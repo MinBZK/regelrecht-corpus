@@ -4,7 +4,7 @@ Opslagplaats voor Nederlandse wetten en regelgeving in machine-leesbaar YAML-for
 
 ## Doel
 
-Deze repository bevat de geoogste en verrijkte wetteksten die door de regelrecht pipeline worden geproduceerd. Elke wet wordt opgeslagen als YAML-bestand conform het [regelrecht-schema](https://raw.githubusercontent.com/MinBZK/poc-machine-law/refs/heads/main/schema/v0.2.0/schema.json).
+Deze repository bevat de geoogste en verrijkte wetteksten die door de regelrecht pipeline worden geproduceerd. Elke wet wordt opgeslagen als YAML-bestand conform het [regelrecht-schema](https://github.com/MinBZK/regelrecht-mvp/tree/main/schema/latest).
 
 ## Directorystructuur
 
