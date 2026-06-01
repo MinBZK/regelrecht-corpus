@@ -1,3 +1,1 @@
-# Notities
-
-Write-test na token-fix.
+# bijgewerkt met juiste etag
