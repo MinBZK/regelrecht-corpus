@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_gebruik_burgerservicenummer_in_de_zorg
 regulatory_layer: AMVB
 publication_date: '2025-01-31'
@@ -24,120 +24,97 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-  - number: 1.a
     text: |-
-      *wet:* [Wet aanvullende bepalingen verwerking persoonsgegevens in de zorg][ref1];
+      In dit besluit wordt verstaan onder:
 
+      a. *wet:* [Wet aanvullende bepalingen verwerking persoonsgegevens in de zorg][ref1];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023864
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023864
-  - number: 1.b
-    text: |-
-      *register van zorgaanbieders:* register van zorgaanbieders als bedoeld in
-      [artikel 14, eerste lid, van de wet][ref1];
+      b. *register van zorgaanbieders:* register van zorgaanbieders als bedoeld in
+      [artikel 14, eerste lid, van de wet][ref2];
 
+      c. *register van indicatieorganen:* register van indicatieorganen als bedoeld in
+      [artikel 14, eerste lid, van de wet][ref3];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel14
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023864
-        artikel: '14'
-  - number: 1.c
-    text: |-
-      *register van indicatieorganen:* register van indicatieorganen als bedoeld in
-      [artikel 14, eerste lid, van de wet][ref1];
+      d. *register van zorgverzekeraars:* register van zorgverzekeraars als bedoeld in
+      [artikel 14, eerste lid, van de wet][ref4];
 
+      e. *register:* register van zorgaanbieders, register van indicatieorganen of register van zorgverzekeraars;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel14
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023864
-        artikel: '14'
-  - number: 1.d
-    text: |-
-      *register van zorgverzekeraars:* register van zorgverzekeraars als bedoeld in
-      [artikel 14, eerste lid, van de wet][ref1];
+      f. *geregistreerde:* in een register opgenomen zorgaanbieder, indicatieorgaan of zorgverzekeraar;
 
+      g. *SBV-Z:* sectorale berichtenvoorziening in de zorg als bedoeld in [artikel 11, eerste lid][ref5];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel14
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023864
-        artikel: '14'
-  - number: 1.e
-    text: '*register:* register van zorgaanbieders, register van indicatieorganen of register van zorgverzekeraars;'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-  - number: 1.f
-    text: '*geregistreerde:* in een register opgenomen zorgaanbieder, indicatieorgaan of zorgverzekeraar;'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-  - number: 1.g
-    text: |-
-      *SBV-Z:* sectorale berichtenvoorziening in de zorg als bedoeld in [artikel 11, eerste lid][ref1];
+      h. *beheervoorziening:* beheervoorziening als bedoeld in
+      [artikel 3 van de Wet algemene bepalingen burgerservicenummer][ref6];
 
+      i. *systeembeschrijving:* systeembeschrijving als bedoeld in [artikel 12][ref7];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel11
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023902
-        artikel: '11'
-        hoofdstuk: III
-  - number: 1.h
-    text: |-
-      *beheervoorziening:* beheervoorziening als bedoeld in
-      [artikel 3 van de Wet algemene bepalingen burgerservicenummer][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0022428#Artikel3
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0022428
-        artikel: '3'
-  - number: 1.i
-    text: |-
-      *systeembeschrijving:* systeembeschrijving als bedoeld in [artikel 12][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel12
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0023902
-        artikel: '12'
-        hoofdstuk: III
-  - number: 1.j
-    text: |-
-      *toegangsmiddel:* certificaat of ander authenticatiemiddel als bedoeld in [artikel 18][ref1] met inbegrip van de
+      j. *toegangsmiddel:* certificaat of ander authenticatiemiddel als bedoeld in [artikel 18][ref8] met inbegrip van de
       drager van het toegangsmiddel.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel18
+      [ref1]: https://wetten.overheid.nl/BWBR0023864
+      [ref2]: https://wetten.overheid.nl/BWBR0023864#Artikel14
+      [ref3]: https://wetten.overheid.nl/BWBR0023864#Artikel14
+      [ref4]: https://wetten.overheid.nl/BWBR0023864#Artikel14
+      [ref5]: https://wetten.overheid.nl/BWBR0023902#Artikel11
+      [ref6]: https://wetten.overheid.nl/BWBR0022428#Artikel3
+      [ref7]: https://wetten.overheid.nl/BWBR0023902#Artikel12
+      [ref8]: https://wetten.overheid.nl/BWBR0023902#Artikel18
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel1
     references:
       - id: ref1
+        bwb_id: BWBR0023864
+      - id: ref2
+        bwb_id: BWBR0023864
+        artikel: '14'
+      - id: ref3
+        bwb_id: BWBR0023864
+        artikel: '14'
+      - id: ref4
+        bwb_id: BWBR0023864
+        artikel: '14'
+      - id: ref5
+        bwb_id: BWBR0023902
+        artikel: '11'
+        hoofdstuk: III
+      - id: ref6
+        bwb_id: BWBR0022428
+        artikel: '3'
+      - id: ref7
+        bwb_id: BWBR0023902
+        artikel: '12'
+        hoofdstuk: III
+      - id: ref8
         bwb_id: BWBR0023902
         artikel: '18'
         hoofdstuk: IV
-  - number: '2.1'
+  - number: '2'
     text: |-
-      De Wlz-uitvoerders, aangewezen krachtens [artikel 4.2.4, tweede lid, van de Wet langdurige zorg][ref1],
+      1 De Wlz-uitvoerders, aangewezen krachtens [artikel 4.2.4, tweede lid, van de Wet langdurige zorg][ref1],
       worden aangewezen als zorgverzekeraar in de zin van de wet voor zover zij het in
       [artikel 4.2.2 van het Besluit langdurige zorg][ref2] aangegeven deel van de administratie verrichten voor de in de
       [Wet langdurige zorg][ref3] aangewezen zorg.
+
+      2 Als zorgaanbieder, respectievelijk zorg in de zin van de wet wordt aangewezen de Stichting Sanquin
+      Bloedvoorziening voor zover het betreft haar werkzaamheden met betrekking tot het diagnostisch
+      laboratoriumonderzoek voor een zorgaanbieder en het beheer en de exploitatie van het Transfusie Register
+      Irregulaire antistoffen en X(kruis)-proeven.
+
+      3 Als zorg in de zin van de wet wordt aangewezen individuele gezondheidszorg als
+      bedoeld in [artikel 1 van de Wet op de beroepen in de individuele gezondheidszorg][ref4]
+      aan een persoon als bedoeld in [artikel 14, eerste en derde lid][ref5], dan wel
+      __REF002___________________________________________________________________________________________________________
+      _________________. Een in Nederland gevestigde verzekeraar die zorg draagt voor de financiële afwikkeling van deze
+      zorg, wordt aangewezen als zorgverzekeraar in de zin van de wet.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0035917#Artikel4
       [ref2]: https://wetten.overheid.nl/BWBR0035948#Artikel4
       [ref3]: https://wetten.overheid.nl/BWBR0035917
+      [ref4]: https://wetten.overheid.nl/BWBR0006251#Artikel1
+      [ref5]: https://wetten.overheid.nl/BWBR0010182#Artikel14
+      [ref6]: https://wetten.overheid.nl/BWBR0010182#Artikel21
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel2
     references:
       - id: ref1
@@ -148,35 +125,13 @@ articles:
         artikel: '4'
       - id: ref3
         bwb_id: BWBR0035917
-  - number: '2.2'
-    text: |-
-      Als zorgaanbieder, respectievelijk zorg in de zin van de wet wordt aangewezen de Stichting Sanquin Bloedvoorziening
-      voor zover het betreft haar werkzaamheden met betrekking tot het diagnostisch laboratoriumonderzoek voor
-      een zorgaanbieder en het beheer en de exploitatie van het Transfusie Register Irregulaire antistoffen en
-      X(kruis)-proeven.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel2
-  - number: '2.3'
-    text: |-
-      Als zorg in de zin van de wet wordt aangewezen individuele gezondheidszorg als bedoeld
-      in [artikel 1 van de Wet op de beroepen in de individuele gezondheidszorg][ref1]
-      aan een persoon als bedoeld in [artikel 14, eerste en derde lid][ref2], dan wel
-      __REF002___________________________________________________________________________________________________________
-      _________________. Een in Nederland gevestigde verzekeraar die zorg draagt voor de financiële afwikkeling van deze
-      zorg, wordt aangewezen als zorgverzekeraar in de zin van de wet.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006251#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0010182#Artikel14
-      [ref3]: https://wetten.overheid.nl/BWBR0010182#Artikel21
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0006251
         artikel: '1'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0010182
         artikel: '14'
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0010182
         artikel: '21'
   - number: '3'
@@ -211,78 +166,56 @@ articles:
         bwb_id: BWBR0023902
         artikel: '3'
         hoofdstuk: II
-  - number: '6.1'
-    text: 'In het register van zorgaanbieders wordt per inschrijving opgenomen:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a
-    text: 'indien de geregistreerde een natuurlijke persoon is:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a.1°
-    text: geslachtsnaam;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a.2°
-    text: voornamen;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a.3°
-    text: geboortedatum;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a.4°
-    text: geboorteplaats;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.a.5°
+  - number: '6'
     text: |-
-      titel in de zin van de [Wet op de beroepen in de individuele gezondheidszorg][ref1];
+      1 In het register van zorgaanbieders wordt per inschrijving opgenomen:
+
+      a. indien de geregistreerde een natuurlijke persoon is:
+
+      1°. geslachtsnaam;
+
+      2°. voornamen;
+
+      3°. geboortedatum;
+
+      4°. geboorteplaats;
+
+      5°. titel in de zin van de [Wet op de beroepen in de individuele gezondheidszorg][ref1];
+
+      b. indien de geregistreerde een rechtspersoon is: naam;
+
+      c. indien de geregistreerde een instelling is in de zin van
+      [artikel 1, eerste lid, van de Wet kwaliteit, klachten en geschillen zorg][ref2], welke wordt gevormd door een
+      organisatorisch verband van natuurlijke personen die bedrijfsmatig zorg verlenen of doen verlenen dan wel door een
+      natuurlijk persoon die bedrijfsmatig zorg doet verlenen: naam van de instelling.
+
+      2 In het register van indicatieorganen en zorgverzekeraars wordt per inschrijving opgenomen de naam van
+      onderscheidenlijk het indicatieorgaan en de zorgverzekeraar.
+
+      3 In de registers wordt voorts per inschrijving opgenomen:
+
+      a. aard van de gegevens en bescheiden aan de hand waarvan is vastgesteld dat de geregistreerde een zorgaanbieder,
+      indicatieorgaan of zorgverzekeraar is;
+
+      b. datum van opname in het register;
+
+      c. adres van vestiging;
+
+      d. gegevens met betrekking tot verstrekte en ingetrokken toegangsmiddelen.
+
+      4 Bij ministeriële regeling kunnen nadere regels worden gesteld over de opname en verwerking van gegevens in het
+      register.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0006251
+      [ref2]: https://wetten.overheid.nl/BWBR0037173#Artikel1
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
     references:
       - id: ref1
         bwb_id: BWBR0006251
-  - number: 6.1.b
-    text: 'indien de geregistreerde een rechtspersoon is: naam;'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.1.c
-    text: |-
-      indien de geregistreerde een instelling is in de zin van
-      [artikel 1, eerste lid, van de Wet kwaliteit, klachten en geschillen zorg][ref1], welke wordt gevormd door een
-      organisatorisch verband van natuurlijke personen die bedrijfsmatig zorg verlenen of doen verlenen dan wel door een
-      natuurlijk persoon die bedrijfsmatig zorg doet verlenen: naam van de instelling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0037173#Artikel1
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0037173
         artikel: '1'
-  - number: '6.2'
-    text: |-
-      In het register van indicatieorganen en zorgverzekeraars wordt per inschrijving opgenomen de naam van
-      onderscheidenlijk het indicatieorgaan en de zorgverzekeraar.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: '6.3'
-    text: 'In de registers wordt voorts per inschrijving opgenomen:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.3.a
-    text: |-
-      aard van de gegevens en bescheiden aan de hand waarvan is vastgesteld dat de geregistreerde een zorgaanbieder,
-      indicatieorgaan of zorgverzekeraar is;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.3.b
-    text: datum van opname in het register;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.3.c
-    text: adres van vestiging;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: 6.3.d
-    text: gegevens met betrekking tot verstrekte en ingetrokken toegangsmiddelen.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
-  - number: '6.4'
-    text: |-
-      Bij ministeriële regeling kunnen nadere regels worden gesteld over de opname en verwerking van gegevens in het
-      register.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel6
   - number: '7'
     text: |-
       De geregistreerde stelt Onze Minister onmiddellijk op de hoogte van een wijziging van de in het register
@@ -303,22 +236,17 @@ articles:
         bwb_id: BWBR0006251
         artikel: '3'
   - number: '9'
-    text: 'De inschrijving in het register kan worden doorgehaald:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel9
-  - number: 9.a
-    text: op verzoek van de geregistreerde;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel9
-  - number: 9.b
-    text: indien de geregistreerde niet langer een zorgaanbieder, indicatieorgaan of zorgverzekeraar is;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel9
-  - number: 9.c
     text: |-
-      indien de in het register opgenomen gegevens afwijken van de gegevens die zijn opgenomen in het register van de
+      De inschrijving in het register kan worden doorgehaald:
+
+      a. op verzoek van de geregistreerde;
+
+      b. indien de geregistreerde niet langer een zorgaanbieder, indicatieorgaan of zorgverzekeraar is;
+
+      c. indien de in het register opgenomen gegevens afwijken van de gegevens die zijn opgenomen in het register van de
       Kamer van Koophandel; of
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel9
-  - number: 9.d
-    text: |-
-      indien ten aanzien van een geregistreerde natuurlijk persoon een aantekening als bedoeld in
+
+      d. indien ten aanzien van een geregistreerde natuurlijk persoon een aantekening als bedoeld in
       [artikel 9, eerste tot en met vierde lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref1] in het
       daar genoemde register is geplaatst, waaruit blijkt dat die persoon tijdelijk of blijvend, het betreffende beroep
       in zijn geheel niet langer mag uitoefenen.
@@ -330,24 +258,22 @@ articles:
       - id: ref1
         bwb_id: BWBR0006251
         artikel: '9'
-  - number: '10.1'
-    text: 'Onze Minister deelt aan een ieder die daarom verzoekt mede of:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel10
-  - number: 10.1.a
-    text: een natuurlijke persoon of rechtspersoon staat ingeschreven;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel10
-  - number: 10.1.b
-    text: een aan een geregistreerde verstrekt toegangsmiddel geldig is.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel10
-  - number: '10.2'
+  - number: '10'
     text: |-
-      Indien het verzoek wordt gedaan door de SBV-Z, wordt de mededeling, bedoeld in het eerste lid, te allen tijde
+      1 Onze Minister deelt aan een ieder die daarom verzoekt mede of:
+
+      a. een natuurlijke persoon of rechtspersoon staat ingeschreven;
+
+      b. een aan een geregistreerde verstrekt toegangsmiddel geldig is.
+
+      2 Indien het verzoek wordt gedaan door de SBV-Z, wordt de mededeling, bedoeld in het eerste lid, te allen tijde
       onmiddellijk gedaan.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel10
   - number: 10a
     text: |-
-      Voor de toepassing van dit hoofdstuk wordt verstaan onder: - *jeugdhulpaanbieder:* jeugdhulpaanbieder als bedoeld
-      in [artikel 1.1 van de Jeugdwet][ref1].
+      Voor de toepassing van dit hoofdstuk wordt verstaan onder:
+
+        - *jeugdhulpaanbieder:* jeugdhulpaanbieder als bedoeld in [artikel 1.1 van de Jeugdwet][ref1].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0034925#Artikel1
@@ -356,40 +282,39 @@ articles:
       - id: ref1
         bwb_id: BWBR0034925
         artikel: '1'
-  - number: '11.1'
+  - number: '11'
     text: |-
-      Onze Minister draagt zorg voor de inrichting en instandhouding van een sectorale berichtenvoorziening in de zorg,
+      1 Onze Minister draagt zorg voor de inrichting en instandhouding van een sectorale berichtenvoorziening in de zorg,
       waarvan deel uitmaken:
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel11
-  - number: 11.1.a
-    text: |-
-      voorzieningen door tussenkomst waarvan zorgaanbieders, indicatieorganen, zorgverzekeraars en jeugdhulpaanbieders
+
+      a. voorzieningen door tussenkomst waarvan zorgaanbieders, indicatieorganen, zorgverzekeraars en jeugdhulpaanbieders
       gebruik kunnen maken van de beheervoorziening;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel11
-  - number: 11.1.b
-    text: |-
-      voorzieningen met behulp waarvan aan een cliënt een overzicht gegeven kan worden van het gebruik dat
+
+      b. voorzieningen met behulp waarvan aan een cliënt een overzicht gegeven kan worden van het gebruik dat
       zorgaanbieders, indicatieorganen, zorgverzekeraars en jeugdhulpaanbieders van de voorzieningen, bedoeld onder a,
       hebben gemaakt teneinde het burgerservicenummer van de cliënt vast te stellen.
+
+      2 Onze Minister is verwerkingsverantwoordelijke voor de SBV-Z.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel11
-  - number: '11.2'
-    text: Onze Minister is verwerkingsverantwoordelijke voor de SBV-Z.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel11
-  - number: '12.1'
-    text: Onze Minister stelt een systeembeschrijving voor de SBV-Z vast.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
-  - number: '12.2'
-    text: 'De systeembeschrijving bevat een beschrijving van:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
-  - number: 12.2.a
-    text: de hoofdlijnen van de inrichting van de SBV-Z;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
-  - number: 12.2.b
+  - number: '12'
     text: |-
-      de inrichting en werking van de voorzieningen, bedoeld in [artikel 11, eerste lid][ref1], met inbegrip van de
+      1 Onze Minister stelt een systeembeschrijving voor de SBV-Z vast.
+
+      2 De systeembeschrijving bevat een beschrijving van:
+
+      a. de hoofdlijnen van de inrichting van de SBV-Z;
+
+      b. de inrichting en werking van de voorzieningen, bedoeld in [artikel 11, eerste lid][ref1], met inbegrip van de
       wijze waarop de uitwisseling van gegevens door de SBV-Z met een zorgaanbieder, indicatieorgaan, zorgverzekeraar of
       jeugdhulpaanbieder enerzijds en de beheervoorziening anderzijds, plaatsvindt;
 
+      c. de wijze waarop de SBV-Z het geautomatiseerde systeem van een zorgaanbieder, indicatieorgaan, zorgverzekeraar of
+      jeugdhulpaanbieder in staat stelt aan te sluiten op de SBV-Z;
+
+      d. de gevallen waarin en de wijze waarop aantekening wordt gehouden van het gebruik dat van de SBV-Z wordt gemaakt;
+
+      e. de hoofdlijnen van het beheer van de SBV-Z.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel11
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
@@ -398,31 +323,34 @@ articles:
         bwb_id: BWBR0023902
         artikel: '11'
         hoofdstuk: III
-  - number: 12.2.c
-    text: |-
-      de wijze waarop de SBV-Z het geautomatiseerde systeem van een zorgaanbieder, indicatieorgaan, zorgverzekeraar of
-      jeugdhulpaanbieder in staat stelt aan te sluiten op de SBV-Z;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
-  - number: 12.2.d
-    text: de gevallen waarin en de wijze waarop aantekening wordt gehouden van het gebruik dat van de SBV-Z wordt gemaakt;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
-  - number: 12.2.e
-    text: de hoofdlijnen van het beheer van de SBV-Z.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel12
   - number: '13'
     text: Onze Minister zorgt er voor dat de SBV-Z functioneert op een wijze die overeenstemt met de systeembeschrijving.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel13
-  - number: '14.1'
+  - number: '14'
     text: |-
-      Onze Minister draagt zorg voor de nodige maatregelen van technische en organisatorische aard ter beveiliging van
+      1 Onze Minister draagt zorg voor de nodige maatregelen van technische en organisatorische aard ter beveiliging van
       de gegevens die de SBV-Z verwerkt tegen verlies of aantasting van deze gegevens en tegen onbevoegde kennisneming,
       opneming, wijziging, verwijdering of verstrekking van deze gegevens.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: '14.2'
-    text: |-
-      Onze Minister draagt zorg voor de nodige maatregelen van technische en organisatorische aard ter beveiliging
+
+      2 Onze Minister draagt zorg voor de nodige maatregelen van technische en organisatorische aard ter beveiliging
       van de SBV-Z tegen onbevoegd gebruik en belemmering van de goede werking van de voorzieningen, bedoeld in
       [artikel 11, eerste lid][ref1].
+
+      3 De maatregelen, bedoeld in het eerste en tweede lid, hebben ten minste betrekking op:
+
+      a. personen die werkzaam zijn voor Onze Minister;
+
+      b. de toegang tot de SBV-Z, met inbegrip van de verbindingen met de SBV-Z;
+
+      c. de toegang tot gebouwen en ruimten waar de SBV-Z of onderdelen daarvan aanwezig zijn;
+
+      d. de apparatuur en de programmatuur van de SBV-Z;
+
+      e. de gegevens en het beheer van de gegevens die door de SBV-Z zijn vastgelegd en bewaard;
+
+      f. het geval dat de geheimhouding van door de SBV-Z verwerkte gegevens is geschaad;
+
+      g. het voorkomen van calamiteiten en het afhandelen daarvan.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel11
@@ -432,30 +360,6 @@ articles:
         bwb_id: BWBR0023902
         artikel: '11'
         hoofdstuk: III
-  - number: '14.3'
-    text: 'De maatregelen, bedoeld in het eerste en tweede lid, hebben ten minste betrekking op:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.a
-    text: personen die werkzaam zijn voor Onze Minister;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.b
-    text: de toegang tot de SBV-Z, met inbegrip van de verbindingen met de SBV-Z;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.c
-    text: de toegang tot gebouwen en ruimten waar de SBV-Z of onderdelen daarvan aanwezig zijn;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.d
-    text: de apparatuur en de programmatuur van de SBV-Z;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.e
-    text: de gegevens en het beheer van de gegevens die door de SBV-Z zijn vastgelegd en bewaard;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.f
-    text: het geval dat de geheimhouding van door de SBV-Z verwerkte gegevens is geschaad;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
-  - number: 14.3.g
-    text: het voorkomen van calamiteiten en het afhandelen daarvan.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel14
   - number: '15'
     text: |-
       Zorgaanbieders, indicatieorganen en zorgverzekeraars kunnen uitsluitend
@@ -481,6 +385,11 @@ articles:
       Het onderzoek, bedoeld in [artikel 21, derde lid, van de Wet algemene bepalingen burgerservicenummer][ref1], leidt
       tot een oordeel over:
 
+      a. de volledigheid, begrijpelijkheid en juistheid van de beschrijving van de inrichting, werking en beveiliging van
+      de SBV-Z, gelet op de geldende regelgeving;
+
+      b. de mate waarin de SBV-Z functioneert overeenkomstig de onder a bedoelde beschrijving.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0022428#Artikel21
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel17
@@ -488,33 +397,39 @@ articles:
       - id: ref1
         bwb_id: BWBR0022428
         artikel: '21'
-  - number: 17.a
-    text: |-
-      de volledigheid, begrijpelijkheid en juistheid van de beschrijving van de inrichting, werking en beveiliging van de
-      SBV-Z, gelet op de geldende regelgeving;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel17
-  - number: 17.b
-    text: de mate waarin de SBV-Z functioneert overeenkomstig de onder a bedoelde beschrijving.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel17
   - number: '18'
     text: |-
       Onze Minister kan op aanvraag de volgende middelen verschaffen waarmee de geregistreerde toegang kan verkrijgen tot
       de SBV-Z:
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel18
-  - number: 18.a
-    text: een certificaat dat is verankerd in het Staat der Nederlanden Root CA Certificaat;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel18
-  - number: 18.b
-    text: een bij ministeriële regeling aangewezen authenticatiemiddel.
+
+      a. een certificaat dat is verankerd in het Staat der Nederlanden Root CA Certificaat;
+
+      b. een bij ministeriële regeling aangewezen authenticatiemiddel.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel18
   - number: '19'
     text: |-
       Bij ministeriële regeling kan worden bepaald welke gegevens en bescheiden worden verstrekt bij de aanvraag van
       een toegangsmiddel.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel19
-  - number: '20.1'
+  - number: '20'
     text: |-
-      De aanvraag, bedoeld in [artikel 18][ref1], wordt toegekend, tenzij:
+      1 De aanvraag, bedoeld in [artikel 18][ref1], wordt toegekend, tenzij:
+
+      a. de aanvraag niet is gedaan door een geregistreerde;
+
+      b. de aanvraag een certificaat betreft en de geregistreerde niet voldoet aan de vereisten voor de toekenning van
+      een certificaat;
+
+      c. de aanvraag een authenticatiemiddel betreft en de geregistreerde niet voldoet aan de bij ministeriële regeling
+      gestelde regels voor de toekenning van dat toegangsmiddel.
+
+      2 Onze Minister verstrekt het toegekende toegangsmiddel desgevraagd aan de geregistreerde, tenzij:
+
+      a. het een certificaat betreft en de geregistreerde niet voldoet aan de vereisten voor het verstrekken van een
+      certificaat;
+
+      b. het een ander toegangsmiddel dan een certificaat betreft en de geregistreerde niet voldoet aan de bij
+      ministeriële regeling gestelde regels voor de verstrekking van dat toegangsmiddel.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel18
@@ -524,137 +439,80 @@ articles:
         bwb_id: BWBR0023902
         artikel: '18'
         hoofdstuk: IV
-  - number: 20.1.a
-    text: de aanvraag niet is gedaan door een geregistreerde;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: 20.1.b
+  - number: '21'
     text: |-
-      de aanvraag een certificaat betreft en de geregistreerde niet voldoet aan de vereisten voor de toekenning van een
-      certificaat;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: 20.1.c
-    text: |-
-      de aanvraag een authenticatiemiddel betreft en de geregistreerde niet voldoet aan de bij ministeriële regeling
-      gestelde regels voor de toekenning van dat toegangsmiddel.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: '20.2'
-    text: 'Onze Minister verstrekt het toegekende toegangsmiddel desgevraagd aan de geregistreerde, tenzij:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: 20.2.a
-    text: |-
-      het een certificaat betreft en de geregistreerde niet voldoet aan de vereisten voor het verstrekken van een
-      certificaat;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: 20.2.b
-    text: |-
-      het een ander toegangsmiddel dan een certificaat betreft en de geregistreerde niet voldoet aan de bij ministeriële
-      regeling gestelde regels voor de verstrekking van dat toegangsmiddel.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel20
-  - number: '21.1'
-    text: |-
-      Onze Minister brengt de geregistreerde een vergoeding voor het certificaat in rekening die ten hoogste
+      1 Onze Minister brengt de geregistreerde een vergoeding voor het certificaat in rekening die ten hoogste
       kostendekkend is.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel21
-  - number: '21.2'
-    text: |-
-      Bij ministeriële regeling kunnen regels worden gesteld met betrekking tot de vergoeding van het certificaat,
+
+      2 Bij ministeriële regeling kunnen regels worden gesteld met betrekking tot de vergoeding van het certificaat,
       waarbij in afwijking van het eerste lid kan worden bepaald dat geen vergoeding in rekening wordt gebracht voor
       daarbij aan te wijzen categorieën certificaten die gedurende een daarbij aan te wijzen periode worden verstrekt.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel21
-  - number: '21.3'
-    text: |-
-      Bij ministeriële regeling kunnen regels worden gesteld met betrekking tot de vergoeding van een ander
+
+      3 Bij ministeriële regeling kunnen regels worden gesteld met betrekking tot de vergoeding van een ander
       toegangsmiddel dan een certificaat.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel21
-  - number: '22.1'
-    text: De geregistreerde gebruikt het toegangsmiddel uitsluitend overeenkomstig de bestemming van dat toegangsmiddel.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel22
-  - number: '22.2'
+  - number: '22'
     text: |-
-      De geregistreerde treft passende maatregelen om het toegangsmiddel te beveiligen tegen beschadiging, verlies en
+      1 De geregistreerde gebruikt het toegangsmiddel uitsluitend overeenkomstig de bestemming van dat toegangsmiddel.
+
+      2 De geregistreerde treft passende maatregelen om het toegangsmiddel te beveiligen tegen beschadiging, verlies en
       onrechtmatig gebruik.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel22
-  - number: '22.3'
-    text: |-
-      De geregistreerde doet Onze Minister onmiddellijk mededeling van omstandigheden die van belang kunnen zijn voor het
-      wijzigen of intrekken van het toegangsmiddel.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel22
-  - number: '22.4'
-    text: |-
-      Onze Minister kan de geregistreerde aanwijzingen geven met betrekking tot het beheer, de beveiliging of het gebruik
-      van het toegangsmiddel.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel22
-  - number: '22.5'
-    text: |-
-      Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot het beheer, de beveiliging, het
+
+      3 De geregistreerde doet Onze Minister onmiddellijk mededeling van omstandigheden die van belang kunnen zijn voor
+      het wijzigen of intrekken van het toegangsmiddel.
+
+      4 Onze Minister kan de geregistreerde aanwijzingen geven met betrekking tot het beheer, de beveiliging of het
+      gebruik van het toegangsmiddel.
+
+      5 Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot het beheer, de beveiliging, het
       gebruik en de intrekking van het toegangsmiddel.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel22
   - number: '23'
-    text: 'Het toegangsmiddel kan worden ingetrokken:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.a
     text: |-
-      indien het toegangsmiddel niet is verstrekt op grond van [artikel 20, tweede lid, onder a of b][ref1];
+      Het toegangsmiddel kan worden ingetrokken:
+
+      a. indien het toegangsmiddel niet is verstrekt op grond van [artikel 20, tweede lid, onder a of b][ref1];
+
+      b. indien de vergoeding, bedoeld in [artikel 21][ref2], niet is voldaan;
+
+      c. indien de inschrijving in het register is geschorst of is doorgehaald;
+
+      d. indien het toegangsmiddel beschadigd, verloren of defect is;
+
+      e. indien het toegangsmiddel onrechtmatig gebruikt is;
+
+      f. indien de werking van het toegangsmiddel aangetast is;
+
+      g. indien de geregistreerde niet voldoet aan de aanwijzingen of regels met betrekking tot het beheer, de
+      beveiliging, het gebruik en de intrekking van het toegangsmiddel;
+
+      h. indien de gegevens die zijn opgenomen op een toegangsmiddel of in een certificaat van een toegangsmiddel,
+      afwijken van de gegevens die zijn opgenomen in het register of in het register van de Kamer van Koophandel;
+
+      i. indien ten aanzien van de houder van het toegangsmiddel een aantekening als bedoeld in
+      [artikel 9, eerste tot en met vierde lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref3] in het
+      daar genoemde register is geplaatst, waaruit blijkt dat die persoon, tijdelijk of blijvend, het betreffende beroep
+      in zijn geheel niet langer mag uitoefenen; of
+
+      j. in andere, bij ministeriële regeling te bepalen gevallen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel20
+      [ref2]: https://wetten.overheid.nl/BWBR0023902#Artikel21
+      [ref3]: https://wetten.overheid.nl/BWBR0006251#Artikel9
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
     references:
       - id: ref1
         bwb_id: BWBR0023902
         artikel: '20'
         hoofdstuk: IV
-  - number: 23.b
-    text: |-
-      indien de vergoeding, bedoeld in [artikel 21][ref1], niet is voldaan;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel21
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0023902
         artikel: '21'
         hoofdstuk: IV
-  - number: 23.c
-    text: indien de inschrijving in het register is geschorst of is doorgehaald;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.d
-    text: indien het toegangsmiddel beschadigd, verloren of defect is;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.e
-    text: indien het toegangsmiddel onrechtmatig gebruikt is;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.f
-    text: indien de werking van het toegangsmiddel aangetast is;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.g
-    text: |-
-      indien de geregistreerde niet voldoet aan de aanwijzingen of regels met betrekking tot het beheer, de beveiliging,
-      het gebruik en de intrekking van het toegangsmiddel;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.h
-    text: |-
-      indien de gegevens die zijn opgenomen op een toegangsmiddel of in een certificaat van een toegangsmiddel, afwijken
-      van de gegevens die zijn opgenomen in het register of in het register van de Kamer van Koophandel;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-  - number: 23.i
-    text: |-
-      indien ten aanzien van de houder van het toegangsmiddel een aantekening als bedoeld in
-      [artikel 9, eerste tot en met vierde lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref1] in het
-      daar genoemde register is geplaatst, waaruit blijkt dat die persoon, tijdelijk of blijvend, het betreffende beroep
-      in zijn geheel niet langer mag uitoefenen; of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006251#Artikel9
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0006251
         artikel: '9'
-  - number: 23.j
-    text: in andere, bij ministeriële regeling te bepalen gevallen.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel23
   - number: '24'
     text: Bij ministeriële regeling wordt de geldigheidsduur van het toegangsmiddel bepaald.
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel24
@@ -692,12 +550,30 @@ articles:
       - id: ref3
         bwb_id: BWBR0022428
         artikel: '12'
-  - number: '28.1'
+  - number: '28'
     text: |-
-      Indien het vaststellen van de identiteit van een cliënt door een zorgaanbieder overeenkomstig het bij of
-      krachtens de [artikelen 5][ref1], [6][ref2] en [17 van de wet][ref3] bepaalde onmogelijk blijkt of een
+      1 Indien het vaststellen van de identiteit van een cliënt door een zorgaanbieder overeenkomstig het bij
+      of krachtens de [artikelen 5][ref1], [6][ref2] en [17 van de wet][ref3] bepaalde onmogelijk blijkt of een
       onevenredige inspanning kost, gebruikt de zorgaanbieder in afwijking van de [artikelen 4][ref4], [8][ref5] en
       [9 van de wet][ref6] geen burgerservicenummer.
+
+      2 In de gevallen, bedoeld het eerste lid:
+
+      a. neemt de zorgaanbieder in ieder geval de volgende gegevens van de cliënt in zijn administratie op:
+
+      1°. geslachtsnaam;
+
+      2°. voornamen;
+
+      3°. geboortedatum;
+
+      4°. postcode van het woonadres;
+
+      5°. huisnummer van het woonadres en
+
+      b. vermeldt de zorgaanbieder de gegevens, bedoeld in onderdeel a, bij het verstrekken van persoonsgegevens
+      met betrekking tot de verlening van, indicatiestelling voor of verzekering van zorg aan een zorgaanbieder, een
+      indicatieorgaan of een zorgverzekeraar.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel5
@@ -726,148 +602,72 @@ articles:
       - id: ref6
         bwb_id: BWBR0023864
         artikel: '9'
-  - number: '28.2'
-    text: 'In de gevallen, bedoeld het eerste lid:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a
-    text: 'neemt de zorgaanbieder in ieder geval de volgende gegevens van de cliënt in zijn administratie op:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a.1°
-    text: geslachtsnaam;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a.2°
-    text: voornamen;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a.3°
-    text: geboortedatum;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a.4°
-    text: postcode van het woonadres;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.a.5°
-    text: huisnummer van het woonadres en
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: 28.2.b
+  - number: '29'
     text: |-
-      vermeldt de zorgaanbieder de gegevens, bedoeld in onderdeel a, bij het verstrekken van persoonsgegevens met
-      betrekking tot de verlening van, indicatiestelling voor of verzekering van zorg aan een zorgaanbieder, een
-      indicatieorgaan of een zorgverzekeraar.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel28
-  - number: '29.1'
-    text: |-
-      In afwijking van [artikel 28][ref1] kan het burgerservicenummer worden gebruikt door apothekers en bij zorg die per
-      telefoon of per elektronische bericht aan de cliënt wordt verleend, indien:
+      1 In afwijking van [artikel 28][ref1] kan het burgerservicenummer worden gebruikt door apothekers en bij zorg die
+      per telefoon of per elektronische bericht aan de cliënt wordt verleend, indien:
 
+      a. de zorgaanbieder de identiteit van de cliënt aan de hand van de volgende gegevens van de cliënt controleert:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel28
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-    references:
-      - id: ref1
-        bwb_id: BWBR0023902
-        artikel: '28'
-        hoofdstuk: V
-  - number: 29.1.a
-    text: 'de zorgaanbieder de identiteit van de cliënt aan de hand van de volgende gegevens van de cliënt controleert:'
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.a.1°
-    text: geslachtsnaam;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.a.2°
-    text: voornamen;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.a.3°
-    text: geboortedatum;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.a.4°
-    text: postcode van het woonadres;
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.a.5°
-    text: huisnummer van het woonadres en
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.1.b
-    text: |-
-      de zorgaanbieder bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de cliënt niet
+      1°. geslachtsnaam;
+
+      2°. voornamen;
+
+      3°. geboortedatum;
+
+      4°. postcode van het woonadres;
+
+      5°. huisnummer van het woonadres en
+
+      b. de zorgaanbieder bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de cliënt niet
       is vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: '29.2'
-    text: |-
-      In afwijking van [artikel 28, eerste lid][ref1], kan, met betrekking tot cliënten tot de leeftijd van 14
-      jaar, waarbij het vaststellen van de identiteit overeenkomstig het bij of krachtens de [artikelen 5][ref2] en
-      [6 van de wet][ref3] bepaalde onmogelijk blijkt, het burgerservicenummer worden gebruikt bij jeugdgezondheidszorg
-      als omschreven bij of krachtens de [Wet publieke gezondheid][ref4] en bij vaccinaties, opgenomen in een
-      vaccinatieprogramma als bedoeld in [artikel 6b van de Wet publieke gezondheid][ref5], indien de zorgaanbieder:
 
+      2 In afwijking van [artikel 28, eerste lid][ref2], kan, met betrekking tot cliënten tot de leeftijd van 14
+      jaar, waarbij het vaststellen van de identiteit overeenkomstig het bij of krachtens de [artikelen 5][ref3] en
+      [6 van de wet][ref4] bepaalde onmogelijk blijkt, het burgerservicenummer worden gebruikt bij jeugdgezondheidszorg
+      als omschreven bij of krachtens de [Wet publieke gezondheid][ref5] en bij vaccinaties, opgenomen in een
+      vaccinatieprogramma als bedoeld in [artikel 6b van de Wet publieke gezondheid][ref6], indien de zorgaanbieder:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel28
-      [ref2]: https://wetten.overheid.nl/BWBR0023864#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0023864#Artikel6
-      [ref4]: https://wetten.overheid.nl/BWBR0024705
-      [ref5]: https://wetten.overheid.nl/BWBR0024705#Artikel6b
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-    references:
-      - id: ref1
-        bwb_id: BWBR0023902
-        artikel: '28'
-        hoofdstuk: V
-      - id: ref2
-        bwb_id: BWBR0023864
-        artikel: '5'
-      - id: ref3
-        bwb_id: BWBR0023864
-        artikel: '6'
-      - id: ref4
-        bwb_id: BWBR0024705
-      - id: ref5
-        bwb_id: BWBR0024705
-        artikel: 6b
-  - number: 29.2.a
-    text: |-
-      de identiteit van de cliënt controleert aan de hand van de gegevens genoemd in het eerste lid, onderdeel a, met de
-      persoonslijst met burgerservicenummer die verstrekt is door de gemeente aan de cliënt, en
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.2.b
-    text: bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de cliënt niet is vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: '29.3'
-    text: |-
-      De zorgaanbieder, bedoeld in het tweede lid, gaat bij elk volgend contact met de cliënt na of de cliënt inmiddels
-      in het bezit is van een document als bedoeld in [artikel 1 van de Wet op de identificatieplicht][ref1] en gebruikt,
+      a. de identiteit van de cliënt controleert aan de hand van de gegevens genoemd in het eerste lid, onderdeel a, met
+      de persoonslijst met burgerservicenummer die verstrekt is door de gemeente aan de cliënt, en
+
+      b. bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de cliënt niet is vastgesteld.
+
+      3 De zorgaanbieder, bedoeld in het tweede lid, gaat bij elk volgend contact met de cliënt na of de cliënt inmiddels
+      in het bezit is van een document als bedoeld in [artikel 1 van de Wet op de identificatieplicht][ref7] en gebruikt,
       indien dit het geval is, dit document eenmalig om de identiteit van de cliënt vast te stellen.
 
+      4 Als de cliënt, bedoeld in het tweede en derde lid, de leeftijd van 14 jaren heeft bereikt, stelt de
+      zorgaanbieder, bedoeld in het tweede en derde lid, alsnog eenmalig de identiteit van de cliënt vast overeenkomstig
+      het bepaalde krachtens de [artikelen 5][ref8] en [6 van de wet][ref9].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006297#Artikel1
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-    references:
-      - id: ref1
-        bwb_id: BWBR0006297
-        artikel: '1'
-  - number: '29.4'
-    text: |-
-      Als de cliënt, bedoeld in het tweede en derde lid, de leeftijd van 14 jaren heeft bereikt, stelt de zorgaanbieder,
-      bedoeld in het tweede en derde lid, alsnog eenmalig de identiteit van de cliënt vast overeenkomstig het bepaalde
-      krachtens de [artikelen 5][ref1] en [6 van de wet][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0023864#Artikel6
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-    references:
-      - id: ref1
-        bwb_id: BWBR0023864
-        artikel: '5'
-      - id: ref2
-        bwb_id: BWBR0023864
-        artikel: '6'
-  - number: '29.5'
-    text: |-
-      In afwijking van [artikel 28, eerste lid][ref1], kan met betrekking tot een pasgeborene het burgerservicenummer
-      gebruikt worden bij zorg als bedoeld in de [artikelen 2.4][ref2] en [2.11 van het Besluit zorgverzekering][ref3],
+      5 In afwijking van [artikel 28, eerste lid][ref10], kan met betrekking tot een pasgeborene het burgerservicenummer
+      gebruikt worden bij zorg als bedoeld in de [artikelen 2.4][ref11] en [2.11 van het Besluit zorgverzekering][ref12],
       die wordt verleend aan moeder en kind in verband met een bevalling, indien de zorgaanbieder:
+
+      a. tijdens de bevalling of direct daarna ter plaatse deze zorg heeft geboden en zich van de identiteit van de
+      pasgeborene heeft kunnen vergewissen als kind van de kraamvrouw,
+
+      b. de identiteit en het burgerservicenummer van de kraamvrouw overeenkomstig de
+      [artikelen 5 tot en met 7 van de wet][ref13] heeft vastgesteld, en
+
+      c. bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de pasgeborene niet is
+      vastgesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel28
-      [ref2]: https://wetten.overheid.nl/BWBR0018492#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0018492#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0023902#Artikel28
+      [ref3]: https://wetten.overheid.nl/BWBR0023864#Artikel5
+      [ref4]: https://wetten.overheid.nl/BWBR0023864#Artikel6
+      [ref5]: https://wetten.overheid.nl/BWBR0024705
+      [ref6]: https://wetten.overheid.nl/BWBR0024705#Artikel6b
+      [ref7]: https://wetten.overheid.nl/BWBR0006297#Artikel1
+      [ref8]: https://wetten.overheid.nl/BWBR0023864#Artikel5
+      [ref9]: https://wetten.overheid.nl/BWBR0023864#Artikel6
+      [ref10]: https://wetten.overheid.nl/BWBR0023902#Artikel28
+      [ref11]: https://wetten.overheid.nl/BWBR0018492#Artikel2
+      [ref12]: https://wetten.overheid.nl/BWBR0018492#Artikel2
+      [ref13]: https://wetten.overheid.nl/BWBR0023864#Artikel5
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
     references:
       - id: ref1
@@ -875,31 +675,42 @@ articles:
         artikel: '28'
         hoofdstuk: V
       - id: ref2
-        bwb_id: BWBR0018492
-        artikel: '2'
+        bwb_id: BWBR0023902
+        artikel: '28'
+        hoofdstuk: V
       - id: ref3
-        bwb_id: BWBR0018492
-        artikel: '2'
-  - number: 29.5.a
-    text: |-
-      tijdens de bevalling of direct daarna ter plaatse deze zorg heeft geboden en zich van de identiteit van de
-      pasgeborene heeft kunnen vergewissen als kind van de kraamvrouw,
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-  - number: 29.5.b
-    text: |-
-      de identiteit en het burgerservicenummer van de kraamvrouw overeenkomstig de
-      [artikelen 5 tot en met 7 van de wet][ref1] heeft vastgesteld, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023864#Artikel5
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
-    references:
-      - id: ref1
         bwb_id: BWBR0023864
         artikel: '5'
-  - number: 29.5.c
-    text: bij het verstrekken van het burgerservicenummer vermeldt dat de identiteit van de pasgeborene niet is vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel29
+      - id: ref4
+        bwb_id: BWBR0023864
+        artikel: '6'
+      - id: ref5
+        bwb_id: BWBR0024705
+      - id: ref6
+        bwb_id: BWBR0024705
+        artikel: 6b
+      - id: ref7
+        bwb_id: BWBR0006297
+        artikel: '1'
+      - id: ref8
+        bwb_id: BWBR0023864
+        artikel: '5'
+      - id: ref9
+        bwb_id: BWBR0023864
+        artikel: '6'
+      - id: ref10
+        bwb_id: BWBR0023902
+        artikel: '28'
+        hoofdstuk: V
+      - id: ref11
+        bwb_id: BWBR0018492
+        artikel: '2'
+      - id: ref12
+        bwb_id: BWBR0018492
+        artikel: '2'
+      - id: ref13
+        bwb_id: BWBR0023864
+        artikel: '5'
   - number: '30'
     text: |-
       Bij ministeriële regeling kunnen regels worden gesteld over de aan de gegevensverwerking, bedoeld in
@@ -918,16 +729,27 @@ articles:
         bwb_id: BWBR0023902
         artikel: '29'
         hoofdstuk: V
-  - number: '32.1'
+  - number: '32'
     text: |-
-      In afwijking van de [artikelen 3][ref1], [4][ref2] en [5][ref3] wordt in het register van zorgaanbieders
+      1 In afwijking van de [artikelen 3][ref1], [4][ref2] en [5][ref3] wordt in het register van zorgaanbieders
       opgenomen elke zorgaanbieder die een op het tijdstip van inwerkingtreding van dit besluit geldige overeenkomst
       terzake van een certificaat heeft gesloten met de Staat der Nederlanden.
+
+      2 Op het tijdstip dat de overeenkomst, bedoeld in het eerste lid, met inachtneming van de daarvoor geldende
+      termijn door Onze Minister is opgezegd, wordt een certificaat waarover de zorgaanbieder uit hoofde van
+      de overeenkomst beschikt, aangemerkt als een certificaat dat op grond van dit besluit is verstrekt. De
+      [artikelen 21, eerste en tweede lid][ref4], [22][ref5], [23, onderdelen b tot en met h][ref6], [24][ref7] en
+      [25][ref8] zijn van overeenkomstige toepassing op het certificaat.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel3
       [ref2]: https://wetten.overheid.nl/BWBR0023902#Artikel4
       [ref3]: https://wetten.overheid.nl/BWBR0023902#Artikel5
+      [ref4]: https://wetten.overheid.nl/BWBR0023902#Artikel21
+      [ref5]: https://wetten.overheid.nl/BWBR0023902#Artikel22
+      [ref6]: https://wetten.overheid.nl/BWBR0023902#Artikel23
+      [ref7]: https://wetten.overheid.nl/BWBR0023902#Artikel24
+      [ref8]: https://wetten.overheid.nl/BWBR0023902#Artikel25
     url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel32
     references:
       - id: ref1
@@ -942,39 +764,23 @@ articles:
         bwb_id: BWBR0023902
         artikel: '5'
         hoofdstuk: II
-  - number: '32.2'
-    text: |-
-      Op het tijdstip dat de overeenkomst, bedoeld in het eerste lid, met inachtneming van de daarvoor geldende
-      termijn door Onze Minister is opgezegd, wordt een certificaat waarover de zorgaanbieder uit hoofde van
-      de overeenkomst beschikt, aangemerkt als een certificaat dat op grond van dit besluit is verstrekt. De
-      [artikelen 21, eerste en tweede lid][ref1], [22][ref2], [23, onderdelen b tot en met h][ref3], [24][ref4] en
-      [25][ref5] zijn van overeenkomstige toepassing op het certificaat.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023902#Artikel21
-      [ref2]: https://wetten.overheid.nl/BWBR0023902#Artikel22
-      [ref3]: https://wetten.overheid.nl/BWBR0023902#Artikel23
-      [ref4]: https://wetten.overheid.nl/BWBR0023902#Artikel24
-      [ref5]: https://wetten.overheid.nl/BWBR0023902#Artikel25
-    url: https://wetten.overheid.nl/BWBR0023902/2025-03-01#Artikel32
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0023902
         artikel: '21'
         hoofdstuk: IV
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0023902
         artikel: '22'
         hoofdstuk: IV
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0023902
         artikel: '23'
         hoofdstuk: IV
-      - id: ref4
+      - id: ref7
         bwb_id: BWBR0023902
         artikel: '24'
         hoofdstuk: IV
-      - id: ref5
+      - id: ref8
         bwb_id: BWBR0023902
         artikel: '25'
         hoofdstuk: IV
