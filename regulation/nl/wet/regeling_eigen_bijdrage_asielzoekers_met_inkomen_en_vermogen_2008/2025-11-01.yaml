@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_eigen_bijdrage_asielzoekers_met_inkomen_en_vermogen_2008
 regulatory_layer: WET
 publication_date: '2025-10-31'
@@ -13,27 +13,22 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Voor de toepassing van deze regeling wordt verstaan onder ‘Rva 2005’: de
+      1 Voor de toepassing van deze regeling wordt verstaan onder ‘Rva 2005’: de
       [Regeling verstrekkingen asielzoekers en andere categorie vreemdelingen 2005][ref1].
+
+      2 Voor de toepassing van deze regeling wordt verstaan onder ‘vergunninghouder’: de vreemdeling bedoeld in
+      [artikel 3, derde lid, onderdeel c, van de Rva 2005][ref2].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0017959
+      [ref2]: https://wetten.overheid.nl/BWBR0017959#Artikel3
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0017959
-  - number: '1.2'
-    text: |-
-      Voor de toepassing van deze regeling wordt verstaan onder ‘vergunninghouder’: de vreemdeling bedoeld in
-      [artikel 3, derde lid, onderdeel c, van de Rva 2005][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel3
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0017959
         artikel: '3'
   - number: '2'
@@ -41,6 +36,14 @@ articles:
       Tot de aan de asielzoeker feitelijk geboden verstrekkingen, bedoeld in
       [artikel 20, tweede lid, van de Rva 2005][ref1], worden gerekend:
 
+      a. de aan of ten behoeve van de asielzoeker en zijn gezinsleden verstrekte financiële toelage ten behoeve van
+      voedsel, kleding en andere persoonlijke uitgaven en de in natura verstrekte maaltijden;
+
+      b. het onderdak in een opvangcentrum of de financiële toelage ten behoeve van de huisvesting buiten een
+      opvangcentrum;
+
+      c. de kosten van medische verstrekkingen overeenkomstig een daarvoor getroffen ziektekostenregeling.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel20
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel2
@@ -48,79 +51,53 @@ articles:
       - id: ref1
         bwb_id: BWBR0017959
         artikel: '20'
-  - number: 2.a
-    text: |-
-      de aan of ten behoeve van de asielzoeker en zijn gezinsleden verstrekte financiële toelage ten behoeve van voedsel,
-      kleding en andere persoonlijke uitgaven en de in natura verstrekte maaltijden;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel2
-  - number: 2.b
-    text: het onderdak in een opvangcentrum of de financiële toelage ten behoeve van de huisvesting buiten een opvangcentrum;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel2
-  - number: 2.c
-    text: de kosten van medische verstrekkingen overeenkomstig een daarvoor getroffen ziektekostenregeling.
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel2
   - number: '3'
     text: |-
       De economische waarde per maand, bedoeld in [artikel 20, tweede lid, van de Rva 2005][ref1], bedraagt:
 
+      a. van de verstrekkingen bedoeld in [artikel 2, onderdeel a][ref2]: de toelage bedoeld in
+      [artikel 14, tweede lid, van de Rva 2005][ref3], die aan of ten behoeve van de asielzoeker of vergunninghouder
+      wordt of zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
+
+      b. van de verstrekkingen bedoeld in [artikel 2, onderdeel b][ref4]: € 50,00 voor een alleenstaande asielzoeker
+      of vergunninghouder of eerste gezinslid, € 25,00, voor het tweede gezinslid en € 12,50 per volgend gezinslid,
+      vermenigvuldigd met de factor 4,33, tot een maximum van € 433,00;
+
+      c. van de verstrekkingen bedoeld in [artikel 2, onderdeel c][ref5]: een geldbedrag gelijk aan de gemiddelde
+      basis zorgpremie als bedoeld in [artikel 2b van het Besluit minimumloon en minimumvakantiebijslag][ref6] minus de
+      maximale zorgtoeslag.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel20
+      [ref2]: https://wetten.overheid.nl/BWBR0024733#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0017959#Artikel14
+      [ref4]: https://wetten.overheid.nl/BWBR0024733#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0024733#Artikel2
+      [ref6]: https://wetten.overheid.nl/BWBR0008222#Artikel2b
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0017959
         artikel: '20'
-  - number: 3.a
-    text: |-
-      van de verstrekkingen bedoeld in [artikel 2, onderdeel a][ref1]: de toelage bedoeld in
-      [artikel 14, tweede lid, van de Rva 2005][ref2], die aan of ten behoeve van de asielzoeker of vergunninghouder
-      wordt of zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0017959#Artikel14
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel3
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0024733
         artikel: '2'
         hoofdstuk: '1'
         paragraaf: '2'
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0017959
         artikel: '14'
-  - number: 3.b
-    text: |-
-      van de verstrekkingen bedoeld in [artikel 2, onderdeel b][ref1]: € 50,00 voor een alleenstaande asielzoeker
-      of vergunninghouder of eerste gezinslid, € 25,00, voor het tweede gezinslid en € 12,50 per volgend gezinslid,
-      vermenigvuldigd met de factor 4,33, tot een maximum van € 433,00;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel2
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel3
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0024733
         artikel: '2'
         hoofdstuk: '1'
         paragraaf: '2'
-  - number: 3.c
-    text: |-
-      van de verstrekkingen bedoeld in [artikel 2, onderdeel c][ref1]: een geldbedrag gelijk aan de gemiddelde basis
-      zorgpremie als bedoeld in [artikel 2b van het Besluit minimumloon en minimumvakantiebijslag][ref2] minus de
-      maximale zorgtoeslag.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0008222#Artikel2b
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel3
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0024733
         artikel: '2'
         hoofdstuk: '1'
         paragraaf: '2'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0008222
         artikel: 2b
   - number: '4'
@@ -142,13 +119,59 @@ articles:
         artikel: '3'
         hoofdstuk: '1'
         paragraaf: '3'
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Tot de middelen bedoeld in [artikel 4][ref1] worden alle vermogens- en inkomensbestanddelen gerekend waarover de
+      1 Tot de middelen bedoeld in [artikel 4][ref1] worden alle vermogens- en inkomensbestanddelen gerekend waarover de
       asielzoeker beschikt of redelijkerwijs kan beschikken.
+
+      2 Niet tot de middelen van de asielzoeker worden gerekend:
+
+      a. kinderbijslag;
+
+      b. vergoedingen en tegemoetkomingen, waaronder begrepen de tegemoetkoming ontvangen op grond van het
+      [Tijdelijk besluit tegemoetkoming buitengewone uitgaven][ref2], voor, alsmede de vermindering of teruggave van
+      loonbelasting of inkomensbelasting en van premies volksverzekeringen op grond van kosten die niet tot de algemeen
+      noodzakelijke bestaanskosten behoren;
+
+      c. rente ontvangen over op grond van [artikel 7, tweede lid, onder b, c, en d][ref3], niet in aanmerking genomen
+      vermogen;
+
+      d. een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
+      uitkering, uit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref4],
+      verantwoord is;
+
+      e. giften van instellingen en particulieren voor zover deze, gezien de bestemming en de hoogte van de giften, uit
+      een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref5], verantwoord zijn.
+
+      3 Onverminderd het bepaalde in het tweede lid worden niet tot de middelen van een asielzoeker, niet
+      zijnde een vergunninghouder, gerekend inkomsten uit arbeid gedurende ten hoogste 24 weken binnen een
+      periode van 52 weken tot 25 procent van deze inkomsten, met een maximum van het bedrag, genoemd in
+      [artikel 31, tweede lid, onderdeel n, van de Participatiewet][ref6], per maand.
+
+      4 Onverminderd het bepaalde in het tweede lid worden tot de middelen van een vergunninghouder niet
+      gerekend inkomsten uit arbeid tot 25 procent van deze inkomsten, met een maximum van het bedrag, genoemd in
+      [artikel 31, tweede lid, onderdeel n, van de Participatiewet][ref7], per maand.
+
+      5 De middelen worden in aanmerking genomen tot het bedrag dat resteert na aftrek van:
+
+      a. de daarover door de asielzoeker verschuldigde loonbelasting of inkomstenbelasting;
+
+      b. de daarover door de asielzoeker verschuldigde premies volksverzekeringen, premies werknemersverzekeringen dan
+      wel een inhouding die met een of meer van deze premies overeenkomt;
+
+      c. ten laste van de asielzoeker komende verplichte bijdragen ingevolge een pensioenregeling en daarmee
+      vergelijkbare regelingen; en
+
+      d. andere ten laste van de asielzoeker komende verplichtingen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel4
+      [ref2]: https://wetten.overheid.nl/BWBR0016555
+      [ref3]: https://wetten.overheid.nl/BWBR0024733#Artikel7
+      [ref4]: https://wetten.overheid.nl/BWBR0017959#Artikel9
+      [ref5]: https://wetten.overheid.nl/BWBR0017959#Artikel9
+      [ref6]: https://wetten.overheid.nl/BWBR0015703#Artikel31
+      [ref7]: https://wetten.overheid.nl/BWBR0015703#Artikel31
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
     references:
       - id: ref1
@@ -156,119 +179,39 @@ articles:
         artikel: '4'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '5.2'
-    text: 'Niet tot de middelen van de asielzoeker worden gerekend:'
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.2.a
-    text: kinderbijslag;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.2.b
-    text: |-
-      vergoedingen en tegemoetkomingen, waaronder begrepen de tegemoetkoming ontvangen op grond van het
-      [Tijdelijk besluit tegemoetkoming buitengewone uitgaven][ref1], voor, alsmede de vermindering of teruggave van
-      loonbelasting of inkomensbelasting en van premies volksverzekeringen op grond van kosten die niet tot de algemeen
-      noodzakelijke bestaanskosten behoren;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0016555
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0016555
-  - number: 5.2.c
-    text: |-
-      rente ontvangen over op grond van [artikel 7, tweede lid, onder b, c, en d][ref1], niet in aanmerking genomen
-      vermogen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel7
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0024733
         artikel: '7'
         hoofdstuk: '2'
         paragraaf: '4'
-  - number: 5.2.d
-    text: |-
-      een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
-      uitkering, uit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref1],
-      verantwoord is;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel9
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0017959
         artikel: '9'
-  - number: 5.2.e
-    text: |-
-      giften van instellingen en particulieren voor zover deze, gezien de bestemming en de hoogte van de giften, uit een
-      oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref1], verantwoord zijn.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel9
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0017959
         artikel: '9'
-  - number: '5.3'
-    text: |-
-      Onverminderd het bepaalde in het tweede lid worden niet tot de middelen van een asielzoeker, niet
-      zijnde een vergunninghouder, gerekend inkomsten uit arbeid gedurende ten hoogste 24 weken binnen een
-      periode van 52 weken tot 25 procent van deze inkomsten, met een maximum van het bedrag, genoemd in
-      [artikel 31, tweede lid, onderdeel n, van de Participatiewet][ref1], per maand.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel31
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0015703
         artikel: '31'
-  - number: '5.4'
-    text: |-
-      Onverminderd het bepaalde in het tweede lid worden tot de middelen van een vergunninghouder niet gerekend
-      inkomsten uit arbeid tot 25 procent van deze inkomsten, met een maximum van het bedrag, genoemd in
-      [artikel 31, tweede lid, onderdeel n, van de Participatiewet][ref1], per maand.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel31
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0015703
         artikel: '31'
-  - number: '5.5'
-    text: 'De middelen worden in aanmerking genomen tot het bedrag dat resteert na aftrek van:'
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.5.a
-    text: de daarover door de asielzoeker verschuldigde loonbelasting of inkomstenbelasting;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.5.b
+  - number: '6'
     text: |-
-      de daarover door de asielzoeker verschuldigde premies volksverzekeringen, premies werknemersverzekeringen dan wel
-      een inhouding die met een of meer van deze premies overeenkomt;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.5.c
-    text: |-
-      ten laste van de asielzoeker komende verplichte bijdragen ingevolge een pensioenregeling en daarmee vergelijkbare
-      regelingen; en
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: 5.5.d
-    text: andere ten laste van de asielzoeker komende verplichtingen.
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
-  - number: '6.1'
-    text: 'Onder inkomen wordt verstaan de middelen voor zover deze:'
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel6
-  - number: 6.1.a
-    text: |-
-      betreffen inkomsten uit of in verband met arbeid, inkomsten uit vermogen, sociale zekerheidsuitkeringen,
+      1 Onder inkomen wordt verstaan de middelen voor zover deze:
+
+      a. betreffen inkomsten uit of in verband met arbeid, inkomsten uit vermogen, sociale zekerheidsuitkeringen,
       uitkeringen tot levensonderhoud op grond van [Boek 1 van het Burgerlijk Wetboek][ref1], voorlopige teruggave of
       teruggave van inkomstenbelasting, loonbelasting, premies volksverzekeringen, zorgtoeslag, studiefinanciering, dan
       wel naar hun aard met deze inkomsten of uitkeringen overeenkomen;
+
+      b. betrekking hebben op een periode waarover beroep op opvang wordt gedaan.
+
+      2 Middelen die het karakter hebben van uitgesteld inkomen worden in aanmerking genomen naar de periode waarin deze
+      zijn verworven. Middelen die het karakter hebben van doorbetaling van inkomen over een periode worden in aanmerking
+      genomen naar de periode waarin deze te gelde kunnen worden gemaakt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002656
@@ -276,31 +219,39 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0002656
-  - number: 6.1.b
-    text: betrekking hebben op een periode waarover beroep op opvang wordt gedaan.
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel6
-  - number: '6.2'
+  - number: '7'
     text: |-
-      Middelen die het karakter hebben van uitgesteld inkomen worden in aanmerking genomen naar de periode waarin deze
-      zijn verworven. Middelen die het karakter hebben van doorbetaling van inkomen over een periode worden in aanmerking
-      genomen naar de periode waarin deze te gelde kunnen worden gemaakt.
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel6
-  - number: '7.1'
-    text: 'Onder vermogen wordt verstaan:'
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-  - number: 7.1.a
-    text: |-
-      de waarde van de bezittingen waarover de asielzoeker bij de aanvang van de opvang beschikt of redelijkerwijs kan
+      1 Onder vermogen wordt verstaan:
+
+      a. de waarde van de bezittingen waarover de asielzoeker bij de aanvang van de opvang beschikt of redelijkerwijs kan
       beschikken, verminderd met de op dat tijdstip aanwezige schulden. De waarde van de bezittingen wordt vastgesteld op
       de waarde in het economische verkeer bij vrije oplevering;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-  - number: 7.1.b
-    text: |-
-      middelen die worden ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, voor zover deze geen
+
+      b. middelen die worden ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, voor zover deze geen
       inkomen zijn als bedoeld in [artikel 6][ref1].
+
+      2 Niet als vermogen wordt in aanmerking genomen:
+
+      a. bezittingen in natura die naar hun aard en waarde algemeen gebruikelijk zijn dan wel, gelet op de omstandigheden
+      van persoon en gezin, noodzakelijk zijn;
+
+      b. het bij de aanvang van de opvang aanwezige vermogen voor zover dit minder bedraagt dan de vermogensgrens als
+      bedoeld in [artikel 20, tweede lid, van de Rva 2005][ref2];
+
+      c. vermogen ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, tot het bedrag dat
+      het bij de aanvang van de opvang aanwezige vermogen minder bedroeg dan de vermogensgrens, bedoeld in
+      [artikel 20, tweede lid, van de Rva 2005][ref3];
+
+      d. spaargelden opgebouwd tijdens de periode waarin opvang wordt geboden;
+
+      e. vergoedingen voor immateriële schade voor zover dit, gelet op de aard en de hoogte van de uitkering, vanuit een
+      oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref4], verantwoord is.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0024733#Artikel6
+      [ref2]: https://wetten.overheid.nl/BWBR0017959#Artikel20
+      [ref3]: https://wetten.overheid.nl/BWBR0017959#Artikel20
+      [ref4]: https://wetten.overheid.nl/BWBR0017959#Artikel9
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
     references:
       - id: ref1
@@ -308,62 +259,29 @@ articles:
         artikel: '6'
         hoofdstuk: '2'
         paragraaf: '3'
-  - number: '7.2'
-    text: 'Niet als vermogen wordt in aanmerking genomen:'
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-  - number: 7.2.a
-    text: |-
-      bezittingen in natura die naar hun aard en waarde algemeen gebruikelijk zijn dan wel, gelet op de omstandigheden
-      van persoon en gezin, noodzakelijk zijn;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-  - number: 7.2.b
-    text: |-
-      het bij de aanvang van de opvang aanwezige vermogen voor zover dit minder bedraagt dan de vermogensgrens als
-      bedoeld in [artikel 20, tweede lid, van de Rva 2005][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel20
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0017959
         artikel: '20'
-  - number: 7.2.c
-    text: |-
-      vermogen ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, tot het bedrag dat
-      het bij de aanvang van de opvang aanwezige vermogen minder bedroeg dan de vermogensgrens, bedoeld in
-      [artikel 20, tweede lid, van de Rva 2005][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel20
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0017959
         artikel: '20'
-  - number: 7.2.d
-    text: spaargelden opgebouwd tijdens de periode waarin opvang wordt geboden;
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-  - number: 7.2.e
-    text: |-
-      vergoedingen voor immateriële schade voor zover dit, gelet op de aard en de hoogte van de uitkering, vanuit een
-      oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref1], verantwoord is.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel9
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0017959
         artikel: '9'
-  - number: 7a.1
+  - number: 7a
     text: |-
-      [Artikel 1, eerste lid, onder d en f, van de Rva 2005][ref1] en
+      1 [Artikel 1, eerste lid, onder d en f, van de Rva 2005][ref1] en
       [artikel 3, tweede en derde lid van de Rva 2005][ref2] zijn van overeenkomstige toepassing.
+
+      2 Indien het college overeenkomstig
+      [artikel 22a van de Regeling verstrekkingen asielzoekers en andere categorieën 2005][ref3] een opvangvoorziening
+      exploiteert zijn de [artikelen 1 tot en met 7a, eerste lid][ref4], van toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0017959#Artikel3
+      [ref3]: https://wetten.overheid.nl/BWBR0017959#Artikel22a
+      [ref4]: https://wetten.overheid.nl/BWBR0024733#Artikel1
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7a
     references:
       - id: ref1
@@ -372,21 +290,10 @@ articles:
       - id: ref2
         bwb_id: BWBR0017959
         artikel: '3'
-  - number: 7a.2
-    text: |-
-      Indien het college overeenkomstig
-      [artikel 22a van de Regeling verstrekkingen asielzoekers en andere categorieën 2005][ref1] een opvangvoorziening
-      exploiteert zijn de [artikelen 1 tot en met 7a, eerste lid][ref2], van toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel22a
-      [ref2]: https://wetten.overheid.nl/BWBR0024733#Artikel1
-    url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel7a
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0017959
         artikel: 22a
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0024733
         artikel: '1'
         hoofdstuk: '1'
