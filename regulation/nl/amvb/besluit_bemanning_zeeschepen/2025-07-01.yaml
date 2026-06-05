@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_bemanning_zeeschepen
 regulatory_layer: AMVB
 publication_date: '2025-04-11'
@@ -47,8 +47,10 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      In dit besluit en de daarop berustende bepalingen wordt verstaan onder: - *andere polaire wateren:* polaire
-      wateren, niet zijnde wateren als bedoeld in de voorschriften 2.5 en 2.10 van de Polar-code;
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+        - *andere polaire wateren:* polaire wateren, niet zijnde wateren als bedoeld in de voorschriften 2.5 en 2.10 van de
+      Polar-code;
         - *beperkte wateren vissersvaartuigen:* gebied omvattende alle wateren tot 30 zeemijlen uit de kust, gemeten vanaf
       de Franse, Belgische, Nederlandse, Duitse en Deense basislijnen, in het zuiden begrensd door de lijn Calais-Dover
       en in het noorden begrensd door de parallel van 57° Noorderbreedte, alsmede het gebied omvattende alle wateren tot
@@ -166,37 +168,46 @@ articles:
         artikel: '7'
       - id: ref2
         bwb_id: BWBR0050681
-  - number: 1.2.1
-    text: Dit besluit is niet van toepassing ten aanzien van zeilschepen met een scheepslengte van minder dan 12 meter.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.2
-  - number: 1.2.2
+  - number: '1.2'
     text: |-
-      Dit besluit is, met uitzondering van [artikel 3.5.2][ref1] en [paragraaf 3.6][ref2] niet van toepassing ten aanzien
-      van vissersvaartuigen met een scheepslengte van minder dan 12 meter.
+      1 Dit besluit is niet van toepassing ten aanzien van zeilschepen met een scheepslengte van minder dan 12 meter.
+
+      2 Dit besluit is, met uitzondering van [artikel 3.5.2][ref1] en [paragraaf 3.6][ref2] niet van toepassing ten
+      aanzien van vissersvaartuigen met een scheepslengte van minder dan 12 meter.
+
+      3 De minimumeisen voor een functie aan boord van vissersvaartuigen met een scheepslengte van minder dan 12 meter
+      voldoen aan de bij ministeriële regeling gestelde regels.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.5.2
       [ref2]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.2
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.5.2
         hoofdstuk: '3'
         paragraaf: '3.5'
       - id: ref2
         bwb_id: BWBR0050941
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 1.2.3
-    text: |-
-      De minimumeisen voor een functie aan boord van vissersvaartuigen met een scheepslengte van minder dan 12 meter
-      voldoen aan de bij ministeriële regeling gestelde regels.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.2
   - number: '1.3'
     text: |-
       Aan een ontheffing als bedoeld in [artikel 3, eerste lid, van de wet][ref1] worden beperkingen of voorwaarden
       verbonden die ten minste zien op:
+
+      a. het specifieke doel van het experiment;
+
+      b. het nut en de noodzaak van het experiment in relatie tot aantoonbare technologische innovatie;
+
+      c. de verantwoordelijke voor de uitvoering van het experiment;
+
+      d. de noodzakelijke operationele eisen ten behoeve van de veilige uitvoering van het experiment;
+
+      e. de periode waarin het experiment zal plaatsvinden; en
+
+      f. het moment en de wijze waarop het experiment wordt geëvalueerd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel3
@@ -205,115 +216,71 @@ articles:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '3'
-  - number: 1.3.a
-    text: het specifieke doel van het experiment;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
-  - number: 1.3.b
-    text: het nut en de noodzaak van het experiment in relatie tot aantoonbare technologische innovatie;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
-  - number: 1.3.c
-    text: de verantwoordelijke voor de uitvoering van het experiment;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
-  - number: 1.3.d
-    text: de noodzakelijke operationele eisen ten behoeve van de veilige uitvoering van het experiment;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
-  - number: 1.3.e
-    text: de periode waarin het experiment zal plaatsvinden; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
-  - number: 1.3.f
-    text: het moment en de wijze waarop het experiment wordt geëvalueerd.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel1.3
   - number: 2.1.1
     text: Deze paragraaf is niet van toepassing op vissersvaartuigen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.1
-  - number: 2.1.2.1
+  - number: 2.1.2
     text: |-
-      De scheepsbeheerder dient een aanvraag voor een bemanningscertificaat in bij Onze Minister en voegt daarbij een
+      1 De scheepsbeheerder dient een aanvraag voor een bemanningscertificaat in bij Onze Minister en voegt daarbij een
       bemanningsplan voor het betrokken zeeschip of de betrokken zeeschepen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.2
-  - number: 2.1.2.2
-    text: De scheepsbeheerder kan voor een zeeschip meer dan één bemanningssamenstelling voorstellen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.2
-  - number: 2.1.2.3
-    text: Bij ministeriële regeling wordt bepaald welke gegevens ten minste in het bemanningsplan worden opgenomen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.2
-  - number: 2.1.2.4
-    text: |-
-      Een aanvraag kan worden ingediend met gebruikmaking van een bij ministeriële regeling vast te stellen format voor
+
+      2 De scheepsbeheerder kan voor een zeeschip meer dan één bemanningssamenstelling voorstellen.
+
+      3 Bij ministeriële regeling wordt bepaald welke gegevens ten minste in het bemanningsplan worden opgenomen.
+
+      4 Een aanvraag kan worden ingediend met gebruikmaking van een bij ministeriële regeling vast te stellen format voor
       een geautomatiseerd bestand.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.2
-  - number: 2.1.3.1
+  - number: 2.1.3
     text: |-
-      Onze Minister besluit tot afgifte van een bemanningscertificaat voor het betrokken zeeschip of de betrokken
+      1 Onze Minister besluit tot afgifte van een bemanningscertificaat voor het betrokken zeeschip of de betrokken
       zeeschepen, indien naar zijn oordeel met de voorgestelde bemanningssamenstelling of bemanningssamenstellingen:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.1.a
-    text: de veiligheid van het zeeschip en de veilige en milieuverantwoorde vaart zijn gewaarborgd;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.1.b
-    text: |-
-      de voor de bemanning geldende normen voor arbeids- en rusttijden niet worden overschreden en er rekening is
+
+      a. de veiligheid van het zeeschip en de veilige en milieuverantwoorde vaart zijn gewaarborgd;
+
+      b. de voor de bemanning geldende normen voor arbeids- en rusttijden niet worden overschreden en er rekening is
       gehouden met de beperking van oververmoeidheid van zeevarenden;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.1.c
-    text: |-
-      aan de eisen, bedoeld in [artikel 4, eerste lid, van de wet][ref1], kan worden voldaan; en
 
+      c. aan de eisen, bedoeld in [artikel 4, eerste lid, van de wet][ref1], kan worden voldaan; en
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel4
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '4'
-  - number: 2.1.3.1.d
-    text: |-
-      wordt voldaan aan het bij of krachtens [artikel 4, derde lid, van de wet][ref1] bepaalde.
+      d. wordt voldaan aan het bij of krachtens [artikel 4, derde lid, van de wet][ref2] bepaalde.
 
+      2 De scheepsbeheerder verstrekt desgevraagd nadere inlichtingen over het bemanningsplan.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel4
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '4'
-  - number: 2.1.3.2
-    text: De scheepsbeheerder verstrekt desgevraagd nadere inlichtingen over het bemanningsplan.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.3
-    text: |-
-      Onze Minister kan de kapitein raadplegen over de bemanningssamenstelling en het bemanningsplan alvorens te
+      3 Onze Minister kan de kapitein raadplegen over de bemanningssamenstelling en het bemanningsplan alvorens te
       besluiten omtrent de afgifte van een bemanningscertificaat.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.4
-    text: |-
-      Onze Minister kan ambtshalve de bemanningssamenstelling of bemanningssamenstellingen van het betrokken zeeschip
+
+      4 Onze Minister kan ambtshalve de bemanningssamenstelling of bemanningssamenstellingen van het betrokken zeeschip
       of de betrokken zeeschepen vaststellen en geeft dienovereenkomstig een bemanningscertificaat af, indien hij van
       oordeel is dat met de bemanningssamenstelling of bemanningssamenstellingen die door de scheepsbeheerder worden
       voorgesteld niet of niet geheel kan worden voldaan aan het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.5
-    text: |-
-      De scheepsbeheerder verschaft de kapitein een afschrift van het bemanningsplan, dat is voorzien van de
+
+      5 De scheepsbeheerder verschaft de kapitein een afschrift van het bemanningsplan, dat is voorzien van de
       eventuele aanvullende gegevens die zijn verstrekt op grond van het derde lid, en dat behoort bij het geldige
       bemanningscertificaat.
+
+      6 Een bemanningscertificaat kan worden afgegeven met gebruikmaking van een bij ministeriële regeling vast te
+      stellen format voor een geautomatiseerd bestand.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel4
+      [ref2]: https://wetten.overheid.nl/BWBR0050681#Artikel4
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.3.6
+    references:
+      - id: ref1
+        bwb_id: BWBR0050681
+        artikel: '4'
+      - id: ref2
+        bwb_id: BWBR0050681
+        artikel: '4'
+  - number: 2.1.4
     text: |-
-      Een bemanningscertificaat kan worden afgegeven met gebruikmaking van een bij ministeriële regeling vast te stellen
-      format voor een geautomatiseerd bestand.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.3
-  - number: 2.1.4.1
-    text: |-
-      Op het bemanningscertificaat worden de kenmerken van het zeeschip en, zo nodig, de bijzonderheden ten aanzien van
+      1 Op het bemanningscertificaat worden de kenmerken van het zeeschip en, zo nodig, de bijzonderheden ten aanzien van
       het gebruik van het zeeschip in relatie tot de bemanning vermeld.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.4
-  - number: 2.1.4.2
-    text: Een bemanningscertificaat wordt voor een bepaalde periode van ten hoogste vijf jaar afgegeven.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.4
-  - number: 2.1.4.3
-    text: |-
-      De kapitein draagt er zorg voor dat een kopie van het geldige bemanningscertificaat op een duidelijk zichtbare
+
+      2 Een bemanningscertificaat wordt voor een bepaalde periode van ten hoogste vijf jaar afgegeven.
+
+      3 De kapitein draagt er zorg voor dat een kopie van het geldige bemanningscertificaat op een duidelijk zichtbare
       plaats aan boord van het zeeschip wordt opgehangen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.4
   - number: 2.1.5
@@ -322,117 +289,94 @@ articles:
       duidelijk onderscheiden in het bemanningscertificaat opgenomen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.5
   - number: 2.1.6
-    text: 'Indien voor een zeeschip meer dan een bemanningssamenstelling geldt, tekent de kapitein in het scheepsdagboek aan:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.6
-  - number: 2.1.6.a
-    text: volgens welke bemanningssamenstelling het zeeschip is bemand; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.6
-  - number: 2.1.6.b
-    text: de feiten of omstandigheden die niet in overeenstemming zijn met de gegevens van het bemanningsplan.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.6
-  - number: 2.1.7.1
     text: |-
-      De scheepsbeheerder meldt aan Onze Minister alle wijzigingen van de gegevens van het bemanningsplan die hij
+      Indien voor een zeeschip meer dan een bemanningssamenstelling geldt, tekent de kapitein in het scheepsdagboek aan:
+
+      a. volgens welke bemanningssamenstelling het zeeschip is bemand; en
+
+      b. de feiten of omstandigheden die niet in overeenstemming zijn met de gegevens van het bemanningsplan.
+    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.6
+  - number: 2.1.7
+    text: |-
+      1 De scheepsbeheerder meldt aan Onze Minister alle wijzigingen van de gegevens van het bemanningsplan die hij
       voornemens is door te voeren.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.7
-  - number: 2.1.7.2
-    text: |-
-      Op grond van de nieuwe gegevens beslist Onze Minister of de bemanningssamenstelling overeenkomstig het geldige
+
+      2 Op grond van de nieuwe gegevens beslist Onze Minister of de bemanningssamenstelling overeenkomstig het geldige
       bemanningscertificaat kan worden gehandhaafd. Zo nodig trekt hij het bemanningscertificaat in en geeft een nieuw
       bemanningscertificaat af.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.7
   - number: 2.1.8
-    text: Onze Minister trekt het bemanningscertificaat in, indien is gebleken dat
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.8
-  - number: 2.1.8.a
     text: |-
-      het bemanningsplan onjuiste of onvolledige gegevens bevat, zodanig dat op grond van de juiste of volledige gegevens
-      dit bemanningscertificaat niet zou zijn afgegeven, dan wel
+      Onze Minister trekt het bemanningscertificaat in, indien is gebleken dat
+
+      a. het bemanningsplan onjuiste of onvolledige gegevens bevat, zodanig dat op grond van de juiste of volledige
+      gegevens dit bemanningscertificaat niet zou zijn afgegeven, dan wel
+
+      b. het zeeschip in strijd met de gegevens in het bemanningscertificaat wordt gebruikt en dit afwijkende gebruik
+      naar zijn redelijk oordeel een andere bemanningssamenstelling noodzakelijk maakt.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.8
-  - number: 2.1.8.b
+  - number: 2.1.9
     text: |-
-      het zeeschip in strijd met de gegevens in het bemanningscertificaat wordt gebruikt en dit afwijkende gebruik naar
-      zijn redelijk oordeel een andere bemanningssamenstelling noodzakelijk maakt.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.8
-  - number: 2.1.9.1
-    text: |-
-      Onverminderd [artikel 2.1.3, vierde lid][ref1], geeft Onze Minister ambtshalve een nieuw bemanningscertificaat
+      1 Onverminderd [artikel 2.1.3, vierde lid][ref1], geeft Onze Minister ambtshalve een nieuw bemanningscertificaat
       af voor een andere bemanningssamenstelling dan waarmee het betrokken zeeschip of de betrokken zeeschepen op grond
       van het laatst afgegeven bemanningscertificaat is of zijn bemand, indien hem is gebleken dat het voldoen aan het
       bepaalde in artikel 2.1.3, eerste lid, met dat certificaat niet langer gewaarborgd is.
 
+      2 In het geval, bedoeld in het eerste lid, nodigt Onze Minister de scheepsbeheerder uit een nieuw bemanningsplan in
+      te dienen.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.3
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.9
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.3
         hoofdstuk: '2'
         paragraaf: '2.1'
-  - number: 2.1.9.2
+  - number: 2.1.10
     text: |-
-      In het geval, bedoeld in het eerste lid, nodigt Onze Minister de scheepsbeheerder uit een nieuw bemanningsplan in
-      te dienen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.9
-  - number: 2.1.10.1
-    text: |-
-      Een regeling als bedoeld in [artikel 19, vierde lid, van de wet][ref1] bevat ten minste:
+      1 Een regeling als bedoeld in [artikel 19, vierde lid, van de wet][ref1] bevat ten minste:
 
+      a. een klachtenprocedure ten behoeve van eerste stuurlieden, respectievelijk eerste maritieme officieren die naar
+      hun oordeel op onjuiste gronden niet zijn aangesteld in de functie van kapitein van een zeeschip;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel19
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '19'
-  - number: 2.1.10.1.a
-    text: |-
-      een klachtenprocedure ten behoeve van eerste stuurlieden, respectievelijk eerste maritieme officieren die naar hun
-      oordeel op onjuiste gronden niet zijn aangesteld in de functie van kapitein van een zeeschip;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.10
-  - number: 2.1.10.1.b
-    text: |-
-      de vaststelling van de werkzaamheden van de commissie, bedoeld in [artikel 19, vijfde lid, van de wet][ref1]; en
+      b. de vaststelling van de werkzaamheden van de commissie, bedoeld in [artikel 19, vijfde lid, van de wet][ref2]; en
 
+      c. de wijze van verkrijging van bij ministeriële regeling aangegeven informatie over de arbeidsmarkt voor
+      Nederlandse zeevarenden, welke jaarlijks vóór 1 oktober aan Onze Minister moet worden verstrekt.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel19
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '19'
-  - number: 2.1.10.1.c
-    text: |-
-      de wijze van verkrijging van bij ministeriële regeling aangegeven informatie over de arbeidsmarkt voor Nederlandse
-      zeevarenden, welke jaarlijks vóór 1 oktober aan Onze Minister moet worden verstrekt.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.10
-  - number: 2.1.10.2
-    text: |-
-      Voorafgaand aan de vaststelling of wijziging van een regeling als bedoeld in
-      [artikel 19, eerste lid, van de wet][ref1] pleegt Onze Minister overleg daarover met de werkgevers- en
+      2 Voorafgaand aan de vaststelling of wijziging van een regeling als bedoeld in
+      [artikel 19, eerste lid, van de wet][ref3] pleegt Onze Minister overleg daarover met de werkgevers- en
       werknemersorganisaties in de sector koopvaardij, respectievelijk de sector zeegaande waterbouw.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel19
+      [ref2]: https://wetten.overheid.nl/BWBR0050681#Artikel19
+      [ref3]: https://wetten.overheid.nl/BWBR0050681#Artikel19
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.1.10
     references:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '19'
-  - number: 2.2.1.1
+      - id: ref2
+        bwb_id: BWBR0050681
+        artikel: '19'
+      - id: ref3
+        bwb_id: BWBR0050681
+        artikel: '19'
+  - number: 2.2.1
     text: |-
-      Een vissersvaartuig is ten minste bemand met vissers in de overeenkomstig de in de bij dit artikel behorende tabel
-      vastgestelde functies, bepaald op basis van de scheepslengte en het voortstuwingsvermogen van het vaartuig en het
-      vaargebied waarvoor een bemanningscertificaat is afgegeven.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.1
-  - number: 2.2.1.2
-    text: Een visser is in het bezit van een vaarbevoegdheidsbewijs voor de functie die hij vervult.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.1
-  - number: 2.2.1.3
-    text: |-
-      Een stuurman-werktuigkundige zeevisvaart als bedoeld in de bij dit artikel behorende tabel kan vervangen worden
+      1 Een vissersvaartuig is ten minste bemand met vissers in de overeenkomstig de in de bij dit artikel behorende
+      tabel vastgestelde functies, bepaald op basis van de scheepslengte en het voortstuwingsvermogen van het vaartuig en
+      het vaargebied waarvoor een bemanningscertificaat is afgegeven.
+
+      2 Een visser is in het bezit van een vaarbevoegdheidsbewijs voor de functie die hij vervult.
+
+      3 Een stuurman-werktuigkundige zeevisvaart als bedoeld in de bij dit artikel behorende tabel kan vervangen worden
       door een stuurman zeevisvaart en een werktuigkundige zeevisvaart.
+
+
             Vissersvaartuigen met een scheepslengte van 45 meter of meer met gecombineerde functies
 
 
@@ -616,6 +560,8 @@ articles:
 
 
 
+
+
             Vissersvaartuigen met een scheepslengte van 45 meter of meer zonder gecombineerde functies
 
 
@@ -757,6 +703,8 @@ articles:
 
 
                     3
+
+
 
 
 
@@ -990,6 +938,8 @@ articles:
 
 
 
+
+
             Vissersvaartuigen met een scheepslengte van minder dan 24 meter
 
 
@@ -1125,148 +1075,125 @@ articles:
       scheepslengte, het brutotonnage, het voortstuwingsvermogen, de wijze van voortstuwing of de bestemming van het
       vissersvaartuig daartoe aanleiding geven.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.2
-  - number: 2.2.3.1
+  - number: 2.2.3
     text: |-
-      Bij ministeriële regeling kan, na overleg met de betrokken organisaties van scheepsbeheerders en vissers, voor
+      1 Bij ministeriële regeling kan, na overleg met de betrokken organisaties van scheepsbeheerders en vissers, voor
       bepaalde categorieën vissersvaartuigen met een scheepslengte van minder dan 45 meter, vrijstelling worden verleend
       van het bepaalde in dit hoofdstuk.
+
+      2 Bij het verlenen van een vrijstelling kunnen beperkingen worden opgelegd ten aanzien van:
+
+      a. de weersomstandigheden waaronder mag worden gevaren;
+
+      b. het te bevaren vaargebied;
+
+      c. de categorie vissersvaartuigen;
+
+      d. de maximale tijd die op zee mag worden doorgebracht.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.3.2
-    text: 'Bij het verlenen van een vrijstelling kunnen beperkingen worden opgelegd ten aanzien van:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.3.2.a
-    text: de weersomstandigheden waaronder mag worden gevaren;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.3.2.b
-    text: het te bevaren vaargebied;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.3.2.c
-    text: de categorie vissersvaartuigen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.3.2.d
-    text: de maximale tijd die op zee mag worden doorgebracht.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.3
-  - number: 2.2.4.1
-    text: De scheepsbeheerder van een vissersvaartuig dient een aanvraag in voor een bemanningscertificaat bij Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.4
-  - number: 2.2.4.2
+  - number: 2.2.4
     text: |-
-      De bemanningssamenstelling op het bemanningscertificaat wordt vastgesteld met in achtneming van
+      1 De scheepsbeheerder van een vissersvaartuig dient een aanvraag in voor een bemanningscertificaat bij Onze
+      Minister.
+
+      2 De bemanningssamenstelling op het bemanningscertificaat wordt vastgesteld met in achtneming van
       [artikel 2.2.1][ref1].
 
+      3 De [artikelen 2.1.3, eerste lid][ref2], [2.1.4][ref3], [2.1.8, aanhef en onderdeel b][ref4], en
+      [2.1.9, eerste lid][ref5], zijn van overeenkomstige toepassing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+      4 Bij ministeriële regeling wordt bepaald welke gegevens ten minste bij de aanvraag worden ingediend.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2.2.1
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.3
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.4
+      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.8
+      [ref5]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.9
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.4
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.2.1
         hoofdstuk: '2'
         paragraaf: '2.2'
-  - number: 2.2.4.3
-    text: |-
-      De [artikelen 2.1.3, eerste lid][ref1], [2.1.4][ref2], [2.1.8, aanhef en onderdeel b][ref3], en
-      [2.1.9, eerste lid][ref4], zijn van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.4
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '2'
-        hoofdstuk: '2'
-        paragraaf: '2.1'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.3
         hoofdstuk: '2'
         paragraaf: '2.1'
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.4
         hoofdstuk: '2'
         paragraaf: '2.1'
       - id: ref4
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.8
         hoofdstuk: '2'
         paragraaf: '2.1'
-  - number: 2.2.4.4
-    text: Bij ministeriële regeling wordt bepaald welke gegevens ten minste bij de aanvraag worden ingediend.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.4
-  - number: 2.2.5.1
+      - id: ref5
+        bwb_id: BWBR0050941
+        artikel: 2.1.9
+        hoofdstuk: '2'
+        paragraaf: '2.1'
+  - number: 2.2.5
     text: |-
-      De scheepsbeheerder van een vissersvaartuig met een scheepslengte van 45 meter of meer kan in afwijking van
-      [artikel 2.2.4][ref1] een aanvraag voor een bemanningscertificaat bij Onze Minister indienen op grond van
+      1 De scheepsbeheerder van een vissersvaartuig met een scheepslengte van 45 meter of meer kan in afwijking
+      van [artikel 2.2.4][ref1] een aanvraag voor een bemanningscertificaat bij Onze Minister indienen op grond van
       [artikel 2.1.2][ref2].
 
+      2 De [artikelen 2.1.2][ref3], [2.1.3][ref4] en [2.1.5 tot en met 2.1.9][ref5] zijn van overeenkomstige toepassing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2.2.4
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.2
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.2
+      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.3
+      [ref5]: https://wetten.overheid.nl/BWBR0050941#Artikel2.1.5
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.5
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.2.4
         hoofdstuk: '2'
         paragraaf: '2.2'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '2'
-        hoofdstuk: '2'
-        paragraaf: '2.1'
-  - number: 2.2.5.2
-    text: |-
-      De [artikelen 2.1.2][ref1], [2.1.3][ref2] en [2.1.5 tot en met 2.1.9][ref3] zijn van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.2.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '2'
-        hoofdstuk: '2'
-        paragraaf: '2.1'
-      - id: ref2
-        bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.2
         hoofdstuk: '2'
         paragraaf: '2.1'
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.1.2
         hoofdstuk: '2'
         paragraaf: '2.1'
-  - number: 2.3.1.1
+      - id: ref4
+        bwb_id: BWBR0050941
+        artikel: 2.1.3
+        hoofdstuk: '2'
+        paragraaf: '2.1'
+      - id: ref5
+        bwb_id: BWBR0050941
+        artikel: 2.1.5
+        hoofdstuk: '2'
+        paragraaf: '2.1'
+  - number: 2.3.1
     text: |-
-      Alvorens een zeeschip voor de eerste maal naar zee vertrekt en vervolgens met tussenpozen van niet meer dan twaalf
-      maanden wordt een bemanningslijst opgemaakt.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.1
-  - number: 2.3.1.2
-    text: Bij elke wijziging in de bemanningssamenstelling wordt een bemanningslijst opgemaakt.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.1
-  - number: 2.3.1.3
-    text: |-
-      Een exemplaar van de bemanningslijst wordt door de kapitein aan boord bewaard en een exemplaar van de
+      1 Alvorens een zeeschip voor de eerste maal naar zee vertrekt en vervolgens met tussenpozen van niet meer dan
+      twaalf maanden wordt een bemanningslijst opgemaakt.
+
+      2 Bij elke wijziging in de bemanningssamenstelling wordt een bemanningslijst opgemaakt.
+
+      3 Een exemplaar van de bemanningslijst wordt door de kapitein aan boord bewaard en een exemplaar van de
       bemanningslijst wordt ten kantore van de scheepsbeheerder in Nederland bewaard en ter beschikking gehouden ten
       behoeve van het houden van toezicht door de ambtenaren, belast met het toezicht op de naleving.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.1
-  - number: 2.3.1.4
-    text: |-
-      In afwijking van het derde lid zendt de schipper van een vissersvaartuig een exemplaar van de bemanningslijst vóór
-      het vertrek of onmiddellijk na het vertrek van het vaartuig aan de scheepsbeheerder of zijn vertegenwoordiger aan
-      de wal.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.1
-  - number: 2.3.1.5
-    text: |-
-      De bemanningslijst kan worden opgemaakt met inachtneming van een bij ministeriële regeling vast te stellen format
+
+      4 In afwijking van het derde lid zendt de schipper van een vissersvaartuig een exemplaar van de bemanningslijst
+      vóór het vertrek of onmiddellijk na het vertrek van het vaartuig aan de scheepsbeheerder of zijn vertegenwoordiger
+      aan de wal.
+
+      5 De bemanningslijst kan worden opgemaakt met inachtneming van een bij ministeriële regeling vast te stellen format
       voor een geautomatiseerd bestand.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.1
   - number: 2.3.2
@@ -1277,39 +1204,31 @@ articles:
   - number: 2.3.4
     text: De scheepsbeheerder bewaart een bemanningslijst, gedurende drie jaar na de vervangingsdatum of geldigheidsdatum.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.3.4
-  - number: 2.4.1.1
+  - number: 2.4.1
     text: |-
-      De kapitein van een zeeschip, niet zijnde een vissersvaartuig, draagt er zorg voor dat voor het ondernemen van
-      een reis en gedurende de reis overeenkomstig hoofdstuk III/10 van de bijlage bij het SOLAS-verdrag voldoende
+      1 De kapitein van een zeeschip, niet zijnde een vissersvaartuig, draagt er zorg voor dat voor het ondernemen
+      van een reis en gedurende de reis overeenkomstig hoofdstuk III/10 van de bijlage bij het SOLAS-verdrag voldoende
       zeevarenden in het bezit van een bekwaamheidsbewijs reddingmiddelen dat ten minste voldoet aan voorschrift VI/2,
       eerste lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993) aan boord zijn.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.1
-  - number: 2.4.1.2
-    text: |-
-      De kapitein van elk zeeschip dat is uitgerust met snelle hulpverleningsboten draagt er zorg voor dat voor het
+
+      2 De kapitein van elk zeeschip dat is uitgerust met snelle hulpverleningsboten draagt er zorg voor dat voor het
       ondernemen van een reis en gedurende de reis voor iedere snelle hulpverleningsboot ten minste twee zeevarenden
       beschikbaar zijn die in het bezit zijn van een bekwaamheidsbewijs snelle hulpverleningsboten dat ten minste voldoet
       aan voorschrift VI/2, tweede lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.1
-  - number: 2.4.2.1
+  - number: 2.4.2
     text: |-
-      De schipper van een vissersvaartuig draagt er zorg voor dat voor het ondernemen van een reis een voldoende aantal
+      1 De schipper van een vissersvaartuig draagt er zorg voor dat voor het ondernemen van een reis een voldoende aantal
       bemanningsleden in het bezit is van een bekwaamheidsbewijs reddingmiddelen dat ten minste voldoet aan voorschrift
       VI/2, eerste lid, van de bijlage bij het STCW-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.2
-  - number: 2.4.2.2
-    text: |-
-      In afwijking van het eerste lid is een bekwaamheidsbewijs reddingmiddelen niet vereist op reizen in beperkte
+
+      2 In afwijking van het eerste lid is een bekwaamheidsbewijs reddingmiddelen niet vereist op reizen in beperkte
       wateren vissersvaartuigen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.2
-  - number: 2.4.2.3
-    text: |-
-      De schipper wijst een visser die in het bezit is van een bekwaamheidsbewijs reddingmiddelen aan die de leiding
+
+      3 De schipper wijst een visser die in het bezit is van een bekwaamheidsbewijs reddingmiddelen aan die de leiding
       heeft over de te gebruiken groepsreddingmiddelen van een vissersvaartuig.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.2
-  - number: 2.4.2.4
-    text: |-
-      De schipper wijst tevens een visser die in het bezit is van een bekwaamheidsbewijs reddingmiddelen aan als
+
+      4 De schipper wijst tevens een visser die in het bezit is van een bekwaamheidsbewijs reddingmiddelen aan als
       plaatsvervanger van de visser, bedoeld in het derde lid.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.2
   - number: 2.4.3
@@ -1317,383 +1236,294 @@ articles:
       Op een zeeschip, niet zijnde een vissersvaartuig, dat een internationale reis van meer dan 3 dagen maakt met 100 of
       meer opvarenden, is een arts aanwezig.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.3
-  - number: 2.4.4.1
+  - number: 2.4.4
     text: |-
-      Aan boord van een zeeschip waarvan de voorgeschreven bemanning uit meer dan 9 personen bestaat, is een scheepskok
+      1 Aan boord van een zeeschip waarvan de voorgeschreven bemanning uit meer dan 9 personen bestaat, is een scheepskok
       belast met het beheer en de bereiding van de voeding.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.4
-  - number: 2.4.4.2
-    text: |-
-      Onder scheepskok wordt verstaan een persoon van 18 jaar of ouder in het bezit van een bekwaamheidsbewijs scheepskok
-      dat ten minste voldoet aan voorschrift 3.2, titel 3, van de bijlage bij het MLC-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.4
-  - number: 2.4.4.3
-    text: |-
-      Onze Minister kan een vaarbevoegdheidsbewijs of bekwaamheidsbewijs, door de bevoegde autoriteiten in een
+
+      2 Onder scheepskok wordt verstaan een persoon van 18 jaar of ouder in het bezit van een bekwaamheidsbewijs
+      scheepskok dat ten minste voldoet aan voorschrift 3.2, titel 3, van de bijlage bij het MLC-verdrag.
+
+      3 Onze Minister kan een vaarbevoegdheidsbewijs of bekwaamheidsbewijs, door de bevoegde autoriteiten in een
       verdragspartij afgegeven op grond van het Verdrag inzake het diploma van bekwaamheid als scheepskok, 1946
       (Trb. 1951, 24) of van het MLC-verdrag, als gelijkwaardig aan het bekwaamheidsbewijs scheepskok erkennen.
+
+      4 Aan boord van een zeeschip waarvan de voorgeschreven bemanning uit minder dan tien personen bestaat, heeft
+      eenieder die in de kombuis levensmiddelen verwerkt een opleiding genoten of instructie gekregen op het gebied van
+      voeding, persoonlijke hygiëne en de behandeling en opslag van levensmiddelen aan boord van zeeschepen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.4
-  - number: 2.4.4.4
+  - number: 2.4.5
     text: |-
-      Aan boord van een zeeschip waarvan de voorgeschreven bemanning uit minder dan tien personen bestaat, heeft eenieder
-      die in de kombuis levensmiddelen verwerkt een opleiding genoten of instructie gekregen op het gebied van voeding,
-      persoonlijke hygiëne en de behandeling en opslag van levensmiddelen aan boord van zeeschepen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.4
-  - number: 2.4.5.1
-    text: |-
-      Aan boord van een zeeschip dat reizen onderneemt buiten het zeegebied A1, zoals omschreven in voorschrift
+      1 Aan boord van een zeeschip dat reizen onderneemt buiten het zeegebied A1, zoals omschreven in voorschrift
       2, onderdeel 12, van hoofdstuk IV van de bijlage bij het SOLAS-verdrag, is ten minste één zeevarende die als
       verantwoordelijke van de wacht, bedoeld in sectie A-VIII/2, part 4-1, van de STCW-code of, in geval van een
       vissersvaartuig, hoofdstuk II, onderdeel 4, van de bijlage bij het STCW F-verdrag, kan optreden in het bezit
       van een algemeen certificaat maritieme radiocommunicatie, afgegeven in overeenstemming met het bepaalde bij of
       krachtens het [Frequentiebesluit 2013][ref1].
 
+      2 De kapitein wijst een zeevarende, in het bezit van een algemeen certificaat maritieme radiocommunicatie aan als
+      de verantwoordelijke voor de afhandeling van radioberichtgeving tijdens noodgevallen.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032895
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0032895
-  - number: 2.4.5.2
-    text: |-
-      De kapitein wijst een zeevarende, in het bezit van een algemeen certificaat maritieme radiocommunicatie aan als de
-      verantwoordelijke voor de afhandeling van radioberichtgeving tijdens noodgevallen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.5
-  - number: 2.4.5.3
-    text: |-
-      Alle andere zeevarenden die als verantwoordelijke van de wacht kunnen optreden zijn ten minste in het bezit van
+      3 Alle andere zeevarenden die als verantwoordelijke van de wacht kunnen optreden zijn ten minste in het bezit van
       een beperkt certificaat maritieme radiocommunicatie dat is afgegeven in overeenstemming met het bepaalde bij of
-      krachtens het [Frequentiebesluit 2013][ref1].
+      krachtens het [Frequentiebesluit 2013][ref2].
+
+      4 Aan boord van een zeeschip dat uitsluitend reizen onderneemt in zeegebied A1, is ten minste één zeevarende
+      die als verantwoordelijke voor de wacht kan optreden in het bezit van het beperkt certificaat maritieme
+      radiocommunicatie, als bedoeld in het derde lid.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0032895
+      [ref2]: https://wetten.overheid.nl/BWBR0032895
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.5
     references:
       - id: ref1
         bwb_id: BWBR0032895
-  - number: 2.4.5.4
+      - id: ref2
+        bwb_id: BWBR0032895
+  - number: 2.4.6
     text: |-
-      Aan boord van een zeeschip dat uitsluitend reizen onderneemt in zeegebied A1, is ten minste één zeevarende die als
-      verantwoordelijke voor de wacht kan optreden in het bezit van het beperkt certificaat maritieme radiocommunicatie,
-      als bedoeld in het derde lid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.5
-  - number: 2.4.6.1
-    text: |-
-      De scheepsbeheerder, niet zijnde de scheepsbeheerder van een vissersvaartuig, draagt er zorg voor dat aan boord te
-      allen tijde manieren beschikbaar zijn voor een doelmatige mondelinge communicatie tussen alle bemanningsleden over
-      veiligheidsaspecten, met name dat boodschappen en instructies tijdig overkomen en juist worden begrepen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.2
-    text: |-
-      De scheepsbeheerder, niet zijnde de scheepsbeheerder van een vissersvaartuig, draagt er zorg voor dat aan boord van
-      zijn zeeschip een werktaal wordt vastgesteld die in het journaal wordt aangetekend.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3
-    text: |-
-      De scheepsbeheerder van een passagiersschip draagt er zorg voor dat een zeevarende die op de alarmrol is aangewezen
-      om de passagiers in kritieke situaties te helpen, duidelijk herkenbaar is en over voor dat doel toereikende
-      communicatieve vaardigheden beschikt, rekening houdend met een relevante en geschikte combinatie van een van de
-      volgende criteria:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3.a
-    text: |-
-      de taal of talen behorende bij de meest voorkomende nationaliteiten van de passagiers die op een bepaalde route
+      1 De scheepsbeheerder, niet zijnde de scheepsbeheerder van een vissersvaartuig, draagt er zorg voor dat aan boord
+      te allen tijde manieren beschikbaar zijn voor een doelmatige mondelinge communicatie tussen alle bemanningsleden
+      over veiligheidsaspecten, met name dat boodschappen en instructies tijdig overkomen en juist worden begrepen.
+
+      2 De scheepsbeheerder, niet zijnde de scheepsbeheerder van een vissersvaartuig, draagt er zorg voor dat aan boord
+      van zijn zeeschip een werktaal wordt vastgesteld die in het journaal wordt aangetekend.
+
+      3 De scheepsbeheerder van een passagiersschip draagt er zorg voor dat een zeevarende die op de alarmrol is
+      aangewezen om de passagiers in kritieke situaties te helpen, duidelijk herkenbaar is en over voor dat doel
+      toereikende communicatieve vaardigheden beschikt, rekening houdend met een relevante en geschikte combinatie van
+      een van de volgende criteria:
+
+      a. de taal of talen behorende bij de meest voorkomende nationaliteiten van de passagiers die op een bepaalde route
       worden vervoerd;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3.b
-    text: |-
-      de waarschijnlijkheid dat het vermogen om een Engelse basiswoordenschat te gebruiken voor elementaire instructies
-      kan dienen als een middel om te communiceren met een passagier die hulp nodig heeft, ongeacht of de passagier en de
-      zeevarende een gemeenschappelijke taal gemeen hebben;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3.c
-    text: |-
-      de mogelijke noodzaak om in een noodsituatie via enig ander middel te communiceren, bijvoorbeeld voordoen,
+
+      b. de waarschijnlijkheid dat het vermogen om een Engelse basiswoordenschat te gebruiken voor elementaire
+      instructies kan dienen als een middel om te communiceren met een passagier die hulp nodig heeft, ongeacht of de
+      passagier en de zeevarende een gemeenschappelijke taal gemeen hebben;
+
+      c. de mogelijke noodzaak om in een noodsituatie via enig ander middel te communiceren, bijvoorbeeld voordoen,
       handgebaren, of het aanduiden van de plaats waar zich instructies, verzamelplaatsen, reddingsmiddelen of
       ontsnappingsroutes bevinden, wanneer niet mondeling kan worden gecommuniceerd;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3.d
-    text: de mate waarin aan de passagiers in hun moedertaal of -talen volledige veiligheidsinstructies zijn verstrekt;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.3.e
-    text: |-
-      de talen waarin de noodinstructies tijdens een noodsituatie of oefening worden omgeroepen, teneinde de passagiers
-      vitale aanwijzingen te geven en het voor de bemanning mogelijk te maken om de passagiers bij te staan.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.6.4
-    text: |-
-      Onverminderd het eerste lid draagt de scheepsbeheerder van een olie- of chemicaliëntankschip of een
+
+      d. de mate waarin aan de passagiers in hun moedertaal of -talen volledige veiligheidsinstructies zijn verstrekt;
+
+      e. de talen waarin de noodinstructies tijdens een noodsituatie of oefening worden omgeroepen, teneinde de
+      passagiers vitale aanwijzingen te geven en het voor de bemanning mogelijk te maken om de passagiers bij te staan.
+
+      4 Onverminderd het eerste lid draagt de scheepsbeheerder van een olie- of chemicaliëntankschip of een
       vloeibaargastankschip er zorg voor dat de kapitein, de officieren en gezellen in staat zijn met elkaar te
       communiceren in één of meer gemeenschappelijke werktalen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.6
-  - number: 2.4.7.1
+  - number: 2.4.7
     text: |-
-      De scheepsbeheerder stelt een verklaring op waarin hij voor ieder onderdeel van [artikel 2.4.6][ref1] voor zover
+      1 De scheepsbeheerder stelt een verklaring op waarin hij voor ieder onderdeel van [artikel 2.4.6][ref1] voor zover
       het desbetreffende onderdeel betrekking heeft op zijn zeeschip, nauwkeurig vermeldt op welke wijze hij ten aanzien
       van zijn zeeschip uitvoering heeft gegeven aan zijn verplichtingen ingevolge dat artikel.
 
+      2 De scheepsbeheerder verschaft de kapitein een exemplaar van de verklaring.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+      3 De kapitein hangt het exemplaar van de verklaring op in een voor iedereen toegankelijke plaats.
+
+      4 De verklaring heeft een geldigheidsduur van vijf jaar.
+
+      5 In afwijking van het vierde lid heeft de verklaring voor passagiersschepen en ro-ro passagiersschepen een
+      geldigheidsduur van één jaar.
+
+      6 Bij ministeriële regeling wordt bepaald welke gegevens worden opgenomen in de verklaring.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel2.4.6
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.4.6
         hoofdstuk: '2'
         paragraaf: '2.4'
-  - number: 2.4.7.2
-    text: De scheepsbeheerder verschaft de kapitein een exemplaar van de verklaring.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
-  - number: 2.4.7.3
-    text: De kapitein hangt het exemplaar van de verklaring op in een voor iedereen toegankelijke plaats.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
-  - number: 2.4.7.4
-    text: De verklaring heeft een geldigheidsduur van vijf jaar.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
-  - number: 2.4.7.5
-    text: |-
-      In afwijking van het vierde lid heeft de verklaring voor passagiersschepen en ro-ro passagiersschepen een
-      geldigheidsduur van één jaar.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
-  - number: 2.4.7.6
-    text: Bij ministeriële regeling wordt bepaald welke gegevens worden opgenomen in de verklaring.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.7
   - number: 2.4.8
     text: |-
       De scheepsbeheerder van een vissersvaartuig draagt er zorg voor dat de schipper en dekofficieren van een
       vissersvaartuig van 24 meter of meer waarvoor een bemanningscertificaat is afgegeven voor onbeperkt vaargebied
       vissersvaartuigen, beschikken over toereikende kennis van de Engelse taal, waardoor zij in staat zijn:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.8
-  - number: 2.4.8.a
-    text: kaarten en andere zeevaartkundige publicaties te gebruiken;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.8
-  - number: 2.4.8.b
-    text: |-
-      weerkundige gegevens en berichten met betrekking tot de veiligheid en het gebruik van het vissersvaartuig te
+
+      a. kaarten en andere zeevaartkundige publicaties te gebruiken;
+
+      b. weerkundige gegevens en berichten met betrekking tot de veiligheid en het gebruik van het vissersvaartuig te
       begrijpen;
+
+      c. te communiceren met andere zeeschepen of tussen het vissersvaartuig en de autoriteiten te land;
+
+      d. de bij resolutie A.918(22) van de Internationale Maritieme Organisatie aangenomen IMO Standard Marine
+      Communication Phrases te begrijpen en te gebruiken.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.8
-  - number: 2.4.8.c
-    text: te communiceren met andere zeeschepen of tussen het vissersvaartuig en de autoriteiten te land;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.8
-  - number: 2.4.8.d
+  - number: 3.1.1
     text: |-
-      de bij resolutie A.918(22) van de Internationale Maritieme Organisatie aangenomen IMO Standard Marine Communication
-      Phrases te begrijpen en te gebruiken.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel2.4.8
-  - number: 3.1.1.1
-    text: |-
-      Een vaarbevoegdheidsbewijs voor een functie als bedoeld in [artikel 23, eerste en tweede lid, van de wet][ref1]
+      1 Een vaarbevoegdheidsbewijs voor een functie als bedoeld in [artikel 23, eerste en tweede lid, van de wet][ref1]
       wordt door Onze Minister afgegeven indien de aanvrager met de daarvoor benodigde kennisbewijzen,
       bekwaamheidsbewijzen, beroepseisen of diensttijd aantoont ten minste te voldoen aan de minimumeisen voor de
       betreffende functie:
 
+      a. genoemd in [paragraaf 3.2][ref2] voor zover het functies betreft aan boord van een zeeschip, niet zijnde een
+      zeilschip met een brutotonnage van minder dan 500 GT of een vissersvaartuig;
+
+      b. genoemd in [paragraaf 3.4][ref3] voor zover het functies betreft aan boord van een vissersvaartuig.
+
+      2 Een kennisbewijs als bedoeld in het eerste lid of bekwaamheidsbewijs voor de zeilvaart mag ten hoogste 4 jaar
+      voor de afgifte van het aangevraagde vaarbevoegdheidsbewijs zijn afgegeven.
+
+      3 Een kennisbewijs of bekwaamheidsbewijs voor de zeilvaart dat meer dan 4 jaar geleden is afgegeven geeft recht op
+      een vaarbevoegdheidsbewijs nadat de aanvrager met goed gevolg een bij ministeriële regeling vast te stellen test
+      als bedoeld in sectie A-1/11, onderdeel 3, van de STCW-code heeft afgerond.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel23
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.1
     references:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '23'
-  - number: 3.1.1.1.a
-    text: |-
-      genoemd in [paragraaf 3.2][ref1] voor zover het functies betreft aan boord van een zeeschip, niet zijnde een
-      zeilschip met een brutotonnage van minder dan 500 GT of een vissersvaartuig;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0050941
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: 3.1.1.1.b
-    text: |-
-      genoemd in [paragraaf 3.4][ref1] voor zover het functies betreft aan boord van een vissersvaartuig.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0050941
         hoofdstuk: '3'
         paragraaf: '3.4'
-  - number: 3.1.1.2
+  - number: 3.1.2
     text: |-
-      Een kennisbewijs als bedoeld in het eerste lid of bekwaamheidsbewijs voor de zeilvaart mag ten hoogste 4 jaar voor
-      de afgifte van het aangevraagde vaarbevoegdheidsbewijs zijn afgegeven.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.1
-  - number: 3.1.1.3
-    text: |-
-      Een kennisbewijs of bekwaamheidsbewijs voor de zeilvaart dat meer dan 4 jaar geleden is afgegeven geeft recht op
-      een vaarbevoegdheidsbewijs nadat de aanvrager met goed gevolg een bij ministeriële regeling vast te stellen test
-      als bedoeld in sectie A-1/11, onderdeel 3, van de STCW-code heeft afgerond.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.1
-  - number: 3.1.2.1
-    text: |-
-      Een vaarbevoegdheidsbewijs, met uitzondering van een vaarbevoegdheidsbewijs voor een gezel, is geldig tot ten
+      1 Een vaarbevoegdheidsbewijs, met uitzondering van een vaarbevoegdheidsbewijs voor een gezel, is geldig tot ten
       hoogste vijf jaar na de datum van afgifte.
+
+      2 Een vaarbevoegdheidsbewijs voor een gezel is onbeperkt geldig.
+
+      3 Een vaarbevoegdheidsbewijs waarvoor de aanvraag tot vernieuwing uiterlijk 3 maanden voor de vervaldatum van
+      het betreffende vaarbevoegdheidsbewijs wordt ingediend, heeft een geldigheidsduur van ten hoogste vijf jaar na
+      de vervaldatum.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.2
-  - number: 3.1.2.2
-    text: Een vaarbevoegdheidsbewijs voor een gezel is onbeperkt geldig.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.2
-  - number: 3.1.2.3
+  - number: 3.1.3
     text: |-
-      Een vaarbevoegdheidsbewijs waarvoor de aanvraag tot vernieuwing uiterlijk 3 maanden voor de vervaldatum van het
-      betreffende vaarbevoegdheidsbewijs wordt ingediend, heeft een geldigheidsduur van ten hoogste vijf jaar na de
-      vervaldatum.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.2
-  - number: 3.1.3.1
-    text: |-
-      Een vaarbevoegdheidsbewijs wordt vernieuwd indien de houder diensttijd heeft opgedaan in een naar het oordeel van
+      1 Een vaarbevoegdheidsbewijs wordt vernieuwd indien de houder diensttijd heeft opgedaan in een naar het oordeel van
       Onze Minister relevante functie waarvoor een vaarbevoegdheidsbewijs is vereist en die door de houder op grond van
       de aan hem toegekende bevoegdheden mocht worden vervuld, gedurende ten minste:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.1.a
-    text: 12 maanden in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing; of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.1.b
-    text: 3 maanden in de periode van 6 maanden voorafgaand aan de datum van de aanvraag tot vernieuwing.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.2
-    text: |-
-      Bij ministeriële regeling wordt voor een vaarbevoegdheidsbewijs aangegeven in welke functie of functies de vereiste
-      diensttijd moet zijn opgedaan om in aanmerking te komen voor vernieuwing, waarbij rekening wordt gehouden met de
-      volgende criteria:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.2.a
-    text: aan boord van welke categorieën zeeschepen de diensttijd moet zijn opgedaan;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.2.b
-    text: |-
-      aan boord van welke grootte, klasse of het voortstuwingsvermogen van zeeschepen de diensttijd moet zijn opgedaan,
-      en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.2.c
-    text: welke diensttijd, niet opgedaan aan boord van zeeschepen, in aanmerking wordt genomen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.3
-    text: |-
-      In afwijking van het eerste lid kan de diensttijd in een andere, bij ministeriële regeling vastgestelde, daarmee
+
+      a. 12 maanden in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing; of
+
+      b. 3 maanden in de periode van 6 maanden voorafgaand aan de datum van de aanvraag tot vernieuwing.
+
+      2 Bij ministeriële regeling wordt voor een vaarbevoegdheidsbewijs aangegeven in welke functie of functies de
+      vereiste diensttijd moet zijn opgedaan om in aanmerking te komen voor vernieuwing, waarbij rekening wordt gehouden
+      met de volgende criteria:
+
+      a. aan boord van welke categorieën zeeschepen de diensttijd moet zijn opgedaan;
+
+      b. aan boord van welke grootte, klasse of het voortstuwingsvermogen van zeeschepen de diensttijd moet zijn
+      opgedaan, en
+
+      c. welke diensttijd, niet opgedaan aan boord van zeeschepen, in aanmerking wordt genomen.
+
+      3 In afwijking van het eerste lid kan de diensttijd in een andere, bij ministeriële regeling vastgestelde, daarmee
       vergelijkbare functie worden vervuld.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.3.4
-    text: |-
-      De bevoegdheden op een te vernieuwen vaarbevoegdheidsbewijs worden op verzoek van de aanvrager gewijzigd indien de
-      aanvrager aantoont ten minste te beschikken over de daarvoor benodigde kennisbewijzen, beroepseisen of diensttijd.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
-  - number: 3.1.4.1
-    text: |-
-      Een vaarbevoegdheidsbewijs of een aanvulling daarop die niet op grond van [artikel 3.1.3][ref1] door Onze Minister
-      kan worden vernieuwd, wordt op verzoek vernieuwd indien de houder voorafgaand aan de aanvraag:
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.1'
-  - number: 3.1.4.1.a
+      4 De bevoegdheden op een te vernieuwen vaarbevoegdheidsbewijs worden op verzoek van de aanvrager gewijzigd
+      indien de aanvrager aantoont ten minste te beschikken over de daarvoor benodigde kennisbewijzen, beroepseisen of
+      diensttijd.
+    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.3
+  - number: 3.1.4
     text: |-
-      gedurende ten minste 3 maanden aaneengesloten diensttijd heeft opgedaan voorafgaand aan de datum van de aanvraag
-      tot vernieuwing in een naar het oordeel van Onze Minister relevante functie boven de sterkte voor zover de
-      geldigheid van het te vernieuwen vaarbewijs niet langer dan 5 jaar is verstreken als bedoeld in sectie A-1/11,
+      1 Een vaarbevoegdheidsbewijs of een aanvulling daarop die niet op grond van [artikel 3.1.3][ref1] door Onze
+      Minister kan worden vernieuwd, wordt op verzoek vernieuwd indien de houder voorafgaand aan de aanvraag:
+
+      a. gedurende ten minste 3 maanden aaneengesloten diensttijd heeft opgedaan voorafgaand aan de datum van de
+      aanvraag tot vernieuwing in een naar het oordeel van Onze Minister relevante functie boven de sterkte voor zover
+      de geldigheid van het te vernieuwen vaarbewijs niet langer dan 5 jaar is verstreken als bedoeld in sectie A-1/11,
       onderdeel 5, eerste zinsnede, van de STCW-code;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-  - number: 3.1.4.1.b
-    text: |-
-      gedurende ten minste 3 maanden aaneengesloten diensttijd heeft opgedaan voorafgaand aan de datum van de aanvraag
+
+      b. gedurende ten minste 3 maanden aaneengesloten diensttijd heeft opgedaan voorafgaand aan de datum van de aanvraag
       tot vernieuwing in een naar het oordeel van Onze Minister relevante maar lagere functie dan waarvoor zijn ongeldig
       geworden vaarbevoegdheidsbewijs gold voor zover de geldigheid van het te vernieuwen vaarbewijs niet langer dan
       5 jaar is verstreken en in de 30 maanden direct voor het verstrijken van het vaarbevoegdheidsbewijs ten minste 6
       maanden diensttijd is opgedaan als bedoeld in sectie A-1/11, onderdeel 5, tweede zinsnede, van de STCW-code;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-  - number: 3.1.4.1.c
-    text: |-
-      met goed gevolg een test als bedoeld in [artikel 3.1.1, derde lid][ref1], heeft afgerond; of
 
+      c. met goed gevolg een test als bedoeld in [artikel 3.1.1, derde lid][ref2], heeft afgerond; of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.1'
-  - number: 3.1.4.1.d
-    text: |-
-      in het bezit is van een geldig kennisbewijs voor de betreffende functie, bedoeld in
-      [artikel 3.1.1, eerste lid][ref1].
+      d. in het bezit is van een geldig kennisbewijs voor de betreffende functie, bedoeld in
+      [artikel 3.1.1, eerste lid][ref3].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.1'
-  - number: 3.1.4.2
-    text: |-
-      Onze Minister geeft op verzoek een tijdelijk vaarbevoegdheidsbewijs af ten behoeve van het opdoen van de
+      2 Onze Minister geeft op verzoek een tijdelijk vaarbevoegdheidsbewijs af ten behoeve van het opdoen van de
       diensttijd, bedoeld in het eerste lid, onderdeel b.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.1.3
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.1.1
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.1.1
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.4
-  - number: 3.1.5.1
+    references:
+      - id: ref1
+        bwb_id: BWBR0050941
+        artikel: 3.1.3
+        hoofdstuk: '3'
+        paragraaf: '3.1'
+      - id: ref2
+        bwb_id: BWBR0050941
+        artikel: 3.1.1
+        hoofdstuk: '3'
+        paragraaf: '3.1'
+      - id: ref3
+        bwb_id: BWBR0050941
+        artikel: 3.1.1
+        hoofdstuk: '3'
+        paragraaf: '3.1'
+  - number: 3.1.5
     text: |-
-      Een vaarbevoegdheidsbewijs of bekwaamheidsbewijs dat verloren is gegaan kan door Onze Minister tegen betaling
+      1 Een vaarbevoegdheidsbewijs of bekwaamheidsbewijs dat verloren is gegaan kan door Onze Minister tegen betaling
       worden vervangen door een duplicaat, waarvan de einddatum overeenkomt met de einddatum op het originele document.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.5
-  - number: 3.1.5.2
-    text: |-
-      Indien de aanvrager van een duplicaat aanspraak kan maken op vernieuwing van het vaarbevoegdheidsbewijs of
+
+      2 Indien de aanvrager van een duplicaat aanspraak kan maken op vernieuwing van het vaarbevoegdheidsbewijs of
       bekwaamheidsbewijs, wordt hem desgevraagd met inachtneming van [artikel 3.1.1][ref1] het vaarbevoegdheidsbewijs of
       bekwaamheidsbewijs afgegeven.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.1.1
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.5
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '3.1'
-  - number: 3.1.6.1
+  - number: 3.1.6
     text: |-
-      Een vaarbevoegdheidsbewijs kan op verzoek met gebruikmaking van een bij ministeriële regeling vast te stellen
+      1 Een vaarbevoegdheidsbewijs kan op verzoek met gebruikmaking van een bij ministeriële regeling vast te stellen
       format voor een geautomatiseerd bestand worden afgegeven.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.6
-  - number: 3.1.6.2
-    text: |-
-      Bij ministeriële regeling kunnen regels worden gesteld ten aanzien van de in [artikel 3.1.1][ref1] genoemde
+
+      2 Bij ministeriële regeling kunnen regels worden gesteld ten aanzien van de in [artikel 3.1.1][ref1] genoemde
       bescheiden als geautomatiseerde bestanden.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.1.1
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.6
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '3.1'
-  - number: 3.1.7.1
+  - number: 3.1.7
     text: |-
-      Bij ministeriële regeling wordt bepaald welke beperkingen of aanvullingen mogen worden aangebracht op een
-      vaarbevoegdheidsbewijs in verband met de aard van de lading, het soort zeeschip, het brutotonnage, het
+      1 Bij ministeriële regeling wordt bepaald welke beperkingen of aanvullingen mogen worden aangebracht op
+      een vaarbevoegdheidsbewijs in verband met de aard van de lading, het soort zeeschip, het brutotonnage, het
       voortstuwingsvermogen, het type voortstuwing, de scheepslengte of het vaargebied.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.7
-  - number: 3.1.7.2
-    text: |-
-      Onverminderd het eerste lid kunnen op een vaarbevoegdheidsbewijs voor een functie in de handelsvaart of zeilvaart
+
+      2 Onverminderd het eerste lid kunnen op een vaarbevoegdheidsbewijs voor een functie in de handelsvaart of zeilvaart
       dan wel in de zeevisvaart in elk geval de aanvullingen en beperkingen worden opgenomen die bij die functie zijn
       vermeld in de [paragrafen 3.2 tot en met 3.4][ref1].
+
+      3 Bij ministeriële regeling wordt bepaald op welke wijze de in het eerste en tweede lid, genoemde aanvullingen dan
+      wel beperkingen op vaarbevoegdheidsbewijzen worden aangebracht.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050941#Hoofdstuk3
@@ -1703,11 +1533,6 @@ articles:
         bwb_id: BWBR0050941
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: 3.1.7.3
-    text: |-
-      Bij ministeriële regeling wordt bepaald op welke wijze de in het eerste en tweede lid, genoemde aanvullingen dan
-      wel beperkingen op vaarbevoegdheidsbewijzen worden aangebracht.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.7
   - number: 3.1.8
     text: |-
       Bij ministeriële regeling worden beroepseisen als bedoeld in de [artikelen 23, eerste en tweede lid][ref1],
@@ -1729,108 +1554,84 @@ articles:
       - id: ref3
         bwb_id: BWBR0050681
         artikel: '25'
-  - number: 3.1.9.1
+  - number: 3.1.9
     text: |-
-      Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
+      1 Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
       [artikel 27, eerste lid, van de wet][ref1] dat op grond van het STCW-verdrag is afgegeven door of namens een
       bevoegde autoriteit van een Lidstaat van de Europese Unie of een andere staat die partij is bij de Overeenkomst
       betreffende de Europese Economische Ruimte of Zwitserland en met deze Lidstaat of andere staat een officiële
       verklaring is opgesteld als bedoeld in artikel 6, tweede lid van [richtlijn (EU) 2022/993](32022L0993).
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel27
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.9
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '27'
-  - number: 3.1.9.2
-    text: |-
-      Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
-      [artikel 27, eerste lid, van de wet][ref1] dat op grond van het STCW-verdrag is afgegeven door een bevoegde
+      2 Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
+      [artikel 27, eerste lid, van de wet][ref2] dat op grond van het STCW-verdrag is afgegeven door een bevoegde
       autoriteit van een staat, niet zijnde een Lidstaat van de Europese Unie, een andere staat die partij is
       bij de Overeenkomst betreffende de Europese Economische Ruimte of Zwitserland, indien ten aanzien van dat
       vaarbevoegdheidsbewijs of bekwaamheidsbewijs is voldaan aan de criteria, bedoeld in artikel 20, tweede tot en met
       zesde lid, van [richtlijn (EU) 2022/993](32022L0993)en met deze andere staat een officiële verklaring is opgesteld
       als bedoeld in voorschrift I/10 van de bijlage bij het STCW-verdrag.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel27
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.9
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '27'
-  - number: 3.1.9.3
-    text: |-
-      Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
-      [artikel 27, eerste lid, van de wet][ref1] dat is afgegeven door een bevoegde autoriteit van een staat die partij
+      3 Onze Minister erkent een vaarbevoegdheidsbewijs of een bekwaamheidsbewijs als bedoeld in
+      [artikel 27, eerste lid, van de wet][ref3] dat is afgegeven door een bevoegde autoriteit van een staat die partij
       is bij het STCW F-verdrag, indien wordt voldaan aan de vereisten van bekwaamheid, afgifte en erkenning, bedoeld in
       voorschrift 7 van de bijlage bij het STCW F-verdrag.
 
+      4 Onze Minister is bevoegd aan de tot het verstrekken en ontvangen van informatie bevoegde autoriteit van
+      een lidstaat van de Europese Unie, een andere staat die partij is bij de Overeenkomst betreffende de Europese
+      Economische Ruimte, het STCW-verdrag of het STCW F-verdrag, informatie te verstrekken en van deze te ontvangen
+      omtrent de erkenning van een vaarbevoegdheidsbewijs op grond van het STCW-verdrag of het STCW F-verdrag.
+
+      5 Bij ministeriële regeling wordt bepaald welke bescheiden worden overlegd bij een aanvraag om erkenning van een
+      vaarbevoegdheidsbewijs of bekwaamheidsbewijs.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel27
+      [ref2]: https://wetten.overheid.nl/BWBR0050681#Artikel27
+      [ref3]: https://wetten.overheid.nl/BWBR0050681#Artikel27
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.9
     references:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '27'
-  - number: 3.1.9.4
+      - id: ref2
+        bwb_id: BWBR0050681
+        artikel: '27'
+      - id: ref3
+        bwb_id: BWBR0050681
+        artikel: '27'
+  - number: 3.1.10
     text: |-
-      Onze Minister is bevoegd aan de tot het verstrekken en ontvangen van informatie bevoegde autoriteit van een
-      lidstaat van de Europese Unie, een andere staat die partij is bij de Overeenkomst betreffende de Europese
-      Economische Ruimte, het STCW-verdrag of het STCW F-verdrag, informatie te verstrekken en van deze te ontvangen
-      omtrent de erkenning van een vaarbevoegdheidsbewijs op grond van het STCW-verdrag of het STCW F-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.9
-  - number: 3.1.9.5
-    text: |-
-      Bij ministeriële regeling wordt bepaald welke bescheiden worden overlegd bij een aanvraag om erkenning van een
-      vaarbevoegdheidsbewijs of bekwaamheidsbewijs.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.9
-  - number: 3.1.10.1
-    text: |-
-      Voor de erkenning van een vaarbevoegdheidsbewijs als kapitein of schipper op grond van
+      1 Voor de erkenning van een vaarbevoegdheidsbewijs als kapitein of schipper op grond van
       [artikel 27, eerste lid, van de wet][ref1] legt de aanvrager het bekwaamheidsbewijs wetgeving en openbaar gezag
       over.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel27
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0050681
-        artikel: '27'
-  - number: 3.1.10.2
-    text: |-
-      Zeevarenden in het bezit van een vaarbevoegdheidsbewijs voor de functie van eerste stuurman, plaatsvervangend
+      2 Zeevarenden in het bezit van een vaarbevoegdheidsbewijs voor de functie van eerste stuurman, plaatsvervangend
       schipper, hoofdwerktuigkundige, tweede werktuigkundige of eerste maritiem officier dat erkend is op grond van
-      [artikel 27, eerste lid, van de wet][ref1], nemen voor aanvang van hun dienst aan boord kennis van de voor het in
+      [artikel 27, eerste lid, van de wet][ref2], nemen voor aanvang van hun dienst aan boord kennis van de voor het in
       het eerste lid genoemde bekwaamheidsbewijs van belang zijnde maritieme regelgeving. Van deze kennisneming wordt
       schriftelijk bewijs vastgelegd.
 
+      3 Bij ministeriële regeling worden de beroepseisen vastgesteld voor de verkrijging van het in het eerste lid
+      genoemde bekwaamheidsbewijs.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel27
+      [ref2]: https://wetten.overheid.nl/BWBR0050681#Artikel27
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.10
     references:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '27'
-  - number: 3.1.10.3
-    text: |-
-      Bij ministeriële regeling worden de beroepseisen vastgesteld voor de verkrijging van het in het eerste lid genoemde
-      bekwaamheidsbewijs.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.10
+      - id: ref2
+        bwb_id: BWBR0050681
+        artikel: '27'
   - number: 3.1.11
-    text: 'Onze Minister aanvaardt:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.11
-  - number: 3.1.11.a
     text: |-
-      een vaarbevoegdheidsbewijs voor de functie van gezel dat is afgeven door een staat die als verdragspartij is bij
+      Onze Minister aanvaardt:
+
+      a. een vaarbevoegdheidsbewijs voor de functie van gezel dat is afgeven door een staat die als verdragspartij is bij
       het STCW-verdrag;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.1.11
-  - number: 3.1.11.b
-    text: |-
-      een bekwaamheidsbewijs, niet zijnde een bekwaamheidsbewijs als bedoeld in
+
+      b. een bekwaamheidsbewijs, niet zijnde een bekwaamheidsbewijs als bedoeld in
       [artikel 27, eerste lid, van de wet][ref1], dat is afgegeven door de bevoegde autoriteit van een andere lidstaat
       van de Europese Unie, een andere staat die partij is bij de Overeenkomst betreffende de Europese Ruimte of
       Zwitserland of door een andere staat die verdragspartij is bij het STCW-verdrag.
@@ -1842,11 +1643,14 @@ articles:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '27'
-  - number: 3.2.1.1
+  - number: 3.2.1
     text: |-
-      Deze paragraaf bevat de minimumeisen die recht geven op een vaarbevoegdheidsbewijs of bekwaamheidsbewijs
+      1 Deze paragraaf bevat de minimumeisen die recht geven op een vaarbevoegdheidsbewijs of bekwaamheidsbewijs
       voor een functie aan boord van een zeeschip, niet zijnde een vissersvaartuig, als bedoeld in
       [artikel 23, eerste lid, aanhef en onderdeel a, en tweede lid, van de wet][ref1].
+
+      2 Bij ministeriële regeling worden regels gesteld met betrekking tot de minimumeisen voor een functie aan boord van
+      een zeilschip van minder dan 500 GT.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel23
@@ -1855,11 +1659,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '23'
-  - number: 3.2.1.2
-    text: |-
-      Bij ministeriële regeling worden regels gesteld met betrekking tot de minimumeisen voor een functie aan boord van
-      een zeilschip van minder dan 500 GT.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.1
   - number: 3.2.2
     text: |-
       Een wachtstuurman van een zeeschip is in het bezit van een vaarbevoegdheidsbewijs dat ten minste voldoet aan
@@ -1889,26 +1688,22 @@ articles:
       vaarbevoegdheidsbewijs dat ten minste voldoet aan voorschrift II/3, tweede lid, van bijlage I bij [richtlijn (EU)
       2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.6
-  - number: 3.2.7.1
+  - number: 3.2.7
     text: |-
-      Een wachtstuurman van een zeeschip met een brutotonnage van minder dan 500 GT dat wordt gebruikt voor reizen nabij
-      de kust, is in het bezit van een vaarbevoegdheidsbewijs dat ten minste voldoet aan voorschrift II/3, vierde lid,
-      van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.7
-  - number: 3.2.7.2
-    text: |-
-      Bij ministeriële regeling kan vrijstelling worden verleend van onderdelen van sectie-II/3 van de STCW-code
+      1 Een wachtstuurman van een zeeschip met een brutotonnage van minder dan 500 GT dat wordt gebruikt voor reizen
+      nabij de kust, is in het bezit van een vaarbevoegdheidsbewijs dat ten minste voldoet aan voorschrift II/3, vierde
+      lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
+
+      2 Bij ministeriële regeling kan vrijstelling worden verleend van onderdelen van sectie-II/3 van de STCW-code
       overeenkomstig voorschrift II/3, zevende lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.7
-  - number: 3.2.8.1
+  - number: 3.2.8
     text: |-
-      Een kapitein van een zeeschip met een brutotonnage van minder dan 500 GT dat wordt gebruikt voor reizen nabij de
+      1 Een kapitein van een zeeschip met een brutotonnage van minder dan 500 GT dat wordt gebruikt voor reizen nabij de
       kust, is in het bezit van een vaarbevoegdheidsbewijs dat ten minste voldoet aan voorschrift II/3, zesde lid, van
       bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.8
-  - number: 3.2.8.2
-    text: |-
-      Bij ministeriële regeling kan vrijstelling worden verleend van onderdelen van sectie-II/3 van de STCW-code
+
+      2 Bij ministeriële regeling kan vrijstelling worden verleend van onderdelen van sectie-II/3 van de STCW-code
       overeenkomstig voorschrift II/3, zevende lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.8
   - number: 3.2.9
@@ -2003,132 +1798,99 @@ articles:
       voldaan wordt aan de voor die functie gestelde minimumeisen en die recht geven op een vaarbevoegdheidsbewijs of
       bekwaamheidsbewijs voor de betreffende functie.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.2.23
-  - number: 3.3.1.1
+  - number: 3.3.1
     text: |-
-      Een zeevarende aan wie speciale taken en verantwoordelijkheden zijn opgedragen met betrekking tot de lading en
+      1 Een zeevarende aan wie speciale taken en verantwoordelijkheden zijn opgedragen met betrekking tot de lading en
       de daarbij behorende uitrusting van een olie- of chemicaliëntankschip, is in het bezit van een bekwaamheidsbewijs
       basis ladingbehandeling olie- en chemicaliëntankschepen dat ten minste voldoet aan voorschrift V/1-1, tweede lid,
       van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.1.2
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of zeevarende
-      die rechtstreeks verantwoordelijk is voor het laden, lossen, de te nemen voorzorgsmaatregelen tijdens de reis,
-      de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de lading van een
-      olietankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling olietankschepen voor gevorderden dat
-      ten minste voldoet aan voorschrift V/1-1, vierde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.1.3
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of zeevarende
-      die rechtstreeks verantwoordelijk is voor het laden, lossen, de te nemen voorzorgsmaatregelen tijdens de reis,
-      de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de lading van een
-      chemicaliëntankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling chemicaliëntankschepen voor
+
+      2 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of
+      zeevarende die rechtstreeks verantwoordelijk is voor het laden, lossen, de te nemen voorzorgsmaatregelen tijdens de
+      reis, de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de lading van
+      een olietankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling olietankschepen voor gevorderden
+      dat ten minste voldoet aan voorschrift V/1-1, vierde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
+
+      3 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of
+      zeevarende die rechtstreeks verantwoordelijk is voor het laden, lossen, de te nemen voorzorgsmaatregelen tijdens de
+      reis, de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de lading van
+      een chemicaliëntankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling chemicaliëntankschepen voor
       gevorderden dat ten minste voldoet aan voorschrift V/1-1, zesde lid, van bijlage I bij [richtlijn (EU) 2022/993]
       (32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.1.4
-    text: |-
-      Een in het eerste tot en met derde lid bedoeld bekwaamheidsbewijs van een kapitein, hoofdwerktuigkundige, eerste
+
+      4 Een in het eerste tot en met derde lid bedoeld bekwaamheidsbewijs van een kapitein, hoofdwerktuigkundige, eerste
       stuurman, tweede werktuigkundige, of eerste maritiem officier wordt op verzoek vernieuwd indien de houder:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.1.4.a
-    text: |-
-      in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing ten minste 3 maanden heeft
+
+      a. in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing ten minste 3 maanden heeft
       dienstgedaan op een bij ministeriële regeling voorgeschreven type tankschip; of
+
+      b. in bezit is van een bekwaamheidsbewijs ten bewijze van het gevolgd hebben van een passende herhalingstraining
+      die ten minste voldoet aan voorschrift V/1-1 van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.1.4.b
+  - number: 3.3.2
     text: |-
-      in bezit is van een bekwaamheidsbewijs ten bewijze van het gevolgd hebben van een passende herhalingstraining die
-      ten minste voldoet aan voorschrift V/1-1 van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.1
-  - number: 3.3.2.1
-    text: |-
-      Een zeevarende aan wie speciale taken en verantwoordelijkheden zijn opgedragen met betrekking tot de lading en
+      1 Een zeevarende aan wie speciale taken en verantwoordelijkheden zijn opgedragen met betrekking tot de lading en
       de daarbij behorende uitrusting van een vloeibaargastankschip, is in het bezit van een bekwaamheidsbewijs basis
       ladingbehandeling gastankschepen dat ten minste voldoet aan voorschrift V/1-2, tweede lid, van bijlage I bij
       [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.2
-  - number: 3.3.2.2
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of zeevarende
-      die rechtstreeks verantwoordelijkheid is voor het laden, lossen, de te nemen voorzorgsmaatregelen tijdens de reis,
-      de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de lading van een
-      vloeibaargastankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling gastankschepen voor gevorderden
-      dat ten minste voldoet aan voorschrift V/1-2, vierde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.2
-  - number: 3.3.2.3
-    text: |-
-      Een in het eerste en tweede lid bedoeld bekwaamheidsbewijs van een kapitein, hoofdwerktuigkundige, eerste stuurman,
-      tweede werktuigkundige of eerste maritiem officier wordt op verzoek vernieuwd indien de houder:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.2
-  - number: 3.3.2.3.a
-    text: |-
-      in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing ten minste 3 maanden heeft
+
+      2 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of
+      zeevarende die rechtstreeks verantwoordelijkheid is voor het laden, lossen, de te nemen voorzorgsmaatregelen
+      tijdens de reis, de behandeling van de lading, het reinigen van tanks of andere werkzaamheden met betrekking tot de
+      lading van een vloeibaargastankschip, is in het bezit van een bekwaamheidsbewijs ladingbehandeling gastankschepen
+      voor gevorderden dat ten minste voldoet aan voorschrift V/1-2, vierde lid, van bijlage I bij [richtlijn (EU)
+      2022/993](32022L0993).
+
+      3 Een in het eerste en tweede lid bedoeld bekwaamheidsbewijs van een kapitein, hoofdwerktuigkundige, eerste
+      stuurman, tweede werktuigkundige of eerste maritiem officier wordt op verzoek vernieuwd indien de houder:
+
+      a. in de periode van 5 jaar voorafgaand aan de datum van de aanvraag tot vernieuwing ten minste 3 maanden heeft
       dienstgedaan op een bij ministeriële regeling voorgeschreven type tankschip; of
+
+      b. in bezit is van een bekwaamheidsbewijs ten bewijze van het gevolgd hebben van een passende herhalingstraining
+      die ten minste voldoet aan voorschrift V/1-2 van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.2
-  - number: 3.3.2.3.b
+  - number: 3.3.3
     text: |-
-      in bezit is van een bekwaamheidsbewijs ten bewijze van het gevolgd hebben van een passende herhalingstraining die
-      ten minste voldoet aan voorschrift V/1-2 van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.2
-  - number: 3.3.3.1
-    text: |-
-      Een zeevarende van een passagiersschip die in overeenstemming met zijn functie of werkzaamheden en
+      1 Een zeevarende van een passagiersschip die in overeenstemming met zijn functie of werkzaamheden en
       verantwoordelijkheden vertrouwd is met noodsituaties aan boord van dat passagiersschip, is in het bezit van een
       schriftelijk bewijs dat hij geoefend is in familiarisatie voor noodsituaties aan boord van passagiersschepen als
       bedoeld in voorschrift V/2, vijfde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.2
-    text: |-
-      Een zeevarende die in de passagiersruimten van een passagiersschip direct bij de dienstverlening aan passagiers in
-      passagiersruimten is betrokken, is in het bezit van een schriftelijk bewijs dat hij geoefend is in dienstverlening
-      aan passagiers aan boord van dat zeeschip dat ten minste voldoet aan voorschrift V/2, zesde lid, van bijlage I bij
-      [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.3
-    text: |-
-      Een kapitein, officier of zeevarende die in de alarmrol is belast met de hulpverlening aan passagiers van
+
+      2 Een zeevarende die in de passagiersruimten van een passagiersschip direct bij de dienstverlening aan
+      passagiers in passagiersruimten is betrokken, is in het bezit van een schriftelijk bewijs dat hij geoefend is in
+      dienstverlening aan passagiers aan boord van dat zeeschip dat ten minste voldoet aan voorschrift V/2, zesde lid,
+      van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
+
+      3 Een kapitein, officier of zeevarende die in de alarmrol is belast met de hulpverlening aan passagiers van
       een passagiersschip, is in het bezit van een bekwaamheidsbewijs of schriftelijk bewijs dat hij geoefend is in
       groepsbegeleiding dat ten minste voldoet aan voorschrift V/2, zevende lid, van bijlage I bij [richtlijn (EU)
       2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.4
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of zeevarende
-      die in de alarmrol is aangewezen en verantwoordelijkheid draagt voor de veiligheid van passagiers in noodsituaties
-      van een passagiersschip, is in het bezit van een bekwaamheidsbewijs of schriftelijk bewijs crisisbeheersing
-      en menselijk gedrag dat ten minste voldoet aan voorschrift V/2, achtste lid, van bijlage I bij [richtlijn (EU)
+
+      4 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of
+      zeevarende die in de alarmrol is aangewezen en verantwoordelijkheid draagt voor de veiligheid van passagiers
+      in noodsituaties van een passagiersschip, is in het bezit van een bekwaamheidsbewijs of schriftelijk bewijs
+      crisisbeheersing en menselijk gedrag dat ten minste voldoet aan voorschrift V/2, achtste lid, van bijlage I bij
+      [richtlijn (EU) 2022/993](32022L0993).
+
+      5 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of
+      zeevarende die directe verantwoordelijkheid draagt voor het aan en van boord gaan van passagiers, het laden, lossen
+      of veilig stuwen van de lading of het sluiten van openingen in de romp van een ro-ro-passagierschip, is in het
+      bezit van een bekwaamheidsbewijs of schriftelijk bewijs passagiersveiligheid, ladingveiligheid en waterdichtheid
+      van de scheepsromp dat ten minste voldoet aan voorschrift V/2, negende lid, van bijlage I bij [richtlijn (EU)
       2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.5
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, eerste maritiem officier of zeevarende
-      die directe verantwoordelijkheid draagt voor het aan en van boord gaan van passagiers, het laden, lossen of veilig
-      stuwen van de lading of het sluiten van openingen in de romp van een ro-ro-passagierschip, is in het bezit van
-      een bekwaamheidsbewijs of schriftelijk bewijs passagiersveiligheid, ladingveiligheid en waterdichtheid van de
-      scheepsromp dat ten minste voldoet aan voorschrift V/2, negende lid, van bijlage I bij [richtlijn (EU) 2022/993]
-      (32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.6
-    text: |-
-      Een zeevarende als bedoeld in het eerste tot en met het vijfde lid toont door middel van schriftelijk bewijs, met
+
+      6 Een zeevarende als bedoeld in het eerste tot en met het vijfde lid toont door middel van schriftelijk bewijs, met
       tussenpozen van niet meer dan 5 jaar, aan:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.6.a
-    text: in de voorgaande periode van 5 jaar ten minste 12 maanden dienst te hebben gedaan op een passagiersschip;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.6.b
-    text: in de voorgaande periode van 6 maanden ten minste 3 maanden dienst te hebben gedaan op een passagiersschip; of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.6.c
-    text: |-
-      met goed gevolg te hebben deelgenomen aan een passende herhalingstraining die ten minste voldoet aan voorschrift
+
+      a. in de voorgaande periode van 5 jaar ten minste 12 maanden dienst te hebben gedaan op een passagiersschip;
+
+      b. in de voorgaande periode van 6 maanden ten minste 3 maanden dienst te hebben gedaan op een passagiersschip; of
+
+      c. met goed gevolg te hebben deelgenomen aan een passende herhalingstraining die ten minste voldoet aan voorschrift
       V/2, vierde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.3
-  - number: 3.3.3.7
-    text: |-
-      In plaats van een bekwaamheidsbewijs of schriftelijk bewijs als bedoeld in het vierde of vijfde lid
+
+      7 In plaats van een bekwaamheidsbewijs of schriftelijk bewijs als bedoeld in het vierde of vijfde lid
       kan worden volstaan met een aantekening van de door de zeevarende gevolgde training in het krachtens
       [artikel 5, eerste lid, van de wet][ref1] bij te houden overzicht.
 
@@ -2139,237 +1901,193 @@ articles:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '5'
-  - number: 3.3.4.1
+  - number: 3.3.4
     text: |-
-      Een zeevarende van een zeeschip dat is onderworpen aan de IGF-code is op passende wijze vertrouwd gemaakt met het
+      1 Een zeevarende van een zeeschip dat is onderworpen aan de IGF-code is op passende wijze vertrouwd gemaakt met het
       zeeschip en de uitrusting als bedoeld in voorschrift V/3, derde lid, van bijlage I bij [richtlijn (EU) 2022/993]
       (32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.4
-  - number: 3.3.4.2
-    text: |-
-      Een zeevarende die is belast met aangewezen veiligheidstaken die verband houden met de zorg voor, het gebruik
+
+      2 Een zeevarende die is belast met aangewezen veiligheidstaken die verband houden met de zorg voor, het gebruik
       van of de noodrespons ten aanzien van de brandstof van een zeeschip dat is onderworpen aan de IGF-code, is in het
       bezit van een bekwaamheidsbewijs basistraining IGF-code dat ten minste voldoet aan voorschrift V/3, vijfde lid, van
       bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.4
-  - number: 3.3.4.3
-    text: |-
-      Een kapitein, hoofdwerktuigkundige, tweede werktuigkundige, werktuigkundige, maritiem officier, eerste
+
+      3 Een kapitein, hoofdwerktuigkundige, tweede werktuigkundige, werktuigkundige, maritiem officier, eerste
       maritiem officier of zeevarende die rechtstreeks is belast met de zorg voor en het gebruik van brandstoffen en
       brandstofsystemen van een zeeschip dat is onderworpen aan de IGF-code, is in het bezit van een bekwaamheidsbewijs
       gevorderdentraining IGF-code dat ten minste voldoet aan voorschrift V/3, achtste lid, van bijlage I bij [richtlijn
       (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.4
-  - number: 3.3.4.4
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het tweede of derde lid wordt op verzoek vernieuwd indien de houder aantoont
-      dat hij gedurende vijf jaar voorafgaand aan de vernieuwing ten minste drie maanden relevante diensttijd heeft
-      opgedaan of met goed gevolg heeft deelgenomen aan een passende herhalingstraining die voldoet aan voorschrift V/3,
-      elfde lid, van bijlage I bij [richtlijn (EU)2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.4
-  - number: 3.3.4.5
-    text: |-
-      Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot de beroepsvereisten van
+
+      4 Een bekwaamheidsbewijs als bedoeld in het tweede of derde lid wordt op verzoek vernieuwd indien de houder
+      aantoont dat hij gedurende vijf jaar voorafgaand aan de vernieuwing ten minste drie maanden relevante diensttijd
+      heeft opgedaan of met goed gevolg heeft deelgenomen aan een passende herhalingstraining die voldoet aan voorschrift
+      V/3, elfde lid, van bijlage I bij [richtlijn (EU)2022/993](32022L0993).
+
+      5 Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot de beroepsvereisten van
       zeevarenden die varen op een met gas of brandstof met een laag vlampunt aangedreven zeeschip van minder dan 500 GT,
       niet zijnde een passagiersschip, bedoeld in de IGF-Code.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.4
-  - number: 3.3.5.1
+  - number: 3.3.5
     text: |-
-      Een kapitein, eerste stuurman, wachtstuurman, eerste maritiem officier of maritiem officier van een tankschip of
-      een passagiersschip dat in open polaire wateren vaart is in het bezit van een bekwaamheidsbewijs basistraining
+      1 Een kapitein, eerste stuurman, wachtstuurman, eerste maritiem officier of maritiem officier van een tankschip
+      of een passagiersschip dat in open polaire wateren vaart is in het bezit van een bekwaamheidsbewijs basistraining
       Polar-code, dat ten minste voldoet aan voorschrift V/4, eerste lid, van bijlage I bij [richtlijn (EU) 2022/993]
       (32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.2
-    text: |-
-      Een kapitein, eerste stuurman of eerste maritiem officier van een zeeschip dat in andere polaire wateren vaart is
+
+      2 Een kapitein, eerste stuurman of eerste maritiem officier van een zeeschip dat in andere polaire wateren vaart is
       in het bezit van een bekwaamheidsbewijs gevorderdentraining Polar-code, dat ten minste voldoet aan voorschrift V/4,
       derde lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.3
-    text: |-
-      Een wachtstuurman of maritiem officier van een zeeschip dat in andere polaire wateren vaart is in het bezit van een
-      bekwaamheidsbewijs basistraining Polar-code, als bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.4
-    text: |-
-      Een zeevarende van een zeeschip dat in polaire wateren vaart, is bekend met de apparatuur en de werkprocedures
+
+      3 Een wachtstuurman of maritiem officier van een zeeschip dat in andere polaire wateren vaart is in het bezit van
+      een bekwaamheidsbewijs basistraining Polar-code, als bedoeld in het eerste lid.
+
+      4 Een zeevarende van een zeeschip dat in polaire wateren vaart, is bekend met de apparatuur en de werkprocedures
       opgenomen in het operationeel handboek polaire wateren, bedoeld in hoofdstuk 2 van de Polar-code.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.5
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
+
+      5 Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
       afgifte.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.6
-    text: 'Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid wordt op verzoek vernieuwd indien de houder:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.6.a
-    text: |-
-      in de periode van 5 jaar voorafgaand aan de datum van vernieuwing ten minste 2 maanden heeft dienstgedaan in een
+
+      6 Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid wordt op verzoek vernieuwd indien de houder:
+
+      a. in de periode van 5 jaar voorafgaand aan de datum van vernieuwing ten minste 2 maanden heeft dienstgedaan in een
       functie waarvoor het bezit van dat bekwaamheidsbewijs;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.6.b
-    text: |-
-      ervaring heeft opgedaan in een relevante functie waarbij de opgedane ervaring als gelijkwaardig kan worden
+
+      b. ervaring heeft opgedaan in een relevante functie waarbij de opgedane ervaring als gelijkwaardig kan worden
       beschouwd als bedoeld in sectie A-I/11, onderdeel 4, onderdeel 2, van de STCW-code; of
+
+      c. met goed gevolg een training voor het bekwaamheidsbewijs heeft afgerond.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.5.6.c
-    text: met goed gevolg een training voor het bekwaamheidsbewijs heeft afgerond.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.5
-  - number: 3.3.6.1
+  - number: 3.3.6
     text: |-
-      Een zeevarende die op grond van paragraaf 12.3.2 van de Polar-code is belast met de uitvoering van paragraaf
+      1 Een zeevarende die op grond van paragraaf 12.3.2 van de Polar-code is belast met de uitvoering van paragraaf
       12.3.1 van de Polar-code is ten minste in het bezit van een geldig vaarbevoegdheidsbewijs als eerste stuurman
       of eerste maritiem officier voor het zeeschip waarop gevaren wordt en is in het bezit van een bekwaamheidsbewijs
       gevorderdentraining Polar-code als bedoeld in [artikel 3.3.5, tweede lid][ref1].
 
+      2 [Artikel 3.3.5, vijfde en zesde lid][ref2], is van overeenkomstige toepassing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.6
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.3'
-  - number: 3.3.6.2
-    text: |-
-      [Artikel 3.3.5, vijfde en zesde lid][ref1], is van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.6
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.3'
-  - number: 3.3.7.1
-    text: |-
-      [Artikel 3.3.5, eerste lid][ref1], is niet van toepassing op een kapitein, eerste stuurman, wachtstuurman, eerste
-      maritiem officier of maritiem officier van een tankschip of een passagiersschip, dat in open polaire wateren
-      vaart indien hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld in
-      [artikel 3.3.6][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.7
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.5
         hoofdstuk: '3'
         paragraaf: '3.3'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.5
         hoofdstuk: '3'
         paragraaf: '3.3'
-  - number: 3.3.7.2
+  - number: 3.3.7
     text: |-
-      [Artikel 3.3.5, tweede en derde lid][ref1], is niet van toepassing op een kapitein, eerste stuurman, wachtstuurman,
-      eerste maritiem officier of maritiem officier van een tankschip of een passagiersschip dat in bergy wateren
-      vaart, indien hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld in
-      [artikel 3.3.6][ref2].
+      1 [Artikel 3.3.5, eerste lid][ref1], is niet van toepassing op een kapitein, eerste stuurman, wachtstuurman,
+      eerste maritiem officier of maritiem officier van een tankschip of een passagiersschip, dat in open polaire
+      wateren vaart indien hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld
+      in [artikel 3.3.6][ref2].
 
+      2 [Artikel 3.3.5, tweede en derde lid][ref3], is niet van toepassing op een kapitein, eerste stuurman,
+      wachtstuurman, eerste maritiem officier of maritiem officier van een tankschip of een passagiersschip dat in bergy
+      wateren vaart, indien hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld
+      in [artikel 3.3.6][ref4].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.7
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.3'
-      - id: ref2
-        bwb_id: BWBR0050941
-        artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '3.3'
-  - number: 3.3.7.3
-    text: |-
-      [Artikel 3.3.5, tweede lid][ref1], is niet van toepassing op een kapitein, eerste stuurman of eerste maritiem
+      3 [Artikel 3.3.5, tweede lid][ref5], is niet van toepassing op een kapitein, eerste stuurman of eerste maritiem
       officier van een tankschip of een passagiersschip dat in andere polaire wateren dan bergy wateren vaart
       indien hij in het bezit is van een bekwaamheidsbewijs basistraining Polar-code, als bedoeld in artikel 3.3.5,
       eerste lid, en hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld in
-      [artikel 3.3.6][ref2].
+      [artikel 3.3.6][ref6].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.6
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.6
+      [ref5]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref6]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.6
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.7
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.5
         hoofdstuk: '3'
         paragraaf: '3.3'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.6
         hoofdstuk: '3'
         paragraaf: '3.3'
-  - number: 3.3.8.1
-    text: |-
-      [Artikel 3.3.5, tweede en derde lid][ref1], is niet van toepassing op een kapitein, eerste stuurman, wachtstuurman,
-      eerste maritiem officier of maritiem officier van een zeeschip, niet zijnde een tankschip of een passagiersschip
-      dat in andere polaire wateren vaart met een ijsconcentratie van twee tiende of minder, als bedoeld in voorschrift
-      12.3.2, onderdelen 4 en 5, van de Polar-code indien hij tijdens de uitoefening van zijn taken wordt geadviseerd
-      door een zeevarende als bedoeld in [artikel 3.3.6][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.8
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.5
         hoofdstuk: '3'
         paragraaf: '3.3'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.6
         hoofdstuk: '3'
         paragraaf: '3.3'
-  - number: 3.3.8.2
+      - id: ref5
+        bwb_id: BWBR0050941
+        artikel: 3.3.5
+        hoofdstuk: '3'
+        paragraaf: '3.3'
+      - id: ref6
+        bwb_id: BWBR0050941
+        artikel: 3.3.6
+        hoofdstuk: '3'
+        paragraaf: '3.3'
+  - number: 3.3.8
     text: |-
-      [Artikel 3.3.5, tweede en derde lid][ref1], is niet van toepassing op een kapitein, eerste stuurman of eerste
+      1 [Artikel 3.3.5, tweede en derde lid][ref1], is niet van toepassing op een kapitein, eerste stuurman,
+      wachtstuurman, eerste maritiem officier of maritiem officier van een zeeschip, niet zijnde een tankschip of een
+      passagiersschip dat in andere polaire wateren vaart met een ijsconcentratie van twee tiende of minder, als bedoeld
+      in voorschrift 12.3.2, onderdelen 4 en 5, van de Polar-code indien hij tijdens de uitoefening van zijn taken wordt
+      geadviseerd door een zeevarende als bedoeld in [artikel 3.3.6][ref2].
+
+      2 [Artikel 3.3.5, tweede en derde lid][ref3], is niet van toepassing op een kapitein, eerste stuurman of eerste
       maritiem officier van een zeeschip, niet zijnde een tankschip of een passagiersschip, dat in andere polaire wateren
       vaart met een ijsconcentratie van meer dan twee tiende, als bedoeld in voorschrift 12.3.2, onderdeel 5, van de
       Polar-code indien hij tijdens de uitoefening van zijn taken wordt geadviseerd door een zeevarende als bedoeld in
-      [artikel 3.3.6][ref2] en hij in het bezit is van een bekwaamheidsbewijs basistraining Polar-code, als bedoeld in
+      [artikel 3.3.6][ref4] en hij in het bezit is van een bekwaamheidsbewijs basistraining Polar-code, als bedoeld in
       artikel 3.3.5, eerste lid.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.6
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.5
+      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel3.3.6
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.8
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.5
         hoofdstuk: '3'
         paragraaf: '3.3'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.3.6
         hoofdstuk: '3'
         paragraaf: '3.3'
-  - number: 3.3.9.1
+      - id: ref3
+        bwb_id: BWBR0050941
+        artikel: 3.3.5
+        hoofdstuk: '3'
+        paragraaf: '3.3'
+      - id: ref4
+        bwb_id: BWBR0050941
+        artikel: 3.3.6
+        hoofdstuk: '3'
+        paragraaf: '3.3'
+  - number: 3.3.9
     text: |-
-      Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, wachtstuurman, wachtwerktuigkundige,
+      1 Een kapitein, hoofdwerktuigkundige, eerste stuurman, tweede werktuigkundige, wachtstuurman, wachtwerktuigkundige,
       eerste maritiem officier of maritiem officier van hogesnelheidsschip is in het bezit van het bekwaamheidsbewijs
       type rating HSC-code dat ten minste voldoet aan voorschrift 18.3 van de HSC-code voor het hogesnelheidsschip waarop
       hij dienstdoet.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.9
-  - number: 3.3.9.2
-    text: |-
-      Een zeevarende als bedoeld in het eerste lid toont door middel van schriftelijk bewijs met tussenpozen van niet
+
+      2 Een zeevarende als bedoeld in het eerste lid toont door middel van schriftelijk bewijs met tussenpozen van niet
       meer dan 2 jaar aan in de voorgaande periode van 2 jaar ten minste 6 maanden dienst te hebben gedaan aan boord van
       het in het bekwaamheidsbewijs genoemde hogesnelheidsschip.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.3.9
@@ -2479,198 +2197,147 @@ articles:
         bwb_id: BWBR0050941
         hoofdstuk: '3'
         paragraaf: '3.4'
-  - number: 3.5.1.1
+  - number: 3.5.1
     text: |-
-      Een zeevarende die is belast met taken op het gebied van veiligheid of het voorkomen van verontreiniging, van
+      1 Een zeevarende die is belast met taken op het gebied van veiligheid of het voorkomen van verontreiniging, van
       een zeeschip, niet zijnde een vissersvaartuig, krijgt alvorens hij zijn taak aan boord aanvangt instructie in
       overeenstemming met sectie A-VI/1, paragraaf 1 van de STCW-code en is in het bezit van een bekwaamheidsbewijs
       basisveiligheid dat ten minste voldoet aan voorschrift VI/1 van bijlage I bij [richtlijn (EU) 2022/993]
       (32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.1
-  - number: 3.5.1.2
-    text: |-
-      Een zeevarende niet zijnde een zeevarende als bedoeld in het eerste lid, krijgt, alvorens hij zijn taak aan boord
+
+      2 Een zeevarende niet zijnde een zeevarende als bedoeld in het eerste lid, krijgt, alvorens hij zijn taak aan boord
       aanvangt instructie in overeenstemming met sectie A-VI/1, paragraaf 1, van de STCW-code.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.1
-  - number: 3.5.1.3
-    text: Een bekwaamheidsbewijs basisveiligheid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.1
-  - number: 3.5.1.4
-    text: |-
-      Een bekwaamheidsbewijs basisveiligheid wordt op verzoek vernieuwd indien de houder met tussenpozen van niet meer
+
+      3 Een bekwaamheidsbewijs basisveiligheid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
+
+      4 Een bekwaamheidsbewijs basisveiligheid wordt op verzoek vernieuwd indien de houder met tussenpozen van niet meer
       dan 5 jaar aantoont een passende herhalingstraining te hebben gevolgd.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.1
-  - number: 3.5.2.1
+  - number: 3.5.2
     text: |-
-      Een visser van een vissersvaartuig is in het bezit van een bekwaamheidsbewijs basisveiligheid voor vissers dat ten
-      minste voldoet aan voorschrift 1, hoofdstuk III, van de bijlage bij het STCW F-verdrag en artikel 31, onderdeel b,
-      van het C188-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2
-    text: |-
-      Een visser als bedoeld in het eerste lid krijgt, alvorens hij zijn taak aan boord aanvangt, voldoende informatie en
-      instructie ten einde:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.a
-    text: |-
-      met de overige opvarenden over elementaire veiligheidszaken te kunnen spreken, begrip te hebben van de
+      1 Een visser van een vissersvaartuig is in het bezit van een bekwaamheidsbewijs basisveiligheid voor vissers dat
+      ten minste voldoet aan voorschrift 1, hoofdstuk III, van de bijlage bij het STCW F-verdrag en artikel 31, onderdeel
+      b, van het C188-verdrag.
+
+      2 Een visser als bedoeld in het eerste lid krijgt, alvorens hij zijn taak aan boord aanvangt, voldoende informatie
+      en instructie ten einde:
+
+      a. met de overige opvarenden over elementaire veiligheidszaken te kunnen spreken, begrip te hebben van de
       veiligheidssymbolen en de alarmseinen te kennen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.b
-    text: |-
-      voldoende bekend te zijn met de aanwezige uitrusting en de bediening ervan, met inbegrip van de te nemen
+
+      b. voldoende bekend te zijn met de aanwezige uitrusting en de bediening ervan, met inbegrip van de te nemen
       veiligheidsmaatregelen voordat hij de uitrusting gebruikt;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.c
-    text: 'te weten wat te doen indien:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.c.1°
-    text: iemand over boord valt;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.c.2°
-    text: vuur of rook wordt ontdekt; of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.c.3°
-    text: het sein «brandalarm» of «schip verlaten» wordt gegeven;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.d
-    text: te weten waar de reddingsgordels zich bevinden en hoe deze om te doen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.e
-    text: alarm te slaan en bekend te zijn met het gebruik van handbrandblussers;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.f
-    text: te weten wat te doen bij een ongeluk voordat hulp wordt ingeroepen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.g
-    text: |-
-      de brand- en waterdichte deuren, met uitzondering van die ter afsluiting van openingen in de romp, te kunnen
+
+      c. te weten wat te doen indien:
+
+      1°. iemand over boord valt;
+
+      2°. vuur of rook wordt ontdekt; of
+
+      3°. het sein «brandalarm» of «schip verlaten» wordt gegeven;
+
+      d. te weten waar de reddingsgordels zich bevinden en hoe deze om te doen;
+
+      e. alarm te slaan en bekend te zijn met het gebruik van handbrandblussers;
+
+      f. te weten wat te doen bij een ongeluk voordat hulp wordt ingeroepen;
+
+      g. de brand- en waterdichte deuren, met uitzondering van die ter afsluiting van openingen in de romp, te kunnen
       sluiten en openen; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.2.h
-    text: |-
-      te kunnen vaststellen waar de verzamelplaatsen bij het sein «schip verlaten», de plaatsen van inscheping in de
+
+      h. te kunnen vaststellen waar de verzamelplaatsen bij het sein «schip verlaten», de plaatsen van inscheping in de
       reddingmiddelen en de ontsnappingsroutes bij noodgevallen zich bevinden.
+
+      3 Een bekwaamheidsbewijs als bedoeld in het eerste lid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
+
+      4 Een bekwaamheidsbewijs basisveiligheid voor vissers als bedoeld in het eerste lid wordt op verzoek vernieuwd
+      indien de houder met tussenpozen van niet meer dan 5 jaar aantoont een passende herhalingstraining te hebben
+      gevolgd.
+
+      5 De geldigheidsduur, als bedoeld in het derde lid, is niet van toepassing tot en met 31 december 2029.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.3
-    text: Een bekwaamheidsbewijs als bedoeld in het eerste lid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.4
+  - number: 3.5.3
     text: |-
-      Een bekwaamheidsbewijs basisveiligheid voor vissers als bedoeld in het eerste lid wordt op verzoek vernieuwd indien
-      de houder met tussenpozen van niet meer dan 5 jaar aantoont een passende herhalingstraining te hebben gevolgd.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.2.5
-    text: De geldigheidsduur, als bedoeld in het derde lid, is niet van toepassing tot en met 31 december 2029.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.2
-  - number: 3.5.3.1
-    text: |-
-      Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende belast
+      1 Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende belast
       met het gebruik van reddingmiddelen en hulpverleningsboten, niet zijnde snelle hulpverleningsboten, is in het bezit
       van een bekwaamheidsbewijs reddingmiddelen dat ten minste voldoet aan voorschrift VI/2, eerste lid, van bijlage I
       bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.3
-  - number: 3.5.3.2
-    text: |-
-      Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende
+
+      2 Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende
       belast met het gebruik van snelle hulpverleningsboten is in het bezit van een bekwaamheidsbewijs snelle
       hulpverleningsboten dat ten minste voldoet aan voorschrift VI/2, tweede lid, van bijlage I bij [richtlijn (EU)
       2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.3
-  - number: 3.5.3.3
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
+
+      3 Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
       afgifte.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.3
-  - number: 3.5.3.4
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid wordt op verzoek vernieuwd indien de houder met
+
+      4 Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid wordt op verzoek vernieuwd indien de houder met
       tussenpozen van niet meer dan 5 jaar aantoont een passende herhalingstraining te hebben gevolgd.
+
+      5 Het derde en vierde lid zijn niet van toepassing op vissers.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.3
-  - number: 3.5.3.5
-    text: Het derde en vierde lid zijn niet van toepassing op vissers.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.3
-  - number: 3.5.4.1
+  - number: 3.5.4
     text: |-
-      Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende die is
+      1 Een kapitein, stuurman, werktuigkundige, officier elektrotechniek, maritiem officier of andere zeevarende die is
       aangewezen om leiding te geven aan brandbestrijdingsoperaties aan boord van een zeeschip is in het bezit van een
       bekwaamheidsbewijs brandbestrijding voor gevorderden dat ten minste voldoet aan voorschrift VI/3, eerste lid, van
       bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.4
-  - number: 3.5.4.2
-    text: Een bekwaamheidsbewijs als bedoeld in het eerste lid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.4
-  - number: 3.5.4.3
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het eerste lid wordt op verzoek vernieuwd indien de houder met tussenpozen
+
+      2 Een bekwaamheidsbewijs als bedoeld in het eerste lid is geldig tot ten hoogste 5 jaar na de datum van afgifte.
+
+      3 Een bekwaamheidsbewijs als bedoeld in het eerste lid wordt op verzoek vernieuwd indien de houder met tussenpozen
       van niet meer dan 5 jaar aantoont een passende herhalingstraining te hebben gevolgd.
+
+      4 Het tweede en derde lid zijn niet van toepassing op vissers.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.4
-  - number: 3.5.4.4
-    text: Het tweede en derde lid zijn niet van toepassing op vissers.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.4
-  - number: 3.5.5.1
+  - number: 3.5.5
     text: |-
-      Een kapitein of zeevarende die is aangewezen om eerste hulp te verlenen aan boord van een zeeschip is in het
+      1 Een kapitein of zeevarende die is aangewezen om eerste hulp te verlenen aan boord van een zeeschip is in het
       bezit van een bekwaamheidsbewijs medische eerste hulp dat ten minste voldoet aan voorschrift VI/4, eerste lid, van
       bijlage I bij [richtlijn (EU) 2022/993](32022L0993) en [richtlijn 92/29/EEG](31992L0029).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.5
-  - number: 3.5.5.2
-    text: |-
-      Een kapitein of zeevarende die is aangewezen om medische verzorging aan boord van een zeeschip op zich te nemen
+
+      2 Een kapitein of zeevarende die is aangewezen om medische verzorging aan boord van een zeeschip op zich te nemen
       is in het bezit van een bekwaamheidsbewijs medische eerste hulp dat ten minste voldoet aan voorschrift VI/4,
       eerste lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993) en [richtlijn 92/29/EEG](31992L0029) en een
       bekwaamheidsbewijs medische zorg dat ten minste voldoet aan de bekwaamheidsvereisten inzake medische verzorging,
       bedoeld in voorschrift VI/4, tweede lid, van bijlage I bij [richtlijn (EU) 2022/993](32022L0993) en [richtlijn
       92/29/EEG](31992L0029).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.5
-  - number: 3.5.5.3
-    text: |-
-      Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
+
+      3 Een bekwaamheidsbewijs als bedoeld in het eerste en tweede lid is geldig tot ten hoogste 5 jaar na de datum van
       afgifte.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.5
-  - number: 3.5.6.1
+  - number: 3.5.6
     text: |-
-      Een zeevarende die is aangesteld als scheepsbeveiligingsfunctionaris is in het bezit van een bekwaamheidsbewijs
+      1 Een zeevarende die is aangesteld als scheepsbeveiligingsfunctionaris is in het bezit van een bekwaamheidsbewijs
       scheepsbeveiligingsfunctionaris dat ten minste voldoet aan voorschrift VI/5, eerste lid, van bijlage I, bij
       [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.2
-    text: |-
-      Andere zeevarenden dan zeevarenden als bedoeld in het eerste lid die zijn belast met taken op het gebied van
-      beveiliging zoals aangegeven in het scheepsbeveiligingsplan, zijn in het bezit van een bekwaamheidsbewijs
+
+      2 Andere zeevarenden dan zeevarenden als bedoeld in het eerste lid die zijn belast met taken op het gebied
+      van beveiliging zoals aangegeven in het scheepsbeveiligingsplan, zijn in het bezit van een bekwaamheidsbewijs
       uitvoering beveiligingstaken dat ten minste voldoet aan voorschrift VI/6, vierde lid, van bijlage I bij [richtlijn
       (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.3
-    text: |-
-      Elke andere zeevarende dan een zeevarende als bedoeld in het eerste en tweede lid is in het bezit van een
+
+      3 Elke andere zeevarende dan een zeevarende als bedoeld in het eerste en tweede lid is in het bezit van een
       bekwaamheidsbewijs bewustwording scheepsbeveiliging dat ten minste voldoet aan voorschrift VI/6, eerste lid, van
       bijlage I bij [richtlijn (EU) 2022/993](32022L0993).
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.4
-    text: |-
-      Iedere zeevarende volgt, alvorens zijn taak aan boord te beginnen, een familiarisatietraining in scheepsbeveiliging
-      of krijgt voldoende informatie en instructie om:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.4.a
-    text: een beveiligingsincident te kunnen rapporteren;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.4.b
-    text: de procedures bij een beveiligingsdreiging te kunnen volgen; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.4.c
-    text: deel te kunnen nemen aan beveiligingsgerelateerde nood- en eventualiteitenprocedures.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.5
-    text: |-
-      Het tweede en derde lid zijn niet van toepassing op zeevarenden in het bezit van het bekwaamheidsbewijs
+
+      4 Iedere zeevarende volgt, alvorens zijn taak aan boord te beginnen, een familiarisatietraining in
+      scheepsbeveiliging of krijgt voldoende informatie en instructie om:
+
+      a. een beveiligingsincident te kunnen rapporteren;
+
+      b. de procedures bij een beveiligingsdreiging te kunnen volgen; en
+
+      c. deel te kunnen nemen aan beveiligingsgerelateerde nood- en eventualiteitenprocedures.
+
+      5 Het tweede en derde lid zijn niet van toepassing op zeevarenden in het bezit van het bekwaamheidsbewijs
       scheepsbeveiligingsfunctionaris.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
-  - number: 3.5.6.6
-    text: |-
-      Het derde en vierde lid zijn niet van toepassing op zeevarenden van zeeschepen waarvoor op grond van
+
+      6 Het derde en vierde lid zijn niet van toepassing op zeevarenden van zeeschepen waarvoor op grond van
       [artikel 9, eerste lid, aanhef en onderdeel b, van het Schepenbesluit 2004][ref1] geen internationaal
       scheepsbeveiligingscertificaat benodigd is.
+
+      7 Het eerste tot en met zesde lid zijn niet van toepassing op vissers.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0016880#Artikel9
@@ -2679,9 +2346,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0016880
         artikel: '9'
-  - number: 3.5.6.7
-    text: Het eerste tot en met zesde lid zijn niet van toepassing op vissers.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.5.6
   - number: 3.5.7
     text: |-
       Bij ministeriële regeling worden voor elke beroepseis genoemd in deze paragraaf bekwaamheidsbewijzen, schriftelijke
@@ -2691,132 +2355,98 @@ articles:
   - number: 3.6.1
     text: Bij ministeriële regeling wordt het model van de geneeskundige verklaring zeevaart vastgesteld.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.1
-  - number: 3.6.2.1
+  - number: 3.6.2
     text: |-
-      Ten behoeve van de afgifte van een geneeskundige verklaring zeevaart als bedoeld in
+      1 Ten behoeve van de afgifte van een geneeskundige verklaring zeevaart als bedoeld in
       [artikel 31, eerste lid, van de wet][ref1] wordt de zeevarende aan een medisch onderzoek onderworpen door een
       aangewezen of erkende keuringsarts.
 
+      2 Indien de keuringsarts twijfels heeft omtrent de medische geschiktheid dan wel wanneer in de medische eisen,
+      bedoeld in [artikel 3.6.3, eerste lid][ref2], een specialistisch rapport is vereist, verwijst deze arts de
+      zeevarende voor deelonderzoek door naar een specialist.
+
+      3 Een geneeskundige verklaring zeevaart wordt afgegeven door een keuringsarts die heeft vastgesteld
+      dat de zeevarende voldoet aan de voor die verklaring van toepassing zijnde medische eisen, bedoeld in
+      [artikel 3.6.3, eerste lid][ref3].
+
+      4 Indien de gekeurde zeevarende gebruik wenst te maken van zijn recht om opnieuw te worden onderzocht, wordt
+      hij onderzocht door een op grond van [artikel 32, eerste lid, van de wet][ref4] als scheidsrechter aangewezen
+      keuringsarts.
+
+      5 De in dit besluit bedoelde onderzoeken worden verricht door geneeskundigen die niet de behandelend arts of
+      specialist van de zeevarende zijn.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel31
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.3
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.3
+      [ref4]: https://wetten.overheid.nl/BWBR0050681#Artikel32
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.2
     references:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '31'
-  - number: 3.6.2.2
-    text: |-
-      Indien de keuringsarts twijfels heeft omtrent de medische geschiktheid dan wel wanneer in de medische eisen,
-      bedoeld in [artikel 3.6.3, eerste lid][ref1], een specialistisch rapport is vereist, verwijst deze arts de
-      zeevarende voor deelonderzoek door naar een specialist.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.3
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.2.3
-    text: |-
-      Een geneeskundige verklaring zeevaart wordt afgegeven door een keuringsarts die heeft vastgesteld
-      dat de zeevarende voldoet aan de voor die verklaring van toepassing zijnde medische eisen, bedoeld in
-      [artikel 3.6.3, eerste lid][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.2
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.3
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.2.4
-    text: |-
-      Indien de gekeurde zeevarende gebruik wenst te maken van zijn recht om opnieuw te worden onderzocht, wordt
-      hij onderzocht door een op grond van [artikel 32, eerste lid, van de wet][ref1] als scheidsrechter aangewezen
-      keuringsarts.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel32
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0050681
         artikel: '32'
-  - number: 3.6.2.5
+  - number: 3.6.3
     text: |-
-      De in dit besluit bedoelde onderzoeken worden verricht door geneeskundigen die niet de behandelend arts of
-      specialist van de zeevarende zijn.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.2
-  - number: 3.6.3.1
-    text: |-
-      Bij ministeriële regeling worden de medische eisen vastgesteld waaraan een zeevarende moet voldoen om in aanmerking
-      te komen voor een geneeskundige verklaring zeevaart.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.3
-  - number: 3.6.3.2
-    text: |-
-      Bij ministeriële regeling worden de procedures en andere voorschriften vastgesteld die in acht worden genomen bij
+      1 Bij ministeriële regeling worden de medische eisen vastgesteld waaraan een zeevarende moet voldoen om in
+      aanmerking te komen voor een geneeskundige verklaring zeevaart.
+
+      2 Bij ministeriële regeling worden de procedures en andere voorschriften vastgesteld die in acht worden genomen bij
       elk van de onderzoeken, bedoeld in [artikel 3.6.2][ref1].
 
+      3 Bij de vaststelling van de medische eisen wordt bepaald ten aanzien van welke nieuwe medische eisen een
+      ontheffing als bedoeld in [artikel 32, vijfde lid, van de wet][ref2] kan worden verleend.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      4 In afwijking van het eerste lid kan Onze Minister aan een zeevarende ontheffing verlenen van één van de medische
+      eisen indien naar zijn oordeel het niet voldoen aan die medische eis de veiligheid niet nadelig beïnvloedt.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.2
+      [ref2]: https://wetten.overheid.nl/BWBR0050681#Artikel32
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.3
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.2
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.3.3
-    text: |-
-      Bij de vaststelling van de medische eisen wordt bepaald ten aanzien van welke nieuwe medische eisen een ontheffing
-      als bedoeld in [artikel 32, vijfde lid, van de wet][ref1] kan worden verleend.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel32
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.3
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0050681
         artikel: '32'
-  - number: 3.6.3.4
+  - number: 3.6.4
     text: |-
-      In afwijking van het eerste lid kan Onze Minister aan een zeevarende ontheffing verlenen van één van de medische
-      eisen indien naar zijn oordeel het niet voldoen aan die medische eis de veiligheid niet nadelig beïnvloedt.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.3
-  - number: 3.6.4.1
-    text: |-
-      Een geneeskundige verklaring zeevaart wordt afgegeven met een geldigheidsduur van ten hoogste twee jaar dan wel een
-      jaar indien het een verklaring met betrekking tot een persoon onder de leeftijd van achttien jaar betreft.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.4
-  - number: 3.6.4.2
-    text: |-
-      Op medische gronden kan de keuringsarts een geneeskundige verklaring zeevaart afgeven voor een kortere duur dan
+      1 Een geneeskundige verklaring zeevaart wordt afgegeven met een geldigheidsduur van ten hoogste twee jaar dan wel
+      een jaar indien het een verklaring met betrekking tot een persoon onder de leeftijd van achttien jaar betreft.
+
+      2 Op medische gronden kan de keuringsarts een geneeskundige verklaring zeevaart afgeven voor een kortere duur dan
       die, genoemd in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.4
-  - number: 3.6.4.3
-    text: |-
-      De keuringsarts kan voorts een geneeskundige verklaring zeevaart afgeven voor een beperkt vaargebied dan wel met
+
+      3 De keuringsarts kan voorts een geneeskundige verklaring zeevaart afgeven voor een beperkt vaargebied dan wel met
       andere in die verklaring te vermelden beperkingen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.4
-  - number: 3.6.5.1
-    text: De keuringsarts kan de gekeurde zeevarende tijdelijk of blijvend ongeschikt voor de zeevaart verklaren.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.5
-  - number: 3.6.5.2
-    text: 'De gekeurde zeevarende is:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.5
-  - number: 3.6.5.2.a
+  - number: 3.6.5
     text: |-
-      tijdelijk ongeschikt, indien op medische gronden wordt verwacht dat hij niet langer dan drie jaar voor de zeevaart
-      ongeschikt zal zijn;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.5
-  - number: 3.6.5.2.b
-    text: |-
-      blijvend ongeschikt, indien op medische gronden wordt verwacht dat hij langer dan drie jaar voor de zeevaart
+      1 De keuringsarts kan de gekeurde zeevarende tijdelijk of blijvend ongeschikt voor de zeevaart verklaren.
+
+      2 De gekeurde zeevarende is:
+
+      a. tijdelijk ongeschikt, indien op medische gronden wordt verwacht dat hij niet langer dan drie jaar voor de
+      zeevaart ongeschikt zal zijn;
+
+      b. blijvend ongeschikt, indien op medische gronden wordt verwacht dat hij langer dan drie jaar voor de zeevaart
       ongeschikt zal zijn.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.5
   - number: 3.6.6
@@ -2826,31 +2456,50 @@ articles:
       [artikelen 3.6.4][ref2] en [3.6.5][ref3] in acht.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.3
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.4
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.5
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.6
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.3
         hoofdstuk: '3'
         paragraaf: '3.6'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.4
         hoofdstuk: '3'
         paragraaf: '3.6'
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.5
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.7.1
+  - number: 3.6.7
     text: |-
-      Een geneeskundige kan Onze Minister verzoeken hem aan te wijzen of te erkennen als keuringsarts op grond
+      1 Een geneeskundige kan Onze Minister verzoeken hem aan te wijzen of te erkennen als keuringsarts op grond
       van [artikel 31, tweede lid, van de wet][ref1]. Bij het verzoek wordt registratie als arts als bedoeld in
       [artikel 3 van de Wet op de beroepen in de individuele gezondheidszorg][ref2], aangetoond.
+
+      2 Indien het verzoek is ingediend door een geneeskundige die in het buitenland zijn praktijk houdt, vergewist Onze
+      Minister zich van diens vakbekwaamheid.
+
+      3 Onze Minister gaat niet over tot aanwijzing of erkenning van een geneeskundige indien diens onafhankelijkheid
+      ten opzichte van werkgevers, werknemers of hun organisaties niet gewaarborgd is, of ingeval diens professionele
+      kundigheden, praktijkervaring of beroepsuitrusting naar zijn oordeel ontoereikend zijn.
+
+      4 Bij het besluit van Onze Minister over de aanwijzing of erkenning worden het aantal al aangewezen of erkende
+      geneeskundigen en de spreiding over het land in relatie tot de regionale of plaatselijke behoefte in aanmerking
+      genomen.
+
+      5 De aanwijzing of erkenning als keurend arts wordt afgegeven voor een periode van ten hoogste vijf jaar.
+
+      6 De aangewezen of erkende keuringsarts is verplicht de door Onze Minister aangewezen nascholingscursussen te
+      volgen. De kosten van deelname komen voor rekening van de betrokken keuringsarts.
+
+      7 Bij ministeriële regeling worden nadere regels gesteld met betrekking tot de aanwijzing en de erkenning van
+      geneeskundigen als keurend arts voor de scheepvaart.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel31
@@ -2863,138 +2512,90 @@ articles:
       - id: ref2
         bwb_id: BWBR0006251
         artikel: '3'
-  - number: 3.6.7.2
-    text: |-
-      Indien het verzoek is ingediend door een geneeskundige die in het buitenland zijn praktijk houdt, vergewist Onze
-      Minister zich van diens vakbekwaamheid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
-  - number: 3.6.7.3
-    text: |-
-      Onze Minister gaat niet over tot aanwijzing of erkenning van een geneeskundige indien diens onafhankelijkheid
-      ten opzichte van werkgevers, werknemers of hun organisaties niet gewaarborgd is, of ingeval diens professionele
-      kundigheden, praktijkervaring of beroepsuitrusting naar zijn oordeel ontoereikend zijn.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
-  - number: 3.6.7.4
-    text: |-
-      Bij het besluit van Onze Minister over de aanwijzing of erkenning worden het aantal al aangewezen of erkende
-      geneeskundigen en de spreiding over het land in relatie tot de regionale of plaatselijke behoefte in aanmerking
-      genomen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
-  - number: 3.6.7.5
-    text: De aanwijzing of erkenning als keurend arts wordt afgegeven voor een periode van ten hoogste vijf jaar.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
-  - number: 3.6.7.6
-    text: |-
-      De aangewezen of erkende keuringsarts is verplicht de door Onze Minister aangewezen nascholingscursussen te volgen.
-      De kosten van deelname komen voor rekening van de betrokken keuringsarts.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
-  - number: 3.6.7.7
-    text: |-
-      Bij ministeriële regeling worden nadere regels gesteld met betrekking tot de aanwijzing en de erkenning van
-      geneeskundigen als keurend arts voor de scheepvaart.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.7
   - number: 3.6.8
-    text: 'Onze Minister trekt een aanwijzing of erkenning in indien de keuringsarts of medisch scheidsrechter:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.a
-    text: de algemeen geldende medische of ethische normen niet in acht neemt;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.b
     text: |-
-      zich bij herhaling niet houdt aan het gestelde in de [artikelen 3.6.2 tot en met 3.6.6][ref1] of zijn
+      Onze Minister trekt een aanwijzing of erkenning in indien de keuringsarts of medisch scheidsrechter:
+
+      a. de algemeen geldende medische of ethische normen niet in acht neemt;
+
+      b. zich bij herhaling niet houdt aan het gestelde in de [artikelen 3.6.2 tot en met 3.6.6][ref1] of zijn
       beroepsuitrusting niet toereikend is voor zijn taak als keuringsarts;
 
+      c. valse of vervalste verklaringen heeft afgegeven;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      d. niet meer in het register, bedoeld in
+      [artikel 3 van de Wet op de beroepen in de individuele gezondheidszorg][ref2], vermeld is als arts;
+
+      e. onder curatele is gesteld wegens geestelijke stoornis;
+
+      f. anderszins niet meer gerechtigd is de geneeskunst uit te oefenen;
+
+      g. een daartoe strekkend verzoek heeft ingediend;
+
+      h. diens onafhankelijkheid ten opzichte van werkgevers, werknemers of hun organisaties niet langer gewaarborgd is;
+
+      i. een te gering aantal keuringen heeft verricht om door praktische ervaring zijn bekwaamheid als keuringsarts op
+      peil te houden, of
+
+      j. heeft verzuimd een voor hem aangewezen nascholingscursus te volgen.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.2
+      [ref2]: https://wetten.overheid.nl/BWBR0006251#Artikel3
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.2
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.8.c
-    text: valse of vervalste verklaringen heeft afgegeven;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.d
-    text: |-
-      niet meer in het register, bedoeld in [artikel 3 van de Wet op de beroepen in de individuele gezondheidszorg][ref1],
-      vermeld is als arts;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006251#Artikel3
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0006251
         artikel: '3'
-  - number: 3.6.8.e
-    text: onder curatele is gesteld wegens geestelijke stoornis;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.f
-    text: anderszins niet meer gerechtigd is de geneeskunst uit te oefenen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.g
-    text: een daartoe strekkend verzoek heeft ingediend;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.h
-    text: diens onafhankelijkheid ten opzichte van werkgevers, werknemers of hun organisaties niet langer gewaarborgd is;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.i
+  - number: 3.6.9
     text: |-
-      een te gering aantal keuringen heeft verricht om door praktische ervaring zijn bekwaamheid als keuringsarts op peil
-      te houden, of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.8.j
-    text: heeft verzuimd een voor hem aangewezen nascholingscursus te volgen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.8
-  - number: 3.6.9.1
-    text: |-
-      De Medisch Adviseur Scheepvaart kan op verzoek aan een zeevarende die in het bezit is van een verklaring die
+      1 De Medisch Adviseur Scheepvaart kan op verzoek aan een zeevarende die in het bezit is van een verklaring die
       gebaseerd is op een ander medisch geneeskundig onderzoek dan bedoeld in [artikel 3.6.2][ref1], eerste lid, een
       geneeskundige verklaring zeevaart afgeven.
 
+      2 De geneeskundige verklaring zeevaart wordt alleen afgegeven als:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      a. de zeevarende voldoet aan medische eisen die naar zijn oordeel gelijkwaardig zijn aan het geheel van de op grond
+      van [artikel 6.3.6, eerste lid][ref2], vastgestelde medische eisen;
+
+      b. de verklaring die gebaseerd is op een ander medisch onderzoek niet langer dan twee jaar voor het verzoek is
+      afgegeven.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel3.6.2
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel6.3.6
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.9
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.6.2
         hoofdstuk: '3'
         paragraaf: '3.6'
-  - number: 3.6.9.2
-    text: 'De geneeskundige verklaring zeevaart wordt alleen afgegeven als:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.9
-  - number: 3.6.9.2.a
-    text: |-
-      de zeevarende voldoet aan medische eisen die naar zijn oordeel gelijkwaardig zijn aan het geheel van de op grond
-      van [artikel 6.3.6, eerste lid][ref1], vastgestelde medische eisen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel6
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.9
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0050941
-        artikel: '6'
+        artikel: 6.3.6
         hoofdstuk: '6'
         paragraaf: '6.3'
-  - number: 3.6.9.2.b
+  - number: 4.1.1
     text: |-
-      de verklaring die gebaseerd is op een ander medisch onderzoek niet langer dan twee jaar voor het verzoek is
-      afgegeven.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel3.6.9
-  - number: 4.1.1.1
-    text: |-
-      De scheepsbeheerder voorziet de zeevarenden aan boord van een zeeschip kosteloos van voeding en drinkwater van
+      1 De scheepsbeheerder voorziet de zeevarenden aan boord van een zeeschip kosteloos van voeding en drinkwater van
       voldoende hoeveelheid, kwaliteit, voedingswaarde en variëteit en rekening houdend met godsdienstige voorschriften
       en culturele gebruiken, in overeenstemming met de daaraan bij ministeriële regeling gestelde voorschriften.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.1.1
-  - number: 4.1.1.2
-    text: |-
-      De maximale hoeveelheid sterke drank als bedoeld in [artikel 1, eerste lid, van de Drank- en Horecawet][ref1] die
+
+      2 De maximale hoeveelheid sterke drank als bedoeld in [artikel 1, eerste lid, van de Drank- en Horecawet][ref1] die
       voor verbruik door de zeevarenden aan boord beschikbaar is, wordt vastgesteld bij ministeriële regeling.
+
+      3 De voorraden voeding en drinkwater en de ruimten en apparatuur voor de opslag, bewerking en bereiding van voeding
+      en drinkwater worden regelmatig door of namens de kapitein geïnspecteerd overeenkomstig bij ministeriële regeling
+      gestelde regels.
+
+      4 Degene die aan boord tot taak heeft de voeding voor de zeevarenden te beheren en te bereiden, voldoet aan de bij
+      ministeriële regeling gestelde voorschriften.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002458#Artikel1
@@ -3003,151 +2604,135 @@ articles:
       - id: ref1
         bwb_id: BWBR0002458
         artikel: '1'
-  - number: 4.1.1.3
+  - number: 4.2.1
     text: |-
-      De voorraden voeding en drinkwater en de ruimten en apparatuur voor de opslag, bewerking en bereiding van voeding
-      en drinkwater worden regelmatig door of namens de kapitein geïnspecteerd overeenkomstig bij ministeriële regeling
-      gestelde regels.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.1.1
-  - number: 4.1.1.4
-    text: |-
-      Degene die aan boord tot taak heeft de voeding voor de zeevarenden te beheren en te bereiden, voldoet aan de bij
-      ministeriële regeling gestelde voorschriften.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.1.1
-  - number: 4.2.1.1
-    text: 'Bij ministeriële regeling worden regels gesteld met betrekking tot:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.1.a
-    text: |-
-      het onderzoek waaraan zeeschepen zijn onderworpen ter verkrijging en verlenging van een certificaat maritieme
+      1 Bij ministeriële regeling worden regels gesteld met betrekking tot:
+
+      a. het onderzoek waaraan zeeschepen zijn onderworpen ter verkrijging en verlenging van een certificaat maritieme
       arbeid of tijdens de geldigheidsduur daarvan, alsmede de inhoud van die onderzoeken en de frequentie waarmee zij
       worden verricht;
+
+      b. de registratie van de bij de inspectie verzamelde onderzoeksgegevens;
+
+      c. de geldigheid van het certificaat maritieme arbeid en de verlenging van de geldigheidsduur daarvan;
+
+      d. de voorwaarden voor afgifte van voorlopige certificaten maritieme arbeid;
+
+      e. regels met betrekking tot de documenten waarmee kan worden aangetoond dat voldaan wordt aan het Aanhangsel A5-1
+      van het MLC-verdrag.
+
+      2 Bij ministeriële regeling worden regels gesteld met betrekking tot:
+
+      a. de bij een aanvraag als bedoeld in het eerste lid te verstrekken gegevens en te overleggen bescheiden; en
+
+      b. de modellen van het certificaat maritieme arbeid en het voorlopige certificaat maritieme arbeid.
+
+      3 Het bepaalde bij of krachtens dit artikel is niet van toepassing op vissersvaartuigen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.1.b
-    text: de registratie van de bij de inspectie verzamelde onderzoeksgegevens;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.1.c
-    text: de geldigheid van het certificaat maritieme arbeid en de verlenging van de geldigheidsduur daarvan;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.1.d
-    text: de voorwaarden voor afgifte van voorlopige certificaten maritieme arbeid;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.1.e
+  - number: 4.2.2
     text: |-
-      regels met betrekking tot de documenten waarmee kan worden aangetoond dat voldaan wordt aan het Aanhangsel A5-1 van
-      het MLC-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.2
-    text: 'Bij ministeriële regeling worden regels gesteld met betrekking tot:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.2.a
-    text: de bij een aanvraag als bedoeld in het eerste lid te verstrekken gegevens en te overleggen bescheiden; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.2.b
-    text: de modellen van het certificaat maritieme arbeid en het voorlopige certificaat maritieme arbeid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.1.3
-    text: Het bepaalde bij of krachtens dit artikel is niet van toepassing op vissersvaartuigen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.1
-  - number: 4.2.2.1
-    text: 'Een certificaat maritieme arbeid vervalt, indien:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.1.a
-    text: |-
-      een deel van het zeeschip wordt verbouwd waarvoor de krachtens [artikel 4.2.1, eerste lid][ref1], gestelde
+      1 Een certificaat maritieme arbeid vervalt, indien:
+
+      a. een deel van het zeeschip wordt verbouwd waarvoor de krachtens [artikel 4.2.1, eerste lid][ref1], gestelde
       voorschriften gelden, of in de inrichting of de uitrusting waarvoor de krachtens artikel 4.2.1, eerste lid,
       gestelde voorschriften gelden, ingrijpende wijzigingen worden aangebracht;
 
+      b. het zeeschip een buitenlands zeeschip wordt;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel4
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '4.2'
-  - number: 4.2.2.1.b
-    text: het zeeschip een buitenlands zeeschip wordt;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.1.c
-    text: het tijdvak waarvoor het certificaat geldt, is verstreken;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.1.d
-    text: |-
-      het tijdens de geldigheidsduur van het certificaat verplicht gestelde onderzoek niet of niet tijdig heeft
+      c. het tijdvak waarvoor het certificaat geldt, is verstreken;
+
+      d. het tijdens de geldigheidsduur van het certificaat verplicht gestelde onderzoek niet of niet tijdig heeft
       plaatsgevonden, tenzij het gaat om een bij ministeriële regeling omschreven geval;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.1.e
-    text: het zeeschip van naam verandert of een ander letterteken of nummer krijgt, of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.1.f
-    text: het zeeschip niet langer wordt beheerd door de scheepsbeheerder vermeld op het certificaat maritieme arbeid.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.2
-    text: 'Onze Minister kan een certificaat intrekken, indien blijkt dat:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.2.a
-    text: |-
-      de bouw, de inrichting of de uitrusting van het zeeschip waarvoor de krachtens [artikel 4.2.1, eerste lid][ref1],
-      gestelde voorschriften gelden, in belangrijke mate afwijkt van de gegevens van het certificaat;
 
+      e. het zeeschip van naam verandert of een ander letterteken of nummer krijgt, of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel4
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0050941
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '4.2'
-  - number: 4.2.2.2.b
-    text: |-
-      het zeeschip of de scheepsbeheerder niet langer voldoet aan de voor het desbetreffende zeeschip afgegeven
+      f. het zeeschip niet langer wordt beheerd door de scheepsbeheerder vermeld op het certificaat maritieme arbeid.
+
+      2 Onze Minister kan een certificaat intrekken, indien blijkt dat:
+
+      a. de bouw, de inrichting of de uitrusting van het zeeschip waarvoor de krachtens
+      [artikel 4.2.1, eerste lid][ref2], gestelde voorschriften gelden, in belangrijke mate afwijkt van de gegevens van
+      het certificaat;
+
+      b. het zeeschip of de scheepsbeheerder niet langer voldoet aan de voor het desbetreffende zeeschip afgegeven
       verklaring naleving maritieme arbeid en de vereiste corrigerende maatregelen niet zijn getroffen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.3
-    text: |-
-      Bij ministeriële regeling kan worden bepaald dat een certificaat maritieme arbeid in bij die regeling te bepalen
+
+      3 Bij ministeriële regeling kan worden bepaald dat een certificaat maritieme arbeid in bij die regeling te bepalen
       gevallen ook vervalt, indien het zeeschip aan zijn oorspronkelijke bestemming wordt onttrokken.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.2.4
-    text: |-
-      De scheepsbeheerder zendt een vervallen of ingetrokken certificaat, niet zijnde een geautomatiseerd bestand, zo
+
+      4 De scheepsbeheerder zendt een vervallen of ingetrokken certificaat, niet zijnde een geautomatiseerd bestand, zo
       spoedig mogelijk aan Onze Minister.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel4.2.1
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel4.2.1
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.2
-  - number: 4.2.3.1
-    text: Een visserij-arbeidscertificaat wordt afgegeven indien wordt voldaan aan artikel 41 van het C188-verdrag.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.3
-  - number: 4.2.3.2
-    text: |-
-      De [artikelen 4.2.1, eerste en tweede lid][ref1], en [4.2.2][ref2] zijn van overeenkomstige toepassing op de
-      afgifte van een visserij-arbeidscertificaat.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel4
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.3
     references:
       - id: ref1
         bwb_id: BWBR0050941
-        artikel: '4'
+        artikel: 4.2.1
         hoofdstuk: '4'
         paragraaf: '4.2'
       - id: ref2
         bwb_id: BWBR0050941
-        artikel: '4'
+        artikel: 4.2.1
         hoofdstuk: '4'
         paragraaf: '4.2'
-  - number: 4.2.3.3
+  - number: 4.2.3
     text: |-
-      Bij ministeriële regeling wordt een opsomming voorgeschreven van de op grond van artikel 41 het C188-verdrag
+      1 Een visserij-arbeidscertificaat wordt afgegeven indien wordt voldaan aan artikel 41 van het C188-verdrag.
+
+      2 De [artikelen 4.2.1, eerste en tweede lid][ref1], en [4.2.2][ref2] zijn van overeenkomstige toepassing op de
+      afgifte van een visserij-arbeidscertificaat.
+
+      3 Bij ministeriële regeling wordt een opsomming voorgeschreven van de op grond van artikel 41 het C188-verdrag
       gestelde voorschriften.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0050941#Artikel4.2.1
+      [ref2]: https://wetten.overheid.nl/BWBR0050941#Artikel4.2.2
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel4.2.3
-  - number: 5.1.1
+    references:
+      - id: ref1
+        bwb_id: BWBR0050941
+        artikel: 4.2.1
+        hoofdstuk: '4'
+        paragraaf: '4.2'
+      - id: ref2
+        bwb_id: BWBR0050941
+        artikel: 4.2.2
+        hoofdstuk: '4'
+        paragraaf: '4.2'
+  - number: '5.1'
     text: |-
-      De voorzitter en de plaatsvervangende voorzitters als bedoeld in [artikel 42, eerste lid, van de wet][ref1] zijn
+      1 De voorzitter en de plaatsvervangende voorzitters als bedoeld in [artikel 42, eerste lid, van de wet][ref1] zijn
       personen:
+
+      a. aan wie op grond van het afsluitend examen van een opleiding in het wetenschappelijk onderwijs door een
+      universiteit dan wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek
+      betrekking heeft, de graad van Bachelor op het gebied van het Nederlands recht en tevens de graad van Master op het
+      gebied van het Nederlands recht is verleend; of
+
+      b. die op grond van het afsluitend examen van een opleiding op het gebied van het Nederlands recht aan een
+      universiteit dan wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek
+      betrekking heeft, het recht hebben verkregen om de titel meester te voeren.
+
+      2 Tien leden en acht plaatsvervangende leden hebben gedurende de aan hun benoeming voorafgaande periode van
+      tien jaar ten minste vijf jaar als kapitein of als scheepsofficier aan boord van een ander zeeschip dan een
+      vissersvaartuig gevaren.
+
+      3 Vier leden en vier plaatsvervangende leden hebben gedurende de aan hun benoeming voorafgaande periode van tien
+      jaar ten minste vijf jaar als schipper of als scheepsofficier aan boord van een vissersvaartuig gevaren.
+
+      4 Voorts worden als plaatsvervangend lid benoemd:
+
+      a. twee reders;
+
+      b. twee waterbouwkundigen;
+
+      c. twee registerloodsen; en
+
+      d. twee hydrografen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel42
@@ -3156,59 +2741,17 @@ articles:
       - id: ref1
         bwb_id: BWBR0050681
         artikel: '42'
-  - number: 5.1.1.a
+  - number: '5.2'
     text: |-
-      aan wie op grond van het afsluitend examen van een opleiding in het wetenschappelijk onderwijs door een
-      universiteit dan wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek
-      betrekking heeft, de graad van Bachelor op het gebied van het Nederlands recht en tevens de graad van Master op het
-      gebied van het Nederlands recht is verleend; of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.1.b
-    text: |-
-      die op grond van het afsluitend examen van een opleiding op het gebied van het Nederlands recht aan een
-      universiteit dan wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek
-      betrekking heeft, het recht hebben verkregen om de titel meester te voeren.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.2
-    text: |-
-      Tien leden en acht plaatsvervangende leden hebben gedurende de aan hun benoeming voorafgaande periode van tien jaar
-      ten minste vijf jaar als kapitein of als scheepsofficier aan boord van een ander zeeschip dan een vissersvaartuig
-      gevaren.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.3
-    text: |-
-      Vier leden en vier plaatsvervangende leden hebben gedurende de aan hun benoeming voorafgaande periode van tien jaar
-      ten minste vijf jaar als schipper of als scheepsofficier aan boord van een vissersvaartuig gevaren.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.4
-    text: 'Voorts worden als plaatsvervangend lid benoemd:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.4.a
-    text: twee reders;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.4.b
-    text: twee waterbouwkundigen;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.4.c
-    text: twee registerloodsen; en
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.1.4.d
-    text: twee hydrografen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.1
-  - number: 5.2.1
-    text: 'De secretaris en de plaatsvervangende secretarissen zijn personen:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.2
-  - number: 5.2.1.a
-    text: |-
-      aan wie op grond van het afsluitend examen van een opleiding in het wetenschappelijk onderwijs door een
+      1 De secretaris en de plaatsvervangende secretarissen zijn personen:
+
+      a. aan wie op grond van het afsluitend examen van een opleiding in het wetenschappelijk onderwijs door een
       universiteit dan wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek
       betrekking heeft, de graad van Bachelor op het gebied van het recht en tevens de graad van Master op het gebied van
       het recht is verleend; of
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.2
-  - number: 5.2.1.b
-    text: |-
-      die op grond van het afsluitend examen van een opleiding op het gebied van het recht aan een universiteit dan wel
-      de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek betrekking heeft, het
+
+      b. die op grond van het afsluitend examen van een opleiding op het gebied van het recht aan een universiteit dan
+      wel de Open Universiteit, waarop de Wet op het hoger onderwijs en wetenschappelijk onderzoek betrekking heeft, het
       recht heeft verkregen om de titel meester te voeren.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.2
   - number: '5.3'
@@ -3216,41 +2759,36 @@ articles:
       Een verzoek of een klacht wordt schriftelijk of als geautomatiseerd bestand en met redenen omkleed ingediend bij de
       voorzitter van het tuchtcollege. Een klacht van een belanghebbende vermeldt de naam, het adres en de woonplaats van
       de klager. Een verzoek en een klacht bevatten voorts ten minste de volgende gegevens:
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.3
-  - number: 5.3.a
-    text: |-
-      de naam en, voor zover bekend, het adres en de woonplaats van de kapitein of de scheepsofficier op wie het verzoek
-      of de klacht betrekking heeft, en indien het verzoek of de klacht betrekking heeft op een scheepsofficier, de
-      functie aan boord van het zeeschip die de scheepsofficier ten tijde van de gewraakte gedraging vervulde;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.3
-  - number: 5.3.b
-    text: |-
-      de naam en, voor zover bekend, het type van het zeeschip, aan boord waarvan de gewraakte gedraging heeft
+
+      a. de naam en, voor zover bekend, het adres en de woonplaats van de kapitein of de scheepsofficier op wie het
+      verzoek of de klacht betrekking heeft, en indien het verzoek of de klacht betrekking heeft op een scheepsofficier,
+      de functie aan boord van het zeeschip die de scheepsofficier ten tijde van de gewraakte gedraging vervulde;
+
+      b. de naam en, voor zover bekend, het type van het zeeschip, aan boord waarvan de gewraakte gedraging heeft
       plaatsgevonden;
+
+      c. een omschrijving van de gedraging, waarop het verzoek of de klacht betrekking heeft;
+
+      d. de bezwaren die tegen de gewraakte gedraging zijn gerezen.
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.3
-  - number: 5.3.c
-    text: een omschrijving van de gedraging, waarop het verzoek of de klacht betrekking heeft;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.3
-  - number: 5.3.d
-    text: de bezwaren die tegen de gewraakte gedraging zijn gerezen.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.3
-  - number: 5.4.1
-    text: 'De secretaris zendt onverwijld een afschrift van de beslissing van het tuchtcollege:'
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.4
-  - number: 5.4.1.a
-    text: bij aangetekende brief en als geautomatiseerd bestand aan de betrokken kapitein of scheepsofficier;
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.4
-  - number: 5.4.1.b
-    text: bij gewone brief en als geautomatiseerd bestand aan Onze Minister en aan de klager.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.4
-  - number: 5.4.2
+  - number: '5.4'
     text: |-
-      Indien het tuchtcollege in zijn uitspraak een schorsing van de vaarbevoegdheid heeft opgelegd, deelt
+      1 De secretaris zendt onverwijld een afschrift van de beslissing van het tuchtcollege:
+
+      a. bij aangetekende brief en als geautomatiseerd bestand aan de betrokken kapitein of scheepsofficier;
+
+      b. bij gewone brief en als geautomatiseerd bestand aan Onze Minister en aan de klager.
+
+      2 Indien het tuchtcollege in zijn uitspraak een schorsing van de vaarbevoegdheid heeft opgelegd, deelt
       de secretaris in zijn aangetekende brief en als geautomatiseerd bestand aan de betrokken kapitein of
       scheepsofficier mede: de datum waarop de schorsing ingaat, de verplichting om zijn vaarbevoegdheidsbewijs
       vóór die datum in te leveren bij het in [artikel 76, eerste lid, van de wet][ref1] genoemde Centraal register
       bemanningsgegevens, alsmede de gevolgen van het niet tijdig inleveren van het vaarbevoegdheidsbewijs, bedoeld in
       [artikel 57, vierde lid van de wet][ref2].
+
+      3 De secretaris zendt een afschrift van de schriftelijke beslissing van het tuchtcollege alsmede van de
+      aangetekende brief aan de betrokken kapitein of scheepsofficier tevens ter registratie aan het Centraal register
+      bemanningsgegevens.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0050681#Artikel76
@@ -3263,12 +2801,6 @@ articles:
       - id: ref2
         bwb_id: BWBR0050681
         artikel: '57'
-  - number: 5.4.3
-    text: |-
-      De secretaris zendt een afschrift van de schriftelijke beslissing van het tuchtcollege alsmede van de
-      aangetekende brief aan de betrokken kapitein of scheepsofficier tevens ter registratie aan het Centraal register
-      bemanningsgegevens.
-    url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel5.4
   - number: 6.1.1
     text: |-
       Een verklaring als bedoeld in [artikel 123, eerste lid, van het Besluit zeevarenden][ref1] die door de
@@ -3278,7 +2810,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0012778#Artikel123
       [ref2]: https://wetten.overheid.nl/BWBR0050681
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2.4.7
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel6.1.1
     references:
       - id: ref1
@@ -3288,7 +2820,7 @@ articles:
         bwb_id: BWBR0050681
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.4.7
         hoofdstuk: '2'
         paragraaf: '2.4'
   - number: 6.2.1
@@ -3313,7 +2845,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0012778#Artikel125ff
       [ref2]: https://wetten.overheid.nl/BWBR0012778#Artikel40a
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel3.5.2
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel6.2.2
     references:
       - id: ref1
@@ -3324,7 +2856,7 @@ articles:
         artikel: 40a
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.5.2
         hoofdstuk: '3'
         paragraaf: '3.5'
   - number: 6.2.3
@@ -3338,7 +2870,7 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0012778#Artikel125gg
       [ref2]: https://wetten.overheid.nl/BWBR0012778#Artikel40
       [ref3]: https://wetten.overheid.nl/BWBR0012778#Artikel117a
-      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0050941#Artikel3.4.2
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel6.2.3
     references:
       - id: ref1
@@ -3352,7 +2884,7 @@ articles:
         artikel: 117a
       - id: ref4
         bwb_id: BWBR0050941
-        artikel: '3'
+        artikel: 3.4.2
         hoofdstuk: '3'
         paragraaf: '3.4'
   - number: 6.2.4
@@ -3364,7 +2896,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0012778#Artikel125ii
       [ref2]: https://wetten.overheid.nl/BWBR0012778#Artikel120
-      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0050941#Artikel2.4.4
     url: https://wetten.overheid.nl/BWBR0050941/2025-07-01#Artikel6.2.4
     references:
       - id: ref1
@@ -3375,7 +2907,7 @@ articles:
         artikel: '120'
       - id: ref3
         bwb_id: BWBR0050941
-        artikel: '2'
+        artikel: 2.4.4
         hoofdstuk: '2'
         paragraaf: '2.4'
   - number: 6.3.1
