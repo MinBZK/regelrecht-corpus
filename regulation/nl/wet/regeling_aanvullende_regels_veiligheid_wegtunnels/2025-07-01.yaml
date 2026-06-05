@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_aanvullende_regels_veiligheid_wegtunnels
 regulatory_layer: WET
 publication_date: '2025-04-16'
@@ -15,10 +15,12 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      In deze regeling wordt verstaan onder tunnelveiligheidsdossier: het dossier, bedoeld in
+      1 In deze regeling wordt verstaan onder tunnelveiligheidsdossier: het dossier, bedoeld in
       [artikel 10 van de wet][ref1].
+
+      2 Het begrip voorval omvat mede ongeluk of incident.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel10
@@ -27,9 +29,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0019516
         artikel: '10'
-  - number: '1.2'
-    text: Het begrip voorval omvat mede ongeluk of incident.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel1
   - number: '4'
     text: |-
       De risicoanalyse, bedoeld in [artikel 6, derde lid, van de wet][ref1], wordt uitgevoerd overeenkomstig het in
@@ -42,14 +41,33 @@ articles:
       - id: ref1
         bwb_id: BWBR0019516
         artikel: '6'
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Het tunnelveiligheidsplan, bedoeld in [artikel 6c van de wet][ref1], wordt opgesteld en uitgevoerd overeenkomstig
+      1 Het tunnelveiligheidsplan, bedoeld in [artikel 6c van de wet][ref1], wordt opgesteld en uitgevoerd overeenkomstig
       [bijlage 2][ref2], onderdeel B1, bij deze regeling.
+
+      2 Het tunnelveiligheidsplan bevat ten minste:
+
+      a. een globale beschrijving van het ontwerp van de tunnel, alsmede van de relevante locatieaspecten, de ruimtelijke
+      inpassing en de technische haalbaarheid van de tunnel;
+
+      b. een beschrijving van het voorziene gebruik van de tunnel;
+
+      c. indien er een gestandaardiseerde uitrusting wordt toegepast, de keuze van de toe te passen gestandaardiseerde
+      uitrusting als bedoeld in [artikel 6b van de wet][ref3], dan wel de keuze om van de gestandaardiseerde uitrusting
+      af te wijken op grond van artikel 6b, derde lid, van de wet;
+
+      d. een beschrijving van de uitkomsten van de risicoanalyse bedoeld in artikel 6, derde lid van de wet, waarmee
+      wordt toegelicht dat met de gekozen uitrusting aan de norm, bedoeld in [artikel 6, eerste lid, van de wet][ref4]
+      wordt voldaan;
+
+      e. een globale beschrijving van de organisatie van het beheer van de tunnel en de calamiteitenbestrijding.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6c
       [ref2]: https://wetten.overheid.nl/BWBR0019806
+      [ref3]: https://wetten.overheid.nl/BWBR0019516#Artikel6b
+      [ref4]: https://wetten.overheid.nl/BWBR0019516#Artikel6
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
     references:
       - id: ref1
@@ -57,54 +75,66 @@ articles:
         artikel: 6c
       - id: ref2
         bwb_id: BWBR0019806
-  - number: '5.2'
-    text: 'Het tunnelveiligheidsplan bevat ten minste:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-  - number: 5.2.a
-    text: |-
-      een globale beschrijving van het ontwerp van de tunnel, alsmede van de relevante locatieaspecten, de ruimtelijke
-      inpassing en de technische haalbaarheid van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-  - number: 5.2.b
-    text: een beschrijving van het voorziene gebruik van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-  - number: 5.2.c
-    text: |-
-      indien er een gestandaardiseerde uitrusting wordt toegepast, de keuze van de toe te passen gestandaardiseerde
-      uitrusting als bedoeld in [artikel 6b van de wet][ref1], dan wel de keuze om van de gestandaardiseerde uitrusting
-      af te wijken op grond van artikel 6b, derde lid, van de wet;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6b
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0019516
         artikel: 6b
-  - number: 5.2.d
-    text: |-
-      een beschrijving van de uitkomsten van de risicoanalyse bedoeld in artikel 6, derde lid van de wet, waarmee wordt
-      toegelicht dat met de gekozen uitrusting aan de norm, bedoeld in [artikel 6, eerste lid, van de wet][ref1] wordt
-      voldaan;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0019516
         artikel: '6'
-  - number: 5.2.e
-    text: een globale beschrijving van de organisatie van het beheer van de tunnel en de calamiteitenbestrijding.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Het veiligheidsbeheerplan, bedoeld in [artikel 7 van de wet][ref1], wordt opgesteld en uitgevoerd overeenkomstig
+      1 Het veiligheidsbeheerplan, bedoeld in [artikel 7 van de wet][ref1], wordt opgesteld en uitgevoerd overeenkomstig
       [bijlage 2][ref2], onderdeel B3, bij deze regeling.
+
+      2 Het veiligheidsbeheerplan bevat ten minste:
+
+      a. een beschrijving van het gebruik van de tunnel;
+
+      b. een beschrijving van het tunnelsysteem;
+
+      c. een beschrijving van de organisatie, processen, procedures, werkinstructies en planningen ten behoeve van het
+      gebruik, de inspectie en het onderhoud van de tunnel;
+
+      d. een beschrijving van de wijze waarop registratie en evaluatie van significante voorvallen plaats vindt en een
+      beschrijving van de wijze waarop verbeteringen worden doorgevoerd;
+
+      e. een analyse van scenario’s van ongevallen of indien die analyse op grond van
+      [artikel 7, eerste lid, van de wet][ref3], achterwege is gebleven, de redenen daarvoor, en
+
+      f. een calamiteitenbestrijdingsplan waarin ook rekening gehouden is met mensen met een beperkte mobiliteit en met
+      gehandicapten en chronisch zieken en dat voorts bevat:
+
+      i. een beschrijving van de operationele afspraken tussen de tunnelbeheerder en de hulpverleningsdiensten over de
+      inzet tijdens calamiteiten, en
+
+      ii. instructies voor de uit te voeren bedienprocessen tijdens incidenten en calamiteiten.
+
+      3 De incidenten, bedoeld in het tweede lid, onderdeel f, onder ii, zijn in ieder geval:
+
+      a. stilstaande voertuigen;
+
+      b. aanrijdingen;
+
+      c. verloren lading, en
+
+      d. voorvallen met verdwaalde personen.
+
+      4 De calamiteiten, bedoeld in het tweede lid, onderdeel f, onder ii, zijn in ieder geval:
+
+      a. een ernstige aanrijding;
+
+      b. een brand of het vermoeden daarvan;
+
+      c. het vrijkomen van gevaarlijke stoffen of een vermoeden daarvan;
+
+      d. een brand in de verkeerscentrale;
+
+      e. een bommelding.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel7
       [ref2]: https://wetten.overheid.nl/BWBR0019806
+      [ref3]: https://wetten.overheid.nl/BWBR0019516#Artikel7
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
     references:
       - id: ref1
@@ -112,131 +142,45 @@ articles:
         artikel: '7'
       - id: ref2
         bwb_id: BWBR0019806
-  - number: '6.2'
-    text: 'Het veiligheidsbeheerplan bevat ten minste:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.a
-    text: een beschrijving van het gebruik van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.b
-    text: een beschrijving van het tunnelsysteem;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.c
-    text: |-
-      een beschrijving van de organisatie, processen, procedures, werkinstructies en planningen ten behoeve van het
-      gebruik, de inspectie en het onderhoud van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.d
-    text: |-
-      een beschrijving van de wijze waarop registratie en evaluatie van significante voorvallen plaats vindt en een
-      beschrijving van de wijze waarop verbeteringen worden doorgevoerd;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.e
-    text: |-
-      een analyse van scenario’s van ongevallen of indien die analyse op grond van
-      [artikel 7, eerste lid, van de wet][ref1], achterwege is gebleven, de redenen daarvoor, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel7
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0019516
         artikel: '7'
-  - number: 6.2.f
+  - number: 6a
     text: |-
-      een calamiteitenbestrijdingsplan waarin ook rekening gehouden is met mensen met een beperkte mobiliteit en met
-      gehandicapten en chronisch zieken en dat voorts bevat:
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.f.i
-    text: |-
-      een beschrijving van de operationele afspraken tussen de tunnelbeheerder en de hulpverleningsdiensten over de inzet
-      tijdens calamiteiten, en
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.2.f.ii
-    text: instructies voor de uit te voeren bedienprocessen tijdens incidenten en calamiteiten.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: '6.3'
-    text: 'De incidenten, bedoeld in het tweede lid, onderdeel f, onder ii, zijn in ieder geval:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.3.a
-    text: stilstaande voertuigen;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.3.b
-    text: aanrijdingen;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.3.c
-    text: verloren lading, en
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.3.d
-    text: voorvallen met verdwaalde personen.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: '6.4'
-    text: 'De calamiteiten, bedoeld in het tweede lid, onderdeel f, onder ii, zijn in ieder geval:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.4.a
-    text: een ernstige aanrijding;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.4.b
-    text: een brand of het vermoeden daarvan;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.4.c
-    text: het vrijkomen van gevaarlijke stoffen of een vermoeden daarvan;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.4.d
-    text: een brand in de verkeerscentrale;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6.4.e
-    text: een bommelding.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6
-  - number: 6a.1
-    text: |-
-      De instructies, bedoeld in [artikel 6, tweede lid, onderdeel f, onder ii][ref1], bevatten een beschrijving van de
+      1 De instructies, bedoeld in [artikel 6, tweede lid, onderdeel f, onder ii][ref1], bevatten een beschrijving van de
       handelswijze bij incidenten en calamiteiten overeenkomstig de volgende processtappen:
 
+      a. vaststellen van de aard van het voorval;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel6
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-    references:
-      - id: ref1
-        bwb_id: BWBR0019806
-        artikel: '6'
-  - number: 6a.1.a
-    text: vaststellen van de aard van het voorval;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.b
-    text: bepalen van de afhandelingstrategie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.c
-    text: instellen van initiële maatregelen;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.d
-    text: informeren en oproepen van hulpverleningsdiensten;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.e
-    text: instellen van additionele maatregelen;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.f
-    text: herstellen en normaliseren van de verkeerssituatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.1.g
-    text: loggen en registreren van het voorval en de afhandeling ervan.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
-  - number: 6a.2
-    text: |-
-      Voor tunnels langer dan 500 meter die zijn uitgerust met een gestandaardiseerde uitrusting overeenkomstig
-      [artikel 13][ref1] bevatten de instructies een nadere uitwerking van de in [bijlage 3][ref2] opgenomen
+      b. bepalen van de afhandelingstrategie;
+
+      c. instellen van initiële maatregelen;
+
+      d. informeren en oproepen van hulpverleningsdiensten;
+
+      e. instellen van additionele maatregelen;
+
+      f. herstellen en normaliseren van de verkeerssituatie;
+
+      g. loggen en registreren van het voorval en de afhandeling ervan.
+
+      2 Voor tunnels langer dan 500 meter die zijn uitgerust met een gestandaardiseerde uitrusting overeenkomstig
+      [artikel 13][ref2] bevatten de instructies een nadere uitwerking van de in [bijlage 3][ref3] opgenomen
       uitgangspunten.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel13
-      [ref2]: https://wetten.overheid.nl/BWBR0019806
+      [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel6
+      [ref2]: https://wetten.overheid.nl/BWBR0019806#Artikel13
+      [ref3]: https://wetten.overheid.nl/BWBR0019806
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel6a
     references:
       - id: ref1
         bwb_id: BWBR0019806
-        artikel: '13'
+        artikel: '6'
       - id: ref2
+        bwb_id: BWBR0019806
+        artikel: '13'
+      - id: ref3
         bwb_id: BWBR0019806
   - number: 6b
     text: |-
@@ -275,130 +219,96 @@ articles:
         artikel: '6'
       - id: ref2
         bwb_id: BWBR0027466
-  - number: '8.1'
+  - number: '8'
     text: |-
-      In of bij de aanvraag voor de in [artikel 8 van de wet][ref1] bedoelde vergunning worden de volgende gegevens
+      1 In of bij de aanvraag voor de in [artikel 8 van de wet][ref1] bedoelde vergunning worden de volgende gegevens
       verstrekt:
+
+      a. naam, post- en e-mailadres en telefoonnummer van de tunnelbeheerder;
+
+      b. de kadastrale aanduiding en de ligging van de tunnel;
+
+      c. de naam en de aard van de tunnel.
+
+      2 Bij de aanvraag worden de volgende bescheiden overgelegd:
+
+      a. het tunnelveiligheidsplan, bedoeld in [artikel 6c, eerste lid, van de wet][ref2];
+
+      b. het advies van de veiligheidsbeambte over het tunnelveiligheidsplan en dat over het samenstel van documenten
+      bedoeld in artikel 7.15, eerste lid, onder b, van de Omgevingsregeling waarmee een omgevingsvergunning voor een
+      bouwactiviteit als bedoeld in [artikel 5.1, tweede lid, aanhef en onder a, van de Omgevingswet][ref3] aangevraagd
+      zal worden;
+
+      c. het veiligheidsbeheerplan, bedoeld in [artikel 7 van de wet][ref4];
+
+      d. het advies van de veiligheidsbeambte over het openstellen voor het verkeer van de tunnel.
+
+      3 Op verzoek van het bevoegde college van burgemeester en wethouders verstrekt de aanvrager tevens nadere gegevens
+      en bescheiden voor zover die voor de beslissing op de aanvraag nodig zijn.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel8
+      [ref2]: https://wetten.overheid.nl/BWBR0019516#Artikel6c
+      [ref3]: https://wetten.overheid.nl/BWBR0037885#Artikel5.1
+      [ref4]: https://wetten.overheid.nl/BWBR0019516#Artikel7
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
     references:
       - id: ref1
         bwb_id: BWBR0019516
         artikel: '8'
-  - number: 8.1.a
-    text: naam, post- en e-mailadres en telefoonnummer van de tunnelbeheerder;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-  - number: 8.1.b
-    text: de kadastrale aanduiding en de ligging van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-  - number: 8.1.c
-    text: de naam en de aard van de tunnel.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-  - number: '8.2'
-    text: 'Bij de aanvraag worden de volgende bescheiden overgelegd:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-  - number: 8.2.a
-    text: |-
-      het tunnelveiligheidsplan, bedoeld in [artikel 6c, eerste lid, van de wet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6c
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0019516
         artikel: 6c
-  - number: 8.2.b
-    text: |-
-      het advies van de veiligheidsbeambte over het tunnelveiligheidsplan en dat over het samenstel van documenten
-      bedoeld in artikel 7.15, eerste lid, onder b, van de Omgevingsregeling waarmee een omgevingsvergunning voor een
-      bouwactiviteit als bedoeld in [artikel 5.1, tweede lid, aanhef en onder a, van de Omgevingswet][ref1] aangevraagd
-      zal worden;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0037885#Artikel5
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0037885
-        artikel: '5'
-  - number: 8.2.c
-    text: |-
-      het veiligheidsbeheerplan, bedoeld in [artikel 7 van de wet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel7
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-    references:
-      - id: ref1
+        artikel: '5.1'
+      - id: ref4
         bwb_id: BWBR0019516
         artikel: '7'
-  - number: 8.2.d
-    text: het advies van de veiligheidsbeambte over het openstellen voor het verkeer van de tunnel.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
-  - number: '8.3'
-    text: |-
-      Op verzoek van het bevoegde college van burgemeester en wethouders verstrekt de aanvrager tevens nadere gegevens en
-      bescheiden voor zover die voor de beslissing op de aanvraag nodig zijn.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel8
   - number: '9'
     text: |-
       De veiligheidsbeambte controleert regelmatig of de tunnelconstructies en -voorzieningen worden onderhouden en waar
       nodig hersteld.
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel9
-  - number: '10.1'
+  - number: '10'
     text: |-
-      Van elk significant voorval in een tunnel stelt de tunnelbeheerder een toelichtend verslag op en zendt
+      1 Van elk significant voorval in een tunnel stelt de tunnelbeheerder een toelichtend verslag op en zendt
       dat binnen vier weken aan de veiligheidsbeambte, het bevoegd college van burgemeester en wethouders en de
       hulpverleningsdiensten.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.2'
-    text: |-
-      De tunnelbeheerder evalueert elk significant voorval. Uiterlijk tien weken na het significante voorval stelt de
+
+      2 De tunnelbeheerder evalueert elk significant voorval. Uiterlijk tien weken na het significante voorval stelt de
       tunnelbeheerder een rapportage op en zendt die aan de veiligheidsbeambte, het bevoegd college van burgemeester en
       wethouders en de hulpverleningsdiensten.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.3'
-    text: De rapportage, bedoeld in het tweede lid, bevat een procesevaluatie en een systeemevaluatie.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.4'
-    text: |-
-      Indien de tunnelbeheerder een door een ander opgesteld onderzoeksverslag ontvangt met een analyse van de
+
+      3 De rapportage, bedoeld in het tweede lid, bevat een procesevaluatie en een systeemevaluatie.
+
+      4 Indien de tunnelbeheerder een door een ander opgesteld onderzoeksverslag ontvangt met een analyse van de
       omstandigheden van een voorval in een tunnel of de conclusies die daaruit kunnen worden getrokken, zendt hij
       dat verslag binnen vier weken na ontvangst aan de veiligheidsbeambte, het bevoegd college van burgemeester en
       wethouders en de hulpverleningsdiensten.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.5'
-    text: De veiligheidsbeambte werkt mee aan de evaluatie van significante voorvallen bedoeld in het tweede lid.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.6'
-    text: |-
-      De tunnelbeheerder draagt er zorg voor dat, in overleg met de veiligheidsbeambte, acties in noodsituaties
+
+      5 De veiligheidsbeambte werkt mee aan de evaluatie van significante voorvallen bedoeld in het tweede lid.
+
+      6 De tunnelbeheerder draagt er zorg voor dat, in overleg met de veiligheidsbeambte, acties in noodsituaties
       uitgevoerd en geëvalueerd worden.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '10.7'
-    text: |-
-      De veiligheidsbeambte rapporteert jaarlijks aan de tunnelbeheerder en het bevoegd college van burgemeester en
+
+      7 De veiligheidsbeambte rapporteert jaarlijks aan de tunnelbeheerder en het bevoegd college van burgemeester en
       wethouders op hoofdlijnen over het incidentregistratie- en evaluatieproces en hoe wordt omgegaan met het realiseren
       van geactiveerde verbetermaatregelen uit de evaluaties.
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel10
-  - number: '11.1'
+  - number: '11'
     text: |-
-      De veiligheidsbeambte gaat na of het bedieningspersoneel en de hulpverleningsdiensten geoefend zijn en werkt mee
+      1 De veiligheidsbeambte gaat na of het bedieningspersoneel en de hulpverleningsdiensten geoefend zijn en werkt mee
       aan de organisatie van de regelmatig te houden oefeningen.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel11
-  - number: '11.2'
-    text: |-
-      De tunnelbeheerder draagt ervoor zorg dat met betrekking tot een tunnel ten minste eenmaal in de vier jaar een
+
+      2 De tunnelbeheerder draagt ervoor zorg dat met betrekking tot een tunnel ten minste eenmaal in de vier jaar een
       realistische oefening en in elk tussenliggend jaar een gedeeltelijke of simulatieoefening wordt uitgevoerd.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel11
-  - number: '11.3'
-    text: |-
-      In afwijking van het tweede lid kan, indien binnen een veiligheidsregio, als bedoeld in de
+
+      3 In afwijking van het tweede lid kan, indien binnen een veiligheidsregio, als bedoeld in de
       [Wet veiligheidsregio’s][ref1], twee of meer tunnels van één tunnelbeheerder liggen en voor zover het een
       realistische oefening betreft, volstaan worden met het houden van één oefening in ten minste één van die tunnels.
+
+      4 De veiligheidsbeambte, de hulpverleningsdiensten en de tunnelbeheerder evalueren gezamenlijk de oefeningen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027466
@@ -406,19 +316,34 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0027466
-  - number: '11.4'
-    text: De veiligheidsbeambte, de hulpverleningsdiensten en de tunnelbeheerder evalueren gezamenlijk de oefeningen.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel11
-  - number: '12.1'
+  - number: '12'
     text: |-
-      Het tunnelveiligheidsdossier bevat alle voor de veiligheid betreffende de tunnel van belang zijnde gegevens
+      1 Het tunnelveiligheidsdossier bevat alle voor de veiligheid betreffende de tunnel van belang zijnde gegevens
       en oorspronkelijke bescheiden, alsmede de desbetreffende digitale documenten, waartoe in elk geval behoren
       de documenten, bedoeld in de [artikelen 4 tot en met 8][ref1], en de documenten betreffende het bepaalde in
       [artikel 11][ref2], met inbegrip van latere wijzigingen daarvan, alsmede:
 
+      a. de planologische besluiten ten aanzien van de tunnel;
+
+      b. de omgevingsvergunning voor een bouwactiviteit als bedoeld in
+      [artikel 5.1, tweede lid, aanhef en onder a, van de Omgevingswet][ref3] en de bij die vergunning behorende
+      aanvraag;
+
+      c. een lijst van de uitgevoerde oefeningen en een analyse van de lering die hieruit getrokken is.
+
+      2 Een ieder die gegevens en oorspronkelijke bescheiden, bedoeld in het eerste lid, ontvangen heeft of onder zich
+      heeft, verstrekt deze met bekwame spoed aan de tunnelbeheerder, die deze opneemt in het tunnelveiligheidsdossier.
+
+      3 Van elk in het tunnelveiligheidsdossier opgenomen document verstrekt de tunnelbeheerder een kopie aan de
+      veiligheidsbeambte.
+
+      4 De betrokken overheidsinstanties kunnen het tunnelveiligheidsdossier te allen tijde inzien. Op hun verzoek
+      verstrekt de tunnelbeheerder hen kopieën van de bescheiden.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel4
       [ref2]: https://wetten.overheid.nl/BWBR0019806#Artikel11
+      [ref3]: https://wetten.overheid.nl/BWBR0037885#Artikel5.1
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
     references:
       - id: ref1
@@ -427,287 +352,177 @@ articles:
       - id: ref2
         bwb_id: BWBR0019806
         artikel: '11'
-  - number: 12.1.a
-    text: de planologische besluiten ten aanzien van de tunnel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-  - number: 12.1.b
-    text: |-
-      de omgevingsvergunning voor een bouwactiviteit als bedoeld in
-      [artikel 5.1, tweede lid, aanhef en onder a, van de Omgevingswet][ref1] en de bij die vergunning behorende
-      aanvraag;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0037885#Artikel5
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0037885
-        artikel: '5'
-  - number: 12.1.c
-    text: een lijst van de uitgevoerde oefeningen en een analyse van de lering die hieruit getrokken is.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-  - number: '12.2'
+        artikel: '5.1'
+  - number: '13'
     text: |-
-      Een ieder die gegevens en oorspronkelijke bescheiden, bedoeld in het eerste lid, ontvangen heeft of onder zich
-      heeft, verstrekt deze met bekwame spoed aan de tunnelbeheerder, die deze opneemt in het tunnelveiligheidsdossier.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-  - number: '12.3'
-    text: |-
-      Van elk in het tunnelveiligheidsdossier opgenomen document verstrekt de tunnelbeheerder een kopie aan de
-      veiligheidsbeambte.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-  - number: '12.4'
-    text: |-
-      De betrokken overheidsinstanties kunnen het tunnelveiligheidsdossier te allen tijde inzien. Op hun verzoek
-      verstrekt de tunnelbeheerder hen kopieën van de bescheiden.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel12
-  - number: '13.1'
-    text: |-
-      De gestandaardiseerde uitrusting, bedoeld in [artikel 6a, eerste lid, van de wet][ref1] bestaat voor een tunnel
+      1 De gestandaardiseerde uitrusting, bedoeld in [artikel 6a, eerste lid, van de wet][ref1] bestaat voor een tunnel
       langer dan 500 meter uit:
+
+      a. afsluitbomen;
+
+      b. bedieningsinstallatie;
+
+      c. beeldvoorziening meldkamer;
+
+      d. bluswatervoorziening;
+
+      e. C2000;
+
+      f. calamiteitendoorsteek;
+
+      g. Closed Circuit Television;
+
+      h. detectie snelheidsonderschrijdingen en spookrijders;
+
+      i. elektrische energiebron;
+
+      j. eventrecorder;
+
+      k. hoog frequent-installatie;
+
+      l. verkeersmanagementsysteem;
+
+      m. verkeersmanagementsysteem koppeling verkeersbuis;
+
+      n. hulpdienstpaneel;
+
+      o. hulpposten;
+
+      p. intercom;
+
+      q. luchtkwaliteitmeters;
+
+      r. noodbedieninginstallatie;
+
+      s. noodtelefoon;
+
+      t. omroepinstallatie verkeersbuis;
+
+      u. overdrukvoorziening grensruimte, tenzij er geen grensruimte is;
+
+      v. ventilatie;
+
+      w. verkeerslichten;
+
+      x. verlichting verkeersbuis;
+
+      y. vloeistofafvoer;
+
+      z. vloeistofpompinstallatie;
+
+      aa. vluchtdeurindicatie;
+
+      bb. veilige vluchtroute, bestaande uit:
+
+      i. een middentunnelkanaal;
+
+      ii. dwarsverbindingen met een verkeersvrij te maken verkeersbuis, of
+
+      iii. een verkeersvrij te maken verkeersbuis.
+
+      2 Indien de veilige vluchtroute als bedoeld in het eerste lid onder bb, onder i, bestaat uit een middentunnelkanaal
+      bevat de tunnel in aanvulling op het eerste lid de volgende uitrusting:
+
+      a. verlichting veilige vluchtroute;
+
+      b. omroepinstallatie veilige vluchtroute;
+
+      c. rij van vluchtdeuren of in geval van een middentunnelkanaal zonder kopdeuren als vluchtuitgang: een rij van
+      vergrendelbare vluchtdeuren;
+
+      d. overdrukvoorziening veilige vluchtroute;
+
+      e. kopdeur middentunnelkanaal, tenzij dit ontwerptechnisch niet mogelijk is; dan wordt de laatste deur van de rij
+      van vergrendelbare vluchtdeuren tot vluchtuitgang bestemd, en
+
+      f. dynamische vluchtroute-indicatie.
+
+      3 Indien de veilige vluchtroute als bedoeld in het eerste lid onder bb, onder ii, bestaat uit dwarsverbindingen met
+      een verkeersvrij te maken verkeersbuis bevat de tunnel in aanvulling op het eerste lid de volgende uitrusting:
+
+      a. verlichting veilige vluchtroute;
+
+      b. omroepinstallatie veilige vluchtroute;
+
+      c. rij van vergrendelbare vluchtdeuren,
+
+      d. overdrukvoorziening veilige vluchtroute, en
+
+      e. dynamische vluchtroute-indicatie.
+
+      4 Indien de veilige vluchtroute, bedoeld in het eerste lid onder bb, onder iii, bestaat uit een verkeersvrij te
+      maken verkeersbuis bevat de tunnel in aanvulling op het eerste lid een rij van vergrendelbare vluchtdeuren.
+
+      5 Een tunnel langer dan 500 meter wordt uitgerust met de in het eerste lid en in het tweede, derde of vierde lid
+      bedoelde onderdelen overeenkomstig [bijlage 4][ref2] bij deze regeling.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6a
+      [ref2]: https://wetten.overheid.nl/BWBR0019806
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
     references:
       - id: ref1
         bwb_id: BWBR0019516
         artikel: 6a
-  - number: 13.1.a
-    text: afsluitbomen;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.b
-    text: bedieningsinstallatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.c
-    text: beeldvoorziening meldkamer;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.d
-    text: bluswatervoorziening;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.e
-    text: C2000;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.f
-    text: calamiteitendoorsteek;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.g
-    text: Closed Circuit Television;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.h
-    text: detectie snelheidsonderschrijdingen en spookrijders;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.i
-    text: elektrische energiebron;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.j
-    text: eventrecorder;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.k
-    text: hoog frequent-installatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.l
-    text: verkeersmanagementsysteem;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.m
-    text: verkeersmanagementsysteem koppeling verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.n
-    text: hulpdienstpaneel;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.o
-    text: hulpposten;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.p
-    text: intercom;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.q
-    text: luchtkwaliteitmeters;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.r
-    text: noodbedieninginstallatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.s
-    text: noodtelefoon;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.t
-    text: omroepinstallatie verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.u
-    text: overdrukvoorziening grensruimte, tenzij er geen grensruimte is;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.v
-    text: ventilatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.w
-    text: verkeerslichten;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.x
-    text: verlichting verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.y
-    text: vloeistofafvoer;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.z
-    text: vloeistofpompinstallatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.aa
-    text: vluchtdeurindicatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.bb
-    text: 'veilige vluchtroute, bestaande uit:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.bb.i
-    text: een middentunnelkanaal;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.bb.ii
-    text: dwarsverbindingen met een verkeersvrij te maken verkeersbuis, of
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.1.bb.iii
-    text: een verkeersvrij te maken verkeersbuis.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: '13.2'
-    text: |-
-      Indien de veilige vluchtroute als bedoeld in het eerste lid onder bb, onder i, bestaat uit een middentunnelkanaal
-      bevat de tunnel in aanvulling op het eerste lid de volgende uitrusting:
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.a
-    text: verlichting veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.b
-    text: omroepinstallatie veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.c
-    text: |-
-      rij van vluchtdeuren of in geval van een middentunnelkanaal zonder kopdeuren als vluchtuitgang: een rij van
-      vergrendelbare vluchtdeuren;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.d
-    text: overdrukvoorziening veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.e
-    text: |-
-      kopdeur middentunnelkanaal, tenzij dit ontwerptechnisch niet mogelijk is; dan wordt de laatste deur van de rij van
-      vergrendelbare vluchtdeuren tot vluchtuitgang bestemd, en
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.2.f
-    text: dynamische vluchtroute-indicatie.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: '13.3'
-    text: |-
-      Indien de veilige vluchtroute als bedoeld in het eerste lid onder bb, onder ii, bestaat uit dwarsverbindingen met
-      een verkeersvrij te maken verkeersbuis bevat de tunnel in aanvulling op het eerste lid de volgende uitrusting:
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.3.a
-    text: verlichting veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.3.b
-    text: omroepinstallatie veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.3.c
-    text: rij van vergrendelbare vluchtdeuren,
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.3.d
-    text: overdrukvoorziening veilige vluchtroute, en
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: 13.3.e
-    text: dynamische vluchtroute-indicatie.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: '13.4'
-    text: |-
-      Indien de veilige vluchtroute, bedoeld in het eerste lid onder bb, onder iii, bestaat uit een verkeersvrij te maken
-      verkeersbuis bevat de tunnel in aanvulling op het eerste lid een rij van vergrendelbare vluchtdeuren.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-  - number: '13.5'
-    text: |-
-      Een tunnel langer dan 500 meter wordt uitgerust met de in het eerste lid en in het tweede, derde of vierde lid
-      bedoelde onderdelen overeenkomstig [bijlage 4][ref1] bij deze regeling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0019806
-  - number: 13a.1
+  - number: 13a
     text: |-
-      De gestandaardiseerde uitrusting als bedoeld in [artikel 6, eerste lid, van de wet][ref1] bestaat voor een tunnel
+      1 De gestandaardiseerde uitrusting als bedoeld in [artikel 6, eerste lid, van de wet][ref1] bestaat voor een tunnel
       langer dan 250 meter en ten hoogste 500 meter uit:
+
+      a. bluswatervoorziening;
+
+      b. C2000;
+
+      c. calamiteitendoorsteek;
+
+      d. elektrische energiebron;
+
+      e. hulpposten;
+
+      f. noodtelefoon;
+
+      g. overdrukvoorziening grensruimte, tenzij er geen grensruimte is;
+
+      h. verlichting verkeersbuis;
+
+      i. vloeistofafvoer;
+
+      j. vloeistofpompinstallatie;
+
+      k. vluchtdeurindicatie;
+
+      l. veilige vluchtroute, bestaande uit een middentunnelkanaal met de volgende uitrusting:
+
+      i. verlichting veilige vluchtroute;
+
+      ii. rij van vluchtdeuren;
+
+      iii. overdrukvoorziening veilige vluchtroute;
+
+      iv. vluchtroute-indicatie;
+
+      v. kopdeur middentunnelkanaal,
+
+      2 Indien de beheerder dit verkeerskundig noodzakelijk acht, beschikt de tunnel tevens over handmatig bedienbare
+      afsluitbomen.
+
+      3 Een tunnel langer dan 250 meter en ten hoogste 500 meter wordt uitgerust met de in het eerste lid bedoelde
+      onderdelen overeenkomstig de voorschriften van [bijlage 4][ref2], paragrafen 1 tot en met 4, 16, 17, 19 tot en met
+      24, 29, 30, 32, 34 en 35 bij deze regeling.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019516#Artikel6
+      [ref2]: https://wetten.overheid.nl/BWBR0019806
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
     references:
       - id: ref1
         bwb_id: BWBR0019516
         artikel: '6'
-  - number: 13a.1.a
-    text: bluswatervoorziening;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.b
-    text: C2000;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.c
-    text: calamiteitendoorsteek;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.d
-    text: elektrische energiebron;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.e
-    text: hulpposten;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.f
-    text: noodtelefoon;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.g
-    text: overdrukvoorziening grensruimte, tenzij er geen grensruimte is;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.h
-    text: verlichting verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.i
-    text: vloeistofafvoer;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.j
-    text: vloeistofpompinstallatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.k
-    text: vluchtdeurindicatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l
-    text: 'veilige vluchtroute, bestaande uit een middentunnelkanaal met de volgende uitrusting:'
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l.i
-    text: verlichting veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l.ii
-    text: rij van vluchtdeuren;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l.iii
-    text: overdrukvoorziening veilige vluchtroute;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l.iv
-    text: vluchtroute-indicatie;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.1.l.v
-    text: kopdeur middentunnelkanaal,
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.2
-    text: |-
-      Indien de beheerder dit verkeerskundig noodzakelijk acht, beschikt de tunnel tevens over handmatig bedienbare
-      afsluitbomen.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-  - number: 13a.3
-    text: |-
-      Een tunnel langer dan 250 meter en ten hoogste 500 meter wordt uitgerust met de in het eerste lid bedoelde
-      onderdelen overeenkomstig de voorschriften van [bijlage 4][ref1], paragrafen 1 tot en met 4, 16, 17, 19 tot en met
-      24, 29, 30, 32, 34 en 35 bij deze regeling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13a
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0019806
   - number: 13b
     text: |-
@@ -731,113 +546,73 @@ articles:
       Indien de doorrijhoogte van een tunnel langer dan 500 meter lager is dan 4,7 meter beschikt de tunnel in aanvulling
       op de gestandaardiseerde uitrusting genoemd in [artikel 13][ref1] over de volgende uitrusting:
 
+      a. Hoogtedetectie zoals weergegeven in [bijlage 5][ref2] bij deze regeling, en
+
+      b. Closed circuit television waarmee de situatie bij de hoogtedetectoren in beeld wordt gebracht.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel13
+      [ref2]: https://wetten.overheid.nl/BWBR0019806
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13c
     references:
       - id: ref1
         bwb_id: BWBR0019806
         artikel: '13'
-  - number: 13c.a
-    text: |-
-      Hoogtedetectie zoals weergegeven in [bijlage 5][ref1] bij deze regeling, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13c
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0019806
-  - number: 13c.b
-    text: Closed circuit television waarmee de situatie bij de hoogtedetectoren in beeld wordt gebracht.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13c
-  - number: 13d.1
+  - number: 13d
     text: |-
-      Indien het in een tunnel langer dan 500 meter mogelijk is om de verkeersrichting in een tunnelbuis om te
-      keren beschikt elke betreffende tunnelbuis in aanvulling op de gestandaardiseerde uitrusting genoemd in
+      1 Indien het in een tunnel langer dan 500 meter mogelijk is om de verkeersrichting in een tunnelbuis om
+      te keren beschikt elke betreffende tunnelbuis in aanvulling op de gestandaardiseerde uitrusting genoemd in
       [artikel 13][ref1] over de volgende uitrusting:
 
+      a. aan beide zijden van de verkeersbuis wordt boven elke rijstrook en ruimtereserveringstrook hoogtedetectie
+      toegepast indien het profiel van de vrije ruimte in de verkeersbuis lager is dan 4,70 meter;
+
+      b. de verlichtingszones bedoeld in paragraaf 4 van [bijlage 4][ref2] worden vanuit beide richtingen bezien;
+
+      c. [bijlage 4][ref3], paragraaf 11, geldt voor beide rijrichtingen;
+
+      d. verkeerslichten aan beide zijden van de verkeersbuis;
+
+      e. afsluitbomen aan beide zijden van de verkeersbuis;
+
+      f. detectie van stilstaande voertuigen en spookrijders die in twee richtingen werkzaam is;
+
+      g. [bijlage 4][ref4], artikel 17.2, tweede lid, is niet van toepassing;
+
+      h. de Closed circuit television-camera’s zijn 180 graden draaibaar, en
+
+      i. verkeersmanagementsysteem wordt voor beide rijrichtingen uitgevoerd.
+
+      2 Indien de tunnelbeheerder dit verkeerskundig noodzakelijk acht, beschikt de tunnel bedoeld in het eerste lid
+      tevens over een:
+
+      a. verrijdbare bermbeveiliging overeenkomstig [bijlage 6][ref5], paragraaf 1, bij deze regeling, of
+
+      b. beweegbare barrier overeenkomstig [bijlage 6][ref6], paragraaf 2, bij deze regeling.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0019806#Artikel13
+      [ref2]: https://wetten.overheid.nl/BWBR0019806
+      [ref3]: https://wetten.overheid.nl/BWBR0019806
+      [ref4]: https://wetten.overheid.nl/BWBR0019806
+      [ref5]: https://wetten.overheid.nl/BWBR0019806
+      [ref6]: https://wetten.overheid.nl/BWBR0019806
     url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
     references:
       - id: ref1
         bwb_id: BWBR0019806
         artikel: '13'
-  - number: 13d.1.a
-    text: |-
-      aan beide zijden van de verkeersbuis wordt boven elke rijstrook en ruimtereserveringstrook hoogtedetectie toegepast
-      indien het profiel van de vrije ruimte in de verkeersbuis lager is dan 4,70 meter;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.1.b
-    text: |-
-      de verlichtingszones bedoeld in paragraaf 4 van [bijlage 4][ref1] worden vanuit beide richtingen bezien;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0019806
-  - number: 13d.1.c
-    text: |-
-      [bijlage 4][ref1], paragraaf 11, geldt voor beide rijrichtingen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0019806
-  - number: 13d.1.d
-    text: verkeerslichten aan beide zijden van de verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.1.e
-    text: afsluitbomen aan beide zijden van de verkeersbuis;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.1.f
-    text: detectie van stilstaande voertuigen en spookrijders die in twee richtingen werkzaam is;
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.1.g
-    text: |-
-      [bijlage 4][ref1], artikel 17.2, tweede lid, is niet van toepassing;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0019806
-  - number: 13d.1.h
-    text: de Closed circuit television-camera’s zijn 180 graden draaibaar, en
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.1.i
-    text: verkeersmanagementsysteem wordt voor beide rijrichtingen uitgevoerd.
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.2
-    text: |-
-      Indien de tunnelbeheerder dit verkeerskundig noodzakelijk acht, beschikt de tunnel bedoeld in het eerste lid tevens
-      over een:
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-  - number: 13d.2.a
-    text: |-
-      verrijdbare bermbeveiliging overeenkomstig [bijlage 6][ref1], paragraaf 1, bij deze regeling, of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0019806
-  - number: 13d.2.b
-    text: |-
-      beweegbare barrier overeenkomstig [bijlage 6][ref1], paragraaf 2, bij deze regeling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019806
-    url: https://wetten.overheid.nl/BWBR0019806/2025-07-01#Artikel13d
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0019806
   - number: 13e
     text: |-
