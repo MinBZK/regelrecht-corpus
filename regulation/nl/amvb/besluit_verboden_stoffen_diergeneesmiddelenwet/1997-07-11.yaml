@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_verboden_stoffen_diergeneesmiddelenwet
 regulatory_layer: AMVB
 publication_date: '2006-01-12'
@@ -31,11 +31,29 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: 1.a
     text: |-
-      wet: [Diergeneesmiddelenwet][ref1];
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+      a. wet: [Diergeneesmiddelenwet][ref1];
+
+      b. communautaire regelgeving: verordening, richtlijn of beschikking als bedoeld in artikel 189 van het Verdrag
+      tot oprichting van de Europese Economische gemeenschap (*Trb.* 1957, 91) ter zake van het in de handel brengen van
+      diergeneesmiddelen en de daarmee verband houdende onderwerpen;
+
+      c. [richtlijn 96/23/EG](31996L0023) richtlijn: 96/23/EG van de Raad van de Europese Unie van 29 april 1996 inzake
+      controlemaatregelen ten aanzien van bepaalde stoffen en residuen daarvan in levende dieren en in producten daarvan
+      en tot intrekking van de [Richtlijnen 85/358/EEG](31985L0358) en [86/469/EEG](31986L0469) en de Beschikkingen
+      [89/187/EEG](31989L0187) en [91/664/EEG](31991L0664) (*PbEG* L 125);
+
+      d. landbouwhuisdieren: als huisdier gehouden runderen, varkens, schapen, geiten, eenhoevigen, pluimvee en tamme
+      konijnen, alsook wilde dieren van genoemde soorten en wilde herkauwers voor zover zij op een bedrijf worden
+      gehouden;
+
+      e. aquicultuurdieren: levende vissen en schaal- en weekdieren die afkomstig zijn van een bedrijf, met inbegrip van
+      voor een bedrijf bestemde dieren die oorspronkelijk in het wild leefden;
+
+      f. fabrikant: degene die ingevolge artikel 21 van de wet een vergunning heeft voor het bereiden van
+      diergeneesmiddelen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003818
@@ -43,99 +61,54 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0003818
-  - number: 1.b
+  - number: '2'
     text: |-
-      communautaire regelgeving: verordening, richtlijn of beschikking als bedoeld in artikel 189 van het Verdrag tot
-      oprichting van de Europese Economische gemeenschap (*Trb.* 1957, 91) ter zake van het in de handel brengen van
-      diergeneesmiddelen en de daarmee verband houdende onderwerpen;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: 1.c
-    text: |-
-      [richtlijn 96/23/EG](31996L0023) richtlijn: 96/23/EG van de Raad van de Europese Unie van 29 april 1996 inzake
-      controlemaatregelen ten aanzien van bepaalde stoffen en residuen daarvan in levende dieren en in producten daarvan
-      en tot intrekking van de [Richtlijnen 85/358/EEG](31985L0358) en [86/469/EEG](31986L0469) en de Beschikkingen
-      [89/187/EEG](31989L0187) en [91/664/EEG](31991L0664) (*PbEG* L 125);
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: 1.d
-    text: |-
-      landbouwhuisdieren: als huisdier gehouden runderen, varkens, schapen, geiten, eenhoevigen, pluimvee en tamme
-      konijnen, alsook wilde dieren van genoemde soorten en wilde herkauwers voor zover zij op een bedrijf worden
-      gehouden;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: 1.e
-    text: |-
-      aquicultuurdieren: levende vissen en schaal- en weekdieren die afkomstig zijn van een bedrijf, met inbegrip van
-      voor een bedrijf bestemde dieren die oorspronkelijk in het wild leefden;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: 1.f
-    text: |-
-      fabrikant: degene die ingevolge artikel 21 van de wet een vergunning heeft voor het bereiden van
-      diergeneesmiddelen.
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel1
-  - number: '2.1'
-    text: |-
-      In afwijking van artikel 4 van de wet worden diergeneesmiddelen die ingevolge [artikel 3][ref1] niet aan
+      1 In afwijking van artikel 4 van de wet worden diergeneesmiddelen die ingevolge [artikel 3][ref1] niet aan
       landbouwhuisdieren of aquicultuurdieren mogen worden toegediend, voor die dieren niet geregistreerd.
 
+      2 Onverminderd artikel 11 van de wet wordt de registratie van een diergeneesmiddel doorgehaald voor zover het
+      middel ingevolge [artikel 3][ref2] niet aan landbouwhuisdieren of aquicultuurdieren mag worden toegediend.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0008785#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0008785#Artikel3
     url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0008785
         artikel: '3'
-  - number: '2.2'
-    text: |-
-      Onverminderd artikel 11 van de wet wordt de registratie van een diergeneesmiddel doorgehaald voor zover het middel
-      ingevolge [artikel 3][ref1] niet aan landbouwhuisdieren of aquicultuurdieren mag worden toegediend.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008785#Artikel3
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0008785
         artikel: '3'
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Door Onze Minister, in overeenstemming met Onze Minister van Volksgezondheid, Welzijn en Sport, aan te wijzen
+      1 Door Onze Minister, in overeenstemming met Onze Minister van Volksgezondheid, Welzijn en Sport, aan te wijzen
       diergeneesmiddelen worden niet toegediend aan landbouwhuisdieren of aquicultuurdieren.
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: '3.2'
-    text: |-
-      Onze Minister kan, in overeenstemming met Onze Minister van Volksgezondheid, Welzijn en Sport, regelen stellen
+
+      2 Onze Minister kan, in overeenstemming met Onze Minister van Volksgezondheid, Welzijn en Sport, regelen stellen
       omtrent de omstandigheden waaronder, in afwijking van het bepaalde krachtens het eerste lid, de in het eerste lid
       bedoelde diergeneesmiddelen aan landbouwhuisdieren of aquicultuurdieren mogen worden toegediend, indien het niet
       betreft diergeneesmiddelen:
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.a
-    text: met hormonale werking en met depotwerking;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.b
-    text: met hormonale werking waarvan de wachttermijn meer dan 15 dagen na beëindiging van de behandeling bedraagt;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.c
-    text: die β-agonisten bevatten en waarvan de wachttermijn meer dan 28 dagen na beëindiging van de behandeling bedraagt;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.d
-    text: |-
-      waarop [verordening (EG) nr. 2309/93](31993R2309) van de Raad van de Europese Unie van 22 juli 1993 tot
-      vaststelling van communautaire procedures voor het verlenen van vergunningen voor en het toezicht op
+
+      a. met hormonale werking en met depotwerking;
+
+      b. met hormonale werking waarvan de wachttermijn meer dan 15 dagen na beëindiging van de behandeling bedraagt;
+
+      c. die β-agonisten bevatten en waarvan de wachttermijn meer dan 28 dagen na beëindiging van de behandeling
+      bedraagt;
+
+      d. waarop [verordening (EG) nr. 2309/93](31993R2309) van de Raad van de Europese Unie van 22 juli 1993
+      tot vaststelling van communautaire procedures voor het verlenen van vergunningen voor en het toezicht op
       geneesmiddelen voor menselijk en diergeneeskundig gebruik en tot oprichting van een Europees Bureau voor de
       geneesmiddelenbeoordeling (*PbEG* L 214) van toepassing is, tenzij registratie ingevolge de bedoelde verordening
       is verleend;
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.e
-    text: waarvan de gebruiksvoorwaarden niet bekend zijn, of
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: 3.2.f
-    text: |-
-      waarvan reagentia of het nodige materiaal voor analysemethoden waarmee de aanwezigheid van residuen boven de
+
+      e. waarvan de gebruiksvoorwaarden niet bekend zijn, of
+
+      f. waarvan reagentia of het nodige materiaal voor analysemethoden waarmee de aanwezigheid van residuen boven de
       toegestane maxima kan worden aangetoond, niet voorhanden zijn.
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
-  - number: '3.3'
-    text: |-
-      Diergeneesmiddelen als bedoeld in het eerste lid worden niet verwerkt in diervoeders tenzij ze zijn toegelaten
+
+      3 Diergeneesmiddelen als bedoeld in het eerste lid worden niet verwerkt in diervoeders tenzij ze zijn toegelaten
       krachtens het tweede lid.
     url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel3
   - number: '4'
@@ -157,33 +130,29 @@ articles:
       - id: ref2
         bwb_id: BWBR0008785
         artikel: '3'
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Onze Minister schorst de vergunning inzake het bereiden van diergeneesmiddelen geheel of gedeeltelijk indien de
-      fabrikant in strijd met het bepaalde in artikel 21 van de wet diergeneesmiddelen of substanties die krachtens
+      1 Onze Minister schorst de vergunning inzake het bereiden van diergeneesmiddelen geheel of gedeeltelijk indien
+      de fabrikant in strijd met het bepaalde in artikel 21 van de wet diergeneesmiddelen of substanties die krachtens
       communautaire regelgeving niet aan landbouwhuisdieren of aquicultuurdieren mogen worden toegediend, heeft
       bereid, voorhanden of in voorraad gehad of gebruikt heeft bij de bereiding van diergeneesmiddelen tenzij de
       diergeneesmiddelen aantoonbaar niet bestemd zijn om in de Europese Unie aan landbouwhuisdieren en aquicultuurdieren
       te worden toegediend.
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel5
-  - number: '5.2'
-    text: |-
-      Onze Minister trekt de vergunning inzake het bereiden van diergeneesmiddelen in indien de fabrikant nogmaals in
+
+      2 Onze Minister trekt de vergunning inzake het bereiden van diergeneesmiddelen in indien de fabrikant nogmaals in
       strijd met artikel 21 van de wet diergeneesmiddelen of substanties die krachtens communautaire regelgeving niet aan
       landbouwhuisdieren of aquicultuurdieren mogen worden toegediend, heeft bereid, voorhanden of in voorraad gehad of
       gebruikt heeft bij de bereiding van diergeneesmiddelen tenzij de diergeneesmiddelen aantoonbaar niet bestemd zijn
       om in de Europese Unie aan landbouwhuisdieren en aquicultuurdieren te worden toegediend.
     url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Indien in een monster residuen van diergeneesmiddelen of substanties die niet aan landbouwhuisdieren of
+      1 Indien in een monster residuen van diergeneesmiddelen of substanties die niet aan landbouwhuisdieren of
       aquicultuurdieren mogen worden toegediend, worden aangetroffen, worden de kosten van onderzoeken als bedoeld in
       artikel 16 van [richtlijn 96/23/EG](31996L0023) in rekening gebracht bij de eigenaar of houder van de bemonsterde
       dieren dan wel van de dieren waarvan de bemonsterde producten afkomstig zijn.
-    url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel6
-  - number: '6.2'
-    text: |-
-      Onze Minister kan regelen stellen omtrent de aard van de in het eerste lid bedoelde kosten, de hoogte van die
+
+      2 Onze Minister kan regelen stellen omtrent de aard van de in het eerste lid bedoelde kosten, de hoogte van die
       kosten, het verschuldigd worden van die kosten en de wijze waarop die kosten in rekening worden gebracht.
     url: https://wetten.overheid.nl/BWBR0008785/1997-07-11#Artikel6
   - number: '7'
