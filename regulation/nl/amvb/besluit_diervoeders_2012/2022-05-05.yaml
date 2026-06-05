@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_diervoeders_2012
 regulatory_layer: AMVB
 publication_date: '2022-05-04'
@@ -84,10 +84,11 @@ preamble:
 articles:
   - number: '1.1'
     text: |-
-      In dit besluit en daarop berustende bepalingen wordt verstaan onder: - *ongewenste stoffen:* alle stoffen en
-      producten, met uitzondering van ziekteverwekkers, die aanwezig zijn in of op een product dat bedoeld is voor het
-      voederen van dieren en die een potentieel gevaar opleveren voor de gezondheid van mens of dier, of voor het milieu,
-      of die de dierlijke productie ongunstig kunnen beïnvloeden;
+      In dit besluit en daarop berustende bepalingen wordt verstaan onder:
+
+        - *ongewenste stoffen:* alle stoffen en producten, met uitzondering van ziekteverwekkers, die aanwezig zijn in
+      of op een product dat bedoeld is voor het voederen van dieren en die een potentieel gevaar opleveren voor de
+      gezondheid van mens of dier, of voor het milieu, of die de dierlijke productie ongunstig kunnen beïnvloeden;
         - *Verordening (EG) nr. 999/2001:* Verordening (EG) nr. 999/2001 van het Europees Parlement en de Raad van 22 mei
       2001 houdende vaststelling van voorschriften inzake preventie, bestrijding en uitroeiing van bepaalde overdraagbare
       spongiforme encefalopathieën (PbEG 2001, L 147);
@@ -138,34 +139,29 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0030250
-  - number: 2.1.1
+  - number: '2.1'
     text: |-
-      Bij ministeriële regeling worden ter uitvoering van EU-verordeningen over diervoeders en krachtens die EU-
-      verordeningen vastgestelde EU-rechtshandelingen regels gesteld over diervoeders met betrekking tot de
+      1 Bij ministeriële regeling worden ter uitvoering van EU-verordeningen over diervoeders en krachtens die
+      EU-verordeningen vastgestelde EU-rechtshandelingen regels gesteld over diervoeders met betrekking tot de
       onderwerpen, bedoeld in [artikel 2.18, tweede lid, onderdelen a tot en met l, van de wet][ref1] voor zover die EU-
       rechtshandelingen verplichten tot invulling van een onderdeel van die rechtshandelingen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '2'
-  - number: 2.1.2
-    text: |-
-      Bij ministeriële regeling kunnen ter uitvoering van EU-verordeningen over diervoeders en krachtens die EU-
+      2 Bij ministeriële regeling kunnen ter uitvoering van EU-verordeningen over diervoeders en krachtens die EU-
       verordeningen vastgestelde EU-rechtshandelingen regels worden gesteld over diervoeders met betrekking tot de
-      onderwerpen, bedoeld in [artikel 2.18, tweede lid, onderdelen a tot en met l, van de wet][ref1] voor zover die EU-
+      onderwerpen, bedoeld in [artikel 2.18, tweede lid, onderdelen a tot en met l, van de wet][ref2] voor zover die EU-
       rechtshandelingen de ruimte bieden om een bepaalde handeling of toestand toe te staan of te verbieden.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel2.18
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.1
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '2'
+        artikel: '2.18'
+      - id: ref2
+        bwb_id: BWBR0030250
+        artikel: '2.18'
   - number: '2.2'
     text: |-
       Deze paragraaf is van toepassing op biologische diervoeders, onverminderd EU-verordeningen, EU-besluiten, of bij
@@ -173,20 +169,20 @@ articles:
       diervoeders.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2.17
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel2.18
+      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel6.4
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.2
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '2'
+        artikel: '2.17'
       - id: ref2
         bwb_id: BWBR0030250
-        artikel: '2'
+        artikel: '2.18'
       - id: ref3
         bwb_id: BWBR0030250
-        artikel: '6'
+        artikel: '6.4'
   - number: '2.3'
     text: |-
       Bij ministeriële regeling worden regels gesteld ter uitvoering van bindende onderdelen van EU-rechtshandelingen met
@@ -197,9 +193,17 @@ articles:
       De Stichting Skal is overeenkomstig [artikelen 15][ref1] en
       [16, tweede lid, van het Landbouwkwaliteitsbesluit 2007][ref2]:
 
+      a. belast met het toezicht op de naleving van het bij of krachtens dit besluit gestelde over de biologische
+      productie van diervoeders en de keuring daarvan, of met het toezicht op die keuring;
+
+      b. bevoegd tot het uitreiken van bewijsstukken ten aanzien van de kwaliteit van volgens de biologische productie
+      geproduceerde diervoeders, indien daarover in de ministeriële regeling, bedoeld in [artikel 2.1][ref3], regels
+      zijn gesteld.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0022535#Artikel15
       [ref2]: https://wetten.overheid.nl/BWBR0022535#Artikel16
+      [ref3]: https://wetten.overheid.nl/BWBR0032346#Artikel2.1
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.5
     references:
       - id: ref1
@@ -208,24 +212,9 @@ articles:
       - id: ref2
         bwb_id: BWBR0022535
         artikel: '16'
-  - number: 2.5.a
-    text: |-
-      belast met het toezicht op de naleving van het bij of krachtens dit besluit gestelde over de biologische productie
-      van diervoeders en de keuring daarvan, of met het toezicht op die keuring;
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.5
-  - number: 2.5.b
-    text: |-
-      bevoegd tot het uitreiken van bewijsstukken ten aanzien van de kwaliteit van volgens de biologische productie
-      geproduceerde diervoeders, indien daarover in de ministeriële regeling, bedoeld in [artikel 2.1][ref1], regels
-      zijn gesteld.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel2
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.5
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0032346
-        artikel: '2'
+        artikel: '2.1'
         hoofdstuk: '2'
         paragraaf: '1'
   - number: '2.6'
@@ -233,54 +222,45 @@ articles:
       Op de uitvoering van het toezicht en de keuring, bedoeld in [artikel 2.4][ref1] door de Stichting Skal, zijn van
       overeenkomstige toepassing:
 
+      a. de [artikelen 8 tot en met 10][ref2], [11, eerste en vierde tot en met zevende lid][ref3], [12][ref4] en
+      [13 van de Landbouwkwaliteitswet][ref5];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel2
+      b. het [Tuchtrechtbesluit Landbouwkwaliteitswet][ref6].
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel2.4
+      [ref2]: https://wetten.overheid.nl/BWBR0002755#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0002755#Artikel11
+      [ref4]: https://wetten.overheid.nl/BWBR0002755#Artikel12
+      [ref5]: https://wetten.overheid.nl/BWBR0002755#Artikel13
+      [ref6]: https://wetten.overheid.nl/BWBR0003252
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.6
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '2'
+        artikel: '2.4'
         hoofdstuk: '2'
         paragraaf: '2'
-  - number: 2.6.a
-    text: |-
-      de [artikelen 8 tot en met 10][ref1], [11, eerste en vierde tot en met zevende lid][ref2], [12][ref3] en
-      [13 van de Landbouwkwaliteitswet][ref4];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002755#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0002755#Artikel11
-      [ref3]: https://wetten.overheid.nl/BWBR0002755#Artikel12
-      [ref4]: https://wetten.overheid.nl/BWBR0002755#Artikel13
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.6
-    references:
-      - id: ref1
-        bwb_id: BWBR0002755
-        artikel: '8'
       - id: ref2
         bwb_id: BWBR0002755
-        artikel: '11'
+        artikel: '8'
       - id: ref3
         bwb_id: BWBR0002755
-        artikel: '12'
+        artikel: '11'
       - id: ref4
         bwb_id: BWBR0002755
+        artikel: '12'
+      - id: ref5
+        bwb_id: BWBR0002755
         artikel: '13'
-  - number: 2.6.b
-    text: |-
-      het [Tuchtrechtbesluit Landbouwkwaliteitswet][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003252
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel2.6
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0003252
   - number: '3.1'
     text: |-
-      In dit hoofdstuk en daarop berustende bepalingen wordt verstaan onder: - *aanvullende diervoeders:* mengsels van
-      diervoeders die een hoog gehalte aan bepaalde stoffen bevatten en door hun samenstelling slechts samen met andere
-      diervoeders een totaal dagrantsoen vormen;
+      In dit hoofdstuk en daarop berustende bepalingen wordt verstaan onder:
+
+        - *aanvullende diervoeders:* mengsels van diervoeders die een hoog gehalte aan bepaalde stoffen bevatten en door
+      hun samenstelling slechts samen met andere diervoeders een totaal dagrantsoen vormen;
         - *dagrantsoen:* totale hoeveelheid diervoeders, omgerekend op een vochtgehalte van 12%, die een dier van een
       bepaalde soort, gegeven zijn leeftijdsklasse en prestatievermogen, gemiddeld dagelijks nodig heeft om volledig in
       zijn voederbehoefte te voorzien;
@@ -307,70 +287,59 @@ articles:
       bijlage I bij Richtlijn nr. 2002/32/EG vastgestelde gehalte aan ongewenste stoffen niet overschrijdt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel2.17
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.2
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '2'
-  - number: 3.3.1
+        artikel: '2.17'
+  - number: '3.3'
     text: |-
-      Wanneer in producten die bedoeld zijn voor het voederen van dieren, maximumgehalten als bedoeld in
+      1 Wanneer in producten die bedoeld zijn voor het voederen van dieren, maximumgehalten als bedoeld in
       [artikel 3.2][ref1] zijn overschreden, verricht Onze Minister onderzoek om de bronnen van ongewenste stoffen te
       identificeren, daarbij rekening houdend met de achtergrondniveaus.
 
+      2 Onze Minister betrekt zo mogelijk marktdeelnemers bij het onderzoek, bedoeld in het eerste lid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0032346
-        artikel: '3'
-        hoofdstuk: '3'
-  - number: 3.3.2
-    text: Onze Minister betrekt zo mogelijk marktdeelnemers bij het onderzoek, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.3
-  - number: 3.3.3
-    text: |-
-      In afwijking van [artikel 3.2][ref1] kunnen bij ministeriële regeling regels worden gesteld voor proefnemingen
+      3 In afwijking van [artikel 3.2][ref2] kunnen bij ministeriële regeling regels worden gesteld voor proefnemingen
       bij dieren met producten die bedoeld zijn voor het voederen van dieren om de bronnen van ongewenste stoffen te
       identificeren in verband met de overschrijding van een maximumgehalte.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3.2
+      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel3.2
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.3
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '3'
+        artikel: '3.2'
         hoofdstuk: '3'
-  - number: 3.4.1
+      - id: ref2
+        bwb_id: BWBR0032346
+        artikel: '3.2'
+        hoofdstuk: '3'
+  - number: '3.4'
     text: |-
-      Wanneer in producten die bedoeld zijn voor het voederen van dieren, verhoogde gehalten van ongewenste stoffen zijn
-      geconstateerd, verricht Onze Minister onderzoek om de bronnen van ongewenste stoffen te identificeren, daarbij
+      1 Wanneer in producten die bedoeld zijn voor het voederen van dieren, verhoogde gehalten van ongewenste stoffen
+      zijn geconstateerd, verricht Onze Minister onderzoek om de bronnen van ongewenste stoffen te identificeren, daarbij
       rekening houdend met de achtergrondniveaus.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.4
-  - number: 3.4.2
-    text: |-
-      Het onderzoek wordt ingesteld bij overschrijding van een actiedrempel, die bij bijlage II van [Richtlijn 2002/32/
+
+      2 Het onderzoek wordt ingesteld bij overschrijding van een actiedrempel, die bij bijlage II van [Richtlijn 2002/32/
       EG](32002L0032) is ingesteld.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.4
-  - number: 3.4.3
-    text: Onze Minister betrekt zo mogelijk marktdeelnemers bij het onderzoek, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.4
-  - number: 3.4.4
-    text: |-
-      In afwijking van [artikel 3.2][ref1] kunnen bij ministeriële regeling regels worden gesteld voor proefnemingen bij
-      dieren met producten die bedoeld zijn voor het voederen van dieren om maatregelen te kunnen nemen om een verhoogd
-      gehalte aan ongewenste stoffen te beperken of deze weg te nemen.
+
+      3 Onze Minister betrekt zo mogelijk marktdeelnemers bij het onderzoek, bedoeld in het eerste lid.
+
+      4 In afwijking van [artikel 3.2][ref1] kunnen bij ministeriële regeling regels worden gesteld voor proefnemingen
+      bij dieren met producten die bedoeld zijn voor het voederen van dieren om maatregelen te kunnen nemen om een
+      verhoogd gehalte aan ongewenste stoffen te beperken of deze weg te nemen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3.2
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.4
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '3'
+        artikel: '3.2'
         hoofdstuk: '3'
   - number: '3.5'
     text: |-
@@ -381,17 +350,17 @@ articles:
       onmiddellijk van belang is voor de andere lidstaten van de Europese Unie.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3.3
+      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel3.4
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.5
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '3'
+        artikel: '3.3'
         hoofdstuk: '3'
       - id: ref2
         bwb_id: BWBR0032346
-        artikel: '3'
+        artikel: '3.4'
         hoofdstuk: '3'
   - number: '3.6'
     text: |-
@@ -406,50 +375,39 @@ articles:
       ongewenste stoffen niet hoger zijn dan het voor volledige diervoeders vastgestelde gehalte, rekening houdend met
       het voor het gebruik ervan voorgeschreven aandeel in een dagrantsoen.
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.7
-  - number: 3.8.1
+  - number: '3.8'
     text: |-
-      Bij ministeriële regeling kan, wegens gevaar voor de gezondheid van mens of dier of voor het milieu, indien nieuwe
-      gegevens beschikbaar zijn gekomen of een nieuwe beoordeling van bestaande gegevens is uitgevoerd:
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
-  - number: 3.8.1.a
-    text: |-
-      tijdelijk een lager maximumgehalte worden vastgesteld dan het maximumgehalte, bedoeld in [artikel 3.2][ref1],
+      1 Bij ministeriële regeling kan, wegens gevaar voor de gezondheid van mens of dier of voor het milieu, indien
+      nieuwe gegevens beschikbaar zijn gekomen of een nieuwe beoordeling van bestaande gegevens is uitgevoerd:
 
+      a. tijdelijk een lager maximumgehalte worden vastgesteld dan het maximumgehalte, bedoeld in [artikel 3.2][ref1],
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
-    references:
-      - id: ref1
-        bwb_id: BWBR0032346
-        artikel: '3'
-        hoofdstuk: '3'
-  - number: 3.8.1.b
-    text: |-
-      een maximumgehalte worden vastgesteld voor een ongewenste stof die niet is genoemd in bijlage I bij [Richtlijn
+      b. een maximumgehalte worden vastgesteld voor een ongewenste stof die niet is genoemd in bijlage I bij [Richtlijn
       2002/32/EG](32002L0032), of
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
-  - number: 3.8.1.c
-    text: de aanwezigheid van een ongewenste stof in producten die bedoeld zijn voor het voederen van dieren worden verboden.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
-  - number: 3.8.2
-    text: |-
-      Onze Minister stelt de overige lidstaten van de Europese Unie en de Commissie van de Europese Unie onmiddellijk op
-      de hoogte van een regeling als bedoeld in het eerste lid, onderdelen a tot en met c, met opgave van de redenen voor
-      zijn besluit.
-    url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
-  - number: 3.8.3
-    text: |-
-      In afwijking van [artikel 3.2][ref1] kan Onze Minister regels stellen voor proefnemingen bij dieren met producten
+
+      c. de aanwezigheid van een ongewenste stof in producten die bedoeld zijn voor het voederen van dieren worden
+      verboden.
+
+      2 Onze Minister stelt de overige lidstaten van de Europese Unie en de Commissie van de Europese Unie onmiddellijk
+      op de hoogte van een regeling als bedoeld in het eerste lid, onderdelen a tot en met c, met opgave van de redenen
+      voor zijn besluit.
+
+      3 In afwijking van [artikel 3.2][ref2] kan Onze Minister regels stellen voor proefnemingen bij dieren met producten
       die bedoeld zijn voor het voederen van dieren en die in verband met nieuwe gegevens of een nieuwe beoordeling van
       bestaande gegevens over stoffen in diervoeders mogelijk een gevaar opleveren als bedoeld in het eerste lid.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel3.2
+      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel3.2
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel3.8
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '3'
+        artikel: '3.2'
+        hoofdstuk: '3'
+      - id: ref2
+        bwb_id: BWBR0032346
+        artikel: '3.2'
         hoofdstuk: '3'
   - number: '3.9'
     text: |-
@@ -464,24 +422,24 @@ articles:
       en [2.4][ref3] van dit besluit.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0032346#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0032346#Artikel2.1
+      [ref2]: https://wetten.overheid.nl/BWBR0032346#Artikel2.3
+      [ref3]: https://wetten.overheid.nl/BWBR0032346#Artikel2.4
     url: https://wetten.overheid.nl/BWBR0032346/2022-05-05#Artikel4.1
     references:
       - id: ref1
         bwb_id: BWBR0032346
-        artikel: '2'
+        artikel: '2.1'
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref2
         bwb_id: BWBR0032346
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         paragraaf: '2'
       - id: ref3
         bwb_id: BWBR0032346
-        artikel: '2'
+        artikel: '2.4'
         hoofdstuk: '2'
         paragraaf: '2'
   - number: '4.2'
