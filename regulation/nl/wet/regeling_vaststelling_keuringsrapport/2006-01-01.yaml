@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_vaststelling_keuringsrapport
 regulatory_layer: WET
 publication_date: '2009-04-29'
@@ -13,51 +13,63 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#ArtikelAanhef
 articles:
-  - number: '2.2'
+  - number: '2'
     text: |-
-      Het model als bedoeld in het eerste lid, moet voorzien zijn van een gele doorslag indien de invulling niet
+      1
+
+      Het model keuringsrapport als bedoeld in [artikel 72, tweede lid, onderdeel a, van de Wegenverkeerswet 1994][ref1]
+      en het model vervangend keuringsbewijs als bedoeld in [artikel 80, eerste lid, van de Wegenverkeerswet 1994][ref2],
+      wordt vastgesteld overeenkomstig het in de bijlage bij deze regeling opgenomen formulier.
+
+      2 Het model als bedoeld in het eerste lid, moet voorzien zijn van een gele doorslag indien de invulling niet
       rechtstreeks plaatsvindt uit het keuringsregister
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0006622#Artikel72
+      [ref2]: https://wetten.overheid.nl/BWBR0006622#Artikel80
     url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel2
+    references:
+      - id: ref1
+        bwb_id: BWBR0006622
+        artikel: '72'
+      - id: ref2
+        bwb_id: BWBR0006622
+        artikel: '80'
   - number: '4'
     text: |-
       De regeling van de Minister van Verkeer en Waterstaat van 12 december 1994, nr. RV 188313 (Stcrt. 252),
       Hoofddirectie van de Waterstaat, houdende vaststelling keuringsbewijs, wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel4
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Deze regeling treedt met uitzondering van [artikel 2][ref1] in werking met ingang van de tweede dag na de
+      1 Deze regeling treedt met uitzondering van [artikel 2][ref1] in werking met ingang van de tweede dag na de
       dagtekening van de Staatscourant waarin zij wordt geplaatst.
+
+      2 Indien het bij koninklijke boodschap van 21 mei 1999 ingediende voorstel van wet tot wijziging van de
+      [Wegenverkeerswet 1994][ref2] met betrekking tot de Algemene periodieke keuring, Kamerstukken II 1998/1999, 26 554,
+      nrs. 1-2, nadat het tot wet is verheven, in werking treedt, vervallen op hetzelfde tijdstip de [artikelen 1][ref3]
+      en [3][ref4] en treedt [artikel 2][ref5] op hetzelfde tijdstip in werking.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010803#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0006622
+      [ref3]: https://wetten.overheid.nl/BWBR0010803#Artikel1
+      [ref4]: https://wetten.overheid.nl/BWBR0010803#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0010803#Artikel2
     url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel5
     references:
       - id: ref1
         bwb_id: BWBR0010803
         artikel: '2'
-  - number: '5.2'
-    text: |-
-      Indien het bij koninklijke boodschap van 21 mei 1999 ingediende voorstel van wet tot wijziging van de
-      [Wegenverkeerswet 1994][ref1] met betrekking tot de Algemene periodieke keuring, Kamerstukken II 1998/1999, 26 554,
-      nrs. 1-2, nadat het tot wet is verheven, in werking treedt, vervallen op hetzelfde tijdstip de [artikelen 1][ref2]
-      en [3][ref3] en treedt [artikel 2][ref4] op hetzelfde tijdstip in werking.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006622
-      [ref2]: https://wetten.overheid.nl/BWBR0010803#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0010803#Artikel3
-      [ref4]: https://wetten.overheid.nl/BWBR0010803#Artikel2
-    url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0006622
       - id: ref2
-        bwb_id: BWBR0010803
-        artikel: '1'
+        bwb_id: BWBR0006622
       - id: ref3
         bwb_id: BWBR0010803
-        artikel: '3'
+        artikel: '1'
       - id: ref4
+        bwb_id: BWBR0010803
+        artikel: '3'
+      - id: ref5
         bwb_id: BWBR0010803
         artikel: '2'
   - number: '6'
