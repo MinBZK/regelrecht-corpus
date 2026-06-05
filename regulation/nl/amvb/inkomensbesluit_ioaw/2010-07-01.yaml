@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: inkomensbesluit_ioaw
 regulatory_layer: AMVB
 publication_date: '2010-12-30'
@@ -25,11 +25,12 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel1
-  - number: 1.a
     text: |-
-      de wet: de [Wet inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte werkloze werknemers][ref1];
+      In dit besluit wordt verstaan onder:
+
+      a. de wet: de [Wet inkomensvoorziening oudere en gedeeltelijk arbeidsongeschikte werkloze werknemers][ref1];
+
+      b. een stamrecht: een recht op periodieke uitkeringen ter vervanging van gederfd of te derven loon.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004044
@@ -37,28 +38,49 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0004044
-  - number: 1.b
-    text: 'een stamrecht: een recht op periodieke uitkeringen ter vervanging van gederfd of te derven loon.'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel1
   - number: '2'
-    text: 'Voor de toepassing van de wet wordt onder inkomen uit arbeid in het bedrijfs- en beroepsleven verstaan:'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel2
-  - number: 2.a
-    text: opbrengst van arbeid;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel2
-  - number: 2.b
-    text: winst uit bedrijf en zelfstandig uitgeoefend beroep.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel2
-  - number: '3.1'
     text: |-
-      Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], wordt, voorzover bedoelde arbeid door een
-      werknemer in de zin van de [Wet financiering sociale verzekeringen][ref2] wordt verricht, verstaan het loon in de
-      zin van [die wet][ref3].
+      Voor de toepassing van de wet wordt onder inkomen uit arbeid in het bedrijfs- en beroepsleven verstaan:
+
+      a. opbrengst van arbeid;
+
+      b. winst uit bedrijf en zelfstandig uitgeoefend beroep.
+    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel2
+  - number: '3'
+    text: |-
+      1 Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], wordt, voorzover bedoelde arbeid door
+      een werknemer in de zin van de [Wet financiering sociale verzekeringen][ref2] wordt verricht, verstaan het loon in
+      de zin van [die wet][ref3].
+
+      2 In afwijking van het eerste lid wordt niet als opbrengst van arbeid beschouwd:
+
+      a. een aanspraak om na verloop van tijd of onder een voorwaarde een of meer uitkeringen of verstrekkingen te
+      ontvangen, voor zover deze niet wordt gedekt door stortingen van de werknemer;
+
+      b. een uitkering op grond van de verplichte verzekering van de [Werkloosheidswet][ref4] (*Stb.* 1986,
+      566), de [Ziektewet][ref5] (*Stb.* 1967, 473) en de [Wet op de arbeidsongeschiktheidsverzekering][ref6]
+      (*Stb.* 1977, 492), de [Wet werk en inkomen naar arbeidsvermogen][ref7] en een uitkering op grond van
+      [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref8] aan de werknemer of gelijkgestelde,
+      bedoeld in [artikel 3:6, eerste lid, van die wet][ref9], al dan niet vermeerderd met een toeslag op grond van de
+      [Toeslagenwet][ref10] (*Stb.* 1986, 562);
+
+      c. een aanvulling op de in onderdeel b genoemde uitkeringen;
+
+      d. opbrengst van arbeid gedurende ten hoogste zes aaneengesloten maanden tot 25 procent van deze opbrengst, met een
+      maximum van € 291,04 per maand, voor zover een uitkering wordt ontvangen en dit naar het oordeel van burgemeester
+      en wethouders bijdraagt aan zijn arbeidsinschakeling.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0017745
       [ref3]: https://wetten.overheid.nl/BWBR0017745
+      [ref4]: https://wetten.overheid.nl/BWBR0004045
+      [ref5]: https://wetten.overheid.nl/BWBR0001888
+      [ref6]: https://wetten.overheid.nl/BWBR0002524
+      [ref7]: https://wetten.overheid.nl/BWBR0019057
+      [ref8]: https://wetten.overheid.nl/BWBR0013008#Paragraaf1
+      [ref9]: https://wetten.overheid.nl/BWBR0013008#Artikel36
+      [ref10]: https://wetten.overheid.nl/BWBR0004043
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
     references:
       - id: ref1
@@ -69,68 +91,40 @@ articles:
         bwb_id: BWBR0017745
       - id: ref3
         bwb_id: BWBR0017745
-  - number: '3.2'
-    text: 'In afwijking van het eerste lid wordt niet als opbrengst van arbeid beschouwd:'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
-  - number: 3.2.a
-    text: |-
-      een aanspraak om na verloop van tijd of onder een voorwaarde een of meer uitkeringen of verstrekkingen te
-      ontvangen, voor zover deze niet wordt gedekt door stortingen van de werknemer;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
-  - number: 3.2.b
-    text: |-
-      een uitkering op grond van de verplichte verzekering van de [Werkloosheidswet][ref1] (*Stb.* 1986,
-      566), de [Ziektewet][ref2] (*Stb.* 1967, 473) en de [Wet op de arbeidsongeschiktheidsverzekering][ref3]
-      (*Stb.* 1977, 492), de [Wet werk en inkomen naar arbeidsvermogen][ref4] en een uitkering op grond van
-      [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref5] aan de werknemer of gelijkgestelde,
-      bedoeld in [artikel 3:6, eerste lid, van die wet][ref6], al dan niet vermeerderd met een toeslag op grond van de
-      [Toeslagenwet][ref7] (*Stb.* 1986, 562);
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-      [ref2]: https://wetten.overheid.nl/BWBR0001888
-      [ref3]: https://wetten.overheid.nl/BWBR0002524
-      [ref4]: https://wetten.overheid.nl/BWBR0019057
-      [ref5]: https://wetten.overheid.nl/BWBR0013008#Paragraaf1
-      [ref6]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref7]: https://wetten.overheid.nl/BWBR0004043
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-      - id: ref2
-        bwb_id: BWBR0001888
-      - id: ref3
-        bwb_id: BWBR0002524
       - id: ref4
-        bwb_id: BWBR0019057
+        bwb_id: BWBR0004045
       - id: ref5
+        bwb_id: BWBR0001888
+      - id: ref6
+        bwb_id: BWBR0002524
+      - id: ref7
+        bwb_id: BWBR0019057
+      - id: ref8
         bwb_id: BWBR0013008
         paragraaf: '1'
-      - id: ref6
+      - id: ref9
         bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref7
+        artikel: 3:6
+      - id: ref10
         bwb_id: BWBR0004043
-  - number: 3.2.c
-    text: een aanvulling op de in onderdeel b genoemde uitkeringen;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
-  - number: 3.2.d
+  - number: '4'
     text: |-
-      opbrengst van arbeid gedurende ten hoogste zes aaneengesloten maanden tot 25 procent van deze opbrengst, met een
-      maximum van € 291,04 per maand, voor zover een uitkering wordt ontvangen en dit naar het oordeel van burgemeester
-      en wethouders bijdraagt aan zijn arbeidsinschakeling.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel3
-  - number: '4.1'
-    text: |-
-      Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], worden, voor zover
+      1 Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], worden, voor zover
       bedoelde arbeid wordt verricht in dienstbetrekking doch niet door een werknemer in de zin van de
       [Wet financiering sociale verzekeringen][ref2], verstaan de gelden en alle andere voordelen welke als beloning voor
       die arbeid worden genoten.
 
+      2 Ten aanzien van de gelden en alle andere voordelen uit de dienstbetrekking, bedoeld in het eerste lid, is het
+      bepaalde bij of krachtens [artikel 16 van de Wet financiering sociale verzekeringen][ref3] van overeenkomstige
+      toepassing.
+
+      3 In afwijking van het bepaalde in het tweede lid wordt niet als opbrengst van arbeid beschouwd een uitkering
+      wegens derving van looninkomen.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0017745
+      [ref3]: https://wetten.overheid.nl/BWBR0017745#Artikel16
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel4
     references:
       - id: ref1
@@ -139,38 +133,27 @@ articles:
         paragraaf: '2'
       - id: ref2
         bwb_id: BWBR0017745
-  - number: '4.2'
-    text: |-
-      Ten aanzien van de gelden en alle andere voordelen uit de dienstbetrekking, bedoeld in het eerste lid, is het
-      bepaalde bij of krachtens [artikel 16 van de Wet financiering sociale verzekeringen][ref1] van overeenkomstige
-      toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017745#Artikel16
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel4
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0017745
         artikel: '16'
-  - number: '4.3'
+  - number: '5'
     text: |-
-      In afwijking van het bepaalde in het tweede lid wordt niet als opbrengst van arbeid beschouwd een uitkering wegens
-      derving van looninkomen.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel4
-  - number: '5.1'
-    text: |-
-      Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], wordt, voorzover bedoelde arbeid niet in
-      dienstbetrekking wordt verricht, verstaan het belastbaar loon uit tegenwoordige arbeid of belastbaar resultaat uit
-      overige werkzaamheden, bedoeld in [hoofdstuk 3][ref2] en [7 van de Wet inkomstenbelasting 2001][ref3], behoudens
-      voorzover het een werkzaamheid betreft als bedoeld in de [artikelen 3.91, eerste lid, onderdelen a en b][ref4],
-      en [3.92 van die wet][ref5].
+      1 Onder opbrengst van arbeid als bedoeld in [artikel 2, onderdeel a][ref1], wordt, voorzover bedoelde
+      arbeid niet in dienstbetrekking wordt verricht, verstaan het belastbaar loon uit tegenwoordige
+      arbeid of belastbaar resultaat uit overige werkzaamheden, bedoeld in [hoofdstuk 3][ref2] en
+      [7 van de Wet inkomstenbelasting 2001][ref3], behoudens voorzover het een werkzaamheid betreft als bedoeld in de
+      [artikelen 3.91, eerste lid, onderdelen a en b][ref4], en [3.92 van die wet][ref5].
+
+      2 Het bepaalde bij of krachtens [artikel 13 van de Wet op de loonbelasting 1964][ref6] is met betrekking tot het
+      bepaalde in het eerste lid van overeenkomstige toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0011353#Hoofdstuk3
       [ref3]: https://wetten.overheid.nl/BWBR0011353#Hoofdstuk7
-      [ref4]: https://wetten.overheid.nl/BWBR0011353#Artikel3
-      [ref5]: https://wetten.overheid.nl/BWBR0011353#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0011353#Artikel3.91
+      [ref5]: https://wetten.overheid.nl/BWBR0011353#Artikel3.92
+      [ref6]: https://wetten.overheid.nl/BWBR0002471#Artikel13
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel5
     references:
       - id: ref1
@@ -185,36 +168,30 @@ articles:
         hoofdstuk: '7'
       - id: ref4
         bwb_id: BWBR0011353
-        artikel: '3'
+        artikel: '3.91'
       - id: ref5
         bwb_id: BWBR0011353
-        artikel: '3'
-  - number: '5.2'
-    text: |-
-      Het bepaalde bij of krachtens [artikel 13 van de Wet op de loonbelasting 1964][ref1] is met betrekking tot het
-      bepaalde in het eerste lid van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002471#Artikel13
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel5
-    references:
-      - id: ref1
+        artikel: '3.92'
+      - id: ref6
         bwb_id: BWBR0002471
         artikel: '13'
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Onder winst als bedoeld in [artikel 2, onderdeel b][ref1], wordt verstaan de belastbare winst uit
+      1 Onder winst als bedoeld in [artikel 2, onderdeel b][ref1], wordt verstaan de belastbare winst uit
       onderneming, bedoeld in [paragraaf 3.2.1 van de Wet inkomstenbelasting 2001][ref2], vermeerderd met de
       ondernemersaftrek, bedoeld in [paragraaf 3.2.4 van die wet][ref3], en de MKB-winstvrijstelling, bedoeld
       in [paragraaf 3.2.5 van die wet][ref4], met dien verstande dat de bestanddelen van de winst, bedoeld in
       [artikel 3.78, derde lid, onderdelen a, b en c, van die wet][ref5], niet geacht worden te behoren tot die winst.
+
+      2 Indien de berekening van de in het eerste lid bedoelde winst leidt tot een negatief bedrag, wordt die winst op
+      nihil gesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0011353#Paragraaf3.2.1
       [ref3]: https://wetten.overheid.nl/BWBR0011353#Paragraaf3.2.4
       [ref4]: https://wetten.overheid.nl/BWBR0011353#Paragraaf3.2.5
-      [ref5]: https://wetten.overheid.nl/BWBR0011353#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0011353#Artikel3.78
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel6
     references:
       - id: ref1
@@ -232,18 +209,13 @@ articles:
         paragraaf: 3.2.5
       - id: ref5
         bwb_id: BWBR0011353
-        artikel: '3'
-  - number: '6.2'
+        artikel: '3.78'
+  - number: '7'
     text: |-
-      Indien de berekening van de in het eerste lid bedoelde winst leidt tot een negatief bedrag, wordt die winst op
-      nihil gesteld.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel6
-  - number: '7.1'
-    text: 'Voor de toepassing van de wet wordt onder inkomen in verband met arbeid in het bedrijfs- of beroepsleven verstaan:'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.a
-    text: |-
-      een uitkering of inkomensvoorziening op grond van de verplichte verzekering van de [Werkloosheidswet][ref1],
+      1 Voor de toepassing van de wet wordt onder inkomen in verband met arbeid in het bedrijfs- of beroepsleven
+      verstaan:
+
+      a. een uitkering of inkomensvoorziening op grond van de verplichte verzekering van de [Werkloosheidswet][ref1],
       de [Ziektewet][ref2], de [Wet arbeidsongeschiktheidsverzekering zelfstandigen][ref3], de
       [Wet werk en arbeidsondersteuning jonggehandicapten][ref4], de [Wet op de arbeidsongeschiktheidsverzekering][ref5]
       of de [Wet werk en inkomen naar arbeidsvermogen][ref6], een uitkering op grond van
@@ -252,6 +224,86 @@ articles:
       [hoofdstuk 3, afdeling 2, van de Wet arbeid en zorg][ref9] aan de werknemer of gelijkgestelde, bedoeld in
       [artikel 3:6, eerste lid, van die wet][ref10] of aan de zelfstandige of beroepsbeoefenaar op arbeidsovereenkomst,
       bedoeld in [artikel 3:17 van die wet][ref11];
+
+      b. een uitkering op grond van een particuliere verzekering wegens derving van inkomen, welke ten behoeve van de
+      werknemer in het kader van een individuele of collectieve arbeidsovereenkomst is afgesloten;
+
+      c. een uitkering op grond van een pensioenregeling, voor zover niet begrepen onder a;
+
+      d. een uitkering op grond van een buitenlandse wettelijke sociale verzekeringsregeling, voor zover niet
+      begrepen onder a, met uitzondering van een uitkering, die naar aard en strekking overeenkomt met een uitkering
+      op grond van de [Algemene Kinderbijslagwet][ref12] of met zorg waarop aanspraak bestaat ingevolge een
+      zorgverzekering als bedoeld in [artikel 1, onderdeel d, van de Zorgverzekeringswet][ref13] of op grond van
+      [artikel 6 van de Algemene Wet Bijzondere Ziektekosten][ref14];
+
+      e. een uitkering op grond van een regeling voor vervroegde uittreding of een regeling, die naar aard en strekking
+      daarmee overeenkomt;
+
+      f. een uitkering op grond van een regeling voor functioneel leeftijdsontslag;
+
+      g. loon dat uit vroegere dienstbetrekking wordt genoten, voor zover niet begrepen onder a, b, c, d, e of f;
+
+      h. een toeslag op grond van de [Toeslagenwet][ref15];
+
+      i. een uitkering ingevolge de [Algemene nabestaandenwet][ref16];
+
+      j. een uitkering op grond van de [Algemene Ouderdomswet][ref17] (Stb. 1985, 181);
+
+      k. een basisbeurs en een aanvullende beurs op grond van de [Wet studiefinanciering 2000][ref18], alsmede een beurs
+      die naar aard en strekking daarmee overeenkomt;
+
+      l. een bedrijfsbeëindigingsvergoeding van de door Onze Minister van Economische Zaken opgerichte Stichting
+      ontwikkeling en sanering midden- en kleinbedrijf; en
+
+      m. een maandelijkse bedrijfsbeëindigingsvergoeding van de door Onze Minister van Landbouw en Visserij opgerichte
+      Stichting ontwikkelings- en saneringsfonds voor de landbouw.
+
+      2 In afwijking van het eerste lid wordt niet als inkomen in verband met arbeid beschouwd:
+
+      a. een aanspraak om na verloop van tijd onder een voorwaarde een of meer uitkeringen of verstrekkingen te
+      ontvangen, voor zover deze niet wordt gedekt door stortingen van degene die het desbetreffende inkomen geniet;
+
+      b. een eenmalige uitkering welke na beëindiging van de dienstbetrekking aan een werknemer in verband met die
+      beëindiging wordt betaald;
+
+      c. 81% van het bedrag waarmee de arbeidsongeschiktheidsuitkering of inkomensvoorziening is verhoogd
+      met toepassing van [artikel 10 van de Wet arbeidsongeschiktheidsverzekering zelfstandigen][ref19],
+      [artikel 2:51][ref20] of [3:9 van de Wet werk en arbeidsondersteuning jonggehandicapten][ref21],
+      [artikel 22 van de Wet op de arbeidsongeschiktheidsverzekering][ref22], [artikel 53][ref23] of
+      [63 van de Werk en inkomen naar arbeidsvermogen][ref24] of een combinatie van deze artikelen;
+
+      d. een uitkering die naar aard en strekking overeenkomt met een uitkering op grond van een wettelijke vrijwillige
+      verzekering of een particuliere verzekering tegen loonderving, toegekend aan een directeur-grootaandeelhouder, die
+      niet als werknemer in de zin van de [Wet financiering sociale verzekeringen][ref25] wordt beschouwd;
+
+      e. een uitkering in verband met geleden immateriële schade, voorzover dit gelet op de aard en de hoogte van de
+      uitkering verantwoord is;
+
+      f. een eenmalige premie die door burgemeester en wethouders kan worden toegekend in het kader van een voorziening
+      gericht op arbeidsinschakeling van ten hoogste€ 2.239,00 per kalenderjaar;
+
+      g. een kostenvergoeding voor het verrichten van vrijwilligerswerk van ten hoogste € 95,– per
+      maand met een maximum van € 764,– per jaar, dan wel een kostenvergoeding voor het verrichten van
+      vrijwilligerswerk in het kader van een voorziening gericht op arbeidsinschakeling als bedoeld in
+      [artikel 7, eerste lid, onderdeel a, van de Wet werk en bijstand][ref26] van ten hoogste € 150,– per maand met een
+      maximum van € 1.500,– per jaar;
+
+      h. periodieke uitkeringen uit hoofde van een stamrecht, dat is verkregen uit een eenmalige uitkering welke na
+      beëindiging van de dienstbetrekking aan de werknemer in verband met die beëindiging is toegekend, mits de werknemer
+      aantoont dat de eenmalige uitkering door de werkgever betaalbaar is gesteld om naar eigen inzicht van de werknemer
+      te besteden.
+
+      3 Voor de toepassing van het eerste lid, onderdeel c, wordt onder pensioenregeling verstaan hetgeen daaronder wordt
+      verstaan voor de toepassing van de [Wet op de loonbelasting 1964][ref27].
+
+      4 Onze Minister wijzigt de bedragen, genoemd in het tweede lid, onderdelen h en
+      i , met ingang van een door hem te bepalen dag, voorzover de ontwikkeling van de in
+      [artikel 31, tweede lid, onderdelen j en k, van de Wet werk en bijstand][ref28] genoemde bedragen, daartoe
+      aanleiding geeft.
+
+      5 Onze Minister wijzigt het bedrag, genoemd in [artikel 3, tweede lid, onderdeel d][ref29],
+      met ingang van een door hem te bepalen dag, voorzover de ontwikkeling van het in
+      [artikel 31, tweede lid, onderdeel o, van de Wet werk en bijstand][ref30] genoemde bedrag daartoe aanleiding geeft.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004045
@@ -263,8 +315,27 @@ articles:
       [ref7]: https://wetten.overheid.nl/BWBR0002822
       [ref8]: https://wetten.overheid.nl/BWBR0024394
       [ref9]: https://wetten.overheid.nl/BWBR0013008#Afdeling2
-      [ref10]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel3
+      [ref10]: https://wetten.overheid.nl/BWBR0013008#Artikel36
+      [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel317
+      [ref12]: https://wetten.overheid.nl/BWBR0002368
+      [ref13]: https://wetten.overheid.nl/BWBR0018450#Artikel1
+      [ref14]: https://wetten.overheid.nl/BWBR0002614#Artikel6
+      [ref15]: https://wetten.overheid.nl/BWBR0004043
+      [ref16]: https://wetten.overheid.nl/BWBR0007795
+      [ref17]: https://wetten.overheid.nl/BWBR0002221
+      [ref18]: https://wetten.overheid.nl/BWBR0011453
+      [ref19]: https://wetten.overheid.nl/BWBR0008656#Artikel10
+      [ref20]: https://wetten.overheid.nl/BWBR0008657#Artikel251
+      [ref21]: https://wetten.overheid.nl/BWBR0008657#Artikel39
+      [ref22]: https://wetten.overheid.nl/BWBR0002524#Artikel22
+      [ref23]: https://wetten.overheid.nl/BWBR0019057#Artikel53
+      [ref24]: https://wetten.overheid.nl/BWBR0019057#Artikel63
+      [ref25]: https://wetten.overheid.nl/BWBR0017745
+      [ref26]: https://wetten.overheid.nl/BWBR0015703#Artikel7
+      [ref27]: https://wetten.overheid.nl/BWBR0002471
+      [ref28]: https://wetten.overheid.nl/BWBR0015703#Artikel31
+      [ref29]: https://wetten.overheid.nl/BWBR0004091#Artikel3
+      [ref30]: https://wetten.overheid.nl/BWBR0015703#Artikel31
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
     references:
       - id: ref1
@@ -288,260 +359,83 @@ articles:
         afdeling: '2'
       - id: ref10
         bwb_id: BWBR0013008
-        artikel: '3'
+        artikel: 3:6
       - id: ref11
         bwb_id: BWBR0013008
-        artikel: '3'
-  - number: 7.1.b
-    text: |-
-      een uitkering op grond van een particuliere verzekering wegens derving van inkomen, welke ten behoeve van de
-      werknemer in het kader van een individuele of collectieve arbeidsovereenkomst is afgesloten;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.c
-    text: een uitkering op grond van een pensioenregeling, voor zover niet begrepen onder a;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.d
-    text: |-
-      een uitkering op grond van een buitenlandse wettelijke sociale verzekeringsregeling, voor zover niet begrepen
-      onder a, met uitzondering van een uitkering, die naar aard en strekking overeenkomt met een uitkering
-      op grond van de [Algemene Kinderbijslagwet][ref1] of met zorg waarop aanspraak bestaat ingevolge een
-      zorgverzekering als bedoeld in [artikel 1, onderdeel d, van de Zorgverzekeringswet][ref2] of op grond van
-      [artikel 6 van de Algemene Wet Bijzondere Ziektekosten][ref3];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002368
-      [ref2]: https://wetten.overheid.nl/BWBR0018450#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0002614#Artikel6
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+        artikel: 3:17
+      - id: ref12
         bwb_id: BWBR0002368
-      - id: ref2
+      - id: ref13
         bwb_id: BWBR0018450
         artikel: '1'
-      - id: ref3
+      - id: ref14
         bwb_id: BWBR0002614
         artikel: '6'
-  - number: 7.1.e
-    text: |-
-      een uitkering op grond van een regeling voor vervroegde uittreding of een regeling, die naar aard en strekking
-      daarmee overeenkomt;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.f
-    text: een uitkering op grond van een regeling voor functioneel leeftijdsontslag;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.g
-    text: loon dat uit vroegere dienstbetrekking wordt genoten, voor zover niet begrepen onder a, b, c, d, e of f;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.h
-    text: |-
-      een toeslag op grond van de [Toeslagenwet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004043
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref15
         bwb_id: BWBR0004043
-  - number: 7.1.i
-    text: |-
-      een uitkering ingevolge de [Algemene nabestaandenwet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007795
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref16
         bwb_id: BWBR0007795
-  - number: 7.1.j
-    text: |-
-      een uitkering op grond van de [Algemene Ouderdomswet][ref1] (Stb. 1985, 181);
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002221
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref17
         bwb_id: BWBR0002221
-  - number: 7.1.k
-    text: |-
-      een basisbeurs en een aanvullende beurs op grond van de [Wet studiefinanciering 2000][ref1], alsmede een beurs die
-      naar aard en strekking daarmee overeenkomt;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011453
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref18
         bwb_id: BWBR0011453
-  - number: 7.1.l
-    text: |-
-      een bedrijfsbeëindigingsvergoeding van de door Onze Minister van Economische Zaken opgerichte Stichting
-      ontwikkeling en sanering midden- en kleinbedrijf; en
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.1.m
-    text: |-
-      een maandelijkse bedrijfsbeëindigingsvergoeding van de door Onze Minister van Landbouw en Visserij opgerichte
-      Stichting ontwikkelings- en saneringsfonds voor de landbouw.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: '7.2'
-    text: 'In afwijking van het eerste lid wordt niet als inkomen in verband met arbeid beschouwd:'
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.2.a
-    text: |-
-      een aanspraak om na verloop van tijd onder een voorwaarde een of meer uitkeringen of verstrekkingen te ontvangen,
-      voor zover deze niet wordt gedekt door stortingen van degene die het desbetreffende inkomen geniet;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.2.b
-    text: |-
-      een eenmalige uitkering welke na beëindiging van de dienstbetrekking aan een werknemer in verband met die
-      beëindiging wordt betaald;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.2.c
-    text: |-
-      81% van het bedrag waarmee de arbeidsongeschiktheidsuitkering of inkomensvoorziening is verhoogd
-      met toepassing van [artikel 10 van de Wet arbeidsongeschiktheidsverzekering zelfstandigen][ref1],
-      [artikel 2:51][ref2] of [3:9 van de Wet werk en arbeidsondersteuning jonggehandicapten][ref3],
-      [artikel 22 van de Wet op de arbeidsongeschiktheidsverzekering][ref4], [artikel 53][ref5] of
-      [63 van de Werk en inkomen naar arbeidsvermogen][ref6] of een combinatie van deze artikelen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008656#Artikel10
-      [ref2]: https://wetten.overheid.nl/BWBR0008657#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0008657#Artikel3
-      [ref4]: https://wetten.overheid.nl/BWBR0002524#Artikel22
-      [ref5]: https://wetten.overheid.nl/BWBR0019057#Artikel53
-      [ref6]: https://wetten.overheid.nl/BWBR0019057#Artikel63
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref19
         bwb_id: BWBR0008656
         artikel: '10'
-      - id: ref2
+      - id: ref20
         bwb_id: BWBR0008657
-        artikel: '2'
-      - id: ref3
+        artikel: 2:51
+      - id: ref21
         bwb_id: BWBR0008657
-        artikel: '3'
-      - id: ref4
+        artikel: 3:9
+      - id: ref22
         bwb_id: BWBR0002524
         artikel: '22'
-      - id: ref5
+      - id: ref23
         bwb_id: BWBR0019057
         artikel: '53'
-      - id: ref6
+      - id: ref24
         bwb_id: BWBR0019057
         artikel: '63'
-  - number: 7.2.d
-    text: |-
-      een uitkering die naar aard en strekking overeenkomt met een uitkering op grond van een wettelijke vrijwillige
-      verzekering of een particuliere verzekering tegen loonderving, toegekend aan een directeur-grootaandeelhouder, die
-      niet als werknemer in de zin van de [Wet financiering sociale verzekeringen][ref1] wordt beschouwd;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0017745
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref25
         bwb_id: BWBR0017745
-  - number: 7.2.e
-    text: |-
-      een uitkering in verband met geleden immateriële schade, voorzover dit gelet op de aard en de hoogte van de
-      uitkering verantwoord is;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.2.f
-    text: |-
-      een eenmalige premie die door burgemeester en wethouders kan worden toegekend in het kader van een voorziening
-      gericht op arbeidsinschakeling van ten hoogste€ 2.239,00 per kalenderjaar;
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: 7.2.g
-    text: |-
-      een kostenvergoeding voor het verrichten van vrijwilligerswerk van ten hoogste € 95,– per maand
-      met een maximum van € 764,– per jaar, dan wel een kostenvergoeding voor het verrichten van
-      vrijwilligerswerk in het kader van een voorziening gericht op arbeidsinschakeling als bedoeld in
-      [artikel 7, eerste lid, onderdeel a, van de Wet werk en bijstand][ref1] van ten hoogste € 150,– per maand met een
-      maximum van € 1.500,– per jaar;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel7
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref26
         bwb_id: BWBR0015703
         artikel: '7'
-  - number: 7.2.h
-    text: |-
-      periodieke uitkeringen uit hoofde van een stamrecht, dat is verkregen uit een eenmalige uitkering welke na
-      beëindiging van de dienstbetrekking aan de werknemer in verband met die beëindiging is toegekend, mits de werknemer
-      aantoont dat de eenmalige uitkering door de werkgever betaalbaar is gesteld om naar eigen inzicht van de werknemer
-      te besteden.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-  - number: '7.3'
-    text: |-
-      Voor de toepassing van het eerste lid, onderdeel c, wordt onder pensioenregeling verstaan hetgeen daaronder wordt
-      verstaan voor de toepassing van de [Wet op de loonbelasting 1964][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002471
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref27
         bwb_id: BWBR0002471
-  - number: '7.4'
-    text: |-
-      Onze Minister wijzigt de bedragen, genoemd in het tweede lid, onderdelen h en i ,
-      met ingang van een door hem te bepalen dag, voorzover de ontwikkeling van de in
-      [artikel 31, tweede lid, onderdelen j en k, van de Wet werk en bijstand][ref1] genoemde bedragen, daartoe
-      aanleiding geeft.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel31
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref28
         bwb_id: BWBR0015703
         artikel: '31'
-  - number: '7.5'
-    text: |-
-      Onze Minister wijzigt het bedrag, genoemd in [artikel 3, tweede lid, onderdeel d][ref1],
-      met ingang van een door hem te bepalen dag, voorzover de ontwikkeling van het in
-      [artikel 31, tweede lid, onderdeel o, van de Wet werk en bijstand][ref2] genoemde bedrag daartoe aanleiding geeft.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0015703#Artikel31
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref29
         bwb_id: BWBR0004091
         artikel: '3'
         paragraaf: '2'
-      - id: ref2
+      - id: ref30
         bwb_id: BWBR0015703
         artikel: '31'
-  - number: '8.1'
+  - number: '8'
     text: |-
-      Het inkomen uit of in verband met arbeid wordt in de maand waarover aanspraak op uitkering wordt gemaakt
+      1 Het inkomen uit of in verband met arbeid wordt in de maand waarover aanspraak op uitkering wordt gemaakt
       vastgesteld op het bedrag dat de werkloze werknemer en de echtgenoot over die maand verwerven of redelijkerwijs
       geacht kunnen worden te verwerven.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel8
-  - number: '8.2'
-    text: |-
-      Indien op grond van artikel 21, tweede lid, van de wet de uitkering over een kortere periode dan een maand wordt
+
+      2 Indien op grond van artikel 21, tweede lid, van de wet de uitkering over een kortere periode dan een maand wordt
       uitbetaald worden het inkomen en de uitkering eerst per maand vastgesteld, waarna de uitkering over een kortere
       periode naar evenredigheid wordt vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel8
-  - number: '8.3'
-    text: |-
-      Indien aannemelijk is dat een inkomensbestanddeel geen juiste maatstaf biedt voor de bepaling van het in het eerste
-      lid bedoelde inkomen, wordt dat bestanddeel per maand vastgesteld op 1/3 onderscheidenlijk 1/12 van het bedrag, dat
-      over drie maanden onderscheidenlijk een jaar is verworven.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel8
-  - number: '8.4'
-    text: |-
-      Indien winst als bedoeld in [artikel 6, eerste lid][ref1] wordt genoten, wordt het daaruit voortvloeiende
+
+      3 Indien aannemelijk is dat een inkomensbestanddeel geen juiste maatstaf biedt voor de bepaling van het in het
+      eerste lid bedoelde inkomen, wordt dat bestanddeel per maand vastgesteld op 1/3 onderscheidenlijk 1/12 van het
+      bedrag, dat over drie maanden onderscheidenlijk een jaar is verworven.
+
+      4 Indien winst als bedoeld in [artikel 6, eerste lid][ref1] wordt genoten, wordt het daaruit voortvloeiende
       inkomensbestanddeel per maand vastgesteld op 1/12 van de winst, genoten over het kalenderjaar of het niet met het
       kalenderjaar samenvallend boekjaar, voorafgaand aan de maand waarover aanspraak op uitkering wordt gemaakt.
+
+      5 Indien de toepassing van de leden 1 tot en met 4, gelet op het tijdstip van verwerving van een
+      inkomensbestanddeel, tot een kennelijk onredelijk resultaat leidt, bepalen burgemeester en wethouders op welke
+      periode dat inkomensbestanddeel geacht moet worden betrekking te hebben en hoe dit geacht moet worden over deze
+      periode te zijn verdeeld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel6
@@ -551,13 +445,6 @@ articles:
         bwb_id: BWBR0004091
         artikel: '6'
         paragraaf: '2'
-  - number: '8.5'
-    text: |-
-      Indien de toepassing van de leden 1 tot en met 4, gelet op het tijdstip van verwerving van een inkomensbestanddeel,
-      tot een kennelijk onredelijk resultaat leidt, bepalen burgemeester en wethouders op welke periode dat
-      inkomensbestanddeel geacht moet worden betrekking te hebben en hoe dit geacht moet worden over deze periode te
-      zijn verdeeld.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel8
   - number: '9'
     text: |-
       In afwijking van artikel 3, eerste lid, en artikel 7, eerste lid, wordt de eenmalige uitkering op grond van artikel
@@ -572,11 +459,27 @@ articles:
       [artikel 3, tweede lid, onderdelen d of e][ref4], een bedrag niet als opbrengst van arbeid werd beschouwd, met dien
       verstande dat dat bedrag wordt vermenigvuldigd met:
 
+      a. 1, in de eerste tot en met de derde maand na de dag voorafgaand aan de inwerkingtreding van de
+      [Wet werk en bijstand][ref5];
+
+      b. 0,75, in de vierde tot en met de zesde maand na de dag voorafgaand aan de inwerkingtreding van de
+      [Wet werk en bijstand][ref6];
+
+      c. 0,5, in de zevende tot en met de negende maand na de dag voorafgaand aan de inwerkingtreding van de
+      [Wet werk en bijstand][ref7];
+
+      d. 0,25, in de tiende tot en met de twaalfde maand na de dag voorafgaand aan de inwerkingtreding van de
+      [Wet werk en bijstand][ref8].
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0015703
       [ref2]: https://wetten.overheid.nl/BWBR0004091#Artikel3
       [ref3]: https://wetten.overheid.nl/BWBR0015703
       [ref4]: https://wetten.overheid.nl/BWBR0004091#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0015703
+      [ref6]: https://wetten.overheid.nl/BWBR0015703
+      [ref7]: https://wetten.overheid.nl/BWBR0015703
+      [ref8]: https://wetten.overheid.nl/BWBR0015703
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9a
     references:
       - id: ref1
@@ -591,59 +494,25 @@ articles:
         bwb_id: BWBR0004091
         artikel: '3'
         paragraaf: '2'
-  - number: 9a.a
-    text: |-
-      1, in de eerste tot en met de derde maand na de dag voorafgaand aan de inwerkingtreding van de
-      [Wet werk en bijstand][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9a
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0015703
-  - number: 9a.b
-    text: |-
-      0,75, in de vierde tot en met de zesde maand na de dag voorafgaand aan de inwerkingtreding van de
-      [Wet werk en bijstand][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9a
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0015703
-  - number: 9a.c
-    text: |-
-      0,5, in de zevende tot en met de negende maand na de dag voorafgaand aan de inwerkingtreding van de
-      [Wet werk en bijstand][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9a
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0015703
-  - number: 9a.d
-    text: |-
-      0,25, in de tiende tot en met de twaalfde maand na de dag voorafgaand aan de inwerkingtreding van de
-      [Wet werk en bijstand][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9a
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0015703
-  - number: 9b.1
+  - number: 9b
     text: |-
-      Op een besluit omtrent het recht op uitkering genomen met toepassing van [artikel 7, tweede lid][ref1],
+      1 Op een besluit omtrent het recht op uitkering genomen met toepassing van [artikel 7, tweede lid][ref1],
       zoals dat artikellid luidde op 31 maart 2008, wordt op aanvraag door burgemeester en wethouders
       [artikel 7, tweede lid, onderdeel j][ref2], toegepast met ingang van 1 april 2005 of indien de periodieke
       uitkeringen uit hoofde van een stamrecht als bedoeld in [artikel 7, tweede lid, onderdeel j][ref3], op
       een later tijdstip zijn ingegaan met ingang van dat tijdstip, mits deze aanvraag om toepassing leidt
       tot een hoger bedrag aan uitkering dan de vaststelling van het recht op uitkering zonder toepassing van
       [artikel 7, tweede lid, onderdeel j][ref4].
+
+      2 De aanvraag, bedoeld in het eerste lid, kan worden ingediend tot 1 april 2009.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004091#Artikel7
@@ -668,9 +537,6 @@ articles:
         bwb_id: BWBR0004091
         artikel: '7'
         paragraaf: '2'
-  - number: 9b.2
-    text: De aanvraag, bedoeld in het eerste lid, kan worden ingediend tot 1 april 2009.
-    url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel9b
   - number: '10'
     text: Dit besluit treedt in werking met ingang van 1 januari 1987.
     url: https://wetten.overheid.nl/BWBR0004091/2010-07-01#Artikel10
