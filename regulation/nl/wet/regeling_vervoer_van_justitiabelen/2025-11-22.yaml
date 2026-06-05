@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_vervoer_van_justitiabelen
 regulatory_layer: WET
 publication_date: '2025-11-21'
@@ -16,21 +16,59 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In deze regeling wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.a
-    text: '*justitiabelen:* gedetineerden, jeugdigen, ter beschikking gestelden of anderszins verpleegden;'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.b
     text: |-
-      *inrichting:* een inrichting als bedoeld in [artikel 1, onderdeel b, van de Penitentiaire beginselenwet][ref1],
+      In deze regeling wordt verstaan onder:
+
+      a. *justitiabelen:* gedetineerden, jeugdigen, ter beschikking gestelden of anderszins verpleegden;
+
+      b. *inrichting:* een inrichting als bedoeld in [artikel 1, onderdeel b, van de Penitentiaire beginselenwet][ref1],
       [artikel 1, onderdeel b, van de Beginselenwet justitiële jeugdinrichtingen][ref2] of
       [artikel 1, onderdeel b, van de Beginselenwet verpleging ter beschikking gestelden][ref3];
+
+      c. *medisch transport:* het transport van justitiabelen, bedoeld in de
+      [artikelen 42, vierde lid, onder c, van de Penitentiaire beginselenwet][ref4],
+      [41, vierde lid, onder c, van de Beginselenwet verpleging ter beschikking gestelden][ref5] en
+      [47, vierde lid, onder c, van de Beginselenwet justitiële jeugdinrichtingen][ref6];
+
+      d. *preciosa:* een beperkt aantal eigendommen van de justitiabelen waaronder geld en documenten die gedurende het
+      transport in bewaring zijn genomen en in een daarvoor bestemde verpakking, zijnde een preciosazak zijn opgeborgen;
+
+      e. *sociaal transport:* het transport van justitiabelen, bedoeld in
+      [artikel 43, derde lid, van de Penitentiaire beginselenwet][ref7],
+      [artikel 48, derde lid, Beginselenwet justitiële jeugdinrichtingen][ref8] of van ter beschikking gestelden of
+      anderszins verpleegden waarbij sprake is van een sociaal belang;
+
+      f. *spoedaanvraag:* een aanvraag tot een transport dat op de dag van de aanvraag moet worden uitgevoerd;
+
+      g. *transport:* de verplaatsing of begeleiding van een justitiabele vanuit of naar de inrichting of vanuit
+      of naar een andere locatie op aanwijzing van het daartoe bevoegde gezag, onder begeleiding van een of meer
+      transportgeleiders;
+
+      h. *transportaanvraag:* een aanvraag tot het uitvoeren van een transport;
+
+      i. *transportaanvrager:* een directeur, hoofd van een inrichting of een selectiefunctionaris;
+
+      j. *wagencommandant:* de transportgeleider die bij de uitvoering van een transport met één of meerdere voertuigen
+      door de transportuitvoerder is aangewezen het transport te leiden, dan wel degene met de hoogste rang of bij
+      gelijke rang, degene met de meeste dienstjaren bij de DV&O.
+
+      k. *transportgeleider:* de medewerker die uitdrukkelijk is belast met het toezicht, de beveiliging en de
+      begeleiding tijdens het transport van justitiabelen;
+
+      l. *transportrapportage:* het formulier, waarop bijzonderheden van het transport worden vermeld en dat door of
+      vanwege de transportgeleider wordt ingevuld;
+
+      m. *transportuitvoerder:* de functionaris die is belast met de uitvoering van het transport.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009709#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0011756#Artikel1
       [ref3]: https://wetten.overheid.nl/BWBR0008765#Artikel1
+      [ref4]: https://wetten.overheid.nl/BWBR0009709#Artikel42
+      [ref5]: https://wetten.overheid.nl/BWBR0008765#Artikel41
+      [ref6]: https://wetten.overheid.nl/BWBR0011756#Artikel47
+      [ref7]: https://wetten.overheid.nl/BWBR0009709#Artikel43
+      [ref8]: https://wetten.overheid.nl/BWBR0011756#Artikel48
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
     references:
       - id: ref1
@@ -42,117 +80,51 @@ articles:
       - id: ref3
         bwb_id: BWBR0008765
         artikel: '1'
-  - number: 1.c
-    text: |-
-      *medisch transport:* het transport van justitiabelen, bedoeld in de
-      [artikelen 42, vierde lid, onder c, van de Penitentiaire beginselenwet][ref1],
-      [41, vierde lid, onder c, van de Beginselenwet verpleging ter beschikking gestelden][ref2] en
-      [47, vierde lid, onder c, van de Beginselenwet justitiële jeugdinrichtingen][ref3];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009709#Artikel42
-      [ref2]: https://wetten.overheid.nl/BWBR0008765#Artikel41
-      [ref3]: https://wetten.overheid.nl/BWBR0011756#Artikel47
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0009709
         artikel: '42'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0008765
         artikel: '41'
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0011756
         artikel: '47'
-  - number: 1.d
-    text: |-
-      *preciosa:* een beperkt aantal eigendommen van de justitiabelen waaronder geld en documenten die gedurende het
-      transport in bewaring zijn genomen en in een daarvoor bestemde verpakking, zijnde een preciosazak zijn opgeborgen;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.e
-    text: |-
-      *sociaal transport:* het transport van justitiabelen, bedoeld in
-      [artikel 43, derde lid, van de Penitentiaire beginselenwet][ref1],
-      [artikel 48, derde lid, Beginselenwet justitiële jeugdinrichtingen][ref2] of van ter beschikking gestelden of
-      anderszins verpleegden waarbij sprake is van een sociaal belang;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009709#Artikel43
-      [ref2]: https://wetten.overheid.nl/BWBR0011756#Artikel48
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0009709
         artikel: '43'
-      - id: ref2
+      - id: ref8
         bwb_id: BWBR0011756
         artikel: '48'
-  - number: 1.f
-    text: '*spoedaanvraag:* een aanvraag tot een transport dat op de dag van de aanvraag moet worden uitgevoerd;'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.g
-    text: |-
-      *transport:* de verplaatsing of begeleiding van een justitiabele vanuit of naar de inrichting of vanuit of naar een
-      andere locatie op aanwijzing van het daartoe bevoegde gezag, onder begeleiding van een of meer transportgeleiders;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.h
-    text: '*transportaanvraag:* een aanvraag tot het uitvoeren van een transport;'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.i
-    text: '*transportaanvrager:* een directeur, hoofd van een inrichting of een selectiefunctionaris;'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.j
-    text: |-
-      *wagencommandant:* de transportgeleider die bij de uitvoering van een transport met één of meerdere voertuigen door
-      de transportuitvoerder is aangewezen het transport te leiden, dan wel degene met de hoogste rang of bij gelijke
-      rang, degene met de meeste dienstjaren bij de DV&O.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.k
-    text: |-
-      *transportgeleider:* de medewerker die uitdrukkelijk is belast met het toezicht, de beveiliging en de begeleiding
-      tijdens het transport van justitiabelen;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.l
-    text: |-
-      *transportrapportage:* het formulier, waarop bijzonderheden van het transport worden vermeld en dat door of vanwege
-      de transportgeleider wordt ingevuld;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
-  - number: 1.m
-    text: '*transportuitvoerder:* de functionaris die is belast met de uitvoering van het transport.'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1
   - number: 1a
     text: |-
       Deze regeling berust mede op [artikel 6.11, eerste lid, onder b, van de Wet forensische zorg][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0040634#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0040634#Artikel6.11
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel1a
     references:
       - id: ref1
         bwb_id: BWBR0040634
-        artikel: '6'
+        artikel: '6.11'
   - number: '2'
     text: Onze Minister kan in de gevallen waarin deze regeling niet voorziet, bijzondere aanwijzingen geven.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel2
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Tijdens eenzelfde transport kunnen gedetineerden, ter beschikking gestelden en anderszins verpleegden en jeugdigen
-      van achttien jaar of ouder worden vervoerd.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel3
-  - number: '3.2'
-    text: Mannen, vrouwen en jeugdigen van achttien jaar of ouder worden in een apart compartiment vervoerd.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel3
-  - number: '3.3'
-    text: |-
-      Jeugdigen jonger dan achttien jaar worden gescheiden van volwassenen in een apart voertuig vervoerd. Jongens en
+      1 Tijdens eenzelfde transport kunnen gedetineerden, ter beschikking gestelden en anderszins verpleegden en
+      jeugdigen van achttien jaar of ouder worden vervoerd.
+
+      2 Mannen, vrouwen en jeugdigen van achttien jaar of ouder worden in een apart compartiment vervoerd.
+
+      3 Jeugdigen jonger dan achttien jaar worden gescheiden van volwassenen in een apart voertuig vervoerd. Jongens en
       meisjes worden in aparte compartimenten vervoerd.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel3
-  - number: '3.4'
-    text: |-
-      Indien tegen een te vervoeren justitiabele een maatregel in het belang van het onderzoek als bedoeld
+
+      4 Indien tegen een te vervoeren justitiabele een maatregel in het belang van het onderzoek als bedoeld
       in [artikel 62, tweede lid, van het Wetboek van Strafvordering][ref1], dient de medewerker logistiek of
       transportgeleider er zorg voor te dragen dat deze justitiabele in afzondering wordt vervoerd. De aard van de
       beperking bepaalt de mate van afzondering.
+
+      5 Justitiabelen kunnen op verzoek van de transportaanvrager in een apart compartiment of voertuig worden vervoerd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001903#Artikel62
@@ -161,18 +133,13 @@ articles:
       - id: ref1
         bwb_id: BWBR0001903
         artikel: '62'
-  - number: '3.5'
-    text: Justitiabelen kunnen op verzoek van de transportaanvrager in een apart compartiment of voertuig worden vervoerd.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel3
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Het in- en uitstappen van justitiabelen geschiedt in de remise, of in een daarvoor bestemde afgesloten ruimte
+      1 Het in- en uitstappen van justitiabelen geschiedt in de remise, of in een daarvoor bestemde afgesloten ruimte
       van een inrichting. Bij het ontbreken van een dergelijke ruimte wordt in- en uitgestapt binnen de omheining van
       de inrichting.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel4
-  - number: '4.2'
-    text: |-
-      Bij een onbeveiligde locatie wordt in ieder geval zo dicht mogelijk bij de ingang van die locatie in- en
+
+      2 Bij een onbeveiligde locatie wordt in ieder geval zo dicht mogelijk bij de ingang van die locatie in- en
       uitgestapt.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel4
   - number: '5'
@@ -180,54 +147,41 @@ articles:
       Bij aankomst in een inrichting of een andere locatie wordt gehandeld overeenkomstig de binnen die inrichting of op
       die locatie gestelde regels en aanwijzingen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Indien de transportuitvoerder eerder of later dan het afgesproken tijdstip of na de reguliere openingstijden van
+      1 Indien de transportuitvoerder eerder of later dan het afgesproken tijdstip of na de reguliere openingstijden van
       een inrichting bij de inrichting zal arriveren om een of meer justitiabelen op te halen dan wel te laten insluiten,
       neemt de transportuitvoerder tijdig contact op met de directeur of het hoofd van de ontvangende inrichting.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel6
-  - number: '6.2'
-    text: |-
-      In een situatie als bedoeld in het eerste lid, neemt de directeur of het hoofd van de inrichting de benodigde
+
+      2 In een situatie als bedoeld in het eerste lid, neemt de directeur of het hoofd van de inrichting de benodigde
       maatregelen om de justitiabelen gereed te maken voor het transport dan wel te laten insluiten.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel6
-  - number: '7.1'
+  - number: '7'
     text: |-
-      Alvorens het transport aanvangt kan de justitiabele door de transportgeleider aan zijn lichaam of aan zijn kleding
-      worden onderzocht.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel7
-  - number: '7.2'
-    text: |-
-      De voorwerpen die door de transportgeleider bij het onderzoek aan lichaam of kleding zijn ingenomen, worden
+      1 Alvorens het transport aanvangt kan de justitiabele door de transportgeleider aan zijn lichaam of aan zijn
+      kleding worden onderzocht.
+
+      2 De voorwerpen die door de transportgeleider bij het onderzoek aan lichaam of kleding zijn ingenomen, worden
       genoteerd.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel7
-  - number: '7.3'
-    text: De wagencommandant kan bepalen dat de ingeslotene sieraden en handbagage tijdens het transport onder zich houdt.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel7
-  - number: '7.4'
-    text: |-
-      Goederen die bij het onderzoek aan lichaam of kleding worden aangetroffen en waarvan het bezit een strafbaar feit
+
+      3 De wagencommandant kan bepalen dat de ingeslotene sieraden en handbagage tijdens het transport onder zich houdt.
+
+      4 Goederen die bij het onderzoek aan lichaam of kleding worden aangetroffen en waarvan het bezit een strafbaar feit
       oplevert, dan wel die anderszins niet zijn toegestaan, worden inbeslaggenomen.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel7
-  - number: '7.5'
-    text: |-
-      Bij aankomst of de overdracht van de justitiabele worden, indien mogelijk in aanwezigheid van de justitiabele, de
+
+      5 Bij aankomst of de overdracht van de justitiabele worden, indien mogelijk in aanwezigheid van de justitiabele, de
       bij het onderzoek aan lichaam of kleding ingenomen artikelen op volledigheid gecontroleerd.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel7
-  - number: '8.1'
+  - number: '8'
     text: |-
-      Wanneer zich tijdens het transport onregelmatigheden voordoen, die zonder het openen van het voertuig of
+      1 Wanneer zich tijdens het transport onregelmatigheden voordoen, die zonder het openen van het voertuig of
       compartiment niet beheersbaar zijn, dan verzoekt de transportgeleider assistentie aan de politie, rijdt hij naar de
       dichtstbijzijnde inrichting of, in medische noodgevallen, naar een arts of ziekenhuis.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel8
-  - number: '8.2'
-    text: |-
-      Het voertuig of compartiment wordt niet geopend voordat voldoende assistentie ter plaatse is, tenzij (medische)
+
+      2 Het voertuig of compartiment wordt niet geopend voordat voldoende assistentie ter plaatse is, tenzij (medische)
       hulp dringend noodzakelijk is.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel8
-  - number: '8.3'
-    text: |-
-      Zo spoedig mogelijk na constatering van de onregelmatigheden informeert de transportgeleider de
+
+      3 Zo spoedig mogelijk na constatering van de onregelmatigheden informeert de transportgeleider de
       transportuitvoerder. De transportuitvoerder informeert vervolgens zo spoedig mogelijk de transportaanvrager.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel8
   - number: '9'
@@ -235,77 +189,65 @@ articles:
       De transportgeleiders houden tijdens het transport zoveel mogelijk toezicht op de justitiabelen, waarbij zij
       gebruik maken van de in het voertuig aanwezig zijnde toezichtsmiddelen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel9
-  - number: '10.1'
+  - number: '10'
     text: |-
-      Tijdens het transport vanuit een inrichting wordt uitsluitend bagage meegenomen die door de directeur of het hoofd
-      van de inrichting wordt meegegeven en is verpakt in een gesloten bagagedoos of preciosazak. Per persoon wordt niet
-      meer dan één bagagedoos en/of preciosazak meegenomen.
+      1 Tijdens het transport vanuit een inrichting wordt uitsluitend bagage meegenomen die door de directeur of het
+      hoofd van de inrichting wordt meegegeven en is verpakt in een gesloten bagagedoos of preciosazak. Per persoon wordt
+      niet meer dan één bagagedoos en/of preciosazak meegenomen.
+
+      2 Dieren worden niet meegenomen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel10
-  - number: '10.2'
-    text: Dieren worden niet meegenomen.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel10
-  - number: '11.1'
+  - number: '11'
     text: |-
-      De bagage van een vreemdeling bij uitzetting hoeft, indien dit door de grootte of de aard van de bagage niet
+      1 De bagage van een vreemdeling bij uitzetting hoeft, indien dit door de grootte of de aard van de bagage niet
       mogelijk is, niet te zijn verpakt in de voorgeschreven bagagedoos of preciosazak.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel11
-  - number: '11.2'
-    text: |-
-      Gelet op de bijzondere aard van het transport tracht de transportgeleider zoveel als redelijkerwijs mogelijk is, de
-      bagage mee te nemen.
+
+      2 Gelet op de bijzondere aard van het transport tracht de transportgeleider zoveel als redelijkerwijs mogelijk is,
+      de bagage mee te nemen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel11
   - number: '12'
     text: |-
       De bagage van justitiabelen die verblijven op een politiebureau hoeft niet te zijn verpakt in een bagagedoos of
       preciosazak.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel12
-  - number: '13.1'
+  - number: '13'
     text: |-
-      De bagagedoos of preciosazak blijft gedurende het transport in beheer van de transportgeleider. Een bagagedoos of
+      1 De bagagedoos of preciosazak blijft gedurende het transport in beheer van de transportgeleider. Een bagagedoos of
       preciosazak wordt niet geopend.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel13
-  - number: '13.2'
-    text: |-
-      Zonder uitdrukkelijke toestemming van de transportuitvoerder, worden van derden geen goederen aangenomen of
+
+      2 Zonder uitdrukkelijke toestemming van de transportuitvoerder, worden van derden geen goederen aangenomen of
       meegenomen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel13
-  - number: '14.1'
+  - number: '14'
     text: |-
-      De vrachtdienst van de transportuitvoerder verzorgt het vervoer van goederen die niet in één bagagedoos verpakt
+      1 De vrachtdienst van de transportuitvoerder verzorgt het vervoer van goederen die niet in één bagagedoos verpakt
       kunnen worden op aanvraag van de transportaanvrager.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel14
-  - number: '14.2'
-    text: |-
-      De transportaanvrager is verantwoordelijk voor het deugdelijk verpakken van de te vervoeren goederen, bedoeld in
+
+      2 De transportaanvrager is verantwoordelijk voor het deugdelijk verpakken van de te vervoeren goederen, bedoeld in
       het eerste lid.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel14
-  - number: '15.1'
+  - number: '15'
     text: |-
-      De directeur of het hoofd van de inrichting geeft, voor zover voorgeschreven door een arts of verpleegkundige,
+      1 De directeur of het hoofd van de inrichting geeft, voor zover voorgeschreven door een arts of verpleegkundige,
       benodigde medicijnen mee en instrueert de transportgeleider over de verstrekking.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel15
-  - number: '15.2'
-    text: |-
-      Deze medicijnen worden tijdens het transport door de transportgeleider in beheer gehouden en indien nodig op de
+
+      2 Deze medicijnen worden tijdens het transport door de transportgeleider in beheer gehouden en indien nodig op de
       door de inrichting voorgeschreven wijze verstrekt.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel15
-  - number: '16.1'
+  - number: '16'
     text: |-
-      De directeur of het hoofd van de inrichting geeft, indien is te voorzien dat de justitiabele tijdens het transport
-      een maaltijd moet gebruiken, een lunchpakket en drinken mee aan de transportgeleider die de justitiabele op het
-      daartoe geëigende moment van eten en drinken voorziet.
+      1 De directeur of het hoofd van de inrichting geeft, indien is te voorzien dat de justitiabele tijdens het
+      transport een maaltijd moet gebruiken, een lunchpakket en drinken mee aan de transportgeleider die de justitiabele
+      op het daartoe geëigende moment van eten en drinken voorziet.
+
+      2 Het is niet toegestaan dat het lunchpakket of het drinken is verpakt in glas of blik.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel16
-  - number: '16.2'
-    text: Het is niet toegestaan dat het lunchpakket of het drinken is verpakt in glas of blik.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel16
-  - number: '17.1'
+  - number: '17'
     text: |-
-      Het is niet toegestaan tijdens een transport met justitiabelen onderweg te stoppen voor het kopen, verkrijgen of
+      1 Het is niet toegestaan tijdens een transport met justitiabelen onderweg te stoppen voor het kopen, verkrijgen of
       nuttigen van consumpties of versnaperingen ten behoeve van de justitiabele.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel17
-  - number: '17.2'
-    text: |-
-      Voor zover noodzakelijk kan alleen gestopt worden voor het verkrijgen van goederen waarvan het verkrijgen geen
+
+      2 Voor zover noodzakelijk kan alleen gestopt worden voor het verkrijgen van goederen waarvan het verkrijgen geen
       uitstel kan dulden.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel17
   - number: '18'
@@ -332,12 +274,11 @@ articles:
       Indien door de fysieke of psychische toestand van de justitiabele bijzondere maatregelen zijn vereist, treft de
       transportuitvoerder de nodige voorzieningen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel21
-  - number: '22.1'
-    text: De transportgeleider houdt te allen tijde het toezicht op de justitiabele tijdens een sociaal transport.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel22
-  - number: '22.2'
+  - number: '22'
     text: |-
-      De transportgeleider kan het sociale transport afbreken indien de justitiabele zich niet houdt aan de voorwaarden
+      1 De transportgeleider houdt te allen tijde het toezicht op de justitiabele tijdens een sociaal transport.
+
+      2 De transportgeleider kan het sociale transport afbreken indien de justitiabele zich niet houdt aan de voorwaarden
       die blijkens de transportaanvraag aan het verlof zijn verbonden of indien de veiligheid van het transport niet meer
       gewaarborgd kan worden.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel22
@@ -346,28 +287,30 @@ articles:
       Wanneer zich tijdens het transport bijzonderheden, aangaande de justitiabele, hebben voorgedaan, dan meldt de
       transportuitvoerder dit aan de inrichting.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel23
-  - number: '24.1'
-    text: De transportgeleider draagt zorg voor een transportrapportage van de uitgevoerde transporten.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: '24.2'
-    text: 'Rapportage in de transportrapportage wordt in elk geval gedaan naar aanleiding van:'
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.a
-    text: klachten van justitiabelen of derden;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.b
-    text: problemen met (procedures) in inrichtingen het transport betreffende;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.c
-    text: gedrag van justitiabelen of andere bijzonderheden van invloed op een verhoging van het transportrisico;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.d
-    text: bijzonderheden het voertuig betreffende;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.e
+  - number: '24'
     text: |-
-      het onderbreken van het transport en de reden daartoe, waaronder in ieder geval een onderbreking als bedoeld in
+      1 De transportgeleider draagt zorg voor een transportrapportage van de uitgevoerde transporten.
+
+      2 Rapportage in de transportrapportage wordt in elk geval gedaan naar aanleiding van:
+
+      a. klachten van justitiabelen of derden;
+
+      b. problemen met (procedures) in inrichtingen het transport betreffende;
+
+      c. gedrag van justitiabelen of andere bijzonderheden van invloed op een verhoging van het transportrisico;
+
+      d. bijzonderheden het voertuig betreffende;
+
+      e. het onderbreken van het transport en de reden daartoe, waaronder in ieder geval een onderbreking als bedoeld in
       [artikel 17, tweede lid][ref1];
+
+      f. conflict met medische behandelaar over de aanwezigheid van een transportgeleider bij een onderzoek;
+
+      g. inbeslaggenomen en of aangetroffen goederen;
+
+      h. defecten aan materiaal geconstateerd tijdens het transport;
+
+      i. alle overige zaken of bijzonderheden waarvan de transportuitvoerder in kennis gesteld dient te worden.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0035372#Artikel17
@@ -377,34 +320,19 @@ articles:
         bwb_id: BWBR0035372
         artikel: '17'
         hoofdstuk: '6'
-  - number: 24.2.f
-    text: conflict met medische behandelaar over de aanwezigheid van een transportgeleider bij een onderzoek;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.g
-    text: inbeslaggenomen en of aangetroffen goederen;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.h
-    text: defecten aan materiaal geconstateerd tijdens het transport;
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: 24.2.i
-    text: alle overige zaken of bijzonderheden waarvan de transportuitvoerder in kennis gesteld dient te worden.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel24
-  - number: '25.1'
+  - number: '25'
     text: |-
-      In het geval de justitiabele gedurende het transport vernielingen aanricht, maakt de transportgeleider een rapport
-      op ten behoeve van de transportuitvoerder en de transportaanvrager.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel25
-  - number: '25.2'
-    text: De transportaanvrager draagt zorg voor verdere afhandeling van de rapportages, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel25
-  - number: '25.3'
-    text: |-
-      De transportuitvoerder wordt door de transportaanvrager zo spoedig mogelijk in kennis gesteld van de wijze van
+      1 In het geval de justitiabele gedurende het transport vernielingen aanricht, maakt de transportgeleider een
+      rapport op ten behoeve van de transportuitvoerder en de transportaanvrager.
+
+      2 De transportaanvrager draagt zorg voor verdere afhandeling van de rapportages, bedoeld in het eerste lid.
+
+      3 De transportuitvoerder wordt door de transportaanvrager zo spoedig mogelijk in kennis gesteld van de wijze van
       afhandeling van de rapportages.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel25
-  - number: '26.1'
-    text: Deze regeling treedt in werking op 1 juli 2014.
-    url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel26
-  - number: '26.2'
-    text: 'Deze regeling wordt aangehaald als: Regeling vervoer van justitiabelen.'
+  - number: '26'
+    text: |-
+      1 Deze regeling treedt in werking op 1 juli 2014.
+
+      2 Deze regeling wordt aangehaald als: Regeling vervoer van justitiabelen.
     url: https://wetten.overheid.nl/BWBR0035372/2025-11-22#Artikel26
