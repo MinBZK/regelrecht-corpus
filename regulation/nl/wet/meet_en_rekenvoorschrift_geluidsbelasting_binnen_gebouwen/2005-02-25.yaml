@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: meet_en_rekenvoorschrift_geluidsbelasting_binnen_gebouwen
 regulatory_layer: WET
 publication_date: '2012-06-27'
@@ -14,23 +14,25 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Voor de toepassing van dit besluit wordt verstaan onder gevel: de bouwkundige constructie die een ruimte in een
+      1 Voor de toepassing van dit besluit wordt verstaan onder gevel: de bouwkundige constructie die een ruimte in een
       gebouw scheidt van de buitenlucht, daaronder mede begrepen het dak.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: '1.2'
-    text: |-
-      In dit besluit worden mede tot de gevel gerekend konstruktiedelen, bevestigd aan het gebouw, die de
+
+      2 In dit besluit worden mede tot de gevel gerekend konstruktiedelen, bevestigd aan het gebouw, die de
       geluidsbelasting binnen dat gebouw beinvloeden door reflectie of afscherming van het geluid.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: '2.1'
+  - number: '2'
     text: |-
-      Het equivalent geluidsniveau binnen een gebouw ten behoeve van de vaststelling van de geluidsbelasting ter
-      plaatse, wordt bepaald door het equivalente geluidsniveau buiten het gebouw, bepaald overeenkomstig het
+      1 Het equivalent geluidsniveau binnen een gebouw ten behoeve van de vaststelling van de geluidsbelasting
+      ter plaatse, wordt bepaald door het equivalente geluidsniveau buiten het gebouw, bepaald overeenkomstig het
       [Meet- en rekenvoorschrift hoofdstuk V Wet geluidhinder][ref1] (Stcrt. 1982, 161) , het Reken- en Meetvoorschrift
       Verkeerslawaai (Stcrt. 1987, 107 of het [Reken- en meetvoorschrift railverkeerslawaai][ref2] (Stcrt. 1987, PM), te
       verminderen met de geluidwering van de gevel.
+
+      2 De geluidwering van een gevel wordt bepaald door middel van meting. De geluidwering van een gevel kan worden
+      bepaald door berekening indien het betreft de bepaling van de geluidwering van een gevel, voordat de voorzieningen
+      zijn aangebracht, en alle voor die berekening benodigde gegevens bekend zijn.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003513
@@ -41,32 +43,22 @@ articles:
         bwb_id: BWBR0003513
       - id: ref2
         bwb_id: BWBR0004171
-  - number: '2.2'
-    text: |-
-      De geluidwering van een gevel wordt bepaald door middel van meting. De geluidwering van een gevel kan worden
-      bepaald door berekening indien het betreft de bepaling van de geluidwering van een gevel, voordat de voorzieningen
-      zijn aangebracht, en alle voor die berekening benodigde gegevens bekend zijn.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
   - number: '3'
-    text: 'Bij de bepaling van de geluidwering van de gevel wordt rekening gehouden met:'
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.a
-    text: het geluidsspectrum, behorend bij het equivalente geluidsniveau buiten het gebouw;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.b
-    text: de structuur van de gevel en de oriëntatie van de geveldelen ten opzichte van de geluidsbron;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.c
-    text: de geluidwerende kwaliteit en de afmetingen van de elementen waaruit de gevel is opgebouwd;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.d
-    text: het volume van het betreffend vertrek bij berekening, of de nagalmtijd van het betreffend vertrek bij meting;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.e
-    text: de geluidwerende kwaliteit van voorzieningen in de gevel voor ventilatie – niet zijnde ramen – in geopende stand;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: 3.f
-    text: geluidlekken.
+    text: |-
+      Bij de bepaling van de geluidwering van de gevel wordt rekening gehouden met:
+
+      a. het geluidsspectrum, behorend bij het equivalente geluidsniveau buiten het gebouw;
+
+      b. de structuur van de gevel en de oriëntatie van de geveldelen ten opzichte van de geluidsbron;
+
+      c. de geluidwerende kwaliteit en de afmetingen van de elementen waaruit de gevel is opgebouwd;
+
+      d. het volume van het betreffend vertrek bij berekening, of de nagalmtijd van het betreffend vertrek bij meting;
+
+      e. de geluidwerende kwaliteit van voorzieningen in de gevel voor ventilatie – niet zijnde ramen – in geopende
+      stand;
+
+      f. geluidlekken.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
   - number: '4'
     text: |-
@@ -100,29 +92,28 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0003529
-  - number: '9.1'
-    text: 'Dit besluit kan worden aangehaald als: Meet- en rekenvoorschrift geluidsbelasting binnen gebouwen.'
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel9
-  - number: '9.2'
+  - number: '9'
     text: |-
-      Dit besluit zal worden geplaatst in de Nederlandse Staatscourant. Het treedt in werking op de eerste dag na de
+      1 Dit besluit kan worden aangehaald als: Meet- en rekenvoorschrift geluidsbelasting binnen gebouwen.
+
+      2 Dit besluit zal worden geplaatst in de Nederlandse Staatscourant. Het treedt in werking op de eerste dag na de
       datum van uitgifte van de Staatscourant waarin het wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel9
-  - number: BI:1.1.1
+  - number: BI:1
     text: |-
-      De bepaling van de geluidwering dient te geschieden voor de octaaf-banden met de middenfrequenties 125 Hz, 250 Hz,
-      500 Hz, 1000 Hz en 2000 Hz.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:1.1.2
-    text: |-
-      Bij de bepaling van de geluidwering van de gevel dient te worden uitgegaan van het A-gewogen referentiespectrum,
-      behorend bij het equivalent geluidsniveau buiten de woning of het andere geluidsgevoelige gebouw. Het A-gewogen
-      referentiespectrum wordt zodanig weergegeven, dat het bijbehorend geluidsniveau 0 dB is.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:1.1.3
-    text: |-
-      Tenzij anders vermeld en gemotiveerd, wordt bij de bepaling van de geluidwering als referentiespectrum voor weg- of
-      spoorweglawaai het in tabel 1 gegeven standaardspectrum gehanteerd.
+      1.1 De bepaling van de geluidwering dient te geschieden voor de octaaf-banden met de middenfrequenties 125 Hz, 250
+      Hz, 500 Hz, 1000 Hz en 2000 Hz.
+
+      1.2 Bij de bepaling van de geluidwering van de gevel dient te worden uitgegaan van het A-gewogen
+      referentiespectrum, behorend bij het equivalent geluidsniveau buiten de woning of het andere geluidsgevoelige
+      gebouw.
+
+      Het A-gewogen referentiespectrum wordt zodanig weergegeven, dat het bijbehorend geluidsniveau 0 dB is.
+
+      1.3 Tenzij anders vermeld en gemotiveerd, wordt bij de bepaling van de geluidwering als referentiespectrum voor
+      weg- of spoorweglawaai het in tabel 1 gegeven standaardspectrum gehanteerd.
+
+
 
 
 
@@ -198,76 +189,84 @@ articles:
 
 
                         –7
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:1.1.3.a
-    text: |-
-      Als in de maatgevende periode op de betreffende spoorweg geen railvoertuigen passeren behorende tot de categorieën
-      4 of 5, bedoeld in artikel 1 van het Reken- en meetvoorschrift railverkeerslawaai, kan de met behulp van het
-      standaardspectrum bepaalde geluidwering met 3 dB(A) worden vermeerderd.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:1.1.4
-    text: |-
-      De geluidwering van de gevel wordt genormeerd voor de nagalmtijd in de geluidsgevoelige ruimte. Voor
+
+
+
+
+
+
+      1.3.a Als in de maatgevende periode op de betreffende spoorweg geen railvoertuigen passeren behorende tot de
+      categorieën 4 of 5, bedoeld in artikel 1 van het Reken- en meetvoorschrift railverkeerslawaai, kan de met behulp
+      van het standaardspectrum bepaalde geluidwering met 3 dB(A) worden vermeerderd.
+
+      1.4 De geluidwering van de gevel wordt genormeerd voor de nagalmtijd in de geluidsgevoelige ruimte. Voor
       geluidsgevoelige ruimten in woningen bedraagt de referentienagalmtijd T 0,5 seconde voor de onder 1.1. genoemde
       octaafbanden. Voor geluidsgevoelige ruimten, anders dan woonruimten, in andere geluidsgevoelige gebouwen dan
       woningen bedraagt de referentienagalmtijd T 0,8 seconde voor de onder 1.1. genoemde octaafbanden.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:1.1.5
-    text: |-
-      Indien door een aanwezige gevel, anders dan door het openen van ramen, ventilatie kan plaatsvinden, zoals
+
+      1.5 Indien door een aanwezige gevel, anders dan door het openen van ramen, ventilatie kan plaatsvinden, zoals
       door kieren, ventilatieroosters of ventilatieklepjes, dan wordt de geluidwering bepaald voor de situatie dat
-      desbetreffende ventilatieopeningen zijn gesloten en afgedicht. Ter compensatie wordt een opening in de gevel
-      in rekening gebracht ter grootte van de helft van de volgens de bouwverordening te bepalen ventilatie-opening
-      in de gevel, met een geluidsisolatiewaarde van 0 dB(A) voor het netto oppervlak van de opening. Indien evenwel
-      ventilatie-openingen in de gevel aanwezig zijn of worden aangebracht waaraan een hogere geluidsisolatiewaarde wordt
-      toegekend dan 0 dB(A), dan worden deze bij de bepaling van de geluidwering geopend respectievelijk geopend geacht.
+      desbetreffende ventilatieopeningen zijn gesloten en afgedicht. Ter compensatie wordt een opening in de gevel in
+      rekening gebracht ter grootte van de helft van de volgens de bouwverordening te bepalen ventilatie-opening in de
+      gevel, met een geluidsisolatiewaarde van 0 dB(A) voor het netto oppervlak van de opening.
+
+      Indien evenwel ventilatie-openingen in de gevel aanwezig zijn of worden aangebracht waaraan een hogere
+      geluidsisolatiewaarde wordt toegekend dan 0 dB(A), dan worden deze bij de bepaling van de geluidwering geopend
+      respectievelijk geopend geacht.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel1
-  - number: BI:2.2.1
+  - number: BI:2
     text: |-
-      Ter bepaling van de waarde van de geluidwering van de gevel worden metingen uitgevoerd per begrenzingsvlak met
-      behulp van een luidspreker of een luidsprekerscombinatie op zodanige wijze dat de metingen voor wat betreft
-      de invalsrichtingen representatief kunnen worden geacht. Daarbij wordt uitgegaan van een geluidsbron op één of
-      meer vaste posities. Het begrenzingsvlak wordt daartoe onder een hoek van 45° ± 5° ten opzichte van de normaal
-      aangestraald, zodanig dat de geluidsbelasting op de andere van belang zijnde begrenzingsvlakken te verwaarlozen is.
-      De afstand van de bron tot het begrenzingsvlak gemeten vanuit de geluidsgevoelige ruimte is ten minste tweemaal de
-      gevelbreedte (van die ruimte). De bron dient een signaal voort te brengen met het karakter van een ruis en met een
-      breedte van tenminste één octaaf waarvan de middenfrequentie overeenkomt met de middenfrequentie van het te meten
-      octaafgeluiddrukniveau. De frequentiekarakteristiek moet vlak zijn binnen een hoek van ca. 40°. De door de bron op
-      de meetplaatsen veroorzaakte geluidsniveaus dienen ten minste 10 dB hoger te zijn dan het achtergrondgeluid, dat
-      wil zeggen alle geluiden die niet van de bron afkomstig zijn.
+      2.1 Ter bepaling van de waarde van de geluidwering van de gevel worden metingen uitgevoerd per begrenzingsvlak
+      met behulp van een luidspreker of een luidsprekerscombinatie op zodanige wijze dat de metingen voor wat betreft de
+      invalsrichtingen representatief kunnen worden geacht.
+
+      Daarbij wordt uitgegaan van een geluidsbron op één of meer vaste posities.
+
+      Het begrenzingsvlak wordt daartoe onder een hoek van 45° ± 5° ten opzichte van de normaal aangestraald, zodanig dat
+      de geluidsbelasting op de andere van belang zijnde begrenzingsvlakken te verwaarlozen is. De afstand van de bron
+      tot het begrenzingsvlak gemeten vanuit de geluidsgevoelige ruimte is ten minste tweemaal de gevelbreedte (van die
+      ruimte). De bron dient een signaal voort te brengen met het karakter van een ruis en met een breedte van tenminste
+      één octaaf waarvan de middenfrequentie overeenkomt met de middenfrequentie van het te meten octaafgeluiddrukniveau.
+      De frequentiekarakteristiek moet vlak zijn binnen een hoek van ca. 40°.
+
+      De door de bron op de meetplaatsen veroorzaakte geluidsniveaus dienen ten minste 10 dB hoger te zijn dan het
+      achtergrondgeluid, dat wil zeggen alle geluiden die niet van de bron afkomstig zijn.
+
+      2.2 Het geluiddrukniveau buiten het gebouw L wordt per octaafband bepaald op 2 meter afstand van het
+      begrenzingsvlak. Het (ruimtelijk gemiddelde) geluiddrukniveau binnen de ruimte L wordt per octaafband bepaald.
+      Voor indicatieve doeleinden kan voor de bepaling van het geluiddrukniveau binnen de geluidgevoelige ruimte – L
+      – eventueel worden volstaan met één meting op 1 à 1,5 meter van het gevelvlak, ter hoogte van het middel van de
+      gevel. Ter compensatie van een systematische fout dient het aldus gemeten geluiddrukniveau met 1 dB te worden
+      verlaagd.
+
+      2.3 In de geluidsgevoelige ruimte dient per octaafband met de middenfrequenties 125 Hz, 250 Hz, 500 Hz, 1000 Hz,
+      2000 Hz, de nagalmtijd T te worden bepaald. Uit de waarden L, L  en T en de referentienagalmtijd T, (zie onder 1.4)
+      wordt het partiële geluidsniveauverschil van de gevel D bepaald volgens de formule:
+
+      D= L – L + 10 log (T/T) (dB) (1)
+
+      2.4 In verband met reflecties van het geluid op de gevel dient het partiële geluidsniveauverschil gecorrigeerd te
+      worden voor de bepaling van de partiële geluidwering volgens de formule:
+
+      G = D–C (dB) (2)
+
+      waarin C = o of 3 dB.
+
+      Uit de partiele geluidwering G (voor de octaafbanden met de middenfrequenties 125 Hz, 250 Hz, 500 Hz, 1000 Hz,
+      en 2000 Hz) wordt rekening houdende met het standaardspectrum de waarde van de geluidwering van de gevel bepaald
+      volgens de formule (5) (zie onder 3.5.).
+
+      2.5 De bij de bepaling van de geluiddrukniveaus te gebruiken apparatuur dient zodanig te zijn dat de meetketen
+      voldoet aan IEC-publicatie 651, uitgave 1979, type 2.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
-  - number: BI:2.2.2
+  - number: BI:3
     text: |-
-      Het geluiddrukniveau buiten het gebouw L wordt per octaafband bepaald op 2 meter afstand van het begrenzingsvlak.
-      Het (ruimtelijk gemiddelde) geluiddrukniveau binnen de ruimte L wordt per octaafband bepaald. Voor indicatieve
-      doeleinden kan voor de bepaling van het geluiddrukniveau binnen de geluidgevoelige ruimte – L – eventueel worden
-      volstaan met één meting op 1 à 1,5 meter van het gevelvlak, ter hoogte van het middel van de gevel. Ter compensatie
-      van een systematische fout dient het aldus gemeten geluiddrukniveau met 1 dB te worden verlaagd.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
-  - number: BI:2.2.3
-    text: |-
-      In de geluidsgevoelige ruimte dient per octaafband met de middenfrequenties 125 Hz, 250 Hz, 500 Hz, 1000 Hz, 2000
-      Hz, de nagalmtijd T te worden bepaald. Uit de waarden L, L  en T en de referentienagalmtijd T, (zie onder 1.4)
-      wordt het partiële geluidsniveauverschil van de gevel D bepaald volgens de formule: D= L – L + 10 log (T/T) (dB)
-      (1)
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
-  - number: BI:2.2.4
-    text: |-
-      In verband met reflecties van het geluid op de gevel dient het partiële geluidsniveauverschil gecorrigeerd te
-      worden voor de bepaling van de partiële geluidwering volgens de formule: G = D–C (dB) (2) waarin C = o of 3 dB. Uit
-      de partiele geluidwering G (voor de octaafbanden met de middenfrequenties 125 Hz, 250 Hz, 500 Hz, 1000 Hz, en 2000
-      Hz) wordt rekening houdende met het standaardspectrum de waarde van de geluidwering van de gevel bepaald volgens de
-      formule (5) (zie onder 3.5.).
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
-  - number: BI:2.2.5
-    text: |-
-      De bij de bepaling van de geluiddrukniveaus te gebruiken apparatuur dient zodanig te zijn dat de meetketen voldoet
-      aan IEC-publicatie 651, uitgave 1979, type 2.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel2
-  - number: BI:3.3.1
-    text: |-
-      De partiele geluidwering (G) van een gevel – dat wil zeggen de geluidwering in één octaafband (i) – wordt berekend
-      uit de geluidsisolaties van de totale, uit te onderscheiden elementen samengestelde, gevel met de formule: waarin:
+      3.1 De partiele geluidwering (G) van een gevel – dat wil zeggen de geluidwering in één octaafband (i) – wordt
+      berekend uit de geluidsisolaties van de totale, uit te onderscheiden elementen samengestelde, gevel met de formule:
+
+      waarin:
+
+
 
 
 
@@ -310,10 +309,17 @@ articles:
 
 
                         totale geveloppervlakte in m² (gezien vanuit de geluidgevoelige ruimte).
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: BI:3.3.2
-    text: |-
-      3.2. In formule (1) geldt: waarin:
+
+
+
+
+
+
+      3.2 3.2. In formule (1) geldt:
+
+      waarin:
+
+
 
 
 
@@ -350,38 +356,37 @@ articles:
                         kierterm. Indien speciale dubbele kierdichting worden toegepast, kan K op 10–5 worden gesteld, in
       de overige gevallen op 3.10–4.
                         Indien een afwijkende kierterm wordt toegepast, wordt deze afwijking nader gemotiveerd.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: BI:3.3.3
-    text: |-
-      De correctieterm C (gevelreflectie) bedraagt 3 dB indien de hoek tussen de kortste verbindingslijn geluidbron
+
+
+
+
+
+
+      3.3 De correctieterm C (gevelreflectie) bedraagt 3 dB indien de hoek tussen de kortste verbindingslijn geluidbron
       – gebouw en de normaal op de gevel of het gevelvlak 70° of minder is en bedraagt 0 dB indien deze hoek meer dan
       70° is. Bij de bepaling van de partiële geluidwering van een gevel volgens formule (3) wordt gerekend met de
       gebruikelijke gevelstructuren. Indien er sprake is van een bijzondere gevelstructuur kan een correctie worden
       toegepast welke wordt gemotiveerd.
+
+      3.4 Indien de waarden R gegeven zijn voor het A-gewogen standaardreferentiespectrum – dus in dB(A) –, geven de
+      formules (3) en (4) direct de geluidwering van de gevel in dB(A).
+
+      3.5 Uit de partiële geluidwering van de gevel (G) wordt de geluidwering van de gevel berekend met de formule:
+
+      waarin:
+
+      C = standaard-referentiespectrum in dB (zie onder 1.2 en 1.3.).
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: BI:3.3.4
+  - number: BII:A
     text: |-
-      Indien de waarden R gegeven zijn voor het A-gewogen standaardreferentiespectrum – dus in dB(A) –, geven de formules
-      (3) en (4) direct de geluidwering van de gevel in dB(A).
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: BI:3.3.5
-    text: |-
-      Uit de partiële geluidwering van de gevel (G) wordt de geluidwering van de gevel berekend met de formule: waarin: C
-      = standaard-referentiespectrum in dB (zie onder 1.2 en 1.3.).
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#Artikel3
-  - number: BII:A.1
-    text: Naam van de opdrachtgever van het onderzoek.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelA
-  - number: BII:A.2
-    text: Naam van de instantie die het onderzoek heeft uitgevoerd.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelA
-  - number: BII:A.3
-    text: Datum van het onderzoek.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelA
-  - number: BII:A.4
-    text: |-
-      Aanleiding en doel van het onderzoek, onder vermelding van de artikelen van de [Wet geluidhinder][ref1] of regeling
-      ingevolge [Wet geluidhinder][ref2], ten behoeve waarvan het onderzoek wordt uitgevoerd.
+      1 Naam van de opdrachtgever van het onderzoek.
+
+      2 Naam van de instantie die het onderzoek heeft uitgevoerd.
+
+      3 Datum van het onderzoek.
+
+      4 Aanleiding en doel van het onderzoek, onder vermelding van de artikelen van de [Wet geluidhinder][ref1] of
+      regeling ingevolge [Wet geluidhinder][ref2], ten behoeve waarvan het onderzoek wordt uitgevoerd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003227
@@ -392,51 +397,42 @@ articles:
         bwb_id: BWBR0003227
       - id: ref2
         bwb_id: BWBR0003227
-  - number: BII:B.1
+  - number: BII:B
     text: |-
-      Indien een andere methode dan de in dit besluit beschreven methoden is toegepast, wordt de noodzaak daarvan gegeven
-      en de betreffende methode beschreven.
+      1 Indien een andere methode dan de in dit besluit beschreven methoden is toegepast, wordt de noodzaak daarvan
+      gegeven en de betreffende methode beschreven.
+
+      2 Een akoestisch rapport inzake een berekening van een geluidwering vermeldt alle gegevens die in de berekening
+      zijn ingevoerd.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelB
-  - number: BII:B.2
+  - number: BII:C
     text: |-
-      Een akoestisch rapport inzake een berekening van een geluidwering vermeldt alle gegevens die in de berekening zijn
-      ingevoerd.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelB
-  - number: BII:C.1
-    text: 'Een of meer kaarten en/of tekeningen op een zodanige schaal dat daarmede een duidelijk beeld wordt gegeven van:'
+      1 Een of meer kaarten en/of tekeningen op een zodanige schaal dat daarmede een duidelijk beeld wordt gegeven van:
+
+      a. de situering van de gebouwen ten opzichte van het industrieterrein de weg of de spoorweg.
+
+      b. de geluidsbelasting van de gevel;
+
+      c. de samenstelling van de gevels waarop het rapport betrekking heeft.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelC
-  - number: BII:C.1.a
-    text: de situering van de gebouwen ten opzichte van het industrieterrein de weg of de spoorweg.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelC
-  - number: BII:C.1.b
-    text: de geluidsbelasting van de gevel;
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelC
-  - number: BII:C.1.c
-    text: de samenstelling van de gevels waarop het rapport betrekking heeft.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelC
-  - number: BII:D.1
-    text: Data, adressen en ruimten waarin is gemeten.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelD
-  - number: BII:D.2
+  - number: BII:D
     text: |-
-      Gebruikte meetapparatuur, microfoon- en bronopstelling, wijze van calibreren en een beschouwing over de signaal-
+      1 Data, adressen en ruimten waarin is gemeten.
+
+      2 Gebruikte meetapparatuur, microfoon- en bronopstelling, wijze van calibreren en een beschouwing over de signaal-
       stoorverhouding tijdens de metingen.
+
+      3 De aangetroffen situatie, indien deze anders is dan uit de tekeningen blijkt.
+
+      4 De oorzaken indien de geluidwering niet voldoet aan de verwachting.
+
+      5 Wijze waarop de meetresultaten zijn verwerkt en uitgewerkt.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelD
-  - number: BII:D.3
-    text: De aangetroffen situatie, indien deze anders is dan uit de tekeningen blijkt.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelD
-  - number: BII:D.4
-    text: De oorzaken indien de geluidwering niet voldoet aan de verwachting.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelD
-  - number: BII:D.5
-    text: Wijze waarop de meetresultaten zijn verwerkt en uitgewerkt.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelD
-  - number: BII:E.1
-    text: Het referentiespectrum.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelE
-  - number: BII:E.2
-    text: Invoergegevens voor berekening, bronvermelding van invoergegevens.
-    url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelE
-  - number: BII:E.3
-    text: Wijze waarop geventileerd kan worden terwijl aan de eisen voor de geluidwering is voldaan.
+  - number: BII:E
+    text: |-
+      1 Het referentiespectrum.
+
+      2 Invoergegevens voor berekening, bronvermelding van invoergegevens.
+
+      3 Wijze waarop geventileerd kan worden terwijl aan de eisen voor de geluidwering is voldaan.
     url: https://wetten.overheid.nl/BWBR0003529/2005-02-25#ArtikelE
