@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_voorraden_meststoffenwet
 regulatory_layer: AMVB
 publication_date: '2005-12-29'
@@ -24,63 +24,46 @@ preamble:
     Hebben goedgevonden en verstaan:
   url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#ArtikelAanhef
 articles:
-  - number: '1.1'
-    text: 'In dit besluit en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-  - number: 1.1.a
+  - number: '1'
     text: |-
-      wet: [Meststoffenwet][ref1];
+      1 In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004054
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004054
-  - number: 1.1.b
-    text: |-
-      intermediaire onderneming: onderneming, niet zijnde een bedrijf, in het kader waarvan dierlijke meststoffen worden
-      aangevoerd ten behoeve van handel, transport, opslag, be- of verwerking of anderszins;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-  - number: 1.1.c
-    text: |-
-      beginvoorraad: hoeveelheid fosfaat, onderscheidenlijk stikstof in dierlijke meststoffen in opslag bij een bedrijf
-      of intermediaire onderneming bij aanvang van het kalenderjaar;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-  - number: 1.1.d
-    text: |-
-      eindvoorraad: hoeveelheid fosfaat, onderscheidenlijk stikstof in dierlijke meststoffen in opslag bij een bedrijf of
-      intermediaire onderneming aan het einde van het kalenderjaar;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-  - number: 1.1.e
-    text: 'mestproducerend bedrijf: bedrijf in het kader waarvan dierlijke meststoffen worden geproduceerd;'
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-  - number: 1.1.f
-    text: |-
-      mestaanvoerend bedrijf: bedrijf in het kader waarvan dierlijke meststoffen worden aangevoerd en waarvan de
+      a. wet: [Meststoffenwet][ref1];
+
+      b. intermediaire onderneming: onderneming, niet zijnde een bedrijf, in het kader waarvan dierlijke meststoffen
+      worden aangevoerd ten behoeve van handel, transport, opslag, be- of verwerking of anderszins;
+
+      c. beginvoorraad: hoeveelheid fosfaat, onderscheidenlijk stikstof in dierlijke meststoffen in opslag bij een
+      bedrijf of intermediaire onderneming bij aanvang van het kalenderjaar;
+
+      d. eindvoorraad: hoeveelheid fosfaat, onderscheidenlijk stikstof in dierlijke meststoffen in opslag bij een bedrijf
+      of intermediaire onderneming aan het einde van het kalenderjaar;
+
+      e. mestproducerend bedrijf: bedrijf in het kader waarvan dierlijke meststoffen worden geproduceerd;
+
+      f. mestaanvoerend bedrijf: bedrijf in het kader waarvan dierlijke meststoffen worden aangevoerd en waarvan de
       gemiddelde veebezetting in het kalenderjaar niet groter is dan drie grootvee-eenheden, bepaald overeenkomstig de
-      daarvoor in [bijlage A bij de wet][ref1] opgenomen normen.
+      daarvoor in [bijlage A bij de wet][ref2] opgenomen normen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004054
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004054
-  - number: '1.2'
-    text: |-
-      Voor de toepassing van [paragraaf 3][ref1] in samenhang met [artikel 2][ref2] wordt onder de begin- en
+      2 Voor de toepassing van [paragraaf 3][ref3] in samenhang met [artikel 2][ref4] wordt onder de begin- en
       eindvoorraad mede begrepen de hoeveelheid fosfaat in overige organische meststoffen in opslag bij een intermediaire
       onderneming bij aanvang, onderscheidenlijk aan het einde van het kalenderjaar.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#ParagraafPARAGRAAF_3
-      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0004054
+      [ref2]: https://wetten.overheid.nl/BWBR0004054
+      [ref3]: https://wetten.overheid.nl/BWBR0008980#ParagraafPARAGRAAF_3
+      [ref4]: https://wetten.overheid.nl/BWBR0008980#Artikel2
     url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel1
     references:
       - id: ref1
+        bwb_id: BWBR0004054
+      - id: ref2
+        bwb_id: BWBR0004054
+      - id: ref3
         bwb_id: BWBR0008980
         paragraaf: PARAGRAAF_3
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0008980
         artikel: '2'
         paragraaf: PARAGRAAF_1
@@ -121,48 +104,34 @@ articles:
       - id: ref2
         bwb_id: BWBR0004054
         artikel: '24'
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Indien [artikel 2][ref1] ten aanzien van een mestproducerend bedrijf wordt toegepast en dat artikel met betrekking
-      tot het voorafgaande kalenderjaar niet is toegepast, wordt als beginvoorraad 0 kilogram fosfaat, onderscheidenlijk
-      stikstof in aanmerking genomen.
+      1 Indien [artikel 2][ref1] ten aanzien van een mestproducerend bedrijf wordt toegepast en dat artikel met
+      betrekking tot het voorafgaande kalenderjaar niet is toegepast, wordt als beginvoorraad 0 kilogram fosfaat,
+      onderscheidenlijk stikstof in aanmerking genomen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-  - number: '4.2'
-    text: |-
-      Indien de eindvoorraad van een mestproducerend bedrijf ten aanzien waarvan [artikel 2][ref1] wordt toegepast, in
-      enig kalenderjaar groter is dan 0 kilogram fosfaat, onderscheidenlijk stikstof, wordt dit artikel ook de daarop
+      2 Indien de eindvoorraad van een mestproducerend bedrijf ten aanzien waarvan [artikel 2][ref2] wordt toegepast,
+      in enig kalenderjaar groter is dan 0 kilogram fosfaat, onderscheidenlijk stikstof, wordt dit artikel ook de daarop
       volgende kalenderjaren ten aanzien van dat bedrijf toegepast, zolang de eindvoorraad groter is dan 0 kilogram
       fosfaat, onderscheidenlijk stikstof.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-  - number: '4.3'
-    text: |-
-      Indien ten aanzien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref1] ingevolge het
-      tweede lid wordt toegepast, de forfaitaire mineralenheffingen, bedoeld in [artikel 14 van de wet][ref2],
-      worden geheven, wordt de belastbare hoeveelheid meststoffen, bedoeld in [artikel 16 van de wet][ref3],
+      3 Indien ten aanzien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref3] ingevolge het
+      tweede lid wordt toegepast, de forfaitaire mineralenheffingen, bedoeld in [artikel 14 van de wet][ref4],
+      worden geheven, wordt de belastbare hoeveelheid meststoffen, bedoeld in [artikel 16 van de wet][ref5],
       vermeerderd met de eindvoorraad die in het voorafgaande jaar op de belastbare hoeveelheid mineralen, bedoeld in
-      [artikel 24 van de wet][ref4], in mindering is gebracht.
+      [artikel 24 van de wet][ref6], in mindering is gebracht.
+
+      4 Indien een bedrijf waarop het tweede lid van toepassing is op enig tijdstip ophoudt als zodanig te bestaan
+      of vanaf enig tijdstip door een ander wordt gevoerd, is de eindvoorraad 0 kilogram fosfaat, onderscheidenlijk
+      stikstof.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0004054#Artikel14
-      [ref3]: https://wetten.overheid.nl/BWBR0004054#Artikel16
-      [ref4]: https://wetten.overheid.nl/BWBR0004054#Artikel24
+      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref4]: https://wetten.overheid.nl/BWBR0004054#Artikel14
+      [ref5]: https://wetten.overheid.nl/BWBR0004054#Artikel16
+      [ref6]: https://wetten.overheid.nl/BWBR0004054#Artikel24
     url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel4
     references:
       - id: ref1
@@ -170,19 +139,22 @@ articles:
         artikel: '2'
         paragraaf: PARAGRAAF_1
       - id: ref2
-        bwb_id: BWBR0004054
-        artikel: '14'
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
       - id: ref3
-        bwb_id: BWBR0004054
-        artikel: '16'
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
       - id: ref4
         bwb_id: BWBR0004054
+        artikel: '14'
+      - id: ref5
+        bwb_id: BWBR0004054
+        artikel: '16'
+      - id: ref6
+        bwb_id: BWBR0004054
         artikel: '24'
-  - number: '4.4'
-    text: |-
-      Indien een bedrijf waarop het tweede lid van toepassing is op enig tijdstip ophoudt als zodanig te bestaan of vanaf
-      enig tijdstip door een ander wordt gevoerd, is de eindvoorraad 0 kilogram fosfaat, onderscheidenlijk stikstof.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel4
   - number: '5'
     text: |-
       [Artikel 2][ref1] is, voorzover het de belastbare hoeveelheid meststoffen, bedoeld in
@@ -201,16 +173,41 @@ articles:
       - id: ref2
         bwb_id: BWBR0004054
         artikel: '31'
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Indien [artikel 2][ref1] in enig kalenderjaar ten aanzien van een intermediaire onderneming wordt toegepast terwijl
-      de eindvoorraad groter is dan de beginvoorraad, wordt [artikel 2][ref2] ook de daarop volgende kalenderjaren ten
-      aanzien van die onderneming toegepast, zolang de eindvoorraad groter is dan de beginvoorraad in het eerste jaar van
-      deze reeks van jaren.
+      1 Indien [artikel 2][ref1] in enig kalenderjaar ten aanzien van een intermediaire onderneming wordt toegepast
+      terwijl de eindvoorraad groter is dan de beginvoorraad, wordt [artikel 2][ref2] ook de daarop volgende
+      kalenderjaren ten aanzien van die onderneming toegepast, zolang de eindvoorraad groter is dan de beginvoorraad in
+      het eerste jaar van deze reeks van jaren.
+
+      2 Een aangemelde opslag van een intermediaire onderneming waarop het eerste lid van toepassing is, kan door de
+      heffingplichtige met ingang van een kalenderjaar worden afgemeld indien de in die opslag aanwezige hoeveelheid
+      fosfaat in dierlijke of overige organische meststoffen aan het einde van het voorafgaande kalenderjaar niet meer
+      bedraagt dan de in die opslag aanwezige hoeveelheid fosfaat in dierlijke of overige organische meststoffen bij
+      aanvang van het eerste jaar van de reeks van jaren, bedoeld in het eerste lid, danwel, indien de aanmelding van de
+      opslag met ingang van een later jaar dan het hier bedoelde eerste jaar heeft plaatsgevonden, bij aanvang van dit
+      latere jaar.
+
+      3 In afwijking het tweede lid kan een opslag gedurende het kalenderjaar worden afgemeld indien:
+
+      a. deze opslag op het tijdstip van afmelding leeg is, of
+
+      b. deze opslag door het aangaan of beëindigen van een huurovereenkomst, het vestigen of beëindigen van een zakelijk
+      gebruiksrecht of door eigendomsoverdracht naar een andere intermediaire onderneming overgaat, en in samenhang
+      daarmee de in de opslag aanwezige dierlijke of overige organische meststoffen naar deze andere intermediaire
+      onderneming worden afgevoerd.
+
+      4 [Artikel 2][ref3] is vanaf het tijdstip van afmelding niet langer van toepassing op de voorraden in de afgemelde
+      opslagen.
+
+      5 Indien een intermediaire onderneming waarop het eerste lid van toepassing is, op enig tijdstip ophoudt als
+      zodanig te bestaan of vanaf enig tijdstip door een ander wordt gevoerd, wordt de belastbare hoeveelheid meststoffen
+      verminderd met de beginvoorraad in het eerste jaar van de reeks van jaren, bedoeld in het eerste lid.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel2
     url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
     references:
       - id: ref1
@@ -221,48 +218,10 @@ articles:
         bwb_id: BWBR0008980
         artikel: '2'
         paragraaf: PARAGRAAF_1
-  - number: '6.2'
-    text: |-
-      Een aangemelde opslag van een intermediaire onderneming waarop het eerste lid van toepassing is, kan door de
-      heffingplichtige met ingang van een kalenderjaar worden afgemeld indien de in die opslag aanwezige hoeveelheid
-      fosfaat in dierlijke of overige organische meststoffen aan het einde van het voorafgaande kalenderjaar niet meer
-      bedraagt dan de in die opslag aanwezige hoeveelheid fosfaat in dierlijke of overige organische meststoffen bij
-      aanvang van het eerste jaar van de reeks van jaren, bedoeld in het eerste lid, danwel, indien de aanmelding van de
-      opslag met ingang van een later jaar dan het hier bedoelde eerste jaar heeft plaatsgevonden, bij aanvang van dit
-      latere jaar.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
-  - number: '6.3'
-    text: 'In afwijking het tweede lid kan een opslag gedurende het kalenderjaar worden afgemeld indien:'
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
-  - number: 6.3.a
-    text: deze opslag op het tijdstip van afmelding leeg is, of
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
-  - number: 6.3.b
-    text: |-
-      deze opslag door het aangaan of beëindigen van een huurovereenkomst, het vestigen of beëindigen van een zakelijk
-      gebruiksrecht of door eigendomsoverdracht naar een andere intermediaire onderneming overgaat, en in samenhang
-      daarmee de in de opslag aanwezige dierlijke of overige organische meststoffen naar deze andere intermediaire
-      onderneming worden afgevoerd.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
-  - number: '6.4'
-    text: |-
-      [Artikel 2][ref1] is vanaf het tijdstip van afmelding niet langer van toepassing op de voorraden in de afgemelde
-      opslagen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0008980
         artikel: '2'
         paragraaf: PARAGRAAF_1
-  - number: '6.5'
-    text: |-
-      Indien een intermediaire onderneming waarop het eerste lid van toepassing is, op enig tijdstip ophoudt als zodanig
-      te bestaan of vanaf enig tijdstip door een ander wordt gevoerd, wordt de belastbare hoeveelheid meststoffen
-      verminderd met de beginvoorraad in het eerste jaar van de reeks van jaren, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel6
   - number: '7'
     text: |-
       [Artikel 2][ref1] is, voorzover het de belastbare hoeveelheid mineralen, bedoeld in [artikel 24 van de wet][ref2],
@@ -281,86 +240,50 @@ articles:
       - id: ref2
         bwb_id: BWBR0004054
         artikel: '24'
-  - number: '8.1'
+  - number: '8'
     text: |-
-      Indien [artikel 2][ref1] in enig kalenderjaar ten aanzien van een mestaanvoerend bedrijf wordt toegepast terwijl
+      1 Indien [artikel 2][ref1] in enig kalenderjaar ten aanzien van een mestaanvoerend bedrijf wordt toegepast terwijl
       de eindvoorraad groter is dan de beginvoorraad, wordt [artikel 2][ref2] ook de daarop volgende kalenderjaren ten
       aanzien van dat bedrijf toegepast, zolang de eindvoorraad groter is dan de beginvoorraad in het eerste jaar van
       deze reeks van jaren.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel8
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-      - id: ref2
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-  - number: '8.2'
-    text: |-
-      Een aangemelde opslag van een bedrijf waarop het eerste lid van toepassing is, kan door de heffingplichtige
+      2 Een aangemelde opslag van een bedrijf waarop het eerste lid van toepassing is, kan door de heffingplichtige
       met ingang van een kalenderjaar worden afgemeld indien de in die opslag aanwezige hoeveelheid fosfaat,
       onderscheidenlijk stikstof in dierlijke meststoffen aan het einde van het voorafgaande kalenderjaar niet meer
       bedraagt dan de in die opslag aanwezige hoeveelheid fosfaat, onderscheidenlijk stikstof in dierlijke meststoffen
       bij aanvang van het eerste jaar van de reeks van jaren, bedoeld in het eerste lid, danwel, indien de aanmelding van
       de opslag met ingang van een later jaar dan het hier bedoelde eerste jaar heeft plaatsgevonden, bij aanvang van dit
-      latere jaar.[ Artikel 2][ref1] is vanaf het kalenderjaar met ingang waarvan de afmelding plaatsvindt, niet langer
+      latere jaar.[ Artikel 2][ref3] is vanaf het kalenderjaar met ingang waarvan de afmelding plaatsvindt, niet langer
       van toepassing op de voorraden in afgemelde opslagen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel8
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-  - number: '8.3'
-    text: |-
-      Indien ten aanzien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref1] ingevolge het
-      eerste lid wordt toegepast, de forfaitaire mineralenheffingen, bedoeld in [artikel 14 van de wet][ref2],
-      worden geheven, wordt de belastbare hoeveelheid meststoffen, bedoeld in [artikel 16 van de wet][ref3],
+      3 Indien ten aanzien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref4] ingevolge het
+      eerste lid wordt toegepast, de forfaitaire mineralenheffingen, bedoeld in [artikel 14 van de wet][ref5],
+      worden geheven, wordt de belastbare hoeveelheid meststoffen, bedoeld in [artikel 16 van de wet][ref6],
       vermeerderd met de eindvoorraad die in het voorafgaande jaar op de belastbare hoeveelheid mineralen, bedoeld in
-      [artikel 24 van de wet][ref4], in mindering is gebracht, en verminderd met de beginvoorraad in het eerste jaar van
+      [artikel 24 van de wet][ref7], in mindering is gebracht, en verminderd met de beginvoorraad in het eerste jaar van
       de reeks van jaren, bedoeld in het eerste lid.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0004054#Artikel14
-      [ref3]: https://wetten.overheid.nl/BWBR0004054#Artikel16
-      [ref4]: https://wetten.overheid.nl/BWBR0004054#Artikel24
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel8
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-      - id: ref2
-        bwb_id: BWBR0004054
-        artikel: '14'
-      - id: ref3
-        bwb_id: BWBR0004054
-        artikel: '16'
-      - id: ref4
-        bwb_id: BWBR0004054
-        artikel: '24'
-  - number: '8.4'
-    text: |-
-      Indien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref1] ingevolge het eerste lid wordt
+      4 Indien van een bedrijf in het jaar volgend op een jaar waarin [artikel 2][ref8] ingevolge het eerste lid wordt
       toegepast, de gemiddelde veebezetting groter is dan drie grootvee-eenheden, wordt de belastbare hoeveelheid
-      meststoffen, bedoeld in [artikel 16 van de wet][ref2], vermeerderd met de eindvoorraad die in het voorafgaande
-      jaar op de belastbare hoeveelheid mineralen, bedoeld in [artikel 24 van de wet][ref3], in mindering is gebracht, en
+      meststoffen, bedoeld in [artikel 16 van de wet][ref9], vermeerderd met de eindvoorraad die in het voorafgaande jaar
+      op de belastbare hoeveelheid mineralen, bedoeld in [artikel 24 van de wet][ref10], in mindering is gebracht, en
       verminderd met de beginvoorraad in het eerste jaar van de reeks van jaren, bedoeld in het eerste lid.
 
+      5 Indien een bedrijf waarop het eerste lid van toepassing is, op enig tijdstip ophoudt als zodanig te bestaan
+      of vanaf enig tijdstip door een ander wordt gevoerd, wordt de belastbare hoeveelheid mineralen verminderd met de
+      beginvoorraad in het eerste jaar van de reeks van jaren, bedoeld in het eerste lid.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0004054#Artikel16
-      [ref3]: https://wetten.overheid.nl/BWBR0004054#Artikel24
+      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref4]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0004054#Artikel14
+      [ref6]: https://wetten.overheid.nl/BWBR0004054#Artikel16
+      [ref7]: https://wetten.overheid.nl/BWBR0004054#Artikel24
+      [ref8]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref9]: https://wetten.overheid.nl/BWBR0004054#Artikel16
+      [ref10]: https://wetten.overheid.nl/BWBR0004054#Artikel24
     url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel8
     references:
       - id: ref1
@@ -368,122 +291,119 @@ articles:
         artikel: '2'
         paragraaf: PARAGRAAF_1
       - id: ref2
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
+      - id: ref3
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
+      - id: ref4
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
+      - id: ref5
+        bwb_id: BWBR0004054
+        artikel: '14'
+      - id: ref6
         bwb_id: BWBR0004054
         artikel: '16'
-      - id: ref3
+      - id: ref7
         bwb_id: BWBR0004054
         artikel: '24'
-  - number: '8.5'
-    text: |-
-      Indien een bedrijf waarop het eerste lid van toepassing is, op enig tijdstip ophoudt als zodanig te bestaan of
-      vanaf enig tijdstip door een ander wordt gevoerd, wordt de belastbare hoeveelheid mineralen verminderd met de
-      beginvoorraad in het eerste jaar van de reeks van jaren, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel8
+      - id: ref8
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
+      - id: ref9
+        bwb_id: BWBR0004054
+        artikel: '16'
+      - id: ref10
+        bwb_id: BWBR0004054
+        artikel: '24'
   - number: '9'
     text: |-
       Bij ministeriële regeling worden regels gesteld omtrent de voorwaarden waaraan moet worden voldaan om voor
-      toepassing van [artikel 2][ref1] in aanmerking te komen. Deze regels kunnen onder meer betreffen:
+      toepassing van [artikel 2][ref1] in aanmerking te komen.
 
+      Deze regels kunnen onder meer betreffen:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '2'
-        paragraaf: PARAGRAAF_1
-  - number: 9.a
-    text: |-
-      de verplichting tot tijdige aanmelding van het mestproducerend bedrijf door de heffingplichtige, en de functionaris
-      bij wie de aanmelding geschiedt;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-  - number: 9.b
-    text: |-
-      de aanmelding, bedoeld in [de artikelen 5][ref1] en [7][ref2], onderscheidenlijk de afmelding, bedoeld in
-      [de artikelen 6, tweede en derde lid][ref3], en [8, tweede lid][ref4], en de functionaris bij wie de aanmelding,
+      a. de verplichting tot tijdige aanmelding van het mestproducerend bedrijf door de heffingplichtige, en de
+      functionaris bij wie de aanmelding geschiedt;
+
+      b. de aanmelding, bedoeld in [de artikelen 5][ref2] en [7][ref3], onderscheidenlijk de afmelding, bedoeld in
+      [de artikelen 6, tweede en derde lid][ref4], en [8, tweede lid][ref5], en de functionaris bij wie de aanmelding,
       onderscheidenlijk afmelding geschiedt;
 
+      c. de opslag en daarop aan te brengen kentekenen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel7
-      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel6
-      [ref4]: https://wetten.overheid.nl/BWBR0008980#Artikel8
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '5'
-        paragraaf: PARAGRAAF_3
-      - id: ref2
-        bwb_id: BWBR0008980
-        artikel: '7'
-        paragraaf: PARAGRAAF_4
-      - id: ref3
-        bwb_id: BWBR0008980
-        artikel: '6'
-        paragraaf: PARAGRAAF_3
-      - id: ref4
-        bwb_id: BWBR0008980
-        artikel: '8'
-        paragraaf: PARAGRAAF_4
-  - number: 9.c
-    text: de opslag en daarop aan te brengen kentekenen;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-  - number: 9.d
-    text: |-
-      de wijze waarop de beginvoorraad, de eindvoorraad, de voorraad, bedoeld in [artikel 6, vijfde lid][ref1], de
-      voorraad, bedoeld in [artikel 8, derde lid][ref2], en de voorraad, bedoeld in [artikel 8, vierde lid][ref3], worden
+      d. de wijze waarop de beginvoorraad, de eindvoorraad, de voorraad, bedoeld in [artikel 6, vijfde lid][ref6], de
+      voorraad, bedoeld in [artikel 8, derde lid][ref7], en de voorraad, bedoeld in [artikel 8, vierde lid][ref8], worden
       vastgesteld;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel8
-      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel8
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-    references:
-      - id: ref1
-        bwb_id: BWBR0008980
-        artikel: '6'
-        paragraaf: PARAGRAAF_3
-      - id: ref2
-        bwb_id: BWBR0008980
-        artikel: '8'
-        paragraaf: PARAGRAAF_4
-      - id: ref3
-        bwb_id: BWBR0008980
-        artikel: '8'
-        paragraaf: PARAGRAAF_4
-  - number: 9.e
-    text: |-
-      de verplichting om de hoeveelheid fosfaat, onderscheidenlijk stikstof in hoeveelheden dierlijke of overige
+      e. de verplichting om de hoeveelheid fosfaat, onderscheidenlijk stikstof in hoeveelheden dierlijke of overige
       organische meststoffen die aan de opgeslagen dierlijke of overige organische meststoffen worden toegevoegd,
       respectievelijk waarmee de opgeslagen dierlijke of overige organische meststoffen worden verminderd, vast te
       stellen en de wijze waarop die vaststelling geschiedt;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-  - number: 9.f
-    text: |-
-      de verplichting om de vaststellingen, bedoeld in onderdelen *d* en *e*, te doen uitvoeren door een daartoe bevoegde
-      persoon of instelling, welke bevoegdheid kan worden verbonden aan een overeenkomstig bij de ministeriële regeling
-      gestelde erkenningsvoorwaarden verleende erkenning;
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
-  - number: 9.g
-    text: |-
-      de administratieve vastlegging en verantwoording van voor de toepassing van [de artikelen 2 tot en met 8][ref1] van
-      belang zijnde gegevens;
+
+      f. de verplichting om de vaststellingen, bedoeld in onderdelen *d* en *e*, te doen uitvoeren door een daartoe
+      bevoegde persoon of instelling, welke bevoegdheid kan worden verbonden aan een overeenkomstig bij de ministeriële
+      regeling gestelde erkenningsvoorwaarden verleende erkenning;
+
+      g. de administratieve vastlegging en verantwoording van voor de toepassing van [de artikelen 2 tot en met 8][ref9]
+      van belang zijnde gegevens;
+
+      h. de verplichting om een verklaring van een registeraccountant of accountant-administratieconsulent terzake van de
+      administratieve vastlegging en verantwoording bedoeld in onderdeel g, over te leggen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008980#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0008980#Artikel5
+      [ref3]: https://wetten.overheid.nl/BWBR0008980#Artikel7
+      [ref4]: https://wetten.overheid.nl/BWBR0008980#Artikel6
+      [ref5]: https://wetten.overheid.nl/BWBR0008980#Artikel8
+      [ref6]: https://wetten.overheid.nl/BWBR0008980#Artikel6
+      [ref7]: https://wetten.overheid.nl/BWBR0008980#Artikel8
+      [ref8]: https://wetten.overheid.nl/BWBR0008980#Artikel8
+      [ref9]: https://wetten.overheid.nl/BWBR0008980#Artikel2
     url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
     references:
       - id: ref1
         bwb_id: BWBR0008980
         artikel: '2'
         paragraaf: PARAGRAAF_1
-  - number: 9.h
-    text: |-
-      de verplichting om een verklaring van een registeraccountant of accountant-administratieconsulent terzake van de
-      administratieve vastlegging en verantwoording bedoeld in onderdeel g, over te leggen.
-    url: https://wetten.overheid.nl/BWBR0008980/2004-01-01#Artikel9
+      - id: ref2
+        bwb_id: BWBR0008980
+        artikel: '5'
+        paragraaf: PARAGRAAF_3
+      - id: ref3
+        bwb_id: BWBR0008980
+        artikel: '7'
+        paragraaf: PARAGRAAF_4
+      - id: ref4
+        bwb_id: BWBR0008980
+        artikel: '6'
+        paragraaf: PARAGRAAF_3
+      - id: ref5
+        bwb_id: BWBR0008980
+        artikel: '8'
+        paragraaf: PARAGRAAF_4
+      - id: ref6
+        bwb_id: BWBR0008980
+        artikel: '6'
+        paragraaf: PARAGRAAF_3
+      - id: ref7
+        bwb_id: BWBR0008980
+        artikel: '8'
+        paragraaf: PARAGRAAF_4
+      - id: ref8
+        bwb_id: BWBR0008980
+        artikel: '8'
+        paragraaf: PARAGRAAF_4
+      - id: ref9
+        bwb_id: BWBR0008980
+        artikel: '2'
+        paragraaf: PARAGRAAF_1
   - number: '10'
     text: |-
       De artikelen van dit besluit treden in werking op een bij koninklijk besluit te bepalen tijdstip, dat voor de
