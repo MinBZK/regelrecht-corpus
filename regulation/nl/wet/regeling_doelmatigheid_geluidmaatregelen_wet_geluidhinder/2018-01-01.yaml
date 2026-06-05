@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_doelmatigheid_geluidmaatregelen_wet_geluidhinder
 regulatory_layer: WET
 publication_date: '2021-03-26'
@@ -16,8 +16,9 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      In deze regeling wordt verstaan onder: - *bronmaatregel:* geluidbeperkende maatregel als bedoeld in tabel 1 en
-      tabel 3, onder 1, van [Bijlage 1][ref1];
+      In deze regeling wordt verstaan onder:
+
+        - *bronmaatregel:* geluidbeperkende maatregel als bedoeld in tabel 1 en tabel 3, onder 1, van [Bijlage 1][ref1];
         - *cluster:* geluidsgevoelig object of verzameling bijeengelegen geluidsgevoelige objecten, gelegen binnen de zone
       van een weg of spoorweg, die een relevante verlaging van de geluidsbelasting vanwege een weg of spoorweg zou kunnen
       ondervinden van een aaneengesloten geluidbeperkende maatregel;
@@ -97,18 +98,26 @@ articles:
       - id: ref1
         bwb_id: BWBR0003227
         artikel: 104a
-  - number: '2.1'
+  - number: '2'
     text: |-
-      Indien deze regeling wordt toegepast in het kader van [afdeling 3.2][ref1] of
+      1 Indien deze regeling wordt toegepast in het kader van [afdeling 3.2][ref1] of
       [4.3 van het Besluit geluidhinder][ref2], bestaat een cluster enkel uit de geluidsgevoelige objecten waarvoor
       een programma van maatregelen is opgesteld als bedoeld in [artikel 89 van de Wet geluidhinder][ref3] of
       [artikel 4.18 van het Besluit geluidhinder][ref4].
+
+      2 Deze regeling is van toepassing in het kader van [hoofdstuk VI, afdeling 3][ref5] en
+      [7, van de Wet geluidhinder][ref6] en [afdeling 3.2][ref7] en [afdeling 4.3 van het Besluit geluidhinder][ref8] bij
+      de afweging omtrent het nemen van geluidbeperkende maatregelen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020445#Afdeling3.2
       [ref2]: https://wetten.overheid.nl/BWBR0020445#Afdeling4.3
       [ref3]: https://wetten.overheid.nl/BWBR0003227#Artikel89
-      [ref4]: https://wetten.overheid.nl/BWBR0020445#Artikel4
+      [ref4]: https://wetten.overheid.nl/BWBR0020445#Artikel4.18
+      [ref5]: https://wetten.overheid.nl/BWBR0003227#Afdeling3
+      [ref6]: https://wetten.overheid.nl/BWBR0003227#Afdeling7
+      [ref7]: https://wetten.overheid.nl/BWBR0020445#Afdeling3.2
+      [ref8]: https://wetten.overheid.nl/BWBR0020445#Afdeling4.3
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel2
     references:
       - id: ref1
@@ -122,174 +131,125 @@ articles:
         artikel: '89'
       - id: ref4
         bwb_id: BWBR0020445
-        artikel: '4'
-  - number: '2.2'
-    text: |-
-      Deze regeling is van toepassing in het kader van [hoofdstuk VI, afdeling 3][ref1] en
-      [7, van de Wet geluidhinder][ref2] en [afdeling 3.2][ref3] en [afdeling 4.3 van het Besluit geluidhinder][ref4] bij
-      de afweging omtrent het nemen van geluidbeperkende maatregelen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003227#Afdeling3
-      [ref2]: https://wetten.overheid.nl/BWBR0003227#Afdeling7
-      [ref3]: https://wetten.overheid.nl/BWBR0020445#Afdeling3.2
-      [ref4]: https://wetten.overheid.nl/BWBR0020445#Afdeling4.3
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel2
-    references:
-      - id: ref1
+        artikel: '4.18'
+      - id: ref5
         bwb_id: BWBR0003227
         afdeling: '3'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0003227
         afdeling: '7'
-      - id: ref3
+      - id: ref7
         bwb_id: BWBR0020445
         afdeling: '3.2'
-      - id: ref4
+      - id: ref8
         bwb_id: BWBR0020445
         afdeling: '4.3'
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Een geluidbeperkende maatregel als bedoeld in tabel 1 en tabel 2 van [Bijlage 1][ref1] is financieel doelmatig,
+      1 Een geluidbeperkende maatregel als bedoeld in tabel 1 en tabel 2 van [Bijlage 1][ref1] is financieel doelmatig,
       indien het aantal maatregelpunten van de geluidbeperkende maatregel niet hoger is dan het aantal reductiepunten
       behorende bij het cluster waar de maatregel voor bedoeld is.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0026996
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0026996
-  - number: '3.2'
-    text: |-
-      In afwijking van het eerste lid is een geluidbeperkende maatregel niet financieel doelmatig, indien naar het
+      2 In afwijking van het eerste lid is een geluidbeperkende maatregel niet financieel doelmatig, indien naar het
       oordeel van de Minister van Infrastructuur en Milieu uit het akoestisch onderzoek blijkt dat:
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.2.a
-    text: toepassing van de geluidbeperkende maatregel de grootste geluidreductie oplevert voor het cluster,
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.2.b
-    text: |-
-      het aantal maatregelpunten voor deze maatregel hoger is dan het aantal maatregelpunten voor een andere
+
+      a. toepassing van de geluidbeperkende maatregel de grootste geluidreductie oplevert voor het cluster,
+
+      b. het aantal maatregelpunten voor deze maatregel hoger is dan het aantal maatregelpunten voor een andere
       geluidbeperkende maatregel die een gelijke of nagenoeg gelijke geluidreductie kan realiseren, en
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.2.c
-    text: |-
-      in vergelijking met de andere maatregel de extra maatregelpunten niet in redelijke verhouding staan tot de extra
+
+      c. in vergelijking met de andere maatregel de extra maatregelpunten niet in redelijke verhouding staan tot de extra
       geluidreductie die door het treffen van deze maatregel bereikt kan worden.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: '3.3'
-    text: |-
-      In afwijking van het eerste lid is een overdrachtsmaatregel niet financieel doelmatig indien deze maatregel een
+
+      3 In afwijking van het eerste lid is een overdrachtsmaatregel niet financieel doelmatig indien deze maatregel een
       bestaande overdrachtsmaatregel zou vervangen, die:
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.3.a
-    text: naar verwachting bij de start van de uitvoering niet ouder dan tien jaar zal zijn;
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.3.b
-    text: niet ophoogbaar is, en
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: 3.3.c
-    text: een geluidreductie realiseert die vrijwel gelijk is aan de nieuw te treffen maatregel.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
-  - number: '3.4'
-    text: |-
-      De financiële doelmatigheid van een maatregel als bedoeld in tabel 3 van [Bijlage 1][ref1] kan worden bepaald door
-      de werkelijke kosten van aanleg en onderhoud van de maatregel af te wegen tegen de geluidreductie die de maatregel
-      kan realiseren en tegen het aantal geluidsgevoelige objecten in het cluster waar de maatregel voor bedoeld is.
+
+      a. naar verwachting bij de start van de uitvoering niet ouder dan tien jaar zal zijn;
+
+      b. niet ophoogbaar is, en
+
+      c. een geluidreductie realiseert die vrijwel gelijk is aan de nieuw te treffen maatregel.
+
+      4 De financiële doelmatigheid van een maatregel als bedoeld in tabel 3 van [Bijlage 1][ref2] kan worden bepaald
+      door de werkelijke kosten van aanleg en onderhoud van de maatregel af te wegen tegen de geluidreductie die de
+      maatregel kan realiseren en tegen het aantal geluidsgevoelige objecten in het cluster waar de maatregel voor
+      bedoeld is.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0026996
+      [ref2]: https://wetten.overheid.nl/BWBR0026996
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0026996
-  - number: '4.1'
+      - id: ref2
+        bwb_id: BWBR0026996
+  - number: '4'
     text: |-
-      Het aantal maatregelpunten van een geluidbeperkende maatregel wordt bepaald op grond van de in tabel 1 en tabel 2
+      1 Het aantal maatregelpunten van een geluidbeperkende maatregel wordt bepaald op grond van de in tabel 1 en tabel 2
       van [Bijlage 1][ref1] opgenomen maatregelpunten per eenheid.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0026996
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0026996
-  - number: '4.2'
-    text: |-
-      Het aantal maatregelpunten, bedoeld in het eerste lid, omvat het totaal van de maatregelpunten van bestaande
+      2 Het aantal maatregelpunten, bedoeld in het eerste lid, omvat het totaal van de maatregelpunten van bestaande
       en van nieuw te treffen geluidbeperkende maatregelen ten opzichte van een weg of spoorweg in de situatie zonder
       maatregelen.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel4
-  - number: '4.3'
-    text: |-
-      Bij het toepassen van tabel 2 van [Bijlage 1][ref1] wordt de hoogte van een geluidscherm bepaald ten opzichte van
+
+      3 Bij het toepassen van tabel 2 van [Bijlage 1][ref2] wordt de hoogte van een geluidscherm bepaald ten opzichte van
       de bovenkant van het spoor of de kantstreep van de weg aan de zijde van het scherm.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0026996
+      [ref2]: https://wetten.overheid.nl/BWBR0026996
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel4
     references:
       - id: ref1
         bwb_id: BWBR0026996
-  - number: '5.1'
+      - id: ref2
+        bwb_id: BWBR0026996
+  - number: '5'
     text: |-
-      Het aantal reductiepunten behorende bij een cluster wordt bepaald door het optellen van de reductiepunten per
+      1 Het aantal reductiepunten behorende bij een cluster wordt bepaald door het optellen van de reductiepunten per
       woning, die overeenkomstig het tweede en derde lid worden gegenereerd door alle geluidsgevoelige objecten in het
       cluster.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel5
-  - number: '5.2'
-    text: |-
-      Het aantal reductiepunten per woning op basis van de hoogste toekomstige geluidsbelasting op de woning vanwege een
-      weg of spoorweg in de situatie zonder maatregelen is opgenomen in tabel 1 van [Bijlage 2][ref1].
+
+      2 Het aantal reductiepunten per woning op basis van de hoogste toekomstige geluidsbelasting op de woning vanwege
+      een weg of spoorweg in de situatie zonder maatregelen is opgenomen in tabel 1 van [Bijlage 2][ref1].
+
+      3 Bij toepassing van deze regeling in het kader van [afdeling 4.3 van het Besluit geluidhinder][ref2] wordt in
+      tabel 1 van [bijlage 2][ref3] in plaats van de getallen 1000 tot en met 3000 telkens gelezen: 0
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0026996
+      [ref2]: https://wetten.overheid.nl/BWBR0020445#Afdeling4.3
+      [ref3]: https://wetten.overheid.nl/BWBR0026996
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel5
     references:
       - id: ref1
         bwb_id: BWBR0026996
-  - number: '5.3'
-    text: |-
-      Bij toepassing van deze regeling in het kader van [afdeling 4.3 van het Besluit geluidhinder][ref1] wordt in tabel
-      1 van [bijlage 2][ref2] in plaats van de getallen 1000 tot en met 3000 telkens gelezen: 0
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020445#Afdeling4.3
-      [ref2]: https://wetten.overheid.nl/BWBR0026996
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0020445
         afdeling: '4.3'
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0026996
-  - number: '6.1'
-    text: 'Bij de toepassing van deze regeling worden achtereenvolgens in overweging genomen:'
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel6
-  - number: 6.1.a
-    text: bronmaatregelen, en
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel6
-  - number: 6.1.b
+  - number: '6'
     text: |-
-      andere geluidbeperkende maatregelen, al dan niet in combinatie met bronmaatregelen, die leiden tot de meeste
+      1 Bij de toepassing van deze regeling worden achtereenvolgens in overweging genomen:
+
+      a. bronmaatregelen, en
+
+      b. andere geluidbeperkende maatregelen, al dan niet in combinatie met bronmaatregelen, die leiden tot de meeste
       geluidreductie.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel6
-  - number: '6.2'
-    text: |-
-      Overdrachtsmaatregelen, al dan niet in combinatie met bronmaatregelen, worden bij de toepassing van deze regeling
+
+      2 Overdrachtsmaatregelen, al dan niet in combinatie met bronmaatregelen, worden bij de toepassing van deze regeling
       uitsluitend in overweging genomen voor zover deze maatregelen leiden tot een afname van de geluidsbelasting van ten
       minste 5 dB op ten minste een geluidsgevoelig object in een cluster.
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel6
-  - number: '7.1'
+  - number: '7'
     text: |-
-      De geluidreductie is het verschil tussen de toekomstige geluidsbelasting, die door geluidsgevoelige objecten
+      1 De geluidreductie is het verschil tussen de toekomstige geluidsbelasting, die door geluidsgevoelige objecten
       zou worden ondervonden vanwege een weg of spoorweg in de situatie zonder maatregelen, en de toekomstige
       geluidsbelasting vanwege een weg of spoorweg in de situatie dat er geluidbeperkende maatregelen getroffen zijn.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel7
-  - number: '7.2'
-    text: |-
-      Indien de berekende toekomstige geluidsbelasting, in de situatie dat er geluidbeperkende maatregelen zijn
+
+      2 Indien de berekende toekomstige geluidsbelasting, in de situatie dat er geluidbeperkende maatregelen zijn
       getroffen, lager is dan de waarde in tabel 2 van [Bijlage 2][ref1], wordt bij toepassing van het eerste lid de
       waarde uit tabel 2 van Bijlage 2, die op de betreffende situatie van toepassing is, gehanteerd als toekomstige
       geluidsbelasting vanwege de weg of spoorweg.
@@ -305,6 +265,12 @@ articles:
       Bij de toepassing van [artikel 5, tweede lid][ref1], [artikel 7, eerste lid][ref2], en
       [tabel 1 van bijlage 2][ref3] wordt gelijkgesteld aan een woning:
 
+      a. elke vijftien strekkende meter geluidsbelaste gevel van een ander geluidsgevoelig gebouw, per bouwlaag;
+
+      b. een woonwagenstandplaats;
+
+      c. een ligplaats voor een woonschip.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0026996#Artikel5
       [ref2]: https://wetten.overheid.nl/BWBR0026996#Artikel7
@@ -319,15 +285,6 @@ articles:
         artikel: '7'
       - id: ref3
         bwb_id: BWBR0026996
-  - number: 8.a
-    text: elke vijftien strekkende meter geluidsbelaste gevel van een ander geluidsgevoelig gebouw, per bouwlaag;
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel8
-  - number: 8.b
-    text: een woonwagenstandplaats;
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel8
-  - number: 8.c
-    text: een ligplaats voor een woonschip.
-    url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel8
   - number: '9'
     text: Deze regeling treedt in werking met ingang van 1 januari 2010.
     url: https://wetten.overheid.nl/BWBR0026996/2018-01-01#Artikel9
