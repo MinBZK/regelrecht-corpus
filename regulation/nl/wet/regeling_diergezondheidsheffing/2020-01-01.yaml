@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_diergezondheidsheffing
 regulatory_layer: WET
 publication_date: '2021-04-16'
@@ -14,17 +14,27 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0040325/2020-01-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'Het aantal:'
+    text: |-
+      Het aantal:
+
+      a. schapen;
+
+      b. geiten;
+
+      c. runderen die één jaar oud of ouder zijn;
+
+      dat in een kalenderjaar wordt gehouden, bedoeld
+      in[ artikel 91f, eerste lid, van de Gezondheids- en welzijnswet voor dieren][ref1], wordt berekend door het aantal
+      aanwezige dieren op 1 februari, 1 mei, 1 augustus en 1 november van dat kalenderjaar op te tellen en te delen door
+      vier.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0005662#Artikel91f
     url: https://wetten.overheid.nl/BWBR0040325/2020-01-01#Artikel1
-  - number: 1.a
-    text: schapen;
-    url: https://wetten.overheid.nl/BWBR0040325/2020-01-01#Artikel1
-  - number: 1.b
-    text: geiten;
-    url: https://wetten.overheid.nl/BWBR0040325/2020-01-01#Artikel1
-  - number: 1.c
-    text: runderen die één jaar oud of ouder zijn;
-    url: https://wetten.overheid.nl/BWBR0040325/2020-01-01#Artikel1
+    references:
+      - id: ref1
+        bwb_id: BWBR0005662
+        artikel: 91f
   - number: '2'
     text: |-
       De [Uitvoeringsregeling diergezondheidsheffing][ref1] wordt ingetrokken.
