@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: wet_energiedistributie
 regulatory_layer: WET
 publication_date: '2006-12-05'
@@ -21,147 +21,114 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In deze wet en daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.a
     text: |-
-      distributie van elektriciteit: het leveren van elektriciteit aan afnemers als bedoeld in
+      In deze wet en daarop berustende bepalingen wordt verstaan onder:
+
+      a. distributie van elektriciteit: het leveren van elektriciteit aan afnemers als bedoeld in
       [artikel 95a, eerste lid, van de Elektriciteitswet 1998][ref1];
+
+      b. distributie van gas: het leveren van gas aan afnemers als bedoeld in
+      [artikel 43, eerste lid, van de Gaswet][ref2], met uitzondering van de leveringen van gas als bedoeld in
+      [artikel 43, tweede lid, onderdeel b, van die wet][ref3];
+
+      c. distributie van warmte: het leveren van warmte aan verbruikers, behoudens voor zover dit leveren geschiedt door
+      een natuurlijke persoon of rechtspersoon die:
+
+      1º. hetzij warmte levert aan niet meer dan tien verbruikers tegelijk,
+
+      2º. hetzij per jaar niet meer warmte aan verbruikers levert dan 10 000 gigajoules,
+
+      3º. hetzij eigenaar is van de gebouwen ten behoeve waarvan de warmte wordt geleverd;
+
+      d. verbruiker van elektriciteit: een afnemer als bedoeld in
+      [artikel 1, eerste lid, onderdeel c, van de Elektriciteitswet 1998][ref4];
+
+      e. distributiebedrijf: een organisatorische eenheid die zich bezighoudt met het geheel of ten dele in het kader van
+      de distributie leveren van elektriciteit of gas of met de distributie van warmte;
+
+      f. Onze Minister: Onze Minister van Economische Zaken.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009755#Artikel95a
+      [ref2]: https://wetten.overheid.nl/BWBR0011440#Artikel43
+      [ref3]: https://wetten.overheid.nl/BWBR0011440#Artikel43
+      [ref4]: https://wetten.overheid.nl/BWBR0009755#Artikel1
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0009755
         artikel: 95a
-  - number: 1.b
-    text: |-
-      distributie van gas: het leveren van gas aan afnemers als bedoeld in [artikel 43, eerste lid, van de Gaswet][ref1],
-      met uitzondering van de leveringen van gas als bedoeld in [artikel 43, tweede lid, onderdeel b, van die wet][ref2];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011440#Artikel43
-      [ref2]: https://wetten.overheid.nl/BWBR0011440#Artikel43
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0011440
-        artikel: '43'
       - id: ref2
         bwb_id: BWBR0011440
         artikel: '43'
-  - number: 1.c
-    text: |-
-      distributie van warmte: het leveren van warmte aan verbruikers, behoudens voor zover dit leveren geschiedt door een
-      natuurlijke persoon of rechtspersoon die:
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.c.1º
-    text: hetzij warmte levert aan niet meer dan tien verbruikers tegelijk,
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.c.2º
-    text: hetzij per jaar niet meer warmte aan verbruikers levert dan 10 000 gigajoules,
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.c.3º
-    text: hetzij eigenaar is van de gebouwen ten behoeve waarvan de warmte wordt geleverd;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.d
-    text: |-
-      verbruiker van elektriciteit: een afnemer als bedoeld in
-      [artikel 1, eerste lid, onderdeel c, van de Elektriciteitswet 1998][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009755#Artikel1
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
+        bwb_id: BWBR0011440
+        artikel: '43'
+      - id: ref4
         bwb_id: BWBR0009755
         artikel: '1'
-  - number: 1.e
-    text: |-
-      distributiebedrijf: een organisatorische eenheid die zich bezighoudt met het geheel of ten dele in het kader van de
-      distributie leveren van elektriciteit of gas of met de distributie van warmte;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
-  - number: 1.f
-    text: 'Onze Minister: Onze Minister van Economische Zaken.'
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel1
   - number: '2'
-    text: 'Een distributiebedrijf heeft de volgende taken:'
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel2
-  - number: 2.a
     text: |-
-      het op een betrouwbare wijze zorg dragen voor de distributie van elektriciteit, gas of warmte tegen zo laag
+      Een distributiebedrijf heeft de volgende taken:
+
+      a. het op een betrouwbare wijze zorg dragen voor de distributie van elektriciteit, gas of warmte tegen zo laag
       mogelijke kosten en op maatschappelijk verantwoorde wijze;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel2
-  - number: 2.b
-    text: |-
-      het bevorderen van de veiligheid bij het gebruik van toestellen en installaties die warmte, geleverd door het
+
+      b. het bevorderen van de veiligheid bij het gebruik van toestellen en installaties die warmte, geleverd door het
       distributiebedrijf, verbruiken;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel2
-  - number: 2.c
-    text: |-
-      het bevorderen van een doelmatig en milieuhygiënisch verantwoord gebruik van energie door zowel het
+
+      c. het bevorderen van een doelmatig en milieuhygiënisch verantwoord gebruik van energie door zowel het
       distributiebedrijf zelf als door verbruikers ten behoeve van wie het distributiebedrijf de distributie van
       elektriciteit, gas of warmte verzorgt.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel2
-  - number: '4.1'
+  - number: '4'
     text: |-
-      De rechtspersoon, aan wie een distributiebedrijf toebehoort, draagt er, met inachtneming van het in dit hoofdstuk
+      1 De rechtspersoon, aan wie een distributiebedrijf toebehoort, draagt er, met inachtneming van het in dit hoofdstuk
       bepaalde, zorg voor dat aan zijn distributiebedrijf een verbruikersraad is verbonden.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel4
-  - number: '4.2'
-    text: |-
-      Een verbruikersraad heeft tot taak de rechtspersoon desgevraagd of uit eigen beweging te adviseren over onderdelen
-      van het beleid van de rechtspersoon die gevolgen hebben voor de verbruikers van elektriciteit, gas of warmte ten
-      behoeve van wie de rechtspersoon de distributie verzorgt.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel4
-  - number: '4.3'
-    text: |-
-      De rechtspersoon heeft de plicht om het advies van de verbruikersraad te betrekken bij de vaststelling van zijn
+
+      2 Een verbruikersraad heeft tot taak de rechtspersoon desgevraagd of uit eigen beweging te adviseren over
+      onderdelen van het beleid van de rechtspersoon die gevolgen hebben voor de verbruikers van elektriciteit, gas of
+      warmte ten behoeve van wie de rechtspersoon de distributie verzorgt.
+
+      3 De rechtspersoon heeft de plicht om het advies van de verbruikersraad te betrekken bij de vaststelling van zijn
       beleid en de verbruikersraad schriftelijk te informeren over de wijze waarop dit heeft plaatsgevonden.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel4
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Een verbruikersraad bestaat uit ten minste vijf leden die een representatieve vertegenwoordiging vormen van de
+      1 Een verbruikersraad bestaat uit ten minste vijf leden die een representatieve vertegenwoordiging vormen van de
       verschillende categorieën van verbruikers ten behoeve waarvan de rechtspersoon de distributie van elektriciteit,
       gas en warmte verzorgt. Grootverbruikers behoeven echter niet in de verbruikersraad vertegenwoordigd te zijn.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel5
-  - number: '5.2'
-    text: |-
-      De leden van een verbruikersraad dienen afnemer te zijn van het aan de rechtspersoon toebehorende
+
+      2 De leden van een verbruikersraad dienen afnemer te zijn van het aan de rechtspersoon toebehorende
       distributiebedrijf of in dienst te zijn van een afnemer van dat distributiebedrijf.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      De rechtspersoon stelt een reglement vast waarin ten minste de taak en de samenstelling van de verbruikersraad,
+      1 De rechtspersoon stelt een reglement vast waarin ten minste de taak en de samenstelling van de verbruikersraad,
       de wijze van benoeming en de zittingsduur van de leden alsmede de vergoeding van de kosten van de raad en van zijn
       leden worden geregeld.
+
+      2 Wijzigingen in het reglement kunnen worden voorgesteld door de rechtspersoon en door de verbruikersraad.
+
+      3 Wijzigingen in het reglement behoeven de goedkeuring van zowel de rechtspersoon als de verbruikersraad.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel6
-  - number: '6.2'
-    text: Wijzigingen in het reglement kunnen worden voorgesteld door de rechtspersoon en door de verbruikersraad.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel6
-  - number: '6.3'
-    text: Wijzigingen in het reglement behoeven de goedkeuring van zowel de rechtspersoon als de verbruikersraad.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel6
-  - number: '7.1'
+  - number: '7'
     text: |-
-      De rechtspersoon stelt de verbruikersraad in staat zijn taak naar behoren te verrichten en verstrekt daartoe alle
+      1 De rechtspersoon stelt de verbruikersraad in staat zijn taak naar behoren te verrichten en verstrekt daartoe alle
       benodigde informatie aan de raad.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel7
-  - number: '7.2'
-    text: Het bestuur van de rechtspersoon voert ten minste tweemaal per jaar overleg met de verbruikersraad.
+
+      2 Het bestuur van de rechtspersoon voert ten minste tweemaal per jaar overleg met de verbruikersraad.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel7
   - number: '8'
     text: De verbruikersraad regelt zijn werkwijze.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel8
-  - number: '9.1'
+  - number: '9'
     text: |-
-      De leden van de verbruikersraad zijn verplicht tot geheimhouding van alle zaken- en bedrijfsgeheimen die zij in hun
-      hoedanigheid vernemen, alsmede van alle aangelegenheden waarvan de rechtspersoon hun geheimhouding heeft opgelegd
-      of waarvan zij het vertrouwelijke karakter kennen of redelijkerwijs moeten vermoeden.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel9
-  - number: '9.2'
-    text: De plicht tot geheimhouding vervalt niet door beëindiging van het lidmaatschap van de verbruikersraad.
+      1 De leden van de verbruikersraad zijn verplicht tot geheimhouding van alle zaken- en bedrijfsgeheimen die zij
+      in hun hoedanigheid vernemen, alsmede van alle aangelegenheden waarvan de rechtspersoon hun geheimhouding heeft
+      opgelegd of waarvan zij het vertrouwelijke karakter kennen of redelijkerwijs moeten vermoeden.
+
+      2 De plicht tot geheimhouding vervalt niet door beëindiging van het lidmaatschap van de verbruikersraad.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel9
   - number: 9a
     text: |-
@@ -179,6 +146,12 @@ articles:
     text: |-
       De[ artikelen 4][ref1], [10][ref2] en [11][ref3] gelden niet met betrekking tot distributie, voor zover het
       betreft:
+
+      a. het leveren van elektriciteit, gas of warmte door een buiten Nederland gevestigde rechtspersoon aan ten hoogste
+      500 verbruikers van elektriciteit, gas of warmte in Nederland;
+
+      b. het leveren van gas door een rechtspersoon, die in het kader van de openbare voorziening in geheel Nederland gas
+      levert aan distributiebedrijven.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008429#Artikel4
@@ -198,16 +171,6 @@ articles:
         bwb_id: BWBR0008429
         artikel: '11'
         hoofdstuk: '5'
-  - number: 15.a
-    text: |-
-      het leveren van elektriciteit, gas of warmte door een buiten Nederland gevestigde rechtspersoon aan ten hoogste 500
-      verbruikers van elektriciteit, gas of warmte in Nederland;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel15
-  - number: 15.b
-    text: |-
-      het leveren van gas door een rechtspersoon, die in het kader van de openbare voorziening in geheel Nederland gas
-      levert aan distributiebedrijven.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel15
   - number: '16'
     text: |-
       Voor de toepassing van de [Belemmeringenwet Verordeningen][ref1] en de [Belemmeringenwet Privaatrecht][ref2] worden
@@ -223,14 +186,12 @@ articles:
         bwb_id: BWBR0001865
       - id: ref2
         bwb_id: BWBR0001936
-  - number: '17.1'
+  - number: '17'
     text: |-
-      Provinciale staten en de gemeenteraad zijn niet bevoegd de distributie van elektriciteit, gas of warmte in het
+      1 Provinciale staten en de gemeenteraad zijn niet bevoegd de distributie van elektriciteit, gas of warmte in het
       belang van de energievoorziening aan regels te binden.
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel17
-  - number: '17.2'
-    text: |-
-      Het eerste lid geldt niet met betrekking tot regels, die uitsluitend gelden voor een distributiebedrijf, dat
+
+      2 Het eerste lid geldt niet met betrekking tot regels, die uitsluitend gelden voor een distributiebedrijf, dat
       toebehoort aan de provincie onderscheidenlijk de gemeente welke die regels stelt.
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel17
   - number: '20'
@@ -241,36 +202,29 @@ articles:
       of dat met deze rechtspersoon in een groep is verbonden in de zin van artikel 24*b* van boek 2 van het Burgerlijk
       Wetboek:
 
+      a. wordt voor de heffing van de vennootschapsbelasting op de balans van dat lichaam geen goodwill opgevoerd met
+      betrekking tot de van deze rechtspersoon verkregen vermogensbestanddelen;
+
+      b. vinden, in afwijking van [artikel 8, eerste lid, van de Wet op de vennootschapsbelasting 1969][ref2],de
+      [artikelen 3.31 tot en met 3.46 van de Wet inkomstenbelasting 2001][ref3] geen toepassing met betrekking tot de
+      overdracht van vermogensbestanddelen van deze rechtspersoon aan dat lichaam.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0008429#Artikel12
+      [ref2]: https://wetten.overheid.nl/BWBR0002672#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0011353#Artikel3.29a
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel20
     references:
       - id: ref1
         bwb_id: BWBR0008429
         artikel: '12'
         hoofdstuk: '6'
-  - number: 20.a
-    text: |-
-      wordt voor de heffing van de vennootschapsbelasting op de balans van dat lichaam geen goodwill opgevoerd met
-      betrekking tot de van deze rechtspersoon verkregen vermogensbestanddelen;
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel20
-  - number: 20.b
-    text: |-
-      vinden, in afwijking van [artikel 8, eerste lid, van de Wet op de vennootschapsbelasting 1969][ref1],de
-      [artikelen 3.31 tot en met 3.46 van de Wet inkomstenbelasting 2001][ref2] geen toepassing met betrekking tot de
-      overdracht van vermogensbestanddelen van deze rechtspersoon aan dat lichaam.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002672#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0011353#Artikel3
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel20
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002672
         artikel: '8'
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0011353
-        artikel: '3'
+        artikel: 3.29a
   - number: 20a
     text: |-
       In verband met het onderbrengen of vervreemden van activiteiten die een rechtspersoon, aan wie een
@@ -288,15 +242,22 @@ articles:
         bwb_id: BWBR0008429
         artikel: '12'
         hoofdstuk: '6'
-  - number: '21.1'
+  - number: '21'
     text: |-
-      Deze wet treedt in werking met ingang van de tweede kalendermaand na de datum van uitgifte van het *Staatsblad*
+      1 Deze wet treedt in werking met ingang van de tweede kalendermaand na de datum van uitgifte van het *Staatsblad*
       waarin zij wordt geplaatst met uitzondering van de[ hoofdstukken 5][ref1] en [6][ref2], die in werking treden op
       een bij koninklijk besluit te bepalen tijdstip dat voor die hoofdstukken verschillend kan zijn.
+
+      2 [Artikel 19][ref3] vindt voor het eerst toepassing met betrekking tot de heffing over het jaar dat aanvangt op
+      of na het tijdstip waarop [hoofdstuk 6][ref4] in werking treedt. De artikelen 20 en 20*a* zijn mede van toepassing
+      in gevallen van het onderbrengen of vervreemden van de in die artikelen bedoelde activiteiten in het zicht van de
+      inwerkingtreding van deze wet.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008429#Hoofdstuk5
       [ref2]: https://wetten.overheid.nl/BWBR0008429#Hoofdstuk6
+      [ref3]: https://wetten.overheid.nl/BWBR0008429#Artikel19
+      [ref4]: https://wetten.overheid.nl/BWBR0008429#Hoofdstuk6
     url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel21
     references:
       - id: ref1
@@ -305,23 +266,11 @@ articles:
       - id: ref2
         bwb_id: BWBR0008429
         hoofdstuk: '6'
-  - number: '21.2'
-    text: |-
-      [Artikel 19][ref1] vindt voor het eerst toepassing met betrekking tot de heffing over het jaar dat aanvangt op of
-      na het tijdstip waarop [hoofdstuk 6][ref2] in werking treedt. De artikelen 20 en 20*a* zijn mede van toepassing
-      in gevallen van het onderbrengen of vervreemden van de in die artikelen bedoelde activiteiten in het zicht van de
-      inwerkingtreding van deze wet.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008429#Artikel19
-      [ref2]: https://wetten.overheid.nl/BWBR0008429#Hoofdstuk6
-    url: https://wetten.overheid.nl/BWBR0008429/2004-07-14#Artikel21
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0008429
         artikel: '19'
         hoofdstuk: '10'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0008429
         hoofdstuk: '6'
   - number: '22'
