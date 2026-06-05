@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_aanwijzing_gevallen_waarin_arbeidsverhouding_als_dienstbetrekking_wordt_beschouwd
 regulatory_layer: AMVB
 publication_date: '2023-06-30'
@@ -25,17 +25,40 @@ preamble:
     Hebben goedgevonden en verstaan:
   url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Als dienstbetrekking in de zin van de [Wet op de arbeidsongeschiktheidsverzekering][ref1] (*Stb.* 1977, 492),
+      1 Als dienstbetrekking in de zin van de [Wet op de arbeidsongeschiktheidsverzekering][ref1] (*Stb.* 1977, 492),
       de [Ziektewet][ref2] (*Stb.* 1967, 473) en de [Werkloosheidswet][ref3] (*Stb.* 1986, 566) wordt beschouwd de
       arbeidsverhouding van de persoon die als thuiswerker arbeid verricht en van de persoon die hem als hulp bij het
       verrichten van zijn arbeid bijstaat, indien zij deze arbeid persoonlijk verrichten.
+
+      2 De arbeidsverhouding, bedoeld in het eerste lid, wordt slechts als dienstbetrekking beschouwd indien:
+
+      a. zij is aangegaan voor een aaneengesloten periode van ten minste dertig dagen;
+
+      b. het bruto-inkomen uit deze arbeidsverhouding per maand doorgaans ten minste 40% van het minimumloon, bedoeld in
+      [artikel 8, eerste lid, onderdeel ][ref4] (*Stb.* 1968, 657) zal bedragen;
+
+      c. voor de persoon jonger dan 23 jaar, wiens bruto-inkomen uitsluitend in verband met zijn leeftijd op een lager
+      bedrag dan als bedoeld in onderdeel *b* is vastgesteld, het bruto-inkomen uit deze arbeidsverhouding doorgaans
+      ten minste 40% van het voor zijn leeftijd geldende minimumloon, bedoeld in [artikel 7][ref5], derde lid, en
+      [artikel 8, derde lid, van de Wet minimumloon en minimumvakantiebijslag][ref6] zal bedragen.
+
+      3 Indien binnen dertig dagen na het einde van een arbeidsverhouding met dezelfde opdrachtgever een nieuwe
+      arbeidsverhouding wordt aangegaan, geldt het tweede lid, onderdeel *a*, niet voor die nieuwe arbeidsverhouding,
+      tenzij de tijdvakken waarvoor de arbeidsverhoudingen zijn aangegaan te zamen korter zijn dan dertig dagen.
+
+      4 Hetgeen een thuiswerker en de persoon die hem als hulp bij het verrichten van de arbeid bijstaat gezamenlijk aan
+      bruto-inkomen ontvangen, wordt voor de toepassing van het tweede lid, onderdeel *b* en *c*, geacht door ieder van
+      hen voor een gelijk deel te zijn ontvangen, tenzij van een andere verdeling blijkt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002524
       [ref2]: https://wetten.overheid.nl/BWBR0001888
       [ref3]: https://wetten.overheid.nl/BWBR0004045
+      [ref4]: https://wetten.overheid.nl/BWBR0002638#Artikel8
+      [ref5]: https://wetten.overheid.nl/BWBR0002638#Artikel7
+      [ref6]: https://wetten.overheid.nl/BWBR0002638#Artikel8
     url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
     references:
       - id: ref1
@@ -44,71 +67,32 @@ articles:
         bwb_id: BWBR0001888
       - id: ref3
         bwb_id: BWBR0004045
-  - number: '1.2'
-    text: 'De arbeidsverhouding, bedoeld in het eerste lid, wordt slechts als dienstbetrekking beschouwd indien:'
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
-  - number: 1.2.a
-    text: zij is aangegaan voor een aaneengesloten periode van ten minste dertig dagen;
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
-  - number: 1.2.b
-    text: |-
-      het bruto-inkomen uit deze arbeidsverhouding per maand doorgaans ten minste 40% van het minimumloon, bedoeld in
-      [artikel 8, eerste lid, onderdeel ][ref1] (*Stb.* 1968, 657) zal bedragen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0002638
         artikel: '8'
-  - number: 1.2.c
-    text: |-
-      voor de persoon jonger dan 23 jaar, wiens bruto-inkomen uitsluitend in verband met zijn leeftijd op een lager
-      bedrag dan als bedoeld in onderdeel *b* is vastgesteld, het bruto-inkomen uit deze arbeidsverhouding doorgaans
-      ten minste 40% van het voor zijn leeftijd geldende minimumloon, bedoeld in [artikel 7][ref1], derde lid, en
-      [artikel 8, derde lid, van de Wet minimumloon en minimumvakantiebijslag][ref2] zal bedragen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0002638
         artikel: '7'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0002638
         artikel: '8'
-  - number: '1.3'
-    text: |-
-      Indien binnen dertig dagen na het einde van een arbeidsverhouding met dezelfde opdrachtgever een nieuwe
-      arbeidsverhouding wordt aangegaan, geldt het tweede lid, onderdeel *a*, niet voor die nieuwe arbeidsverhouding,
-      tenzij de tijdvakken waarvoor de arbeidsverhoudingen zijn aangegaan te zamen korter zijn dan dertig dagen.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
-  - number: '1.4'
-    text: |-
-      Hetgeen een thuiswerker en de persoon die hem als hulp bij het verrichten van de arbeid bijstaat gezamenlijk aan
-      bruto-inkomen ontvangen, wordt voor de toepassing van het tweede lid, onderdeel *b* en *c*, geacht door ieder van
-      hen voor een gelijk deel te zijn ontvangen, tenzij van een andere verdeling blijkt.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel1
   - number: '2'
-    text: 'Als dienstbetrekking wordt niet beschouwd de arbeidsverhouding van de thuiswerker die:'
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel2
-  - number: 2.a
     text: |-
-      zich doorgaans laat bijstaan door meer dan twee andere personen, niet zijnde zijn echtgenoot of zijn tot zijn
+      Als dienstbetrekking wordt niet beschouwd de arbeidsverhouding van de thuiswerker die:
+
+      a. zich doorgaans laat bijstaan door meer dan twee andere personen, niet zijnde zijn echtgenoot of zijn tot zijn
       huishouden behorende minderjarige kinderen;
+
+      b. behoort tot een groep personen, aangewezen door Onze Minister.
     url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel2
-  - number: 2.b
-    text: behoort tot een groep personen, aangewezen door Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel2
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Zonodig in afwijking van de [artikelen 3, 4 en 5, onderdeel ][ref1], de [Ziektewet][ref2] en de
+      1 Zonodig in afwijking van de [artikelen 3, 4 en 5, onderdeel ][ref1], de [Ziektewet][ref2] en de
       [Werkloosheidswet][ref3] wordt als dienstbetrekking beschouwd de arbeidsverhouding van de persoon die persoonlijk
       arbeid verricht ten behoeve van een derde door tussenkomst van de natuurlijke persoon tot wie of van het lichaam
       tot welk de arbeidsverhouding bestaat.
+
+      2 Het eerste lid is niet van toepassing in gevallen, aangewezen door Onze Minister.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel3
@@ -123,9 +107,6 @@ articles:
         bwb_id: BWBR0001888
       - id: ref3
         bwb_id: BWBR0004045
-  - number: '3.2'
-    text: Het eerste lid is niet van toepassing in gevallen, aangewezen door Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel3
   - number: '4'
     text: |-
       Als dienstbetrekking wordt beschouwd de arbeidsverhouding van de persoon die als musicus of anderszins als artiest
@@ -137,17 +118,37 @@ articles:
       met Onze Minister van Volksgezondheid, Welzijn en Sport vastgestelde reglement van de stichting Fonds voor de
       Topsporter een periodieke uitkering als tegemoetkoming in de kosten van zijn levensonderhoud geniet.
     url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel4a
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Als dienstbetrekking wordt beschouwd de arbeidsverhouding van de persoon die, anders dan bedoeld in de
+      1 Als dienstbetrekking wordt beschouwd de arbeidsverhouding van de persoon die, anders dan bedoeld in de
       [artikelen 1][ref1], [3][ref2], [4][ref3] en [4a][ref4], persoonlijk arbeid verricht op doorgaans ten minste twee
       dagen per week.
+
+      2 De arbeidsverhouding, bedoeld in het eerste lid, wordt niet als dienstbetrekking beschouwd, indien:
+
+      a. zij een arbeidsverhouding is als bedoeld in de
+      [artikelen 3, 4 of 5, onderdeel a, b of c, van de Wet op de arbeidsongeschiktheidsverzekering][ref5], de
+      [Ziektewet][ref6] of de [Werkloosheidswet][ref7] doch de persoon uit hoofde van deze arbeidsverhouding niet als
+      werknemer wordt beschouwd;
+
+      b. de persoon, werkzaam in de arbeidsverhouding, behoort tot een groep personen, aangewezen door Onze Minister.
+
+      3 [Artikel 1, tweede en derde lid][ref8], is van toepassing op de arbeidsverhouding, bedoeld in het eerste
+      lid, met dien verstande dat in plaats van het bruto-inkomen per maand het bruto-inkomen per week en in plaats
+      van het minimumloon, bedoeld in [artikel 8, eerste lid, onderdeel a][ref9], het minimumloon, bedoeld in
+      [artikel 8, onderdeel b, van de Wet minimumloon en minimumvakantiebijslag][ref10], in aanmerking wordt genomen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004090#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0004090#Artikel3
       [ref3]: https://wetten.overheid.nl/BWBR0004090#Artikel4
       [ref4]: https://wetten.overheid.nl/BWBR0004090#Artikel4a
+      [ref5]: https://wetten.overheid.nl/BWBR0002524#Artikel3
+      [ref6]: https://wetten.overheid.nl/BWBR0001888
+      [ref7]: https://wetten.overheid.nl/BWBR0004045
+      [ref8]: https://wetten.overheid.nl/BWBR0004090#Artikel1
+      [ref9]: https://wetten.overheid.nl/BWBR0004090#Artikel8
+      [ref10]: https://wetten.overheid.nl/BWBR0002638#Artikel8
     url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5
     references:
       - id: ref1
@@ -162,62 +163,28 @@ articles:
       - id: ref4
         bwb_id: BWBR0004090
         artikel: 4a
-  - number: '5.2'
-    text: 'De arbeidsverhouding, bedoeld in het eerste lid, wordt niet als dienstbetrekking beschouwd, indien:'
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5
-  - number: 5.2.a
-    text: |-
-      zij een arbeidsverhouding is als bedoeld in de
-      [artikelen 3, 4 of 5, onderdeel a, b of c, van de Wet op de arbeidsongeschiktheidsverzekering][ref1], de
-      [Ziektewet][ref2] of de [Werkloosheidswet][ref3] doch de persoon uit hoofde van deze arbeidsverhouding niet als
-      werknemer wordt beschouwd;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0001888
-      [ref3]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0002524
         artikel: '3'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0001888
-      - id: ref3
+      - id: ref7
         bwb_id: BWBR0004045
-  - number: 5.2.b
-    text: de persoon, werkzaam in de arbeidsverhouding, behoort tot een groep personen, aangewezen door Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5
-  - number: '5.3'
-    text: |-
-      [Artikel 1, tweede en derde lid][ref1], is van toepassing op de arbeidsverhouding, bedoeld in het eerste
-      lid, met dien verstande dat in plaats van het bruto-inkomen per maand het bruto-inkomen per week en in plaats
-      van het minimumloon, bedoeld in [artikel 8, eerste lid, onderdeel a][ref2], het minimumloon, bedoeld in
-      [artikel 8, onderdeel b, van de Wet minimumloon en minimumvakantiebijslag][ref3], in aanmerking wordt genomen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004090#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0004090#Artikel8
-      [ref3]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0004090
         artikel: '1'
-      - id: ref2
+      - id: ref9
         bwb_id: BWBR0004090
         artikel: '8'
-      - id: ref3
+      - id: ref10
         bwb_id: BWBR0002638
         artikel: '8'
-  - number: 5a.1
+  - number: 5a
     text: |-
-      Als dienstbetrekking wordt beschouwd de arbeidsverhouding van de persoon die als sekswerker persoonlijk arbeid
+      1 Als dienstbetrekking wordt beschouwd de arbeidsverhouding van de persoon die als sekswerker persoonlijk arbeid
       verricht, tenzij wordt voldaan aan bij ministeriële regeling te stellen regels.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5a
-  - number: 5a.2
-    text: |-
-      Voor de toepassing van dit artikel en de daarop berustende bepalingen wordt verstaan onder sekswerker: de persoon
+
+      2 Voor de toepassing van dit artikel en de daarop berustende bepalingen wordt verstaan onder sekswerker: de persoon
       die tegen betaling seksuele handelingen met of voor een ander verricht.
     url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel5a
   - number: '6'
@@ -269,13 +236,24 @@ articles:
         artikel: '5'
       - id: ref3
         bwb_id: BWBR0002638
-  - number: '8.1'
-    text: 'Voor de toepassing van dit besluit wordt niet als dienstbetrekking beschouwd de arbeidsverhouding van de persoon:'
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
-  - number: 8.1.a
+  - number: '8'
     text: |-
-      die arbeid verricht als zelfstandige als bedoeld in
+      1 Voor de toepassing van dit besluit wordt niet als dienstbetrekking beschouwd de arbeidsverhouding van de persoon:
+
+      a. die arbeid verricht als zelfstandige als bedoeld in
       [artikel 4 van de Wet arbeidsongeschiktheidsverzekering zelfstandigen][ref1];
+
+      b. die arbeid verricht uitsluitend voor rekening en risico van de onderneming van de rechtspersoon waarvan hij
+      directeur-grootaandeelhouder is;
+
+      c die het verrichten van de arbeid rechtstreeks is overeengekomen met een natuurlijk persoon ten behoeve van diens
+      persoonlijke aangelegenheden;
+
+      d. die arbeid van overwegend geestelijke aard verricht;
+
+      e. die werkzaam is in een arbeidsverhouding, die in overwegende mate wordt beheerst door een familieverhouding.
+
+      2 Onze Minister is bevoegd regels te stellen met betrekking tot het eerste lid.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008656#Artikel4
@@ -284,25 +262,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0008656
         artikel: '4'
-  - number: 8.1.b
-    text: |-
-      die arbeid verricht uitsluitend voor rekening en risico van de onderneming van de rechtspersoon waarvan hij
-      directeur-grootaandeelhouder is;
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
-  - number: 8.1.c
-    text: |-
-      die het verrichten van de arbeid rechtstreeks is overeengekomen met een natuurlijk persoon ten behoeve van diens
-      persoonlijke aangelegenheden;
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
-  - number: 8.1.d
-    text: die arbeid van overwegend geestelijke aard verricht;
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
-  - number: 8.1.e
-    text: die werkzaam is in een arbeidsverhouding, die in overwegende mate wordt beheerst door een familieverhouding.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
-  - number: '8.2'
-    text: Onze Minister is bevoegd regels te stellen met betrekking tot het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0004090/2009-01-01#Artikel8
   - number: '9'
     text: |-
       Tussen Onze Minister en Onze Minister van Financiën dient overeenstemming te bestaan omtrent het aanwijzen van een
