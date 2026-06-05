@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_eigen_bijdrage_asielzoekers_met_inkomen_en_vermogen
 regulatory_layer: WET
 publication_date: '2008-11-24'
@@ -25,6 +25,12 @@ articles:
       Tot de aan de alleenstaande of het gezin feitelijk geboden verstrekkingen, bedoeld in
       [artikel 17, tweede lid, van de Rva 1997][ref1], worden gerekend:
 
+      a. de aan of ten behoeve van de alleenstaande of het gezin verstrekte financiële toelage ten behoeve van voedsel,
+      kleding en andere persoonlijke uitgaven en de in natura verstrekte maaltijden;
+
+      b. het onderdak in een opvangcentrum of de financiële toelage ten behoeve van de huisvesting buiten een
+      opvangcentrum.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel1
@@ -32,54 +38,36 @@ articles:
       - id: ref1
         bwb_id: BWBR0009205
         artikel: '17'
-  - number: 1.a
-    text: |-
-      de aan of ten behoeve van de alleenstaande of het gezin verstrekte financiële toelage ten behoeve van voedsel,
-      kleding en andere persoonlijke uitgaven en de in natura verstrekte maaltijden;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel1
-  - number: 1.b
-    text: het onderdak in een opvangcentrum of de financiële toelage ten behoeve van de huisvesting buiten een opvangcentrum.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel1
   - number: '2'
     text: |-
       De economische waarde per maand, bedoeld in [artikel 17, tweede lid, van de Rva 1997][ref1], bedraagt:
 
+      a. van de verstrekkingen bedoeld in [artikel 1, onder a][ref2]: de toelage bedoeld in
+      [artikel 11, tweede lid, van de Rva 1997][ref3], die aan of ten behoeve van de alleenstaande of het gezin wordt of
+      zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
+
+      b. van de verstrekkingen bedoeld in [artikel 1, onder b][ref4]: f 100,- voor een alleenstaande of eerste gezinslid,
+      f 50,-, voor het tweede gezinslid en f 25,- per volgend gezinslid, vermenigvuldigd met de factor 4,33, tot een
+      maximum van € 393,43.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
+      [ref2]: https://wetten.overheid.nl/BWBR0009876#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0009205#Artikel11
+      [ref4]: https://wetten.overheid.nl/BWBR0009876#Artikel1
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0009205
         artikel: '17'
-  - number: 2.a
-    text: |-
-      van de verstrekkingen bedoeld in [artikel 1, onder a][ref1]: de toelage bedoeld in
-      [artikel 11, tweede lid, van de Rva 1997][ref2], die aan of ten behoeve van de alleenstaande of het gezin wordt of
-      zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009876#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0009205#Artikel11
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0009876
         artikel: '1'
         afdeling: I
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0009205
         artikel: '11'
-  - number: 2.b
-    text: |-
-      van de verstrekkingen bedoeld in [artikel 1, onder b][ref1]: f 100,- voor een alleenstaande of eerste gezinslid,
-      f 50,-, voor het tweede gezinslid en f 25,- per volgend gezinslid, vermenigvuldigd met de factor 4,33, tot een
-      maximum van € 393,43.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009876#Artikel1
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0009876
         artikel: '1'
         afdeling: I
@@ -101,62 +89,46 @@ articles:
         bwb_id: BWBR0009876
         artikel: '2'
         afdeling: I
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Tot de middelen bedoeld in [artikel 3][ref1] worden gerekend alle vermogens- en inkomensbestandsdelen waarover de
+      1 Tot de middelen bedoeld in [artikel 3][ref1] worden gerekend alle vermogens- en inkomensbestandsdelen waarover de
       alleenstaande of het gezin beschikt of redelijkerwijs kan beschikken.
+
+      2 Niet tot de middelen van de belanghebbende worden gerekend:
+
+      a. kinderbijslag;
+
+      b. vergoedingen en tegemoetkomingen voor verwervingskosten, alsmede de vermindering of teruggave van loonbelasting
+      of inkomstenbelasting en van premies volksverzekeringen voor verwervingskosten die de in artikel 37 van de Wet op
+      de inkomstenbelasting genoemde bedragen te boven gaan;
+
+      c. rente ontvangen over op grond van [artikel 9, onder b, c, en d][ref2], niet in aanmerking genomen vermogen;
+
+      d. een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
+      uitkering, uit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 5 van de Rva 1997][ref3],
+      verantwoord is;
+
+      e. inkomsten uit of in verband met arbeid tot € 71,70 per maand, alsmede de helft van het meerdere tot een maximum
+      van in totaal € 131,60 per maand.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009876#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0009876#Artikel9
+      [ref3]: https://wetten.overheid.nl/BWBR0009205#Artikel5
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
     references:
       - id: ref1
         bwb_id: BWBR0009876
         artikel: '3'
         afdeling: II
-  - number: '4.2'
-    text: 'Niet tot de middelen van de belanghebbende worden gerekend:'
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
-  - number: 4.2.a
-    text: kinderbijslag;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
-  - number: 4.2.b
-    text: |-
-      vergoedingen en tegemoetkomingen voor verwervingskosten, alsmede de vermindering of teruggave van loonbelasting of
-      inkomstenbelasting en van premies volksverzekeringen voor verwervingskosten die de in artikel 37 van de Wet op de
-      inkomstenbelasting genoemde bedragen te boven gaan;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
-  - number: 4.2.c
-    text: |-
-      rente ontvangen over op grond van [artikel 9, onder b, c, en d][ref1], niet in aanmerking genomen vermogen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009876#Artikel9
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0009876
         artikel: '9'
         paragraaf: '3'
         afdeling: III
-  - number: 4.2.d
-    text: |-
-      een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
-      uitkering, uit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 5 van de Rva 1997][ref1],
-      verantwoord is;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel5
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0009205
         artikel: '5'
-  - number: 4.2.e
-    text: |-
-      inkomsten uit of in verband met arbeid tot € 71,70 per maand, alsmede de helft van het meerdere tot een maximum van
-      in totaal € 131,60 per maand.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel4
   - number: '5'
     text: |-
       Bij de vaststelling van de middelen worden giften van instellingen en personen niet in aanmerking genomen voor
@@ -171,68 +143,52 @@ articles:
         bwb_id: BWBR0009205
         artikel: '5'
   - number: '6'
-    text: 'De middelen worden in aanmerking genomen tot het bedrag dat resteert na aftrek van:'
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
-  - number: 6.a
-    text: de daarover door de belanghebbende verschuldigde loonbelasting of inkomstenbelasting;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
-  - number: 6.b
     text: |-
-      de daarover door de belanghebbende verschuldigde premies volksverzekeringen en ziekenfondspremie dan wel een
+      De middelen worden in aanmerking genomen tot het bedrag dat resteert na aftrek van:
+
+      a. de daarover door de belanghebbende verschuldigde loonbelasting of inkomstenbelasting;
+
+      b. de daarover door de belanghebbende verschuldigde premies volksverzekeringen en ziekenfondspremie dan wel een
       inhouding die met een of meer van deze premies overeenkomt;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
-  - number: 6.c
-    text: |-
-      ten laste van de belanghebbende komende verplichte bijdragen ingevolge een pensioenregeling en daarmee
+
+      c. ten laste van de belanghebbende komende verplichte bijdragen ingevolge een pensioenregeling en daarmee
       vergelijkbare regelingen; en
+
+      d. andere ten laste van de belanghebbende komende verplichtingen.
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
-  - number: 6.d
-    text: andere ten laste van de belanghebbende komende verplichtingen.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
-  - number: '7.1'
+  - number: '7'
     text: |-
-      Onder inkomen wordt verstaan de op grond van [paragraaf 1][ref1] in aanmerking genomen middelen voor zover deze:
+      1 Onder inkomen wordt verstaan de op grond van [paragraaf 1][ref1] in aanmerking genomen middelen voor zover deze:
+
+      a. betreffen inkomsten uit of in verband met arbeid, inkomsten uit vermogen, sociale zekerheidsuitkeringen,
+      uitkeringen tot levensonderhoud op grond van [Boek 1 van het Burgerlijk Wetboek][ref2], teruggave van loonbelasting
+      en premies volksverzekeringen, dan wel naar hun aard met deze inkomsten of uitkeringen overeenkomen;
+
+      b. betrekking hebben op een periode waarover beroep op opvang wordt gedaan.
+
+      2 Middelen die het karakter hebben van uitgesteld inkomen worden in aanmerking genomen naar de periode waarin deze
+      zijn verworven. Middelen die het karakter hebben van doorbetaling van inkomen over een periode worden in aanmerking
+      genomen naar de periode waarin deze te gelde kunnen worden gemaakt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009876#AfdelingIII
+      [ref2]: https://wetten.overheid.nl/BWBR0002656
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel7
     references:
       - id: ref1
         bwb_id: BWBR0009876
         paragraaf: '1'
         afdeling: III
-  - number: 7.1.a
-    text: |-
-      betreffen inkomsten uit of in verband met arbeid, inkomsten uit vermogen, sociale zekerheidsuitkeringen,
-      uitkeringen tot levensonderhoud op grond van [Boek 1 van het Burgerlijk Wetboek][ref1], teruggave van loonbelasting
-      en premies volksverzekeringen, dan wel naar hun aard met deze inkomsten of uitkeringen overeenkomen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002656
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel7
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002656
-  - number: 7.1.b
-    text: betrekking hebben op een periode waarover beroep op opvang wordt gedaan.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel7
-  - number: '7.2'
-    text: |-
-      Middelen die het karakter hebben van uitgesteld inkomen worden in aanmerking genomen naar de periode waarin deze
-      zijn verworven. Middelen die het karakter hebben van doorbetaling van inkomen over een periode worden in aanmerking
-      genomen naar de periode waarin deze te gelde kunnen worden gemaakt.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel7
   - number: '8'
-    text: 'Onder het vermogen wordt verstaan:'
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel8
-  - number: 8.a
     text: |-
-      de waarde van de bezittingen waarover de alleenstaande of het gezin bij de aanvang van de opvang beschikt of
+      Onder het vermogen wordt verstaan:
+
+      a. de waarde van de bezittingen waarover de alleenstaande of het gezin bij de aanvang van de opvang beschikt of
       redelijkerwijs kan beschikken, verminderd met de op dat tijdstip aanwezige schulden;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel8
-  - number: 8.b
-    text: |-
-      de op grond van de in [paragraaf 1][ref1] in aanmerking genomen middelen die worden ontvangen tijdens de periode
+
+      b. de op grond van de in [paragraaf 1][ref1] in aanmerking genomen middelen die worden ontvangen tijdens de periode
       waarover beroep op opvang wordt gedaan, voor zover deze geen inkomen zijn als bedoeld in [artikel 7][ref2].
 
 
@@ -250,52 +206,38 @@ articles:
         paragraaf: '2'
         afdeling: III
   - number: '9'
-    text: 'Niet als vermogen wordt in aanmerking genomen:'
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
-  - number: 9.a
     text: |-
-      bezittingen in natura die naar hun aard en waarde algemeen gebruikelijk zijn dan wel, gelet op de omstandigheden
+      Niet als vermogen wordt in aanmerking genomen:
+
+      a. bezittingen in natura die naar hun aard en waarde algemeen gebruikelijk zijn dan wel, gelet op de omstandigheden
       van persoon en gezin, noodzakelijk zijn;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
-  - number: 9.b
-    text: |-
-      het bij de aanvang van de opvang aanwezige vermogen voor zover dit minder bedraagt dan de vermogensgrens als
+
+      b. het bij de aanvang van de opvang aanwezige vermogen voor zover dit minder bedraagt dan de vermogensgrens als
       genoemd in [artikel 17, tweede lid, van de Rva 1997][ref1];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
-    references:
-      - id: ref1
-        bwb_id: BWBR0009205
-        artikel: '17'
-  - number: 9.c
-    text: |-
-      vermogen ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, tot het bedrag dat
+      c. vermogen ontvangen tijdens de periode waarover beroep op opvang wordt gedaan, tot het bedrag dat
       het bij de aanvang van de opvang aanwezige vermogen minder bedroeg dan de vermogensgrens, genoemd in
-      [artikel 17, tweede lid, van de Rva 1997][ref1];
+      [artikel 17, tweede lid, van de Rva 1997][ref2];
 
+      d. spaargelden opgebouwd tijdens de periode waarin opvang wordt geboden;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
-    references:
-      - id: ref1
-        bwb_id: BWBR0009205
-        artikel: '17'
-  - number: 9.d
-    text: spaargelden opgebouwd tijdens de periode waarin opvang wordt geboden;
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
-  - number: 9.e
-    text: |-
-      een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
-      uitkering, vanuit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 5 van de Rva 1997][ref1],
+      e. een uitkering in verband met geleden immateriële schade voor zover dit, gelet op de aard en de hoogte van de
+      uitkering, vanuit een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 5 van de Rva 1997][ref3],
       verantwoord is.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel5
+      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
+      [ref2]: https://wetten.overheid.nl/BWBR0009205#Artikel17
+      [ref3]: https://wetten.overheid.nl/BWBR0009205#Artikel5
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel9
     references:
       - id: ref1
+        bwb_id: BWBR0009205
+        artikel: '17'
+      - id: ref2
+        bwb_id: BWBR0009205
+        artikel: '17'
+      - id: ref3
         bwb_id: BWBR0009205
         artikel: '5'
   - number: '10'
