@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_landbouwgrond_en_natuurterrein_meststoffenwet
 regulatory_layer: WET
 publication_date: '2005-11-21'
@@ -15,9 +15,11 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      In deze regeling wordt verstaan onder:
+      1 In deze regeling wordt verstaan onder:
+
+
 
               a)
                wet:
@@ -59,6 +61,14 @@ articles:
       [artikel 2a][ref7] in gebruik heeft.
 
 
+
+
+      2 Deze regeling berust op [artikel 1, eerste lid, onderdelen p en v, van de wet][ref8] en op
+      [artikel 1, eerste lid, onderdeel d, van het Besluit gebruik meststoffen][ref9] voor zover het betreft de
+      [artikelen 1][ref10], [1a][ref11] en [1b][ref12], en op [artikel 1a, tweede lid, van de wet][ref13] voor zover het
+      betreft de [artikelen 1][ref14], [2][ref15], [2a][ref16] en [3][ref17].
+
+
       [ref1]: https://wetten.overheid.nl/BWBR0004054
       [ref2]: https://wetten.overheid.nl/BWBR0004054#Artikel1
       [ref3]: https://wetten.overheid.nl/BWBR0004054#Artikel1
@@ -66,6 +76,16 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0004054#Artikel22
       [ref6]: https://wetten.overheid.nl/BWBR0009251#Artikel2
       [ref7]: https://wetten.overheid.nl/BWBR0009251#Artikel2a
+      [ref8]: https://wetten.overheid.nl/BWBR0004054#Artikel1
+      [ref9]: https://wetten.overheid.nl/BWBR0009066#Artikel1
+      [ref10]: https://wetten.overheid.nl/BWBR0009251#Artikel1
+      [ref11]: https://wetten.overheid.nl/BWBR0009251#Artikel1a
+      [ref12]: https://wetten.overheid.nl/BWBR0009251#Artikel1b
+      [ref13]: https://wetten.overheid.nl/BWBR0004054#Artikel1a
+      [ref14]: https://wetten.overheid.nl/BWBR0009251#Artikel1
+      [ref15]: https://wetten.overheid.nl/BWBR0009251#Artikel2
+      [ref16]: https://wetten.overheid.nl/BWBR0009251#Artikel2a
+      [ref17]: https://wetten.overheid.nl/BWBR0009251#Artikel3
     url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1
     references:
       - id: ref1
@@ -88,54 +108,34 @@ articles:
       - id: ref7
         bwb_id: BWBR0009251
         artikel: 2a
-  - number: '1.2'
-    text: |-
-      Deze regeling berust op [artikel 1, eerste lid, onderdelen p en v, van de wet][ref1] en op
-      [artikel 1, eerste lid, onderdeel d, van het Besluit gebruik meststoffen][ref2] voor zover het betreft de
-      [artikelen 1][ref3], [1a][ref4] en [1b][ref5], en op [artikel 1a, tweede lid, van de wet][ref6] voor zover het
-      betreft de [artikelen 1][ref7], [2][ref8], [2a][ref9] en [3][ref10].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004054#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0009066#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0009251#Artikel1
-      [ref4]: https://wetten.overheid.nl/BWBR0009251#Artikel1a
-      [ref5]: https://wetten.overheid.nl/BWBR0009251#Artikel1b
-      [ref6]: https://wetten.overheid.nl/BWBR0004054#Artikel1a
-      [ref7]: https://wetten.overheid.nl/BWBR0009251#Artikel1
-      [ref8]: https://wetten.overheid.nl/BWBR0009251#Artikel2
-      [ref9]: https://wetten.overheid.nl/BWBR0009251#Artikel2a
-      [ref10]: https://wetten.overheid.nl/BWBR0009251#Artikel3
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0004054
         artikel: '1'
-      - id: ref2
+      - id: ref9
         bwb_id: BWBR0009066
         artikel: '1'
-      - id: ref3
+      - id: ref10
         bwb_id: BWBR0009251
         artikel: '1'
-      - id: ref4
+      - id: ref11
         bwb_id: BWBR0009251
         artikel: 1a
-      - id: ref5
+      - id: ref12
         bwb_id: BWBR0009251
         artikel: 1b
-      - id: ref6
+      - id: ref13
         bwb_id: BWBR0004054
         artikel: 1a
-      - id: ref7
+      - id: ref14
         bwb_id: BWBR0009251
         artikel: '1'
-      - id: ref8
+      - id: ref15
         bwb_id: BWBR0009251
         artikel: '2'
-      - id: ref9
+      - id: ref16
         bwb_id: BWBR0009251
         artikel: 2a
-      - id: ref10
+      - id: ref17
         bwb_id: BWBR0009251
         artikel: '3'
   - number: 1a
@@ -161,9 +161,18 @@ articles:
       gestelde regels voldoet, wordt aangemerkt beheer dat het gebruik van dierlijke meststoffen of beweiding toestaat en
       dat tevens beheer is:
 
+      a. als bedoeld in de [Subsidieregeling natuurbeheer 2000][ref3],
+
+      b. dat is vastgesteld krachtens de [Natuurbeschermingswet][ref4], of
+
+      c. dat is gericht op de instandhouding van natuurwaarden en tot stand is gekomen met instemming van de Minister van
+      Landbouw, Natuur en Voedselkwaliteit.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0004054#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0009066#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0010999
+      [ref4]: https://wetten.overheid.nl/BWBR0002611
     url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1b
     references:
       - id: ref1
@@ -172,124 +181,75 @@ articles:
       - id: ref2
         bwb_id: BWBR0009066
         artikel: '1'
-  - number: 1b.a
-    text: |-
-      als bedoeld in de [Subsidieregeling natuurbeheer 2000][ref1],
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0010999
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1b
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0010999
-  - number: 1b.b
-    text: |-
-      dat is vastgesteld krachtens de [Natuurbeschermingswet][ref1], of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002611
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1b
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0002611
-  - number: 1b.c
-    text: |-
-      dat is gericht op de instandhouding van natuurwaarden en tot stand is gekomen met instemming van de Minister van
-      Landbouw, Natuur en Voedselkwaliteit.
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel1b
   - number: '2'
     text: |-
       Voor de toepassing van ‘de hoofdstukken III, IV en V, titel 3, en de daarop berustende bepalingen wordt, in zoverre
       in afwijking van [artikel 1, eerste lid, onderdeel q, en derde lid, van de wet, onder][ref1] de tot het bedrijf
       behorende oppervlakte landbouwgrond ook gerekend:
 
+      a. in België of Duitsland, binnen 25 kilometer van de grens met Nederland gelegen landbouwgrond, die daadwerkelijk
+      in het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is en die:
+
+      1º indien die grond in België is gelegen, tot het bedrijf behoort ingevolge eigendom of tot het bedrijf behoort
+      blijkens registratie bij de Dienst Regelingen ingevolge artikel 2.2a van de Regeling keuring en handel dierlijke
+      producten en registratie bij de Vlaamse Mestbank ingevolge artikel 30 van het Besluit van de Vlaamse regering van
+      20 december 1995 tot uitvoering van sommige artikelen van het decreet van 23 januari 1991 inzake de bescherming van
+      het leefmilieu tegen de verontreiniging door meststoffen, en
+
+      2º indien die grond in Duitsland is gelegen, tot het bedrijf behoort ingevolge eigendom of ingevolge een in
+      Duitsland geregistreerde pachtovereenkomst;
+
+      b. landbouwgrond die daadwerkelijk in het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is en
+      die tijdelijk in gebruik is gegeven overeenkomstig:
+
+      1º [artikel 189][ref2] of [201 van de Landinrichtingswet][ref3],
+
+      2º [artikel 46, vierde lid][ref4], of [81 van de Reconstructiewet Midden-Delfland][ref5], of
+
+      3º [artikel 28, vierde lid][ref6], of
+      [85 van de Herinrichtingswet Oost-Groningen en de Gronings-Drentse Veenkoloniën][ref7];
+
+      c. landbouwgrond die daadwerkelijk in het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is
+      en ter zake waarvan overeenkomstig [artikel 3][ref8] een grondgebruiksverklaring is opgesteld en bij de Dienst
+      Regelingen is ingediend.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0004054#Artikel1
+      [ref2]: https://wetten.overheid.nl/BWBR0003793#Artikel189
+      [ref3]: https://wetten.overheid.nl/BWBR0003793#Artikel201
+      [ref4]: https://wetten.overheid.nl/BWBR0003094#Artikel46
+      [ref5]: https://wetten.overheid.nl/BWBR0003094#Artikel81
+      [ref6]: https://wetten.overheid.nl/BWBR0003143#Artikel28
+      [ref7]: https://wetten.overheid.nl/BWBR0003143#Artikel85
+      [ref8]: https://wetten.overheid.nl/BWBR0009251#Artikel3
     url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0004054
         artikel: '1'
-  - number: 2.a
-    text: |-
-      in België of Duitsland, binnen 25 kilometer van de grens met Nederland gelegen landbouwgrond, die daadwerkelijk in
-      het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is en die:
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-  - number: 2.a.1º
-    text: |-
-      indien die grond in België is gelegen, tot het bedrijf behoort ingevolge eigendom of tot het bedrijf behoort
-      blijkens registratie bij de Dienst Regelingen ingevolge artikel 2.2a van de Regeling keuring en handel dierlijke
-      producten en registratie bij de Vlaamse Mestbank ingevolge artikel 30 van het Besluit van de Vlaamse regering van
-      20 december 1995 tot uitvoering van sommige artikelen van het decreet van 23 januari 1991 inzake de bescherming van
-      het leefmilieu tegen de verontreiniging door meststoffen, en
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-  - number: 2.a.2º
-    text: |-
-      indien die grond in Duitsland is gelegen, tot het bedrijf behoort ingevolge eigendom of ingevolge een in Duitsland
-      geregistreerde pachtovereenkomst;
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-  - number: 2.b
-    text: |-
-      landbouwgrond die daadwerkelijk in het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is en die
-      tijdelijk in gebruik is gegeven overeenkomstig:
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-  - number: 2.b.1º
-    text: |-
-      [artikel 189][ref1] of [201 van de Landinrichtingswet][ref2],
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003793#Artikel189
-      [ref2]: https://wetten.overheid.nl/BWBR0003793#Artikel201
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0003793
         artikel: '189'
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0003793
         artikel: '201'
-  - number: 2.b.2º
-    text: |-
-      [artikel 46, vierde lid][ref1], of [81 van de Reconstructiewet Midden-Delfland][ref2], of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003094#Artikel46
-      [ref2]: https://wetten.overheid.nl/BWBR0003094#Artikel81
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0003094
         artikel: '46'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0003094
         artikel: '81'
-  - number: 2.b.3º
-    text: |-
-      [artikel 28, vierde lid][ref1], of
-      [85 van de Herinrichtingswet Oost-Groningen en de Gronings-Drentse Veenkoloniën][ref2];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003143#Artikel28
-      [ref2]: https://wetten.overheid.nl/BWBR0003143#Artikel85
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0003143
         artikel: '28'
-      - id: ref2
+      - id: ref7
         bwb_id: BWBR0003143
         artikel: '85'
-  - number: 2.c
-    text: |-
-      landbouwgrond die daadwerkelijk in het kader van een normale bedrijfsvoering bij het bedrijf in gebruik is en ter
-      zake waarvan overeenkomstig [artikel 3][ref1] een grondgebruiksverklaring is opgesteld en bij de Dienst Regelingen
-      is ingediend.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009251#Artikel3
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel2
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0009251
         artikel: '3'
   - number: 2a
@@ -311,12 +271,19 @@ articles:
       - id: ref2
         bwb_id: BWBR0009251
         artikel: '3'
-  - number: '3.1'
+  - number: '3'
     text: |-
-      De grondgebruiksverklaring wordt gesteld op het formulier, bedoeld in
+      1 De grondgebruiksverklaring wordt gesteld op het formulier, bedoeld in
       [artikel 5d, eerste lid, van de Regeling administratieve verplichtingen Meststoffenwet][ref1] dat overeenkomstig
       de daarbij aangegeven wijze, volledig en naar waarheid wordt ingevuld en door zowel de gebruiker als de eigenaar,
       onderscheidenlijk de erfpachter, vruchtgebruiker of pachter van de desbetreffende grond wordt ondertekend.
+
+      2 De gebruiker van de grond dient het formulier binnen dertig dagen na de datum waarop de grond blijkens het
+      ingevulde formulier in gebruik is genomen in bij de Dienst Regelingen.
+
+      3 Indien het formulier niet binnen de in het tweede lid genoemde termijn is ingediend, geldt als datum waarop de
+      grond in gebruik is genomen de datum die is gelegen dertig dagen vóór de datum waarop het formulier door de Dienst
+      Regelingen is ontvangen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009228#Artikel5d
@@ -325,17 +292,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0009228
         artikel: 5d
-  - number: '3.2'
-    text: |-
-      De gebruiker van de grond dient het formulier binnen dertig dagen na de datum waarop de grond blijkens het
-      ingevulde formulier in gebruik is genomen in bij de Dienst Regelingen.
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel3
-  - number: '3.3'
-    text: |-
-      Indien het formulier niet binnen de in het tweede lid genoemde termijn is ingediend, geldt als datum waarop de
-      grond in gebruik is genomen de datum die is gelegen dertig dagen vóór de datum waarop het formulier door de Dienst
-      Regelingen is ontvangen.
-    url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel3
   - number: '6'
     text: 'Deze regeling wordt aangehaald als: Regeling landbouwgrond en natuurterrein Meststoffenwet.'
     url: https://wetten.overheid.nl/BWBR0009251/2005-07-06#Artikel6
