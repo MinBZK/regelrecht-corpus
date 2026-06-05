@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_veiligheidsregios
 regulatory_layer: AMVB
 publication_date: '2025-11-14'
@@ -30,8 +30,9 @@ preamble:
 articles:
   - number: '1.1'
     text: |-
-      In dit besluit wordt verstaan onder: - *commando plaats incident:* commando plaats incident als bedoeld in
-      [artikel 2.1.2][ref1];
+      In dit besluit wordt verstaan onder:
+
+        - *commando plaats incident:* commando plaats incident als bedoeld in [artikel 2.1.2][ref1];
         - *gemeentelijk beleidsteam:* gemeentelijk beleidsteam als bedoeld in [artikel 2.1.5][ref2];
         - *grootschalige alarmering:* het bij een ramp of crisis onverwijld en volledig alarmeren van
       de onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing, bedoeld in
@@ -59,43 +60,43 @@ articles:
         - *wet:* [Wet veiligheidsregio’s][ref15].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.2
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.5
+      [ref3]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.1
       [ref4]: https://wetten.overheid.nl/BWBR0041330
-      [ref5]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.1
       [ref6]: https://wetten.overheid.nl/BWBR0027466#Artikel35
-      [ref7]: https://wetten.overheid.nl/BWBR0037885#Artikel5
-      [ref8]: https://wetten.overheid.nl/BWBR0027844#Artikel7
+      [ref7]: https://wetten.overheid.nl/BWBR0037885#Artikel5.1
+      [ref8]: https://wetten.overheid.nl/BWBR0027844#Artikel7.2
       [ref9]: https://wetten.overheid.nl/BWBR0027466#Artikel39
-      [ref10]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      [ref10]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.4
       [ref11]: https://wetten.overheid.nl/BWBR0027466#Artikel15
       [ref12]: https://wetten.overheid.nl/BWBR0041330
-      [ref13]: https://wetten.overheid.nl/BWBR0027844#Artikel2
-      [ref14]: https://wetten.overheid.nl/BWBR0041330#Artikel4
+      [ref13]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.3
+      [ref14]: https://wetten.overheid.nl/BWBR0041330#Artikel4.14
       [ref15]: https://wetten.overheid.nl/BWBR0027466
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel1.1
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.2
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref2
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.5
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref3
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.1
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref4
         bwb_id: BWBR0041330
       - id: ref5
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.1
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref6
@@ -103,17 +104,17 @@ articles:
         artikel: '35'
       - id: ref7
         bwb_id: BWBR0037885
-        artikel: '5'
+        artikel: '5.1'
       - id: ref8
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: '7'
       - id: ref9
         bwb_id: BWBR0027466
         artikel: '39'
       - id: ref10
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.4
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref11
@@ -123,12 +124,12 @@ articles:
         bwb_id: BWBR0041330
       - id: ref13
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.3
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref14
         bwb_id: BWBR0041330
-        artikel: '4'
+        artikel: '4.14'
       - id: ref15
         bwb_id: BWBR0027466
   - number: '1.2'
@@ -141,52 +142,38 @@ articles:
     text: |-
       Het bestuur van de veiligheidsregio draagt zorg voor de inrichting van de hoofdstructuur van de rampenbestrijding
       en crisisbeheersing, die bestaat uit de volgende onderdelen:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.1.a
-    text: de meldkamer;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.1.b
-    text: |-
-      een of meer commando’s plaats incident, afhankelijk van de aard van de ramp of crisis en de wijze waarop deze zich
+
+      a. de meldkamer;
+
+      b. een of meer commando’s plaats incident, afhankelijk van de aard van de ramp of crisis en de wijze waarop deze
+      zich ontwikkelt;
+
+      c. een of meer teams bevolkingszorg, afhankelijk van de aard van de ramp of crisis en de wijze waarop deze zich
       ontwikkelt;
+
+      d. een regionaal operationeel team, en
+
+      e. een gemeentelijk beleidsteam of, bij een bovenlokale ramp of crisis, een regionaal beleidsteam.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.1.c
+  - number: 2.1.2
     text: |-
-      een of meer teams bevolkingszorg, afhankelijk van de aard van de ramp of crisis en de wijze waarop deze zich
-      ontwikkelt;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.1.d
-    text: een regionaal operationeel team, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.1.e
-    text: een gemeentelijk beleidsteam of, bij een bovenlokale ramp of crisis, een regionaal beleidsteam.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.1
-  - number: 2.1.2.1
-    text: 'Een commando plaats incident bestaat ten minste uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.a
-    text: een leider commando plaats incident;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.b
-    text: een officier van dienst van de brandweer;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.c
-    text: een officier van dienst geneeskundig;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.d
-    text: een officier van dienst van de politie of van de Koninklijke marechaussee;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.e
-    text: een informatiemanager commando plaats incident, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.1.f
-    text: een functionaris crisiscommunicatie commando plaats incident.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.2
-  - number: 2.1.2.2
-    text: |-
-      Een commando plaats incident is belast met de operationele leiding ter plaatse, de afstemming met andere betrokken
-      partijen als bedoeld in [artikel 16, tweede lid, van de wet][ref1], en het adviseren van het regionaal operationeel
-      team.
+      1 Een commando plaats incident bestaat ten minste uit:
+
+      a. een leider commando plaats incident;
+
+      b. een officier van dienst van de brandweer;
+
+      c. een officier van dienst geneeskundig;
+
+      d. een officier van dienst van de politie of van de Koninklijke marechaussee;
+
+      e. een informatiemanager commando plaats incident, en
+
+      f. een functionaris crisiscommunicatie commando plaats incident.
+
+      2 Een commando plaats incident is belast met de operationele leiding ter plaatse, de afstemming met andere
+      betrokken partijen als bedoeld in [artikel 16, tweede lid, van de wet][ref1], en het adviseren van het regionaal
+      operationeel team.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027466#Artikel16
@@ -195,116 +182,94 @@ articles:
       - id: ref1
         bwb_id: BWBR0027466
         artikel: '16'
-  - number: 2.1.3.1
+  - number: 2.1.3
     text: |-
-      Een team bevolkingszorg bestaat ten minste uit de door het college van burgemeester en wethouders aangewezen
+      1 Een team bevolkingszorg bestaat ten minste uit de door het college van burgemeester en wethouders aangewezen
       functionarissen, van wie één functionaris is belast met de leiding van het team, één functionaris met het
       informatiemanagement, en één functionaris met de coördinatie van de crisiscommunicatie.
+
+      2 Een team bevolkingszorg zorgt dat de volgende taken worden uitgevoerd:
+
+      a. het verzorgen van de crisiscommunicatie;
+
+      b. het voorzien in opvang en verzorging van de bevolking;
+
+      c. het verzorgen van nazorg voor de bevolking;
+
+      d. het registreren van de slachtoffers,
+
+      e. het registreren van schadegevallen, en
+
+      f. het adviseren van het regionaal operationeel team.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2
-    text: 'Een team bevolkingszorg zorgt dat de volgende taken worden uitgevoerd:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.a
-    text: het verzorgen van de crisiscommunicatie;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.b
-    text: het voorzien in opvang en verzorging van de bevolking;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.c
-    text: het verzorgen van nazorg voor de bevolking;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.d
-    text: het registreren van de slachtoffers,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.e
-    text: het registreren van schadegevallen, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.3.2.f
-    text: het adviseren van het regionaal operationeel team.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.3
-  - number: 2.1.4.1
-    text: 'Een regionaal operationeel team bestaat ten minste uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.a
-    text: een regionaal operationeel leider;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.b
-    text: een sectie brandweer;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.c
-    text: een sectie GHOR;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.d
-    text: een sectie politie;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.e
-    text: een sectie bevolkingszorg;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.f
-    text: een sectie informatiemanagement, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.1.g
-    text: een functionaris crisiscommunicatie regionaal operationeel team.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.2
+  - number: 2.1.4
     text: |-
-      Een regionaal operationeel team is belast met de operationele leiding, de afstemming met andere bij de ramp of
+      1 Een regionaal operationeel team bestaat ten minste uit:
+
+      a. een regionaal operationeel leider;
+
+      b. een sectie brandweer;
+
+      c. een sectie GHOR;
+
+      d. een sectie politie;
+
+      e. een sectie bevolkingszorg;
+
+      f. een sectie informatiemanagement, en
+
+      g. een functionaris crisiscommunicatie regionaal operationeel team.
+
+      2 Een regionaal operationeel team is belast met de operationele leiding, de afstemming met andere bij de ramp of
       crisis betrokken partijen en het adviseren van het gemeentelijk of regionaal beleidsteam.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.4.3
-    text: |-
-      Indien er meer commando’s plaats incident zijn, is het regionaal operationeel team belast met de coördinatie
+
+      3 Indien er meer commando’s plaats incident zijn, is het regionaal operationeel team belast met de coördinatie
       daarvan.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.4
-  - number: 2.1.5.1
+  - number: 2.1.5
     text: |-
-      Een gemeentelijk beleidsteam bestaat bij opkomst ten minste uit leidinggevenden van de brandweer, de GHOR, de
+      1 Een gemeentelijk beleidsteam bestaat bij opkomst ten minste uit leidinggevenden van de brandweer, de GHOR, de
       politie en de bevolkingszorg.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.5
-  - number: 2.1.5.2
-    text: Een gemeentelijk beleidsteam ondersteunt de burgemeester bij de rampenbestrijding en crisisbeheersing.
+
+      2 Een gemeentelijk beleidsteam ondersteunt de burgemeester bij de rampenbestrijding en crisisbeheersing.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.1.5
   - number: 2.2.1
     text: |-
       Het bestuur van de veiligheidsregio stelt criteria vast voor de situaties waarin de meldkamer tot grootschalige
       alarmering overgaat.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.1
-  - number: 2.2.2.1
+  - number: 2.2.2
     text: |-
-      Zodra is vastgesteld dat is voldaan aan de criteria voor grootschalige alarmering wordt de meldkamer door één
+      1 Zodra is vastgesteld dat is voldaan aan de criteria voor grootschalige alarmering wordt de meldkamer door één
       leidinggevende aangestuurd.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.2
-  - number: 2.2.2.2
-    text: |-
-      Het bestuur van de veiligheidsregio stemt met de korpschef af op welke wijze de meldingen die geen verband houden
+
+      2 Het bestuur van de veiligheidsregio stemt met de korpschef af op welke wijze de meldingen die geen verband houden
       met een ramp of crisis worden afgehandeld.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.2
-  - number: 2.2.3.1
+  - number: 2.2.3
     text: |-
-      Binnen twee minuten nadat is vastgesteld dat is voldaan aan de criteria voor grootschalige alarmering,
+      1 Binnen twee minuten nadat is vastgesteld dat is voldaan aan de criteria voor grootschalige alarmering,
       begint de meldkamer met de alarmering van de onderdelen van de hoofdstructuur van de rampenbestrijding en
       crisisbeheersing, bedoeld in [artikel 2.1.1, onderdelen b tot en met d][ref1], en wordt de burgemeester of in
       het geval [artikel 39 van de wet][ref2] van toepassing is, de voorzitter van de veiligheidsregio en de betrokken
       burgemeesters geïnformeerd.
 
+      2 Afhankelijk van de aard en omstandigheden van de ramp of crisis, alarmeert de meldkamer andere functionarissen en
+      eenheden die nodig zijn voor de rampenbestrijding en crisisbeheersing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.1
       [ref2]: https://wetten.overheid.nl/BWBR0027466#Artikel39
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.3
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.1
         hoofdstuk: '2'
         paragraaf: '1'
       - id: ref2
         bwb_id: BWBR0027466
         artikel: '39'
-  - number: 2.2.3.2
-    text: |-
-      Afhankelijk van de aard en omstandigheden van de ramp of crisis, alarmeert de meldkamer andere functionarissen en
-      eenheden die nodig zijn voor de rampenbestrijding en crisisbeheersing.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.3
   - number: 2.2.4
     text: |-
       Binnen vijf minuten nadat is vastgesteld dat is voldaan aan de criteria voor grootschalige alarmering geeft de
@@ -313,12 +278,12 @@ articles:
       eenheden als bedoeld in [artikel 2.2.3, tweede lid][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.2.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.4
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.2.3
         hoofdstuk: '2'
         paragraaf: '2'
   - number: 2.2.5
@@ -326,124 +291,95 @@ articles:
       Het bestuur van de veiligheidsregio draagt zorg voor een voorziening waardoor in het geval dat de meldkamer
       uitvalt, de functie en taken van de meldkamer worden gecontinueerd.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.2.5
-  - number: 2.3.1.1
-    text: De besturen van de veiligheidsregio’s hanteren een uniforme opschalingsprocedure.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.1
-  - number: 2.3.1.2
-    text: Onze Minister kan nadere regels geven over de opschalingsprocedure.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.1
-  - number: 2.3.2.1
+  - number: 2.3.1
     text: |-
-      Vanaf het moment dat is vastgesteld dat is voldaan aan de criteria, bedoeld in [artikel 2.2.1][ref1] beginnen de
+      1 De besturen van de veiligheidsregio’s hanteren een uniforme opschalingsprocedure.
+
+      2 Onze Minister kan nadere regels geven over de opschalingsprocedure.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.1
+  - number: 2.3.2
+    text: |-
+      1 Vanaf het moment dat is vastgesteld dat is voldaan aan de criteria, bedoeld in [artikel 2.2.1][ref1] beginnen de
       volgende onderdelen of functionarissen binnen de gestelde tijd met de uitvoering van hun taken:
 
+      a. een eerste commando plaats incident binnen dertig minuten;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      b. de leidinggevenden binnen een regionaal operationeel team binnen vijfenveertig minuten, met uitzondering van de
+      leidinggevende van de sectie informatiemanagement, die binnen dertig minuten begint;
+
+      c. functionaris crisiscommunicatie regionaal operationeel team binnen dertig minuten;
+
+      d. de sectie informatiemanagement van een regionaal operationeel team binnen veertig minuten;
+
+      e. de overige secties van een regionaal operationeel team binnen zestig minuten;
+
+      f. een team bevolkingszorg binnen negentig minuten met uitzondering van de functionaris die met de coördinatie van
+      de crisiscommunicatie is belast, die binnen dertig minuten begint, en
+
+      g. een gemeentelijk beleidsteam binnen zestig minuten vanaf het moment dat de burgemeester het beleidsteam bijeen
+      heeft geroepen.
+
+      2 Het bestuur van de veiligheidsregio draagt er zorg voor dat de hoofdstructuur van de rampenbestrijding en
+      crisisbeheersing in staat is gedurende een ramp of crisis onafgebroken te functioneren.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.2.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.2.1
         hoofdstuk: '2'
         paragraaf: '2'
-  - number: 2.3.2.1.a
-    text: een eerste commando plaats incident binnen dertig minuten;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.b
+  - number: 2.4.1
     text: |-
-      de leidinggevenden binnen een regionaal operationeel team binnen vijfenveertig minuten, met uitzondering van de
-      leidinggevende van de sectie informatiemanagement, die binnen dertig minuten begint;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.c
-    text: functionaris crisiscommunicatie regionaal operationeel team binnen dertig minuten;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.d
-    text: de sectie informatiemanagement van een regionaal operationeel team binnen veertig minuten;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.e
-    text: de overige secties van een regionaal operationeel team binnen zestig minuten;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.f
-    text: |-
-      een team bevolkingszorg binnen negentig minuten met uitzondering van de functionaris die met de coördinatie van de
-      crisiscommunicatie is belast, die binnen dertig minuten begint, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.1.g
-    text: |-
-      een gemeentelijk beleidsteam binnen zestig minuten vanaf het moment dat de burgemeester het beleidsteam bijeen
-      heeft geroepen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.3.2.2
-    text: |-
-      Het bestuur van de veiligheidsregio draagt er zorg voor dat de hoofdstructuur van de rampenbestrijding en
-      crisisbeheersing in staat is gedurende een ramp of crisis onafgebroken te functioneren.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.3.2
-  - number: 2.4.1.1
-    text: |-
-      Het bestuur van de veiligheidsregio draagt er zorg voor dat binnen de hoofdstructuur van de rampenbestrijding en
+      1 Het bestuur van de veiligheidsregio draagt er zorg voor dat binnen de hoofdstructuur van de rampenbestrijding en
       crisisbeheersing tijdens een ramp of crisis een totaalbeeld wordt bijgehouden.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.1.2
-    text: |-
-      Het totaalbeeld is opgebouwd uit ten minste de beschikbare gegevens over het incident, over de hulpverlening, over
-      de prognose en de aanpak en over de getroffen maatregelen en de resultaten ervan.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.1.3
-    text: |-
-      Het totaalbeeld wordt langs geautomatiseerde weg zo spoedig mogelijk en voor zover dat redelijkerwijs mogelijk is
+
+      2 Het totaalbeeld is opgebouwd uit ten minste de beschikbare gegevens over het incident, over de hulpverlening,
+      over de prognose en de aanpak en over de getroffen maatregelen en de resultaten ervan.
+
+      3 Het totaalbeeld wordt langs geautomatiseerde weg zo spoedig mogelijk en voor zover dat redelijkerwijs mogelijk is
       geverifieerd, beschikbaar gesteld aan:
+
+      a. de onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing;
+
+      b. andere bij de ramp of crisis betrokken partijen, voor zover zij deze gegevens nodig hebben voor de uitvoering
+      van hun taken en bevoegdheden, en
+
+      c. Onze Minister.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.1.3.a
-    text: de onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.1.3.b
+  - number: 2.4.2
     text: |-
-      andere bij de ramp of crisis betrokken partijen, voor zover zij deze gegevens nodig hebben voor de uitvoering van
-      hun taken en bevoegdheden, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.1.3.c
-    text: Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.1
-  - number: 2.4.2.1
-    text: |-
-      De onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing, bedoeld in
+      1 De onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing, bedoeld in
       [artikel 2.1.1, onderdelen a tot en met d][ref1], houden bij de rampenbestrijding en crisisbeheersing een eigen
       beeld bij.
 
+      2 Het eigen beeld bestaat uit de beschikbare gegevens over de ontwikkeling en effecten van een incident, de
+      risico’s voor de veiligheid van de hulpverleners en de personen in het getroffen gebied, de aanpak van het incident
+      en de daarvoor benodigde mensen en middelen.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      3 De gegevens worden nadat zij beschikbaar zijn binnen tien minuten verwerkt in het eigen beeld en voor zover
+      mogelijk geverifieerd.
+
+      4 De gegevens worden langs geautomatiseerde weg beschikbaar gesteld aan:
+
+      a. de onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing;
+
+      b. andere de bij de ramp of crisis betrokken partijen die deze gegevens nodig hebben voor de uitvoering van hun
+      taken en bevoegdheden, en
+
+      c. het onderdeel dat het totaalbeeld bijhoudt.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.1.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.1.1
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: 2.4.2.2
-    text: |-
-      Het eigen beeld bestaat uit de beschikbare gegevens over de ontwikkeling en effecten van een incident, de risico’s
-      voor de veiligheid van de hulpverleners en de personen in het getroffen gebied, de aanpak van het incident en de
-      daarvoor benodigde mensen en middelen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
-  - number: 2.4.2.3
-    text: |-
-      De gegevens worden nadat zij beschikbaar zijn binnen tien minuten verwerkt in het eigen beeld en voor zover
-      mogelijk geverifieerd.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
-  - number: 2.4.2.4
-    text: 'De gegevens worden langs geautomatiseerde weg beschikbaar gesteld aan:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
-  - number: 2.4.2.4.a
-    text: de onderdelen van de hoofdstructuur van de rampenbestrijding en crisisbeheersing;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
-  - number: 2.4.2.4.b
-    text: |-
-      andere de bij de ramp of crisis betrokken partijen die deze gegevens nodig hebben voor de uitvoering van hun taken
-      en bevoegdheden, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
-  - number: 2.4.2.4.c
-    text: het onderdeel dat het totaalbeeld bijhoudt.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.2
   - number: 2.4.3
     text: |-
       Een advies of opdracht van een onderdeel van de hoofdstructuur van de rampenbestrijding en crisisbeheersing is
@@ -457,12 +393,12 @@ articles:
       geformuleerd.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel2.4.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel2.4.4
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '2'
+        artikel: 2.4.3
         hoofdstuk: '2'
         paragraaf: '4'
   - number: 2.5.1
@@ -483,141 +419,106 @@ articles:
       - id: ref1
         bwb_id: BWBR0027466
         artikel: '25'
-  - number: 3.1.2.1
-    text: 'Een basisbrandweereenheid bestaat uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.1.a
-    text: een bevelvoerder,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.1.b
-    text: een chauffeur, tevens voertuigbediener, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.1.c
-    text: twee ploegen van twee manschappen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.2
-    text: 'De eenheid is belast met:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.2.a
-    text: brandbestrijding en redding;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.2.b
-    text: technische hulpverlening;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.2.c
-    text: basishandelingen bij de bestrijding van ongevallen met gevaarlijke stoffen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.2.d
-    text: ondersteuning bij waterongevallen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.2.3
-    text: De eenheid beschikt over een tankautospuit met uitrusting.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
-  - number: 3.1.3.1
-    text: 'Een ondersteuningseenheid voor redden en blussen op hoogte bestaat uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.1.a
-    text: een bevelvoerder of een manschap, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.1.b
-    text: een chauffeur, tevens voertuigbediener.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.2
-    text: 'De eenheid is belast met:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.2.a
-    text: het redden van mensen en dieren op hoogte;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.2.b
-    text: ondersteuning van basisbrandweereenheden bij het blussen op hoogte, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.2.c
-    text: het verlenen van hulp op hoogte.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.3.3
-    text: De eenheid beschikt over een redvoertuig met uitrusting.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
-  - number: 3.1.4.1
-    text: 'Een ondersteuningseenheid voor hulpverlening bestaat uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.1.a
-    text: een bevelvoerder of een manschap, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.1.b
-    text: een chauffeur, tevens voertuigbediener.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.2
-    text: 'De eenheid is belast met:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.2.a
-    text: ondersteuning bij het bevrijden van beknelde en ingesloten mensen en dieren;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.2.b
-    text: ondersteuning van basishandelingen bij de bestrijding van ongevallen met gevaarlijke stoffen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.2.c
-    text: ondersteuning bij waterongevallen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.4.3
-    text: De eenheid beschikt over een hulpverleningsvoertuig met uitrusting.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
-  - number: 3.1.5.1
+  - number: 3.1.2
     text: |-
-      In afwijking van [artikel 3.1.2, eerste lid][ref1], kan het bestuur van de veiligheidsregio besluiten tot een
+      1 Een basisbrandweereenheid bestaat uit:
+
+      a. een bevelvoerder,
+
+      b. een chauffeur, tevens voertuigbediener, en
+
+      c. twee ploegen van twee manschappen.
+
+      2 De eenheid is belast met:
+
+      a. brandbestrijding en redding;
+
+      b. technische hulpverlening;
+
+      c. basishandelingen bij de bestrijding van ongevallen met gevaarlijke stoffen;
+
+      d. ondersteuning bij waterongevallen.
+
+      3 De eenheid beschikt over een tankautospuit met uitrusting.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.2
+  - number: 3.1.3
+    text: |-
+      1 Een ondersteuningseenheid voor redden en blussen op hoogte bestaat uit:
+
+      a. een bevelvoerder of een manschap, en
+
+      b. een chauffeur, tevens voertuigbediener.
+
+      2 De eenheid is belast met:
+
+      a. het redden van mensen en dieren op hoogte;
+
+      b. ondersteuning van basisbrandweereenheden bij het blussen op hoogte, en
+
+      c. het verlenen van hulp op hoogte.
+
+      3 De eenheid beschikt over een redvoertuig met uitrusting.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.3
+  - number: 3.1.4
+    text: |-
+      1 Een ondersteuningseenheid voor hulpverlening bestaat uit:
+
+      a. een bevelvoerder of een manschap, en
+
+      b. een chauffeur, tevens voertuigbediener.
+
+      2 De eenheid is belast met:
+
+      a. ondersteuning bij het bevrijden van beknelde en ingesloten mensen en dieren;
+
+      b. ondersteuning van basishandelingen bij de bestrijding van ongevallen met gevaarlijke stoffen;
+
+      c. ondersteuning bij waterongevallen.
+
+      3 De eenheid beschikt over een hulpverleningsvoertuig met uitrusting.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.4
+  - number: 3.1.5
+    text: |-
+      1 In afwijking van [artikel 3.1.2, eerste lid][ref1], kan het bestuur van de veiligheidsregio besluiten tot een
       andere samenstelling van basisbrandweereenheden, mits daarmee wordt voorzien in een gelijkwaardig niveau van
       brandweerzorg en geen afbreuk wordt gedaan aan de veiligheid en gezondheid van het brandweerpersoneel.
 
+      2 Toepassing van het eerste lid doet geen afbreuk aan de afspraken, bedoeld in
+      [artikel 51, vijfde lid, van de wet][ref2].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel3
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel3.1.2
+      [ref2]: https://wetten.overheid.nl/BWBR0027466#Artikel51
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.5
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '3'
+        artikel: 3.1.2
         hoofdstuk: '3'
         paragraaf: '1'
-  - number: 3.1.5.2
-    text: |-
-      Toepassing van het eerste lid doet geen afbreuk aan de afspraken, bedoeld in
-      [artikel 51, vijfde lid, van de wet][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027466#Artikel51
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.1.5
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0027466
         artikel: '51'
-  - number: 3.2.1.1
+  - number: 3.2.1
     text: |-
-      Het bestuur van de veiligheidsregio hanteert bij het vaststellen van de opkomsttijden van een basisbrandweereenheid
-      de volgende tijdnormen:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.1.a
-    text: |-
-      vijf minuten bij gebouwen met een winkelfunctie met een gesloten constructie, gebouwen met een woonfunctie boven
+      1 Het bestuur van de veiligheidsregio hanteert bij het vaststellen van de opkomsttijden van een
+      basisbrandweereenheid de volgende tijdnormen:
+
+      a. vijf minuten bij gebouwen met een winkelfunctie met een gesloten constructie, gebouwen met een woonfunctie boven
       een gebouw met een winkelfunctie of gebouwen met een celfunctie;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.1.b
-    text: zes minuten bij portiekwoningen, portiekflats of gebouwen met een woonfunctie voor verminderd zelfredzamen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.1.c
-    text: |-
-      acht minuten bij gebouwen met een andere woonfunctie dan bedoeld onder a en b, of met een winkelfunctie,
+
+      b. zes minuten bij portiekwoningen, portiekflats of gebouwen met een woonfunctie voor verminderd zelfredzamen;
+
+      c. acht minuten bij gebouwen met een andere woonfunctie dan bedoeld onder a en b, of met een winkelfunctie,
       gezondheidszorgfunctie, onderwijsfunctie of logiesfunctie, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.1.d
-    text: |-
-      tien minuten bij gebouwen met een kantoorfunctie, industriefunctie, sportfunctie, bijeenkomstfunctie of een overige
-      gebruiksfunctie.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.2
-    text: |-
-      Indien het bestuur van de veiligheidsregio voor bepaalde locaties opkomsttijden vaststelt die afwijken van de
+
+      d. tien minuten bij gebouwen met een kantoorfunctie, industriefunctie, sportfunctie, bijeenkomstfunctie of een
+      overige gebruiksfunctie.
+
+      2 Indien het bestuur van de veiligheidsregio voor bepaalde locaties opkomsttijden vaststelt die afwijken van de
       tijdnormen, motiveert het de keuze van de locatie en de mate van de afwijking.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
-  - number: 3.2.1.3
-    text: Het bestuur van de veiligheidsregio stelt geen opkomsttijd vast die hoger is dan achttien minuten.
+
+      3 Het bestuur van de veiligheidsregio stelt geen opkomsttijd vast die hoger is dan achttien minuten.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel3.2.1
   - number: 3.2.2
     text: |-
@@ -648,190 +549,142 @@ articles:
       - id: ref1
         bwb_id: BWBR0027466
         artikel: '25'
-  - number: 4.1.2.1
-    text: 'Een eenheid voor het verkennen van gevaarlijke stoffen bestaat uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.2
-  - number: 4.1.2.1.a
-    text: een meetplanleider, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.2
-  - number: 4.1.2.1.b
-    text: ten minste vier meetploegen die elk bestaan uit twee verkenners gevaarlijke stoffen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.2
-  - number: 4.1.2.2
-    text: Een meetploeg is belast met het verkennen en meten van gevaarlijke stoffen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.2
-  - number: 4.1.3.1
-    text: 'Een eenheid bestrijding van ongevallen met gevaarlijke stoffen bestaat ten minste uit:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.1.a
-    text: een officier van dienst,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.1.b
-    text: twee bevelvoerders,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.1.c
-    text: acht gaspakdragers,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.1.d
-    text: zes manschappen, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.1.e
-    text: twee chauffeurs.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.2
-    text: 'Een eenheid bestrijding van ongevallen met gevaarlijke stoffen is belast met:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.2.a
-    text: het redden van mensen en dieren uit een met gevaarlijke stoffen besmet gebied;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.2.b
-    text: het bestrijden van de bron van het ongeval met gevaarlijke stoffen, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.3.2.c
-    text: het ontsmetten van hulpverleners en burgers.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
-  - number: 4.1.5.1
+  - number: 4.1.2
     text: |-
-      In geval van bedreiging van de gezondheid van de bevolking werken een eenheid voor het verkennen van gevaarlijke
+      1 Een eenheid voor het verkennen van gevaarlijke stoffen bestaat uit:
+
+      a. een meetplanleider, en
+
+      b. ten minste vier meetploegen die elk bestaan uit twee verkenners gevaarlijke stoffen.
+
+      2 Een meetploeg is belast met het verkennen en meten van gevaarlijke stoffen.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.2
+  - number: 4.1.3
+    text: |-
+      1 Een eenheid bestrijding van ongevallen met gevaarlijke stoffen bestaat ten minste uit:
+
+      a. een officier van dienst,
+
+      b. twee bevelvoerders,
+
+      c. acht gaspakdragers,
+
+      d. zes manschappen, en
+
+      e. twee chauffeurs.
+
+      2 Een eenheid bestrijding van ongevallen met gevaarlijke stoffen is belast met:
+
+      a. het redden van mensen en dieren uit een met gevaarlijke stoffen besmet gebied;
+
+      b. het bestrijden van de bron van het ongeval met gevaarlijke stoffen, en
+
+      c. het ontsmetten van hulpverleners en burgers.
+    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.3
+  - number: 4.1.5
+    text: |-
+      1 In geval van bedreiging van de gezondheid van de bevolking werken een eenheid voor het verkennen van gevaarlijke
       stoffen, een eenheid bestrijding van ongevallen met gevaarlijke stoffen en een adviseur gevaarlijke stoffen samen
       met de in de regio werkzame instellingen, zorgaanbieders, ambulancevervoerders en gezondheidsdiensten, bedoeld in
       [artikel 33, eerste lid, van de wet][ref1].
 
+      2 Een eenheid voor de bestrijding van ongevallen met gevaarlijke stoffen en een adviseur gevaarlijke stoffen treden
+      op in aanvulling op de basisbrandweereenheden, bedoeld in [artikel 3.1.1][ref2].
+
+      3 Voor de bestrijding van ongevallen met gevaarlijke stoffen beschikt de regionale brandweer over beschreven
+      procedures voor:
+
+      a. de aanpak van de bestrijding van ongevallen met gevaarlijke stoffen;
+
+      b. het verkennen en meten van gevaarlijke stoffen, en
+
+      c. het waarschuwen en informeren van de bevolking.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0027466#Artikel33
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel3.1.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
     references:
       - id: ref1
         bwb_id: BWBR0027466
         artikel: '33'
-  - number: 4.1.5.2
-    text: |-
-      Een eenheid voor de bestrijding van ongevallen met gevaarlijke stoffen en een adviseur gevaarlijke stoffen treden
-      op in aanvulling op de basisbrandweereenheden, bedoeld in [artikel 3.1.1][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0027844
-        artikel: '3'
+        artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '1'
-  - number: 4.1.5.3
+  - number: 4.1.6
     text: |-
-      Voor de bestrijding van ongevallen met gevaarlijke stoffen beschikt de regionale brandweer over beschreven
-      procedures voor:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
-  - number: 4.1.5.3.a
-    text: de aanpak van de bestrijding van ongevallen met gevaarlijke stoffen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
-  - number: 4.1.5.3.b
-    text: het verkennen en meten van gevaarlijke stoffen, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
-  - number: 4.1.5.3.c
-    text: het waarschuwen en informeren van de bevolking.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.5
-  - number: 4.1.6.1
-    text: |-
-      De veiligheidsregio’s, genoemd in [bijlage 1][ref1] bij dit besluit, hebben mede ten behoeve van de genoemde
+      1 De veiligheidsregio’s, genoemd in [bijlage 1][ref1] bij dit besluit, hebben mede ten behoeve van de genoemde
       omliggende veiligheidsregio’s, een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en
       nucleaire incidenten.
 
+      2 Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten bestaat
+      uit:
+
+      a. een leider ontsmettingseenheid, zijnde een officier van dienst;
+
+      b ten minste twee bevelvoerders;
+
+      c. ten minste veertien manschappen;
+
+      d. twee chauffeurs, en
+
+      e. een adviseur gevaarlijke stoffen.
+
+      3 Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten is
+      belast met:
+
+      a. het leveren van middelen en kennis ten behoeve van de bestrijding van chemische, biologische, radiologische en
+      nucleaire incidenten;
+
+      b. het leveren van ondersteuning aan een eenheid bestrijding van ongevallen met gevaarlijke stoffen bij het redden
+      van mensen en dieren, en
+
+      c. voor zover het grootschalige chemische, biologische, radiologische en nucleaire incidenten betreft, het
+      ontsmetten van besmette personen.
+
+      4 In geval van bedreiging van de gezondheid van de bevolking werkt een ontsmettingseenheid voor grootschalige
+      chemische, biologische, radiologische en nucleaire incidenten samen met de in de regio werkzame instellingen,
+      zorgaanbieders, ambulancevervoerders en gezondheidsdiensten, bedoeld in [artikel 33, eerste lid, van de wet][ref2].
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0027844
+      [ref2]: https://wetten.overheid.nl/BWBR0027466#Artikel33
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
     references:
       - id: ref1
         bwb_id: BWBR0027844
-  - number: 4.1.6.2
-    text: |-
-      Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten bestaat
-      uit:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.2.a
-    text: een leider ontsmettingseenheid, zijnde een officier van dienst;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.2.b
-    text: ten minste twee bevelvoerders;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.2.c
-    text: ten minste veertien manschappen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.2.d
-    text: twee chauffeurs, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.2.e
-    text: een adviseur gevaarlijke stoffen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.3
-    text: |-
-      Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten is belast
-      met:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.3.a
-    text: |-
-      het leveren van middelen en kennis ten behoeve van de bestrijding van chemische, biologische, radiologische en
-      nucleaire incidenten;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.3.b
-    text: |-
-      het leveren van ondersteuning aan een eenheid bestrijding van ongevallen met gevaarlijke stoffen bij het redden van
-      mensen en dieren, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.3.c
-    text: |-
-      voor zover het grootschalige chemische, biologische, radiologische en nucleaire incidenten betreft, het ontsmetten
-      van besmette personen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-  - number: 4.1.6.4
-    text: |-
-      In geval van bedreiging van de gezondheid van de bevolking werkt een ontsmettingseenheid voor grootschalige
-      chemische, biologische, radiologische en nucleaire incidenten samen met de in de regio werkzame instellingen,
-      zorgaanbieders, ambulancevervoerders en gezondheidsdiensten, bedoeld in [artikel 33, eerste lid, van de wet][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027466#Artikel33
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.1.6
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0027466
         artikel: '33'
-  - number: 4.2.1.1
+  - number: 4.2.1
     text: |-
-      Een meetplanleider begint direct na alarmering met de uitvoering van zijn taken en is binnen dertig minuten na
+      1 Een meetplanleider begint direct na alarmering met de uitvoering van zijn taken en is binnen dertig minuten na
       alarmering bij de meldkamer of het regionaal operationeel team.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.1
-  - number: 4.2.1.2
-    text: |-
-      Eén en afhankelijk van de aard van het ongeval een tweede, meetploeg begint binnen dertig minuten na alarmering met
-      de uitvoering van zijn taken op de aangegeven meetlocatie.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.1
-  - number: 4.2.1.3
-    text: |-
-      Afhankelijk van de aard van het ongeval begint een derde of een vierde meetploeg binnen zestig minuten na
+
+      2 Eén en afhankelijk van de aard van het ongeval een tweede, meetploeg begint binnen dertig minuten na alarmering
+      met de uitvoering van zijn taken op de aangegeven meetlocatie.
+
+      3 Afhankelijk van de aard van het ongeval begint een derde of een vierde meetploeg binnen zestig minuten na
       alarmering met de uitvoering van zijn taken op de aangegeven meetlocatie.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.1
-  - number: 4.2.2.1
+  - number: 4.2.2
     text: |-
-      Een eenheid bestrijding van ongevallen met gevaarlijke stoffen begint binnen dertig minuten na alarmering met de
+      1 Een eenheid bestrijding van ongevallen met gevaarlijke stoffen begint binnen dertig minuten na alarmering met de
       uitvoering van haar taken op de plaats van het incident.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.2
-  - number: 4.2.2.2
-    text: |-
-      Een adviseur gevaarlijke stoffen begint afhankelijk van het regionaal vastgestelde risicoprofiel binnen dertig of
+
+      2 Een adviseur gevaarlijke stoffen begint afhankelijk van het regionaal vastgestelde risicoprofiel binnen dertig of
       zestig minuten na alarmering met de uitvoering van zijn taken op de plaats van het incident.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.2
-  - number: 4.2.3.1
+  - number: 4.2.3
     text: |-
-      Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten is binnen
-      dertig minuten na alarmering gereed voor vertrek.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.3
-  - number: 4.2.3.2
-    text: De ontsmettingseenheid kan minimaal acht uur lang dienst doen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.3
-  - number: 4.2.3.3
-    text: De ontsmettingseenheid kan minimaal vijftig personen per uur ontsmetten.
+      1 Een ontsmettingseenheid voor grootschalige chemische, biologische, radiologische en nucleaire incidenten is
+      binnen dertig minuten na alarmering gereed voor vertrek.
+
+      2 De ontsmettingseenheid kan minimaal acht uur lang dienst doen.
+
+      3 De ontsmettingseenheid kan minimaal vijftig personen per uur ontsmetten.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel4.2.3
   - number: 4.3.1
     text: |-
@@ -846,6 +699,27 @@ articles:
       die veiligheidsregio werkzame instellingen, zorgaanbieders, ambulancevervoerders en gezondheidsdiensten, bedoeld in
       [artikel 33, eerste lid, van de wet][ref1], betreffen:
 
+      a. de procedures die gevolgd worden bij een ramp of crisis, waarbij het in ieder geval gaat over grootschalige
+      alarmering, opschaling, coördinatie, informatiemanagement en evaluatie;
+
+      b. de wijze waarop en de mate waarin personeel en materieel worden ingezet;
+
+      c. de bereikbaarheid en beschikbaarheid van personeel, ruimte en materieel;
+
+      d. de wijze van trainen en oefenen met het oog op het gezamenlijk optreden bij de rampenbestrijding en
+      crisisbeheersing en de frequentie waarin getraind en geoefend wordt;
+
+      e. de samenwerking met:
+
+      1°. de functionarissen van de GHOR,
+
+      2°. andere instellingen, en
+
+      3°. andere hulpverleningsinstanties, en
+
+      f. het onderhoud en beheer van materieel voor de geneeskundige hulpverlening bij ongevallen en rampen dat eigendom
+      is van de veiligheidsregio of het Rijk.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0027466#Artikel33
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
@@ -853,47 +727,12 @@ articles:
       - id: ref1
         bwb_id: BWBR0027466
         artikel: '33'
-  - number: 5.1.a
+  - number: 6.1.1
     text: |-
-      de procedures die gevolgd worden bij een ramp of crisis, waarbij het in ieder geval gaat over grootschalige
-      alarmering, opschaling, coördinatie, informatiemanagement en evaluatie;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.b
-    text: de wijze waarop en de mate waarin personeel en materieel worden ingezet;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.c
-    text: de bereikbaarheid en beschikbaarheid van personeel, ruimte en materieel;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.d
-    text: |-
-      de wijze van trainen en oefenen met het oog op het gezamenlijk optreden bij de rampenbestrijding en
-      crisisbeheersing en de frequentie waarin getraind en geoefend wordt;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.e
-    text: 'de samenwerking met:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.e.1°
-    text: de functionarissen van de GHOR,
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.e.2°
-    text: andere instellingen, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.e.3°
-    text: andere hulpverleningsinstanties, en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 5.1.f
-    text: |-
-      het onderhoud en beheer van materieel voor de geneeskundige hulpverlening bij ongevallen en rampen dat eigendom is
-      van de veiligheidsregio of het Rijk.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel5.1
-  - number: 6.1.1.1
-    text: |-
-      Het bestuur van de veiligheidsregio stelt een rampbestrijdingsplan vast voor locaties waarop
+      1 Het bestuur van de veiligheidsregio stelt een rampbestrijdingsplan vast voor locaties waarop
       hogedrempelinrichtingen worden geëxploiteerd.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.1
-  - number: 6.1.1.2
-    text: |-
-      Het eerste lid is van overeenkomstige toepassing ten aanzien van een calamiteit op locaties waarop
+
+      2 Het eerste lid is van overeenkomstige toepassing ten aanzien van een calamiteit op locaties waarop
       hogedrempelinrichtingen worden geëxploiteerd die in een andere staat zijn gelegen, welke calamiteit tot een ramp in
       Nederland kan leiden. De artikelen in deze paragraaf worden daarbij voor zover mogelijk toegepast.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.1
@@ -905,79 +744,61 @@ articles:
       is te beslissen op de aanvraag om een omgevingsvergunning.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6.1.7
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.2
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.1.7
         hoofdstuk: '6'
         paragraaf: '1'
   - number: 6.1.3
-    text: 'Het rampbestrijdingsplan bevat in ieder geval:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.a
     text: |-
-      de naam of functie van de aan de hogedrempelinrichting verbonden personen die bevoegd zijn om procedures van
+      Het rampbestrijdingsplan bevat in ieder geval:
+
+      a. de naam of functie van de aan de hogedrempelinrichting verbonden personen die bevoegd zijn om procedures van
       alarmering binnen en buiten de hogedrempelinrichting en van inwerkingstelling van bestrijdingsacties binnen de
       hogedrempelinrichting in werking te doen treden;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.b
-    text: |-
-      de naam of functie van de personen die belast zijn met de operationele leiding van het geheel van de
+
+      b. de naam of functie van de personen die belast zijn met de operationele leiding van het geheel van de
       bestrijdingsacties;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.c
-    text: |-
-      de maatregelen en voorzieningen die zijn getroffen opdat degene die is belast met het opperbevel en de
+
+      c. de maatregelen en voorzieningen die zijn getroffen opdat degene die is belast met het opperbevel en de
       hulpverleningsdiensten snel worden geïnformeerd en de bij de bestrijding betrokken personen snel worden opgeroepen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.d
-    text: |-
-      het schema met betrekking tot de leiding over en de gecoördineerde inzet van diensten en organisaties die bij de
+
+      d. het schema met betrekking tot de leiding over en de gecoördineerde inzet van diensten en organisaties die bij de
       bestrijding kunnen worden betrokken;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.e
-    text: |-
-      de maatregelen en voorzieningen die zijn getroffen met het oog op de bestrijding op en buiten de locatie waarop een
-      hogedrempelinrichting wordt geëxploiteerd;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.f
-    text: |-
-      de maatregelen en voorzieningen die zijn getroffen om de bevolking te informeren over de ramp of de dreiging van
+
+      e. de maatregelen en voorzieningen die zijn getroffen met het oog op de bestrijding op en buiten de locatie waarop
+      een hogedrempelinrichting wordt geëxploiteerd;
+
+      f. de maatregelen en voorzieningen die zijn getroffen om de bevolking te informeren over de ramp of de dreiging van
       een ramp en over de door haar te volgen gedragslijn;
+
+      g. de maatregelen en voorzieningen die zijn getroffen om de hulpverleningsdiensten van een andere staat te
+      informeren, indien de bevolking of het milieu van die staat door de ramp kunnen worden getroffen of dreigen te
+      worden getroffen.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.3.g
+  - number: 6.1.4
     text: |-
-      de maatregelen en voorzieningen die zijn getroffen om de hulpverleningsdiensten van een andere staat te informeren,
-      indien de bevolking of het milieu van die staat door de ramp kunnen worden getroffen of dreigen te worden
-      getroffen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.3
-  - number: 6.1.4.1
-    text: |-
-      [Afdeling 3:4 van de Algemene wet bestuursrecht][ref1] is van overeenkomstige toepassing op de vaststelling van
+      1 [Afdeling 3:4 van de Algemene wet bestuursrecht][ref1] is van overeenkomstige toepassing op de vaststelling van
       het rampbestrijdingsplan.
+
+      2 Indien met betrekking tot de hogedrempelinrichting met toepassing van
+      [artikel 19.3 van de Wet milieubeheer][ref2] van een document een tweede tekst is overgelegd waaruit vertrouwelijke
+      gegevens als in dat artikel bedoeld zijn weggelaten, wordt alleen deze tekst ter inzage gelegd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Afdeling3.4
+      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel19.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.4
     references:
       - id: ref1
         bwb_id: BWBR0005537
         afdeling: '3.4'
-  - number: 6.1.4.2
-    text: |-
-      Indien met betrekking tot de hogedrempelinrichting met toepassing van [artikel 19.3 van de Wet milieubeheer][ref1]
-      van een document een tweede tekst is overgelegd waaruit vertrouwelijke gegevens als in dat artikel bedoeld zijn
-      weggelaten, wordt alleen deze tekst ter inzage gelegd.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel19
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.4
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0003245
-        artikel: '19'
+        artikel: '19.3'
   - number: 6.1.5
     text: |-
       Indien de bevolking van een andere staat kan worden getroffen door de gevolgen van een ramp op een locatie waarop
@@ -1000,27 +821,27 @@ articles:
       geëxploiteerd en bij de betrokken veiligheidsregio hebben voorgedaan, met nieuwe technische kennis en met inzichten
       omtrent de bij rampen te nemen maatregelen.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.7
-  - number: 6.1.8.1
+  - number: 6.1.8
     text: |-
-      Indien het bestuur van de veiligheidsregio besluit dat voor een locatie waarop een hogedrempelinrichting wordt
+      1 Indien het bestuur van de veiligheidsregio besluit dat voor een locatie waarop een hogedrempelinrichting wordt
       geëxploiteerd geen rampbestrijdingsplan behoeft te worden vastgesteld, zendt het een afschrift van zijn besluit
       aan:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.1.8.1.a
-    text: degene die de hogedrempelinrichting exploiteert;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.1.8.1.b
-    text: de burgemeester van de gemeente waarin de hogedrempelinrichting is gelegen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.1.8.1.c
-    text: |-
-      het bestuursorgaan dat bevoegd is voor het exploiteren van de hogedrempelinrichting een omgevingsvergunning te
-      verlenen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.1.8.1.d
-    text: |-
-      de daartoe door Onze Minister van Sociale Zaken en Werkgelegenheid aangewezen toezichthouder, bedoeld in
+
+      a. degene die de hogedrempelinrichting exploiteert;
+
+      b. de burgemeester van de gemeente waarin de hogedrempelinrichting is gelegen;
+
+      c. het bestuursorgaan dat bevoegd is voor het exploiteren van de hogedrempelinrichting een omgevingsvergunning
+      te verlenen;
+
+      d. de daartoe door Onze Minister van Sociale Zaken en Werkgelegenheid aangewezen toezichthouder, bedoeld in
       [artikel 1, derde lid, onderdeel d, van de Arbeidsomstandighedenwet][ref1], en
+
+      e. Onze Minister.
+
+      2 Indien het besluit van het bestuur van de veiligheidsregio een hogedrempelinrichting betreft die geheel of
+      gedeeltelijk is gelegen in een aan een andere staat grenzende gemeente, zendt Onze Minister een afschrift van het
+      besluit aan de andere staat.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010346#Artikel1
@@ -1029,34 +850,24 @@ articles:
       - id: ref1
         bwb_id: BWBR0010346
         artikel: '1'
-  - number: 6.1.8.1.e
-    text: Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.1.8.2
+  - number: 6.2.1
     text: |-
-      Indien het besluit van het bestuur van de veiligheidsregio een hogedrempelinrichting betreft die geheel of
-      gedeeltelijk is gelegen in een aan een andere staat grenzende gemeente, zendt Onze Minister een afschrift van het
-      besluit aan de andere staat.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.1.8
-  - number: 6.2.1.1
-    text: |-
-      Het bestuur van de veiligheidsregio stelt, na overleg met de exploitant van een burgerluchthaven, respectievelijk
+      1 Het bestuur van de veiligheidsregio stelt, na overleg met de exploitant van een burgerluchthaven, respectievelijk
       de basiscommandant van een militaire luchthaven, een rampbestrijdingsplan vast voor een vliegtuigongeval op een
       luchthaven binnen de veiligheidsregio, dat op grond van onderdeel 9.2.5. en tabel 9-1 in bijlage 14, volume 1 van
       het op 7 december 1944 te Chicago tot stand gekomen Verdrag inzake de internationale burgerluchtvaart (Trb. 1973,
       109) is ingedeeld in brandrisicoklasse 3 of hoger, of in geval van een militaire luchthaven, het terrein dat in
       overleg met Onze Minister van Defensie is aangewezen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.1
-  - number: 6.2.1.2
-    text: |-
-      Het rampbestrijdingsplan ziet mede op de onmiddellijke omgeving van een luchthaven. Het bestuur van de
+
+      2 Het rampbestrijdingsplan ziet mede op de onmiddellijke omgeving van een luchthaven. Het bestuur van de
       veiligheidsregio stelt in overleg met de exploitant van een burgerluchthaven, respectievelijk de basiscommandant
       van een militaire luchthaven vast welk gebied tot de onmiddellijke omgeving wordt gerekend.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.1
-  - number: 6.2.1.3
-    text: |-
-      [Afdeling 3.4 van de Algemene wet bestuursrecht][ref1] is van overeenkomstige toepassing op de vaststelling van
+
+      3 [Afdeling 3.4 van de Algemene wet bestuursrecht][ref1] is van overeenkomstige toepassing op de vaststelling van
       het rampbestrijdingsplan.
+
+      4 Het bestuur van de veiligheidsregio zendt het rampbestrijdingsplan aan Onze Minister van Infrastructuur en
+      Milieu.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Afdeling3.4
@@ -1065,123 +876,92 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         afdeling: '3.4'
-  - number: 6.2.1.4
-    text: Het bestuur van de veiligheidsregio zendt het rampbestrijdingsplan aan Onze Minister van Infrastructuur en Milieu.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.1
   - number: 6.2.2
-    text: 'Het rampbestrijdingsplan bevat in ieder geval:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.a
     text: |-
-      de functies van de aan de luchthaven verbonden personen die bevoegd zijn om procedures van alarmering binnen en
+      Het rampbestrijdingsplan bevat in ieder geval:
+
+      a. de functies van de aan de luchthaven verbonden personen die bevoegd zijn om procedures van alarmering binnen en
       buiten de luchthaven en van bestrijdingsacties op de luchthaven in werking te doen treden;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.b
-    text: de functies van de personen die belast zijn met de operationele leiding van het geheel van de bestrijdingsacties;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.c
-    text: |-
-      de maatregelen en de voorzieningen die zijn getroffen opdat degene die is belast met de operationele leiding, en de
-      hulpverleningsdiensten snel worden geïnformeerd en de bij de bestrijding betrokken personen snel worden opgeroepen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.d
-    text: |-
-      het schema met betrekking tot de leiding over en de gecoördineerde inzet van diensten en organisaties die bij de
+
+      b. de functies van de personen die belast zijn met de operationele leiding van het geheel van de
+      bestrijdingsacties;
+
+      c. de maatregelen en de voorzieningen die zijn getroffen opdat degene die is belast met de operationele leiding,
+      en de hulpverleningsdiensten snel worden geïnformeerd en de bij de bestrijding betrokken personen snel worden
+      opgeroepen;
+
+      d. het schema met betrekking tot de leiding over en de gecoördineerde inzet van diensten en organisaties die bij de
       bestrijding kunnen worden betrokken;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.e
-    text: |-
-      de maatregelen en voorzieningen die zijn getroffen met het oog op de bestrijding van op en in de onmiddellijke
+
+      e. de maatregelen en voorzieningen die zijn getroffen met het oog op de bestrijding van op en in de onmiddellijke
       omgeving van de luchthaven;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.f
-    text: |-
-      een plan in hoofdlijnen met betrekking tot de geneeskundige organisatie, waaronder een plan op hoofdlijnen met
+
+      f. een plan in hoofdlijnen met betrekking tot de geneeskundige organisatie, waaronder een plan op hoofdlijnen met
       betrekking tot de opvang en verzorging van de slachtoffers;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.g
-    text: de wijze waarop de bevolking wordt geïnformeerd en over de door haar te volgen gedragslijn;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.h
-    text: |-
-      de maatregelen en voorzieningen die worden getroffen om de hulpverleningsdiensten van een andere staat te
+
+      g. de wijze waarop de bevolking wordt geïnformeerd en over de door haar te volgen gedragslijn;
+
+      h. de maatregelen en voorzieningen die worden getroffen om de hulpverleningsdiensten van een andere staat te
       informeren, indien de bevolking of het milieu van die staat door het vliegtuigongeval worden getroffen of dreigen
       te worden getroffen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.i
-    text: |-
-      de wijze waarop slachtoffers, verwanten van slachtoffers, reizigers, medewerkers van de luchthaven en van
+
+      i. de wijze waarop slachtoffers, verwanten van slachtoffers, reizigers, medewerkers van de luchthaven en van
       vliegtuigmaatschappijen, binnen- en buitenlandse overheden en de media worden geïnformeerd, en
+
+      j. een overzichtskaart van de indeling van de luchthaven en de onmiddellijke omgeving daarvan.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.2.j
-    text: een overzichtskaart van de indeling van de luchthaven en de onmiddellijke omgeving daarvan.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.2
-  - number: 6.2.3.1
+  - number: 6.2.3
     text: |-
-      Het bestuur van de veiligheidsregio draagt er zorg voor dat gezamenlijk met de onderdelen van de hoofdstructuur
+      1 Het bestuur van de veiligheidsregio draagt er zorg voor dat gezamenlijk met de onderdelen van de hoofdstructuur
       van de rampenbestrijding en crisisbeheersing met passende tussenpozen een oefening wordt gehouden waarbij het
       rampbestrijdingsplan op juistheid, volledigheid en bruikbaarheid wordt getoetst.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.3
-  - number: 6.2.3.2
-    text: |-
-      In ieder geval vindt één maal per twee jaar een multidisciplinaire stafoefening en één maal per vier jaar een
+
+      2 In ieder geval vindt één maal per twee jaar een multidisciplinaire stafoefening en één maal per vier jaar een
       multidisciplinaire oefening van staf en operationele eenheden plaats.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.3
-  - number: 6.2.3.3
-    text: Bij de oefeningen, bedoeld in het tweede lid, wordt het calamiteitenplan van de luchthaven mede geoefend.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.3
-  - number: 6.2.3.4
-    text: |-
-      Het bestuur van de veiligheidsregio draagt zorg voor de evaluatie van de oefeningen, bedoeld in het tweede lid.
+
+      3 Bij de oefeningen, bedoeld in het tweede lid, wordt het calamiteitenplan van de luchthaven mede geoefend.
+
+      4 Het bestuur van de veiligheidsregio draagt zorg voor de evaluatie van de oefeningen, bedoeld in het tweede lid.
       Bij de uitvoering van de evaluatie worden de exploitant van een burgerluchthaven en de basiscommandant, bedoeld in
       [artikel 6.2.1][ref1], betrokken.
 
+      5 Het bestuur van de veiligheidsregio draagt er zorg voor dat het rampbestrijdingsplan één maal per vier jaar wordt
+      geactualiseerd.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6.2.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.3
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.2.1
         hoofdstuk: '6'
         paragraaf: '2'
-  - number: 6.2.3.5
+  - number: 6.3.1
     text: |-
-      Het bestuur van de veiligheidsregio draagt er zorg voor dat het rampbestrijdingsplan één maal per vier jaar wordt
-      geactualiseerd.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.2.3
-  - number: 6.3.1.1
-    text: |-
-      Het bestuur van de veiligheidsregio stelt een rampbestrijdingsplan vast voor locaties waarop
+      1 Het bestuur van de veiligheidsregio stelt een rampbestrijdingsplan vast voor locaties waarop
       winningsafvalvoorzieningen categorie A als bedoeld in [artikel 1.1, eerste lid, van de Wet milieubeheer][ref1]
       worden geëxploiteerd.
 
+      2 [Artikel 6.1.3][ref2] is van overeenkomstige toepassing op het rampbestrijdingsplan, bedoeld in het eerste lid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel1
+      3 Een rampbestrijdingsplan, bedoeld in het eerste lid, wordt vastgesteld uiterlijk een jaar na het tijdstip
+      waarop het bevoegd gezag een afschrift van een aanvraag om een omgevingsvergunning voor het exploiteren van een
+      winningsafvalvoorziening categorie A heeft ontvangen.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel1.1
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel6.1.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.3.1
     references:
       - id: ref1
         bwb_id: BWBR0003245
-        artikel: '1'
-  - number: 6.3.1.2
-    text: |-
-      [Artikel 6.1.3][ref1] is van overeenkomstige toepassing op het rampbestrijdingsplan, bedoeld in het eerste lid.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.3.1
-    references:
-      - id: ref1
+        artikel: '1.1'
+      - id: ref2
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.1.3
         hoofdstuk: '6'
         paragraaf: '1'
-  - number: 6.3.1.3
-    text: |-
-      Een rampbestrijdingsplan, bedoeld in het eerste lid, wordt vastgesteld uiterlijk een jaar na het tijdstip
-      waarop het bevoegd gezag een afschrift van een aanvraag om een omgevingsvergunning voor het exploiteren van een
-      winningsafvalvoorziening categorie A heeft ontvangen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.3.1
   - number: 6.3.2
     text: |-
       Degene die de winningsafvalvoorziening categorie A exploiteert, verstrekt bij een aanvraag om een
@@ -1192,12 +972,12 @@ articles:
       verkregen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6.3.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.3.2
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.3.1
         hoofdstuk: '6'
         paragraaf: '3'
   - number: 6.3.3
@@ -1206,467 +986,316 @@ articles:
       daarvan is [artikel 6.1.4][ref2] van overeenkomstige toepassing.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel6.3.1
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel6.1.4
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel6.3.3
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.3.1
         hoofdstuk: '6'
         paragraaf: '3'
       - id: ref2
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.1.4
         hoofdstuk: '6'
         paragraaf: '1'
-  - number: 7.1.1
+  - number: '7.1'
     text: |-
-      Het bestuur van de veiligheidsregio kan als bedrijfsbrandweerplichtig aanwijzen een locatie waarop een of meer van
-      de volgende milieubelastende activiteiten worden verricht:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.a
-    text: |-
-      het exploiteren van een Seveso-inrichting, bedoeld in
+      1 Het bestuur van de veiligheidsregio kan als bedrijfsbrandweerplichtig aanwijzen een locatie waarop een of meer
+      van de volgende milieubelastende activiteiten worden verricht:
+
+      a. het exploiteren van een Seveso-inrichting, bedoeld in
       [artikel 3.50, eerste lid, van het Besluit activiteiten leefomgeving][ref1];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.b
-    text: |-
-      het opslaan van gevaarlijke stoffen, bedoeld in
-      [artikel 3.27, eerste lid, van het Besluit activiteiten leefomgeving][ref1], voor zover het gaat om het opslaan in
+      b. het opslaan van gevaarlijke stoffen, bedoeld in
+      [artikel 3.27, eerste lid, van het Besluit activiteiten leefomgeving][ref2], voor zover het gaat om het opslaan in
       een opslagplaats voor korte tijd en in afwachting van aansluitend vervoer naar een vooraf bekende ontvanger van:
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.b.1°
-    text: |-
-      10.000 kg of meer gevaarlijke stoffen, als het geheel of gedeeltelijk gaat om brandbare gevaarlijke stoffen met
-      fluor-, chloor-, broom-, stikstof- of zwavelhoudende verbindingen, of zowel brandbare gevaarlijke stoffen als
+      1°. 10.000 kg of meer gevaarlijke stoffen, als het geheel of gedeeltelijk gaat om brandbare gevaarlijke stoffen
+      met fluor-, chloor-, broom-, stikstof- of zwavelhoudende verbindingen, of zowel brandbare gevaarlijke stoffen als
       gevaarlijke stoffen met die verbindingen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.b.2°
-    text: meer dan 1.500 l giftige of bijtende gassen van ADR-klasse 2 in gasflessen; of
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.b.3°
-    text: |-
-      meer dan 1.500 l tot vloeistof verdichte gassen in de gevarenklasse acute toxiciteit, categorie 1, 2 of 3, bedoeld
-      in bijlage I, deel 3, bij de CLP-verordening, in gasflessen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.c
-    text: |-
-      het voor het vervoer van stoffen of goederen opslaan van stoffen of goederen, bedoeld in
-      [artikel 3.285 van het Besluit activiteiten leefomgeving][ref1], voor zover het gaat om het opslaan voor korte tijd
+
+      2°. meer dan 1.500 l giftige of bijtende gassen van ADR-klasse 2 in gasflessen; of
+
+      3°. meer dan 1.500 l tot vloeistof verdichte gassen in de gevarenklasse acute toxiciteit, categorie 1, 2 of 3,
+      bedoeld in bijlage I, deel 3, bij de CLP-verordening, in gasflessen;
+
+      c. het voor het vervoer van stoffen of goederen opslaan van stoffen of goederen, bedoeld in
+      [artikel 3.285 van het Besluit activiteiten leefomgeving][ref3], voor zover het gaat om het opslaan voor korte tijd
       en in afwachting van aansluitend vervoer naar een vooraf bekende ontvanger van:
 
+      1°. vuurwerk of pyrotechnische artikelen voor theatergebruik;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.c.1°
-    text: vuurwerk of pyrotechnische artikelen voor theatergebruik;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.c.2°
-    text: |-
-      ontplofbare stoffen van ADR-klasse 1 door een ander dan de Nederlandse of een bondgenootschappelijke krijgsmacht;
-      of
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.c.3°
-    text: |-
-      gevaarlijke stoffen als bedoeld in artikel 3, tiende lid, van de Seveso-richtlijn, in een hoeveelheid van ten
+      2°. ontplofbare stoffen van ADR-klasse 1 door een ander dan de Nederlandse of een bondgenootschappelijke
+      krijgsmacht; of
+
+      3°. gevaarlijke stoffen als bedoeld in artikel 3, tiende lid, van de Seveso-richtlijn, in een hoeveelheid van ten
       minste de drempelwaarde, genoemd in bijlage I, deel 1, kolom 2, of deel 2, kolom 2, bij de Seveso-richtlijn, met
       inachtneming van de aantekeningen bij die bijlage;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-  - number: 7.1.1.d
-    text: |-
-      het voor het vervoer van stoffen of goederen opstellen van voertuigen, opleggers of aanhangers met gevaarlijke
-      stoffen, bedoeld in [artikel 3.285 van het Besluit activiteiten leefomgeving][ref1], voor zover het gaat om:
+
+      d. het voor het vervoer van stoffen of goederen opstellen van voertuigen, opleggers of aanhangers met gevaarlijke
+      stoffen, bedoeld in [artikel 3.285 van het Besluit activiteiten leefomgeving][ref4], voor zover het gaat om:
+
+      1°. het voor meer dan 24 uur opstellen van voertuigen, opleggers of aanhangers met gevaarlijke stoffen als bedoeld
+      in [artikel 3.27, eerste lid, onder a, b of c][ref5]; of
+
+      2°. het opstellen van meer dan drie voertuigen, opleggers of aanhangers met gevaarlijke stoffen als bedoeld in
+      [artikel 3.27, eerste lid, onder a, b of c][ref6]; en
+
+      e. het exploiteren van een spoorwegemplacement, bedoeld in
+      [artikel 3.295a van het Besluit activiteiten leefomgeving][ref7].
+
+      2 Het bestuur van de veiligheidsregio kan ook als bedrijfsbrandweerplichtig aanwijzen een inrichting als
+      bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref8], met uitzondering van een inrichting waarop
+      [artikel 44 van het Besluit kerninstallaties, splijtstoffen en ertsen][ref9] van toepassing is.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.d.1°
-    text: |-
-      het voor meer dan 24 uur opstellen van voertuigen, opleggers of aanhangers met gevaarlijke stoffen als bedoeld in
-      [artikel 3.27, eerste lid, onder a, b of c][ref1]; of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.d.2°
-    text: |-
-      het opstellen van meer dan drie voertuigen, opleggers of aanhangers met gevaarlijke stoffen als bedoeld in
-      [artikel 3.27, eerste lid, onder a, b of c][ref1]; en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3.50
+      [ref2]: https://wetten.overheid.nl/BWBR0041330#Artikel3.27
+      [ref3]: https://wetten.overheid.nl/BWBR0041330#Artikel3.285
+      [ref4]: https://wetten.overheid.nl/BWBR0041330#Artikel3.285
+      [ref5]: https://wetten.overheid.nl/BWBR0041330#Artikel3.27
+      [ref6]: https://wetten.overheid.nl/BWBR0041330#Artikel3.27
+      [ref7]: https://wetten.overheid.nl/BWBR0041330#Artikel3.295a
+      [ref8]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref9]: https://wetten.overheid.nl/BWBR0002667#Artikel44
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
     references:
       - id: ref1
         bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.1.e
-    text: |-
-      het exploiteren van een spoorwegemplacement, bedoeld in
-      [artikel 3.295a van het Besluit activiteiten leefomgeving][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0041330#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
+        artikel: '3.50'
+      - id: ref2
         bwb_id: BWBR0041330
-        artikel: '3'
-  - number: 7.1.2
-    text: |-
-      Het bestuur van de veiligheidsregio kan ook als bedrijfsbrandweerplichtig aanwijzen een inrichting als
-      bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1], met uitzondering van een inrichting waarop
-      [artikel 44 van het Besluit kerninstallaties, splijtstoffen en ertsen][ref2] van toepassing is.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-      [ref2]: https://wetten.overheid.nl/BWBR0002667#Artikel44
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.1
-    references:
-      - id: ref1
+        artikel: '3.27'
+      - id: ref3
+        bwb_id: BWBR0041330
+        artikel: '3.285'
+      - id: ref4
+        bwb_id: BWBR0041330
+        artikel: '3.285'
+      - id: ref5
+        bwb_id: BWBR0041330
+        artikel: '3.27'
+      - id: ref6
+        bwb_id: BWBR0041330
+        artikel: '3.27'
+      - id: ref7
+        bwb_id: BWBR0041330
+        artikel: 3.295a
+      - id: ref8
         bwb_id: BWBR0002402
         artikel: '15'
-      - id: ref2
+      - id: ref9
         bwb_id: BWBR0002667
         artikel: '44'
-  - number: 7.2.1
+  - number: '7.2'
     text: |-
-      Alvorens tot aanwijzing over te gaan, verzoekt het bestuur van de veiligheidsregio degene die de
+      1 Alvorens tot aanwijzing over te gaan, verzoekt het bestuur van de veiligheidsregio degene die de
       milieubelastende activiteit op de locatie verricht of de exploitant van de inrichting, bedoeld in
       [artikel 15, onderdeel b, van de Kernenergiewet][ref1], waarvan het bestuur redelijkerwijs kan vermoeden dat deze
       in geval van een brand of ongeval bijzonder gevaar voor de openbare veiligheid kan opleveren, binnen een door het
       bestuur te stellen termijn een rapport inzake de bedrijfsbrandweer over te leggen, dat de volgende gegevens bevat:
 
+      a. een aanduiding van de begrenzing van de locatie en een algemene beschrijving van:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.a
-    text: 'een aanduiding van de begrenzing van de locatie en een algemene beschrijving van:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.1.a.1°
-    text: |-
-      de locatie waarop een of meer milieubelastende activiteiten worden verricht of de inrichting, bedoeld in
-      [artikel 15, onderdeel b, van de Kernenergiewet][ref1];
+      1°. de locatie waarop een of meer milieubelastende activiteiten worden verricht of de inrichting, bedoeld in
+      [artikel 15, onderdeel b, van de Kernenergiewet][ref2];
 
+      2°. de milieubelastende activiteiten die worden verricht op de locatie en andere milieubelastende activiteiten die
+      de milieubelastende activiteiten op de locatie functioneel ondersteunen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.a.2°
-    text: |-
-      de milieubelastende activiteiten die worden verricht op de locatie en andere milieubelastende activiteiten die de
-      milieubelastende activiteiten op de locatie functioneel ondersteunen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.1.a.3°
-    text: |-
-      de op de locatie of in de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1],
+      3°. de op de locatie of in de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref3],
       voorkomende stoffen; en
 
+      4°. de eigenschappen van deze stoffen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.a.4°
-    text: de eigenschappen van deze stoffen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.1.b
-    text: |-
-      een algemene beschrijving van de processen die op de locatie waarop de milieubelastende activiteiten worden
-      verricht of in de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1], plaatsvinden;
+      b. een algemene beschrijving van de processen die op de locatie waarop de milieubelastende activiteiten worden
+      verricht of in de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref4], plaatsvinden;
 
+      c. een beschrijving van de aard, de omvang, het verloop in de tijd en de bestrijding of de beheersing van een
+      brand of een ongeval op de locatie waarop de milieubelastende activiteiten worden verricht of op het terrein van de
+      inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref5]:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.c
-    text: |-
-      een beschrijving van de aard, de omvang, het verloop in de tijd en de bestrijding of de beheersing van een brand
-      of een ongeval op de locatie waarop de milieubelastende activiteiten worden verricht of op het terrein van de
-      inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1]:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.c.1°
-    text: |-
-      die gegeven de aard van een installatie of de milieubelastende activiteiten die op de locatie worden verricht of
-      gegeven de aard van de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1], rekening
+      1°. die gegeven de aard van een installatie of de milieubelastende activiteiten die op de locatie worden verricht
+      of gegeven de aard van de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref6], rekening
       houdend met de daarin aangebrachte preventieve voorzieningen, als reëel en typerend wordt geacht;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.c.2°
-    text: |-
-      waarbij schade aan gebouwen of personen in de omgeving van de locatie waarop de
+      2°. waarbij schade aan gebouwen of personen in de omgeving van de locatie waarop de
       milieubelastende activiteiten worden verricht of in de omgeving van de inrichting, bedoeld in
-      [artikel 15, onderdeel b, van de Kernenergiewet][ref1], kan ontstaan, en
+      [artikel 15, onderdeel b, van de Kernenergiewet][ref7], kan ontstaan, en
 
+      3°. waarbij van preventieve of repressieve maatregelen duidelijk effect verwacht mag worden, waardoor escalatie
+      daarvan wordt voorkomen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.1.c.3°
-    text: |-
-      waarbij van preventieve of repressieve maatregelen duidelijk effect verwacht mag worden, waardoor escalatie daarvan
-      wordt voorkomen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.1.d
-    text: |-
-      de maatgevende incidentscenario’s dat wil zeggen de geloofwaardige incidentscenario’s, bedoeld in onderdeel c, die
-      bepalend zijn voor de omvang en de uitrusting van de bedrijfsbrandweer;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.1.e
-    text: |-
-      een beschrijving van de organisatie van de nodig geachte bedrijfsbrandweer, waaronder de omvang van het personeel
-      en het materieel.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.2
-    text: |-
-      Als voor een milieubelastende activiteit als bedoeld in [artikel 7.1, eerste lid][ref1], een aanvraag om
-      een omgevingsvergunning wordt ingediend, wordt het verzoek, bedoeld in het eerste lid, zo spoedig mogelijk
-      gedaan nadat het bestuur van de veiligheidsregio in de gelegenheid is gesteld advies als bedoeld in
-      [artikel 4.33 van het Omgevingsbesluit][ref2] uit te brengen.
+      d. de maatgevende incidentscenario’s dat wil zeggen de geloofwaardige incidentscenario’s, bedoeld in onderdeel c,
+      die bepalend zijn voor de omvang en de uitrusting van de bedrijfsbrandweer;
 
+      e. een beschrijving van de organisatie van de nodig geachte bedrijfsbrandweer, waaronder de omvang van het
+      personeel en het materieel.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0041278#Artikel4
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0027844
-        artikel: '7'
-        hoofdstuk: '7'
-      - id: ref2
-        bwb_id: BWBR0041278
-        artikel: '4'
-  - number: 7.2.3
-    text: |-
-      Indien gegevens als bedoeld in het eerste lid reeds zijn opgenomen in een veiligheidsrapport, kan in het rapport
+      2 Als voor een milieubelastende activiteit als bedoeld in [artikel 7.1, eerste lid][ref8], een aanvraag
+      om een omgevingsvergunning wordt ingediend, wordt het verzoek, bedoeld in het eerste lid, zo spoedig
+      mogelijk gedaan nadat het bestuur van de veiligheidsregio in de gelegenheid is gesteld advies als bedoeld in
+      [artikel 4.33 van het Omgevingsbesluit][ref9] uit te brengen.
+
+      3 Indien gegevens als bedoeld in het eerste lid reeds zijn opgenomen in een veiligheidsrapport, kan in het rapport
       worden volstaan met een verwijzing naar de desbetreffende gegevens.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.4
-    text: 'Het bestuur van de veiligheidsregio zendt een exemplaar van het rapport aan:'
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-  - number: 7.2.4.a
-    text: |-
-      de toezichthouder, bedoeld in [artikel 1, derde lid, onderdeel d, van de Arbeidsomstandighedenwet][ref1];
 
+      4 Het bestuur van de veiligheidsregio zendt een exemplaar van het rapport aan:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0010346#Artikel1
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0010346
-        artikel: '1'
-  - number: 7.2.4.b
-    text: |-
-      het college van burgemeester en wethouders van de gemeente waarin de locatie of de inrichting, bedoeld in
-      [artikel 15, onderdeel b, van de Kernenergiewet][ref1], is gelegen;
+      a. de toezichthouder, bedoeld in [artikel 1, derde lid, onderdeel d, van de Arbeidsomstandighedenwet][ref10];
 
+      b. het college van burgemeester en wethouders van de gemeente waarin de locatie of de inrichting, bedoeld in
+      [artikel 15, onderdeel b, van de Kernenergiewet][ref11], is gelegen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.4.c
-    text: |-
-      het bestuursorgaan dat beslist op een aanvraag om een omgevingsvergunning voor de
+      c. het bestuursorgaan dat beslist op een aanvraag om een omgevingsvergunning voor de
       milieubelastende activiteit of op een aanvraag om een vergunning voor de inrichting, bedoeld in
-      [artikel 15, onderdeel b, van de Kernenergiewet][ref1]; en
+      [artikel 15, onderdeel b, van de Kernenergiewet][ref12]; en
 
+      d. Onze Minister van Infrastructuur en Milieu, indien de locatie of inrichting, bedoeld in
+      [artikel 15, onderdeel b, van de Kernenergiewet][ref13], is gelegen op of deel uitmaakt van, een luchthaven als
+      bedoeld in [artikel 1.1, eerste lid, van de Wet luchtvaart][ref14].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-  - number: 7.2.4.d
-    text: |-
-      Onze Minister van Infrastructuur en Milieu, indien de locatie of inrichting, bedoeld in
-      [artikel 15, onderdeel b, van de Kernenergiewet][ref1], is gelegen op of deel uitmaakt van, een luchthaven als
-      bedoeld in [artikel 1.1, eerste lid, van de Wet luchtvaart][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
-      [ref2]: https://wetten.overheid.nl/BWBR0005555#Artikel1
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002402
-        artikel: '15'
-      - id: ref2
-        bwb_id: BWBR0005555
-        artikel: '1'
-  - number: 7.2.5
-    text: |-
-      Het bestuur van de veiligheidsregio kan degene die de milieubelastende activiteiten op de locatie verricht of de
-      exploitant van de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1], verzoeken om aan
+      5 Het bestuur van de veiligheidsregio kan degene die de milieubelastende activiteiten op de locatie verricht of de
+      exploitant van de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref15], verzoeken om aan
       het bestuur aanvullende gegevens te verschaffen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref2]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref3]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref4]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref5]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref6]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref7]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref8]: https://wetten.overheid.nl/BWBR0027844#Artikel7.1
+      [ref9]: https://wetten.overheid.nl/BWBR0041278#Artikel4.33
+      [ref10]: https://wetten.overheid.nl/BWBR0010346#Artikel1
+      [ref11]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref12]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref13]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref14]: https://wetten.overheid.nl/BWBR0005555#Artikel1.1
+      [ref15]: https://wetten.overheid.nl/BWBR0002402#Artikel15
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.2
     references:
       - id: ref1
         bwb_id: BWBR0002402
         artikel: '15'
-  - number: 7.3.1
+      - id: ref2
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref3
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref4
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref5
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref6
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref7
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref8
+        bwb_id: BWBR0027844
+        artikel: '7.1'
+        hoofdstuk: '7'
+      - id: ref9
+        bwb_id: BWBR0041278
+        artikel: '4.33'
+      - id: ref10
+        bwb_id: BWBR0010346
+        artikel: '1'
+      - id: ref11
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref12
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref13
+        bwb_id: BWBR0002402
+        artikel: '15'
+      - id: ref14
+        bwb_id: BWBR0005555
+        artikel: '1.1'
+      - id: ref15
+        bwb_id: BWBR0002402
+        artikel: '15'
+  - number: '7.3'
     text: |-
-      Indien het bestuur van de veiligheidsregio van oordeel is dat de locatie, waarop een of meer milieubelastende
+      1 Indien het bestuur van de veiligheidsregio van oordeel is dat de locatie, waarop een of meer milieubelastende
       activiteiten worden verricht of de inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1],
       in geval van een brand of ongeval bijzonder gevaar kan opleveren voor de openbare veiligheid, wijst het bestuur die
       locatie of inrichting aan als bedrijfsbrandweerplichtig. Het bestuur bepaalt daarbij de termijn waarbinnen over een
       bedrijfsbrandweer dient te worden beschikt.
 
+      2 Als voor een milieubelastende activiteit als bedoeld in [artikel 7.1, eerste lid][ref2], een aanvraag om
+      een omgevingsvergunning is ingediend vindt de aanwijzing bedoeld in het eerste lid, plaats binnen 26 weken na
+      ontvangst van het rapport inzake de bedrijfsbrandweer. Als op het moment van het verstrijken van die termijn de
+      omgevingsvergunning nog niet onherroepelijk is, vindt de aanwijzing in afwijking van de eerste zin plaats binnen 8
+      weken na het onherroepelijk worden van de omgevingsvergunning.
+
+      3 In de aanwijzing stelt het bestuur van de veiligheidsregio de begrenzing vast van de locatie of de inrichting
+      waarop de aanwijzing van toepassing is.
+
+      4 Het bestuur van de veiligheidsregio gaat niet over tot het aanwijzen dan nadat de bestuursorganen, bedoeld in
+      [artikel 7.2, vierde lid][ref3], door het bestuur in de gelegenheid zijn gesteld advies ter zake uit te brengen.
+
+      5 Het bestuur van de veiligheidsregio kan locaties of inrichtingen aanwijzen waarvoor degenen die de
+      milieubelastende activiteiten verrichten op die locaties respectievelijk de exploitanten van die inrichtingen
+      gezamenlijk dienen te beschikken over een bedrijfsbrandweer. Het vierde lid is van overeenkomstige toepassing.
+
+      6 Het bestuur van de veiligheidsregio stuurt een afschrift van de aanwijzing aan de bestuursorganen, bedoeld in
+      [artikel 7.2, vierde lid][ref4].
+
+      7 Het bestuur van de veiligheidsregio kan in de aanwijzing, bedoeld in het eerste en vijfde lid, slechts eisen
+      stellen aan:
+
+      a. de geoefendheid en de samenstelling van de bedrijfsbrandweer waarbij de functies genoemd in het
+      [Besluit personeel veiligheidsregio’s][ref5], kunnen worden aangewezen;
+
+      b. de voorzieningen inzake bluswater, melding, alarmering en verbindingen;
+
+      c. het blusmaterieel;
+
+      d. de beschermende middelen;
+
+      e. de alarmering van en samenwerking met de brandweer en andere hulpverleningsorganisaties; en
+
+      f. de omvang van het personeel en het materieel van de bedrijfsbrandweer.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel7.1
+      [ref3]: https://wetten.overheid.nl/BWBR0027844#Artikel7.2
+      [ref4]: https://wetten.overheid.nl/BWBR0027844#Artikel7.2
+      [ref5]: https://wetten.overheid.nl/BWBR0027841
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
     references:
       - id: ref1
         bwb_id: BWBR0002402
         artikel: '15'
-  - number: 7.3.2
-    text: |-
-      Als voor een milieubelastende activiteit als bedoeld in [artikel 7.1, eerste lid][ref1], een aanvraag om een
-      omgevingsvergunning is ingediend vindt de aanwijzing bedoeld in het eerste lid, plaats binnen 26 weken na
-      ontvangst van het rapport inzake de bedrijfsbrandweer. Als op het moment van het verstrijken van die termijn de
-      omgevingsvergunning nog niet onherroepelijk is, vindt de aanwijzing in afwijking van de eerste zin plaats binnen 8
-      weken na het onherroepelijk worden van de omgevingsvergunning.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.1'
         hoofdstuk: '7'
-  - number: 7.3.3
-    text: |-
-      In de aanwijzing stelt het bestuur van de veiligheidsregio de begrenzing vast van de locatie of de inrichting
-      waarop de aanwijzing van toepassing is.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.4
-    text: |-
-      Het bestuur van de veiligheidsregio gaat niet over tot het aanwijzen dan nadat de bestuursorganen, bedoeld in
-      [artikel 7.2, vierde lid][ref1], door het bestuur in de gelegenheid zijn gesteld advies ter zake uit te brengen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: '7'
-  - number: 7.3.5
-    text: |-
-      Het bestuur van de veiligheidsregio kan locaties of inrichtingen aanwijzen waarvoor degenen die de milieubelastende
-      activiteiten verrichten op die locaties respectievelijk de exploitanten van die inrichtingen gezamenlijk dienen te
-      beschikken over een bedrijfsbrandweer. Het vierde lid is van overeenkomstige toepassing.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.6
-    text: |-
-      Het bestuur van de veiligheidsregio stuurt een afschrift van de aanwijzing aan de bestuursorganen, bedoeld in
-      [artikel 7.2, vierde lid][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: '7'
-  - number: 7.3.7
-    text: |-
-      Het bestuur van de veiligheidsregio kan in de aanwijzing, bedoeld in het eerste en vijfde lid, slechts eisen
-      stellen aan:
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.7.a
-    text: |-
-      de geoefendheid en de samenstelling van de bedrijfsbrandweer waarbij de functies genoemd in het
-      [Besluit personeel veiligheidsregio’s][ref1], kunnen worden aangewezen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027841
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0027841
-  - number: 7.3.7.b
-    text: de voorzieningen inzake bluswater, melding, alarmering en verbindingen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.7.c
-    text: het blusmaterieel;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.7.d
-    text: de beschermende middelen;
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.7.e
-    text: de alarmering van en samenwerking met de brandweer en andere hulpverleningsorganisaties; en
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.3.7.f
-    text: de omvang van het personeel en het materieel van de bedrijfsbrandweer.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.3
-  - number: 7.4.1
+  - number: '7.4'
     text: |-
-      Na wijziging of uitbreiding van een aangewezen locatie, van een milieubelastende activiteit op een aangewezen
+      1 Na wijziging of uitbreiding van een aangewezen locatie, van een milieubelastende activiteit op een aangewezen
       locatie of van een inrichting, bedoeld in [artikel 15, onderdeel b, van de Kernenergiewet][ref1], dan wel
       verandering van de gebezigde processen die in betekenende mate consequenties hebben voor de inhoud van het
       rapport, verstrekt degene die de milieubelastende activiteit verricht of de exploitant van de inrichting zo spoedig
@@ -1674,175 +1303,139 @@ articles:
       uitbreiding of verandering een aanvraag om een omgevingsvergunning is ingediend wordt het gewijzigd rapport
       gelijktijdig met die aanvraag verstrekt aan het bestuur van de veiligheidsregio.
 
+      2 [Artikel 7.2, derde tot en met vijfde lid][ref2], is van overeenkomstige toepassing.
+
+      3 Indien het gewijzigde rapport, het veiligheidsrapport of de wijziging daarvan daartoe aanleiding geven, kan het
+      bestuur van de veiligheidsregio de aanwijzing intrekken dan wel de bij de aanwijzing gestelde eisen wijzigen.
+
+      4 Het bestuur van de veiligheidsregio bepaalt bij het vaststellen van gewijzigde eisen, bedoeld in het derde lid,
+      een termijn waarbinnen aan die eisen moet zijn voldaan.
+
+      5 [Artikel 7.3, vierde en zesde lid][ref3], is van overeenkomstige toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002402#Artikel15
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel7.2
+      [ref3]: https://wetten.overheid.nl/BWBR0027844#Artikel7.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.4
     references:
       - id: ref1
         bwb_id: BWBR0002402
         artikel: '15'
-  - number: 7.4.2
-    text: |-
-      [Artikel 7.2, derde tot en met vijfde lid][ref1], is van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.4
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: '7'
-  - number: 7.4.3
-    text: |-
-      Indien het gewijzigde rapport, het veiligheidsrapport of de wijziging daarvan daartoe aanleiding geven, kan het
-      bestuur van de veiligheidsregio de aanwijzing intrekken dan wel de bij de aanwijzing gestelde eisen wijzigen.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.4
-  - number: 7.4.4
-    text: |-
-      Het bestuur van de veiligheidsregio bepaalt bij het vaststellen van gewijzigde eisen, bedoeld in het derde lid, een
-      termijn waarbinnen aan die eisen moet zijn voldaan.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.4
-  - number: 7.4.5
-    text: |-
-      [Artikel 7.3, vierde en zesde lid][ref1], is van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.4
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.3'
         hoofdstuk: '7'
-  - number: 7.5.1
+  - number: '7.5'
     text: |-
-      Na wijziging van de omgeving van een aangewezen locatie of inrichting die in betekenende mate
+      1 Na wijziging van de omgeving van een aangewezen locatie of inrichting die in betekenende mate
       consequenties heeft voor gegevens over de geloofwaardige en maatgevende incidentscenario’s, bedoeld in
       [artikel 7.2, eerste lid, onderdeel c en d][ref1], kan het bestuur van de veiligheidsregio de aanwijzing intrekken
       dan wel de bij de aanwijzing gestelde eisen wijzigen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0027844
-        artikel: '7'
-        hoofdstuk: '7'
-  - number: 7.5.2
-    text: |-
-      Het bestuur van de veiligheidsregio bepaalt bij het vaststellen van gewijzigde eisen, bedoeld in het eerste lid,
+      2 Het bestuur van de veiligheidsregio bepaalt bij het vaststellen van gewijzigde eisen, bedoeld in het eerste lid,
       een termijn waarbinnen aan die eisen moet zijn voldaan.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.5
-  - number: 7.5.3
-    text: |-
-      [Artikel 7.3, vierde en zesde lid][ref1], is van overeenkomstige toepassing.
+
+      3 [Artikel 7.3, vierde en zesde lid][ref2], is van overeenkomstige toepassing.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7.2
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel7.3
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.5
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: '7'
-  - number: 7.6.1
+      - id: ref2
+        bwb_id: BWBR0027844
+        artikel: '7.3'
+        hoofdstuk: '7'
+  - number: '7.6'
     text: |-
-      Op een aanwijzing die Onze Minister geeft ten aanzien van een locatie of inrichting die is gelegen op of deel
+      1 Op een aanwijzing die Onze Minister geeft ten aanzien van een locatie of inrichting die is gelegen op of deel
       uitmaakt van een bij de krijgsmacht in gebruik zijnd terrein, zijn de [artikelen 7.1 tot en met 7.5][ref1] van
       overeenkomstige toepassing met dien verstande dat Onze Minister tevens een exemplaar van het rapport zendt aan de
       Minister van Defensie en het bestuur van de veiligheidsregio.
 
+      2 Onze Minister zendt een rapport aan het bestuur van de veiligheidsregio nadat hij het rapport zodanig heeft
+      bewerkt dat de gegevens waarvoor geheimhouding geboden is, daarin niet voorkomen of daaruit niet kunnen worden
+      afgeleid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel7.1
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.6
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.1'
         hoofdstuk: '7'
-  - number: 7.6.2
+  - number: '8.1'
     text: |-
-      Onze Minister zendt een rapport aan het bestuur van de veiligheidsregio nadat hij het rapport zodanig heeft bewerkt
-      dat de gegevens waarvoor geheimhouding geboden is, daarin niet voorkomen of daaruit niet kunnen worden afgeleid.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel7.6
-  - number: 8.1.1
-    text: |-
-      Onze Minister stelt, onder voorbehoud van goedkeuring van de begroting van de uitgaven en de ontvangsten van
+      1 Onze Minister stelt, onder voorbehoud van goedkeuring van de begroting van de uitgaven en de ontvangsten van
       het Ministerie van Veiligheid en Justitie, jaarlijks vóór 1 juli voor het eerstvolgende jaar de bijdrage voor de
       doeluitkering aan de veiligheidsregio’s vast. Het voor de doeluitkering beschikbare totaalbedrag, bestaat uit de
       bedragen, bedoeld in [artikel 8.2][ref1] en uit een vast en een variabel deel. Het vaste en variabele deel worden
       verdeeld volgens het verdeelsysteem in [bijlage 2][ref2] bij dit besluit.
 
+      2 Onze Minister kan de jaarlijkse bijdrage bijstellen in verband met loon- en prijsmutaties die tot wijziging van
+      het voor de doeluitkering beschikbare bedrag leiden.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel8
+      3 Onze Minister kan de jaarlijkse bijdrage bijstellen in verband met andere dan in het tweede lid bedoelde
+      wijzigingen van het voor de doeluitkering beschikbare bedrag.
+
+      4 Onze Minister stelt het bestuur van de veiligheidsregio zo spoedig mogelijk op de hoogte van een besluit tot
+      bijstelling als bedoeld in het tweede en derde lid.
+
+      5 Verrekening van bijstellingen in de jaarlijkse bijdrage vindt uiterlijk plaats op 1 december van het jaar waarop
+      de jaarlijkse bijdrage betrekking heeft.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel8.2
       [ref2]: https://wetten.overheid.nl/BWBR0027844
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.1
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '8'
+        artikel: '8.2'
         hoofdstuk: '8'
       - id: ref2
         bwb_id: BWBR0027844
-  - number: 8.1.2
+  - number: '8.2'
     text: |-
-      Onze Minister kan de jaarlijkse bijdrage bijstellen in verband met loon- en prijsmutaties die tot wijziging van het
-      voor de doeluitkering beschikbare bedrag leiden.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.1
-  - number: 8.1.3
-    text: |-
-      Onze Minister kan de jaarlijkse bijdrage bijstellen in verband met andere dan in het tweede lid bedoelde
-      wijzigingen van het voor de doeluitkering beschikbare bedrag.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.1
-  - number: 8.1.4
-    text: |-
-      Onze Minister stelt het bestuur van de veiligheidsregio zo spoedig mogelijk op de hoogte van een besluit tot
-      bijstelling als bedoeld in het tweede en derde lid.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.1
-  - number: 8.1.5
-    text: |-
-      Verrekening van bijstellingen in de jaarlijkse bijdrage vindt uiterlijk plaats op 1 december van het jaar waarop de
-      jaarlijkse bijdrage betrekking heeft.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.1
-  - number: 8.2.1
-    text: |-
-      In verband met extra voorzieningen voor de Waddeneilanden ontvangt de veiligheidsregio Fryslân jaarlijks een bedrag
-      van € 150.000,– en de veiligheidsregio Noord-Holland-Noord jaarlijks een bedrag van € 28.000,–.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.2
-  - number: 8.2.2
-    text: |-
-      In verband met extra voorzieningen voor de luchthaven Schiphol ontvangt de veiligheidsregio Kennemerland jaarlijks
-      een bedrag van € 5.000.000,–.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.2
-  - number: 8.2.3
-    text: |-
-      Voor de interregionale versterking van de veiligheidsregio’s Amsterdam-Amstelland en Kennemerland in verband met de
-      luchthaven Schiphol ontvangt de veiligheidsregio Kennemerland jaarlijks een bedrag van € 2.500.000,–.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.2
-  - number: 8.2.4
-    text: |-
-      Voor de uitvoering van de taak, bedoeld in [artikel 4.1.6][ref1], ontvangen de veiligheidsregio’s, genoemd in
+      1 In verband met extra voorzieningen voor de Waddeneilanden ontvangt de veiligheidsregio Fryslân jaarlijks een
+      bedrag van € 150.000,– en de veiligheidsregio Noord-Holland-Noord jaarlijks een bedrag van € 28.000,–.
+
+      2 In verband met extra voorzieningen voor de luchthaven Schiphol ontvangt de veiligheidsregio Kennemerland
+      jaarlijks een bedrag van € 5.000.000,–.
+
+      3 Voor de interregionale versterking van de veiligheidsregio’s Amsterdam-Amstelland en Kennemerland in verband met
+      de luchthaven Schiphol ontvangt de veiligheidsregio Kennemerland jaarlijks een bedrag van € 2.500.000,–.
+
+      4 Voor de uitvoering van de taak, bedoeld in [artikel 4.1.6][ref1], ontvangen de veiligheidsregio’s, genoemd in
       [bijlage 1][ref2] bij dit besluit, elk jaarlijks een bedrag van € 175.000,–.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel4.1.6
       [ref2]: https://wetten.overheid.nl/BWBR0027844
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.2
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '4'
+        artikel: 4.1.6
         hoofdstuk: '4'
         paragraaf: '1'
       - id: ref2
         bwb_id: BWBR0027844
-  - number: 8.3.1
-    text: Onze Minister kan aan een veiligheidsregio een incidentele bijdrage verstrekken.
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.3
-  - number: 8.3.2
-    text: Een incidentele bijdrage kan onder voorwaarden worden verleend.
+  - number: '8.3'
+    text: |-
+      1 Onze Minister kan aan een veiligheidsregio een incidentele bijdrage verstrekken.
+
+      2 Een incidentele bijdrage kan onder voorwaarden worden verleend.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.3
   - number: '8.4'
     text: |-
@@ -1850,17 +1443,17 @@ articles:
       gelijke termijnen, op de eerste werkdag na de 14e van de eerste maand van ieder kwartaal.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel8
+      [ref1]: https://wetten.overheid.nl/BWBR0027844#Artikel8.1
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel8.2
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.4
     references:
       - id: ref1
         bwb_id: BWBR0027844
-        artikel: '8'
+        artikel: '8.1'
         hoofdstuk: '8'
       - id: ref2
         bwb_id: BWBR0027844
-        artikel: '8'
+        artikel: '8.2'
         hoofdstuk: '8'
   - number: '8.5'
     text: |-
@@ -1879,36 +1472,31 @@ articles:
       Indien de accountant een afkeurende verklaring of een verklaring met beperking of oordeelsonthouding heeft gegeven,
       kan Onze Minister de jaarlijkse bijdrage voor de doeluitkering voor een volgend jaar verminderen.
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel8.6
-  - number: 9.1.1
+  - number: '9.1'
     text: |-
-      De rampbestrijdingsplannen die op grond van het [Besluit rampbestrijdingsplannen inrichtingen][ref1]
+      1 De rampbestrijdingsplannen die op grond van het [Besluit rampbestrijdingsplannen inrichtingen][ref1]
       zijn vastgesteld door de burgemeester, blijven van kracht. Onverminderd het bepaalde in
       [artikel 6.1.7, tweede lid][ref2], worden zij door het bestuur van de veiligheidsregio opnieuw vastgesteld indien
       deze dit nodig oordeelt.
 
+      2 De rampbestrijdingsplannen die op grond van het [Besluit rampbestrijdingsplannen luchtvaartterreinen][ref3] zijn
+      vastgesteld door de burgemeester, blijven van kracht. Zij worden door het bestuur van de veiligheidsregio opnieuw
+      vastgesteld indien deze dit nodig oordeelt.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0010506
-      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel6
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel6.1.7
+      [ref3]: https://wetten.overheid.nl/BWBR0012703
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel9.1
     references:
       - id: ref1
         bwb_id: BWBR0010506
       - id: ref2
         bwb_id: BWBR0027844
-        artikel: '6'
+        artikel: 6.1.7
         hoofdstuk: '6'
         paragraaf: '1'
-  - number: 9.1.2
-    text: |-
-      De rampbestrijdingsplannen die op grond van het [Besluit rampbestrijdingsplannen luchtvaartterreinen][ref1] zijn
-      vastgesteld door de burgemeester, blijven van kracht. Zij worden door het bestuur van de veiligheidsregio opnieuw
-      vastgesteld indien deze dit nodig oordeelt.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0012703
-    url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel9.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0012703
   - number: '9.2'
     text: |-
@@ -1918,7 +1506,7 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004694#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel7
+      [ref2]: https://wetten.overheid.nl/BWBR0027844#Artikel7.4
     url: https://wetten.overheid.nl/BWBR0027844/2024-01-01#Artikel9.2
     references:
       - id: ref1
@@ -1926,7 +1514,7 @@ articles:
         artikel: '4'
       - id: ref2
         bwb_id: BWBR0027844
-        artikel: '7'
+        artikel: '7.4'
         hoofdstuk: '7'
   - number: '9.3'
     text: |-
