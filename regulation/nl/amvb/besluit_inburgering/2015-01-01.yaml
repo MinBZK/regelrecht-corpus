@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_inburgering
 regulatory_layer: AMVB
 publication_date: '2021-09-01'
@@ -30,175 +30,116 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#ArtikelAanhef
 articles:
   - number: '1.1'
-    text: 'In dit besluit en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-  - number: 1.1.a
     text: |-
-      wet: de [Wet inburgering][ref1];
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-  - number: 1.1.b
-    text: |-
-      inburgeringsdiploma: het diploma, bedoeld in [artikel 7, vierde lid, onderdeel g, van de wet][ref1], ten bewijze
+      a. wet: de [Wet inburgering][ref1];
+
+      b. inburgeringsdiploma: het diploma, bedoeld in [artikel 7, vierde lid, onderdeel g, van de wet][ref2], ten bewijze
       waarvan het inburgeringsexamen is behaald;
 
+      c. Informatiesysteem Inburgering: het informatiesysteem, bedoeld in [artikel 47 van de wet][ref3];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+      d. rijksbijdrage: de rijksbijdrage, bedoeld in [artikel 52 van de wet][ref4], zoals dat artikel luidde voor de
+      datum van inwerkingtreding van de [Wet participatiebudget][ref5];
+
+      e. lening: de lening, bedoeld in [artikel 16 van de wet][ref6];
+
+      f. Wet inburgering nieuwkomers: [Wet inburgering nieuwkomers][ref7] zoals die luidde op 31 december 2006.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020611
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+      [ref3]: https://wetten.overheid.nl/BWBR0020611#Artikel47
+      [ref4]: https://wetten.overheid.nl/BWBR0020611#Artikel52
+      [ref5]: https://wetten.overheid.nl/BWBR0025039
+      [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel16
+      [ref7]: https://wetten.overheid.nl/BWBR0009544
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
     references:
       - id: ref1
+        bwb_id: BWBR0020611
+      - id: ref2
         bwb_id: BWBR0020611
         artikel: '7'
-  - number: 1.1.c
-    text: |-
-      Informatiesysteem Inburgering: het informatiesysteem, bedoeld in [artikel 47 van de wet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel47
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020611
         artikel: '47'
-  - number: 1.1.d
-    text: |-
-      rijksbijdrage: de rijksbijdrage, bedoeld in [artikel 52 van de wet][ref1], zoals dat artikel luidde voor de datum
-      van inwerkingtreding van de [Wet participatiebudget][ref2];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel52
-      [ref2]: https://wetten.overheid.nl/BWBR0025039
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0020611
         artikel: '52'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0025039
-  - number: 1.1.e
-    text: |-
-      lening: de lening, bedoeld in [artikel 16 van de wet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel16
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0020611
         artikel: '16'
-  - number: 1.1.f
-    text: |-
-      Wet inburgering nieuwkomers: [Wet inburgering nieuwkomers][ref1] zoals die luidde op 31 december 2006.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009544
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel1.1
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0009544
-  - number: 2.1.1
+  - number: '2.1'
     text: |-
-      Het doel van het verblijf in Nederland van de houder van een verblijfsvergunning voor bepaalde
+      1 Het doel van het verblijf in Nederland van de houder van een verblijfsvergunning voor bepaalde
       tijd als bedoeld in [artikel 14 van de Vreemdelingenwet 2000][ref1] is tijdelijk in de zin van
       [artikel 3, eerste lid, onderdeel a, van de wet][ref2], indien die verblijfsvergunning is verleend onder een
       beperking verband houdend met:
 
+      a. uitwisseling, al dan niet in het kader van een verdrag;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel14
-      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0011823
-        artikel: '14'
-      - id: ref2
-        bwb_id: BWBR0020611
-        artikel: '3'
-  - number: 2.1.1.a
-    text: uitwisseling, al dan niet in het kader van een verdrag;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.b
-    text: studie;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.c
-    text: seizoenarbeid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.d
-    text: lerend werken;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.e
-    text: arbeid in loondienst;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.f
-    text: grensoverschrijdende dienstverlening;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.g
-    text: arbeid als niet-geprivilegieerd militair of niet-geprivilegieerd burgerpersoneel;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.h
-    text: arbeid als kennismigrant;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.i
-    text: |-
-      verblijf als houder van de Europese blauwe kaart in de zin van richtlijn 2009/50/EG van de Raad van 25 mei
+      b. studie;
+
+      c. seizoenarbeid;
+
+      d. lerend werken;
+
+      e. arbeid in loondienst;
+
+      f. grensoverschrijdende dienstverlening;
+
+      g. arbeid als niet-geprivilegieerd militair of niet-geprivilegieerd burgerpersoneel;
+
+      h. arbeid als kennismigrant;
+
+      i. verblijf als houder van de Europese blauwe kaart in de zin van richtlijn 2009/50/EG van de Raad van 25 mei
       2009 betreffende de voorwaarden voor toegang en verblijf van onderdanen van derde landen met het oog op een
       hooggekwalificeerde baan (PbEU L 155);
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.j
-    text: wetenschappelijk onderzoek in de zin van richtlijn 2005/71/EG;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.k
-    text: arbeid als zelfstandige;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.l
-    text: het zoeken en verrichten van arbeid al dan niet in loondienst;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.m
-    text: verblijf als familie- of gezinslid bij een persoon die voor een tijdelijk doel in Nederland verblijft;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.n
-    text: medische behandeling;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.o
-    text: |-
-      het afwachten van een verzoek op grond van [artikel 17 van de Rijkswet op het Nederlanderschap][ref1];
 
+      j. wetenschappelijk onderzoek in de zin van richtlijn 2005/71/EG;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel17
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0003738
-        artikel: '17'
-  - number: 2.1.1.p
-    text: tijdelijke humanitaire gronden;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.1.1.q
-    text: |-
-      verblijf als vermogende vreemdeling als bedoeld in [artikel 3.29a van het Vreemdelingenbesluit 2000][ref1].
+      k. arbeid als zelfstandige;
 
+      l. het zoeken en verrichten van arbeid al dan niet in loondienst;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011825#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0011825
-        artikel: '3'
-  - number: 2.1.2
-    text: |-
-      Het doel van het verblijf van een houder van een verblijfsvergunning voor bepaalde tijd als bedoeld in
-      [artikel 14 van de Vreemdelingenwet 2000][ref1], verleend onder een andere beperking dan bedoeld in het eerste lid,
-      is tijdelijk in de zin van [artikel 3, eerste lid, onderdeel a, van de wet][ref2], indien zulks met toepassing van
-      [artikel 3.5, vierde lid, van het Vreemdelingenbesluit 2000][ref3] is bepaald.
+      m. verblijf als familie- of gezinslid bij een persoon die voor een tijdelijk doel in Nederland verblijft;
+
+      n. medische behandeling;
+
+      o. het afwachten van een verzoek op grond van [artikel 17 van de Rijkswet op het Nederlanderschap][ref3];
+
+      p. tijdelijke humanitaire gronden;
+
+      q. verblijf als vermogende vreemdeling als bedoeld in [artikel 3.29a van het Vreemdelingenbesluit 2000][ref4].
+
+      2 Het doel van het verblijf van een houder van een verblijfsvergunning voor bepaalde tijd als bedoeld in
+      [artikel 14 van de Vreemdelingenwet 2000][ref5], verleend onder een andere beperking dan bedoeld in het eerste lid,
+      is tijdelijk in de zin van [artikel 3, eerste lid, onderdeel a, van de wet][ref6], indien zulks met toepassing van
+      [artikel 3.5, vierde lid, van het Vreemdelingenbesluit 2000][ref7] is bepaald.
+
+      3 Het doel van het verblijf van de houder van een verblijfsvergunning als bedoeld in
+      [artikel 8, onder b, c en d van de Vreemdelingenwet 2000][ref8] is niet tijdelijk in de zin van
+      [artikel 3, eerste lid, onderdeel a, van de wet][ref9].
+
+      4 Bij regeling van Onze Minister kunnen de beperkingen, bedoeld in het eerste en tweede lid, nader worden
+      uitgewerkt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel14
       [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0011825#Artikel3
+      [ref3]: https://wetten.overheid.nl/BWBR0003738#Artikel17
+      [ref4]: https://wetten.overheid.nl/BWBR0011825#Artikel3.29a
+      [ref5]: https://wetten.overheid.nl/BWBR0011823#Artikel14
+      [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel3
+      [ref7]: https://wetten.overheid.nl/BWBR0011825#Artikel3.5
+      [ref8]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+      [ref9]: https://wetten.overheid.nl/BWBR0020611#Artikel3
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
     references:
       - id: ref1
@@ -208,42 +149,54 @@ articles:
         bwb_id: BWBR0020611
         artikel: '3'
       - id: ref3
+        bwb_id: BWBR0003738
+        artikel: '17'
+      - id: ref4
         bwb_id: BWBR0011825
-        artikel: '3'
-  - number: 2.1.3
-    text: |-
-      Het doel van het verblijf van de houder van een verblijfsvergunning als bedoeld in
-      [artikel 8, onder b, c en d van de Vreemdelingenwet 2000][ref1] is niet tijdelijk in de zin van
-      [artikel 3, eerste lid, onderdeel a, van de wet][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-    references:
-      - id: ref1
+        artikel: 3.29a
+      - id: ref5
         bwb_id: BWBR0011823
-        artikel: '8'
-      - id: ref2
+        artikel: '14'
+      - id: ref6
         bwb_id: BWBR0020611
         artikel: '3'
-  - number: 2.1.4
-    text: Bij regeling van Onze Minister kunnen de beperkingen, bedoeld in het eerste en tweede lid, nader worden uitgewerkt.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.1
-  - number: 2.2.1
+      - id: ref7
+        bwb_id: BWBR0011825
+        artikel: '3.5'
+      - id: ref8
+        bwb_id: BWBR0011823
+        artikel: '8'
+      - id: ref9
+        bwb_id: BWBR0020611
+        artikel: '3'
+  - number: '2.2'
     text: |-
-      De inburgeringsplicht eindigt niet, indien de vreemdeling direct aansluitend op de periode
+      1 De inburgeringsplicht eindigt niet, indien de vreemdeling direct aansluitend op de periode
       waarin hij op grond van [artikel 3, eerste lid, van de wet][ref1] inburgeringsplichtig was of
       op de termijn, bedoeld in [artikel 3.82, eerste lid, van het Vreemdelingenbesluit 2000][ref2],
       rechtmatig verblijf in de zin van [artikel 8, onderdeel g of h, van de Vreemdelingenwet 2000][ref3]
       heeft verkregen. In deze gevallen wordt de inburgeringsplicht tijdens de termijn, bedoeld in
       [artikel 3.82, eerste lid, van het Vreemdelingenbesluit 2000][ref4], geacht niet te zijn geëindigd.
 
+      2 De inburgeringsplicht wordt geacht niet te zijn geëindigd, indien de vreemdeling tussen twee tijdvakken waarin
+      hij op grond van [artikel 3, eerste lid, van de wet][ref5] inburgeringsplichtig was, gedurende een tijdvak van
+      maximaal een jaar:
+
+      a. geen ingezetene in de zin van de [Wet basisregistratie personen][ref6] was;
+
+      b. in Nederland verbleef voor een tijdelijk doel, of
+
+      c. zijn werkzaamheden als geestelijke bedienaar, bedoeld in [artikel 3, eerste lid, onderdeel b, van de wet][ref7]
+      heeft onderbroken.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0011825#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0011825#Artikel3.82
       [ref3]: https://wetten.overheid.nl/BWBR0011823#Artikel8
-      [ref4]: https://wetten.overheid.nl/BWBR0011825#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0011825#Artikel3.82
+      [ref5]: https://wetten.overheid.nl/BWBR0020611#Artikel3
+      [ref6]: https://wetten.overheid.nl/BWBR0033715
+      [ref7]: https://wetten.overheid.nl/BWBR0020611#Artikel3
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.2
     references:
       - id: ref1
@@ -251,226 +204,146 @@ articles:
         artikel: '3'
       - id: ref2
         bwb_id: BWBR0011825
-        artikel: '3'
+        artikel: '3.82'
       - id: ref3
         bwb_id: BWBR0011823
         artikel: '8'
       - id: ref4
         bwb_id: BWBR0011825
-        artikel: '3'
-  - number: 2.2.2
-    text: |-
-      De inburgeringsplicht wordt geacht niet te zijn geëindigd, indien de vreemdeling tussen twee tijdvakken waarin hij
-      op grond van [artikel 3, eerste lid, van de wet][ref1] inburgeringsplichtig was, gedurende een tijdvak van maximaal
-      een jaar:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.2
-    references:
-      - id: ref1
+        artikel: '3.82'
+      - id: ref5
         bwb_id: BWBR0020611
         artikel: '3'
-  - number: 2.2.2.a
-    text: |-
-      geen ingezetene in de zin van de [Wet basisregistratie personen][ref1] was;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0033715
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.2
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0033715
-  - number: 2.2.2.b
-    text: in Nederland verbleef voor een tijdelijk doel, of
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.2
-  - number: 2.2.2.c
-    text: |-
-      zijn werkzaamheden als geestelijke bedienaar, bedoeld in [artikel 3, eerste lid, onderdeel b, van de wet][ref1]
-      heeft onderbroken.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.2
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0020611
         artikel: '3'
-  - number: 2.3.1
-    text: 'Niet inburgeringsplichtig is degene die beschikt over:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.a
-    text: het inburgeringsdiploma;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.b
+  - number: '2.3'
     text: |-
-      een op wettelijke basis uitgereikt diploma of getuigschrift van afronding van een opleiding van wetenschappelijk
+      1 Niet inburgeringsplichtig is degene die beschikt over:
+
+      a. het inburgeringsdiploma;
+
+      b. een op wettelijke basis uitgereikt diploma of getuigschrift van afronding van een opleiding van wetenschappelijk
       onderwijs, hoger beroepsonderwijs, algemeen voortgezet onderwijs, of middelbaar beroepsonderwijs vanaf niveau 2, na
       onderwijs te hebben gevolgd in de Nederlandse taal;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.c
-    text: |-
-      een met een van de in onderdeel b genoemde diploma’s of getuigschriften vergelijkbaar diploma of ander document,
+
+      c. een met een van de in onderdeel b genoemde diploma’s of getuigschriften vergelijkbaar diploma of ander document,
       behaald in het Nederlandstalig onderwijs in België, mits een voldoende is behaald voor het vak Nederlandse taal;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.d
-    text: |-
-      een met een van de in onderdeel b genoemde diploma’s of getuigschriften vergelijkbaar diploma of ander document,
+
+      d. een met een van de in onderdeel b genoemde diploma’s of getuigschriften vergelijkbaar diploma of ander document,
       behaald in het Nederlandstalig onderwijs in Suriname, mits een voldoende is behaald voor het vak Nederlandse taal;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.e
-    text: |-
-      een diploma, certificaat of ander document, behaald in het Nederlandstalig onderwijs in de openbare lichamen
+
+      e. een diploma, certificaat of ander document, behaald in het Nederlandstalig onderwijs in de openbare lichamen
       Bonaire, Sint Eustatius of Saba, of in Aruba, Curaçao of Sint Maarten, ten bewijze van afronding van een bij
       regeling van Onze Minister aangewezen opleiding, mits een voldoende behaald is voor het vak Nederlandse taal;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.f
-    text: |-
-      het diploma van het Europees baccalaureaat van de Europese school, bedoeld in het Statuut van de Europese school
+
+      f. het diploma van het Europees baccalaureaat van de Europese school, bedoeld in het Statuut van de Europese school
       (Trb. 1957, 246), voor zover dat baccalaureaat het vak Nederlands als eerste of tweede taal omvat en voor dat vak
       een voldoende is behaald;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.g
-    text: |-
-      het getuigschrift International Baccalaureate Middle Years Certificate, International General Certificate of
+
+      g. het getuigschrift International Baccalaureate Middle Years Certificate, International General Certificate of
       Secondary Education of Internationaal Baccalaureaat, indien daartoe een cursus Engels-Nederlandstalig onderwijs
       of een cursus Internationaal Baccalaureaat met daarin het vak Nederlands is gevolgd en voor dat vak een voldoende
       is behaald;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.h
-    text: |-
-      het certificaat, bedoeld in [artikel 13, tweede lid, van de Wet inburgering nieuwkomers][ref1] alsmede de
+
+      h. het certificaat, bedoeld in [artikel 13, tweede lid, van de Wet inburgering nieuwkomers][ref1] alsmede de
       verklaring van het regionaal opleidingencentrum op grond waarvan dat certificaat is afgegeven, indien uit die
       verklaring blijkt dat ten minste de volgende niveaus zijn behaald:
 
+      1°. niveau 2 voor de onderdelen Luisteren, Spreken, Lezen en Schrijven, en
+
+      2°. voor het onderdeel Maatschappij Oriëntatie:
+
+        - het niveau van [artikel 11, eerste lid, onderdeel b, van die wet][ref2], of
+        - een score van de MO-Profieltoets van ten minste: 85%, indien die toets is afgelegd voor 1 september 2001,
+      respectievelijk 80%, indien die toets is afgelegd na 31 augustus 2001;
+
+      i. het certificaat, bedoeld in de [Regeling certificaat inburgering oudkomers][ref3], indien uit de vermelding
+      daarop blijkt dat ten minste het niveau NT2 2 voor de onderdelen Luisteren, Spreken, Lezen en Schrijven is behaald;
+
+      j. het document, bedoeld in [artikel 2.7, tweede lid][ref4],
+      zoals dat luidde voor het tijdstip van inwerkingtreding van het
+      __REF001___________________________________________________________________________________________________________
+      ____________________________________________________________________________________ (Stb. 2012, 432);
+
+      k. het inburgeringsdiploma, bedoeld in [artikel 14, tweede lid, van de Wet inburgering][ref6]
+      zoals die wet luidde voor de inwerkingtreding van de
+      __REF001___________________________________________________________________________________________________________
+      ________________________________________________________________________ (Stb. 2012, 430).
+
+      2 Bij regeling van Onze Minister kan worden voorzien in vrijstelling van de inburgeringsplicht op grond van andere
+      diploma’s, certificaten of documenten dan genoemd in het eerste lid.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel13
+      [ref2]: https://wetten.overheid.nl/BWBR0009544#Artikel11
+      [ref3]: https://wetten.overheid.nl/BWBR0018730
+      [ref4]: https://wetten.overheid.nl/BWBR0020674#Artikel2.7
+      [ref5]: https://wetten.overheid.nl/BWBR0032034
+      [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel14
+      [ref7]: https://wetten.overheid.nl/BWBR0032031
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
     references:
       - id: ref1
         bwb_id: BWBR0009544
         artikel: '13'
-  - number: 2.3.1.h.1°
-    text: niveau 2 voor de onderdelen Luisteren, Spreken, Lezen en Schrijven, en
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.3.1.h.2°
-    text: |-
-      voor het onderdeel Maatschappij Oriëntatie: - het niveau van
-      [artikel 11, eerste lid, onderdeel b, van die wet][ref1], of
-        - een score van de MO-Profieltoets van ten minste: 85%, indien die toets is afgelegd voor 1 september 2001,
-      respectievelijk 80%, indien die toets is afgelegd na 31 augustus 2001;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel11
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0009544
         artikel: '11'
-  - number: 2.3.1.i
-    text: |-
-      het certificaat, bedoeld in de [Regeling certificaat inburgering oudkomers][ref1], indien uit de vermelding daarop
-      blijkt dat ten minste het niveau NT2 2 voor de onderdelen Luisteren, Spreken, Lezen en Schrijven is behaald;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018730
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0018730
-  - number: 2.3.1.j
-    text: |-
-      het document, bedoeld in [artikel 2.7, tweede lid][ref1],
-      zoals dat luidde voor het tijdstip van inwerkingtreding van het
-      __REF001___________________________________________________________________________________________________________
-      ____________________________________________________________________________________ (Stb. 2012, 432);
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0032034
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.7'
         hoofdstuk: '2'
         afdeling: '4'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0032034
-  - number: 2.3.1.k
-    text: |-
-      het inburgeringsdiploma, bedoeld in [artikel 14, tweede lid, van de Wet inburgering][ref1]
-      zoals die wet luidde voor de inwerkingtreding van de
-      __REF001___________________________________________________________________________________________________________
-      ________________________________________________________________________ (Stb. 2012, 430).
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel14
-      [ref2]: https://wetten.overheid.nl/BWBR0032031
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0020611
         artikel: '14'
-      - id: ref2
+      - id: ref7
         bwb_id: BWBR0032031
-  - number: 2.3.2
+  - number: '2.4'
     text: |-
-      Bij regeling van Onze Minister kan worden voorzien in vrijstelling van de inburgeringsplicht op grond van andere
-      diploma’s, certificaten of documenten dan genoemd in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.3
-  - number: 2.4.1
-    text: |-
-      Van de verplichting om mondelinge en schriftelijke vaardigheden in de Nederlandse taal te verwerven en de
+      1 Van de verplichting om mondelinge en schriftelijke vaardigheden in de Nederlandse taal te verwerven en de
       betreffende onderdelen van het inburgeringsexamen te behalen, is vrijgesteld de inburgeringsplichtige die beschikt
       over het certificaat, bedoeld in [artikel 13, tweede lid, van de Wet inburgering nieuwkomers][ref1], alsmede
       de verklaring van het regionaal opleidingencentrum op grond waarvan dat certificaat is afgegeven, indien uit
       die verklaring blijkt dat voor het onderdeel Nederlands als tweede taal ten minste niveau 2 van de eindtermen
       Referentiekader Nederlands als Tweede Taal is behaald.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel13
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.4
-    references:
-      - id: ref1
-        bwb_id: BWBR0009544
-        artikel: '13'
-  - number: 2.4.2
-    text: |-
-      Van de verplichting om kennis van de Nederlandse samenleving te verwerven en het betreffende onderdeel van het
+      2 Van de verplichting om kennis van de Nederlandse samenleving te verwerven en het betreffende onderdeel van het
       inburgeringsexamen te behalen, is vrijgesteld de inburgeringsplichtige die beschikt over het certificaat, bedoeld
-      in [artikel 13, tweede lid, van de Wet inburgering nieuwkomers][ref1], alsmede de verklaring van het regionaal
+      in [artikel 13, tweede lid, van de Wet inburgering nieuwkomers][ref2], alsmede de verklaring van het regionaal
       opleidingencentrum op grond waarvan dat certificaat is afgegeven, indien uit die verklaring blijkt dat voor het
       onderdeel Maatschappij Oriëntatie is behaald:
 
+      a. het niveau van [artikel 11, eerste lid, onderdeel b, van die wet][ref3], of
+
+      b. een score van de MO-Profieltoets van ten minste: 85%, indien die toets is afgelegd voor 1 september 2001,
+      respectievelijk 80%, indien die toets is afgelegd na 31 augustus 2001.
+
+      3 Bij regeling van Onze Minister kan worden voorzien in gedeeltelijke vrijstelling van de inburgeringsplicht op
+      grond van andere diploma’s, certificaten of documenten dan genoemd in het eerste of tweede lid.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel13
+      [ref2]: https://wetten.overheid.nl/BWBR0009544#Artikel13
+      [ref3]: https://wetten.overheid.nl/BWBR0009544#Artikel11
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.4
     references:
       - id: ref1
         bwb_id: BWBR0009544
         artikel: '13'
-  - number: 2.4.2.a
-    text: |-
-      het niveau van [artikel 11, eerste lid, onderdeel b, van die wet][ref1], of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel11
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref2
+        bwb_id: BWBR0009544
+        artikel: '13'
+      - id: ref3
         bwb_id: BWBR0009544
         artikel: '11'
-  - number: 2.4.2.b
-    text: |-
-      een score van de MO-Profieltoets van ten minste: 85%, indien die toets is afgelegd voor 1 september 2001,
-      respectievelijk 80%, indien die toets is afgelegd na 31 augustus 2001.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.4
-  - number: 2.4.3
-    text: |-
-      Bij regeling van Onze Minister kan worden voorzien in gedeeltelijke vrijstelling van de inburgeringsplicht op grond
-      van andere diploma’s, certificaten of documenten dan genoemd in het eerste of tweede lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.4
   - number: '2.5'
     text: |-
       Geheel vrijgesteld van de inburgeringsplicht is degene die een toets als bedoeld in
@@ -485,11 +358,15 @@ articles:
       - id: ref1
         bwb_id: BWBR0009544
         artikel: '5'
-  - number: 2.6.1
+  - number: '2.6'
     text: |-
-      Het verblijf in Nederland tijdens de leerplichtige leeftijd, bedoeld in
+      1 Het verblijf in Nederland tijdens de leerplichtige leeftijd, bedoeld in
       [artikel 5, eerste lid, onderdeel b, van de wet][ref1], blijkt uit inschrijving als ingezetene in de
       basisregistratie personen.
+
+      2 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de toepassing van het eerste lid en
+      kan van het eerste lid worden afgeweken op grond van concrete aanwijzingen dat de inschrijving kennelijk onjuist
+      was.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel5
@@ -498,18 +375,27 @@ articles:
       - id: ref1
         bwb_id: BWBR0020611
         artikel: '5'
-  - number: 2.6.2
+  - number: '2.8'
     text: |-
-      Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de toepassing van het eerste lid en kan
-      van het eerste lid worden afgeweken op grond van concrete aanwijzingen dat de inschrijving kennelijk onjuist was.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.6
-  - number: 2.8.1
-    text: |-
-      Bij de aanvraag tot ontheffing van de inburgeringsplicht op grond van een psychische of lichamelijke belemmering
-      dan wel verstandelijke handicap als bedoeld in [artikel 6, eerste lid, onderdeel a, van de wet][ref1],
+      1 Bij de aanvraag tot ontheffing van de inburgeringsplicht op grond van een psychische of lichamelijke
+      belemmering dan wel verstandelijke handicap als bedoeld in [artikel 6, eerste lid, onderdeel a, van de wet][ref1],
       legt de inburgeringsplichtige een advies over van een door Onze Minister aangewezen
       onafhankelijke arts, die is ingeschreven in het betreffende register, bedoeld in
       [artikel 3, eerste lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref2].
+
+      2 Onze Minister geeft binnen acht weken na ontvangst van de aanvraag een beschikking.
+
+      3 Indien Onze Minister, op grond van het advies, bedoeld in het eerste lid, van oordeel is dat de
+      inburgeringsplichtige het inburgeringsexamen slechts kan afleggen onder bijzondere examenomstandigheden die zijn
+      aangepast aan de mogelijkheden van die inburgeringsplichtige, wordt in de beschikking vermeld welke bijzondere
+      examenomstandigheden het betreft.
+
+      4 De ontheffing kan worden verleend indien redelijkerwijs verwacht mag worden dat de aard en de ernst van de
+      psychische of lichamelijke belemmering dan wel verstandelijke handicap zodanig zijn dat niet binnen vijf jaar na de
+      aanvraag van de ontheffing aan de inburgeringsplicht kan worden voldaan.
+
+      5 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlening van de ontheffing alsmede
+      omtrent het advies, bedoeld in het eerste lid.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel6
@@ -522,42 +408,25 @@ articles:
       - id: ref2
         bwb_id: BWBR0006251
         artikel: '3'
-  - number: 2.8.2
-    text: Onze Minister geeft binnen acht weken na ontvangst van de aanvraag een beschikking.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8
-  - number: 2.8.3
+  - number: 2.8a
     text: |-
-      Indien Onze Minister, op grond van het advies, bedoeld in het eerste lid, van oordeel is dat de
-      inburgeringsplichtige het inburgeringsexamen slechts kan afleggen onder bijzondere examenomstandigheden die zijn
-      aangepast aan de mogelijkheden van die inburgeringsplichtige, wordt in de beschikking vermeld welke bijzondere
-      examenomstandigheden het betreft.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8
-  - number: 2.8.4
-    text: |-
-      De ontheffing kan worden verleend indien redelijkerwijs verwacht mag worden dat de aard en de ernst van de
-      psychische of lichamelijke belemmering dan wel verstandelijke handicap zodanig zijn dat niet binnen vijf jaar na de
-      aanvraag van de ontheffing aan de inburgeringsplicht kan worden voldaan.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8
-  - number: 2.8.5
-    text: |-
-      Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlening van de ontheffing alsmede
-      omtrent het advies, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8
-  - number: 2.8a.1
-    text: |-
-      Onze Minister verleent op aanvraag ontheffing van de inburgeringsplicht, indien Onze Minister van oordeel is dat
+      1 Onze Minister verleent op aanvraag ontheffing van de inburgeringsplicht, indien Onze Minister van oordeel is dat
       een inburgeringsplichtige aantoonbaar voldoende is ingeburgerd.
+
+      2 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlening van de ontheffing.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8a
-  - number: 2.8a.2
-    text: Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlening van de ontheffing.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8a
-  - number: 2.8b.1
+  - number: 2.8b
     text: |-
-      Een aanvraag tot ontheffing van de inburgeringsplicht op grond van door de inburgeringsplichtige aantoonbaar
+      1 Een aanvraag tot ontheffing van de inburgeringsplicht op grond van door de inburgeringsplichtige aantoonbaar
       geleverde inspanningen als bedoeld in [artikel 6, eerste lid, onderdeel b, van de wet][ref1], kan niet eerder
       worden ingediend dan zes maanden voor het verstrijken van de voor de inburgeringsplichtige geldende termijn,
       bedoeld in [artikel 7, eerste lid, van de wet][ref2]. Onze Minister geeft binnen acht weken na ontvangst van de
       aanvraag een beschikking.
+
+      2 In bijzondere gevallen die de inburgeringsplichtige betreffen, kan Onze Minister ambtshalve besluiten tot het
+      verlenen van de ontheffing.
+
+      3 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent het verlenen van de ontheffing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel6
@@ -570,45 +439,29 @@ articles:
       - id: ref2
         bwb_id: BWBR0020611
         artikel: '7'
-  - number: 2.8b.2
-    text: |-
-      In bijzondere gevallen die de inburgeringsplichtige betreffen, kan Onze Minister ambtshalve besluiten tot het
-      verlenen van de ontheffing.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8b
-  - number: 2.8b.3
-    text: Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent het verlenen van de ontheffing.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.8b
   - number: '2.9'
     text: |-
       De inburgeringsplichtige verwerft de volgende vaardigheden in de Nederlandse taal op het niveau A2 van het Europees
       Raamwerk voor Moderne Vreemde Talen:
+
+      a. spreekvaardigheid;
+
+      b. luistervaardigheid;
+
+      c. schrijfvaardigheid;
+
+      d. leesvaardigheid.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.9
-  - number: 2.9.a
-    text: spreekvaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.9
-  - number: 2.9.b
-    text: luistervaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.9
-  - number: 2.9.c
-    text: schrijfvaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.9
-  - number: 2.9.d
-    text: leesvaardigheid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.9
-  - number: 2.10.1
+  - number: '2.10'
     text: |-
-      De inburgeringsplichtige verwerft kennis van de Nederlandse samenleving op het niveau van de bij regeling van Onze
-      Minister vast te stellen eindtermen met betrekking tot de volgende onderdelen:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.10
-  - number: 2.10.1.a
-    text: kennis van de Nederlandse maatschappij;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.10
-  - number: 2.10.1.b
-    text: oriëntatie op de Nederlandse arbeidsmarkt.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.10
-  - number: 2.10.2
-    text: |-
-      Van de in het eerste lid, onderdeel b, bedoelde te verwerven kennis is vrijgesteld de persoon die
+      1 De inburgeringsplichtige verwerft kennis van de Nederlandse samenleving op het niveau van de bij regeling van
+      Onze Minister vast te stellen eindtermen met betrekking tot de volgende onderdelen:
+
+      a. kennis van de Nederlandse maatschappij;
+
+      b. oriëntatie op de Nederlandse arbeidsmarkt.
+
+      2 Van de in het eerste lid, onderdeel b, bedoelde te verwerven kennis is vrijgesteld de persoon die
       inburgeringsplichtig is geworden voor 1 januari 2015.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.10
   - number: '2.11'
@@ -618,7 +471,7 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel2.2
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.11
     references:
       - id: ref1
@@ -626,63 +479,54 @@ articles:
         artikel: '7'
       - id: ref2
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 2.12.1
+  - number: '2.12'
     text: |-
-      Een aanvraag tot verlenging van de voor de inburgeringsplichtige geldende termijn, bedoeld in
+      1 Een aanvraag tot verlenging van de voor de inburgeringsplichtige geldende termijn, bedoeld in
       [artikel 7, eerste lid, van de wet][ref1], kan niet eerder worden ingediend dan zes maanden voor het verstrijken
       van die termijn. Onze Minister geeft binnen acht weken na ontvangst van de aanvraag een beschikking.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.12
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '7'
-  - number: 2.12.2
-    text: |-
-      In bijzondere gevallen die de inburgeringsplichtige betreffen, kan Onze Minister ambtshalve
+      2 In bijzondere gevallen die de inburgeringsplichtige betreffen, kan Onze Minister ambtshalve
       besluiten tot verlenging van de voor de inburgeringsplichtige geldende termijn, bedoeld in
-      [artikel 7, eerste lid, van de wet][ref1]. De beschikking wordt niet eerder gegeven dan zes maanden voor het
+      [artikel 7, eerste lid, van de wet][ref2]. De beschikking wordt niet eerder gegeven dan zes maanden voor het
       verstrijken van die termijn.
 
+      3 In de beschikking wordt de duur van de verlenging vermeld.
+
+      4 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlenging van de termijn.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel7
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.12
     references:
       - id: ref1
         bwb_id: BWBR0020611
         artikel: '7'
-  - number: 2.12.3
-    text: In de beschikking wordt de duur van de verlenging vermeld.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.12
-  - number: 2.12.4
-    text: Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de verlenging van de termijn.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel2.12
-  - number: 3.1.1
-    text: Onze Minister stelt het inburgeringsexamen vast en neemt het af.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.1
-  - number: 3.1.2
-    text: Bij regeling van Onze Minister worden regels gesteld omtrent de toepassing van het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.1
-  - number: 3.2.1
+      - id: ref2
+        bwb_id: BWBR0020611
+        artikel: '7'
+  - number: '3.1'
     text: |-
-      Degene die wenst te worden toegelaten tot een of meer onderdelen van het inburgeringsexamen, meldt zich daartoe
+      1 Onze Minister stelt het inburgeringsexamen vast en neemt het af.
+
+      2 Bij regeling van Onze Minister worden regels gesteld omtrent de toepassing van het eerste lid.
+    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.1
+  - number: '3.2'
+    text: |-
+      1 Degene die wenst te worden toegelaten tot een of meer onderdelen van het inburgeringsexamen, meldt zich daartoe
       schriftelijk aan overeenkomstig de door Onze Minister gestelde regels.
+
+      2 Onze Minister bevestigt de aanmelding schriftelijk.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.2
-  - number: 3.2.2
-    text: Onze Minister bevestigt de aanmelding schriftelijk.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.2
-  - number: 3.3.1
+  - number: '3.3'
     text: |-
-      Voor toelating tot de af te leggen onderdelen van het inburgeringsexamen is examengeld verschuldigd, dat
+      1 Voor toelating tot de af te leggen onderdelen van het inburgeringsexamen is examengeld verschuldigd, dat
       overeenkomstig door Onze Minister vastgestelde regels wordt voldaan.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.3
-  - number: 3.3.2
-    text: Het examengeld wordt vastgesteld bij regeling van Onze Minister.
+
+      2 Het examengeld wordt vastgesteld bij regeling van Onze Minister.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.3
   - number: '3.4'
     text: |-
@@ -696,191 +540,150 @@ articles:
       - id: ref1
         bwb_id: BWBR0006297
         artikel: '1'
-  - number: 3.5.1
+  - number: '3.5'
     text: |-
-      Onze Minister stelt de kandidaat met een psychische of lichamelijke belemmering of verstandelijke handicap op diens
-      verzoek in de gelegenheid het inburgeringsexamen dan wel een onderdeel daarvan af te leggen op een wijze die is
-      aangepast aan zijn mogelijkheden.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.5
-  - number: 3.5.2
-    text: |-
-      Indien Onze Minister bij de toepassing van [artikel 2.8][ref1] heeft geoordeeld dat de inburgeringsplichtige
+      1 Onze Minister stelt de kandidaat met een psychische of lichamelijke belemmering of verstandelijke handicap op
+      diens verzoek in de gelegenheid het inburgeringsexamen dan wel een onderdeel daarvan af te leggen op een wijze die
+      is aangepast aan zijn mogelijkheden.
+
+      2 Indien Onze Minister bij de toepassing van [artikel 2.8][ref1] heeft geoordeeld dat de inburgeringsplichtige
       het inburgeringsexamen dan wel een onderdeel daarvan slechts kan afleggen op een wijze die is aangepast aan de
       mogelijkheden van die inburgeringsplichtige, legt de kandidaat bij de aanvraag de beschikking, bedoeld in het derde
       lid van dat artikel over.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '5'
-  - number: 3.5.3
-    text: |-
-      In de overige gevallen legt de kandidaat een advies over van een door Onze Minister
+      3 In de overige gevallen legt de kandidaat een advies over van een door Onze Minister
       aangewezen onafhankelijke arts, die is ingeschreven in het betreffende register, bedoeld in
-      [artikel 3, eerste lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref1], waaruit blijkt dat hij
+      [artikel 3, eerste lid, van de Wet op de beroepen in de individuele gezondheidszorg][ref2], waaruit blijkt dat hij
       het inburgeringsexamen dan wel een onderdeel daarvan slechts kan afleggen op een wijze die is aangepast aan zijn
       mogelijkheden.
 
+      4 Bij regeling van Onze Minister worden regels gesteld over de toepassing van dit artikel.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006251#Artikel3
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2.8
+      [ref2]: https://wetten.overheid.nl/BWBR0006251#Artikel3
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0006251
-        artikel: '3'
-  - number: 3.5.4
-    text: Bij regeling van Onze Minister worden regels gesteld over de toepassing van dit artikel.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.5
-  - number: 3.6.1
-    text: |-
-      Indien een kandidaat zich ten aanzien van een onderdeel van het inburgeringsexamen aan enige onregelmatigheid
-      schuldig maakt of heeft gemaakt, kan Onze Minister het inburgeringsexamen ongeldig verklaren en bepalen dat de
-      kandidaat het inburgeringsexamen of een onderdeel daarvan opnieuw moet afleggen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.6
-  - number: 3.6.2
-    text: |-
-      Indien de onregelmatigheid eerst na afloop van het examen wordt ontdekt, kan Onze Minister het examenresultaat
-      ongeldig verklaren.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.6
-  - number: 3.9.1
-    text: |-
-      Het inburgeringsexamen bestaat voor wat betreft de examinering van de mondelinge en schriftelijke vaardigheden in
-      de Nederlandse taal, bedoeld in [artikel 7, eerste lid, van de wet][ref1], uit de volgende onderdelen:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '7'
-  - number: 3.9.1.a
-    text: leesvaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.1.b
-    text: luistervaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.1.c
-    text: schrijfvaardigheid;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.1.d
-    text: spreekvaardigheid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.2
-    text: |-
-      Het inburgeringsexamen bestaat voor wat betreft de examinering van de kennis van de Nederlandse samenleving,
-      bedoeld in [artikel 7, eerste lid, van de wet][ref1], uit de volgende onderdelen:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '7'
-  - number: 3.9.2.a
-    text: kennis van de Nederlandse maatschappij;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.2.b
-    text: oriëntatie op de Nederlandse arbeidsmarkt.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9.3
-    text: |-
-      Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de onderdelen van het
-      inburgeringsexamen, genoemd in het eerste en tweede lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
-  - number: 3.9a.1
-    text: |-
-      De onderdelen leesvaardigheid, luistervaardigheid en spreekvaardigheid van het inburgeringsexamen worden afgelegd
-      door middel van een door Onze Minister beheerd geautomatiseerd systeem.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9a
-  - number: 3.9a.2
-    text: Het onderdeel schrijfvaardigheid van het inburgeringsexamen wordt schriftelijk afgelegd.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9a
-  - number: 3.9a.3
-    text: |-
-      Het onderdeel kennis van de Nederlandse samenleving van het inburgeringsexamen wordt voor wat betreft het onderdeel
-      oriëntatie op de Nederlandse arbeidsmarkt afgelegd door middel van een praktijkexamen en voor wat betreft het
-      onderwerp kennis van de Nederlandse maatschappij door middel van een door Onze Minister beheerd geautomatiseerd
-      systeem.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9a
-  - number: 3.9a.4
-    text: Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de wijze van examineren.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9a
-  - number: 3.9b.1
-    text: |-
-      De resultaten van de onderdelen leesvaardigheid en luistervaardigheid van het inburgeringsexamen worden beoordeeld
-      door Onze Minister door middel van het geautomatiseerde systeem, bedoeld in [artikel 3.9a, eerste lid][ref1].
-      Het onderdeel spreekvaardigheid van het inburgeringsexamen wordt voor een deel beoordeeld door middel van het
-      geautomatiseerde systeem, bedoeld in artikel 3.9a, eerste lid, en voor het overige deel door de door Onze Minister
-      aan te wijzen beoordelaars.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel3
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9b
     references:
       - id: ref1
         bwb_id: BWBR0020674
+        artikel: '2.8'
+        hoofdstuk: '2'
+        afdeling: '5'
+      - id: ref2
+        bwb_id: BWBR0006251
         artikel: '3'
-        hoofdstuk: '3'
-        paragraaf: '2'
-  - number: 3.9b.2
-    text: Het onderdeel schrijfvaardigheid wordt beoordeeld door de door Onze Minister aan te wijzen beoordelaars.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9b
-  - number: 3.9b.3
+  - number: '3.6'
     text: |-
-      Het onderdeel kennis van de Nederlandse samenleving van het inburgeringsexamen, bedoeld in
-      [artikel 3.9a, derde lid][ref1], wordt voor wat betreft het onderdeel kennis van de Nederlandse maatschappij
+      1 Indien een kandidaat zich ten aanzien van een onderdeel van het inburgeringsexamen aan enige onregelmatigheid
+      schuldig maakt of heeft gemaakt, kan Onze Minister het inburgeringsexamen ongeldig verklaren en bepalen dat de
+      kandidaat het inburgeringsexamen of een onderdeel daarvan opnieuw moet afleggen.
+
+      2 Indien de onregelmatigheid eerst na afloop van het examen wordt ontdekt, kan Onze Minister het examenresultaat
+      ongeldig verklaren.
+    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.6
+  - number: '3.9'
+    text: |-
+      1 Het inburgeringsexamen bestaat voor wat betreft de examinering van de mondelinge en schriftelijke vaardigheden in
+      de Nederlandse taal, bedoeld in [artikel 7, eerste lid, van de wet][ref1], uit de volgende onderdelen:
+
+      a. leesvaardigheid;
+
+      b. luistervaardigheid;
+
+      c. schrijfvaardigheid;
+
+      d. spreekvaardigheid.
+
+      2 Het inburgeringsexamen bestaat voor wat betreft de examinering van de kennis van de Nederlandse samenleving,
+      bedoeld in [artikel 7, eerste lid, van de wet][ref2], uit de volgende onderdelen:
+
+      a. kennis van de Nederlandse maatschappij;
+
+      b. oriëntatie op de Nederlandse arbeidsmarkt.
+
+      3 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de onderdelen van het
+      inburgeringsexamen, genoemd in het eerste en tweede lid.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9
+    references:
+      - id: ref1
+        bwb_id: BWBR0020611
+        artikel: '7'
+      - id: ref2
+        bwb_id: BWBR0020611
+        artikel: '7'
+  - number: 3.9a
+    text: |-
+      1 De onderdelen leesvaardigheid, luistervaardigheid en spreekvaardigheid van het inburgeringsexamen worden afgelegd
+      door middel van een door Onze Minister beheerd geautomatiseerd systeem.
+
+      2 Het onderdeel schrijfvaardigheid van het inburgeringsexamen wordt schriftelijk afgelegd.
+
+      3 Het onderdeel kennis van de Nederlandse samenleving van het inburgeringsexamen wordt voor wat betreft het
+      onderdeel oriëntatie op de Nederlandse arbeidsmarkt afgelegd door middel van een praktijkexamen en voor wat betreft
+      het onderwerp kennis van de Nederlandse maatschappij door middel van een door Onze Minister beheerd geautomatiseerd
+      systeem.
+
+      4 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de wijze van examineren.
+    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9a
+  - number: 3.9b
+    text: |-
+      1 De resultaten van de onderdelen leesvaardigheid en luistervaardigheid van het inburgeringsexamen
+      worden beoordeeld door Onze Minister door middel van het geautomatiseerde systeem, bedoeld in
+      [artikel 3.9a, eerste lid][ref1]. Het onderdeel spreekvaardigheid van het inburgeringsexamen wordt voor een deel
+      beoordeeld door middel van het geautomatiseerde systeem, bedoeld in artikel 3.9a, eerste lid, en voor het overige
+      deel door de door Onze Minister aan te wijzen beoordelaars.
+
+      2 Het onderdeel schrijfvaardigheid wordt beoordeeld door de door Onze Minister aan te wijzen beoordelaars.
+
+      3 Het onderdeel kennis van de Nederlandse samenleving van het inburgeringsexamen, bedoeld in
+      [artikel 3.9a, derde lid][ref2], wordt voor wat betreft het onderdeel kennis van de Nederlandse maatschappij
       door middel van een geautomatiseerd systeem beoordeeld en het praktijkexamen van het onderdeel oriëntatie op de
       Nederlandse arbeidsmarkt wordt door examinatoren beoordeeld.
 
+      4 Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de beoordeling van het examen.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel3
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel3.9a
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel3.9a
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9b
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '3'
+        artikel: 3.9a
         hoofdstuk: '3'
         paragraaf: '2'
-  - number: 3.9b.4
-    text: Bij regeling van Onze Minister kunnen nadere regels worden gesteld omtrent de beoordeling van het examen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.9b
-  - number: 3.10.1
-    text: Het inburgeringsdiploma wordt uitgereikt door Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.10
-  - number: 3.10.2
-    text: Het inburgeringsdiploma wordt ondertekend door Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.10
-  - number: 3.10.3
+      - id: ref2
+        bwb_id: BWBR0020674
+        artikel: 3.9a
+        hoofdstuk: '3'
+        paragraaf: '2'
+  - number: '3.10'
     text: |-
-      Duplicaten van inburgeringsdiploma’s worden tegen betaling van de kostprijs, uitsluitend door Onze Minister
+      1 Het inburgeringsdiploma wordt uitgereikt door Onze Minister.
+
+      2 Het inburgeringsdiploma wordt ondertekend door Onze Minister.
+
+      3 Duplicaten van inburgeringsdiploma’s worden tegen betaling van de kostprijs, uitsluitend door Onze Minister
       verstrekt.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.10
   - number: '3.13'
     text: |-
       Bij regeling van Onze Minister worden normen voor de kwaliteit van de examinering vastgesteld die in ieder geval
       betrekking hebben op:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
-  - number: 3.13.a
-    text: de afname van de onderdelen van het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
-  - number: 3.13.b
-    text: de voorwaarden voor toelating tot de onderdelen van het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
-  - number: 3.13.c
-    text: de deskundigheid van de examinatoren en beoordelaars;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
-  - number: 3.13.d
-    text: het vaststellen van de uitslag van de onderdelen van het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
-  - number: 3.13.e
-    text: de waarborging van de kwaliteit van de examinering.
+
+      a. de afname van de onderdelen van het inburgeringsexamen;
+
+      b. de voorwaarden voor toelating tot de onderdelen van het inburgeringsexamen;
+
+      c. de deskundigheid van de examinatoren en beoordelaars;
+
+      d. het vaststellen van de uitslag van de onderdelen van het inburgeringsexamen;
+
+      e. de waarborging van de kwaliteit van de examinering.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel3.13
   - number: '4.1'
     text: |-
@@ -888,9 +691,25 @@ articles:
       persoon, bedoeld in [artikel 5, tweede lid, van de wet][ref1], die rechtmatig verblijf verkrijgt als bedoeld in
       [artikel 8, onderdeel e of l, van de Vreemdelingenwet 2000][ref2] en die:
 
+      a. anders dan voor een tijdelijk doel als bedoeld in [artikel 2.1][ref3] in Nederland verblijft;
+
+      b. ouder dan 16 jaar is dan wel de pensioengerechtigde leeftijd, bedoeld in
+      [artikel 7a, eerste lid, van de Algemene Ouderdomswet][ref4] nog niet heeft bereikt;
+
+      c. minder dan acht jaren tijdens de leerplichtige leeftijd in Nederland heeft verbleven;
+
+      d. niet beschikt over een bij of krachtens algemene maatregel van bestuur aangewezen diploma, certificaat of ander
+      document;
+
+      e. niet leerplichtig of kwalificatieplichtig is, dan wel een opleiding volgt waarvan de afronding leidt tot
+      uitreiking van een bij of krachtens algemene maatregel van bestuur aangewezen diploma, certificaat of ander
+      document.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel5
       [ref2]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel2.1
+      [ref4]: https://wetten.overheid.nl/BWBR0002221#Artikel7a
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
     references:
       - id: ref1
@@ -899,170 +718,121 @@ articles:
       - id: ref2
         bwb_id: BWBR0011823
         artikel: '8'
-  - number: 4.1.a
-    text: |-
-      anders dan voor een tijdelijk doel als bedoeld in [artikel 2.1][ref1] in Nederland verblijft;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.1'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 4.1.b
-    text: |-
-      ouder dan 16 jaar is dan wel de pensioengerechtigde leeftijd, bedoeld in
-      [artikel 7a, eerste lid, van de Algemene Ouderdomswet][ref1] nog niet heeft bereikt;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002221#Artikel7a
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0002221
         artikel: 7a
-  - number: 4.1.c
-    text: minder dan acht jaren tijdens de leerplichtige leeftijd in Nederland heeft verbleven;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
-  - number: 4.1.d
+  - number: 4.1a
     text: |-
-      niet beschikt over een bij of krachtens algemene maatregel van bestuur aangewezen diploma, certificaat of ander
-      document;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
-  - number: 4.1.e
-    text: |-
-      niet leerplichtig of kwalificatieplichtig is, dan wel een opleiding volgt waarvan de afronding leidt tot uitreiking
-      van een bij of krachtens algemene maatregel van bestuur aangewezen diploma, certificaat of ander document.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1
-  - number: 4.1a.1
-    text: |-
-      Aan de inburgeringsplichtige kan eenmalig op aanvraag een lening van ten hoogste € 5.000,– worden verstrekt ten
+      1 Aan de inburgeringsplichtige kan eenmalig op aanvraag een lening van ten hoogste € 5.000,– worden verstrekt ten
       behoeve van:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-  - number: 4.1a.1.a
-    text: |-
-      het volgen bij een cursusinstelling van een cursus die opleidt tot het
+
+      a. het volgen bij een cursusinstelling van een cursus die opleidt tot het
       inburgeringsexamen of het staatsexamen Nederlands als tweede taal I of II als bedoeld in
       [artikel 7.3.1, eerste lid, onderdeel c, van de Wet educatie en beroepsonderwijs][ref1];
 
+      b. het afleggen van een examen als bedoeld onder a.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-    references:
-      - id: ref1
-        bwb_id: BWBR0007625
-        artikel: '7'
-  - number: 4.1a.1.b
-    text: het afleggen van een examen als bedoeld onder a.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-  - number: 4.1a.2
-    text: |-
-      De hoogte van de lening wordt bepaald aan de hand van de hoogte van het overeenkomstig
-      [artikel 8, eerste tot en met derde lid, van de Algemene wet inkomensafhankelijke regelingen][ref1] te berekenen
+      2 De hoogte van de lening wordt bepaald aan de hand van de hoogte van het overeenkomstig
+      [artikel 8, eerste tot en met derde lid, van de Algemene wet inkomensafhankelijke regelingen][ref2] te berekenen
       toetsingsinkomen van de inburgeringsplichtige en diens partner als bedoeld in artikel 3 van die wet.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018472#Artikel8
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-    references:
-      - id: ref1
-        bwb_id: BWBR0018472
-        artikel: '8'
-  - number: 4.1a.3
-    text: |-
-      In afwijking van het eerste lid kan een lening worden verstrekt van ten hoogste € 10.000,–, aan de
+      3 In afwijking van het eerste lid kan een lening worden verstrekt van ten hoogste € 10.000,–, aan de
       inburgeringsplichtige en kan hij de lening tevens aanwenden voor het volgen van een alfabetiseringscursus, indien
       hij:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-  - number: 4.1a.3.a
-    text: |-
-      rechtmatig verblijf heeft op grond van een verblijfsvergunning voor bepaalde tijd als bedoeld in
-      [artikel 28 van de Vreemdelingenwet 2000][ref1], of
 
+      a. rechtmatig verblijf heeft op grond van een verblijfsvergunning voor bepaalde tijd als bedoeld in
+      [artikel 28 van de Vreemdelingenwet 2000][ref3], of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel28
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-    references:
-      - id: ref1
-        bwb_id: BWBR0011823
-        artikel: '28'
-  - number: 4.1a.3.b
-    text: |-
-      als gezinslid van een houder van een verblijfsvergunning als bedoeld in [artikel 28][ref1]
-      of [33 van de Vreemdelingenwet 2000][ref2] rechtmatig verblijf houdt als bedoeld in
-      [artikel 8, onderdeel a, van die wet][ref3].
+      b. als gezinslid van een houder van een verblijfsvergunning als bedoeld in [artikel 28][ref4]
+      of [33 van de Vreemdelingenwet 2000][ref5] rechtmatig verblijf houdt als bedoeld in
+      [artikel 8, onderdeel a, van die wet][ref6].
 
+      4 Het tweede lid is niet van toepassing op de inburgeringsplichtige, bedoeld in het derde lid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel28
-      [ref2]: https://wetten.overheid.nl/BWBR0011823#Artikel33
-      [ref3]: https://wetten.overheid.nl/BWBR0011823#Artikel8
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-    references:
-      - id: ref1
-        bwb_id: BWBR0011823
-        artikel: '28'
-      - id: ref2
-        bwb_id: BWBR0011823
-        artikel: '33'
-      - id: ref3
-        bwb_id: BWBR0011823
-        artikel: '8'
-  - number: 4.1a.4
-    text: Het tweede lid is niet van toepassing op de inburgeringsplichtige, bedoeld in het derde lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-  - number: 4.1a.5
-    text: |-
-      De lening ten behoeve van het volgen van een cursus wordt slechts verstrekt indien de inburgeringsplichtige een
+      5 De lening ten behoeve van het volgen van een cursus wordt slechts verstrekt indien de inburgeringsplichtige een
       cursus volgt bij een cursusinstelling die in het bezit is van een bij regeling van Onze Minister aan te wijzen
-      keurmerk of van het in [artikel 9, eerste lid, van de wet][ref1] bedoelde certificaat.
+      keurmerk of van het in [artikel 9, eerste lid, van de wet][ref7] bedoelde certificaat.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel9
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '9'
-  - number: 4.1a.6
-    text: |-
-      De lening wordt niet verstrekt, indien de inburgeringsplichtige op grond van
-      [artikel 4.1][ref1] zoals dat luidde voor het tijdstip van inwerkingtreding van het
+      6 De lening wordt niet verstrekt, indien de inburgeringsplichtige op grond van
+      [artikel 4.1][ref8] zoals dat luidde voor het tijdstip van inwerkingtreding van het
       __REF001___________________________________________________________________________________________________________
       ____________________________________________________________________________________ (Stb. 2012, 432) een lening is
       verstrekt en deze nog niet geheel is terugbetaald of kwijtgescholden.
 
+      7 Bij regeling van Onze Minister kunnen nadere regels worden gesteld met betrekking tot de toepassing van het
+      eerste, tweede, derde en vijfde lid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0032034
+
+      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.3.1
+      [ref2]: https://wetten.overheid.nl/BWBR0018472#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0011823#Artikel28
+      [ref4]: https://wetten.overheid.nl/BWBR0011823#Artikel28
+      [ref5]: https://wetten.overheid.nl/BWBR0011823#Artikel33
+      [ref6]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+      [ref7]: https://wetten.overheid.nl/BWBR0020611#Artikel9
+      [ref8]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1
+      [ref9]: https://wetten.overheid.nl/BWBR0032034
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
     references:
       - id: ref1
+        bwb_id: BWBR0007625
+        artikel: 7.3.1
+      - id: ref2
+        bwb_id: BWBR0018472
+        artikel: '8'
+      - id: ref3
+        bwb_id: BWBR0011823
+        artikel: '28'
+      - id: ref4
+        bwb_id: BWBR0011823
+        artikel: '28'
+      - id: ref5
+        bwb_id: BWBR0011823
+        artikel: '33'
+      - id: ref6
+        bwb_id: BWBR0011823
+        artikel: '8'
+      - id: ref7
+        bwb_id: BWBR0020611
+        artikel: '9'
+      - id: ref8
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.1'
         hoofdstuk: '4'
         paragraaf: '1'
-      - id: ref2
+      - id: ref9
         bwb_id: BWBR0032034
-  - number: 4.1a.7
+  - number: '4.2'
     text: |-
-      Bij regeling van Onze Minister kunnen nadere regels worden gesteld met betrekking tot de toepassing van het eerste,
-      tweede, derde en vijfde lid.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.1a
-  - number: 4.2.1
-    text: |-
-      De inburgeringsplichtige heeft aanspraak op de lening gedurende de termijn, bedoeld in
+      1 De inburgeringsplichtige heeft aanspraak op de lening gedurende de termijn, bedoeld in
       [artikel 7, eerste lid, van de wet][ref1], gedurende de verlengde termijn, bedoeld in artikel 7, derde en
       vierde lid, aanhef en onderdeel a, van de wet en gedurende de termijn, genoemd in de boetebeschikking, bedoeld
       in [artikel 32 van de wet][ref2]. Een persoon als bedoeld in [artikel 4.1][ref3] heeft aanspraak op de lening
       gedurende drie jaar nadat hij rechtmatig verblijf verkrijgt.
 
+      2 Het geleende bedrag wordt niet uitbetaald, indien de inburgeringsplichtige:
+
+      a. niet langer ingezetene is in de zin van de [Wet basisregistratie personen][ref4];
+
+      b. als vreemdeling geen rechtmatig verblijf meer heeft in de zin van
+      [artikel 8, onderdelen a, c, e en l van de Vreemdelingenwet 2000][ref5], dan wel, in de in
+      [artikel 2.2, eerste lid][ref6], bedoelde gevallen, in de zin van artikel 8, onderdelen g of h, van de
+      Vreemdelingenwet 2000.
+
+      3 Bij regeling van Onze Minister worden regels gesteld over de betaling van de lening.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
       [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel32
-      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1
+      [ref4]: https://wetten.overheid.nl/BWBR0033715
+      [ref5]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+      [ref6]: https://wetten.overheid.nl/BWBR0020674#Artikel2.2
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.2
     references:
       - id: ref1
@@ -1073,179 +843,133 @@ articles:
         artikel: '32'
       - id: ref3
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.1'
         hoofdstuk: '4'
         paragraaf: '1'
-  - number: 4.2.2
-    text: 'Het geleende bedrag wordt niet uitbetaald, indien de inburgeringsplichtige:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.2
-  - number: 4.2.2.a
-    text: |-
-      niet langer ingezetene is in de zin van de [Wet basisregistratie personen][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0033715
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0033715
-  - number: 4.2.2.b
-    text: |-
-      als vreemdeling geen rechtmatig verblijf meer heeft in de zin van
-      [artikel 8, onderdelen a, c, e en l van de Vreemdelingenwet 2000][ref1], dan wel, in de in
-      [artikel 2.2, eerste lid][ref2], bedoelde gevallen, in de zin van artikel 8, onderdelen g of h, van de
-      Vreemdelingenwet 2000.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.2
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0011823
         artikel: '8'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 4.2.3
-    text: Bij regeling van Onze Minister worden regels gesteld over de betaling van de lening.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.2
-  - number: 4.3.1
-    text: In de aanvraag vermeldt de aanvrager zijn burgerservicenummer.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.3
-  - number: 4.3.2
+  - number: '4.3'
     text: |-
-      Bij de aanvraag overlegt de aanvrager een door hem ondertekende verklaring waarin hij Onze Minister machtigt het
+      1 In de aanvraag vermeldt de aanvrager zijn burgerservicenummer.
+
+      2 Bij de aanvraag overlegt de aanvrager een door hem ondertekende verklaring waarin hij Onze Minister machtigt het
       bedrag van de maandelijkse termijnen die hij op grond van [artikel 4.8][ref1] of [4.11][ref2] moet terugbetalen,
       automatisch van zijn bankrekening af te schrijven.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.8
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.11
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.3
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.8'
         hoofdstuk: '4'
         paragraaf: '2'
       - id: ref2
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.11'
         hoofdstuk: '4'
         paragraaf: '2'
   - number: '4.4'
     text: Onze Minister geeft binnen acht weken na ontvangst van de aanvraag een beschikking.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.4
-  - number: 4.5.1
+  - number: '4.5'
     text: |-
-      Onze Minister stelt jaarlijks voor 31 december ten behoeve van het daarop volgende jaar een rentepercentage vast
+      1 Onze Minister stelt jaarlijks voor 31 december ten behoeve van het daarop volgende jaar een rentepercentage vast
       dat gelijk is aan het gemiddeld effectief rendement over de maand oktober van dat jaar van de openbare lening,
       uitgegeven door de Staat der Nederlanden en toegelaten tot de notering aan de officiële markt ter beurze van
       Amsterdam, met een resterende looptijd van drie tot vijf jaren.
+
+      2 Bij regeling van Onze Minister worden nadere regels gesteld omtrent de wijze waarop de rente wordt berekend over
+      de aangegane lening.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.5
-  - number: 4.5.2
+  - number: '4.6'
     text: |-
-      Bij regeling van Onze Minister worden nadere regels gesteld omtrent de wijze waarop de rente wordt berekend over de
-      aangegane lening.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.5
-  - number: 4.6.1
-    text: De terugbetalingsperiode beslaat ten hoogste tien jaren.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.6
-  - number: 4.6.2
-    text: |-
-      De terugbetalingsperiode vangt aan op de eerste dag van de maand volgend op het in
+      1 De terugbetalingsperiode beslaat ten hoogste tien jaren.
+
+      2 De terugbetalingsperiode vangt aan op de eerste dag van de maand volgend op het in
       [artikel 17, eerste lid, van de wet][ref1] bedoelde tijdstip. De terugbetalingsperiode kan op schriftelijk verzoek
       van de debiteur aanvangen op een eerder tijdstip, in welk geval de aanspraak op de lening vervalt.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel17
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.6
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '17'
-  - number: 4.6.3
-    text: |-
-      Gedurende de in [artikel 17, eerste lid, van de wet][ref1] bedoelde aanloopfase van zes maanden bestaat geen
+      3 Gedurende de in [artikel 17, eerste lid, van de wet][ref2] bedoelde aanloopfase van zes maanden bestaat geen
       verplichting tot terugbetaling, doch is wel rente verschuldigd over het bedrag van de lening.
 
+      4 In afwijking van het tweede lid, vangt de terugbetalingsperiode voor een persoon als bedoeld in
+      [artikel 4.1][ref3] aan zes maanden nadat drie jaar zijn verstreken sedert de verstrekking van de lening of, indien
+      dat eerder is, zes maanden nadat aan de inburgeringsplicht is voldaan.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel17
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel17
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.6
     references:
       - id: ref1
         bwb_id: BWBR0020611
         artikel: '17'
-  - number: 4.6.4
-    text: |-
-      In afwijking van het tweede lid, vangt de terugbetalingsperiode voor een persoon als bedoeld in [artikel 4.1][ref1]
-      aan zes maanden nadat drie jaar zijn verstreken sedert de verstrekking van de lening of, indien dat eerder is, zes
-      maanden nadat aan de inburgeringsplicht is voldaan.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.6
-    references:
-      - id: ref1
+      - id: ref2
+        bwb_id: BWBR0020611
+        artikel: '17'
+      - id: ref3
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.1'
         hoofdstuk: '4'
         paragraaf: '1'
-  - number: 4.7.1
+  - number: '4.7'
     text: |-
-      De terugbetaling van de lening geschiedt in maandelijkse termijnbedragen, behoudens in de bij regeling van Onze
+      1 De terugbetaling van de lening geschiedt in maandelijkse termijnbedragen, behoudens in de bij regeling van Onze
       Minister genoemde gevallen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.7
-  - number: 4.7.2
-    text: |-
-      De hoogte van het maandelijkse termijnbedrag wordt op basis van het aantal maanden van de terugbetalingsperiode tot
-      een gelijk bedrag vastgesteld bij de aanvang van de aanloopfase, bedoeld in [artikel 4.6, derde lid][ref1], dan wel
-      binnen acht weken na ontvangst van een verzoek als bedoeld in 4.6, tweede lid, tweede volzin.
+
+      2 De hoogte van het maandelijkse termijnbedrag wordt op basis van het aantal maanden van de terugbetalingsperiode
+      tot een gelijk bedrag vastgesteld bij de aanvang van de aanloopfase, bedoeld in [artikel 4.6, derde lid][ref1], dan
+      wel binnen acht weken na ontvangst van een verzoek als bedoeld in 4.6, tweede lid, tweede volzin.
+
+      3 Bij regeling van Onze Minister worden nadere regels gesteld over de hoogte van het termijnbedrag alsmede de wijze
+      waarop dit wordt berekend.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.6
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.7
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.6'
         hoofdstuk: '4'
         paragraaf: '2'
-  - number: 4.7.3
+  - number: '4.8'
     text: |-
-      Bij regeling van Onze Minister worden nadere regels gesteld over de hoogte van het termijnbedrag alsmede de wijze
-      waarop dit wordt berekend.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.7
-  - number: 4.8.1
-    text: |-
-      Binnen acht weken na de aanvang van de aanloopfase, bedoeld in [artikel 4.6, derde lid][ref1], dan wel de ontvangst
-      van een verzoek als bedoeld in artikel 4.6, tweede lid, tweede volzin, stelt Onze Minister het termijnbedrag vast
-      dat de debiteur overeenkomstig de [artikelen 4.5 tot en met 4.7][ref2] maandelijks moet terugbetalen alsmede de
-      periode waarbinnen dit moet gebeuren.
+      1 Binnen acht weken na de aanvang van de aanloopfase, bedoeld in [artikel 4.6, derde lid][ref1], dan wel
+      de ontvangst van een verzoek als bedoeld in artikel 4.6, tweede lid, tweede volzin, stelt Onze Minister het
+      termijnbedrag vast dat de debiteur overeenkomstig de [artikelen 4.5 tot en met 4.7][ref2] maandelijks moet
+      terugbetalen alsmede de periode waarbinnen dit moet gebeuren.
+
+      2 Bij regeling van Onze Minister kunnen regels worden gesteld voor het geval de debiteur meer betaalt dan het
+      termijnbedrag.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.6
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.5
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.8
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.6'
         hoofdstuk: '4'
         paragraaf: '2'
       - id: ref2
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.5'
         hoofdstuk: '4'
         paragraaf: '2'
-  - number: 4.8.2
-    text: |-
-      Bij regeling van Onze Minister kunnen regels worden gesteld voor het geval de debiteur meer betaalt dan het
-      termijnbedrag.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.8
   - number: '4.9'
     text: |-
       Indien de debiteur niet in staat is het overeenkomstig [artikel 4.8][ref1] vastgestelde termijnbedrag te
@@ -1253,150 +977,119 @@ articles:
       terugbetalingsperiode.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.8
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.9
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.8'
         hoofdstuk: '4'
         paragraaf: '2'
-  - number: 4.10.1
+  - number: '4.10'
     text: |-
-      Ter bepaling van de draagkracht van de debiteur wordt het toetsingsinkomen van de debiteur en dat van zijn partner
-      als bedoeld in [artikel 3 van de Algemene wet inkomensafhankelijke regelingen][ref1] in aanmerking genomen.
+      1 Ter bepaling van de draagkracht van de debiteur wordt het toetsingsinkomen van de debiteur en dat van zijn
+      partner als bedoeld in [artikel 3 van de Algemene wet inkomensafhankelijke regelingen][ref1] in aanmerking genomen.
+
+      2 Het toetsingsinkomen wordt berekend overeenkomstig
+      [artikel 8, eerste tot en met derde lid, van de Algemene wet inkomensafhankelijke regelingen][ref2].
+
+      3 Bij regeling van Onze Minister worden nadere regels gesteld ten aanzien van de wijze waarop de draagkracht van de
+      debiteur wordt vastgesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018472#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0018472#Artikel8
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.10
     references:
       - id: ref1
         bwb_id: BWBR0018472
         artikel: '3'
-  - number: 4.10.2
-    text: |-
-      Het toetsingsinkomen wordt berekend overeenkomstig
-      [artikel 8, eerste tot en met derde lid, van de Algemene wet inkomensafhankelijke regelingen][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018472#Artikel8
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.10
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0018472
         artikel: '8'
-  - number: 4.10.3
+  - number: '4.11'
     text: |-
-      Bij regeling van Onze Minister worden nadere regels gesteld ten aanzien van de wijze waarop de draagkracht van de
-      debiteur wordt vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.10
-  - number: 4.11.1
-    text: |-
-      Onze Minister geeft binnen acht weken na ontvangst van de aanvraag, bedoeld in [artikel 4.9][ref1], een
+      1 Onze Minister geeft binnen acht weken na ontvangst van de aanvraag, bedoeld in [artikel 4.9][ref1], een
       beschikking.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.11
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '2'
-  - number: 4.11.2
-    text: |-
-      Indien het bedrag van de draagkracht lager is dan het overeenkomstig [artikel 4.8][ref1] vastgestelde
+      2 Indien het bedrag van de draagkracht lager is dan het overeenkomstig [artikel 4.8][ref2] vastgestelde
       termijnbedrag, wordt het termijnbedrag opnieuw vastgesteld met ingang van de eerste dag van de maand volgend op de
       maand waarin Onze Minister het nieuwe termijnbedrag aan de debiteur bekend heeft gemaakt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.9
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.8
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.11
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.9'
+        hoofdstuk: '4'
+        paragraaf: '2'
+      - id: ref2
+        bwb_id: BWBR0020674
+        artikel: '4.8'
         hoofdstuk: '4'
         paragraaf: '2'
   - number: '4.12'
     text: Bij regeling van Onze Minister worden regels gesteld omtrent verzuim, aanmaning en de invordering van de schuld.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.12
-  - number: 4.13.1
+  - number: '4.13'
     text: |-
-      De schuld kan op verzoek van de inburgeringsplichtige door Onze Minister in bij regeling van Onze Minister aan te
+      1 De schuld kan op verzoek van de inburgeringsplichtige door Onze Minister in bij regeling van Onze Minister aan te
       wijzen gevallen geheel of gedeeltelijk worden kwijtgescholden.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
-  - number: 4.13.2
-    text: |-
-      Onze Minister geeft binnen acht weken na ontvangst van de aanvraag van een debiteur om gehele of gedeeltelijke
+
+      2 Onze Minister geeft binnen acht weken na ontvangst van de aanvraag van een debiteur om gehele of gedeeltelijke
       kwijtschelding een beschikking.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
-  - number: 4.13.3
-    text: |-
-      Aan vreemdelingen die rechtmatig verblijf in Nederland hebben verkregen op grond van
+
+      3 Aan vreemdelingen die rechtmatig verblijf in Nederland hebben verkregen op grond van
       [artikel 8, onderdeel c, van de Vreemdelingenwet 2000][ref1] en op of na 1 januari 2013 inburgeringsplichtig zijn
       geworden, wordt volledige kwijtschelding van de opgebouwde schuld ambtshalve verleend indien:
 
+      a. voldaan is aan de inburgeringsplicht binnen de termijn, bedoeld in [artikel 7, eerste lid, van de wet][ref2] of
+      gedurende de verlengde termijn, bedoeld in artikel 7, derde en vierde lid, aanhef en onderdeel a, van de wet; of
+
+      b. een vrijstelling van de inburgeringsplicht van toepassing is op grond van [artikel 5 van de wet][ref3]; of
+
+      c. ontheffing is verleend van de inburgeringsplicht als bedoeld in
+      [artikel 6, eerste en tweede lid, van de wet][ref4].
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel7
+      [ref3]: https://wetten.overheid.nl/BWBR0020611#Artikel5
+      [ref4]: https://wetten.overheid.nl/BWBR0020611#Artikel6
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
     references:
       - id: ref1
         bwb_id: BWBR0011823
         artikel: '8'
-  - number: 4.13.3.a
-    text: |-
-      voldaan is aan de inburgeringsplicht binnen de termijn, bedoeld in [artikel 7, eerste lid, van de wet][ref1] of
-      gedurende de verlengde termijn, bedoeld in artikel 7, derde en vierde lid, aanhef en onderdeel a, van de wet; of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0020611
         artikel: '7'
-  - number: 4.13.3.b
-    text: |-
-      een vrijstelling van de inburgeringsplicht van toepassing is op grond van [artikel 5 van de wet][ref1]; of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020611
         artikel: '5'
-  - number: 4.13.3.c
-    text: |-
-      ontheffing is verleend van de inburgeringsplicht als bedoeld in [artikel 6, eerste en tweede lid, van de wet][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel6
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.13
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0020611
         artikel: '6'
-  - number: 4.14.1
+  - number: '4.14'
     text: |-
-      De schuld die bij het einde van de terugbetalingsperiode resteert omdat overeenkomstig
+      1 De schuld die bij het einde van de terugbetalingsperiode resteert omdat overeenkomstig
       [artikel 4.11, tweede lid][ref1], het termijnbedrag opnieuw is vastgesteld, gaat op dat ogenblik teniet, met
       uitzondering van achterstallige termijnbedragen.
 
+      2 De schuld die resteert bij het overlijden van de debiteur gaat op dat ogenblik teniet.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.11
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.14
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.11'
         hoofdstuk: '4'
         paragraaf: '2'
-  - number: 4.14.2
-    text: De schuld die resteert bij het overlijden van de debiteur gaat op dat ogenblik teniet.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.14
   - number: '4.15'
     text: |-
       De termijnen, bedoeld in [artikel 17, eerste lid, van de wet][ref1] en [artikel 4.2, eerste lid][ref2], worden
@@ -1404,8 +1097,8 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel17
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.2
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel2.2
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel4.15
     references:
       - id: ref1
@@ -1413,12 +1106,12 @@ articles:
         artikel: '17'
       - id: ref2
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.2'
         hoofdstuk: '4'
         paragraaf: '1'
       - id: ref3
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
   - number: '4.16'
@@ -1441,298 +1134,214 @@ articles:
       - id: ref3
         bwb_id: BWBR0018472
         artikel: '6'
-  - number: 6.1.1
-    text: 'Het Informatiesysteem Inburgering bevat uitsluitend persoonsgegevens van:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.1.1.a
-    text: inburgeringsplichtigen en gewezen inburgeringsplichtigen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.1.1.b
+  - number: '6.1'
     text: |-
-      andere dan de in onderdeel a bedoelde personen, die deelnemen aan het inburgeringsexamen of aan wie een lening is
-      verstrekt ten behoeve van het volgen van een inburgeringscursus of het afleggen van het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.1.1.c
-    text: |-
-      partners van inburgeringsplichtigen, indien overeenkomstig [artikel 4.1a, tweede lid][ref1], de hoogte van de
+      1 Het Informatiesysteem Inburgering bevat uitsluitend persoonsgegevens van:
+
+      a. inburgeringsplichtigen en gewezen inburgeringsplichtigen;
+
+      b. andere dan de in onderdeel a bedoelde personen, die deelnemen aan het inburgeringsexamen of aan wie een lening
+      is verstrekt ten behoeve van het volgen van een inburgeringscursus of het afleggen van het inburgeringsexamen;
+
+      c. partners van inburgeringsplichtigen, indien overeenkomstig [artikel 4.1a, tweede lid][ref1], de hoogte van de
       lening wordt bepaald of overeenkomstig [artikel 4.10][ref2] de draagkracht van de debiteur wordt bepaald;
 
+      d. personen ten aanzien van wie is gebleken dat zij aansluitend op de leerplicht of kwalificatieplicht een
+      opleiding volgen als bedoeld in [artikel 5, eerste lid, onderdeel e, van de wet][ref3];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4
+      e. personen ten aanzien van wie op redelijke gronden kan worden vermoed dat zij inburgeringsplichtig zijn of kunnen
+      worden.
+
+      2 Het Informatiesysteem Inburgering bevat de in de bijlage bij dit besluit opgenomen gegevens. Persoonsgegevens
+      worden opgenomen zoals deze zijn opgenomen in de basisregistratie personen.
+
+      3 Bij regeling van Onze Minister kan de bijlage bij dit besluit worden gewijzigd.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1a
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.10
+      [ref3]: https://wetten.overheid.nl/BWBR0020611#Artikel5
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: 4.1a
         hoofdstuk: '4'
         paragraaf: '1'
       - id: ref2
         bwb_id: BWBR0020674
-        artikel: '4'
+        artikel: '4.10'
         hoofdstuk: '4'
         paragraaf: '2'
-  - number: 6.1.1.d
-    text: |-
-      personen ten aanzien van wie is gebleken dat zij aansluitend op de leerplicht of kwalificatieplicht een opleiding
-      volgen als bedoeld in [artikel 5, eerste lid, onderdeel e, van de wet][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020611
         artikel: '5'
-  - number: 6.1.1.e
+  - number: '6.2'
     text: |-
-      personen ten aanzien van wie op redelijke gronden kan worden vermoed dat zij inburgeringsplichtig zijn of kunnen
-      worden.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.1.2
-    text: |-
-      Het Informatiesysteem Inburgering bevat de in de bijlage bij dit besluit opgenomen gegevens. Persoonsgegevens
-      worden opgenomen zoals deze zijn opgenomen in de basisregistratie personen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.1.3
-    text: Bij regeling van Onze Minister kan de bijlage bij dit besluit worden gewijzigd.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.1
-  - number: 6.2.1
-    text: |-
-      De volgende instanties verstrekken ten behoeve van opneming in het Informatiesysteem Inburgering aan de beheerder
+      1 De volgende instanties verstrekken ten behoeve van opneming in het Informatiesysteem Inburgering aan de beheerder
       daarvan uit eigen beweging of op verzoek alle gegevens die noodzakelijk zijn voor de uitvoering van de taken die
       bij of krachtens de [wet][ref1] aan die instanties zijn opgedragen:
 
+      a. Onze Minister;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-  - number: 6.2.1.a
-    text: Onze Minister;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.1.b
-    text: de rijksbelastingdienst;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.1.c
-    text: |-
-      de cursusinstellingen, bedoeld in [artikel 4.1a, vijfde lid][ref1];
+      b. de rijksbelastingdienst;
 
+      c. de cursusinstellingen, bedoeld in [artikel 4.1a, vijfde lid][ref2];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '1'
-  - number: 6.2.1.d
-    text: |-
-      de organisatie die belast is met het beheer van het in [artikel 4.1a, vijfde lid][ref1] bedoelde keurmerk;
+      d. de organisatie die belast is met het beheer van het in [artikel 4.1a, vijfde lid][ref3] bedoelde keurmerk;
 
+      e. het College voor examens, genoemd in [artikel 2, eerste lid, van de Wet College voor examens][ref4];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '1'
-  - number: 6.2.1.e
-    text: |-
-      het College voor examens, genoemd in [artikel 2, eerste lid, van de Wet College voor examens][ref1];
+      f. Onze Minister van Onderwijs, Cultuur en Wetenschap;
 
+      g. het Centraal Orgaan opvang asielzoekers;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0025364#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0025364
-        artikel: '2'
-  - number: 6.2.1.f
-    text: Onze Minister van Onderwijs, Cultuur en Wetenschap;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.1.g
-    text: het Centraal Orgaan opvang asielzoekers;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.1.h
-    text: |-
-      de door Onze Minister aangewezen organisaties die belast zijn met de uitvoering van een internationale
+      h. de door Onze Minister aangewezen organisaties die belast zijn met de uitvoering van een internationale
       diplomawaardering of een indicatie van het onderwijsniveau van een betrokkene ter ondersteuning van de in
-      [artikel 2.10, eerste lid, onderdeel b][ref1], bedoelde oriëntatie op de Nederlandse arbeidsmarkt.
+      [artikel 2.10, eerste lid, onderdeel b][ref5], bedoelde oriëntatie op de Nederlandse arbeidsmarkt.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-  - number: 6.2.2
-    text: |-
-      Onverminderd de gegevensverstrekking, bedoeld in [artikel 47, tweede lid, van de wet][ref1] aan Onze Minister,
+      2 Onverminderd de gegevensverstrekking, bedoeld in [artikel 47, tweede lid, van de wet][ref6] aan Onze Minister,
       Onze Minister van Veiligheid en Justitie en de rijksbelastingdienst worden gegevens die zijn opgenomen in het
       Informatiesysteem Inburgering slechts ter beschikking gesteld aan:
 
+      a. Onze Minister van Onderwijs, Cultuur en Wetenschap;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel47
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '47'
-  - number: 6.2.2.a
-    text: Onze Minister van Onderwijs, Cultuur en Wetenschap;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.2.b
-    text: |-
-      de cursusinstellingen, bedoeld in [artikel 4.1a, vijfde lid][ref1];
+      b. de cursusinstellingen, bedoeld in [artikel 4.1a, vijfde lid][ref7];
 
+      c. de organisatie die belast is met het beheer van het in [artikel 4.1a, vijfde lid][ref8], bedoelde keurmerk.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '1'
-  - number: 6.2.2.c
-    text: |-
-      de organisatie die belast is met het beheer van het in [artikel 4.1a, vijfde lid][ref1], bedoelde keurmerk.
+      Deze gegevens worden niet gebruikt voor een ander doel dan genoemd in [artikel 47, tweede lid, van de wet][ref9].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '4'
-        hoofdstuk: '4'
-        paragraaf: '1'
-  - number: 6.2.3
-    text: |-
-      De verstrekking van gegevens met het oog op de evaluatie van bestaand beleid en de voorbereiding van toekomstig
-      beleid, bedoeld in [artikel 47, tweede lid, onderdeel b, van de wet][ref1], geschiedt zodanig dat de gegevens niet
+      3 De verstrekking van gegevens met het oog op de evaluatie van bestaand beleid en de voorbereiding van toekomstig
+      beleid, bedoeld in [artikel 47, tweede lid, onderdeel b, van de wet][ref10], geschiedt zodanig dat de gegevens niet
       kunnen worden herleid tot een natuurlijk persoon.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel47
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '47'
-  - number: 6.2.4
-    text: |-
-      De instanties, genoemd in het eerste lid, verstrekken de gegevens zo spoedig mogelijk doch uiterlijk binnen twee
+      4 De instanties, genoemd in het eerste lid, verstrekken de gegevens zo spoedig mogelijk doch uiterlijk binnen twee
       weken na het ontstaan van de noodzaak tot opneming in het Informatiesysteem Inburgering.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.5
-    text: |-
-      Bij regeling van Onze Minister kunnen andere instanties worden aangewezen ten aanzien waarvan de in het eerste
+
+      5 Bij regeling van Onze Minister kunnen andere instanties worden aangewezen ten aanzien waarvan de in het eerste
       lid bedoelde verplichting eveneens geldt of waaraan eveneens gegevens uit het Informatiesysteem Inburgering worden
       verstrekt.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.2.6
-    text: |-
-      In opdracht van Onze Minister kunnen ten behoeve van het verrichten van rechtmatigheids- en
+
+      6 In opdracht van Onze Minister kunnen ten behoeve van het verrichten van rechtmatigheids- en
       doelmatigheidsonderzoeken gegevens uit het Informatiesysteem Inburgering worden verstrekt die kunnen worden
       herleid tot een natuurlijk persoon. In de rapportages over deze onderzoeken worden geen tot die persoon herleidbare
       gegevens opgenomen.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020611
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1a
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1a
+      [ref4]: https://wetten.overheid.nl/BWBR0025364#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0020674#Artikel2.10
+      [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel47
+      [ref7]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1a
+      [ref8]: https://wetten.overheid.nl/BWBR0020674#Artikel4.1a
+      [ref9]: https://wetten.overheid.nl/BWBR0020611#Artikel47
+      [ref10]: https://wetten.overheid.nl/BWBR0020611#Artikel47
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.2
-  - number: 6.3.1
-    text: 'In het Informatiesysteem Inburgering opgenomen persoonsgegevens worden verwijderd:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.1.a
-    text: na verloop van twintig jaren, of
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.1.b
-    text: indien de betrokken persoon is overleden.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2
+    references:
+      - id: ref1
+        bwb_id: BWBR0020611
+      - id: ref2
+        bwb_id: BWBR0020674
+        artikel: 4.1a
+        hoofdstuk: '4'
+        paragraaf: '1'
+      - id: ref3
+        bwb_id: BWBR0020674
+        artikel: 4.1a
+        hoofdstuk: '4'
+        paragraaf: '1'
+      - id: ref4
+        bwb_id: BWBR0025364
+        artikel: '2'
+      - id: ref5
+        bwb_id: BWBR0020674
+        artikel: '2.10'
+        hoofdstuk: '2'
+        afdeling: '6'
+      - id: ref6
+        bwb_id: BWBR0020611
+        artikel: '47'
+      - id: ref7
+        bwb_id: BWBR0020674
+        artikel: 4.1a
+        hoofdstuk: '4'
+        paragraaf: '1'
+      - id: ref8
+        bwb_id: BWBR0020674
+        artikel: 4.1a
+        hoofdstuk: '4'
+        paragraaf: '1'
+      - id: ref9
+        bwb_id: BWBR0020611
+        artikel: '47'
+      - id: ref10
+        bwb_id: BWBR0020611
+        artikel: '47'
+  - number: '6.3'
     text: |-
-      In afwijking van de in het eerste lid, onderdeel a, genoemde termijn worden de volgende gegevens van personen als
+      1 In het Informatiesysteem Inburgering opgenomen persoonsgegevens worden verwijderd:
+
+      a. na verloop van twintig jaren, of
+
+      b. indien de betrokken persoon is overleden.
+
+      2 In afwijking van de in het eerste lid, onderdeel a, genoemde termijn worden de volgende gegevens van personen als
       bedoeld in [artikel 6.1, eerste lid, onderdeel a][ref1], verwijderd na verloop van vijftig jaar:
 
+      a. burgerservicenummer;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel6
+      b. naamgegevens;
+
+      c. adresgegevens;
+
+      d. woonplaats;
+
+      e. geboortedatum;
+
+      f. gegevens die betrekking hebben op gehele of gedeeltelijke vrijstelling van de inburgeringsplicht;
+
+      g. gegevens die betrekking hebben op een ontheffing van de inburgeringsplicht;
+
+      h. de datum en de wijze waarop aan de inburgeringsplicht is voldaan;
+
+      i. gegevens over een tijdelijke of definitief niet invorderbare schuld terzake van een lening.
+
+      3 In afwijking van de in het eerste lid, onderdeel a, genoemde termijn worden de volgende gegevens van personen als
+      bedoeld in [artikel 6.1, eerste lid, onderdeel b][ref2], verwijderd na verloop van vijftig jaar:
+
+      a. burgerservicenummer;
+
+      b. naamgegevens;
+
+      c. adresgegevens;
+
+      d. woonplaats;
+
+      e. geboortedatum;
+
+      f. de datum waarop het inburgeringsdiploma is behaald.
+
+      4 De termijnen, genoemd in het eerste lid, onderdeel a, en in de aanhef van het tweede en derde lid, vangen aan op
+      de dag waarop de gegevens in het Informatiesysteem Inburgering zijn opgenomen.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel6.1
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel6.1
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '6'
+        artikel: '6.1'
         hoofdstuk: '6'
         afdeling: '1'
-  - number: 6.3.2.a
-    text: burgerservicenummer;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.b
-    text: naamgegevens;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.c
-    text: adresgegevens;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.d
-    text: woonplaats;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.e
-    text: geboortedatum;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.f
-    text: gegevens die betrekking hebben op gehele of gedeeltelijke vrijstelling van de inburgeringsplicht;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.g
-    text: gegevens die betrekking hebben op een ontheffing van de inburgeringsplicht;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.h
-    text: de datum en de wijze waarop aan de inburgeringsplicht is voldaan;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.2.i
-    text: gegevens over een tijdelijke of definitief niet invorderbare schuld terzake van een lening.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3
-    text: |-
-      In afwijking van de in het eerste lid, onderdeel a, genoemde termijn worden de volgende gegevens van personen als
-      bedoeld in [artikel 6.1, eerste lid, onderdeel b][ref1], verwijderd na verloop van vijftig jaar:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel6
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0020674
-        artikel: '6'
+        artikel: '6.1'
         hoofdstuk: '6'
         afdeling: '1'
-  - number: 6.3.3.a
-    text: burgerservicenummer;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3.b
-    text: naamgegevens;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3.c
-    text: adresgegevens;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3.d
-    text: woonplaats;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3.e
-    text: geboortedatum;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.3.f
-    text: de datum waarop het inburgeringsdiploma is behaald.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
-  - number: 6.3.4
-    text: |-
-      De termijnen, genoemd in het eerste lid, onderdeel a, en in de aanhef van het tweede en derde lid, vangen aan op de
-      dag waarop de gegevens in het Informatiesysteem Inburgering zijn opgenomen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel6.3
   - number: '6.8'
     text: |-
       Met betrekking tot het Informatiesysteem Inburgering is Onze Minister de verantwoordelijke in de zin van de
@@ -1744,172 +1353,121 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0011468
-  - number: 7.1.1
+  - number: '7.1'
     text: |-
-      De rijksbijdrage voor 2007 en 2008 voor een gemeente omvat een vast deel, een prestatie-afhankelijk deel en een
+      1 De rijksbijdrage voor 2007 en 2008 voor een gemeente omvat een vast deel, een prestatie-afhankelijk deel en een
       variabel deel.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.2
-    text: |-
-      Het vaste deel, bedoeld in het eerste lid, wordt vastgesteld met behulp van de verdeelsleutel, bedoeld in
+
+      2 Het vaste deel, bedoeld in het eerste lid, wordt vastgesteld met behulp van de verdeelsleutel, bedoeld in
       [artikel 7.2, tweede lid][ref1], zoals dat artikel luidde op 31 december 2008.
 
+      3 Het prestatie-afhankelijke deel, bedoeld in het eerste lid, wordt berekend op de grondslag van:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '7'
-        hoofdstuk: '7'
-        afdeling: '1'
-  - number: 7.1.3
-    text: 'Het prestatie-afhankelijke deel, bedoeld in het eerste lid, wordt berekend op de grondslag van:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.a
-    text: |-
-      het aantal inburgeringsplichtigen, bedoeld in [artikel 19, eerste lid, van de wet][ref1], zoals die luidde op 31
+      a. het aantal inburgeringsplichtigen, bedoeld in [artikel 19, eerste lid, van de wet][ref2], zoals die luidde op 31
       december 2008, ten behoeve van wie het college voor de eerste keer een inburgeringsvoorziening heeft vastgesteld en
       aan wie geen lening is verstrekt, hetzij ten behoeve van wie die lening in zijn geheel is terugbetaald;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '19'
-  - number: 7.1.3.b
-    text: |-
-      het aantal in onderdeel a bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
+      b. het aantal in onderdeel a bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
       inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.c
-    text: |-
-      het aantal inburgeringsplichtigen, bedoeld in [artikel 19, eerste lid, van de wet][ref1], zoals die luidde op
+
+      c. het aantal inburgeringsplichtigen, bedoeld in [artikel 19, eerste lid, van de wet][ref3], zoals die luidde op
       31 december 2008, ten behoeve van wie het college voor de eerste keer een gecombineerde inburgeringsvoorziening
       heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie die lening in zijn geheel is
       terugbetaald;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '19'
-  - number: 7.1.3.d
-    text: |-
-      het aantal in onderdeel c bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
+      d. het aantal in onderdeel c bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
       gecombineerde inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.e
-    text: |-
-      het aantal inburgeringsplichtigen, bedoeld in [artikel 19, tweede lid, onderdeel a, van de wet][ref1], zoals
+
+      e. het aantal inburgeringsplichtigen, bedoeld in [artikel 19, tweede lid, onderdeel a, van de wet][ref4], zoals
       die luidde op 31 december 2008, ten behoeve van wie het college voor de eerste keer een inburgeringsvoorziening
       heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie die lening in zijn geheel is
       terugbetaald;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '19'
-  - number: 7.1.3.f
-    text: |-
-      het aantal in onderdeel g bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
+      f. het aantal in onderdeel g bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
       inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.g
-    text: |-
-      het aantal inburgeringsplichtigen, bedoeld in [artikel 19, tweede lid, onderdeel a, van de wet][ref1],
+
+      g. het aantal inburgeringsplichtigen, bedoeld in [artikel 19, tweede lid, onderdeel a, van de wet][ref5],
       zoals die luidde op 31 december 2008, ten behoeve van wie het college voor de eerste keer een gecombineerde
       inburgeringsvoorziening heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie die
       lening in zijn geheel is terugbetaald;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '19'
-  - number: 7.1.3.h
-    text: |-
-      het aantal in onderdeel i bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
+      h. het aantal in onderdeel i bedoelde inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
       gecombineerde inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.i
-    text: |-
-      het aantal inburgeringsplichtigen ten behoeve van wie het college voor de eerste keer een duale
+
+      i. het aantal inburgeringsplichtigen ten behoeve van wie het college voor de eerste keer een duale
       inburgeringsvoorziening heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie die
       lening in zijn geheel is terugbetaald;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.3.j
-    text: |-
-      het aantal inburgeringsplichtigen ten behoeve van wie het college voor de eerste keer een taalkennisvoorziening als
-      bedoeld in [artikel 19, derde lid, van de wet][ref1], zoals die luidde op 31 december 2008 heeft vastgesteld en aan
-      wie geen lening is verstrekt, hetzij ten behoeve van wie die lening in zijn geheel is terugbetaald.
 
+      j. het aantal inburgeringsplichtigen ten behoeve van wie het college voor de eerste keer een taalkennisvoorziening
+      als bedoeld in [artikel 19, derde lid, van de wet][ref6], zoals die luidde op 31 december 2008 heeft vastgesteld en
+      aan wie geen lening is verstrekt, hetzij ten behoeve van wie die lening in zijn geheel is terugbetaald.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0020611
-        artikel: '19'
-  - number: 7.1.4
-    text: 'Het variabele deel, bedoeld in het eerste lid, wordt vastgesteld op de grondslag van:'
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.4.a
-    text: het aantal inburgeringsplichtigen aan wie het college een handhavingsbeschikking bekend heeft gemaakt;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.4.b
-    text: |-
-      het aantal inburgeringsplichtigen aan wie het college een kennisgeving als bedoeld in
-      [artikel 5.3, derde lid][ref1], zoals dat luidde voor het tijdstip van inwerkingtreding van het
+      4 Het variabele deel, bedoeld in het eerste lid, wordt vastgesteld op de grondslag van:
+
+      a. het aantal inburgeringsplichtigen aan wie het college een handhavingsbeschikking bekend heeft gemaakt;
+
+      b. het aantal inburgeringsplichtigen aan wie het college een kennisgeving als bedoeld in
+      [artikel 5.3, derde lid][ref7], zoals dat luidde voor het tijdstip van inwerkingtreding van het
       __REF001___________________________________________________________________________________________________________
       ____________________________________________________________________________________ (Stb. 2012, 432), heeft
       verstrekt;
 
+      c. het aantal geestelijke bedienaren ten behoeve van wie het college een inburgeringsvoorziening heeft vastgesteld;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0032034
+      d. het aantal geestelijke bedienaren dat heeft deelgenomen aan het inburgeringsexamen;
+
+      e. het aantal geestelijke bedienaren dat heeft deelgenomen aan het aanvullend
+      praktijkdeel van het inburgeringsexamen, bedoeld in [artikel 3.8, eerste lid][ref9],
+      zoals dat luidde voor het tijdstip van inwerkingtreding van het
+      __REF001___________________________________________________________________________________________________________
+      _____________________________________________________________________________________ (Stb. 2012, 432).
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7.2
+      [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel19
+      [ref3]: https://wetten.overheid.nl/BWBR0020611#Artikel19
+      [ref4]: https://wetten.overheid.nl/BWBR0020611#Artikel19
+      [ref5]: https://wetten.overheid.nl/BWBR0020611#Artikel19
+      [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel19
+      [ref7]: https://wetten.overheid.nl/BWBR0020674#Artikel5.3
+      [ref8]: https://wetten.overheid.nl/BWBR0032034
+      [ref9]: https://wetten.overheid.nl/BWBR0020674#Artikel3.8
+      [ref10]: https://wetten.overheid.nl/BWBR0032034
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '5'
-        hoofdstuk: '5'
+        artikel: '7.2'
+        hoofdstuk: '7'
         afdeling: '1'
       - id: ref2
-        bwb_id: BWBR0032034
-  - number: 7.1.4.c
-    text: het aantal geestelijke bedienaren ten behoeve van wie het college een inburgeringsvoorziening heeft vastgesteld;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.4.d
-    text: het aantal geestelijke bedienaren dat heeft deelgenomen aan het inburgeringsexamen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-  - number: 7.1.4.e
-    text: |-
-      het aantal geestelijke bedienaren dat heeft deelgenomen aan het aanvullend praktijkdeel van het inburgeringsexamen,
-      bedoeld in [artikel 3.8, eerste lid][ref1], zoals dat luidde voor het tijdstip van inwerkingtreding van het
-      __REF001___________________________________________________________________________________________________________
-      ____________________________________________________________________________________ (Stb. 2012, 432).
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0032034
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1
-    references:
-      - id: ref1
+        bwb_id: BWBR0020611
+        artikel: '19'
+      - id: ref3
+        bwb_id: BWBR0020611
+        artikel: '19'
+      - id: ref4
+        bwb_id: BWBR0020611
+        artikel: '19'
+      - id: ref5
+        bwb_id: BWBR0020611
+        artikel: '19'
+      - id: ref6
+        bwb_id: BWBR0020611
+        artikel: '19'
+      - id: ref7
         bwb_id: BWBR0020674
-        artikel: '3'
+        artikel: '5.3'
+        hoofdstuk: '5'
+        afdeling: '1'
+      - id: ref8
+        bwb_id: BWBR0032034
+      - id: ref9
+        bwb_id: BWBR0020674
+        artikel: '3.8'
         hoofdstuk: '3'
         paragraaf: '2'
-      - id: ref2
+      - id: ref10
         bwb_id: BWBR0032034
   - number: 7.1a
     text: |-
@@ -1917,12 +1475,16 @@ articles:
       2007/11, houdende wijziging van de Vreemdelingencirculaire 2000, worden voor de berekening van de rijksbijdrage in
       deze afdeling niet meegerekend.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.1a
-  - number: 7.5.1
+  - number: '7.5'
     text: |-
-      Het prestatie-afhankelijke deel van de rijksbijdrage voor een gemeente wordt berekend met de formule: A = ( [ B
-      x C ] + [ D x E ] + [ H x I ] + [ J x K ] + [ L x M ] + [ N x O ] + [ R x S ] + [ T x U ] + [V x W] + [X x Y] +
-      [Z x AA] + [BB x CC] + DD) x EE waarin wordt voorgesteld: - met de letter A: het prestatie-afhankelijke deel van
-      de rijksbijdrage;
+      1 Het prestatie-afhankelijke deel van de rijksbijdrage voor een gemeente wordt berekend met de formule:
+
+      A = ( [ B x C ] + [ D x E ] + [ H x I ] + [ J x K ] + [ L x M ] + [ N x O ] + [ R x S ] + [ T x U ] + [V x W] + [X
+      x Y] + [Z x AA] + [BB x CC] + DD) x EE
+
+      waarin wordt voorgesteld:
+
+        - met de letter A: het prestatie-afhankelijke deel van de rijksbijdrage;
         - met de letter B: het aantal inburgeringsplichtigen, bedoeld in [artikel 19, eerste lid, van de wet][ref1], zoals
       die luidde op 31 december 2008, ten behoeve van wie het college in het jaar waarop de prognose betrekking heeft
       voor de eerste keer een inburgeringsvoorziening heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten
@@ -1992,6 +1554,33 @@ articles:
         - met de letters DD: het bedrag, bedoeld in [artikel 9.3, derde lid][ref18];
         - met de letters EE: de door Onze Minister vast te stellen correctiefactor.
 
+      2 Het college verstrekt de gegevens, bedoeld in de letters B, D, H, J, L, N, R, T, V en X van het
+      eerste lid, tezamen met de jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref19], welke
+      betrekking heeft op het jaar 2011. Het college verstrekt de gegevens, bedoeld in de letters Z en BB van
+      het eerste lid, tezamen met de jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref20], welke
+      betrekking heeft op het jaar 2008. De jaarrekening is voorzien van de accountantsverklaring, bedoeld in
+      [artikel 213, derde lid, van de Gemeentewet][ref21]. Het college vergewist zich ervan dat de gegevens zijn
+      opgenomen in het Informatiesysteem Inburgering.
+
+      3 Indien Onze Minister de gegevens en de accountantsverklaring niet voor
+      binnen zesentwintig weken na het verstrijken van de termijn, bedoeld in
+      [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref22] heeft ontvangen, stelt
+      Onze Minister de hoogte van de letters B, D, H, J, L, N, R, T, V en X, respectievelijk de letters Z en BB in de
+      formule, bedoeld in het eerste lid, vast op nul.
+
+      4 Onze Minister stelt het prestatie-afhankelijke deel van de rijksbijdrage
+      uiterlijk dertig weken na het verstrijken van de termijn, bedoeld in
+      [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref23], welke betrekking heeft
+      op de jaarrekening van het jaar 2011, vast.
+
+      5 Het prestatie-afhankelijke deel van de rijksbijdrage wordt vastgesteld onder voorbehoud van goedkeuring van
+      de beschikbare middelen door de begrotingswetgever en kan worden verlaagd in verband met wijzigingen van de
+      rijksbegroting voor het jaar 2012 dan wel het jaar 2013.
+
+      6 Het prestatie-afhankelijke deel van de rijksbijdrage wordt verrekend met het voorschot dat is verleend ten
+      behoeve van de jaren 2007 en 2008. Het uit de verrekening resulterende positieve of negatieve saldo wordt uiterlijk
+      zes maanden na de vaststelling ervan aan een gemeente betaald.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel19
@@ -2001,16 +1590,21 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref7]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref8]: https://wetten.overheid.nl/BWBR0020611#Artikel19
-      [ref9]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref10]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref11]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref12]: https://wetten.overheid.nl/BWBR0020674#Artikel2
+      [ref9]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
+      [ref10]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
+      [ref11]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
+      [ref12]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
       [ref13]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref14]: https://wetten.overheid.nl/BWBR0009544
       [ref15]: https://wetten.overheid.nl/BWBR0009544
-      [ref16]: https://wetten.overheid.nl/BWBR0007625#Artikel7
-      [ref17]: https://wetten.overheid.nl/BWBR0007625#Artikel7
-      [ref18]: https://wetten.overheid.nl/BWBR0020674#Artikel9
+      [ref16]: https://wetten.overheid.nl/BWBR0007625#Artikel7.4.15
+      [ref17]: https://wetten.overheid.nl/BWBR0007625#Artikel7.4.15
+      [ref18]: https://wetten.overheid.nl/BWBR0020674#Artikel9.3
+      [ref19]: https://wetten.overheid.nl/BWBR0005416#Artikel186
+      [ref20]: https://wetten.overheid.nl/BWBR0005416#Artikel186
+      [ref21]: https://wetten.overheid.nl/BWBR0005416#Artikel213
+      [ref22]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
+      [ref23]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
     references:
       - id: ref1
@@ -2039,22 +1633,22 @@ articles:
         artikel: '19'
       - id: ref9
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref10
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref11
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref12
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref13
@@ -2066,83 +1660,38 @@ articles:
         bwb_id: BWBR0009544
       - id: ref16
         bwb_id: BWBR0007625
-        artikel: '7'
+        artikel: 7.4.15
       - id: ref17
         bwb_id: BWBR0007625
-        artikel: '7'
+        artikel: 7.4.15
       - id: ref18
         bwb_id: BWBR0020674
-        artikel: '9'
+        artikel: '9.3'
         hoofdstuk: '9'
         afdeling: '1'
-  - number: 7.5.2
-    text: |-
-      Het college verstrekt de gegevens, bedoeld in de letters B, D, H, J, L, N, R, T, V en X van het eerste lid, tezamen
-      met de jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref1], welke betrekking heeft op het jaar 2011.
-      Het college verstrekt de gegevens, bedoeld in de letters Z en BB van het eerste lid, tezamen met de jaarrekening,
-      bedoeld in [artikel 186 van de Gemeentewet][ref2], welke betrekking heeft op het jaar 2008. De jaarrekening is
-      voorzien van de accountantsverklaring, bedoeld in [artikel 213, derde lid, van de Gemeentewet][ref3]. Het college
-      vergewist zich ervan dat de gegevens zijn opgenomen in het Informatiesysteem Inburgering.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel186
-      [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel186
-      [ref3]: https://wetten.overheid.nl/BWBR0005416#Artikel213
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
-    references:
-      - id: ref1
+      - id: ref19
         bwb_id: BWBR0005416
         artikel: '186'
-      - id: ref2
+      - id: ref20
         bwb_id: BWBR0005416
         artikel: '186'
-      - id: ref3
+      - id: ref21
         bwb_id: BWBR0005416
         artikel: '213'
-  - number: 7.5.3
-    text: |-
-      Indien Onze Minister de gegevens en de accountantsverklaring niet voor binnen zesentwintig weken na het verstrijken
-      van de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1]
-      heeft ontvangen, stelt Onze Minister de hoogte van de letters B, D, H, J, L, N, R, T, V en X, respectievelijk de
-      letters Z en BB in de formule, bedoeld in het eerste lid, vast op nul.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
-    references:
-      - id: ref1
+      - id: ref22
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.5.4
-    text: |-
-      Onze Minister stelt het prestatie-afhankelijke deel van de rijksbijdrage uiterlijk dertig weken na het verstrijken
-      van de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1],
-      welke betrekking heeft op de jaarrekening van het jaar 2011, vast.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
-    references:
-      - id: ref1
+      - id: ref23
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.5.5
+  - number: '7.6'
     text: |-
-      Het prestatie-afhankelijke deel van de rijksbijdrage wordt vastgesteld onder voorbehoud van goedkeuring van
-      de beschikbare middelen door de begrotingswetgever en kan worden verlaagd in verband met wijzigingen van de
-      rijksbegroting voor het jaar 2012 dan wel het jaar 2013.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
-  - number: 7.5.6
-    text: |-
-      Het prestatie-afhankelijke deel van de rijksbijdrage wordt verrekend met het voorschot dat is verleend ten behoeve
-      van de jaren 2007 en 2008. Het uit de verrekening resulterende positieve of negatieve saldo wordt uiterlijk zes
-      maanden na de vaststelling ervan aan een gemeente betaald.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.5
-  - number: 7.6.1
-    text: |-
-      Het vaste en variabele deel van de rijksbijdrage voor een gemeente wordt berekend met de formule A = B + [ C x D ]
-      + [ E x F ] + [ G x H ] + [ I x J ] + [ K x L ] waarin wordt voorgesteld: - met de letter A: het vaste en variabele
-      deel van de rijksbijdrage;
+      1 Het vaste en variabele deel van de rijksbijdrage voor een gemeente wordt berekend met de formule A = B + [ C x
+      D ] + [ E x F ] + [ G x H ] + [ I x J ] + [ K x L ]
+
+      waarin wordt voorgesteld:
+
+        - met de letter A: het vaste en variabele deel van de rijksbijdrage;
         - met de letter B: het verleende voorschot op het vaste deel van de rijksbijdrage;
         - met de letter C: het aantal inburgeringsplichtigen aan wie het college in het jaar waarop het vaste en variabele
       deel van de rijksbijdrage betrekking hebben een handhavingsbeschikking bekend heeft gemaakt;
@@ -2179,184 +1728,164 @@ articles:
       __REF009___________________________________________________________________________________________________________
       _____________________________________________________________________________________ (Stb. 2012, 432).
 
+      2 Het college verstrekt de gegevens bedoeld in de letters C, E, G, I en K van het eerste lid, tezamen met de
+      jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref11], welke betrekking heeft op het jaar waarop het
+      variabele deel van de rijksbijdrage betrekking heeft. De jaarrekening is voorzien van de accountantsverklaring,
+      bedoeld in [artikel 213, derde lid, van de Gemeentewet][ref12]. Het college vergewist zich ervan dat de gegevens
+      zijn opgenomen in het Informatiesysteem Inburgering.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel5
+      3 Indien Onze Minister de gegevens en de accountantsverklaring niet binnen zesentwintig weken na het verstrijken
+      van de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref13]
+      heeft ontvangen stelt Onze Minister de hoogte van de letters C, E, G, I en K in de formule, bedoeld in het eerste
+      lid, vast op nul.
+
+      4 Onze Minister stelt het vaste en variabele deel van de rijksbijdrage uiterlijk dertig weken na het verstrijken van
+      de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref14],
+      vast.
+
+      5 Het vaste en variabele deel van de rijksbijdrage worden vastgesteld onder voorbehoud van goedkeuring van de
+      beschikbare middelen door de begrotingswetgever en kunnen worden verlaagd in verband met wijzigingen van de
+      rijksbegroting.
+
+      6 Het vaste en variabele deel van de rijksbijdrage worden verrekend met het voorschot dat is verleend ten behoeve
+      van de jaren 2007 en 2008. Het uit de verrekening resulterende positieve of negatieve saldo wordt uiterlijk zes
+      maanden na de vaststelling ervan aan de gemeente betaald.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel5.3
       [ref2]: https://wetten.overheid.nl/BWBR0032034
-      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel5
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel5.3
       [ref4]: https://wetten.overheid.nl/BWBR0032034
-      [ref5]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref6]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-      [ref7]: https://wetten.overheid.nl/BWBR0020674#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
+      [ref6]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
+      [ref7]: https://wetten.overheid.nl/BWBR0020674#Artikel3.8
       [ref8]: https://wetten.overheid.nl/BWBR0032034
-      [ref9]: https://wetten.overheid.nl/BWBR0020674#Artikel3
+      [ref9]: https://wetten.overheid.nl/BWBR0020674#Artikel3.8
       [ref10]: https://wetten.overheid.nl/BWBR0032034
+      [ref11]: https://wetten.overheid.nl/BWBR0005416#Artikel186
+      [ref12]: https://wetten.overheid.nl/BWBR0005416#Artikel213
+      [ref13]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
+      [ref14]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '5'
+        artikel: '5.3'
         hoofdstuk: '5'
         afdeling: '1'
       - id: ref2
         bwb_id: BWBR0032034
       - id: ref3
         bwb_id: BWBR0020674
-        artikel: '5'
+        artikel: '5.3'
         hoofdstuk: '5'
         afdeling: '1'
       - id: ref4
         bwb_id: BWBR0032034
       - id: ref5
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref6
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref7
         bwb_id: BWBR0020674
-        artikel: '3'
+        artikel: '3.8'
         hoofdstuk: '3'
         paragraaf: '2'
       - id: ref8
         bwb_id: BWBR0032034
       - id: ref9
         bwb_id: BWBR0020674
-        artikel: '3'
+        artikel: '3.8'
         hoofdstuk: '3'
         paragraaf: '2'
       - id: ref10
         bwb_id: BWBR0032034
-  - number: 7.6.2
-    text: |-
-      Het college verstrekt de gegevens bedoeld in de letters C, E, G, I en K van het eerste lid, tezamen met de
-      jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref1], welke betrekking heeft op het jaar waarop het
-      variabele deel van de rijksbijdrage betrekking heeft. De jaarrekening is voorzien van de accountantsverklaring,
-      bedoeld in [artikel 213, derde lid, van de Gemeentewet][ref2]. Het college vergewist zich ervan dat de gegevens
-      zijn opgenomen in het Informatiesysteem Inburgering.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel186
-      [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel213
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
-    references:
-      - id: ref1
+      - id: ref11
         bwb_id: BWBR0005416
         artikel: '186'
-      - id: ref2
+      - id: ref12
         bwb_id: BWBR0005416
         artikel: '213'
-  - number: 7.6.3
-    text: |-
-      Indien Onze Minister de gegevens en de accountantsverklaring niet binnen zesentwintig weken na het verstrijken van
-      de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1]
-      heeft ontvangen stelt Onze Minister de hoogte van de letters C, E, G, I en K in de formule, bedoeld in het eerste
-      lid, vast op nul.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
-    references:
-      - id: ref1
+      - id: ref13
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.6.4
-    text: |-
-      Onze Minister stelt het vaste en variabele deel van de rijksbijdrage uiterlijk dertig weken na het verstrijken van
-      de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1],
-      vast.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
-    references:
-      - id: ref1
+      - id: ref14
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.6.5
+  - number: '7.7'
     text: |-
-      Het vaste en variabele deel van de rijksbijdrage worden vastgesteld onder voorbehoud van goedkeuring van de
-      beschikbare middelen door de begrotingswetgever en kunnen worden verlaagd in verband met wijzigingen van de
-      rijksbegroting.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
-  - number: 7.6.6
-    text: |-
-      Het vaste en variabele deel van de rijksbijdrage worden verrekend met het voorschot dat is verleend ten behoeve van
-      de jaren 2007 en 2008. Het uit de verrekening resulterende positieve of negatieve saldo wordt uiterlijk zes maanden
-      na de vaststelling ervan aan de gemeente betaald.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.6
-  - number: 7.7.1
-    text: |-
-      Onze Minister stelt ten behoeve van de vaststelling van de rijksbijdrage jaarlijks de bijdragevergoedingen, bedoeld
-      in [artikel 7.5][ref1] en [7.6][ref2], vast.
+      1 Onze Minister stelt ten behoeve van de vaststelling van de rijksbijdrage jaarlijks de bijdragevergoedingen,
+      bedoeld in [artikel 7.5][ref1] en [7.6][ref2], vast.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.7
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '7'
-        hoofdstuk: '7'
-        afdeling: '1'
-      - id: ref2
-        bwb_id: BWBR0020674
-        artikel: '7'
-        hoofdstuk: '7'
-        afdeling: '1'
-  - number: 7.7.2
-    text: |-
-      Onze Minister stelt ten behoeve van de vast te stellen hoogte van de bijdragevergoedingen jaarlijks de onderlinge
-      verhouding vast tussen de indicatoren, bedoeld in [artikel 7.1, derde lid, onderdelen a, c, e en g][ref1], en
+      2 Onze Minister stelt ten behoeve van de vast te stellen hoogte van de bijdragevergoedingen jaarlijks de onderlinge
+      verhouding vast tussen de indicatoren, bedoeld in [artikel 7.1, derde lid, onderdelen a, c, e en g][ref3], en
       artikel 7.1, vierde lid, onderdeel c, enerzijds en de indicatoren, bedoeld in artikel 7.1, derde lid, onderdelen b,
       d, f en h, en artikel 7.1, vierde lid, onderdelen d en e, anderzijds.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.7
-    references:
-      - id: ref1
-        bwb_id: BWBR0020674
-        artikel: '7'
-        hoofdstuk: '7'
-        afdeling: '1'
-  - number: 7.7.3
-    text: |-
-      Onze Minister stelt de bijdragevergoedingen vast aan de hand van de verhouding,
+      3 Onze Minister stelt de bijdragevergoedingen vast aan de hand van de verhouding,
       bedoeld in het tweede lid, de hoogte van de eigen bijdrage, bedoeld in
-      [artikel 23, tweede lid, van de wet][ref1] zoals deze luidde voor het tijdstip van inwerkingtreding van
+      [artikel 23, tweede lid, van de wet][ref4] zoals deze luidde voor het tijdstip van inwerkingtreding van
       __REF001___________________________________________________________________________________________________________
       _________________________________________________________________________________________ (Stb. 430) en een
       uitvalpercentage ter hoogte van 10%.
 
+      4 Onze Minister maakt de hoogte van de bijdragevergoedingen jaarlijks voor 15 september bekend.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel23
-      [ref2]: https://wetten.overheid.nl/BWBR0032031#ArtikelI
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7.5
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel7.6
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel7.1
+      [ref4]: https://wetten.overheid.nl/BWBR0020611#Artikel23
+      [ref5]: https://wetten.overheid.nl/BWBR0032031#ArtikelI
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.7
     references:
       - id: ref1
+        bwb_id: BWBR0020674
+        artikel: '7.5'
+        hoofdstuk: '7'
+        afdeling: '1'
+      - id: ref2
+        bwb_id: BWBR0020674
+        artikel: '7.6'
+        hoofdstuk: '7'
+        afdeling: '1'
+      - id: ref3
+        bwb_id: BWBR0020674
+        artikel: '7.1'
+        hoofdstuk: '7'
+        afdeling: '1'
+      - id: ref4
         bwb_id: BWBR0020611
         artikel: '23'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0032031
         artikel: I
-  - number: 7.7.4
-    text: Onze Minister maakt de hoogte van de bijdragevergoedingen jaarlijks voor 15 september bekend.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.7
-  - number: 7.8.1
+  - number: '7.8'
     text: |-
-      Gemeenten kunnen in onderling overleg besluiten tot een gezamenlijke aanwending van de aan hen te verstrekken
+      1 Gemeenten kunnen in onderling overleg besluiten tot een gezamenlijke aanwending van de aan hen te verstrekken
       rijksbijdragen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.8
-  - number: 7.8.2
-    text: |-
-      In geval van samenwerking als bedoeld in het eerste lid dragen de deelnemende gemeenten de hen bij of krachtens dit
-      hoofdstuk toekomende rechten en de bij of krachtens dit hoofdstuk op hen rustende verplichtingen over aan een van
-      hen, dan wel aan een openbaar lichaam als bedoeld in [artikel 8 van de Wet gemeenschappelijke regelingen][ref1].
+
+      2 In geval van samenwerking als bedoeld in het eerste lid dragen de deelnemende gemeenten de hen
+      bij of krachtens dit hoofdstuk toekomende rechten en de bij of krachtens dit hoofdstuk op hen
+      rustende verplichtingen over aan een van hen, dan wel aan een openbaar lichaam als bedoeld in
+      [artikel 8 van de Wet gemeenschappelijke regelingen][ref1].
+
+      3 De colleges wie het betreft stellen Onze Minister voor 1 september, voorafgaand aan het jaar waarop de
+      samenwerking betrekking heeft, in kennis van de samenwerking. Deze kennisgeving bevat in ieder geval:
+
+      a. de namen van de deelnemende gemeenten;
+
+      b. de naam van de gemeente dan wel het openbaar lichaam aan wie de in het tweede lid genoemde rechten en
+      verplichtingen zijn overgedragen;
+
+      c. een verklaring van de deelnemende gemeenten waaruit de in het tweede lid bedoelde overdracht van rechten en
+      verplichtingen blijkt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003740#Artikel8
@@ -2365,132 +1894,99 @@ articles:
       - id: ref1
         bwb_id: BWBR0003740
         artikel: '8'
-  - number: 7.8.3
+  - number: '7.9'
     text: |-
-      De colleges wie het betreft stellen Onze Minister voor 1 september, voorafgaand aan het jaar waarop de samenwerking
-      betrekking heeft, in kennis van de samenwerking. Deze kennisgeving bevat in ieder geval:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.8
-  - number: 7.8.3.a
-    text: de namen van de deelnemende gemeenten;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.8
-  - number: 7.8.3.b
-    text: |-
-      de naam van de gemeente dan wel het openbaar lichaam aan wie de in het tweede lid genoemde rechten en
-      verplichtingen zijn overgedragen;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.8
-  - number: 7.8.3.c
-    text: |-
-      een verklaring van de deelnemende gemeenten waaruit de in het tweede lid bedoelde overdracht van rechten en
-      verplichtingen blijkt.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.8
-  - number: 7.9.1
-    text: |-
-      Onze Minister kan de vastgestelde rijksbijdrage binnen een periode van vijf jaar na de bekendmaking ervan intrekken
-      of ten nadele van de gemeente wijzigen:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.9
-  - number: 7.9.1.a
-    text: |-
-      indien er sprake is van feiten of omstandigheden waarvan Onze Minister bij de vaststelling van de rijksbijdrage
+      1 Onze Minister kan de vastgestelde rijksbijdrage binnen een periode van vijf jaar na de bekendmaking ervan
+      intrekken of ten nadele van de gemeente wijzigen:
+
+      a. indien er sprake is van feiten of omstandigheden waarvan Onze Minister bij de vaststelling van de rijksbijdrage
       redelijkerwijs niet op de hoogte kon zijn en op grond waarvan de rijksbijdrage lager zou zijn vastgesteld;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.9
-  - number: 7.9.1.b
-    text: indien de vaststelling van de rijksbijdrage onjuist was en de gemeente dit wist of behoorde te weten;
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.9
-  - number: 7.9.1.c
-    text: |-
-      indien de gemeente na de vaststelling van de rijksbijdrage niet heeft voldaan aan de regels en voorschriften,
+
+      b. indien de vaststelling van de rijksbijdrage onjuist was en de gemeente dit wist of behoorde te weten;
+
+      c. indien de gemeente na de vaststelling van de rijksbijdrage niet heeft voldaan aan de regels en voorschriften,
       vastgesteld bij en krachtens dit hoofdstuk.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.9
-  - number: 7.9.2
-    text: |-
-      De intrekking of wijziging werkt terug tot en met het tijdstip waarop de rijksbijdrage is vastgesteld, tenzij bij
+
+      2 De intrekking of wijziging werkt terug tot en met het tijdstip waarop de rijksbijdrage is vastgesteld, tenzij bij
       de intrekking of wijziging anders is bepaald.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.9
-  - number: 7.10.1
+  - number: '7.10'
     text: |-
-      Bij het geheel of gedeeltelijk intrekken van de rijksbijdrage op grond van [artikel 7.9][ref1] besluit Onze
+      1 Bij het geheel of gedeeltelijk intrekken van de rijksbijdrage op grond van [artikel 7.9][ref1] besluit Onze
       Minister tot:
 
+      a. het onmiddellijk terugvorderen van de middelen, of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
+      b. het verrekenen van de middelen met nog te betalen rijksbijdragen.
+
+      2 Indien Onze Minister toepassing geeft aan het eerste lid, onderdeel a, betaalt het college de middelen terug
+      binnen drie maanden na de bekendmaking van het daartoe strekkende besluit van Onze Minister.
+
+      3 Na het verstrijken van de termijn, bedoeld in het tweede lid, is de gemeente zonder aanmaning of rechterlijke
+      tussenkomst de wettelijke rente verschuldigd.
+
+      4 Indien volledige terugvordering naar het oordeel van Onze Minister tot een onbillijkheid van overwegende aard
+      leidt, stelt Onze Minister de terugvordering op een lager bedrag vast.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7.9
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '7'
+        artikel: '7.9'
         hoofdstuk: '7'
         afdeling: '1'
-  - number: 7.10.1.a
-    text: het onmiddellijk terugvorderen van de middelen, of
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
-  - number: 7.10.1.b
-    text: het verrekenen van de middelen met nog te betalen rijksbijdragen.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
-  - number: 7.10.2
-    text: |-
-      Indien Onze Minister toepassing geeft aan het eerste lid, onderdeel a, betaalt het college de middelen terug binnen
-      drie maanden na de bekendmaking van het daartoe strekkende besluit van Onze Minister.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
-  - number: 7.10.3
-    text: |-
-      Na het verstrijken van de termijn, bedoeld in het tweede lid, is de gemeente zonder aanmaning of rechterlijke
-      tussenkomst de wettelijke rente verschuldigd.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
-  - number: 7.10.4
-    text: |-
-      Indien volledige terugvordering naar het oordeel van Onze Minister tot een onbillijkheid van overwegende aard
-      leidt, stelt Onze Minister de terugvordering op een lager bedrag vast.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.10
   - number: '7.11'
     text: |-
-      In deze afdeling wordt verstaan onder: nieuwe inburgeringsplichtigen: inburgeringsplichtigen als bedoeld in
-      het besluit van de Staatssecretaris van Justitie van 12 juni 2007, nr. 2007/11, houdende wijziging van de
-      Vreemdelingencirculaire 2000, aan wie geen persoonsvolgend budget is verstrekt.
+      In deze afdeling wordt verstaan onder:
+
+      nieuwe inburgeringsplichtigen: inburgeringsplichtigen als bedoeld in het besluit van de Staatssecretaris van
+      Justitie van 12 juni 2007, nr. 2007/11, houdende wijziging van de Vreemdelingencirculaire 2000, aan wie geen
+      persoonsvolgend budget is verstrekt.
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.11
-  - number: 7.12.1
+  - number: '7.12'
     text: |-
-      Op de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe inburgeringsplichtigen zijn de
+      1 Op de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe inburgeringsplichtigen zijn de
       [artikelen 7.1 tot en met 7.7][ref1] niet van toepassing.
 
+      2 Op de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe inburgeringsplichtigen zijn de
+      [artikelen 7.8 tot en met 7.10][ref2] van overeenkomstige toepassing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7.1
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel7.8
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.12
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '7'
+        artikel: '7.1'
         hoofdstuk: '7'
         afdeling: '1'
-  - number: 7.12.2
-    text: |-
-      Op de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe inburgeringsplichtigen zijn de
-      [artikelen 7.8 tot en met 7.10][ref1] van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.12
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0020674
-        artikel: '7'
+        artikel: '7.8'
         hoofdstuk: '7'
         afdeling: '1'
   - number: '7.13'
     text: |-
       De rijksbijdrage voor een gemeente ten behoeve van nieuwe inburgeringsplichtigen wordt berekend op de grondslag
       van:
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.13
-  - number: 7.13.a
-    text: |-
-      het aantal nieuwe inburgeringsplichtigen, ten behoeve van wie het college voor de eerste keer een
+
+      a. het aantal nieuwe inburgeringsplichtigen, ten behoeve van wie het college voor de eerste keer een
       inburgeringsvoorziening, een duale inburgeringsvoorziening of een taalkennisvoorziening als bedoeld
       in [artikel 19, derde lid, van de wet][ref1], zoals die luidde voor de inwerkingtreding van de
       [Wet participatiebudget][ref2] heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie
       die lening in zijn geheel is terugbetaald;
 
+      b. het aantal in onderdeel a bedoelde nieuwe inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen
+      de inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen of het examen, bedoeld in
+      [artikel 2.3, eerste lid, onderdeel c][ref3], zoals dit luidde op 31 december 2014.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref2]: https://wetten.overheid.nl/BWBR0025039
+      [ref3]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.13
     references:
       - id: ref1
@@ -2498,26 +1994,21 @@ articles:
         artikel: '19'
       - id: ref2
         bwb_id: BWBR0025039
-  - number: 7.13.b
-    text: |-
-      het aantal in onderdeel a bedoelde nieuwe inburgeringsplichtigen dat binnen drie kalenderjaren nadat voor hen de
-      inburgeringsvoorziening is vastgesteld, heeft deelgenomen aan het inburgeringsexamen of het examen, bedoeld in
-      [artikel 2.3, eerste lid, onderdeel c][ref1], zoals dit luidde op 31 december 2014.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.13
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
-  - number: 7.15.1
+  - number: '7.15'
     text: |-
-      De rijksbijdrage voor een gemeente ten behoeve van de nieuwe inburgeringsplichtigen wordt berekend met de formule:
-      A = [ B x C ] + [ D x E] + [F x G] + [H x I] waarin wordt voorgesteld: - met de letter A: de rijksbijdrage ten
-      behoeve van nieuwe inburgeringsplichtigen;
+      1 De rijksbijdrage voor een gemeente ten behoeve van de nieuwe inburgeringsplichtigen wordt berekend met de
+      formule:
+
+      A = [ B x C ] + [ D x E] + [F x G] + [H x I]
+
+      waarin wordt voorgesteld:
+
+        - met de letter A: de rijksbijdrage ten behoeve van nieuwe inburgeringsplichtigen;
         - met de letter B: het aantal nieuwe inburgeringsplichtigen ten behoeve van wie het college voor de eerste keer
       een inburgeringsvoorziening heeft vastgesteld en aan wie geen lening is verstrekt, hetzij ten behoeve van wie die
       lening in zijn geheel is terugbetaald;
@@ -2539,15 +2030,41 @@ articles:
         - met de letter I: de bijdragevergoeding ten aanzien van de vaststelling van de taalkennisvoorziening ten behoeve
       van nieuwe inburgeringsplichtigen.
 
+      2 Het college verstrekt de gegevens, bedoeld in de letters B, D, F en H van het eerste lid,
+      tezamen met de jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref4], welke betrekking
+      heeft op het jaar 2011. De jaarrekening is voorzien van de accountantsverklaring, bedoeld in
+      [artikel 213, derde lid, van de Gemeentewet][ref5]. Het college vergewist zich ervan dat de gegevens zijn opgenomen
+      in het Informatiesysteem Inburgering.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
+      3 Indien Onze Minister de gegevens en de accountantsverklaring niet binnen zesentwintig weken na het verstrijken
+      van de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref6],
+      heeft ontvangen, stelt Onze Minister de rijksbijdrage vast op nul.
+
+      4 Onze Minister stelt de rijksbijdrage ten behoeve van nieuwe inburgeringsplichtigen
+      uiterlijk dertig weken na het verstrijken van de termijn, bedoeld in
+      [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref7], vast.
+
+      5 De rijksbijdrage wordt vastgesteld onder voorbehoud van goedkeuring van de beschikbare middelen door de
+      begrotingswetgever en kan worden verlaagd in verband met wijzigingen van de rijksbegroting voor het jaar 2012 dan
+      wel het jaar 2013.
+
+      6 De rijksbijdrage wordt verrekend met het voorschot dat is verleend ten behoeve van de jaren 2007 en 2008. Het uit
+      de verrekening resulterende positieve of negatieve saldo wordt uiterlijk zes maanden na de vaststelling ervan aan
+      een gemeente betaald.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
       [ref2]: https://wetten.overheid.nl/BWBR0020611#Artikel19
       [ref3]: https://wetten.overheid.nl/BWBR0025039
+      [ref4]: https://wetten.overheid.nl/BWBR0005416#Artikel186
+      [ref5]: https://wetten.overheid.nl/BWBR0005416#Artikel213
+      [ref6]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
+      [ref7]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref2
@@ -2555,151 +2072,91 @@ articles:
         artikel: '19'
       - id: ref3
         bwb_id: BWBR0025039
-  - number: 7.15.2
-    text: |-
-      Het college verstrekt de gegevens, bedoeld in de letters B, D, F en H van het eerste lid,
-      tezamen met de jaarrekening, bedoeld in [artikel 186 van de Gemeentewet][ref1], welke betrekking
-      heeft op het jaar 2011. De jaarrekening is voorzien van de accountantsverklaring, bedoeld in
-      [artikel 213, derde lid, van de Gemeentewet][ref2]. Het college vergewist zich ervan dat de gegevens zijn opgenomen
-      in het Informatiesysteem Inburgering.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel186
-      [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel213
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0005416
         artikel: '186'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0005416
         artikel: '213'
-  - number: 7.15.3
-    text: |-
-      Indien Onze Minister de gegevens en de accountantsverklaring niet binnen zesentwintig weken na het verstrijken van
-      de termijn, bedoeld in [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1],
-      heeft ontvangen, stelt Onze Minister de rijksbijdrage vast op nul.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.15.4
-    text: |-
-      Onze Minister stelt de rijksbijdrage ten behoeve van nieuwe inburgeringsplichtigen
-      uiterlijk dertig weken na het verstrijken van de termijn, bedoeld in
-      [artikel 17b, derde lid, aanhef en onderdeel a, van de Financiële-verhoudingswet][ref1], vast.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008290#Artikel17b
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0008290
         artikel: 17b
-  - number: 7.15.5
+  - number: '7.16'
     text: |-
-      De rijksbijdrage wordt vastgesteld onder voorbehoud van goedkeuring van de beschikbare middelen door de
-      begrotingswetgever en kan worden verlaagd in verband met wijzigingen van de rijksbegroting voor het jaar 2012 dan
-      wel het jaar 2013.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
-  - number: 7.15.6
-    text: |-
-      De rijksbijdrage wordt verrekend met het voorschot dat is verleend ten behoeve van de jaren 2007 en 2008. Het uit
-      de verrekening resulterende positieve of negatieve saldo wordt uiterlijk zes maanden na de vaststelling ervan aan
-      een gemeente betaald.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.15
-  - number: 7.16.1
-    text: |-
-      Onze Minister stelt ten behoeve van de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe
+      1 Onze Minister stelt ten behoeve van de vaststelling van de rijksbijdrage voor een gemeente ten behoeve van nieuwe
       inburgeringsplichtigen jaarlijks de bijdragevergoedingen, bedoeld in [artikel 7.15][ref1], vast.
 
+      2 Onze Minister maakt de hoogte van de bijdragevergoedingen jaarlijks voor 15 november bekend.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel7.15
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.16
     references:
       - id: ref1
         bwb_id: BWBR0020674
-        artikel: '7'
+        artikel: '7.15'
         hoofdstuk: '7'
         afdeling: '2'
-  - number: 7.16.2
-    text: Onze Minister maakt de hoogte van de bijdragevergoedingen jaarlijks voor 15 november bekend.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel7.16
   - number: '9.1'
-    text: Vrijgesteld van de inburgeringsplicht is degene die voor 1 januari 2015 inburgeringsplichtig is geworden en
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.1
-  - number: 9.1.a
     text: |-
-      beschikt over een diploma staatsexamen Nederlands als tweede taal I of II als bedoeld in
+      Vrijgesteld van de inburgeringsplicht is degene die voor 1 januari 2015 inburgeringsplichtig is geworden en
+
+      a. beschikt over een diploma staatsexamen Nederlands als tweede taal I of II als bedoeld in
       [artikel 7.3.1, eerste lid, onderdeel c, van de Wet educatie en beroepsonderwijs][ref1], of
 
+      b. in aanmerking zou zijn gekomen voor een vrijstelling van de inburgeringsplicht op grond van
+      [artikel 2.3, eerste lid, onderdeel b][ref2], zoals dit onderdeel luidde op 31 december 2014.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7
+
+      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.3.1
+      [ref2]: https://wetten.overheid.nl/BWBR0020674#Artikel2.3
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.1
     references:
       - id: ref1
         bwb_id: BWBR0007625
-        artikel: '7'
-  - number: 9.1.b
-    text: |-
-      in aanmerking zou zijn gekomen voor een vrijstelling van de inburgeringsplicht op grond van
-      [artikel 2.3, eerste lid, onderdeel b][ref1], zoals dit onderdeel luidde op 31 december 2014.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020674#Artikel2
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.1
-    references:
-      - id: ref1
+        artikel: 7.3.1
+      - id: ref2
         bwb_id: BWBR0020674
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '2'
-  - number: 9.3.1
+  - number: '9.3'
     text: |-
-      De inburgeringsplichtige die op 1 januari 2007 deelneemt aan een opleiding educatie als bedoeld in
+      1 De inburgeringsplichtige die op 1 januari 2007 deelneemt aan een opleiding educatie als bedoeld in
       [artikel 7.3.1, eerste lid, onderdeel d, van de Wet educatie en beroepsonderwijs][ref1], blijft toegelaten tot
       deze opleiding.
 
+      2 Het college kan de opleidingen educatie, bedoeld in het eerste lid, bekostigen uit het prestatie-afhankelijke
+      deel van de rijksbijdrage dat betrekking heeft op het jaar 2007.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7
+      3 Indien het college toepassing geeft aan het tweede lid, doet het college opgave van het daarmee gemoeide bedrag,
+      alsmede het aantal opleidingen educatie, bedoeld in het eerste lid, tezamen met de jaarrekening, bedoeld in
+      [artikel 186 van de Gemeentewet][ref2], welke betrekking heeft op het jaar 2007. De jaarrekening is voorzien van de
+      accountantsverklaring, bedoeld in [artikel 213, derde lid, van de Gemeentewet][ref3].
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.3.1
+      [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel186
+      [ref3]: https://wetten.overheid.nl/BWBR0005416#Artikel213
     url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.3
     references:
       - id: ref1
         bwb_id: BWBR0007625
-        artikel: '7'
-  - number: 9.3.2
-    text: |-
-      Het college kan de opleidingen educatie, bedoeld in het eerste lid, bekostigen uit het prestatie-afhankelijke deel
-      van de rijksbijdrage dat betrekking heeft op het jaar 2007.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.3
-  - number: 9.3.3
-    text: |-
-      Indien het college toepassing geeft aan het tweede lid, doet het college opgave van het daarmee gemoeide bedrag,
-      alsmede het aantal opleidingen educatie, bedoeld in het eerste lid, tezamen met de jaarrekening, bedoeld in
-      [artikel 186 van de Gemeentewet][ref1], welke betrekking heeft op het jaar 2007. De jaarrekening is voorzien van de
-      accountantsverklaring, bedoeld in [artikel 213, derde lid, van de Gemeentewet][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel186
-      [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel213
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0005416
-        artikel: '186'
+        artikel: 7.3.1
       - id: ref2
         bwb_id: BWBR0005416
+        artikel: '186'
+      - id: ref3
+        bwb_id: BWBR0005416
         artikel: '213'
-  - number: 9.8.1
-    text: De wet en dit besluit treden in werking op 1 januari 2007.
-    url: https://wetten.overheid.nl/BWBR0020674/2015-01-01#Artikel9.8
-  - number: 9.8.2
+  - number: '9.8'
     text: |-
-      [Artikel 65 van de wet][ref1] werkt terug tot en met 1 januari 2006.
+      1 De wet en dit besluit treden in werking op 1 januari 2007.
+
+      2 [Artikel 65 van de wet][ref1] werkt terug tot en met 1 januari 2006.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020611#Artikel65
