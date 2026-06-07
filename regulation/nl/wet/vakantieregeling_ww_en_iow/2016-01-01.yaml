@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: vakantieregeling_ww_en_iow
 regulatory_layer: WET
 publication_date: '2017-10-26'
@@ -13,11 +13,17 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Van vakantie genieten als bedoeld in [artikel 19, eerste lid, onderdeel k, van de Werkloosheidswet][ref1] en
+      1 Van vakantie genieten als bedoeld in [artikel 19, eerste lid, onderdeel k, van de Werkloosheidswet][ref1] en
       [artikel 6, eerste lid, onderdeel e, van de Wet inkomensvoorziening oudere werklozen][ref2] is sprake gedurende de
       periode waarover de werknemer of de uitkeringsgerechtigde:
+
+      a. verklaart vakantie te genieten;
+
+      b. niet verklaart vakantie te genieten, maar daarvan, gelet op de feitelijke omstandigheden, kennelijk sprake is.
+
+      2 In deze regeling wordt verstaan onder dagen: maandag tot en met vrijdag danwel dinsdag tot en met zaterdag.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel19
@@ -30,15 +36,6 @@ articles:
       - id: ref2
         bwb_id: BWBR0024394
         artikel: '6'
-  - number: 1.1.a
-    text: verklaart vakantie te genieten;
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel1
-  - number: 1.1.b
-    text: niet verklaart vakantie te genieten, maar daarvan, gelet op de feitelijke omstandigheden, kennelijk sprake is.
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel1
-  - number: '1.2'
-    text: 'In deze regeling wordt verstaan onder dagen: maandag tot en met vrijdag danwel dinsdag tot en met zaterdag.'
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel1
   - number: 1a
     text: |-
       Deze regeling berust mede op de [artikelen 19, achtste lid, van de Werkloosheidswet][ref1] en
@@ -55,113 +52,76 @@ articles:
       - id: ref2
         bwb_id: BWBR0024394
         artikel: '6'
-  - number: '2.1'
+  - number: '2'
     text: |-
-      De werknemer kan per kalenderjaar gedurende 20 dagen vakantie genieten met behoud van zijn recht op uitkering op
+      1 De werknemer kan per kalenderjaar gedurende 20 dagen vakantie genieten met behoud van zijn recht op uitkering op
       grond van de [Werkloosheidswet][ref1].
 
+      2 De uitkeringsgerechtigde kan per kalenderjaar gedurende 20 dagen vakantie genieten met behoud van zijn recht op
+      uitkering op grond van de [Wet inkomensvoorziening oudere werklozen][ref2].
+
+      3 In afwijking van het eerste lid geldt een termijn van 65 dagen voor de werknemer, bedoeld in
+      [artikel 7 van de Regeling vrijstelling verplichtingen sociale zekerheidswetten][ref3].
+
+      4 In afwijking van het tweede lid geldt een termijn van 65 dagen voor de IOW-gerechtigde, bedoeld in
+      [artikel 7 van de Regeling vrijstelling verplichtingen sociale zekerheidswetten][ref4].
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0004045
+      [ref2]: https://wetten.overheid.nl/BWBR0024394
+      [ref3]: https://wetten.overheid.nl/BWBR0019305#Artikel7
+      [ref4]: https://wetten.overheid.nl/BWBR0019305#Artikel7
     url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0004045
-  - number: '2.2'
-    text: |-
-      De uitkeringsgerechtigde kan per kalenderjaar gedurende 20 dagen vakantie genieten met behoud van zijn recht op
-      uitkering op grond van de [Wet inkomensvoorziening oudere werklozen][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024394
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0024394
-  - number: '2.3'
-    text: |-
-      In afwijking van het eerste lid geldt een termijn van 65 dagen voor de werknemer, bedoeld in
-      [artikel 7 van de Regeling vrijstelling verplichtingen sociale zekerheidswetten][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019305#Artikel7
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0019305
         artikel: '7'
-  - number: '2.4'
-    text: |-
-      In afwijking van het tweede lid geldt een termijn van 65 dagen voor de IOW-gerechtigde, bedoeld in
-      [artikel 7 van de Regeling vrijstelling verplichtingen sociale zekerheidswetten][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019305#Artikel7
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0019305
         artikel: '7'
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Op het aantal dagen, bedoeld in [artikel 2, eerste en derde lid][ref1], wordt in mindering gebracht:
+      1 Op het aantal dagen, bedoeld in [artikel 2, eerste en derde lid][ref1], wordt in mindering gebracht:
 
+      a. vijf maal het aantal hele weken voor de eerste werkloosheidsdag in het desbetreffende kalenderjaar, gedeeld
+      door 13;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0016004#Artikel2
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0016004
-        artikel: '2'
-  - number: 3.1.a
-    text: |-
-      vijf maal het aantal hele weken voor de eerste werkloosheidsdag in het desbetreffende kalenderjaar, gedeeld door
-      13;
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
-  - number: 3.1.b
-    text: |-
-      het aantal dagen waarop de werknemer in het desbetreffende kalenderjaar vakantie heeft genoten met behoud van
-      zijn recht op uitkering op grond van de [Werkloosheidswet][ref1], met uitzondering van vakantiedagen die tevens
+      b. het aantal dagen waarop de werknemer in het desbetreffende kalenderjaar vakantie heeft genoten met behoud van
+      zijn recht op uitkering op grond van de [Werkloosheidswet][ref2], met uitzondering van vakantiedagen die tevens
       nationale of christelijke feestdagen zijn.
 
+      2 Op het aantal dagen, bedoeld in [artikel 2, tweede en vierde lid][ref3], wordt in mindering gebracht:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-  - number: '3.2'
-    text: |-
-      Op het aantal dagen, bedoeld in [artikel 2, tweede en vierde lid][ref1], wordt in mindering gebracht:
+      a. vijf maal het aantal hele weken voor de eerste dag waarop recht op een uitkering op grond van de
+      [Wet inkomensvoorziening oudere werklozen][ref4] bestond in het desbetreffende kalenderjaar, gedeeld door 13;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0016004#Artikel2
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0016004
-        artikel: '2'
-  - number: 3.2.a
-    text: |-
-      vijf maal het aantal hele weken voor de eerste dag waarop recht op een uitkering op grond van de
-      [Wet inkomensvoorziening oudere werklozen][ref1] bestond in het desbetreffende kalenderjaar, gedeeld door 13;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024394
-    url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024394
-  - number: 3.2.b
-    text: |-
-      het aantal dagen waarop de werknemer in het desbetreffende kalenderjaar vakantie heeft genoten met behoud van
-      zijn recht op uitkering op grond van de [Wet inkomensvoorziening oudere werklozen][ref1], met uitzondering van
+      b. het aantal dagen waarop de werknemer in het desbetreffende kalenderjaar vakantie heeft genoten met behoud van
+      zijn recht op uitkering op grond van de [Wet inkomensvoorziening oudere werklozen][ref5], met uitzondering van
       vakantiedagen die tevens nationale of christelijke feestdagen zijn.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0024394
+      [ref1]: https://wetten.overheid.nl/BWBR0016004#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0004045
+      [ref3]: https://wetten.overheid.nl/BWBR0016004#Artikel2
+      [ref4]: https://wetten.overheid.nl/BWBR0024394
+      [ref5]: https://wetten.overheid.nl/BWBR0024394
     url: https://wetten.overheid.nl/BWBR0016004/2016-01-01#Artikel3
     references:
       - id: ref1
+        bwb_id: BWBR0016004
+        artikel: '2'
+      - id: ref2
+        bwb_id: BWBR0004045
+      - id: ref3
+        bwb_id: BWBR0016004
+        artikel: '2'
+      - id: ref4
+        bwb_id: BWBR0024394
+      - id: ref5
         bwb_id: BWBR0024394
   - number: '4'
     text: Het aantal dagen, berekend volgens de voorgaande artikelen, wordt rekenkundig op hele dagen afgerond.
