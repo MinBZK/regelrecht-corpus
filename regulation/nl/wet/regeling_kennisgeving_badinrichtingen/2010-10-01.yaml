@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_kennisgeving_badinrichtingen
 regulatory_layer: WET
 publication_date: '2020-12-03'
@@ -13,18 +13,58 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Bij een kennisgeving als bedoeld in
+      1 Bij een kennisgeving als bedoeld in
       [artikel 10, eerste lid, van de Wet hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref1]
       verstrekt degene die voornemens is een badinrichting op te richten ten minste drie maanden
       vóór het tijdstip waarop de aanvraag om een omgevingsvergunning voor het bouwen, bedoeld in
       [artikel 2.1, eerste lid, onder a, van de Wet algemene bepalingen omgevingsrecht][ref2], vermoedelijk zal worden
       ingediend, de volgende gegevens aan gedeputeerde staten:
 
+      a. naam, adres en telefoonnummer van de houder van de badinrichting;
+
+      b. naam en adres van de badinrichting;
+
+      c. of de badinrichting behoort tot een categorie als bedoeld in [artikel 2, eerste lid][ref3], [artikel 26][ref4]
+      of [artikel 34 van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref5];
+
+      d. indien de badinrichting behoort tot een categorie als bedoeld in
+      [artikel 2, eerste lid, van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref6]: naam,
+      adres en telefoonnummer van het laboratorium als bedoeld in [artikel 10, eerste lid, van dat besluit][ref7], dat
+      bij de ingebruikneming van de badinrichting het onderzoek zal verrichten;
+
+      e. indien de badinrichting behoort tot een categorie als bedoeld in
+      [artikel 2, eerste lid, van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref8]: een
+      stromingsschema van de waterbehandeling met een zodanige toelichting dat een oordeel gevormd kan worden over de
+      opzet en capaciteit ervan;
+
+      f. indien de badinrichting behoort tot een categorie als bedoeld in [artikel 2, eerste lid][ref9],
+      of [artikel 26 van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref10]: de
+      herkomst en het kaliumpermanganaatverbruik van het in [artikel 8, tweede lid][ref11], onderscheidenlijk
+      [artikel 27 van dat besluit][ref12] bedoelde water;
+
+      g. een duidelijke overzichtstekening van de badinrichting;
+
+      h. het maximale aantal per dag toe te laten zwemmers of baders, het maximale aantal gelijktijdig toe te laten
+      zwemmers of baders, en de maximale openingstijden per dag.
+
+      2 Gedeputeerde staten kunnen een formulier vaststellen waarop de in het eerste lid bedoelde gegevens worden
+      ingediend.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002660#Artikel10
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref3]: https://wetten.overheid.nl/BWBR0003716#Artikel2
+      [ref4]: https://wetten.overheid.nl/BWBR0003716#Artikel26
+      [ref5]: https://wetten.overheid.nl/BWBR0003716#Artikel34
+      [ref6]: https://wetten.overheid.nl/BWBR0003716#Artikel2
+      [ref7]: https://wetten.overheid.nl/BWBR0003716#Artikel10
+      [ref8]: https://wetten.overheid.nl/BWBR0003716#Artikel2
+      [ref9]: https://wetten.overheid.nl/BWBR0003716#Artikel2
+      [ref10]: https://wetten.overheid.nl/BWBR0003716#Artikel26
+      [ref11]: https://wetten.overheid.nl/BWBR0003716#Artikel8
+      [ref12]: https://wetten.overheid.nl/BWBR0003716#Artikel27
     url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
     references:
       - id: ref1
@@ -32,107 +72,40 @@ articles:
         artikel: '10'
       - id: ref2
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 1.1.a
-    text: naam, adres en telefoonnummer van de houder van de badinrichting;
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-  - number: 1.1.b
-    text: naam en adres van de badinrichting;
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-  - number: 1.1.c
-    text: |-
-      of de badinrichting behoort tot een categorie als bedoeld in [artikel 2, eerste lid][ref1], [artikel 26][ref2] of
-      [artikel 34 van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref3];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003716#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003716#Artikel26
-      [ref3]: https://wetten.overheid.nl/BWBR0003716#Artikel34
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0003716
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0003716
-        artikel: '26'
+        artikel: '2.1'
       - id: ref3
         bwb_id: BWBR0003716
-        artikel: '34'
-  - number: 1.1.d
-    text: |-
-      indien de badinrichting behoort tot een categorie als bedoeld in
-      [artikel 2, eerste lid, van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref1]: naam,
-      adres en telefoonnummer van het laboratorium als bedoeld in [artikel 10, eerste lid, van dat besluit][ref2], dat
-      bij de ingebruikneming van de badinrichting het onderzoek zal verrichten;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003716#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003716#Artikel10
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0003716
         artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0003716
-        artikel: '10'
-  - number: 1.1.e
-    text: |-
-      indien de badinrichting behoort tot een categorie als bedoeld in
-      [artikel 2, eerste lid, van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref1]: een
-      stromingsschema van de waterbehandeling met een zodanige toelichting dat een oordeel gevormd kan worden over de
-      opzet en capaciteit ervan;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003716#Artikel2
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0003716
-        artikel: '2'
-  - number: 1.1.f
-    text: |-
-      indien de badinrichting behoort tot een categorie als bedoeld in [artikel 2, eerste lid][ref1], of
-      [artikel 26 van het Besluit hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref2]: de
-      herkomst en het kaliumpermanganaatverbruik van het in [artikel 8, tweede lid][ref3], onderscheidenlijk
-      [artikel 27 van dat besluit][ref4] bedoelde water;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003716#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003716#Artikel26
-      [ref3]: https://wetten.overheid.nl/BWBR0003716#Artikel8
-      [ref4]: https://wetten.overheid.nl/BWBR0003716#Artikel27
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0003716
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0003716
-        artikel: '26'
-      - id: ref3
-        bwb_id: BWBR0003716
-        artikel: '8'
       - id: ref4
         bwb_id: BWBR0003716
+        artikel: '26'
+      - id: ref5
+        bwb_id: BWBR0003716
+        artikel: '34'
+      - id: ref6
+        bwb_id: BWBR0003716
+        artikel: '2'
+      - id: ref7
+        bwb_id: BWBR0003716
+        artikel: '10'
+      - id: ref8
+        bwb_id: BWBR0003716
+        artikel: '2'
+      - id: ref9
+        bwb_id: BWBR0003716
+        artikel: '2'
+      - id: ref10
+        bwb_id: BWBR0003716
+        artikel: '26'
+      - id: ref11
+        bwb_id: BWBR0003716
+        artikel: '8'
+      - id: ref12
+        bwb_id: BWBR0003716
         artikel: '27'
-  - number: 1.1.g
-    text: een duidelijke overzichtstekening van de badinrichting;
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-  - number: 1.1.h
+  - number: '2'
     text: |-
-      het maximale aantal per dag toe te laten zwemmers of baders, het maximale aantal gelijktijdig toe te laten zwemmers
-      of baders, en de maximale openingstijden per dag.
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-  - number: '1.2'
-    text: |-
-      Gedeputeerde staten kunnen een formulier vaststellen waarop de in het eerste lid bedoelde gegevens worden
-      ingediend.
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel1
-  - number: '2.1'
-    text: |-
-      Bij een kennisgeving als bedoeld in
+      1 Bij een kennisgeving als bedoeld in
       [artikel 10, eerste lid, van de Wet hygiëne en veiligheid badinrichtingen en zwemgelegenheden][ref1]
       verstrekt degene die voornemens is een badinrichting zodanig te wijzigen of uit te breiden dat de gegevens,
       bedoeld in [artikel 1, eerste lid, onder e, g of h][ref2], een verandering ondergaan, ten minste drie
@@ -140,10 +113,22 @@ articles:
       [artikel 2.1, eerste lid, onder a, van de Wet algemene bepalingen omgevingsrecht][ref3], vermoedelijk zal worden
       ingediend, de desbetreffende gegevens aan gedeputeerde staten.
 
+      2 In afwijking in zoverre van het eerste lid, verstrekt degene die voornemens is een badinrichting
+      zodanig te wijzigen dat de gegevens, bedoeld in [artikel 1, eerste lid, onder e][ref4], een
+      verandering ondergaan en voor die verandering geen omgevingsvergunning voor het bouwen, bedoeld in
+      [artikel 2.1, eerste lid, onder a, van de Wet algemene bepalingen omgevingsrecht][ref5], is vereist, ten minste
+      drie maanden voordat het voornemen tot wijziging in uitvoering wordt gegeven, de desbetreffende gegevens aan
+      gedeputeerde staten.
+
+      3 [Artikel 1, tweede lid][ref6], is van overeenkomstige toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002660#Artikel10
       [ref2]: https://wetten.overheid.nl/BWBR0011622#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref4]: https://wetten.overheid.nl/BWBR0011622#Artikel1
+      [ref5]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref6]: https://wetten.overheid.nl/BWBR0011622#Artikel1
     url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel2
     references:
       - id: ref1
@@ -154,36 +139,14 @@ articles:
         artikel: '1'
       - id: ref3
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: '2.2'
-    text: |-
-      In afwijking in zoverre van het eerste lid, verstrekt degene die voornemens is een badinrichting
-      zodanig te wijzigen dat de gegevens, bedoeld in [artikel 1, eerste lid, onder e][ref1], een
-      verandering ondergaan en voor die verandering geen omgevingsvergunning voor het bouwen, bedoeld in
-      [artikel 2.1, eerste lid, onder a, van de Wet algemene bepalingen omgevingsrecht][ref2], is vereist, ten minste
-      drie maanden voordat het voornemen tot wijziging in uitvoering wordt gegeven, de desbetreffende gegevens aan
-      gedeputeerde staten.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011622#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel2
-    references:
-      - id: ref1
+        artikel: '2.1'
+      - id: ref4
         bwb_id: BWBR0011622
         artikel: '1'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: '2.3'
-    text: |-
-      [Artikel 1, tweede lid][ref1], is van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011622#Artikel1
-    url: https://wetten.overheid.nl/BWBR0011622/2010-10-01#Artikel2
-    references:
-      - id: ref1
+        artikel: '2.1'
+      - id: ref6
         bwb_id: BWBR0011622
         artikel: '1'
   - number: '3'
