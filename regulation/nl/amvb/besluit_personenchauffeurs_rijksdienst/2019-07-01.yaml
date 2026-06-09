@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_personenchauffeurs_rijksdienst
 regulatory_layer: AMVB
 publication_date: '2016-11-29'
@@ -26,16 +26,17 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel1
-  - number: 1.a
-    text: 'Onze Minister: het hoofd van het betrokken departement van algemeen bestuur;'
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel1
-  - number: 1.b
     text: |-
-      personenchauffeur: de ambtenaar aangesteld op grond van het [Algemeen Rijksambtenarenreglement][ref1], het
+      In dit besluit wordt verstaan onder:
+
+      a. Onze Minister: het hoofd van het betrokken departement van algemeen bestuur;
+
+      b. personenchauffeur: de ambtenaar aangesteld op grond van het [Algemeen Rijksambtenarenreglement][ref1], het
       [Reglement Dienst Buitenlandse Zaken][ref2] of het [Ambtenarenreglement Staten-Generaal][ref3] die belast is met
       het vervoer van bewindslieden en hoge ambtelijke functionarissen en als zodanig door Onze Minister is aangewezen;
+
+      c. arbeidsduurfactor: de breuk waarvan de teller bestaat uit de voor de personenchauffeur vastgestelde arbeidsduur
+      en de noemer bestaat uit het getal 48.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001950
@@ -49,11 +50,6 @@ articles:
         bwb_id: BWBR0004052
       - id: ref3
         bwb_id: BWBR0003229
-  - number: 1.c
-    text: |-
-      arbeidsduurfactor: de breuk waarvan de teller bestaat uit de voor de personenchauffeur vastgestelde arbeidsduur en
-      de noemer bestaat uit het getal 48.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel1
   - number: '2'
     text: |-
       Ten aanzien van toepassing van dit besluit op de personenchauffeurs bij de Eerste en Tweede Kamer der Staten-
@@ -65,9 +61,11 @@ articles:
       Nationale ombudsman, de vice-president van de Raad van State of de voorzitter van de commissie van toezicht op de
       inlichtingen- en veiligheidsdiensten.
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel2
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Op de personenchauffeur zijn niet van toepassing: - [artikel 21, tweede tot en met vierde lid][ref1], en
+      1 Op de personenchauffeur zijn niet van toepassing:
+
+        - [artikel 21, tweede tot en met vierde lid][ref1], en
       [artikel 21a, eerste lid, tweede volzin van het Algemeen Rijksambtenarenreglement][ref2];
         - [artikel 34, tweede tot en met vierde lid][ref3], en
       [artikel 34a, eerste lid, tweede volzin, van het Ambtenarenreglement Staten-Generaal][ref4];
@@ -75,6 +73,11 @@ articles:
       [artikel 38, eerste lid, tweede volzin, van het Reglement Dienst Buitenlandse Zaken][ref6];
         - de [artikelen 17][ref7], [17a][ref8], [18a][ref9] en
       [23, van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref10].
+
+      2 Voor de toepassing van [artikel 21a van het Algemeen Rijksambtenarenreglement][ref11],
+      [artikel 34a van het Ambtenarenreglement Staten-Generaal][ref12] en
+      [artikel 38 van het Reglement Dienst Buitenlandse Zaken][ref13] wordt de aanvulling op zijn salaris als bedoeld in
+      [artikel 6][ref14], aangemerkt als salaris.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001950#Artikel21
@@ -87,6 +90,10 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0003630#Artikel17a
       [ref9]: https://wetten.overheid.nl/BWBR0003630#Artikel18a
       [ref10]: https://wetten.overheid.nl/BWBR0003630#Artikel23
+      [ref11]: https://wetten.overheid.nl/BWBR0001950#Artikel21a
+      [ref12]: https://wetten.overheid.nl/BWBR0003229#Artikel34a
+      [ref13]: https://wetten.overheid.nl/BWBR0004052#Artikel38
+      [ref14]: https://wetten.overheid.nl/BWBR0010015#Artikel6
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel3
     references:
       - id: ref1
@@ -119,30 +126,16 @@ articles:
       - id: ref10
         bwb_id: BWBR0003630
         artikel: '23'
-  - number: '3.2'
-    text: |-
-      Voor de toepassing van [artikel 21a van het Algemeen Rijksambtenarenreglement][ref1],
-      [artikel 34a van het Ambtenarenreglement Staten-Generaal][ref2] en
-      [artikel 38 van het Reglement Dienst Buitenlandse Zaken][ref3] wordt de aanvulling op zijn salaris als bedoeld in
-      [artikel 6][ref4], aangemerkt als salaris.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001950#Artikel21a
-      [ref2]: https://wetten.overheid.nl/BWBR0003229#Artikel34a
-      [ref3]: https://wetten.overheid.nl/BWBR0004052#Artikel38
-      [ref4]: https://wetten.overheid.nl/BWBR0010015#Artikel6
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel3
-    references:
-      - id: ref1
+      - id: ref11
         bwb_id: BWBR0001950
         artikel: 21a
-      - id: ref2
+      - id: ref12
         bwb_id: BWBR0003229
         artikel: 34a
-      - id: ref3
+      - id: ref13
         bwb_id: BWBR0004052
         artikel: '38'
-      - id: ref4
+      - id: ref14
         bwb_id: BWBR0010015
         artikel: '6'
   - number: '4'
@@ -156,23 +149,25 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0003630
-  - number: '5.1'
+  - number: '5'
     text: |-
-      De arbeidsduur voor de personenchauffeur met een volledige arbeidsduur, bedraagt voor de toepassing van dit besluit
-      gemiddeld 48 uur per week.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel5
-  - number: '5.2'
-    text: |-
-      In afwijking van [artikel 21, eerste lid, van het Algemeen Rijksambtenarenreglement][ref1],
+      1 De arbeidsduur voor de personenchauffeur met een volledige arbeidsduur, bedraagt voor de toepassing van dit
+      besluit gemiddeld 48 uur per week.
+
+      2 In afwijking van [artikel 21, eerste lid, van het Algemeen Rijksambtenarenreglement][ref1],
       [artikel 34, eerste lid, van het Ambtenarenreglement Staten-Generaal][ref2] en
       [artikel 37, eerste lid, van het Reglement Dienst Buitenlandse Zaken][ref3] kan het in het arbeidstijdpatroon
       opgenomen aantal te werken uren op jaarbasis voor de personenchauffeur niet hoger zijn dan gemiddeld 48 uur per
       week.
 
+      3 Op de arbeidsduur voor de personenchauffeur die uitsluitend of nagenoeg uitsluitend is belast met het vervoer van
+      doorgaans dezelfde persoon per auto, is [paragraaf 5.7 van het Arbeidstijdenbesluit][ref4] van toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0001950#Artikel21
       [ref2]: https://wetten.overheid.nl/BWBR0003229#Artikel34
       [ref3]: https://wetten.overheid.nl/BWBR0004052#Artikel37
+      [ref4]: https://wetten.overheid.nl/BWBR0007687#Paragraaf5.7
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel5
     references:
       - id: ref1
@@ -184,64 +179,43 @@ articles:
       - id: ref3
         bwb_id: BWBR0004052
         artikel: '37'
-  - number: '5.3'
-    text: |-
-      Op de arbeidsduur voor de personenchauffeur die uitsluitend of nagenoeg uitsluitend is belast met het vervoer van
-      doorgaans dezelfde persoon per auto, is [paragraaf 5.7 van het Arbeidstijdenbesluit][ref1] van toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007687#Paragraaf5.7
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0007687
         paragraaf: '5.7'
-  - number: '6.1'
-    text: De personenchauffeur ontvangt een aanvulling op zijn salaris.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel6
-  - number: '6.2'
+  - number: '6'
     text: |-
-      De aanvulling, bedoeld in het eerste lid, bedraagt per maand 52/156 maal het voor de personenchauffeur geldende
+      1 De personenchauffeur ontvangt een aanvulling op zijn salaris.
+
+      2 De aanvulling, bedoeld in het eerste lid, bedraagt per maand 52/156 maal het voor de personenchauffeur geldende
       salaris uit [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref1], vermenigvuldigd met de
       factor 1,5.
 
+      3 Het salaris, bedoeld in het tweede lid, bedraagt ten hoogste het salaris behorende bij salarisnummer 10 van
+      salarisschaal 4 uit [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref2].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003630
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0003630
-  - number: '6.3'
-    text: |-
-      Het salaris, bedoeld in het tweede lid, bedraagt ten hoogste het salaris behorende bij salarisnummer 10 van
-      salarisschaal 4 uit [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003630
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0003630
-  - number: '6.4'
-    text: |-
-      De aanvulling, bedoeld in het eerste lid, wordt vermenigvuldigd met de voor de personenchauffeur geldende
+      4 De aanvulling, bedoeld in het eerste lid, wordt vermenigvuldigd met de voor de personenchauffeur geldende
       arbeidsduurfactor.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0003630
+      [ref2]: https://wetten.overheid.nl/BWBR0003630
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel6
-  - number: '7.1'
+    references:
+      - id: ref1
+        bwb_id: BWBR0003630
+      - id: ref2
+        bwb_id: BWBR0003630
+  - number: '7'
     text: |-
-      De personenchauffeur ontvangt maandelijks een vaste toelage voor het werken op onregelmatige uren ter hoogte van €
-      169,37 vermenigvuldigd met de arbeidsduurfactor.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel7
-  - number: '7.2'
-    text: |-
-      Het bedrag, genoemd in het eerste lid, wordt bij ministeriële regeling gewijzigd overeenkomstig een algemene
+      1 De personenchauffeur ontvangt maandelijks een vaste toelage voor het werken op onregelmatige uren ter hoogte van
+      € 169,37 vermenigvuldigd met de arbeidsduurfactor.
+
+      2 Het bedrag, genoemd in het eerste lid, wordt bij ministeriële regeling gewijzigd overeenkomstig een algemene
       wijziging van het salaris van het burgerlijk rijkspersoneel met ingang van de dag waarop de salariswijziging van
       kracht wordt.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel7
-  - number: '7.3'
-    text: |-
-      Het bedrag, genoemd in het eerste lid, bedroeg van 1 januari 2007 tot 1 april 2008 € 145,35 en van 1 april 2008 tot
-      1 april 2009 € 148,26.
+
+      3 Het bedrag, genoemd in het eerste lid, bedroeg van 1 januari 2007 tot 1 april 2008 € 145,35 en van 1 april 2008
+      tot 1 april 2009 € 148,26.
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel7
   - number: '8'
     text: |-
@@ -313,8 +287,9 @@ articles:
       In afwijking van [artikel 22, vierde lid, van het Algemeen Rijksambtenarenreglement][ref1],
       [artikel 41, vierde lid, van het Reglement Dienst Buitenlandse Zaken][ref2] bedraagt voor de personenchauffeur
       met een volledige werktijd de aanspraak op wettelijke vakantie-uren 192 uren en de aanspraak op bovenwettelijke
-      vakantie-uren 28,8 uren per kalenderjaar. Onder volledige werktijd wordt verstaan een werktijd welke gemiddeld 48
-      werkuren per week omvat.
+      vakantie-uren 28,8 uren per kalenderjaar.
+
+      Onder volledige werktijd wordt verstaan een werktijd welke gemiddeld 48 werkuren per week omvat.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001950#Artikel22
@@ -339,69 +314,51 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0003630
-  - number: 12a.1
+  - number: 12a
     text: |-
-      Aan de personenchauffeur aan wie een andere functie, niet zijnde personenchauffeur, wordt opgedragen, kan een
+      1 Aan de personenchauffeur aan wie een andere functie, niet zijnde personenchauffeur, wordt opgedragen, kan een
       aflopende compensatietoelage worden toegekend, mits hij gedurende twee jaar voorafgaande aan de andere functie,
       zonder wezenlijke onderbreking als personenchauffeur is aangesteld.
+
+      2 Voor de toepassing van het eerste lid wordt onder wezenlijke onderbreking verstaan een onderbreking van langer
+      dan twaalf maanden.
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12a
-  - number: 12a.2
+  - number: 12b
     text: |-
-      Voor de toepassing van het eerste lid wordt onder wezenlijke onderbreking verstaan een onderbreking van langer dan
-      twaalf maanden.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12a
-  - number: 12b.1
-    text: |-
-      De personenchauffeur die op de dag voorafgaande aan het vervallen van [artikel 8][ref1] een toelage ontving op
+      1 De personenchauffeur die op de dag voorafgaande aan het vervallen van [artikel 8][ref1] een toelage ontving op
       grond van dat artikel, ontvangt een toelage.
+
+      2 De toelage bedraagt per maand 2,66% van het voor de personenchauffeur geldende salaris uit
+      [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref2].
+
+      3 Het salaris, bedoeld in het tweede lid, bedraagt ten hoogste het salaris behorende bij salarisnummer 10 van
+      salarisschaal 4 uit [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref3].
+
+      4 De toelage wordt vermenigvuldigd met de voor de personenchauffeur geldende arbeidsduurfactor.
+
+      5 De toelage behoort tot de bezoldiging, bedoeld in [artikel 2, onderdeel f][ref4],
+      en tot de berekeningsbasis voor de eindejaarsuitkering, bedoeld in
+      [artikel 20a, eerste lid, van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref5].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010015#Artikel8
+      [ref2]: https://wetten.overheid.nl/BWBR0003630
+      [ref3]: https://wetten.overheid.nl/BWBR0003630
+      [ref4]: https://wetten.overheid.nl/BWBR0010015#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0003630#Artikel20a
     url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12b
     references:
       - id: ref1
         bwb_id: BWBR0010015
         artikel: '8'
-  - number: 12b.2
-    text: |-
-      De toelage bedraagt per maand 2,66% van het voor de personenchauffeur geldende salaris uit
-      [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003630
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12b
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0003630
-  - number: 12b.3
-    text: |-
-      Het salaris, bedoeld in het tweede lid, bedraagt ten hoogste het salaris behorende bij salarisnummer 10 van
-      salarisschaal 4 uit [bijlage B van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003630
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12b
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0003630
-  - number: 12b.4
-    text: De toelage wordt vermenigvuldigd met de voor de personenchauffeur geldende arbeidsduurfactor.
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12b
-  - number: 12b.5
-    text: |-
-      De toelage behoort tot de bezoldiging, bedoeld in [artikel 2, onderdeel f][ref1],
-      en tot de berekeningsbasis voor de eindejaarsuitkering, bedoeld in
-      [artikel 20a, eerste lid, van het Bezoldigingsbesluit Burgerlijke Rijksambtenaren 1984][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0010015#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003630#Artikel20a
-    url: https://wetten.overheid.nl/BWBR0010015/2019-07-01#Artikel12b
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0010015
         artikel: '2'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0003630
         artikel: 20a
   - number: '13'
