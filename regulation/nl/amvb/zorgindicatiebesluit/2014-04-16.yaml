@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: zorgindicatiebesluit
 regulatory_layer: AMVB
 publication_date: '2005-11-22'
@@ -25,83 +25,75 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-  - number: 1.a
     text: |-
-      de AWBZ: de [Algemene Wet Bijzondere Ziektekosten][ref1];
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+      a. de AWBZ: de [Algemene Wet Bijzondere Ziektekosten][ref1];
+
+      b. indicatieorgaan: een indicatieorgaan als bedoeld in [artikel 9a van de AWBZ][ref2];
+
+      c. zorgvrager: degene ten behoeve van wie een aanvraag om een indicatiebesluit is ingediend;
+
+      d. indicatiebesluit: het besluit van een indicatieorgaan waarbij beoordeeld wordt of en in welke omvang een
+      zorgvrager in aanmerking komt voor een of meer vormen van zorg als bedoeld in [artikel 2][ref3];
+
+      e. het besluit: het [Besluit zorgaanspraken AWBZ][ref4];
+
+      f. cliëntprofiel: een profiel van zorgvragers met een vergelijkbare zorgbehoefte en beperkingen op
+      dezelfde terreinen, bij wie de verzorgings-, verplegings-, begeleidings- of behandelingsdoelen naar aard
+      en inhoud overeenkomen en die op verblijf als bedoeld in [artikel 9, eerste en tweede lid][ref5], of
+      [artikel 13, tweede lid, van het besluit][ref6] zijn aangewezen;
+
+      h. zorgzwaarte pakket: naar aard, inhoud en omvang bij een cliëntprofiel passende, samenhangende zorg als
+      omschreven op grond van het besluit.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002614
+      [ref2]: https://wetten.overheid.nl/BWBR0002614#Artikel9a
+      [ref3]: https://wetten.overheid.nl/BWBR0008946#Artikel2
+      [ref4]: https://wetten.overheid.nl/BWBR0014149
+      [ref5]: https://wetten.overheid.nl/BWBR0014149#Artikel9
+      [ref6]: https://wetten.overheid.nl/BWBR0014149#Artikel13
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0002614
-  - number: 1.b
-    text: |-
-      indicatieorgaan: een indicatieorgaan als bedoeld in [artikel 9a van de AWBZ][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002614#Artikel9a
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002614
         artikel: 9a
-  - number: 1.c
-    text: 'zorgvrager: degene ten behoeve van wie een aanvraag om een indicatiebesluit is ingediend;'
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-  - number: 1.d
-    text: |-
-      indicatiebesluit: het besluit van een indicatieorgaan waarbij beoordeeld wordt of en in welke omvang een zorgvrager
-      in aanmerking komt voor een of meer vormen van zorg als bedoeld in [artikel 2][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0008946
         artikel: '2'
         paragraaf: '1'
-  - number: 1.e
-    text: |-
-      het besluit: het [Besluit zorgaanspraken AWBZ][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014149
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0014149
-  - number: 1.f
-    text: |-
-      cliëntprofiel: een profiel van zorgvragers met een vergelijkbare zorgbehoefte en beperkingen op dezelfde
-      terreinen, bij wie de verzorgings-, verplegings-, begeleidings- of behandelingsdoelen naar aard en
-      inhoud overeenkomen en die op verblijf als bedoeld in [artikel 9, eerste en tweede lid][ref1], of
-      [artikel 13, tweede lid, van het besluit][ref2] zijn aangewezen;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014149#Artikel9
-      [ref2]: https://wetten.overheid.nl/BWBR0014149#Artikel13
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0014149
         artikel: '9'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0014149
         artikel: '13'
-  - number: 1.h
-    text: |-
-      zorgzwaarte pakket: naar aard, inhoud en omvang bij een cliëntprofiel passende, samenhangende zorg als omschreven
-      op grond van het besluit.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel1
   - number: '2'
     text: |-
       Als vormen van zorg als bedoeld in [artikel 9a, eerste lid, van de AWBZ][ref1] worden aangewezen de vormen van
       zorg, bedoeld in de [artikelen 4 tot en met 6][ref2], [8][ref3], [9, eerste en tweede lid][ref4], [9a][ref5],
       [10][ref6], [13, tweede lid][ref7], en [34 van het besluit][ref8], met uitzondering van:
+
+      a. de zorg, bedoeld in [artikel 5 van het besluit][ref9], voor zover het betreft advies, instructie en voorlichting
+      door een aan de instelling verbonden gespecialiseerde verpleegkundige ten behoeve van een niet in de instelling
+      verblijvende verzekerde;
+
+      b. de zorg, bedoeld in [artikel 8 van het besluit][ref10]:
+
+      1°. voor zover het betreft consultatie van een aan de instelling verbonden verpleeghuisarts of arts voor
+      verstandelijk gehandicapten ten behoeve van een niet in de instelling verblijvende verzekerde, of
+
+      2°. die in verband met een zintuiglijke handicap wordt verleend;
+
+      c. de zorg, bedoeld in [artikel 9][ref11] of [13, tweede lid, van het besluit][ref12], voor zover het meer zorg
+      betreft dan is begrepen in het voor de zorgdrager geïndiceerde zwaartepakket;
+
+      d. forensische zorg als bedoeld in [artikel 2 van het Interimbesluit forensische zorg][ref13].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002614#Artikel9a
@@ -112,6 +104,11 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0014149#Artikel10
       [ref7]: https://wetten.overheid.nl/BWBR0014149#Artikel13
       [ref8]: https://wetten.overheid.nl/BWBR0014149#Artikel34
+      [ref9]: https://wetten.overheid.nl/BWBR0014149#Artikel5
+      [ref10]: https://wetten.overheid.nl/BWBR0014149#Artikel8
+      [ref11]: https://wetten.overheid.nl/BWBR0014149#Artikel9
+      [ref12]: https://wetten.overheid.nl/BWBR0014149#Artikel13
+      [ref13]: https://wetten.overheid.nl/BWBR0029333#Artikel2
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
     references:
       - id: ref1
@@ -138,63 +135,19 @@ articles:
       - id: ref8
         bwb_id: BWBR0014149
         artikel: '34'
-  - number: 2.a
-    text: |-
-      de zorg, bedoeld in [artikel 5 van het besluit][ref1], voor zover het betreft advies, instructie en voorlichting
-      door een aan de instelling verbonden gespecialiseerde verpleegkundige ten behoeve van een niet in de instelling
-      verblijvende verzekerde;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014149#Artikel5
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-    references:
-      - id: ref1
+      - id: ref9
         bwb_id: BWBR0014149
         artikel: '5'
-  - number: 2.b
-    text: |-
-      de zorg, bedoeld in [artikel 8 van het besluit][ref1]:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014149#Artikel8
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-    references:
-      - id: ref1
+      - id: ref10
         bwb_id: BWBR0014149
         artikel: '8'
-  - number: 2.b.1°
-    text: |-
-      voor zover het betreft consultatie van een aan de instelling verbonden verpleeghuisarts of arts voor verstandelijk
-      gehandicapten ten behoeve van een niet in de instelling verblijvende verzekerde, of
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-  - number: 2.b.2°
-    text: die in verband met een zintuiglijke handicap wordt verleend;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-  - number: 2.c
-    text: |-
-      de zorg, bedoeld in [artikel 9][ref1] of [13, tweede lid, van het besluit][ref2], voor zover het meer zorg betreft
-      dan is begrepen in het voor de zorgdrager geïndiceerde zwaartepakket;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014149#Artikel9
-      [ref2]: https://wetten.overheid.nl/BWBR0014149#Artikel13
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-    references:
-      - id: ref1
+      - id: ref11
         bwb_id: BWBR0014149
         artikel: '9'
-      - id: ref2
+      - id: ref12
         bwb_id: BWBR0014149
         artikel: '13'
-  - number: 2.d
-    text: |-
-      forensische zorg als bedoeld in [artikel 2 van het Interimbesluit forensische zorg][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0029333#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel2
-    references:
-      - id: ref1
+      - id: ref13
         bwb_id: BWBR0029333
         artikel: '2'
   - number: '3'
@@ -215,13 +168,16 @@ articles:
       - id: ref2
         bwb_id: BWBR0005700
         artikel: '60'
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Het indicatieorgaan stelt met een indicatiebesluit de aanspraak op zorg als bedoeld in [artikel 2][ref1] vast voor
-      in het buitenland wonende personen die verzekerd zijn of met toepassing van Verordening (EG) nr. 883/2004 van het
-      Europees Parlement en de Raad van 29 april 2004 betreffende de coördinatie van sociale zekerheidsstelsels (PbEU
+      1 Het indicatieorgaan stelt met een indicatiebesluit de aanspraak op zorg als bedoeld in [artikel 2][ref1] vast
+      voor in het buitenland wonende personen die verzekerd zijn of met toepassing van Verordening (EG) nr. 883/2004 van
+      het Europees Parlement en de Raad van 29 april 2004 betreffende de coördinatie van sociale zekerheidsstelsels (PbEU
       2004, L 166) of een Verdrag dat Nederland heeft gesloten of dat Nederland anderszins bindt tijdens een verblijf in
       Nederland recht hebben op verstrekkingen overeenkomstig de Nederlandse wetgeving.
+
+      2 Het indicatiebesluit houdt rekening met de verwachte verblijfsduur van de zorgvrager in Nederland en heeft een
+      maximale geldigheidsduur van zes maanden, welke eenmalig kan worden verlengd met maximaal zes maanden.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel2
@@ -231,89 +187,66 @@ articles:
         bwb_id: BWBR0008946
         artikel: '2'
         paragraaf: '1'
-  - number: '4.2'
+  - number: '5'
     text: |-
-      Het indicatiebesluit houdt rekening met de verwachte verblijfsduur van de zorgvrager in Nederland en heeft een
-      maximale geldigheidsduur van zes maanden, welke eenmalig kan worden verlengd met maximaal zes maanden.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel4
-  - number: '5.1'
-    text: Een indicatiebesluit kan zowel schriftelijk als mondeling worden aangevraagd.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel5
-  - number: '5.2'
-    text: |-
-      Bij of onmiddellijk na het indienen van de aanvraag gaat het indicatieorgaan na of de zorgvrager toestemming geeft
-      tot het zonodig raadplegen van behandelende beroepsbeoefenaren en het gebruik maken van bij hen aanwezige medische
-      gegevens, en het maakt hier schriftelijk melding van.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel5
-  - number: '5.3'
-    text: |-
-      Indien de aanvraag door een vertegenwoordiger van de zorgvrager wordt gedaan, wordt nagegaan wat de reden daarvan
+      1 Een indicatiebesluit kan zowel schriftelijk als mondeling worden aangevraagd.
+
+      2 Bij of onmiddellijk na het indienen van de aanvraag gaat het indicatieorgaan na of de zorgvrager toestemming
+      geeft tot het zonodig raadplegen van behandelende beroepsbeoefenaren en het gebruik maken van bij hen aanwezige
+      medische gegevens, en het maakt hier schriftelijk melding van.
+
+      3 Indien de aanvraag door een vertegenwoordiger van de zorgvrager wordt gedaan, wordt nagegaan wat de reden daarvan
       is en wordt die reden schriftelijk vermeld.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel5
-  - number: '5.4'
-    text: Het indicatieorgaan tekent onverwijld de datum van ontvangst van de aanvraag aan.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel5
-  - number: '5.5'
-    text: Het indicatieorgaan zendt de aanvrager een bewijs van ontvangst, waarin die datum is vermeld.
+
+      4 Het indicatieorgaan tekent onverwijld de datum van ontvangst van de aanvraag aan.
+
+      5 Het indicatieorgaan zendt de aanvrager een bewijs van ontvangst, waarin die datum is vermeld.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel5
   - number: '6'
-    text: 'Voor zover dit voor het nemen van een indicatiebesluit van belang is, wordt onderzoek verricht naar:'
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.a
-    text: de algemene gezondheidstoestand van de zorgvrager;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.b
     text: |-
-      de beperkingen die de zorgvrager in zijn functioneren ondervindt als gevolg van een somatische, psychogeriatrische
-      of psychiatrische aandoening of beperking, of een verstandelijke, lichamelijke of zintuiglijke handicap;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.c
-    text: de woning en de woonomgeving van de zorgvrager;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.d
-    text: het psychisch en sociaal functioneren van de zorgvrager;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.e
-    text: de sociale omstandigheden van de zorgvrager;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.f
-    text: |-
-      de aard en de omvang van de aan de zorgvrager geboden professionele en niet-professionele hulp en zorg en de
+      Voor zover dit voor het nemen van een indicatiebesluit van belang is, wordt onderzoek verricht naar:
+
+      a. de algemene gezondheidstoestand van de zorgvrager;
+
+      b. de beperkingen die de zorgvrager in zijn functioneren ondervindt als gevolg van een somatische,
+      psychogeriatrische of psychiatrische aandoening of beperking, of een verstandelijke, lichamelijke of zintuiglijke
+      handicap;
+
+      c. de woning en de woonomgeving van de zorgvrager;
+
+      d. het psychisch en sociaal functioneren van de zorgvrager;
+
+      e. de sociale omstandigheden van de zorgvrager;
+
+      f. de aard en de omvang van de aan de zorgvrager geboden professionele en niet-professionele hulp en zorg en de
       mogelijkheden tot continuering en uitbreiding daarvan;
+
+      g. welk cliëntprofiel het beste bij de zorgvrager past.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: 6.g
-    text: welk cliëntprofiel het beste bij de zorgvrager past.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel6
-  - number: '7.1'
+  - number: '7'
     text: |-
-      Bij het onderzoek wordt zoveel mogelijk gebruik gemaakt van gegevens die bij de aanvraag zijn gevoegd of tijdens
+      1 Bij het onderzoek wordt zoveel mogelijk gebruik gemaakt van gegevens die bij de aanvraag zijn gevoegd of tijdens
       het onderzoek ter beschikking zijn gesteld.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel7
-  - number: '7.2'
-    text: |-
-      Indien daartoe aanleiding bestaat, worden de behandelende beroepsbeoefenaren van de zorgvrager tijdens het
+
+      2 Indien daartoe aanleiding bestaat, worden de behandelende beroepsbeoefenaren van de zorgvrager tijdens het
       onderzoek geraadpleegd.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel7
-  - number: '7.3'
-    text: |-
-      Het gebruik maken van gegevens als bedoeld in het eerste lid en het raadplegen van behandelende beroepsbeoefenaren
-      als bedoeld in het tweede lid geschiedt slechts met toestemming van de zorgvrager.
+
+      3 Het gebruik maken van gegevens als bedoeld in het eerste lid en het raadplegen van behandelende
+      beroepsbeoefenaren als bedoeld in het tweede lid geschiedt slechts met toestemming van de zorgvrager.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel7
   - number: '8'
     text: |-
       Het onderzoek wordt verricht door personen dan wel organisaties die over voldoende deskundigheid beschikken om de
       aanvraag om een indicatiebesluit te kunnen beoordelen.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel8
-  - number: '9.1'
+  - number: '9'
     text: |-
-      Indien uit de aanvraag blijkt dat de zorgvrager die jonger is dan tachtig jaar langdurig verblijf of langdurige
+      1 Indien uit de aanvraag blijkt dat de zorgvrager die jonger is dan tachtig jaar langdurig verblijf of langdurige
       intensieve zorg thuis wenst, dan wel na het indienen van de aanvraag blijkt dat redelijkerwijs te verwachten is
       dat een indicatiebesluit zal worden genomen, waaruit blijkt dat een zorgvrager die jonger is dan tachtig jaar voor
       zodanig verblijf of zodanige zorg in aanmerking komt, wordt de aanvraag onderzocht door een team van deskundigen.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel9
-  - number: '9.2'
-    text: |-
-      In een team als bedoeld in het eerste lid is, voor zover dat voor de beoordeling van de aanvraag van belang kan
+
+      2 In een team als bedoeld in het eerste lid is, voor zover dat voor de beoordeling van de aanvraag van belang kan
       zijn, deskundigheid aanwezig op de terreinen van de zorg, bedoeld in [artikel 2][ref1], alsmede op de terreinen van
       woningaanpassing en voorzieningen die op grond van de [Wet maatschappelijke ondersteuning][ref2] verstrekt kunnen
       worden.
@@ -347,96 +280,73 @@ articles:
   - number: '11'
     text: Onze Minister kan beleidsregels stellen over de wijze waarop het indicatieorgaan zijn activiteiten uitvoert.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel11
-  - number: '12.1'
-    text: Het indicatieorgaan stelt binnen zes weken nadat de aanvraag is ingediend een indicatiebesluit vast.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel12
-  - number: '12.2'
+  - number: '12'
     text: |-
-      In afwijking van het eerste lid stelt het indicatieorgaan in situaties waarin spoedige verlening van zorg
+      1 Het indicatieorgaan stelt binnen zes weken nadat de aanvraag is ingediend een indicatiebesluit vast.
+
+      2 In afwijking van het eerste lid stelt het indicatieorgaan in situaties waarin spoedige verlening van zorg
       redelijkerwijs noodzakelijk is, binnen twee weken nadat de aanvraag is ingediend, een indicatiebesluit vast.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel12
-  - number: '13.1'
+  - number: '13'
     text: |-
-      Indien een zorgvrager is aangewezen op een vorm van zorg of vormen van zorg als bedoeld in [artikel 2][ref1],
+      1 Indien een zorgvrager is aangewezen op een vorm van zorg of vormen van zorg als bedoeld in [artikel 2][ref1],
       worden in het indicatiebesluit aangegeven:
 
+      a. de vorm van zorg of vormen van zorg waarop de zorgvrager is aangewezen,
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel2
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-    references:
-      - id: ref1
-        bwb_id: BWBR0008946
-        artikel: '2'
-        paragraaf: '1'
-  - number: 13.1.a
-    text: de vorm van zorg of vormen van zorg waarop de zorgvrager is aangewezen,
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: 13.1.b
-    text: |-
-      de aandoening, beperking of handicap als gevolg waarvan de zorgvrager op de vorm van zorg of vormen van zorg is
+      b. de aandoening, beperking of handicap als gevolg waarvan de zorgvrager op de vorm van zorg of vormen van zorg is
       aangewezen, en
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: 13.1.c
-    text: de hoeveelheid zorg in tijd per zorgvorm.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: '13.2'
-    text: |-
-      In afwijking van het eerste lid worden indien een zorgvrager is aangewezen op verblijf
-      als bedoeld in [artikel 9, eerste lid][ref1], of voortgezet verblijf als bedoeld in
-      [artikel 13, tweede lid, van het besluit][ref2] in het indicatiebesluit aangegeven:
 
+      c. de hoeveelheid zorg in tijd per zorgvorm.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0014149#Artikel9
-      [ref2]: https://wetten.overheid.nl/BWBR0014149#Artikel13
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-    references:
-      - id: ref1
-        bwb_id: BWBR0014149
-        artikel: '9'
-      - id: ref2
-        bwb_id: BWBR0014149
-        artikel: '13'
-  - number: 13.2.a
-    text: het verblijf of voortgezet verblijf met de daarbij behorende samenhangende zorg waarop de zorgvrager is aangewezen,
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: 13.2.b
-    text: |-
-      de aandoening, beperking of handicap als gevolg waarvan de zorgvrager op het verblijf of voortgezet verblijf met de
-      daarbij behorende samenhangende zorg is aangewezen,
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: 13.2.c
-    text: het bij de zorgvrager best passende cliëntprofiel, en
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: 13.2.d
-    text: het daarbij behorende zorgzwaartepakket.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: '13.3'
-    text: |-
-      In het indicatiebesluit wordt aangegeven met ingang van welke datum de zorgvrager op de geïndiceerde vorm van zorg
-      of vormen van zorg is aangewezen.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
-  - number: '13.4'
-    text: |-
-      Indien een indicatieorgaan van mening is dat andere professionele zorg dan de zorg, bedoeld in [artikel 2][ref1],
+      2 In afwijking van het eerste lid worden indien een zorgvrager is aangewezen op verblijf
+      als bedoeld in [artikel 9, eerste lid][ref2], of voortgezet verblijf als bedoeld in
+      [artikel 13, tweede lid, van het besluit][ref3] in het indicatiebesluit aangegeven:
+
+      a. het verblijf of voortgezet verblijf met de daarbij behorende samenhangende zorg waarop de zorgvrager is
+      aangewezen,
+
+      b. de aandoening, beperking of handicap als gevolg waarvan de zorgvrager op het verblijf of voortgezet verblijf met
+      de daarbij behorende samenhangende zorg is aangewezen,
+
+      c. het bij de zorgvrager best passende cliëntprofiel, en
+
+      d. het daarbij behorende zorgzwaartepakket.
+
+      3 In het indicatiebesluit wordt aangegeven met ingang van welke datum de zorgvrager op de geïndiceerde vorm van
+      zorg of vormen van zorg is aangewezen.
+
+      4 Indien een indicatieorgaan van mening is dat andere professionele zorg dan de zorg, bedoeld in [artikel 2][ref4],
       noodzakelijk, dan wel mede noodzakelijk is, geeft het indicatieorgaan daarover zo mogelijk advies.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0014149#Artikel9
+      [ref3]: https://wetten.overheid.nl/BWBR0014149#Artikel13
+      [ref4]: https://wetten.overheid.nl/BWBR0008946#Artikel2
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel13
     references:
       - id: ref1
         bwb_id: BWBR0008946
         artikel: '2'
         paragraaf: '1'
-  - number: '14.1'
+      - id: ref2
+        bwb_id: BWBR0014149
+        artikel: '9'
+      - id: ref3
+        bwb_id: BWBR0014149
+        artikel: '13'
+      - id: ref4
+        bwb_id: BWBR0008946
+        artikel: '2'
+        paragraaf: '1'
+  - number: '14'
     text: |-
-      Indien de geldigheidsduur van het indicatiebesluit korter is dan een jaar, geeft het indicatieorgaan in het
+      1 Indien de geldigheidsduur van het indicatiebesluit korter is dan een jaar, geeft het indicatieorgaan in het
       indicatiebesluit aan of de zorgbehoefte van de zorgvrager naar haar oordeel ten minste een jaar zal bestaan vanaf
       het moment dat de zorgvrager volgens dat besluit op zorg is aangewezen.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel14
-  - number: '14.2'
-    text: |-
-      Het indicatieorgaan laat de toepassing van het eerste lid achterwege indien de zorgvrager bij de aanvraag van
+
+      2 Het indicatieorgaan laat de toepassing van het eerste lid achterwege indien de zorgvrager bij de aanvraag van
       een indicatiebesluit heeft aangegeven voornemens te zijn het indicatiebesluit niet met een subsidie op grond van
       [artikel 44, eerste lid, onder b, van de AWBZ][ref1] tot gelding te brengen.
 
@@ -447,11 +357,11 @@ articles:
       - id: ref1
         bwb_id: BWBR0002614
         artikel: '44'
-  - number: '15.1'
-    text: In het indicatiebesluit wordt de geldigheidsduur ervan vermeld.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel15
-  - number: '15.2'
-    text: Bij ministeriële regeling kunnen regels over de geldigheidsduur van indicatiebesluiten worden gesteld.
+  - number: '15'
+    text: |-
+      1 In het indicatiebesluit wordt de geldigheidsduur ervan vermeld.
+
+      2 Bij ministeriële regeling kunnen regels over de geldigheidsduur van indicatiebesluiten worden gesteld.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel15
   - number: '16'
     text: |-
@@ -475,126 +385,99 @@ articles:
       indicatiebesluit van belang zijn, zoals naam, adres, woonplaats of verblijfplaats, burgerlijke staat en wettelijke
       vertegenwoordiging, zo veel mogelijk actueel.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel16a
-  - number: '17.1'
+  - number: '17'
     text: |-
-      Voordat het indicatieorgaan een indicatiebesluit neemt, waaruit blijkt dat opneming en verder verblijf in een
+      1 Voordat het indicatieorgaan een indicatiebesluit neemt, waaruit blijkt dat opneming en verder verblijf in een
       instelling als bedoeld in [artikel 3][ref1] noodzakelijk wordt geoordeeld, wordt de zorgvrager, tenzij gebleken is
       dat hij de nodige bereidheid bezit tot zodanige opneming en verder verblijf, schriftelijk en mondeling medegedeeld
       dat hij bedenkingen kan inbrengen tegen zodanige opneming en verder verblijf.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel3
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel17
-    references:
-      - id: ref1
-        bwb_id: BWBR0008946
-        artikel: '3'
-        paragraaf: '1'
-  - number: '17.2'
-    text: |-
-      Indien een besluit als bedoeld in het eerste lid wordt genomen, wordt, tenzij gebleken is dat de zorgvrager de
+      2 Indien een besluit als bedoeld in het eerste lid wordt genomen, wordt, tenzij gebleken is dat de zorgvrager de
       nodige bereidheid bezit tot zodanige opneming en verder verblijf, in dat besluit melding gemaakt van:
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel17
-  - number: 17.2.a
-    text: de aard van de stoornis van de geestvermogens;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel17
-  - number: 17.2.b
-    text: |-
-      de omstandigheden die meebrengen dat hij zich ten gevolge van die stoornis niet buiten een een inrichting als
-      bedoeld in [artikel 3][ref1] kan handhaven;
+
+      a. de aard van de stoornis van de geestvermogens;
+
+      b. de omstandigheden die meebrengen dat hij zich ten gevolge van die stoornis niet buiten een een inrichting als
+      bedoeld in [artikel 3][ref2] kan handhaven;
+
+      c. de wijze waarop aan hem is meegedeeld dat hij bedenkingen kan inbrengen tegen zodanige opneming en verder
+      verblijf en diens reactie daarop.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0008946#Artikel3
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel17
     references:
       - id: ref1
         bwb_id: BWBR0008946
         artikel: '3'
         paragraaf: '1'
-  - number: 17.2.c
+      - id: ref2
+        bwb_id: BWBR0008946
+        artikel: '3'
+        paragraaf: '1'
+  - number: '18'
     text: |-
-      de wijze waarop aan hem is meegedeeld dat hij bedenkingen kan inbrengen tegen zodanige opneming en verder verblijf
-      en diens reactie daarop.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel17
-  - number: '18.1'
-    text: |-
-      Het indicatieorgaan registreert de resultaten van zijn onderzoeken en de inhoud van de door hem gegeven
+      1 Het indicatieorgaan registreert de resultaten van zijn onderzoeken en de inhoud van de door hem gegeven
       indicatiebesluiten volgens bij ministeriële regeling te bepalen regels.
+
+      2 De ministeriële regeling bevat ten minste een beschrijving van:
+
+      a. de technische standaarden voor de wijze waarop gegevens worden vastgelegd;
+
+      b. de afzonderlijke gegevenselementen die vastgelegd worden en de ordening van deze elementen;
+
+      c. de functionele beveiligingseisen voor het bewerken en vastleggen van gegevens.
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel18
-  - number: '18.2'
-    text: 'De ministeriële regeling bevat ten minste een beschrijving van:'
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel18
-  - number: 18.2.a
-    text: de technische standaarden voor de wijze waarop gegevens worden vastgelegd;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel18
-  - number: 18.2.b
-    text: de afzonderlijke gegevenselementen die vastgelegd worden en de ordening van deze elementen;
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel18
-  - number: 18.2.c
-    text: de functionele beveiligingseisen voor het bewerken en vastleggen van gegevens.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel18
-  - number: '20.1'
-    text: 'Dit besluit is niet van toepassing ten aanzien van diegenen die:'
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel20
-  - number: 20.1.a
+  - number: '20'
     text: |-
-      onmiddellijk vóór 1 januari 1997 zorg als bedoeld in de [artikelen 10][ref1] en
+      1 Dit besluit is niet van toepassing ten aanzien van diegenen die:
+
+      a. onmiddellijk vóór 1 januari 1997 zorg als bedoeld in de [artikelen 10][ref1] en
       [14 van het Besluit zorgaanspraken bijzondere ziektekostenverzekering][ref2] zoals dat besluit tot dat tijdstip
       luidde verleend werd en aan wie die zorg onmiddellijk voorafgaand aan de inwerkingtreding van dit besluit nog
       steeds verleend werd;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005283#Artikel10
-      [ref2]: https://wetten.overheid.nl/BWBR0005283#Artikel14
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel20
-    references:
-      - id: ref1
-        bwb_id: BWBR0005283
-        artikel: '10'
-      - id: ref2
-        bwb_id: BWBR0005283
-        artikel: '14'
-  - number: 20.1.b
-    text: |-
-      in het bezit zijn van een advies op grond van het
-      [Besluit indicatie-advisering bejaardenoorden en verpleeginrichtingen][ref1], zoals dat besluit luidde
+      b. in het bezit zijn van een advies op grond van het
+      [Besluit indicatie-advisering bejaardenoorden en verpleeginrichtingen][ref3], zoals dat besluit luidde
       tot de intrekking van de Wet op de bejaardenoorden, waaruit blijkt dat zij voor zorg als bedoeld in de
-      [artikelen 10][ref2] en [14 van het Besluit zorgaanspraken bijzondere ziektekostenverzekering][ref3] zoals dat
+      [artikelen 10][ref4] en [14 van het Besluit zorgaanspraken bijzondere ziektekostenverzekering][ref5] zoals dat
       besluit tot dat tijdstip luidde in aanmerking komen, en mits aan hen binnen twee jaar na inwerkingtreding van dit
       besluit die zorg ook verleend wordt.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004408
-      [ref2]: https://wetten.overheid.nl/BWBR0005283#Artikel10
-      [ref3]: https://wetten.overheid.nl/BWBR0005283#Artikel14
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel20
-    references:
-      - id: ref1
-        bwb_id: BWBR0004408
-      - id: ref2
-        bwb_id: BWBR0005283
-        artikel: '10'
-      - id: ref3
-        bwb_id: BWBR0005283
-        artikel: '14'
-  - number: 20.1.c
-    text: |-
-      onmiddellijk vóór 1 januari 1997 zorg als bedoeld in [artikel 15, eerste lid, onder ][ref1], zoals dat besluit
+      c. onmiddellijk vóór 1 januari 1997 zorg als bedoeld in [artikel 15, eerste lid, onder ][ref6], zoals dat besluit
       luidde tot dat tijdstip, verleend werd, bestaande uit verpleging of verzorging door of vanwege een kruisorganisatie
       en mits aan hen die zorg op het tijdstip van inwerkingtreding van dit besluit nog verleend wordt.
 
+      2 Onze Minister kan bij ministeriële regeling een tijdstip bepalen met ingang waarvan dit besluit van toepassing is
+      op personen dan wel categorieën van personen, bedoeld in het eerste lid.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005283#Artikel15
+
+      [ref1]: https://wetten.overheid.nl/BWBR0005283#Artikel10
+      [ref2]: https://wetten.overheid.nl/BWBR0005283#Artikel14
+      [ref3]: https://wetten.overheid.nl/BWBR0004408
+      [ref4]: https://wetten.overheid.nl/BWBR0005283#Artikel10
+      [ref5]: https://wetten.overheid.nl/BWBR0005283#Artikel14
+      [ref6]: https://wetten.overheid.nl/BWBR0005283#Artikel15
     url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel20
     references:
       - id: ref1
         bwb_id: BWBR0005283
+        artikel: '10'
+      - id: ref2
+        bwb_id: BWBR0005283
+        artikel: '14'
+      - id: ref3
+        bwb_id: BWBR0004408
+      - id: ref4
+        bwb_id: BWBR0005283
+        artikel: '10'
+      - id: ref5
+        bwb_id: BWBR0005283
+        artikel: '14'
+      - id: ref6
+        bwb_id: BWBR0005283
         artikel: '15'
-  - number: '20.2'
-    text: |-
-      Onze Minister kan bij ministeriële regeling een tijdstip bepalen met ingang waarvan dit besluit van toepassing is
-      op personen dan wel categorieën van personen, bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel20
   - number: '21'
     text: |-
       Een indicatiebeoordeling als bedoeld in artikel 1, eerste lid, onder *c*, van het Besluit indicatiebeoordeling
@@ -612,12 +495,11 @@ articles:
         bwb_id: BWBR0008946
         artikel: '1'
         paragraaf: '1'
-  - number: '25.1'
-    text: Dit besluit treedt in werking op een bij koninklijk besluit te bepalen tijdstip.
-    url: https://wetten.overheid.nl/BWBR0008946/2014-04-16#Artikel25
-  - number: '25.2'
+  - number: '25'
     text: |-
-      [Artikel 9, derde lid][ref1], en [artikel 9a][ref2] vervallen drie jaar nadat zij in werking zijn getreden.
+      1 Dit besluit treedt in werking op een bij koninklijk besluit te bepalen tijdstip.
+
+      2 [Artikel 9, derde lid][ref1], en [artikel 9a][ref2] vervallen drie jaar nadat zij in werking zijn getreden.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008946#Artikel9
