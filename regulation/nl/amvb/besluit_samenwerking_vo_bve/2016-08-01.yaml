@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/schema.json
 $id: besluit_samenwerking_vo_bve
 regulatory_layer: AMVB
 publication_date: '2021-11-05'
@@ -26,51 +26,42 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel1
-  - number: 1.a
     text: |-
-      WVO: [Wet op het voortgezet onderwijs][ref1];
+      In dit besluit wordt verstaan onder:
+
+      a. WVO: [Wet op het voortgezet onderwijs][ref1];
+
+      b. WEB: [Wet educatie en beroepsonderwijs][ref2];
+
+      c. VAVO: voortgezet algemeen volwassenenonderwijs als bedoeld in
+      [artikel 7.3.1, eerste lid, onderdeel a, van de WEB][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399
+      [ref2]: https://wetten.overheid.nl/BWBR0007625
+      [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel7.3.1
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0002399
-  - number: 1.b
-    text: |-
-      WEB: [Wet educatie en beroepsonderwijs][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007625
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0007625
-  - number: 1.c
-    text: |-
-      VAVO: voortgezet algemeen volwassenenonderwijs als bedoeld in
-      [artikel 7.3.1, eerste lid, onderdeel a, van de WEB][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0007625
-        artikel: '7'
+        artikel: 7.3.1
   - number: 1a
     text: |-
-      In [hoofdstuk 2][ref1] wordt verstaan onder: - *school:* een uit ’s Rijks kas bekostigde school voor voortgezet
-      onderwijs als bedoeld in [artikel 1 van de WVO][ref2];
+      In [hoofdstuk 2][ref1] wordt verstaan onder:
+
+        - *school:* een uit ’s Rijks kas bekostigde school voor voortgezet onderwijs als bedoeld in
+      [artikel 1 van de WVO][ref2];
         - *instelling:* een uit ’s Rijks kas bekostigde instelling als bedoeld in
       [artikel 1.1.1, onderdeel b, sub 1, van de WEB][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0019143#Hoofdstuk2
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel1.1.1
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel1a
     references:
       - id: ref1
@@ -81,195 +72,148 @@ articles:
         artikel: '1'
       - id: ref3
         bwb_id: BWBR0007625
-        artikel: '1'
-  - number: '2.1'
+        artikel: 1.1.1
+  - number: '2'
     text: |-
-      Het bevoegd gezag van een school kan de volgende leerlingen in de gelegenheid stellen in het kader van het
+      1 Het bevoegd gezag van een school kan de volgende leerlingen in de gelegenheid stellen in het kader van het
       onderwijs waarvoor zij aan de school zijn ingeschreven, ook onderwijs te ontvangen dat een school van een ander
       bevoegd gezag of een instelling verzorgt:
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-  - number: 2.1.a
-    text: |-
-      voor het in [artikel 25a, tweede lid onder a, van de WVO][ref1] bedoelde doel, leerlingen die het derde of
-      het vierde leerjaar van het voorbereidend beroepsonderwijs of het middelbaar algemeen voortgezet onderwijs
+
+      a. voor het in [artikel 25a, tweede lid onder a, van de WVO][ref1] bedoelde doel, leerlingen die het derde
+      of het vierde leerjaar van het voorbereidend beroepsonderwijs of het middelbaar algemeen voortgezet onderwijs
       volgen en naar het oordeel van het bevoegd gezag zonder gerichte ondersteuning een vergrote kans lopen
       om het onderwijs te verlaten zonder ten minste een diploma van een basisberoepsopleiding als bedoeld in
       [artikel 7.2.2, eerste lid, onderdeel b, van de WEB][ref2];
 
+      b. voor het in [artikel 25a, tweede lid, onderdeel b, van de WVO][ref3] bedoelde doel, leerlingen die naar het
+      oordeel van het bevoegd gezag een grotere kans hebben om vervolgonderwijs met gunstig resultaat te volgen door
+      extra verrijking, verdieping en oriëntatie naast hun reguliere opleiding, of door onderdelen van beroepsopleidingen
+      of opleidingen educatie als bedoeld in de [WEB][ref4] te volgen, naast hun opleiding in het voortgezet onderwijs;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
-      [ref2]: https://wetten.overheid.nl/BWBR0007625#Artikel7
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002399
-        artikel: 25a
-      - id: ref2
-        bwb_id: BWBR0007625
-        artikel: '7'
-  - number: 2.1.b
-    text: |-
-      voor het in [artikel 25a, tweede lid, onderdeel b, van de WVO][ref1] bedoelde doel, leerlingen die naar het oordeel
-      van het bevoegd gezag een grotere kans hebben om vervolgonderwijs met gunstig resultaat te volgen door extra
-      verrijking, verdieping en oriëntatie naast hun reguliere opleiding, of door onderdelen van beroepsopleidingen of
-      opleidingen educatie als bedoeld in de [WEB][ref2] te volgen, naast hun opleiding in het voortgezet onderwijs;
+      c. voor het in [artikel 25a, tweede lid, onderdeel c, van de WVO][ref5] bedoelde doel, iedere leerling.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
-      [ref2]: https://wetten.overheid.nl/BWBR0007625
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002399
-        artikel: 25a
-      - id: ref2
-        bwb_id: BWBR0007625
-  - number: 2.1.c
-    text: |-
-      voor het in [artikel 25a, tweede lid, onderdeel c, van de WVO][ref1] bedoelde doel, iedere leerling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002399
-        artikel: 25a
-  - number: '2.2'
-    text: |-
-      Een leerling als bedoeld in het eerste lid volgt voor ten hoogste de helft van het aantal klokuren van het
-      onderwijsprogramma, bedoeld in [artikel 24, tweede lid, van de WVO][ref1], lessen of stages aan de andere school of
+      2 Een leerling als bedoeld in het eerste lid volgt voor ten hoogste de helft van het aantal klokuren van het
+      onderwijsprogramma, bedoeld in [artikel 24, tweede lid, van de WVO][ref6], lessen of stages aan de andere school of
       aan een instelling.
 
+      3 Bij de toepassing van het eerste lid dient op elke school die betrokken is bij de samenwerkingsovereenkomst
+      bedoeld in [artikel 25a, derde lid, van de WVO][ref7], ten minste een deel van het onderwijs in de bovenbouw op de
+      eigen school te worden verzorgd. Voor de verschillende schoolsoorten gelden de volgende voorschriften:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel24
+      a. indien het betreft een school voor voorbereidend wetenschappelijk onderwijs of een school voor hoger algemeen
+      voortgezet onderwijs, dient op de eigen school het onderwijs te worden verzorgd in ten minste één van de profielen
+      bedoeld in [artikel 12, derde lid, van de WVO][ref8];
+
+      b. indien het betreft een school voor middelbaar algemeen voortgezet onderwijs, dient op de
+      eigen school het onderwijs te worden verzorgd in ten minste één van de profielen bedoeld in
+      [artikel 10, derde lid, van de WVO][ref9];
+
+      c. indien het betreft een school voor voorbereidend beroepsonderwijs, dient op de eigen school het onderwijs te
+      worden verzorgd in ten minste één van de profielen bedoeld in [artikel 10b, derde lid, van de WVO][ref10];
+
+      d. indien het betreft onderwijs in de gemengde leerweg als bedoeld in [artikel 10d van de WVO][ref11] aan een
+      school voor middelbaar algemeen voortgezet onderwijs of aan een school voor voorbereidend beroepsonderwijs, dient
+      op de eigen school het onderwijs te worden verzorgd in ten minste één van de profielen bedoeld in het derde lid van
+      dat artikel.
+
+      4 In de samenwerkingsovereenkomst, bedoeld in [artikel 25a van de WVO][ref12], worden afspraken gemaakt over de
+      wijze waarop de school geregeld contact onderhoudt met de leerlingen die aan die school zijn ingeschreven.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
+      [ref2]: https://wetten.overheid.nl/BWBR0007625#Artikel7.2.2
+      [ref3]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
+      [ref4]: https://wetten.overheid.nl/BWBR0007625
+      [ref5]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
+      [ref6]: https://wetten.overheid.nl/BWBR0002399#Artikel24
+      [ref7]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
+      [ref8]: https://wetten.overheid.nl/BWBR0002399#Artikel12
+      [ref9]: https://wetten.overheid.nl/BWBR0002399#Artikel10
+      [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
+      [ref11]: https://wetten.overheid.nl/BWBR0002399#Artikel10d
+      [ref12]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
     references:
       - id: ref1
+        bwb_id: BWBR0002399
+        artikel: 25a
+      - id: ref2
+        bwb_id: BWBR0007625
+        artikel: 7.2.2
+      - id: ref3
+        bwb_id: BWBR0002399
+        artikel: 25a
+      - id: ref4
+        bwb_id: BWBR0007625
+      - id: ref5
+        bwb_id: BWBR0002399
+        artikel: 25a
+      - id: ref6
         bwb_id: BWBR0002399
         artikel: '24'
-  - number: '2.3'
-    text: |-
-      Bij de toepassing van het eerste lid dient op elke school die betrokken is bij de samenwerkingsovereenkomst bedoeld
-      in [artikel 25a, derde lid, van de WVO][ref1], ten minste een deel van het onderwijs in de bovenbouw op de eigen
-      school te worden verzorgd. Voor de verschillende schoolsoorten gelden de volgende voorschriften:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0002399
         artikel: 25a
-  - number: 2.3.a
-    text: |-
-      indien het betreft een school voor voorbereidend wetenschappelijk onderwijs of een school voor hoger algemeen
-      voortgezet onderwijs, dient op de eigen school het onderwijs te worden verzorgd in ten minste één van de profielen
-      bedoeld in [artikel 12, derde lid, van de WVO][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel12
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0002399
         artikel: '12'
-  - number: 2.3.b
-    text: |-
-      indien het betreft een school voor middelbaar algemeen voortgezet onderwijs, dient op de eigen school het onderwijs
-      te worden verzorgd in ten minste één van de profielen bedoeld in [artikel 10, derde lid, van de WVO][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel10
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref9
         bwb_id: BWBR0002399
         artikel: '10'
-  - number: 2.3.c
-    text: |-
-      indien het betreft een school voor voorbereidend beroepsonderwijs, dient op de eigen school het onderwijs te worden
-      verzorgd in ten minste één van de profielen bedoeld in [artikel 10b, derde lid, van de WVO][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref10
         bwb_id: BWBR0002399
         artikel: 10b
-  - number: 2.3.d
-    text: |-
-      indien het betreft onderwijs in de gemengde leerweg als bedoeld in [artikel 10d van de WVO][ref1] aan een school
-      voor middelbaar algemeen voortgezet onderwijs of aan een school voor voorbereidend beroepsonderwijs, dient op de
-      eigen school het onderwijs te worden verzorgd in ten minste één van de profielen bedoeld in het derde lid van dat
-      artikel.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel10d
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref11
         bwb_id: BWBR0002399
         artikel: 10d
-  - number: '2.4'
-    text: |-
-      In de samenwerkingsovereenkomst, bedoeld in [artikel 25a van de WVO][ref1], worden afspraken gemaakt over de wijze
-      waarop de school geregeld contact onderhoudt met de leerlingen die aan die school zijn ingeschreven.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel25a
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref12
         bwb_id: BWBR0002399
         artikel: 25a
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Het bevoegd gezag van een school kan de volgende leerlingen in de gelegenheid stellen in het kader van het
+      1 Het bevoegd gezag van een school kan de volgende leerlingen in de gelegenheid stellen in het kader van het
       onderwijs waarvoor zij aan de school zijn ingeschreven, deel te nemen aan een opleiding VAVO en die opleiding met
       een examen af te sluiten:
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel3
-  - number: 3.1.a
-    text: |-
-      leerlingen van 16 en 17 jaar die naar het oordeel van het bevoegd gezag een grotere kans hebben een diploma of
-      volgend diploma als bedoeld in [artikel 29, derde lid, van de WVO][ref1] te behalen indien zij VAVO volgen in
+
+      a. leerlingen van 16 en 17 jaar die naar het oordeel van het bevoegd gezag een grotere kans hebben een diploma
+      of volgend diploma als bedoeld in [artikel 29, derde lid, van de WVO][ref1] te behalen indien zij VAVO volgen in
       plaats van voortgezet onderwijs;
+
+      b. leerlingen van 18 jaar of ouder die ononderbroken in het voortgezet onderwijs of daarmee op grond
+      van de [Leerplichtwet 1969][ref2] gelijkgesteld onderwijs ingeschreven zijn geweest en die naar het
+      oordeel van het bevoegd gezag een grotere kans hebben om een diploma of volgend diploma als bedoeld in
+      [artikel 29, derde lid, van de WVO][ref3] te behalen indien zij VAVO volgen in plaats van voortgezet onderwijs.
+
+      2 Het eerste lid, aanhef en onder b, vindt ten aanzien van de daar bedoelde leerlingen toepassing voor ten hoogste
+      de periode van de resterende cursusduur van de opleiding waarvoor zij aan de school zijn ingeschreven, vermeerderd
+      met een jaar.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel29
+      [ref2]: https://wetten.overheid.nl/BWBR0002628
+      [ref3]: https://wetten.overheid.nl/BWBR0002399#Artikel29
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0002399
         artikel: '29'
-  - number: 3.1.b
-    text: |-
-      leerlingen van 18 jaar of ouder die ononderbroken in het voortgezet onderwijs of daarmee op grond
-      van de [Leerplichtwet 1969][ref1] gelijkgesteld onderwijs ingeschreven zijn geweest en die naar het
-      oordeel van het bevoegd gezag een grotere kans hebben om een diploma of volgend diploma als bedoeld in
-      [artikel 29, derde lid, van de WVO][ref2] te behalen indien zij VAVO volgen in plaats van voortgezet onderwijs.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002628
-      [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel29
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0002628
       - id: ref2
+        bwb_id: BWBR0002628
+      - id: ref3
         bwb_id: BWBR0002399
         artikel: '29'
-  - number: '3.2'
-    text: |-
-      Het eerste lid, aanhef en onder b, vindt ten aanzien van de daar bedoelde leerlingen toepassing voor ten hoogste de
-      periode van de resterende cursusduur van de opleiding waarvoor zij aan de school zijn ingeschreven, vermeerderd met
-      een jaar.
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel3
   - number: '4'
     text: |-
       Overdracht van een deel van de bekostiging met toepassing van [artikel 96s van de WVO][ref1] is uitsluitend
       mogelijk voor een leerling:
+
+      a. ten aanzien van wie na 1 oktober van het schooljaar blijkt dat deze is aangewezen op onderwijs aan een andere
+      school of aan een instelling,
+
+      b. die in verband daarmee in dat schooljaar wordt uitgeschreven aan de school, en
+
+      c. die aansluitend in dat schooljaar wordt ingeschreven als leerling aan een andere school of als deelnemer aan
+      een instelling.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel96s
@@ -278,19 +222,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0002399
         artikel: 96s
-  - number: 4.a
-    text: |-
-      ten aanzien van wie na 1 oktober van het schooljaar blijkt dat deze is aangewezen op onderwijs aan een andere
-      school of aan een instelling,
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel4
-  - number: 4.b
-    text: die in verband daarmee in dat schooljaar wordt uitgeschreven aan de school, en
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel4
-  - number: 4.c
-    text: |-
-      die aansluitend in dat schooljaar wordt ingeschreven als leerling aan een andere school of als deelnemer aan een
-      instelling.
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel4
   - number: '5'
     text: |-
       In afwijking van [artikel 33, eerste lid, van de WVO][ref1] kan onderwijs ook worden verzorgd door docenten van
@@ -347,7 +278,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel56
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel29
-      [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel1.4a.1
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel7
     references:
       - id: ref1
@@ -358,17 +289,20 @@ articles:
         artikel: '29'
       - id: ref3
         bwb_id: BWBR0007625
-        artikel: '1'
-  - number: '10.1'
+        artikel: 1.4a.1
+  - number: '10'
     text: |-
-      Dit besluit treedt, met uitzondering van [artikel 9][ref1], in werking met ingang van het tijdstip waarop de
+      1 Dit besluit treedt, met uitzondering van [artikel 9][ref1], in werking met ingang van het tijdstip waarop de
       __REF001___________________________________________________________________________________________________________
       _________________________________________________________________________________________________________________
       (Stb. 512) in werking treedt.
 
+      2 [Artikel 9][ref3] treedt in werking met ingang van een bij koninklijk besluit te bepalen tijdstip.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0019143#Artikel9
       [ref2]: https://wetten.overheid.nl/BWBR0018736
+      [ref3]: https://wetten.overheid.nl/BWBR0019143#Artikel9
     url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel10
     references:
       - id: ref1
@@ -377,15 +311,7 @@ articles:
         hoofdstuk: '4'
       - id: ref2
         bwb_id: BWBR0018736
-  - number: '10.2'
-    text: |-
-      [Artikel 9][ref1] treedt in werking met ingang van een bij koninklijk besluit te bepalen tijdstip.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019143#Artikel9
-    url: https://wetten.overheid.nl/BWBR0019143/2016-08-01#Artikel10
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0019143
         artikel: '9'
         hoofdstuk: '4'
