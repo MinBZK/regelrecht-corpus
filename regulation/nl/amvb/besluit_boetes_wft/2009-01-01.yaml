@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_boetes_wft
 regulatory_layer: AMVB
 publication_date: '2009-07-31'
@@ -21,76 +21,59 @@ preamble:
     Hebben goedgevonden en verstaan:
   url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#ArtikelAanhef
 articles:
-  - number: '1.1'
-    text: 'Onder eigen vermogen wordt in dit besluit verstaan:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-  - number: 1.1.a
+  - number: '1'
     text: |-
-      indien het betreft rechtspersonen die op grond van [artikel 360 van Boek 2 van het Burgerlijk Wetboek][ref1]
+      1 Onder eigen vermogen wordt in dit besluit verstaan:
+
+      a. indien het betreft rechtspersonen die op grond van [artikel 360 van Boek 2 van het Burgerlijk Wetboek][ref1]
       verplicht zijn een jaarrekening op te stellen: het eigen vermogen zoals dat blijkt uit die jaarrekening;
+
+      b. indien het betreft andere administratieplichtigen, die op grond van
+      [artikel 52 Algemene wet inzake rijksbelastingen][ref2] verplicht zijn een administratie te voeren en een
+      jaarrekening opstellen: het eigen vermogen zoals dat uit deze jaarrekening blijkt;
+
+      c. indien het betreft administratieplichtigen die geen jaarrekening opstellen: het eigen vermogen zoals dat
+      blijkt uit de administratie die op grond van [artikel 52 van de Algemene wet inzake rijksbelasting][ref3] wordt
+      aangehouden;
+
+      2 Onder balanstotaal wordt in dit besluit verstaan:
+
+      a. indien het betreft rechtspersonen als bedoeld in het eerste lid onder a: het balanstotaal zoals dat blijkt uit
+      die jaarrekening;
+
+      b. indien het betreft administratieplichtigen als bedoeld in het eerste lid onder b: het balanstotaal zoals dat uit
+      deze jaarrekening blijkt;
+
+      3 Indien het betreft een persoon die niet volgens de Nederlandse wet administratieplichtig
+      is, stelt de toezichthouder op basis van andere documenten, met inachtneming van de in
+      [artikel 362 Boek 2 van het Burgerlijk Wetboek][ref4] bedoelde normen, het eigen vermogen onderscheidenlijk het
+      balanstotaal vast.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003045#Artikel360
+      [ref2]: https://wetten.overheid.nl/BWBR0002320#Artikel52
+      [ref3]: https://wetten.overheid.nl/BWBR0002320#Artikel52
+      [ref4]: https://wetten.overheid.nl/BWBR0003045#Artikel362
     url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0003045
         artikel: '360'
-  - number: 1.1.b
-    text: |-
-      indien het betreft andere administratieplichtigen, die op grond van
-      [artikel 52 Algemene wet inzake rijksbelastingen][ref1] verplicht zijn een administratie te voeren en een
-      jaarrekening opstellen: het eigen vermogen zoals dat uit deze jaarrekening blijkt;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002320#Artikel52
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002320
         artikel: '52'
-  - number: 1.1.c
-    text: |-
-      indien het betreft administratieplichtigen die geen jaarrekening opstellen: het eigen vermogen zoals dat blijkt uit
-      de administratie die op grond van [artikel 52 van de Algemene wet inzake rijksbelasting][ref1] wordt aangehouden;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002320#Artikel52
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002320
         artikel: '52'
-  - number: '1.2'
-    text: 'Onder balanstotaal wordt in dit besluit verstaan:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-  - number: 1.2.a
-    text: |-
-      indien het betreft rechtspersonen als bedoeld in het eerste lid onder a: het balanstotaal zoals dat blijkt uit
-      die jaarrekening;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-  - number: 1.2.b
-    text: |-
-      indien het betreft administratieplichtigen als bedoeld in het eerste lid onder b: het balanstotaal zoals dat uit
-      deze jaarrekening blijkt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-  - number: '1.3'
-    text: |-
-      Indien het betreft een persoon die niet volgens de Nederlandse wet administratieplichtig is, stelt de toezichthouder
-      op basis van andere documenten, met inachtneming van de in [artikel 362 Boek 2 van het Burgerlijk Wetboek][ref1]
-      bedoelde normen, het eigen vermogen onderscheidenlijk het balanstotaal vast.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003045#Artikel362
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0003045
         artikel: '362'
   - number: '2'
     text: |-
       Voor de tariefnummers, behorend bij de in [artikel 3][ref1], [4][ref2] en [5][ref3] genoemde overtredingen, zijn
       de boetebedragen als volgt vastgesteld:
+
+
 
 
 
@@ -164,6 +147,8 @@ articles:
       Overtreding van een voorschrift, gesteld in een hierna genoemd artikel van de
       [Wet op het financieel toezicht][ref1] of in een hierna genoemd artikel van een op die wet gebaseerde algemene
       maatregel van bestuur, is als volgt beboetbaar:
+
+
 
 
 
@@ -4126,6 +4111,8 @@ articles:
 
 
 
+
+
                   [Besluit bijzondere prudentiële maatregelen, beleggerscompensatie en depositogarantie Wft][ref438]
 
 
@@ -4176,6 +4163,8 @@ articles:
 
 
                   1
+
+
 
 
 
@@ -4247,6 +4236,8 @@ articles:
 
 
                   4
+
+
 
 
 
@@ -5416,6 +5407,8 @@ articles:
 
 
                   3
+
+
 
 
 
@@ -7093,6 +7086,8 @@ articles:
 
 
 
+
+
                   [Besluit uitvoeringsrichtlijn transparantie uitgevende instellingen Wft][ref803]
 
 
@@ -7116,6 +7111,8 @@ articles:
 
 
                   2
+
+
 
 
 
@@ -7205,6 +7202,8 @@ articles:
 
 
                   3
+
+
 
 
 
@@ -7425,440 +7424,440 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0020368
       [ref2]: https://wetten.overheid.nl/BWBR0020368
       [ref3]: https://wetten.overheid.nl/BWBR0020368
-      [ref4]: https://wetten.overheid.nl/BWBR0020368#Artikel1
-      [ref5]: https://wetten.overheid.nl/BWBR0020368#Artikel1
-      [ref6]: https://wetten.overheid.nl/BWBR0020368#Artikel1
-      [ref7]: https://wetten.overheid.nl/BWBR0020368#Artikel1
+      [ref4]: https://wetten.overheid.nl/BWBR0020368#Artikel110
+      [ref5]: https://wetten.overheid.nl/BWBR0020368#Artikel112
+      [ref6]: https://wetten.overheid.nl/BWBR0020368#Artikel128
+      [ref7]: https://wetten.overheid.nl/BWBR0020368#Artikel174
       [ref8]: https://wetten.overheid.nl/BWBR0020368
-      [ref9]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref10]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref11]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref12]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref13]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref14]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref15]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref16]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref17]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref18]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref19]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref20]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref21]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref22]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref23]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref24]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref25]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref26]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref27]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref28]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref29]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref30]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref31]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref32]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref33]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref34]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref35]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref36]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref37]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref38]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref39]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref40]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref41]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref42]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref43]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref44]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref45]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref46]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref47]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref48]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref49]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref50]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref51]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref52]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref53]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref54]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref55]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref56]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref57]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref58]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref59]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref60]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref61]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref62]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref63]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref64]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref65]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref66]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref67]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref68]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref69]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref70]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref71]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref72]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref73]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref74]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref75]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref76]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref77]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref78]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref79]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref80]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref81]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref82]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref83]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref84]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref85]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref86]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref87]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref88]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref89]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref90]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref91]: https://wetten.overheid.nl/BWBR0020368#Artikel2
-      [ref92]: https://wetten.overheid.nl/BWBR0020368#Artikel2
+      [ref9]: https://wetten.overheid.nl/BWBR0020368#Artikel24
+      [ref10]: https://wetten.overheid.nl/BWBR0020368#Artikel26
+      [ref11]: https://wetten.overheid.nl/BWBR0020368#Artikel28
+      [ref12]: https://wetten.overheid.nl/BWBR0020368#Artikel29
+      [ref13]: https://wetten.overheid.nl/BWBR0020368#Artikel210
+      [ref14]: https://wetten.overheid.nl/BWBR0020368#Artikel210
+      [ref15]: https://wetten.overheid.nl/BWBR0020368#Artikel211
+      [ref16]: https://wetten.overheid.nl/BWBR0020368#Artikel215
+      [ref17]: https://wetten.overheid.nl/BWBR0020368#Artikel215
+      [ref18]: https://wetten.overheid.nl/BWBR0020368#Artikel216
+      [ref19]: https://wetten.overheid.nl/BWBR0020368#Artikel218
+      [ref20]: https://wetten.overheid.nl/BWBR0020368#Artikel218
+      [ref21]: https://wetten.overheid.nl/BWBR0020368#Artikel219
+      [ref22]: https://wetten.overheid.nl/BWBR0020368#Artikel220
+      [ref23]: https://wetten.overheid.nl/BWBR0020368#Artikel223
+      [ref24]: https://wetten.overheid.nl/BWBR0020368#Artikel225
+      [ref25]: https://wetten.overheid.nl/BWBR0020368#Artikel225
+      [ref26]: https://wetten.overheid.nl/BWBR0020368#Artikel226
+      [ref27]: https://wetten.overheid.nl/BWBR0020368#Artikel226a
+      [ref28]: https://wetten.overheid.nl/BWBR0020368#Artikel226c
+      [ref29]: https://wetten.overheid.nl/BWBR0020368#Artikel226d
+      [ref30]: https://wetten.overheid.nl/BWBR0020368#Artikel226f
+      [ref31]: https://wetten.overheid.nl/BWBR0020368#Artikel227
+      [ref32]: https://wetten.overheid.nl/BWBR0020368#Artikel235
+      [ref33]: https://wetten.overheid.nl/BWBR0020368#Artikel236
+      [ref34]: https://wetten.overheid.nl/BWBR0020368#Artikel236
+      [ref35]: https://wetten.overheid.nl/BWBR0020368#Artikel236
+      [ref36]: https://wetten.overheid.nl/BWBR0020368#Artikel238
+      [ref37]: https://wetten.overheid.nl/BWBR0020368#Artikel238
+      [ref38]: https://wetten.overheid.nl/BWBR0020368#Artikel239
+      [ref39]: https://wetten.overheid.nl/BWBR0020368#Artikel240
+      [ref40]: https://wetten.overheid.nl/BWBR0020368#Artikel245
+      [ref41]: https://wetten.overheid.nl/BWBR0020368#Artikel245
+      [ref42]: https://wetten.overheid.nl/BWBR0020368#Artikel246
+      [ref43]: https://wetten.overheid.nl/BWBR0020368#Artikel248
+      [ref44]: https://wetten.overheid.nl/BWBR0020368#Artikel250
+      [ref45]: https://wetten.overheid.nl/BWBR0020368#Artikel252
+      [ref46]: https://wetten.overheid.nl/BWBR0020368#Artikel253
+      [ref47]: https://wetten.overheid.nl/BWBR0020368#Artikel254
+      [ref48]: https://wetten.overheid.nl/BWBR0020368#Artikel254
+      [ref49]: https://wetten.overheid.nl/BWBR0020368#Artikel254a
+      [ref50]: https://wetten.overheid.nl/BWBR0020368#Artikel254c
+      [ref51]: https://wetten.overheid.nl/BWBR0020368#Artikel254d
+      [ref52]: https://wetten.overheid.nl/BWBR0020368#Artikel254f
+      [ref53]: https://wetten.overheid.nl/BWBR0020368#Artikel255
+      [ref54]: https://wetten.overheid.nl/BWBR0020368#Artikel260
+      [ref55]: https://wetten.overheid.nl/BWBR0020368#Artikel265
+      [ref56]: https://wetten.overheid.nl/BWBR0020368#Artikel265
+      [ref57]: https://wetten.overheid.nl/BWBR0020368#Artikel271
+      [ref58]: https://wetten.overheid.nl/BWBR0020368#Artikel272
+      [ref59]: https://wetten.overheid.nl/BWBR0020368#Artikel273
+      [ref60]: https://wetten.overheid.nl/BWBR0020368#Artikel275
+      [ref61]: https://wetten.overheid.nl/BWBR0020368#Artikel280
+      [ref62]: https://wetten.overheid.nl/BWBR0020368#Artikel281
+      [ref63]: https://wetten.overheid.nl/BWBR0020368#Artikel284
+      [ref64]: https://wetten.overheid.nl/BWBR0020368#Artikel286
+      [ref65]: https://wetten.overheid.nl/BWBR0020368#Artikel290
+      [ref66]: https://wetten.overheid.nl/BWBR0020368#Artikel292
+      [ref67]: https://wetten.overheid.nl/BWBR0020368#Artikel296
+      [ref68]: https://wetten.overheid.nl/BWBR0020368#Artikel299
+      [ref69]: https://wetten.overheid.nl/BWBR0020368#Artikel2100
+      [ref70]: https://wetten.overheid.nl/BWBR0020368#Artikel2101
+      [ref71]: https://wetten.overheid.nl/BWBR0020368#Artikel2102
+      [ref72]: https://wetten.overheid.nl/BWBR0020368#Artikel2103
+      [ref73]: https://wetten.overheid.nl/BWBR0020368#Artikel2103a
+      [ref74]: https://wetten.overheid.nl/BWBR0020368#Artikel2107
+      [ref75]: https://wetten.overheid.nl/BWBR0020368#Artikel2108
+      [ref76]: https://wetten.overheid.nl/BWBR0020368#Artikel2110
+      [ref77]: https://wetten.overheid.nl/BWBR0020368#Artikel2111
+      [ref78]: https://wetten.overheid.nl/BWBR0020368#Artikel2112
+      [ref79]: https://wetten.overheid.nl/BWBR0020368#Artikel2114
+      [ref80]: https://wetten.overheid.nl/BWBR0020368#Artikel2115
+      [ref81]: https://wetten.overheid.nl/BWBR0020368#Artikel2117
+      [ref82]: https://wetten.overheid.nl/BWBR0020368#Artikel2118
+      [ref83]: https://wetten.overheid.nl/BWBR0020368#Artikel2120
+      [ref84]: https://wetten.overheid.nl/BWBR0020368#Artikel2121
+      [ref85]: https://wetten.overheid.nl/BWBR0020368#Artikel2122
+      [ref86]: https://wetten.overheid.nl/BWBR0020368#Artikel2123
+      [ref87]: https://wetten.overheid.nl/BWBR0020368#Artikel2125
+      [ref88]: https://wetten.overheid.nl/BWBR0020368#Artikel2126
+      [ref89]: https://wetten.overheid.nl/BWBR0020368#Artikel2127
+      [ref90]: https://wetten.overheid.nl/BWBR0020368#Artikel2128
+      [ref91]: https://wetten.overheid.nl/BWBR0020368#Artikel2129
+      [ref92]: https://wetten.overheid.nl/BWBR0020368#Artikel2130
       [ref93]: https://wetten.overheid.nl/BWBR0020368
-      [ref94]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref95]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref96]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref97]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref98]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref99]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref100]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref101]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref102]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref103]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref104]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref105]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref106]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref107]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref108]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref109]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref110]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref111]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref112]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref113]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref114]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref115]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref116]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref117]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref118]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref119]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref120]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref121]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref122]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref123]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref124]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref125]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref126]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref127]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref128]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref129]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref130]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref131]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref132]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref133]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref134]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref135]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref136]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref137]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref138]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref139]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref140]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref141]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref142]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref143]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref144]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref145]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref146]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref147]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref148]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref149]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref150]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref151]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref152]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref153]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref154]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref155]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref156]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref157]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref158]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref159]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref160]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref161]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref162]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref163]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref164]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref165]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref166]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref167]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref168]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref169]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref170]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref171]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref172]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref173]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref174]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref175]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref176]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref177]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref178]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref179]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref180]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref181]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref182]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref183]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref184]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref185]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref186]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref187]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref188]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref189]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref190]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref191]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref192]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref193]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref194]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref195]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref196]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref197]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref198]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref199]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref200]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref201]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref202]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref203]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref204]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref205]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref206]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref207]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref208]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref209]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref210]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref211]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref212]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref213]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref214]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref215]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref216]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref217]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref218]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref219]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref220]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref221]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref222]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref223]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref224]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref225]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref226]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref227]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref228]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref229]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref230]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref231]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref232]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref233]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref234]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref235]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref236]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref237]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref238]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref239]: https://wetten.overheid.nl/BWBR0020368#Artikel3
+      [ref94]: https://wetten.overheid.nl/BWBR0020368#Artikel35
+      [ref95]: https://wetten.overheid.nl/BWBR0020368#Artikel35
+      [ref96]: https://wetten.overheid.nl/BWBR0020368#Artikel36
+      [ref97]: https://wetten.overheid.nl/BWBR0020368#Artikel36
+      [ref98]: https://wetten.overheid.nl/BWBR0020368#Artikel37
+      [ref99]: https://wetten.overheid.nl/BWBR0020368#Artikel37
+      [ref100]: https://wetten.overheid.nl/BWBR0020368#Artikel38
+      [ref101]: https://wetten.overheid.nl/BWBR0020368#Artikel39
+      [ref102]: https://wetten.overheid.nl/BWBR0020368#Artikel310
+      [ref103]: https://wetten.overheid.nl/BWBR0020368#Artikel310
+      [ref104]: https://wetten.overheid.nl/BWBR0020368#Artikel315
+      [ref105]: https://wetten.overheid.nl/BWBR0020368#Artikel316
+      [ref106]: https://wetten.overheid.nl/BWBR0020368#Artikel317
+      [ref107]: https://wetten.overheid.nl/BWBR0020368#Artikel318
+      [ref108]: https://wetten.overheid.nl/BWBR0020368#Artikel319
+      [ref109]: https://wetten.overheid.nl/BWBR0020368#Artikel320
+      [ref110]: https://wetten.overheid.nl/BWBR0020368#Artikel321
+      [ref111]: https://wetten.overheid.nl/BWBR0020368#Artikel324
+      [ref112]: https://wetten.overheid.nl/BWBR0020368#Artikel329
+      [ref113]: https://wetten.overheid.nl/BWBR0020368#Artikel329
+      [ref114]: https://wetten.overheid.nl/BWBR0020368#Artikel330
+      [ref115]: https://wetten.overheid.nl/BWBR0020368#Artikel332
+      [ref116]: https://wetten.overheid.nl/BWBR0020368#Artikel334
+      [ref117]: https://wetten.overheid.nl/BWBR0020368#Artikel335
+      [ref118]: https://wetten.overheid.nl/BWBR0020368#Artikel336
+      [ref119]: https://wetten.overheid.nl/BWBR0020368#Artikel337
+      [ref120]: https://wetten.overheid.nl/BWBR0020368#Artikel337
+      [ref121]: https://wetten.overheid.nl/BWBR0020368#Artikel338
+      [ref122]: https://wetten.overheid.nl/BWBR0020368#Artikel338a
+      [ref123]: https://wetten.overheid.nl/BWBR0020368#Artikel338b
+      [ref124]: https://wetten.overheid.nl/BWBR0020368#Artikel339
+      [ref125]: https://wetten.overheid.nl/BWBR0020368#Artikel339
+      [ref126]: https://wetten.overheid.nl/BWBR0020368#Artikel341
+      [ref127]: https://wetten.overheid.nl/BWBR0020368#Artikel342
+      [ref128]: https://wetten.overheid.nl/BWBR0020368#Artikel343
+      [ref129]: https://wetten.overheid.nl/BWBR0020368#Artikel344
+      [ref130]: https://wetten.overheid.nl/BWBR0020368#Artikel345
+      [ref131]: https://wetten.overheid.nl/BWBR0020368#Artikel347
+      [ref132]: https://wetten.overheid.nl/BWBR0020368#Artikel347
+      [ref133]: https://wetten.overheid.nl/BWBR0020368#Artikel348
+      [ref134]: https://wetten.overheid.nl/BWBR0020368#Artikel351
+      [ref135]: https://wetten.overheid.nl/BWBR0020368#Artikel352
+      [ref136]: https://wetten.overheid.nl/BWBR0020368#Artikel353
+      [ref137]: https://wetten.overheid.nl/BWBR0020368#Artikel353
+      [ref138]: https://wetten.overheid.nl/BWBR0020368#Artikel357
+      [ref139]: https://wetten.overheid.nl/BWBR0020368#Artikel357
+      [ref140]: https://wetten.overheid.nl/BWBR0020368#Artikel363
+      [ref141]: https://wetten.overheid.nl/BWBR0020368#Artikel367
+      [ref142]: https://wetten.overheid.nl/BWBR0020368#Artikel368
+      [ref143]: https://wetten.overheid.nl/BWBR0020368#Artikel368a
+      [ref144]: https://wetten.overheid.nl/BWBR0020368#Artikel369
+      [ref145]: https://wetten.overheid.nl/BWBR0020368#Artikel369
+      [ref146]: https://wetten.overheid.nl/BWBR0020368#Artikel370
+      [ref147]: https://wetten.overheid.nl/BWBR0020368#Artikel371
+      [ref148]: https://wetten.overheid.nl/BWBR0020368#Artikel372
+      [ref149]: https://wetten.overheid.nl/BWBR0020368#Artikel372
+      [ref150]: https://wetten.overheid.nl/BWBR0020368#Artikel372
+      [ref151]: https://wetten.overheid.nl/BWBR0020368#Artikel372
+      [ref152]: https://wetten.overheid.nl/BWBR0020368#Artikel373
+      [ref153]: https://wetten.overheid.nl/BWBR0020368#Artikel374
+      [ref154]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref155]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref156]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref157]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref158]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref159]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref160]: https://wetten.overheid.nl/BWBR0020368#Artikel374a
+      [ref161]: https://wetten.overheid.nl/BWBR0020368#Artikel375
+      [ref162]: https://wetten.overheid.nl/BWBR0020368#Artikel376
+      [ref163]: https://wetten.overheid.nl/BWBR0020368#Artikel377
+      [ref164]: https://wetten.overheid.nl/BWBR0020368#Artikel378
+      [ref165]: https://wetten.overheid.nl/BWBR0020368#Artikel381
+      [ref166]: https://wetten.overheid.nl/BWBR0020368#Artikel383
+      [ref167]: https://wetten.overheid.nl/BWBR0020368#Artikel387
+      [ref168]: https://wetten.overheid.nl/BWBR0020368#Artikel388
+      [ref169]: https://wetten.overheid.nl/BWBR0020368#Artikel389
+      [ref170]: https://wetten.overheid.nl/BWBR0020368#Artikel395
+      [ref171]: https://wetten.overheid.nl/BWBR0020368#Artikel396
+      [ref172]: https://wetten.overheid.nl/BWBR0020368#Artikel399
+      [ref173]: https://wetten.overheid.nl/BWBR0020368#Artikel3103
+      [ref174]: https://wetten.overheid.nl/BWBR0020368#Artikel3104
+      [ref175]: https://wetten.overheid.nl/BWBR0020368#Artikel3104
+      [ref176]: https://wetten.overheid.nl/BWBR0020368#Artikel3105
+      [ref177]: https://wetten.overheid.nl/BWBR0020368#Artikel3108
+      [ref178]: https://wetten.overheid.nl/BWBR0020368#Artikel3110
+      [ref179]: https://wetten.overheid.nl/BWBR0020368#Artikel3111
+      [ref180]: https://wetten.overheid.nl/BWBR0020368#Artikel3111a
+      [ref181]: https://wetten.overheid.nl/BWBR0020368#Artikel3111a
+      [ref182]: https://wetten.overheid.nl/BWBR0020368#Artikel3112
+      [ref183]: https://wetten.overheid.nl/BWBR0020368#Artikel3113
+      [ref184]: https://wetten.overheid.nl/BWBR0020368#Artikel3116
+      [ref185]: https://wetten.overheid.nl/BWBR0020368#Artikel3119
+      [ref186]: https://wetten.overheid.nl/BWBR0020368#Artikel3120
+      [ref187]: https://wetten.overheid.nl/BWBR0020368#Artikel3120
+      [ref188]: https://wetten.overheid.nl/BWBR0020368#Artikel3120
+      [ref189]: https://wetten.overheid.nl/BWBR0020368#Artikel3120
+      [ref190]: https://wetten.overheid.nl/BWBR0020368#Artikel3124
+      [ref191]: https://wetten.overheid.nl/BWBR0020368#Artikel3125
+      [ref192]: https://wetten.overheid.nl/BWBR0020368#Artikel3126
+      [ref193]: https://wetten.overheid.nl/BWBR0020368#Artikel3129
+      [ref194]: https://wetten.overheid.nl/BWBR0020368#Artikel3131
+      [ref195]: https://wetten.overheid.nl/BWBR0020368#Artikel3132
+      [ref196]: https://wetten.overheid.nl/BWBR0020368#Artikel3135
+      [ref197]: https://wetten.overheid.nl/BWBR0020368#Artikel3136
+      [ref198]: https://wetten.overheid.nl/BWBR0020368#Artikel3137
+      [ref199]: https://wetten.overheid.nl/BWBR0020368#Artikel3138
+      [ref200]: https://wetten.overheid.nl/BWBR0020368#Artikel3139
+      [ref201]: https://wetten.overheid.nl/BWBR0020368#Artikel3141
+      [ref202]: https://wetten.overheid.nl/BWBR0020368#Artikel3143
+      [ref203]: https://wetten.overheid.nl/BWBR0020368#Artikel3144
+      [ref204]: https://wetten.overheid.nl/BWBR0020368#Artikel3145
+      [ref205]: https://wetten.overheid.nl/BWBR0020368#Artikel3146
+      [ref206]: https://wetten.overheid.nl/BWBR0020368#Artikel3148
+      [ref207]: https://wetten.overheid.nl/BWBR0020368#Artikel3151
+      [ref208]: https://wetten.overheid.nl/BWBR0020368#Artikel3153
+      [ref209]: https://wetten.overheid.nl/BWBR0020368#Artikel3155
+      [ref210]: https://wetten.overheid.nl/BWBR0020368#Artikel3156
+      [ref211]: https://wetten.overheid.nl/BWBR0020368#Artikel3158
+      [ref212]: https://wetten.overheid.nl/BWBR0020368#Artikel3175
+      [ref213]: https://wetten.overheid.nl/BWBR0020368#Artikel3196
+      [ref214]: https://wetten.overheid.nl/BWBR0020368#Artikel3259
+      [ref215]: https://wetten.overheid.nl/BWBR0020368#Artikel3262
+      [ref216]: https://wetten.overheid.nl/BWBR0020368#Artikel3263
+      [ref217]: https://wetten.overheid.nl/BWBR0020368#Artikel3264
+      [ref218]: https://wetten.overheid.nl/BWBR0020368#Artikel3267
+      [ref219]: https://wetten.overheid.nl/BWBR0020368#Artikel3269
+      [ref220]: https://wetten.overheid.nl/BWBR0020368#Artikel3269
+      [ref221]: https://wetten.overheid.nl/BWBR0020368#Artikel3271
+      [ref222]: https://wetten.overheid.nl/BWBR0020368#Artikel3272
+      [ref223]: https://wetten.overheid.nl/BWBR0020368#Artikel3273
+      [ref224]: https://wetten.overheid.nl/BWBR0020368#Artikel3279
+      [ref225]: https://wetten.overheid.nl/BWBR0020368#Artikel3280
+      [ref226]: https://wetten.overheid.nl/BWBR0020368#Artikel3280a
+      [ref227]: https://wetten.overheid.nl/BWBR0020368#Artikel3284
+      [ref228]: https://wetten.overheid.nl/BWBR0020368#Artikel3285
+      [ref229]: https://wetten.overheid.nl/BWBR0020368#Artikel3285
+      [ref230]: https://wetten.overheid.nl/BWBR0020368#Artikel3286
+      [ref231]: https://wetten.overheid.nl/BWBR0020368#Artikel3286
+      [ref232]: https://wetten.overheid.nl/BWBR0020368#Artikel3296
+      [ref233]: https://wetten.overheid.nl/BWBR0020368#Artikel3296
+      [ref234]: https://wetten.overheid.nl/BWBR0020368#Artikel3296
+      [ref235]: https://wetten.overheid.nl/BWBR0020368#Artikel3296
+      [ref236]: https://wetten.overheid.nl/BWBR0020368#Artikel3296
+      [ref237]: https://wetten.overheid.nl/BWBR0020368#Artikel3297
+      [ref238]: https://wetten.overheid.nl/BWBR0020368#Artikel3298
+      [ref239]: https://wetten.overheid.nl/BWBR0020368#Artikel3299
       [ref240]: https://wetten.overheid.nl/BWBR0020368
-      [ref241]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref242]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref243]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref244]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref245]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref246]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref247]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref248]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref249]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref250]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref251]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref252]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref253]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref254]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref255]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref256]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref257]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref258]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref259]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref260]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref261]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref262]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref263]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref264]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref265]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref266]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref267]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref268]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref269]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref270]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref271]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref272]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref273]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref274]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref275]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref276]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref277]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref278]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref279]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref280]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref281]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref282]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref283]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref284]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref285]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref286]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref287]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref288]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref289]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref290]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref291]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref292]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref293]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref294]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref295]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref296]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref297]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref298]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref299]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref300]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref301]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref302]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref303]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref304]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref305]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref306]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref307]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref308]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref309]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref310]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref311]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref312]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref313]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref314]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref315]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref316]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref317]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref318]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref319]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref320]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref321]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref322]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref323]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref324]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref325]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref326]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref327]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref328]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref329]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref330]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref331]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref332]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref333]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref334]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref335]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref336]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref337]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref338]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref339]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref340]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref341]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref342]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref343]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref344]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref345]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref346]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref347]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref348]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref349]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref350]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref351]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref352]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref353]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref354]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref355]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref356]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref357]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref358]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref359]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref360]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref361]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref362]: https://wetten.overheid.nl/BWBR0020368#Artikel4
-      [ref363]: https://wetten.overheid.nl/BWBR0020368#Artikel4
+      [ref241]: https://wetten.overheid.nl/BWBR0020368#Artikel43
+      [ref242]: https://wetten.overheid.nl/BWBR0020368#Artikel43
+      [ref243]: https://wetten.overheid.nl/BWBR0020368#Artikel44
+      [ref244]: https://wetten.overheid.nl/BWBR0020368#Artikel44a
+      [ref245]: https://wetten.overheid.nl/BWBR0020368#Artikel45
+      [ref246]: https://wetten.overheid.nl/BWBR0020368#Artikel46
+      [ref247]: https://wetten.overheid.nl/BWBR0020368#Artikel46a
+      [ref248]: https://wetten.overheid.nl/BWBR0020368#Artikel49
+      [ref249]: https://wetten.overheid.nl/BWBR0020368#Artikel49
+      [ref250]: https://wetten.overheid.nl/BWBR0020368#Artikel410
+      [ref251]: https://wetten.overheid.nl/BWBR0020368#Artikel411
+      [ref252]: https://wetten.overheid.nl/BWBR0020368#Artikel411
+      [ref253]: https://wetten.overheid.nl/BWBR0020368#Artikel413
+      [ref254]: https://wetten.overheid.nl/BWBR0020368#Artikel414
+      [ref255]: https://wetten.overheid.nl/BWBR0020368#Artikel415
+      [ref256]: https://wetten.overheid.nl/BWBR0020368#Artikel416
+      [ref257]: https://wetten.overheid.nl/BWBR0020368#Artikel417
+      [ref258]: https://wetten.overheid.nl/BWBR0020368#Artikel418a
+      [ref259]: https://wetten.overheid.nl/BWBR0020368#Artikel418b
+      [ref260]: https://wetten.overheid.nl/BWBR0020368#Artikel418c
+      [ref261]: https://wetten.overheid.nl/BWBR0020368#Artikel418d
+      [ref262]: https://wetten.overheid.nl/BWBR0020368#Artikel419
+      [ref263]: https://wetten.overheid.nl/BWBR0020368#Artikel420
+      [ref264]: https://wetten.overheid.nl/BWBR0020368#Artikel420
+      [ref265]: https://wetten.overheid.nl/BWBR0020368#Artikel421
+      [ref266]: https://wetten.overheid.nl/BWBR0020368#Artikel423
+      [ref267]: https://wetten.overheid.nl/BWBR0020368#Artikel424
+      [ref268]: https://wetten.overheid.nl/BWBR0020368#Artikel426
+      [ref269]: https://wetten.overheid.nl/BWBR0020368#Artikel426
+      [ref270]: https://wetten.overheid.nl/BWBR0020368#Artikel427
+      [ref271]: https://wetten.overheid.nl/BWBR0020368#Artikel430a
+      [ref272]: https://wetten.overheid.nl/BWBR0020368#Artikel431
+      [ref273]: https://wetten.overheid.nl/BWBR0020368#Artikel432
+      [ref274]: https://wetten.overheid.nl/BWBR0020368#Artikel433
+      [ref275]: https://wetten.overheid.nl/BWBR0020368#Artikel434
+      [ref276]: https://wetten.overheid.nl/BWBR0020368#Artikel439
+      [ref277]: https://wetten.overheid.nl/BWBR0020368#Artikel440
+      [ref278]: https://wetten.overheid.nl/BWBR0020368#Artikel441
+      [ref279]: https://wetten.overheid.nl/BWBR0020368#Artikel442
+      [ref280]: https://wetten.overheid.nl/BWBR0020368#Artikel443
+      [ref281]: https://wetten.overheid.nl/BWBR0020368#Artikel444
+      [ref282]: https://wetten.overheid.nl/BWBR0020368#Artikel446
+      [ref283]: https://wetten.overheid.nl/BWBR0020368#Artikel446
+      [ref284]: https://wetten.overheid.nl/BWBR0020368#Artikel446
+      [ref285]: https://wetten.overheid.nl/BWBR0020368#Artikel446a
+      [ref286]: https://wetten.overheid.nl/BWBR0020368#Artikel447
+      [ref287]: https://wetten.overheid.nl/BWBR0020368#Artikel448
+      [ref288]: https://wetten.overheid.nl/BWBR0020368#Artikel449
+      [ref289]: https://wetten.overheid.nl/BWBR0020368#Artikel449
+      [ref290]: https://wetten.overheid.nl/BWBR0020368#Artikel450
+      [ref291]: https://wetten.overheid.nl/BWBR0020368#Artikel450
+      [ref292]: https://wetten.overheid.nl/BWBR0020368#Artikel451
+      [ref293]: https://wetten.overheid.nl/BWBR0020368#Artikel452
+      [ref294]: https://wetten.overheid.nl/BWBR0020368#Artikel452a
+      [ref295]: https://wetten.overheid.nl/BWBR0020368#Artikel453
+      [ref296]: https://wetten.overheid.nl/BWBR0020368#Artikel455
+      [ref297]: https://wetten.overheid.nl/BWBR0020368#Artikel456
+      [ref298]: https://wetten.overheid.nl/BWBR0020368#Artikel457
+      [ref299]: https://wetten.overheid.nl/BWBR0020368#Artikel458
+      [ref300]: https://wetten.overheid.nl/BWBR0020368#Artikel459
+      [ref301]: https://wetten.overheid.nl/BWBR0020368#Artikel459
+      [ref302]: https://wetten.overheid.nl/BWBR0020368#Artikel460
+      [ref303]: https://wetten.overheid.nl/BWBR0020368#Artikel462
+      [ref304]: https://wetten.overheid.nl/BWBR0020368#Artikel463
+      [ref305]: https://wetten.overheid.nl/BWBR0020368#Artikel465
+      [ref306]: https://wetten.overheid.nl/BWBR0020368#Artikel466
+      [ref307]: https://wetten.overheid.nl/BWBR0020368#Artikel467
+      [ref308]: https://wetten.overheid.nl/BWBR0020368#Artikel468
+      [ref309]: https://wetten.overheid.nl/BWBR0020368#Artikel469
+      [ref310]: https://wetten.overheid.nl/BWBR0020368#Artikel470
+      [ref311]: https://wetten.overheid.nl/BWBR0020368#Artikel471
+      [ref312]: https://wetten.overheid.nl/BWBR0020368#Artikel472
+      [ref313]: https://wetten.overheid.nl/BWBR0020368#Artikel473
+      [ref314]: https://wetten.overheid.nl/BWBR0020368#Artikel474
+      [ref315]: https://wetten.overheid.nl/BWBR0020368#Artikel475
+      [ref316]: https://wetten.overheid.nl/BWBR0020368#Artikel476
+      [ref317]: https://wetten.overheid.nl/BWBR0020368#Artikel477
+      [ref318]: https://wetten.overheid.nl/BWBR0020368#Artikel477
+      [ref319]: https://wetten.overheid.nl/BWBR0020368#Artikel483
+      [ref320]: https://wetten.overheid.nl/BWBR0020368#Artikel484
+      [ref321]: https://wetten.overheid.nl/BWBR0020368#Artikel485
+      [ref322]: https://wetten.overheid.nl/BWBR0020368#Artikel487
+      [ref323]: https://wetten.overheid.nl/BWBR0020368#Artikel488
+      [ref324]: https://wetten.overheid.nl/BWBR0020368#Artikel489
+      [ref325]: https://wetten.overheid.nl/BWBR0020368#Artikel489a
+      [ref326]: https://wetten.overheid.nl/BWBR0020368#Artikel490
+      [ref327]: https://wetten.overheid.nl/BWBR0020368#Artikel490a
+      [ref328]: https://wetten.overheid.nl/BWBR0020368#Artikel490b
+      [ref329]: https://wetten.overheid.nl/BWBR0020368#Artikel490b
+      [ref330]: https://wetten.overheid.nl/BWBR0020368#Artikel490b
+      [ref331]: https://wetten.overheid.nl/BWBR0020368#Artikel490c
+      [ref332]: https://wetten.overheid.nl/BWBR0020368#Artikel490d
+      [ref333]: https://wetten.overheid.nl/BWBR0020368#Artikel490e
+      [ref334]: https://wetten.overheid.nl/BWBR0020368#Artikel490e
+      [ref335]: https://wetten.overheid.nl/BWBR0020368#Artikel491a
+      [ref336]: https://wetten.overheid.nl/BWBR0020368#Artikel491a
+      [ref337]: https://wetten.overheid.nl/BWBR0020368#Artikel491b
+      [ref338]: https://wetten.overheid.nl/BWBR0020368#Artikel491b
+      [ref339]: https://wetten.overheid.nl/BWBR0020368#Artikel491c
+      [ref340]: https://wetten.overheid.nl/BWBR0020368#Artikel491d
+      [ref341]: https://wetten.overheid.nl/BWBR0020368#Artikel491g
+      [ref342]: https://wetten.overheid.nl/BWBR0020368#Artikel491i
+      [ref343]: https://wetten.overheid.nl/BWBR0020368#Artikel491j
+      [ref344]: https://wetten.overheid.nl/BWBR0020368#Artikel491k
+      [ref345]: https://wetten.overheid.nl/BWBR0020368#Artikel491k
+      [ref346]: https://wetten.overheid.nl/BWBR0020368#Artikel491l
+      [ref347]: https://wetten.overheid.nl/BWBR0020368#Artikel493
+      [ref348]: https://wetten.overheid.nl/BWBR0020368#Artikel494
+      [ref349]: https://wetten.overheid.nl/BWBR0020368#Artikel494
+      [ref350]: https://wetten.overheid.nl/BWBR0020368#Artikel494
+      [ref351]: https://wetten.overheid.nl/BWBR0020368#Artikel495
+      [ref352]: https://wetten.overheid.nl/BWBR0020368#Artikel495
+      [ref353]: https://wetten.overheid.nl/BWBR0020368#Artikel495
+      [ref354]: https://wetten.overheid.nl/BWBR0020368#Artikel496
+      [ref355]: https://wetten.overheid.nl/BWBR0020368#Artikel497
+      [ref356]: https://wetten.overheid.nl/BWBR0020368#Artikel499
+      [ref357]: https://wetten.overheid.nl/BWBR0020368#Artikel4100
+      [ref358]: https://wetten.overheid.nl/BWBR0020368#Artikel4100
+      [ref359]: https://wetten.overheid.nl/BWBR0020368#Artikel4100
+      [ref360]: https://wetten.overheid.nl/BWBR0020368#Artikel4100a
+      [ref361]: https://wetten.overheid.nl/BWBR0020368#Artikel4100b
+      [ref362]: https://wetten.overheid.nl/BWBR0020368#Artikel4100c
+      [ref363]: https://wetten.overheid.nl/BWBR0020368#Artikel4100d
       [ref364]: https://wetten.overheid.nl/BWBR0020368
-      [ref365]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref366]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref367]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref368]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref369]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref370]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref371]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref372]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref373]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref374]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref375]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref376]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref377]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref378]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref379]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref380]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref381]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref382]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref383]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref384]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref385]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref386]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref387]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref388]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref389]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref390]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref391]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref392]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref393]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref394]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref395]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref396]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref397]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref398]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref399]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref400]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref401]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref402]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref403]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref404]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref405]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref406]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref407]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref408]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref409]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref410]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref411]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref412]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref413]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref414]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref415]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref416]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref417]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref418]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref419]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref420]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref421]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref422]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref423]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref424]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref425]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref426]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref427]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref428]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref429]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref430]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref431]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref432]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref433]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref434]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref435]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref436]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref437]: https://wetten.overheid.nl/BWBR0020368#Artikel5
+      [ref365]: https://wetten.overheid.nl/BWBR0020368#Artikel52
+      [ref366]: https://wetten.overheid.nl/BWBR0020368#Artikel516
+      [ref367]: https://wetten.overheid.nl/BWBR0020368#Artikel518
+      [ref368]: https://wetten.overheid.nl/BWBR0020368#Artikel520
+      [ref369]: https://wetten.overheid.nl/BWBR0020368#Artikel521
+      [ref370]: https://wetten.overheid.nl/BWBR0020368#Artikel521
+      [ref371]: https://wetten.overheid.nl/BWBR0020368#Artikel521
+      [ref372]: https://wetten.overheid.nl/BWBR0020368#Artikel523
+      [ref373]: https://wetten.overheid.nl/BWBR0020368#Artikel525c
+      [ref374]: https://wetten.overheid.nl/BWBR0020368#Artikel525d
+      [ref375]: https://wetten.overheid.nl/BWBR0020368#Artikel525e
+      [ref376]: https://wetten.overheid.nl/BWBR0020368#Artikel525f
+      [ref377]: https://wetten.overheid.nl/BWBR0020368#Artikel525h
+      [ref378]: https://wetten.overheid.nl/BWBR0020368#Artikel525i
+      [ref379]: https://wetten.overheid.nl/BWBR0020368#Artikel525m
+      [ref380]: https://wetten.overheid.nl/BWBR0020368#Artikel525n
+      [ref381]: https://wetten.overheid.nl/BWBR0020368#Artikel525p
+      [ref382]: https://wetten.overheid.nl/BWBR0020368#Artikel525q
+      [ref383]: https://wetten.overheid.nl/BWBR0020368#Artikel525v
+      [ref384]: https://wetten.overheid.nl/BWBR0020368#Artikel526
+      [ref385]: https://wetten.overheid.nl/BWBR0020368#Artikel527
+      [ref386]: https://wetten.overheid.nl/BWBR0020368#Artikel528
+      [ref387]: https://wetten.overheid.nl/BWBR0020368#Artikel529
+      [ref388]: https://wetten.overheid.nl/BWBR0020368#Artikel530
+      [ref389]: https://wetten.overheid.nl/BWBR0020368#Artikel531
+      [ref390]: https://wetten.overheid.nl/BWBR0020368#Artikel531
+      [ref391]: https://wetten.overheid.nl/BWBR0020368#Artikel532
+      [ref392]: https://wetten.overheid.nl/BWBR0020368#Artikel532a
+      [ref393]: https://wetten.overheid.nl/BWBR0020368#Artikel532b
+      [ref394]: https://wetten.overheid.nl/BWBR0020368#Artikel532b
+      [ref395]: https://wetten.overheid.nl/BWBR0020368#Artikel532c
+      [ref396]: https://wetten.overheid.nl/BWBR0020368#Artikel532d
+      [ref397]: https://wetten.overheid.nl/BWBR0020368#Artikel532e
+      [ref398]: https://wetten.overheid.nl/BWBR0020368#Artikel532f
+      [ref399]: https://wetten.overheid.nl/BWBR0020368#Artikel532g
+      [ref400]: https://wetten.overheid.nl/BWBR0020368#Artikel532j
+      [ref401]: https://wetten.overheid.nl/BWBR0020368#Artikel532k
+      [ref402]: https://wetten.overheid.nl/BWBR0020368#Artikel532l
+      [ref403]: https://wetten.overheid.nl/BWBR0020368#Artikel532m
+      [ref404]: https://wetten.overheid.nl/BWBR0020368#Artikel534
+      [ref405]: https://wetten.overheid.nl/BWBR0020368#Artikel535
+      [ref406]: https://wetten.overheid.nl/BWBR0020368#Artikel536
+      [ref407]: https://wetten.overheid.nl/BWBR0020368#Artikel537
+      [ref408]: https://wetten.overheid.nl/BWBR0020368#Artikel538
+      [ref409]: https://wetten.overheid.nl/BWBR0020368#Artikel539
+      [ref410]: https://wetten.overheid.nl/BWBR0020368#Artikel540
+      [ref411]: https://wetten.overheid.nl/BWBR0020368#Artikel541
+      [ref412]: https://wetten.overheid.nl/BWBR0020368#Artikel542
+      [ref413]: https://wetten.overheid.nl/BWBR0020368#Artikel543
+      [ref414]: https://wetten.overheid.nl/BWBR0020368#Artikel544
+      [ref415]: https://wetten.overheid.nl/BWBR0020368#Artikel548
+      [ref416]: https://wetten.overheid.nl/BWBR0020368#Artikel550
+      [ref417]: https://wetten.overheid.nl/BWBR0020368#Artikel551
+      [ref418]: https://wetten.overheid.nl/BWBR0020368#Artikel556
+      [ref419]: https://wetten.overheid.nl/BWBR0020368#Artikel556
+      [ref420]: https://wetten.overheid.nl/BWBR0020368#Artikel557
+      [ref421]: https://wetten.overheid.nl/BWBR0020368#Artikel558
+      [ref422]: https://wetten.overheid.nl/BWBR0020368#Artikel559
+      [ref423]: https://wetten.overheid.nl/BWBR0020368#Artikel560
+      [ref424]: https://wetten.overheid.nl/BWBR0020368#Artikel560
+      [ref425]: https://wetten.overheid.nl/BWBR0020368#Artikel561
+      [ref426]: https://wetten.overheid.nl/BWBR0020368#Artikel562
+      [ref427]: https://wetten.overheid.nl/BWBR0020368#Artikel562
+      [ref428]: https://wetten.overheid.nl/BWBR0020368#Artikel563
+      [ref429]: https://wetten.overheid.nl/BWBR0020368#Artikel564
+      [ref430]: https://wetten.overheid.nl/BWBR0020368#Artikel564
+      [ref431]: https://wetten.overheid.nl/BWBR0020368#Artikel564
+      [ref432]: https://wetten.overheid.nl/BWBR0020368#Artikel565
+      [ref433]: https://wetten.overheid.nl/BWBR0020368#Artikel566
+      [ref434]: https://wetten.overheid.nl/BWBR0020368#Artikel568
+      [ref435]: https://wetten.overheid.nl/BWBR0020368#Artikel574
+      [ref436]: https://wetten.overheid.nl/BWBR0020368#Artikel578
+      [ref437]: https://wetten.overheid.nl/BWBR0020368#Artikel579
       [ref438]: https://wetten.overheid.nl/BWBR0020414
       [ref439]: https://wetten.overheid.nl/BWBR0020414#Artikel4
       [ref440]: https://wetten.overheid.nl/BWBR0020414#Artikel4
@@ -8269,1302 +8268,1302 @@ articles:
         bwb_id: BWBR0020368
       - id: ref4
         bwb_id: BWBR0020368
-        artikel: '1'
+        artikel: 1:10
       - id: ref5
         bwb_id: BWBR0020368
-        artikel: '1'
+        artikel: 1:12
       - id: ref6
         bwb_id: BWBR0020368
-        artikel: '1'
+        artikel: 1:28
       - id: ref7
         bwb_id: BWBR0020368
-        artikel: '1'
+        artikel: 1:74
       - id: ref8
         bwb_id: BWBR0020368
       - id: ref9
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:4
       - id: ref10
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:6
       - id: ref11
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:8
       - id: ref12
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:9
       - id: ref13
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:10
       - id: ref14
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:10
       - id: ref15
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:11
       - id: ref16
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:15
       - id: ref17
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:15
       - id: ref18
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:16
       - id: ref19
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:18
       - id: ref20
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:18
       - id: ref21
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:19
       - id: ref22
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:20
       - id: ref23
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:23
       - id: ref24
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:25
       - id: ref25
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:25
       - id: ref26
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:26
       - id: ref27
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:26a
       - id: ref28
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:26c
       - id: ref29
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:26d
       - id: ref30
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:26f
       - id: ref31
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:27
       - id: ref32
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:35
       - id: ref33
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:36
       - id: ref34
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:36
       - id: ref35
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:36
       - id: ref36
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:38
       - id: ref37
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:38
       - id: ref38
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:39
       - id: ref39
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:40
       - id: ref40
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:45
       - id: ref41
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:45
       - id: ref42
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:46
       - id: ref43
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:48
       - id: ref44
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:50
       - id: ref45
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:52
       - id: ref46
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:53
       - id: ref47
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54
       - id: ref48
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54
       - id: ref49
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54a
       - id: ref50
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54c
       - id: ref51
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54d
       - id: ref52
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:54f
       - id: ref53
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:55
       - id: ref54
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:60
       - id: ref55
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:65
       - id: ref56
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:65
       - id: ref57
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:71
       - id: ref58
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:72
       - id: ref59
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:73
       - id: ref60
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:75
       - id: ref61
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:80
       - id: ref62
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:81
       - id: ref63
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:84
       - id: ref64
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:86
       - id: ref65
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:90
       - id: ref66
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:92
       - id: ref67
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:96
       - id: ref68
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:99
       - id: ref69
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:100
       - id: ref70
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:101
       - id: ref71
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:102
       - id: ref72
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:103
       - id: ref73
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:103a
       - id: ref74
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:107
       - id: ref75
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:108
       - id: ref76
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:110
       - id: ref77
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:111
       - id: ref78
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:112
       - id: ref79
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:114
       - id: ref80
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:115
       - id: ref81
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:117
       - id: ref82
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:118
       - id: ref83
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:120
       - id: ref84
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:121
       - id: ref85
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:122
       - id: ref86
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:123
       - id: ref87
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:125
       - id: ref88
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:126
       - id: ref89
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:127
       - id: ref90
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:128
       - id: ref91
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:129
       - id: ref92
         bwb_id: BWBR0020368
-        artikel: '2'
+        artikel: 2:130
       - id: ref93
         bwb_id: BWBR0020368
       - id: ref94
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:5
       - id: ref95
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:5
       - id: ref96
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:6
       - id: ref97
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:6
       - id: ref98
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:7
       - id: ref99
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:7
       - id: ref100
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:8
       - id: ref101
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:9
       - id: ref102
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:10
       - id: ref103
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:10
       - id: ref104
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:15
       - id: ref105
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:16
       - id: ref106
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:17
       - id: ref107
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:18
       - id: ref108
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:19
       - id: ref109
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:20
       - id: ref110
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:21
       - id: ref111
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:24
       - id: ref112
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:29
       - id: ref113
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:29
       - id: ref114
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:30
       - id: ref115
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:32
       - id: ref116
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:34
       - id: ref117
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:35
       - id: ref118
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:36
       - id: ref119
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:37
       - id: ref120
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:37
       - id: ref121
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:38
       - id: ref122
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:38a
       - id: ref123
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:38b
       - id: ref124
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:39
       - id: ref125
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:39
       - id: ref126
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:41
       - id: ref127
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:42
       - id: ref128
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:43
       - id: ref129
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:44
       - id: ref130
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:45
       - id: ref131
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:47
       - id: ref132
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:47
       - id: ref133
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:48
       - id: ref134
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:51
       - id: ref135
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:52
       - id: ref136
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:53
       - id: ref137
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:53
       - id: ref138
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:57
       - id: ref139
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:57
       - id: ref140
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:63
       - id: ref141
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:67
       - id: ref142
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:68
       - id: ref143
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:68a
       - id: ref144
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:69
       - id: ref145
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:69
       - id: ref146
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:70
       - id: ref147
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:71
       - id: ref148
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:72
       - id: ref149
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:72
       - id: ref150
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:72
       - id: ref151
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:72
       - id: ref152
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:73
       - id: ref153
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74
       - id: ref154
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref155
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref156
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref157
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref158
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref159
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref160
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:74a
       - id: ref161
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:75
       - id: ref162
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:76
       - id: ref163
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:77
       - id: ref164
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:78
       - id: ref165
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:81
       - id: ref166
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:83
       - id: ref167
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:87
       - id: ref168
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:88
       - id: ref169
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:89
       - id: ref170
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:95
       - id: ref171
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:96
       - id: ref172
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:99
       - id: ref173
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:103
       - id: ref174
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:104
       - id: ref175
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:104
       - id: ref176
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:105
       - id: ref177
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:108
       - id: ref178
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:110
       - id: ref179
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:111
       - id: ref180
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:111a
       - id: ref181
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:111a
       - id: ref182
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:112
       - id: ref183
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:113
       - id: ref184
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:116
       - id: ref185
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:119
       - id: ref186
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:120
       - id: ref187
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:120
       - id: ref188
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:120
       - id: ref189
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:120
       - id: ref190
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:124
       - id: ref191
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:125
       - id: ref192
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:126
       - id: ref193
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:129
       - id: ref194
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:131
       - id: ref195
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:132
       - id: ref196
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:135
       - id: ref197
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:136
       - id: ref198
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:137
       - id: ref199
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:138
       - id: ref200
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:139
       - id: ref201
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:141
       - id: ref202
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:143
       - id: ref203
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:144
       - id: ref204
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:145
       - id: ref205
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:146
       - id: ref206
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:148
       - id: ref207
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:151
       - id: ref208
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:153
       - id: ref209
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:155
       - id: ref210
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:156
       - id: ref211
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:158
       - id: ref212
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:175
       - id: ref213
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:196
       - id: ref214
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:259
       - id: ref215
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:262
       - id: ref216
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:263
       - id: ref217
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:264
       - id: ref218
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:267
       - id: ref219
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:269
       - id: ref220
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:269
       - id: ref221
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:271
       - id: ref222
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:272
       - id: ref223
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:273
       - id: ref224
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:279
       - id: ref225
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:280
       - id: ref226
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:280a
       - id: ref227
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:284
       - id: ref228
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:285
       - id: ref229
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:285
       - id: ref230
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:286
       - id: ref231
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:286
       - id: ref232
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:296
       - id: ref233
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:296
       - id: ref234
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:296
       - id: ref235
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:296
       - id: ref236
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:296
       - id: ref237
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:297
       - id: ref238
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:298
       - id: ref239
         bwb_id: BWBR0020368
-        artikel: '3'
+        artikel: 3:299
       - id: ref240
         bwb_id: BWBR0020368
       - id: ref241
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:3
       - id: ref242
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:3
       - id: ref243
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:4
       - id: ref244
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:4a
       - id: ref245
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:5
       - id: ref246
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:6
       - id: ref247
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:6a
       - id: ref248
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:9
       - id: ref249
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:9
       - id: ref250
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:10
       - id: ref251
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:11
       - id: ref252
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:11
       - id: ref253
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:13
       - id: ref254
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:14
       - id: ref255
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:15
       - id: ref256
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:16
       - id: ref257
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:17
       - id: ref258
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:18a
       - id: ref259
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:18b
       - id: ref260
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:18c
       - id: ref261
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:18d
       - id: ref262
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:19
       - id: ref263
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:20
       - id: ref264
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:20
       - id: ref265
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:21
       - id: ref266
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:23
       - id: ref267
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:24
       - id: ref268
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:26
       - id: ref269
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:26
       - id: ref270
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:27
       - id: ref271
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:30a
       - id: ref272
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:31
       - id: ref273
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:32
       - id: ref274
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:33
       - id: ref275
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:34
       - id: ref276
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:39
       - id: ref277
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:40
       - id: ref278
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:41
       - id: ref279
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:42
       - id: ref280
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:43
       - id: ref281
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:44
       - id: ref282
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:46
       - id: ref283
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:46
       - id: ref284
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:46
       - id: ref285
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:46a
       - id: ref286
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:47
       - id: ref287
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:48
       - id: ref288
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:49
       - id: ref289
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:49
       - id: ref290
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:50
       - id: ref291
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:50
       - id: ref292
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:51
       - id: ref293
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:52
       - id: ref294
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:52a
       - id: ref295
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:53
       - id: ref296
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:55
       - id: ref297
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:56
       - id: ref298
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:57
       - id: ref299
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:58
       - id: ref300
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:59
       - id: ref301
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:59
       - id: ref302
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:60
       - id: ref303
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:62
       - id: ref304
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:63
       - id: ref305
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:65
       - id: ref306
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:66
       - id: ref307
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:67
       - id: ref308
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:68
       - id: ref309
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:69
       - id: ref310
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:70
       - id: ref311
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:71
       - id: ref312
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:72
       - id: ref313
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:73
       - id: ref314
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:74
       - id: ref315
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:75
       - id: ref316
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:76
       - id: ref317
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:77
       - id: ref318
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:77
       - id: ref319
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:83
       - id: ref320
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:84
       - id: ref321
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:85
       - id: ref322
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:87
       - id: ref323
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:88
       - id: ref324
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:89
       - id: ref325
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:89a
       - id: ref326
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90
       - id: ref327
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90a
       - id: ref328
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90b
       - id: ref329
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90b
       - id: ref330
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90b
       - id: ref331
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90c
       - id: ref332
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90d
       - id: ref333
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90e
       - id: ref334
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:90e
       - id: ref335
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91a
       - id: ref336
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91a
       - id: ref337
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91b
       - id: ref338
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91b
       - id: ref339
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91c
       - id: ref340
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91d
       - id: ref341
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91g
       - id: ref342
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91i
       - id: ref343
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91j
       - id: ref344
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91k
       - id: ref345
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91k
       - id: ref346
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:91l
       - id: ref347
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:93
       - id: ref348
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:94
       - id: ref349
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:94
       - id: ref350
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:94
       - id: ref351
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:95
       - id: ref352
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:95
       - id: ref353
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:95
       - id: ref354
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:96
       - id: ref355
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:97
       - id: ref356
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:99
       - id: ref357
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100
       - id: ref358
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100
       - id: ref359
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100
       - id: ref360
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100a
       - id: ref361
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100b
       - id: ref362
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100c
       - id: ref363
         bwb_id: BWBR0020368
-        artikel: '4'
+        artikel: 4:100d
       - id: ref364
         bwb_id: BWBR0020368
       - id: ref365
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:2
       - id: ref366
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:16
       - id: ref367
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:18
       - id: ref368
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:20
       - id: ref369
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:21
       - id: ref370
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:21
       - id: ref371
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:21
       - id: ref372
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:23
       - id: ref373
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25c
       - id: ref374
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25d
       - id: ref375
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25e
       - id: ref376
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25f
       - id: ref377
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25h
       - id: ref378
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25i
       - id: ref379
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25m
       - id: ref380
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25n
       - id: ref381
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25p
       - id: ref382
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25q
       - id: ref383
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:25v
       - id: ref384
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:26
       - id: ref385
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:27
       - id: ref386
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:28
       - id: ref387
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:29
       - id: ref388
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:30
       - id: ref389
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:31
       - id: ref390
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:31
       - id: ref391
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32
       - id: ref392
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32a
       - id: ref393
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32b
       - id: ref394
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32b
       - id: ref395
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32c
       - id: ref396
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32d
       - id: ref397
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32e
       - id: ref398
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32f
       - id: ref399
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32g
       - id: ref400
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32j
       - id: ref401
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32k
       - id: ref402
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32l
       - id: ref403
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:32m
       - id: ref404
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:34
       - id: ref405
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:35
       - id: ref406
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:36
       - id: ref407
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:37
       - id: ref408
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:38
       - id: ref409
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:39
       - id: ref410
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:40
       - id: ref411
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:41
       - id: ref412
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:42
       - id: ref413
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:43
       - id: ref414
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:44
       - id: ref415
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:48
       - id: ref416
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:50
       - id: ref417
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:51
       - id: ref418
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:56
       - id: ref419
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:56
       - id: ref420
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:57
       - id: ref421
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:58
       - id: ref422
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:59
       - id: ref423
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:60
       - id: ref424
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:60
       - id: ref425
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:61
       - id: ref426
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:62
       - id: ref427
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:62
       - id: ref428
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:63
       - id: ref429
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:64
       - id: ref430
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:64
       - id: ref431
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:64
       - id: ref432
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:65
       - id: ref433
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:66
       - id: ref434
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:68
       - id: ref435
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:74
       - id: ref436
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:78
       - id: ref437
         bwb_id: BWBR0020368
-        artikel: '5'
+        artikel: 5:79
       - id: ref438
         bwb_id: BWBR0020414
       - id: ref439
@@ -10758,10 +10757,12 @@ articles:
       - id: ref837
         bwb_id: BWBR0022511
         artikel: '27'
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Overtreding van een voorschrift in het hierna te noemen artikel van de [Algemene wet bestuursrecht][ref1] is als
+      1 Overtreding van een voorschrift in het hierna te noemen artikel van de [Algemene wet bestuursrecht][ref1] is als
       volgt beboetbaar:
+
+
 
 
 
@@ -10785,22 +10786,14 @@ articles:
                     3
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537
-      [ref2]: https://wetten.overheid.nl/BWBR0005537
-      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0005537
-      - id: ref2
-        bwb_id: BWBR0005537
-      - id: ref3
-        bwb_id: BWBR0005537
-        artikel: '5'
-  - number: '4.2'
-    text: |-
-      Overtreding van een voorschrift, gesteld in een hierna genoemd artikel van de Prospectusverordening is als volgt
+
+
+
+
+      2 Overtreding van een voorschrift, gesteld in een hierna genoemd artikel van de Prospectusverordening is als volgt
       beboetbaar:
+
+
 
 
 
@@ -10840,11 +10833,16 @@ articles:
 
 
                     4
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel4
-  - number: '4.3'
-    text: |-
-      Overtreding van een voorschrift, gesteld in een hierna genoemd artikel van de uitvoeringsverordening markten voor
+
+
+
+
+
+
+      3 Overtreding van een voorschrift, gesteld in een hierna genoemd artikel van de uitvoeringsverordening markten voor
       financiële instrumenten is als volgt beboetbaar:
+
+
 
 
 
@@ -10961,7 +10959,20 @@ articles:
 
 
                     3
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0005537
+      [ref2]: https://wetten.overheid.nl/BWBR0005537
+      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel520
     url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel4
+    references:
+      - id: ref1
+        bwb_id: BWBR0005537
+      - id: ref2
+        bwb_id: BWBR0005537
+      - id: ref3
+        bwb_id: BWBR0005537
+        artikel: 5:20
   - number: '5'
     text: |-
       Overtreding van een voorschrift gesteld in een hierna te noemen artikel uit de Nadere Regeling –
@@ -10969,6 +10980,8 @@ articles:
       [66][ref7], [68][ref8], [69][ref9], [70][ref10], [71][ref11], [84][ref12], [110][ref13], [112][ref14],
       [118][ref15], [123][ref16], [124][ref17], [133][ref18], [134][ref19], [164][ref20], [165][ref21] en
       [167 van het Besluit Gedragstoezicht financiële ondernemingen][ref22] – is als volgt beboetbaar gesteld:
+
+
 
 
 
@@ -11370,207 +11383,294 @@ articles:
       - id: ref22
         bwb_id: BWBR0020421
         artikel: '167'
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Indien een boete wordt opgelegd aan een persoon die behoort tot een van de hierna genoemde categorieën, is de
+      1 Indien een boete wordt opgelegd aan een persoon die behoort tot een van de hierna genoemde categorieën, is de
       hoogte van de boete mede afhankelijk van diens draagkracht:
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: 6.1.a
-    text: financiële ondernemingen;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: 6.1.b
-    text: vertegenwoordigers van een verzekeraar;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: 6.1.c
-    text: |-
-      houders van een verklaring van geen bezwaar als bedoeld in [artikel 3:95][ref1], [3:96][ref2] of
+
+      a. financiële ondernemingen;
+
+      b. vertegenwoordigers van een verzekeraar;
+
+      c. houders van een verklaring van geen bezwaar als bedoeld in [artikel 3:95][ref1], [3:96][ref2] of
       [5:32 van de Wet op het financieel toezicht][ref3];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0020368#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0020368
-        artikel: '3'
-      - id: ref2
-        bwb_id: BWBR0020368
-        artikel: '3'
-      - id: ref3
-        bwb_id: BWBR0020368
-        artikel: '5'
-  - number: 6.1.d
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
+      d. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
       uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden verrichten ten behoeve van deze activiteiten;
       en
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: 6.1.e
-    text: |-
-      personen en vennootschappen, niet behorende tot een in de onderdelen a tot en met d genoemde categorie, indien het
-      een overtreding betreft van artikel:
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: 6.1.e.1°
-    text: |-
-      [5:70][ref1], [5:71][ref2] of [5:72 van de Wet op het financieel toezicht][ref3];
 
+      e. personen en vennootschappen, niet behorende tot een in de onderdelen a tot en met d genoemde categorie, indien
+      het een overtreding betreft van artikel:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref2
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref3
-        bwb_id: BWBR0020368
-        artikel: '5'
-  - number: 6.1.e.2°
-    text: |-
-      [5:34, eerste of tweede lid][ref1], [5:34, eerste tot en met vierde lid][ref2], [5:36][ref3],
-      [5:37][ref4], [5:38, eerste of tweede lid][ref5], [5:39, eerste lid][ref6], [5:40][ref7],
-      [5:41, eerste of tweede lid][ref8], [5:42][ref9], [5:43, eerste en tweede lid][ref10],
-      [5:44][ref11], [5:48, derde tot en met achtste of tiende lid][ref12], [5:50][ref13] of
-      [5:51 van de Wet op het financieel toezicht][ref14]; of
+      1°. [5:70][ref4], [5:71][ref5] of [5:72 van de Wet op het financieel toezicht][ref6];
 
+      2°. [5:34, eerste of tweede lid][ref7], [5:34, eerste tot en met vierde lid][ref8], [5:36][ref9],
+      [5:37][ref10], [5:38, eerste of tweede lid][ref11], [5:39, eerste lid][ref12], [5:40][ref13],
+      [5:41, eerste of tweede lid][ref14], [5:42][ref15], [5:43, eerste en tweede lid][ref16],
+      [5:44][ref17], [5:48, derde tot en met achtste of tiende lid][ref18], [5:50][ref19] of
+      [5:51 van de Wet op het financieel toezicht][ref20]; of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref4]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref5]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref6]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref7]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref8]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref9]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref10]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref11]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref12]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref13]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref14]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref2
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref3
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref4
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref5
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref6
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref7
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref8
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref9
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref10
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref11
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref12
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref13
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref14
-        bwb_id: BWBR0020368
-        artikel: '5'
-  - number: 6.1.e.3°
-    text: |-
-      [5:26, eerste lid][ref1], [5:28, eerste of tweede lid][ref2], [5:30, eerste of derde lid][ref3], [5:31][ref4],
-      [5:32, eerste of vierde lid, van de Wet op het financieel toezicht][ref5].
+      3°. [5:26, eerste lid][ref21], [5:28, eerste of tweede lid][ref22], [5:30, eerste of derde lid][ref23],
+      [5:31][ref24], [5:32, eerste of vierde lid, van de Wet op het financieel toezicht][ref25].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref4]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-      [ref5]: https://wetten.overheid.nl/BWBR0020368#Artikel5
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref2
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref3
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref4
-        bwb_id: BWBR0020368
-        artikel: '5'
-      - id: ref5
-        bwb_id: BWBR0020368
-        artikel: '5'
-  - number: '6.2'
-    text: |-
-      De draagkracht komt in de hoogte van de boete tot uiting door het boetebedrag, zoals bepaald op grond van
-      [artikel 3][ref1], [4][ref2] en [5][ref3], te vermenigvuldigen met de op grond van [artikel 7][ref4]
+      2 De draagkracht komt in de hoogte van de boete tot uiting door het boetebedrag, zoals bepaald op grond van
+      [artikel 3][ref26], [4][ref27] en [5][ref28], te vermenigvuldigen met de op grond van [artikel 7][ref29]
       toepasselijke draagkrachtfactor.
 
+      3 Indien de toezichthouder niet beschikt over de voor de bepaling van de draagkracht noodzakelijke gegevens,
+      verzoekt hij degene aan wie de boete zal worden opgelegd deze gegevens binnen een door hem te stellen redelijke
+      termijn te verstrekken.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020418#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0020418#Artikel4
-      [ref3]: https://wetten.overheid.nl/BWBR0020418#Artikel5
-      [ref4]: https://wetten.overheid.nl/BWBR0020418#Artikel7
+      4 Indien de betrokkene de in het derde lid bedoelde gegevens niet binnen de in dat lid bedoelde termijn verstrekt,
+      is bij de vaststelling van de hoogte van de boete de draagkrachtfactor vijf van toepassing.
+
+      5 Indien een boete wordt opgelegd aan een persoon die behoort tot meerdere van de in het eerste artikel genoemde
+      categorie dan is de categorie van toepassing die leidt tot de hoogste draagkrachtfactor.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0020368#Artikel395
+      [ref2]: https://wetten.overheid.nl/BWBR0020368#Artikel396
+      [ref3]: https://wetten.overheid.nl/BWBR0020368#Artikel532
+      [ref4]: https://wetten.overheid.nl/BWBR0020368#Artikel570
+      [ref5]: https://wetten.overheid.nl/BWBR0020368#Artikel571
+      [ref6]: https://wetten.overheid.nl/BWBR0020368#Artikel572
+      [ref7]: https://wetten.overheid.nl/BWBR0020368#Artikel534
+      [ref8]: https://wetten.overheid.nl/BWBR0020368#Artikel534
+      [ref9]: https://wetten.overheid.nl/BWBR0020368#Artikel536
+      [ref10]: https://wetten.overheid.nl/BWBR0020368#Artikel537
+      [ref11]: https://wetten.overheid.nl/BWBR0020368#Artikel538
+      [ref12]: https://wetten.overheid.nl/BWBR0020368#Artikel539
+      [ref13]: https://wetten.overheid.nl/BWBR0020368#Artikel540
+      [ref14]: https://wetten.overheid.nl/BWBR0020368#Artikel541
+      [ref15]: https://wetten.overheid.nl/BWBR0020368#Artikel542
+      [ref16]: https://wetten.overheid.nl/BWBR0020368#Artikel543
+      [ref17]: https://wetten.overheid.nl/BWBR0020368#Artikel544
+      [ref18]: https://wetten.overheid.nl/BWBR0020368#Artikel548
+      [ref19]: https://wetten.overheid.nl/BWBR0020368#Artikel550
+      [ref20]: https://wetten.overheid.nl/BWBR0020368#Artikel551
+      [ref21]: https://wetten.overheid.nl/BWBR0020368#Artikel526
+      [ref22]: https://wetten.overheid.nl/BWBR0020368#Artikel528
+      [ref23]: https://wetten.overheid.nl/BWBR0020368#Artikel530
+      [ref24]: https://wetten.overheid.nl/BWBR0020368#Artikel531
+      [ref25]: https://wetten.overheid.nl/BWBR0020368#Artikel532
+      [ref26]: https://wetten.overheid.nl/BWBR0020418#Artikel3
+      [ref27]: https://wetten.overheid.nl/BWBR0020418#Artikel4
+      [ref28]: https://wetten.overheid.nl/BWBR0020418#Artikel5
+      [ref29]: https://wetten.overheid.nl/BWBR0020418#Artikel7
     url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
     references:
       - id: ref1
+        bwb_id: BWBR0020368
+        artikel: 3:95
+      - id: ref2
+        bwb_id: BWBR0020368
+        artikel: 3:96
+      - id: ref3
+        bwb_id: BWBR0020368
+        artikel: 5:32
+      - id: ref4
+        bwb_id: BWBR0020368
+        artikel: 5:70
+      - id: ref5
+        bwb_id: BWBR0020368
+        artikel: 5:71
+      - id: ref6
+        bwb_id: BWBR0020368
+        artikel: 5:72
+      - id: ref7
+        bwb_id: BWBR0020368
+        artikel: 5:34
+      - id: ref8
+        bwb_id: BWBR0020368
+        artikel: 5:34
+      - id: ref9
+        bwb_id: BWBR0020368
+        artikel: 5:36
+      - id: ref10
+        bwb_id: BWBR0020368
+        artikel: 5:37
+      - id: ref11
+        bwb_id: BWBR0020368
+        artikel: 5:38
+      - id: ref12
+        bwb_id: BWBR0020368
+        artikel: 5:39
+      - id: ref13
+        bwb_id: BWBR0020368
+        artikel: 5:40
+      - id: ref14
+        bwb_id: BWBR0020368
+        artikel: 5:41
+      - id: ref15
+        bwb_id: BWBR0020368
+        artikel: 5:42
+      - id: ref16
+        bwb_id: BWBR0020368
+        artikel: 5:43
+      - id: ref17
+        bwb_id: BWBR0020368
+        artikel: 5:44
+      - id: ref18
+        bwb_id: BWBR0020368
+        artikel: 5:48
+      - id: ref19
+        bwb_id: BWBR0020368
+        artikel: 5:50
+      - id: ref20
+        bwb_id: BWBR0020368
+        artikel: 5:51
+      - id: ref21
+        bwb_id: BWBR0020368
+        artikel: 5:26
+      - id: ref22
+        bwb_id: BWBR0020368
+        artikel: 5:28
+      - id: ref23
+        bwb_id: BWBR0020368
+        artikel: 5:30
+      - id: ref24
+        bwb_id: BWBR0020368
+        artikel: 5:31
+      - id: ref25
+        bwb_id: BWBR0020368
+        artikel: 5:32
+      - id: ref26
         bwb_id: BWBR0020418
         artikel: '3'
-      - id: ref2
+      - id: ref27
         bwb_id: BWBR0020418
         artikel: '4'
-      - id: ref3
+      - id: ref28
         bwb_id: BWBR0020418
         artikel: '5'
-      - id: ref4
+      - id: ref29
         bwb_id: BWBR0020418
         artikel: '7'
-  - number: '6.3'
-    text: |-
-      Indien de toezichthouder niet beschikt over de voor de bepaling van de draagkracht noodzakelijke gegevens, verzoekt
-      hij degene aan wie de boete zal worden opgelegd deze gegevens binnen een door hem te stellen redelijke termijn
-      te verstrekken.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: '6.4'
-    text: |-
-      Indien de betrokkene de in het derde lid bedoelde gegevens niet binnen de in dat lid bedoelde termijn verstrekt, is
-      bij de vaststelling van de hoogte van de boete de draagkrachtfactor vijf van toepassing.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
-  - number: '6.5'
-    text: |-
-      Indien een boete wordt opgelegd aan een persoon die behoort tot meerdere van de in het eerste artikel genoemde
-      categorie dan is de categorie van toepassing die leidt tot de hoogste draagkrachtfactor.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel6
   - number: '7'
     text: |-
       De in [artikel 6, tweede lid][ref1], bedoelde draagkrachtfactoren zijn:
+
+      a. draagkrachtfactor één:
+
+      1°. beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van minder
+      dan € 500.000;
+
+      2°. kredietinstellingen en clearinginstellingen met een balanstotaal van minder dan € 50.000.000;
+
+      3°. natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van minder dan € 5.000.000.;
+
+      4°. levensverzekeraars met een balanstotaal van minder dan € 15.000.000;
+
+      5°. financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
+      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
+      minder dan 15 bedraagt;
+
+      6°. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in
+      de uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
+      activiteiten met een omzet van minder dan € 100.000;
+
+      7°. personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een
+      eigen vermogen van minder dan € 150.000.
+
+      b. draagkrachtfactor twee:
+
+      1°. beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
+      € 500.000 maar minder dan € 5.000.000;
+
+      2°. Kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 50.000.000 maar minder dan
+      € 500.000.000;
+
+      3°. natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 5.000.000 maar minder
+      dan € 25.000.000;
+
+      4°. levensverzekeraars met een balanstotaal van ten minste € 15.000.000 maar minder dan € 75.000.000;
+
+      5°. financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
+      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
+      ten minste 15 maar minder dan 25 bedraagt;
+
+      6°. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in
+      de uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
+      activiteiten met een omzet van ten minste € 100.000, maar niet meer dan € 200.000;
+
+      7°. personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een
+      eigen vermogen van ten minste € 150.000 maar minder dan € 300.000.
+
+      c. draagkrachtfactor drie:
+
+      1°. beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
+      € 5.000.000 maar minder dan € 50.000.000;
+
+      2°. Kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 500.000.000 maar minder dan
+      € 5.000.000.000;
+
+      3°. natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 25.000.000 maar minder
+      dan € 125.000.000;
+
+      4°. levensverzekeraars met een balanstotaal van ten minste € 75.000.000 maar minder dan € 375.000.000;
+
+      5°. financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
+      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
+      ten minste 25 maar minder dan 40 bedraagt;
+
+      6°. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in
+      de uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
+      activiteiten met een omzet van ten minste € 200.000, maar niet meer dan € 300.000;
+
+      7°. personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een
+      eigen vermogen van ten minste € 300.000 maar minder dan € 500.000.
+
+      d. draagkrachtfactor vier:
+
+      1°. beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
+      € 50.000.000 maar minder dan € 500.000.000;
+
+      2°. kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 5.000.000.000 maar minder
+      dan € 50.000.000.000;
+
+      3°. natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 125.000.000 maar minder
+      dan € 500.000.000;
+
+      4°. levensverzekeraars met een balanstotaal van ten minste € 375.000.000 maar minder dan € 1.500.000.000;
+
+      5°. financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
+      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
+      ten minste 40 maar minder dan 50 bedraagt;
+
+      6°. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in
+      de uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
+      activiteiten met een omzet van ten minste € 300.000, maar niet meer dan € 400.000;
+
+      7°. personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een
+      eigen vermogen van ten minste € 500.000 maar minder dan € 5.000.000.
+
+      e. draagkrachtfactor vijf:
+
+      1°. beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
+      € 500.000.000;
+
+      2°. kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 50.000.000.000;
+
+      3°. natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 500.000.000;
+
+      4°. levensverzekeraars met een balanstotaal van ten minste € 1.500.000.000;
+
+      5°. financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
+      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
+      ten minste 50 bedraagt;
+
+      6°. personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen
+      dan professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in
+      de uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
+      activiteiten met een omzet van ten minste € 400.000;
+
+      7°. personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een
+      eigen vermogen van ten minste € 5.000.000.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020418#Artikel6
@@ -11579,193 +11679,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0020418
         artikel: '6'
-  - number: 7.a
-    text: 'draagkrachtfactor één:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.1°
-    text: |-
-      beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van minder dan
-      € 500.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.2°
-    text: kredietinstellingen en clearinginstellingen met een balanstotaal van minder dan € 50.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.3°
-    text: natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van minder dan € 5.000.000.;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.4°
-    text: levensverzekeraars met een balanstotaal van minder dan € 15.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.5°
-    text: |-
-      financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
-      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
-      minder dan 15 bedraagt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.6°
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
-      uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
-      activiteiten met een omzet van minder dan € 100.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.a.7°
-    text: |-
-      personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een eigen
-      vermogen van minder dan € 150.000.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b
-    text: 'draagkrachtfactor twee:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.1°
-    text: |-
-      beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
-      € 500.000 maar minder dan € 5.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.2°
-    text: |-
-      Kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 50.000.000 maar minder dan
-      € 500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.3°
-    text: |-
-      natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 5.000.000 maar minder dan
-      € 25.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.4°
-    text: levensverzekeraars met een balanstotaal van ten minste € 15.000.000 maar minder dan € 75.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.5°
-    text: |-
-      financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
-      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
-      ten minste 15 maar minder dan 25 bedraagt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.6°
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
-      uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
-      activiteiten met een omzet van ten minste € 100.000, maar niet meer dan € 200.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.b.7°
-    text: |-
-      personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een eigen
-      vermogen van ten minste € 150.000 maar minder dan € 300.000.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c
-    text: 'draagkrachtfactor drie:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.1°
-    text: |-
-      beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
-      € 5.000.000 maar minder dan € 50.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.2°
-    text: |-
-      Kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 500.000.000 maar minder dan
-      € 5.000.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.3°
-    text: |-
-      natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 25.000.000 maar minder
-      dan € 125.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.4°
-    text: levensverzekeraars met een balanstotaal van ten minste € 75.000.000 maar minder dan € 375.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.5°
-    text: |-
-      financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
-      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
-      ten minste 25 maar minder dan 40 bedraagt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.6°
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
-      uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
-      activiteiten met een omzet van ten minste € 200.000, maar niet meer dan € 300.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.c.7°
-    text: |-
-      personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een eigen
-      vermogen van ten minste € 300.000 maar minder dan € 500.000.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d
-    text: 'draagkrachtfactor vier:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.1°
-    text: |-
-      beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
-      € 50.000.000 maar minder dan € 500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.2°
-    text: |-
-      kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 5.000.000.000 maar minder dan
-      € 50.000.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.3°
-    text: |-
-      natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 125.000.000 maar minder
-      dan € 500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.4°
-    text: levensverzekeraars met een balanstotaal van ten minste € 375.000.000 maar minder dan € 1.500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.5°
-    text: |-
-      financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
-      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
-      ten minste 40 maar minder dan 50 bedraagt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.6°
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
-      uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
-      activiteiten met een omzet van ten minste € 300.000, maar niet meer dan € 400.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.d.7°
-    text: |-
-      personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een eigen
-      vermogen van ten minste € 500.000 maar minder dan € 5.000.000.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e
-    text: 'draagkrachtfactor vijf:'
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.1°
-    text: |-
-      beleggingsondernemingen, beheerders, beleggingsinstellingen en bewaarders met een eigen vermogen van ten minste
-      € 500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.2°
-    text: kredietinstellingen en clearinginstellingen met een balanstotaal van ten minste € 50.000.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.3°
-    text: natura-uitvaartverzekeraars en schadeverzekeraars met een balanstotaal van ten minste € 500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.4°
-    text: levensverzekeraars met een balanstotaal van ten minste € 1.500.000.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.5°
-    text: |-
-      financiëledienstverleners, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 4°, waarvan het
-      aantal werknemers, gemeten naar voltijdsequivalent, dat zich rechtstreeks bezighoudt met financiële dienstverlening
-      ten minste 50 bedraagt;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.6°
-    text: |-
-      personen die in of vanuit Nederland bedrijfsmatig buiten besloten kring opvorderbare gelden van anderen dan
-      professionele marktpartijen aantrekken, ter beschikking verkrijgen of ter beschikking hebben, danwel in de
-      uitoefening van een beroep of bedrijf als tussenpersoon werkzaamheden te verrichten ten behoeve van deze
-      activiteiten met een omzet van ten minste € 400.000;
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
-  - number: 7.e.7°
-    text: |-
-      personen en vennootschappen, niet zijnde financiële ondernemingen als bedoeld onder 1° tot en met 6°, met een eigen
-      vermogen van ten minste € 5.000.000.
-    url: https://wetten.overheid.nl/BWBR0020418/2009-01-01#Artikel7
   - number: '8'
     text: |-
       De artikelen van dit besluit treden in werking op een bij koninklijk besluit te bepalen tijdstip, dat voor de
