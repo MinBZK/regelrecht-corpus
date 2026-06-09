@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_dagloonregels_werknemersverzekeringen
 regulatory_layer: AMVB
 publication_date: '2013-05-30'
@@ -25,309 +25,275 @@ preamble:
     Hebben goedgevonden en verstaan:
   url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#ArtikelAanhef
 articles:
-  - number: '1.1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-  - number: 1.1.a
+  - number: '1'
     text: |-
-      *ZW*: [Ziektewet][ref1];
+      1 In dit besluit wordt verstaan onder:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0001888
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0001888
-  - number: 1.1.b
-    text: |-
-      *WAO*: [Wet op de arbeidsongeschiktheidsverzekering][ref1];
+      a. *ZW*: [Ziektewet][ref1];
 
+      b. *WAO*: [Wet op de arbeidsongeschiktheidsverzekering][ref2];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002524
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-  - number: 1.1.c
-    text: |-
-      *WW*: [Werkloosheidswet][ref1];
+      c. *WW*: [Werkloosheidswet][ref3];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-  - number: 1.1.d
-    text: |-
-      *Wet WIA*: [Wet werk en inkomen naar arbeidsvermogen][ref1];
+      d. *Wet WIA*: [Wet werk en inkomen naar arbeidsvermogen][ref4];
 
+      e. *WML*: [Wet minimumloon en minimumvakantiebijslag][ref5];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0019057
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0019057
-  - number: 1.1.e
-    text: |-
-      *WML*: [Wet minimumloon en minimumvakantiebijslag][ref1];
+      f. *ZW-dagloon*: het dagloon, bedoeld in [artikel 15, eerste lid, van de ZW][ref6];
 
+      g. *WAO*-dagloon: het dagloon, bedoeld in [artikel 14, eerste lid, van de WAO][ref7];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002638
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002638
-  - number: 1.1.f
-    text: |-
-      *ZW-dagloon*: het dagloon, bedoeld in [artikel 15, eerste lid, van de ZW][ref1];
+      h. *WIA*-dagloon: het dagloon, bedoeld in [artikel 13, eerste lid, van de Wet WIA][ref8];
 
+      i. *WW-dagloon*: het dagloon, bedoeld in [artikel 45, eerste lid, van de WW][ref9];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel15
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0001888
-        artikel: '15'
-  - number: 1.1.g
-    text: |-
-      *WAO*-dagloon: het dagloon, bedoeld in [artikel 14, eerste lid, van de WAO][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel14
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-        artikel: '14'
-  - number: 1.1.h
-    text: |-
-      *WIA*-dagloon: het dagloon, bedoeld in [artikel 13, eerste lid, van de Wet WIA][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019057#Artikel13
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0019057
-        artikel: '13'
-  - number: 1.1.i
-    text: |-
-      *WW-dagloon*: het dagloon, bedoeld in [artikel 45, eerste lid, van de WW][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel45
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-        artikel: '45'
-  - number: 1.1.j
-    text: |-
-      *loon*: het loon, bedoeld in
-      [hoofdstuk 3, afdeling 1, paragraaf 1, van de Wet financiering sociale verzekeringen][ref1],
+      j. *loon*: het loon, bedoeld in
+      [hoofdstuk 3, afdeling 1, paragraaf 1, van de Wet financiering sociale verzekeringen][ref10],
       met uitzondering van het eindheffingsbestanddeel, bedoeld in
-      [artikel 31, eerste lid, onderdeel a, van de Wet op de loonbelasting 1964][ref2] ten aanzien
+      [artikel 31, eerste lid, onderdeel a, van de Wet op de loonbelasting 1964][ref11] ten aanzien
       waarvan de werkgever met toestemming van de inspecteur van de rijksbelastingdienst geen
-      correctiebericht als bedoeld in [artikel 28a van die wet][ref3] heeft ingediend en met
+      correctiebericht als bedoeld in [artikel 28a van die wet][ref12] heeft ingediend en met
       uitzondering van een uitkering die de werknemer heeft genoten op grond van de aanspraak, bedoeld in
-      [artikel 39d, tweede lid of derde lid, van de Wet op de loonbelasting 1964][ref4], zonder dat er sprake is van
+      [artikel 39d, tweede lid of derde lid, van de Wet op de loonbelasting 1964][ref13], zonder dat er sprake is van
       onbetaald extra verlof;
 
+      k. *dagloondagen*: maandag tot en met vrijdag;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0017745#Paragraaf1
-      [ref2]: https://wetten.overheid.nl/BWBR0002471#Artikel31
-      [ref3]: https://wetten.overheid.nl/BWBR0002471#Artikel28a
-      [ref4]: https://wetten.overheid.nl/BWBR0002471#Artikel39d
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0017745
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0002471
-        artikel: '31'
-      - id: ref3
-        bwb_id: BWBR0002471
-        artikel: 28a
-      - id: ref4
-        bwb_id: BWBR0002471
-        artikel: 39d
-  - number: 1.1.k
-    text: '*dagloondagen*: maandag tot en met vrijdag;'
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-  - number: 1.1.l
-    text: |-
-      *aanvullingen*: de aanvullingen, bedoeld in
-      [artikel 16, tweede lid, onderdeel a, onder 1°, van de Wet financiering sociale verzekeringen][ref1];
+      l. *aanvullingen*: de aanvullingen, bedoeld in
+      [artikel 16, tweede lid, onderdeel a, onder 1°, van de Wet financiering sociale verzekeringen][ref14];
 
+      m. *arbeidsongeschikt(heid)*: ongeschikt(heid) tot het verrichten van zijn of haar arbeid, bedoeld
+      in [artikel 19, eerste en tweede lid, van de ZW][ref15], arbeidsongeschikt(heid), bedoeld in
+      [artikel 18, eerste lid, van de WAO][ref16] of volledige en gedeeltelijke arbeidsgeschikt(heid), bedoeld in
+      [artikel 46 van de Wet WIA][ref17];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0017745#Artikel16
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0017745
-        artikel: '16'
-  - number: 1.1.m
-    text: |-
-      *arbeidsongeschikt(heid)*: ongeschikt(heid) tot het verrichten van zijn of haar arbeid, bedoeld
-      in [artikel 19, eerste en tweede lid, van de ZW][ref1], arbeidsongeschikt(heid), bedoeld in
-      [artikel 18, eerste lid, van de WAO][ref2] of volledige en gedeeltelijke arbeidsgeschikt(heid), bedoeld in
-      [artikel 46 van de Wet WIA][ref3];
+      n. *arbeidsurenverlies*: het arbeidsurenverlies, bedoeld in [artikel 16, eerste lid, van de WW][ref18];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel19
-      [ref2]: https://wetten.overheid.nl/BWBR0002524#Artikel18
-      [ref3]: https://wetten.overheid.nl/BWBR0019057#Artikel46
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0001888
-        artikel: '19'
-      - id: ref2
-        bwb_id: BWBR0002524
-        artikel: '18'
-      - id: ref3
-        bwb_id: BWBR0019057
-        artikel: '46'
-  - number: 1.1.n
-    text: |-
-      *arbeidsurenverlies*: het arbeidsurenverlies, bedoeld in [artikel 16, eerste lid, van de WW][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel16
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-        artikel: '16'
-  - number: 1.1.o
-    text: |-
-      *aangiftetijdvak*: het tijdvak van vier weken dan wel één maand waarop de aangifte waarop de ingehouden
+      o. *aangiftetijdvak*: het tijdvak van vier weken dan wel één maand waarop de aangifte waarop de ingehouden
       loonbelasting wordt afgedragen, betrekking heeft;
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-  - number: 1.1.p
-    text: '*gebroken aangiftetijdvak*: een aangiftetijdvak dat deels binnen en deels buiten het refertejaar valt;'
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-  - number: 1.1.q
-    text: |-
-      *refertejaar*: de periode van één jaar die eindigt op de laatste dag van het aangiftetijdvak voorafgaande
+
+      p. *gebroken aangiftetijdvak*: een aangiftetijdvak dat deels binnen en deels buiten het refertejaar valt;
+
+      q. *refertejaar*: de periode van één jaar die eindigt op de laatste dag van het aangiftetijdvak voorafgaande
       aan het aangiftetijdvak waarin de arbeidsongeschiktheid dan wel het arbeidsurenverlies is ingetreden, of die
-      eindigt, in geval de arbeidsongeschiktheid als bedoeld in de [WAO][ref1] of de [Wet WIA][ref2] is ingetreden in
+      eindigt, in geval de arbeidsongeschiktheid als bedoeld in de [WAO][ref19] of de [Wet WIA][ref20] is ingetreden in
       gelijktijdige dienstbetrekkingen, op de laatste dag van het aangiftetijdvak dat het eerst voor het intreden van de
       arbeidsongeschiktheid is geëindigd;
 
+      r. minimumloon: het minimumloon per maand, bedoeld in [artikel 8, eerste lid, onderdeel a, van de WML][ref21],
+      gedeeld door 21,75;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002524
-      [ref2]: https://wetten.overheid.nl/BWBR0019057
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-      - id: ref2
-        bwb_id: BWBR0019057
-  - number: 1.1.r
-    text: |-
-      minimumloon: het minimumloon per maand, bedoeld in [artikel 8, eerste lid, onderdeel a, van de WML][ref1], gedeeld
-      door 21,75;
+      s. *minimumjeugdloonpercentage*: een percentage als bedoeld in [artikel 8, derde lid, van de WML][ref22];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002638
-        artikel: '8'
-  - number: 1.1.s
-    text: |-
-      *minimumjeugdloonpercentage*: een percentage als bedoeld in [artikel 8, derde lid, van de WML][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002638
-        artikel: '8'
-  - number: 1.1.t
-    text: |-
-      *verlof*: een tussen de werkgever en werknemer voor een gedeelte of het geheel van de arbeidstijd overeengekomen
+      t. *verlof*: een tussen de werkgever en werknemer voor een gedeelte of het geheel van de arbeidstijd overeengekomen
       periode van verlof, waarin de werknemer geen arbeid jegens de werkgever verricht;
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-  - number: 1.1.u
-    text: |-
-      *WAO-vervolgdagloon*: het vervolgdagloon, bedoeld in [artikel 21b van de WAO][ref1].
 
+      u. *WAO-vervolgdagloon*: het vervolgdagloon, bedoeld in [artikel 21b van de WAO][ref23].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel21b
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-        artikel: 21b
-  - number: '1.2'
-    text: |-
-      In dit besluit wordt onder vakantiebijslag niet verstaan vakantiebijslag voldaan overeenkomstig
-      [artikel 18, eerste lid, van de WML][ref1].
+      2 In dit besluit wordt onder vakantiebijslag niet verstaan vakantiebijslag voldaan overeenkomstig
+      [artikel 18, eerste lid, van de WML][ref24].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel18
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002638
-        artikel: '18'
-  - number: '1.3'
-    text: |-
-      [Artikel 40, tweede lid, van de WAO][ref1] is voor de bepaling van het refertejaar, bedoeld in het eerste lid,
+      3 [Artikel 40, tweede lid, van de WAO][ref25] is voor de bepaling van het refertejaar, bedoeld in het eerste lid,
       onderdeel q, van overeenkomstige toepassing.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel40
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-        artikel: '40'
-  - number: '1.4'
-    text: |-
-      Indien op de dag, bedoeld in [artikel 54, tweede lid, van de Wet WIA][ref1] geen recht op een
-      werkhervattingsuitkering gedeeltelijk arbeidsgeschikten als bedoeld in [hoofdstuk 7 van de Wet WIA][ref2], is
+      4 Indien op de dag, bedoeld in [artikel 54, tweede lid, van de Wet WIA][ref26] geen recht op een
+      werkhervattingsuitkering gedeeltelijk arbeidsgeschikten als bedoeld in [hoofdstuk 7 van de Wet WIA][ref27], is
       ontstaan omdat de werknemer op die dag niet gedeeltelijk arbeidsgeschikt is, en op die dag, of op een eerdere
       dag als gevolg van het eindigen van de dienstbetrekking, een arbeidsurenverlies is ingetreden, wordt voor de
       bepaling van het refertejaar in aanmerking genomen: de periode van één jaar die eindigt op de laatste dag van het
       aangiftetijdvak voorafgaande aan het aangiftetijdvak waarin de arbeidsongeschiktheid is ingetreden. De in de eerste
-      zin bedoelde periode van één jaar eindigt, in geval de arbeidsongeschiktheid als bedoeld in de [WAO][ref3] of de
-      [Wet WIA][ref4] is ingetreden in gelijktijdige dienstbetrekkingen, op de laatste dag van het aangiftetijdvak dat
+      zin bedoelde periode van één jaar eindigt, in geval de arbeidsongeschiktheid als bedoeld in de [WAO][ref28] of de
+      [Wet WIA][ref29] is ingetreden in gelijktijdige dienstbetrekkingen, op de laatste dag van het aangiftetijdvak dat
       het eerst voor het intreden van de arbeidsongeschiktheid is geëindigd.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0019057#Artikel54
-      [ref2]: https://wetten.overheid.nl/BWBR0019057#Hoofdstuk7
-      [ref3]: https://wetten.overheid.nl/BWBR0002524
+      [ref1]: https://wetten.overheid.nl/BWBR0001888
+      [ref2]: https://wetten.overheid.nl/BWBR0002524
+      [ref3]: https://wetten.overheid.nl/BWBR0004045
       [ref4]: https://wetten.overheid.nl/BWBR0019057
+      [ref5]: https://wetten.overheid.nl/BWBR0002638
+      [ref6]: https://wetten.overheid.nl/BWBR0001888#Artikel15
+      [ref7]: https://wetten.overheid.nl/BWBR0002524#Artikel14
+      [ref8]: https://wetten.overheid.nl/BWBR0019057#Artikel13
+      [ref9]: https://wetten.overheid.nl/BWBR0004045#Artikel45
+      [ref10]: https://wetten.overheid.nl/BWBR0017745#Paragraaf1
+      [ref11]: https://wetten.overheid.nl/BWBR0002471#Artikel31
+      [ref12]: https://wetten.overheid.nl/BWBR0002471#Artikel28a
+      [ref13]: https://wetten.overheid.nl/BWBR0002471#Artikel39d
+      [ref14]: https://wetten.overheid.nl/BWBR0017745#Artikel16
+      [ref15]: https://wetten.overheid.nl/BWBR0001888#Artikel19
+      [ref16]: https://wetten.overheid.nl/BWBR0002524#Artikel18
+      [ref17]: https://wetten.overheid.nl/BWBR0019057#Artikel46
+      [ref18]: https://wetten.overheid.nl/BWBR0004045#Artikel16
+      [ref19]: https://wetten.overheid.nl/BWBR0002524
+      [ref20]: https://wetten.overheid.nl/BWBR0019057
+      [ref21]: https://wetten.overheid.nl/BWBR0002638#Artikel8
+      [ref22]: https://wetten.overheid.nl/BWBR0002638#Artikel8
+      [ref23]: https://wetten.overheid.nl/BWBR0002524#Artikel21b
+      [ref24]: https://wetten.overheid.nl/BWBR0002638#Artikel18
+      [ref25]: https://wetten.overheid.nl/BWBR0002524#Artikel40
+      [ref26]: https://wetten.overheid.nl/BWBR0019057#Artikel54
+      [ref27]: https://wetten.overheid.nl/BWBR0019057#Hoofdstuk7
+      [ref28]: https://wetten.overheid.nl/BWBR0002524
+      [ref29]: https://wetten.overheid.nl/BWBR0019057
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel1
     references:
       - id: ref1
-        bwb_id: BWBR0019057
-        artikel: '54'
+        bwb_id: BWBR0001888
       - id: ref2
-        bwb_id: BWBR0019057
-        hoofdstuk: '7'
-      - id: ref3
         bwb_id: BWBR0002524
+      - id: ref3
+        bwb_id: BWBR0004045
       - id: ref4
         bwb_id: BWBR0019057
-  - number: '2.1'
+      - id: ref5
+        bwb_id: BWBR0002638
+      - id: ref6
+        bwb_id: BWBR0001888
+        artikel: '15'
+      - id: ref7
+        bwb_id: BWBR0002524
+        artikel: '14'
+      - id: ref8
+        bwb_id: BWBR0019057
+        artikel: '13'
+      - id: ref9
+        bwb_id: BWBR0004045
+        artikel: '45'
+      - id: ref10
+        bwb_id: BWBR0017745
+        paragraaf: '1'
+      - id: ref11
+        bwb_id: BWBR0002471
+        artikel: '31'
+      - id: ref12
+        bwb_id: BWBR0002471
+        artikel: 28a
+      - id: ref13
+        bwb_id: BWBR0002471
+        artikel: 39d
+      - id: ref14
+        bwb_id: BWBR0017745
+        artikel: '16'
+      - id: ref15
+        bwb_id: BWBR0001888
+        artikel: '19'
+      - id: ref16
+        bwb_id: BWBR0002524
+        artikel: '18'
+      - id: ref17
+        bwb_id: BWBR0019057
+        artikel: '46'
+      - id: ref18
+        bwb_id: BWBR0004045
+        artikel: '16'
+      - id: ref19
+        bwb_id: BWBR0002524
+      - id: ref20
+        bwb_id: BWBR0019057
+      - id: ref21
+        bwb_id: BWBR0002638
+        artikel: '8'
+      - id: ref22
+        bwb_id: BWBR0002638
+        artikel: '8'
+      - id: ref23
+        bwb_id: BWBR0002524
+        artikel: 21b
+      - id: ref24
+        bwb_id: BWBR0002638
+        artikel: '18'
+      - id: ref25
+        bwb_id: BWBR0002524
+        artikel: '40'
+      - id: ref26
+        bwb_id: BWBR0019057
+        artikel: '54'
+      - id: ref27
+        bwb_id: BWBR0019057
+        hoofdstuk: '7'
+      - id: ref28
+        bwb_id: BWBR0002524
+      - id: ref29
+        bwb_id: BWBR0019057
+  - number: '2'
     text: |-
-      Voor de toepassing van dit besluit wordt de werknemer geacht zijn loon te hebben genoten in het aangiftetijdvak
+      1 Voor de toepassing van dit besluit wordt de werknemer geacht zijn loon te hebben genoten in het aangiftetijdvak
       waarover de werkgever van dat loon opgave heeft gedaan.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-  - number: '2.2'
-    text: |-
-      Voorzover het loon bestaat uit een uitkering op grond van de [ZW][ref1], de [WW][ref2], de [WAO][ref3], de
+
+      2 Voorzover het loon bestaat uit een uitkering op grond van de [ZW][ref1], de [WW][ref2], de [WAO][ref3], de
       [Wet WIA][ref4] of [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref5], wordt bij de berekening
-      van het dagloon in de plaats van die uitkering als loon in aanmerking genomen: ((100 x A) / B) – (C + D) waarbij:
+      van het dagloon in de plaats van die uitkering als loon in aanmerking genomen:
+
+      ((100 x A) / B) – (C + D)
+
+      waarbij:
+
       A staat voor de uitkering op grond van de [ZW][ref6], de [WW][ref7], de [WAO][ref8], de [Wet WIA][ref9] of
-      [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref10]; B staat voor:
+      [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref10];
+
+      B staat voor:
+
+      a. 70, dan wel
+
+      b. indien het uitkeringspercentage van de uitkeringen op grond van de [ZW][ref11], de [WAO][ref12],
+      [hoofdstuk 6 van de Wet WIA][ref13], [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref14] of
+      [hoofdstuk IV van de WW][ref15] hoger is dan 70%, het uitkeringspercentage waarnaar de uitkering is berekend; of
+
+      c. 100, indien de [artikelen 53][ref16] of [63 van de Wet WIA][ref17] van toepassing zijn, dan wel
+
+      d. indien de teller van de factor, bedoeld in [artikel 53][ref18] of [63 van de wet WIA][ref19] lager is, de waarde
+      van die teller;
+
+      C staat voor toeslagen op de uitkering op grond van de [Toeslagenwet][ref20]; en
+
+      D staat voor aanvullingen op de uitkering.
+
+      3 Voorzover het tweede lid van toepassing is wordt, bij de toepassing van [artikel 3][ref21], als genoten
+      respectievelijk opgebouwde vakantiebijslag in aanmerking genomen:
+
+      (100 x A) / B
+
+      waarbij:
+
+      A staat voor de in het in aanmerking te nemen tijdvak daadwerkelijk genoten respectievelijk opgebouwde
+      vakantiebijslag;
+
+      B gelijk is aan de factor B, bedoeld in het tweede lid.
+
+      4 Onder loon wordt mede begrepen het loon waarvan de werknemer aantoont dat dit in het refertejaar vorderbaar maar
+      niet tevens inbaar is geworden. Voor de toepassing van dit besluit wordt de werknemer geacht dit loon te hebben
+      genoten in het aangiftetijdvak waarin het vorderbaar is geworden. Indien in het refertejaar een uitkering als
+      bedoeld in het tweede lid is genoten, waarbij in het dagloon loon als bedoeld in de eerste zin is meegerekend,
+      wordt, indien dat loon in het refertejaar inbaar is geworden, dat loon bij de dagloonberekening buiten beschouwing
+      gelaten.
+
+      5 Onder loon worden mede begrepen de inkomsten, bedoeld in [artikel 16, derde lid, van de WW][ref22], waarop
+      de werknemer recht heeft in verband met de beëindiging van de dienstbetrekking, voorzover die inkomsten worden
+      toegerekend aan perioden die in het refertejaar vallen.
+
+      6 Het loon dat in een gebroken aangiftetijdvak in aanmerking wordt genomen bij de dagloonvaststelling is de
+      uitkomst van de volgende berekening:
+
+      ((A – B – C) x Y) / Z
+
+      waarbij:
+
+      A staat voor het totale loon dat de werknemer in dat gebroken aangiftetijdvak heeft genoten;
+
+      B staat voor de bedragen aan vakantiebijslag die de werknemer onder die titel in dat gebroken aangiftetijdvak heeft
+      genoten;
+
+      C staat voor de bedragen die de werknemer in dat gebroken aangiftetijdvak onder die titel heeft genoten aan
+      uitkeringen die het karakter hebben van een extra periodiek salaris;
+
+      Y staat voor het totale aantal dagloondagen binnen het refertejaar in dat gebroken aangiftetijdvak waarop de
+      werknemer bij de werkgever in dienst was;
+
+      Z staat voor het totale aantal dagloondagen in dat gebroken aangiftetijdvak waarop de werknemer bij de werkgever in
+      dienst was.
+
+      7 Indien Z nul is wordt de uitkomst van de berekening van het zesde lid op nihil gesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001888
@@ -340,6 +306,18 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0002524
       [ref9]: https://wetten.overheid.nl/BWBR0019057
       [ref10]: https://wetten.overheid.nl/BWBR0013008#Paragraaf1
+      [ref11]: https://wetten.overheid.nl/BWBR0001888
+      [ref12]: https://wetten.overheid.nl/BWBR0002524
+      [ref13]: https://wetten.overheid.nl/BWBR0019057#Hoofdstuk6
+      [ref14]: https://wetten.overheid.nl/BWBR0013008#Paragraaf1
+      [ref15]: https://wetten.overheid.nl/BWBR0004045#HoofdstukIV
+      [ref16]: https://wetten.overheid.nl/BWBR0019057#Artikel53
+      [ref17]: https://wetten.overheid.nl/BWBR0019057#Artikel63
+      [ref18]: https://wetten.overheid.nl/BWBR0019057#Artikel53
+      [ref19]: https://wetten.overheid.nl/BWBR0019057#Artikel63
+      [ref20]: https://wetten.overheid.nl/BWBR0004043
+      [ref21]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref22]: https://wetten.overheid.nl/BWBR0004045#Artikel16
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
     references:
       - id: ref1
@@ -364,132 +342,62 @@ articles:
       - id: ref10
         bwb_id: BWBR0013008
         paragraaf: '1'
-  - number: 2.2.a
-    text: 70, dan wel
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-  - number: 2.2.b
-    text: |-
-      indien het uitkeringspercentage van de uitkeringen op grond van de [ZW][ref1], de [WAO][ref2],
-      [hoofdstuk 6 van de Wet WIA][ref3], [hoofdstuk 3, afdeling 2, paragraaf 1, van de Wet arbeid en zorg][ref4] of
-      [hoofdstuk IV van de WW][ref5] hoger is dan 70%, het uitkeringspercentage waarnaar de uitkering is berekend; of
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001888
-      [ref2]: https://wetten.overheid.nl/BWBR0002524
-      [ref3]: https://wetten.overheid.nl/BWBR0019057#Hoofdstuk6
-      [ref4]: https://wetten.overheid.nl/BWBR0013008#Paragraaf1
-      [ref5]: https://wetten.overheid.nl/BWBR0004045#HoofdstukIV
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref11
         bwb_id: BWBR0001888
-      - id: ref2
+      - id: ref12
         bwb_id: BWBR0002524
-      - id: ref3
+      - id: ref13
         bwb_id: BWBR0019057
         hoofdstuk: '6'
-      - id: ref4
+      - id: ref14
         bwb_id: BWBR0013008
         paragraaf: '1'
-      - id: ref5
+      - id: ref15
         bwb_id: BWBR0004045
         hoofdstuk: IV
-  - number: 2.2.c
-    text: |-
-      100, indien de [artikelen 53][ref1] of [63 van de Wet WIA][ref2] van toepassing zijn, dan wel
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019057#Artikel53
-      [ref2]: https://wetten.overheid.nl/BWBR0019057#Artikel63
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref16
         bwb_id: BWBR0019057
         artikel: '53'
-      - id: ref2
+      - id: ref17
         bwb_id: BWBR0019057
         artikel: '63'
-  - number: 2.2.d
-    text: |-
-      indien de teller van de factor, bedoeld in [artikel 53][ref1] of [63 van de wet WIA][ref2] lager is, de waarde van
-      die teller;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019057#Artikel53
-      [ref2]: https://wetten.overheid.nl/BWBR0019057#Artikel63
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref18
         bwb_id: BWBR0019057
         artikel: '53'
-      - id: ref2
+      - id: ref19
         bwb_id: BWBR0019057
         artikel: '63'
-  - number: '2.3'
-    text: |-
-      Voorzover het tweede lid van toepassing is wordt, bij de toepassing van [artikel 3][ref1], als genoten
-      respectievelijk opgebouwde vakantiebijslag in aanmerking genomen: (100 x A) / B waarbij: A staat voor de in het in
-      aanmerking te nemen tijdvak daadwerkelijk genoten respectievelijk opgebouwde vakantiebijslag; B gelijk is aan de
-      factor B, bedoeld in het tweede lid.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref20
+        bwb_id: BWBR0004043
+      - id: ref21
         bwb_id: BWBR0018842
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '2.4'
-    text: |-
-      Onder loon wordt mede begrepen het loon waarvan de werknemer aantoont dat dit in het refertejaar vorderbaar maar
-      niet tevens inbaar is geworden. Voor de toepassing van dit besluit wordt de werknemer geacht dit loon te hebben
-      genoten in het aangiftetijdvak waarin het vorderbaar is geworden. Indien in het refertejaar een uitkering als
-      bedoeld in het tweede lid is genoten, waarbij in het dagloon loon als bedoeld in de eerste zin is meegerekend,
-      wordt, indien dat loon in het refertejaar inbaar is geworden, dat loon bij de dagloonberekening buiten beschouwing
-      gelaten.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-  - number: '2.5'
-    text: |-
-      Onder loon worden mede begrepen de inkomsten, bedoeld in [artikel 16, derde lid, van de WW][ref1], waarop de
-      werknemer recht heeft in verband met de beëindiging van de dienstbetrekking, voorzover die inkomsten worden
-      toegerekend aan perioden die in het refertejaar vallen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel16
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref22
         bwb_id: BWBR0004045
         artikel: '16'
-  - number: '2.6'
+  - number: '3'
     text: |-
-      Het loon dat in een gebroken aangiftetijdvak in aanmerking wordt genomen bij de dagloonvaststelling is de uitkomst
-      van de volgende berekening: ((A – B – C) x Y) / Z waarbij: A staat voor het totale loon dat de werknemer in dat
-      gebroken aangiftetijdvak heeft genoten; B staat voor de bedragen aan vakantiebijslag die de werknemer onder die
-      titel in dat gebroken aangiftetijdvak heeft genoten; C staat voor de bedragen die de werknemer in dat gebroken
-      aangiftetijdvak onder die titel heeft genoten aan uitkeringen die het karakter hebben van een extra periodiek
-      salaris; Y staat voor het totale aantal dagloondagen binnen het refertejaar in dat gebroken aangiftetijdvak
-      waarop de werknemer bij de werkgever in dienst was; Z staat voor het totale aantal dagloondagen in dat gebroken
-      aangiftetijdvak waarop de werknemer bij de werkgever in dienst was.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-  - number: '2.7'
-    text: Indien Z nul is wordt de uitkomst van de berekening van het zesde lid op nihil gesteld.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel2
-  - number: '3.1'
-    text: |-
-      Het dagloon is de uitkomst van de volgende berekening: ((A – B – C) + D + E) / 261 waarbij: A staat voor het loon
-      dat de werknemer in het refertejaar heeft genoten; B staat voor de bedragen aan vakantiebijslag die de werknemer
-      onder die titel in de volledige aangiftetijdvakken in het refertejaar heeft genoten; C staat voor de bedragen die
-      de werknemer in de volledige aangiftetijdvakken in het refertejaar onder die titel heeft genoten aan uitkeringen
-      die het karakter hebben van een extra periodiek salaris; D staat voor het bedrag dat de werknemer in het
-      refertejaar heeft opgebouwd aan vakantiebijslag; E staat voor het bedrag dat de werknemer in het refertejaar heeft
-      opgebouwd aan uitkeringen als bedoeld onder C.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel3
-  - number: '3.2'
-    text: |-
-      Indien het minimumloon is herzien tussen het einde van het refertejaar en de eerste dag waarop recht
+      1 Het dagloon is de uitkomst van de volgende berekening:
+
+      ((A – B – C) + D + E) / 261
+
+      waarbij:
+
+      A staat voor het loon dat de werknemer in het refertejaar heeft genoten;
+
+      B staat voor de bedragen aan vakantiebijslag die de werknemer onder die titel in de volledige aangiftetijdvakken in
+      het refertejaar heeft genoten;
+
+      C staat voor de bedragen die de werknemer in de volledige aangiftetijdvakken in het refertejaar onder die titel
+      heeft genoten aan uitkeringen die het karakter hebben van een extra periodiek salaris;
+
+      D staat voor het bedrag dat de werknemer in het refertejaar heeft opgebouwd aan vakantiebijslag;
+
+      E staat voor het bedrag dat de werknemer in het refertejaar heeft opgebouwd aan uitkeringen als bedoeld onder C.
+
+      2 Indien het minimumloon is herzien tussen het einde van het refertejaar en de eerste dag waarop recht
       bestaat op een uitkering op grond van de [ZW][ref1], de[ WW][ref2], de [WAO][ref3], de [Wet WIA][ref4] of
       de[ Wet arbeid en zorg][ref5] wordt de uitkomst van het eerste lid herzien in de mate waarin het minimumloon is
       herzien.
@@ -512,14 +420,27 @@ articles:
         bwb_id: BWBR0019057
       - id: ref5
         bwb_id: BWBR0013008
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Indien in het refertejaar door de werknemer in een aangiftetijdvak geen loon of minder loon is genoten in
+      1 Indien in het refertejaar door de werknemer in een aangiftetijdvak geen loon of minder loon is genoten in
       verband met verlof of omdat hij de bedongen arbeid niet heeft verricht wegens arbeidsongeschiktheid, zwangerschap
       of bevalling, wordt bij het vaststellen van het loon in dat aangiftetijdvak in aanmerking genomen het loon,
       genoten bij dezelfde werkgever in het laatste aan dat verlof of die arbeidsongeschiktheid voorafgaande en in het
       refertejaar gelegen aangiftetijdvak, waarin die situatie zich niet heeft voorgedaan. De eerste zin geldt voorzover
       [artikel 2, tweede lid][ref1], niet van toepassing is.
+
+      2 Indien geen voorafgaand aangiftetijdvak als bedoeld in het eerste lid wordt gevonden, wordt in aanmerking genomen
+      het loon bij dezelfde werkgever over het in het refertejaar gelegen aangiftetijdvak, gelegen direct na afloop van
+      dat verlof, dan wel die arbeidsongeschiktheid.
+
+      3 Indien noch een laatste aan het verlof of aan de arbeidsongeschiktheid voorafgaand aangiftetijdvak als bedoeld
+      in het eerste lid noch een direct na afloop van dat verlof of die arbeidsongeschiktheid gelegen aangiftetijdvak als
+      bedoeld in het tweede lid wordt gevonden, wordt voor ieder in het refertejaar gelegen aangiftetijdvak waarin door
+      de werknemer geen of minder loon is genoten in verband met de in het eerste lid genoemde omstandigheden, het voor
+      dat aangiftetijdvak geldende overeengekomen loon in aanmerking genomen.
+
+      4 Dit artikel blijft buiten toepassing, indien de vaststelling van het loon met toepassing van dit artikel leidt
+      tot een lager loon dan de vaststelling van het loon zonder toepassing van dit artikel.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel2
@@ -529,39 +450,39 @@ articles:
         bwb_id: BWBR0018842
         artikel: '2'
         hoofdstuk: '1'
-  - number: '4.2'
+  - number: '5'
     text: |-
-      Indien geen voorafgaand aangiftetijdvak als bedoeld in het eerste lid wordt gevonden, wordt in aanmerking genomen
-      het loon bij dezelfde werkgever over het in het refertejaar gelegen aangiftetijdvak, gelegen direct na afloop van
-      dat verlof, dan wel die arbeidsongeschiktheid.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel4
-  - number: '4.3'
-    text: |-
-      Indien noch een laatste aan het verlof of aan de arbeidsongeschiktheid voorafgaand aangiftetijdvak als bedoeld in
-      het eerste lid noch een direct na afloop van dat verlof of die arbeidsongeschiktheid gelegen aangiftetijdvak als
-      bedoeld in het tweede lid wordt gevonden, wordt voor ieder in het refertejaar gelegen aangiftetijdvak waarin door
-      de werknemer geen of minder loon is genoten in verband met de in het eerste lid genoemde omstandigheden, het voor
-      dat aangiftetijdvak geldende overeengekomen loon in aanmerking genomen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel4
-  - number: '4.4'
-    text: |-
-      Dit artikel blijft buiten toepassing, indien de vaststelling van het loon met toepassing van dit artikel leidt tot
-      een lager loon dan de vaststelling van het loon zonder toepassing van dit artikel.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel4
-  - number: '5.1'
-    text: |-
-      Indien de werknemer bij aanvang van het refertejaar jonger is dan 23 jaar en het op grond van [hoofdstuk 2][ref1]
+      1 Indien de werknemer bij aanvang van het refertejaar jonger is dan 23 jaar en het op grond van [hoofdstuk 2][ref1]
       van dit besluit berekende dagloon minder bedraagt dan het minimumloon dat behoort bij de leeftijd van de
       werknemer op de eerste dag waarop recht bestaat op uitkering, vermeerderd met de vakantiebijslag bedoeld in
-      [artikel 15 van de WML][ref2], wordt dat dagloon verhoogd door het te vermenigvuldigen met A / B waarbij: A staat
-      voor het minimumjeugdloonpercentage dat verbonden is aan de leeftijd van de werknemer op de eerste dag waarop
-      recht bestaat op uitkering of indien de werknemer op die dag de leeftijd van 23 jaar heeft bereikt, voor 100; B
-      staat voor het minimumjeugdloonpercentage dat verbonden is aan de leeftijd van de werknemer bij aanvang van het
+      [artikel 15 van de WML][ref2], wordt dat dagloon verhoogd door het te vermenigvuldigen met
+
+      A / B
+
+      waarbij:
+
+      A staat voor het minimumjeugdloonpercentage dat verbonden is aan de leeftijd van de werknemer op de eerste dag
+      waarop recht bestaat op uitkering of indien de werknemer op die dag de leeftijd van 23 jaar heeft bereikt, voor
+      100;
+
+      B staat voor het minimumjeugdloonpercentage dat verbonden is aan de leeftijd van de werknemer bij aanvang van het
       refertejaar.
+
+      2 Het verhoogde dagloon bedraagt niet meer dan het minimumloon, dat behoort bij de leeftijd van de
+      werknemer op de eerste dag waarop recht bestaat op uitkering, vermeerderd met de vakantiebijslag, bedoeld in
+      [artikel 15 van de WML][ref3].
+
+      3 Indien bij de vaststelling van het dagloon [artikel 6][ref4], [11][ref5] of [16][ref6] van toepassing is, wordt
+      bij de toepassing het eerste lid voor «bij aanvang van het refertejaar» gelezen: bij aanvang van het tijdvak
+      waarover het loon in aanmerking wordt genomen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Hoofdstuk2
       [ref2]: https://wetten.overheid.nl/BWBR0002638#Artikel15
+      [ref3]: https://wetten.overheid.nl/BWBR0002638#Artikel15
+      [ref4]: https://wetten.overheid.nl/BWBR0018842#Artikel6
+      [ref5]: https://wetten.overheid.nl/BWBR0018842#Artikel11
+      [ref6]: https://wetten.overheid.nl/BWBR0018842#Artikel16
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel5
     references:
       - id: ref1
@@ -570,55 +491,63 @@ articles:
       - id: ref2
         bwb_id: BWBR0002638
         artikel: '15'
-  - number: '5.2'
-    text: |-
-      Het verhoogde dagloon bedraagt niet meer dan het minimumloon, dat behoort bij de leeftijd van de werknemer
-      op de eerste dag waarop recht bestaat op uitkering, vermeerderd met de vakantiebijslag, bedoeld in
-      [artikel 15 van de WML][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel15
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002638
         artikel: '15'
-  - number: '5.3'
-    text: |-
-      Indien bij de vaststelling van het dagloon [artikel 6][ref1], [11][ref2] of [16][ref3] van toepassing is, wordt bij
-      de toepassing het eerste lid voor «bij aanvang van het refertejaar» gelezen: bij aanvang van het tijdvak waarover
-      het loon in aanmerking wordt genomen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel11
-      [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel16
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0018842
         artikel: '6'
         hoofdstuk: '2'
         paragraaf: '3'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0018842
         artikel: '11'
         hoofdstuk: '2'
         paragraaf: '5'
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0018842
         artikel: '16'
         hoofdstuk: '2'
         paragraaf: '6'
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Het dagloon van de werknemer die vanaf de aanvang van het refertejaar tot en met de laatste dag van de eerste
+      1 Het dagloon van de werknemer die vanaf de aanvang van het refertejaar tot en met de laatste dag van de eerste
       volledige maand van dat jaar geen loon als bedoeld in [artikel 2][ref1] ontving wordt vastgesteld door bij de
       toepassing van [artikel 3][ref2] «261» te vervangen door: het aantal dagloondagen vanaf en met inbegrip van de
       dag waarop de werkzaamheden als werknemer zijn gestart tot het einde van het refertejaar. Daarbij wordt rekening
       gehouden met het loon dat de werknemer vanaf de start van de werkzaamheden in het refertejaar heeft ontvangen, en
       met de bedragen die de werknemer vanaf dat moment in het refertejaar heeft opgebouwd aan vakantiebijslag en aan
       uitkeringen die het karakter hebben van een extra periodiek salaris.
+
+      2 Het dagloon van de werknemer, bedoeld in het eerste lid, die in het refertejaar geen loon heeft genoten, is in
+      afwijking van het eerste lid de uitkomst van de volgende berekening:
+
+      ((A – B – C ) + D + E) / F
+
+      waarbij:
+
+      A staat voor het loon dat de werknemer in het aangiftetijdvak waarin de arbeidsongeschiktheid of het
+      arbeidsurenverlies is ingetreden, voor dat intreden heeft genoten;
+
+      B staat voor de bedragen aan vakantiebijslag die de werknemer onder die titel in het aangiftetijdvak waarin de
+      arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden voor dat intreden heeft genoten;
+
+      C staat voor de bedragen die de werknemer in het aangiftetijdvak waarin de arbeidsongeschiktheid of het
+      arbeidsurenverlies is ingetreden, voor dat intreden onder die titel heeft genoten aan uitkeringen die het karakter
+      hebben van een extra periodiek salaris;
+
+      D staat voor het bedrag dat de werknemer in het aangiftetijdvak waarin de arbeidsongeschiktheid of het
+      arbeidsurenverlies is ingetreden, voor dat intreden heeft opgebouwd aan vakantiebijslag;
+
+      E staat voor het bedrag dat de werknemer in het aangiftetijdvak waarin de arbeidsongeschiktheid of het
+      arbeidsurenverlies is ingetreden, voor dat intreden heeft opgebouwd aan uitkeringen als bedoeld onder C;
+
+      F staat voor het in dat aangiftetijdvak gelegen aantal dagloondagen waarover de werknemer loon heeft genoten,
+      voordat de arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden.
+
+      3 Indien F nul is wordt de uitkomst van de berekening van het tweede lid op nihil gesteld.
+
+      4 Dit artikel is niet van toepassing, indien de werknemer in verband met verlof geen loon heeft ontvangen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel2
@@ -634,35 +563,17 @@ articles:
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '6.2'
+  - number: '7'
     text: |-
-      Het dagloon van de werknemer, bedoeld in het eerste lid, die in het refertejaar geen loon heeft genoten, is in
-      afwijking van het eerste lid de uitkomst van de volgende berekening: ((A – B – C ) + D + E) / F waarbij: A staat
-      voor het loon dat de werknemer in het aangiftetijdvak waarin de arbeidsongeschiktheid of het arbeidsurenverlies
-      is ingetreden, voor dat intreden heeft genoten; B staat voor de bedragen aan vakantiebijslag die de werknemer
-      onder die titel in het aangiftetijdvak waarin de arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden
-      voor dat intreden heeft genoten; C staat voor de bedragen die de werknemer in het aangiftetijdvak waarin de
-      arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden, voor dat intreden onder die titel heeft genoten
-      aan uitkeringen die het karakter hebben van een extra periodiek salaris; D staat voor het bedrag dat de werknemer
-      in het aangiftetijdvak waarin de arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden, voor dat intreden
-      heeft opgebouwd aan vakantiebijslag; E staat voor het bedrag dat de werknemer in het aangiftetijdvak waarin de
-      arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden, voor dat intreden heeft opgebouwd aan uitkeringen
-      als bedoeld onder C; F staat voor het in dat aangiftetijdvak gelegen aantal dagloondagen waarover de werknemer loon
-      heeft genoten, voordat de arbeidsongeschiktheid of het arbeidsurenverlies is ingetreden.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel6
-  - number: '6.3'
-    text: Indien F nul is wordt de uitkomst van de berekening van het tweede lid op nihil gesteld.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel6
-  - number: '6.4'
-    text: Dit artikel is niet van toepassing, indien de werknemer in verband met verlof geen loon heeft ontvangen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel6
-  - number: '7.1'
-    text: |-
-      Het WW-, WIA- of WAO-dagloon van de werknemer, die aantoont dat zijn per tijdseenheid overeengekomen loon is
+      1 Het WW-, WIA- of WAO-dagloon van de werknemer, die aantoont dat zijn per tijdseenheid overeengekomen loon is
       verlaagd op of nadat hij de leeftijd van 55 jaar heeft bereikt, wordt vastgesteld door bij de toepassing van
       [artikel 3][ref1] het loon dat de werknemer in het refertejaar heeft genoten te vervangen door: het loon dat deze
       werknemer zou hebben genoten indien deze verlaging niet zou hebben plaatsgevonden, tot ten hoogste 9/7 deel van dat
       lagere loon.
+
+      2 Het eerste lid is slechts van toepassing op de werknemer die onmiddellijk voordat zijn arbeidsurenverlies of
+      arbeidsongeschiktheid is ingetreden in dienstbetrekking stond tot dezelfde werkgever of diens rechtsopvolger als
+      waarmee de vermindering van loon is overeengekomen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel3
@@ -673,12 +584,6 @@ articles:
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '7.2'
-    text: |-
-      Het eerste lid is slechts van toepassing op de werknemer die onmiddellijk voordat zijn arbeidsurenverlies of
-      arbeidsongeschiktheid is ingetreden in dienstbetrekking stond tot dezelfde werkgever of diens rechtsopvolger als
-      waarmee de vermindering van loon is overeengekomen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel7
   - number: '8'
     text: |-
       Indien een werknemer, die recht heeft op een uitkering op grond van de [WAO][ref1] of de [Wet WIA][ref2] op of na
@@ -729,16 +634,14 @@ articles:
         bwb_id: BWBR0002524
       - id: ref11
         bwb_id: BWBR0019057
-  - number: '9.1'
+  - number: '9'
     text: |-
-      Bij het vaststellen van het ZW- of WW-dagloon van de werknemer die tijdens het refertejaar in twee of meer
+      1 Bij het vaststellen van het ZW- of WW-dagloon van de werknemer die tijdens het refertejaar in twee of meer
       dienstbetrekkingen stond, wordt slechts in aanmerking genomen het loon uit de dienstbetrekking uit hoofde waarvan
       de werknemer arbeidsongeschikt of werkloos is geworden, alsmede uit de overige dienstbetrekkingen naar de mate
       waarin die dienstbetrekking daarvoor in de plaats is gekomen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel9
-  - number: '9.2'
-    text: |-
-      Bij het vaststellen van het ZW- of WW-dagloon van de werknemer die tijdens het refertejaar een uitkering op grond
+
+      2 Bij het vaststellen van het ZW- of WW-dagloon van de werknemer die tijdens het refertejaar een uitkering op grond
       van de [ZW][ref1], de [WW][ref2], de[ WAO][ref3], de [Wet WIA][ref4] of de [Wet arbeid en zorg][ref5] genoot worden
       het op grond van [artikel 2, tweede en derde lid][ref6], vastgestelde loon en de vakantiebijslag in aanmerking
       genomen naar de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld, in de plaats is gekomen van de in
@@ -767,17 +670,36 @@ articles:
         bwb_id: BWBR0018842
         artikel: '2'
         hoofdstuk: '1'
-  - number: '10.1'
+  - number: '10'
     text: |-
-      Bij het vaststellen van het ZW-, WIA- of WAO-dagloon van de persoon, wiens aanspraak op ziekengeld
-      onderscheidenlijk arbeidsongeschiktheidsuitkering berust op [artikel 46 van de ZW][ref1],
+      1 Bij het vaststellen van het ZW-, WIA- of WAO-dagloon van de persoon, wiens aanspraak op
+      ziekengeld onderscheidenlijk arbeidsongeschiktheidsuitkering berust op [artikel 46 van de ZW][ref1],
       [artikel 10 van de Wet WIA][ref2] of [artikel 17 van de WAO][ref3], eindigt het refertejaar op de laatste dag van
       het aangiftetijdvak voorafgaand aan het aangiftetijdvak waarin de verzekering is geëindigd.
+
+      2 Het ZW-dagloon van de persoon, bedoeld in het eerste lid, die laatstelijk verzekerd was op grond van
+      [artikel 7 van de ZW][ref4] wegens het ontvangen van een uitkering op grond van de [WW][ref5], wordt vastgesteld
+      overeenkomstig [artikel 12][ref6].
+
+      3 Het dagloon van de persoon, wiens aanspraak op uitkering berust op
+      [artikel 3:10, eerste en tweede lid, van de Wet arbeid en zorg][ref7], wordt bepaald overeenkomstig
+      [artikel 11][ref8], met dien verstande dat waar in [artikel 11][ref9] wordt uitgegaan van hetgeen uit de
+      dienstbetrekking waarin de arbeidsongeschiktheid is ingetreden is genoten in een bepaald aangiftetijdvak, bij de
+      vaststelling van dit dagloon wordt uitgegaan van hetgeen de persoon als werknemer of gelijkgestelde als bedoeld in
+      [artikel 3:6, eerste lid, van die wet][ref10] heeft genoten in het aangiftetijdvak voorafgaande aan het tijdstip,
+      dat hij niet langer werknemer of die gelijkgestelde was.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel46
       [ref2]: https://wetten.overheid.nl/BWBR0019057#Artikel10
       [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel17
+      [ref4]: https://wetten.overheid.nl/BWBR0001888#Artikel7
+      [ref5]: https://wetten.overheid.nl/BWBR0004045
+      [ref6]: https://wetten.overheid.nl/BWBR0018842#Artikel12
+      [ref7]: https://wetten.overheid.nl/BWBR0013008#Artikel310
+      [ref8]: https://wetten.overheid.nl/BWBR0018842#Artikel11
+      [ref9]: https://wetten.overheid.nl/BWBR0018842#Artikel11
+      [ref10]: https://wetten.overheid.nl/BWBR0013008#Artikel36
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel10
     references:
       - id: ref1
@@ -789,83 +711,113 @@ articles:
       - id: ref3
         bwb_id: BWBR0002524
         artikel: '17'
-  - number: '10.2'
-    text: |-
-      Het ZW-dagloon van de persoon, bedoeld in het eerste lid, die laatstelijk verzekerd was op grond van
-      [artikel 7 van de ZW][ref1] wegens het ontvangen van een uitkering op grond van de [WW][ref2], wordt vastgesteld
-      overeenkomstig [artikel 12][ref3].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0004045
-      [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel12
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel10
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0001888
         artikel: '7'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0004045
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0018842
         artikel: '12'
         hoofdstuk: '2'
         paragraaf: '5'
-  - number: '10.3'
-    text: |-
-      Het dagloon van de persoon, wiens aanspraak op uitkering berust op
-      [artikel 3:10, eerste en tweede lid, van de Wet arbeid en zorg][ref1], wordt bepaald overeenkomstig
-      [artikel 11][ref2], met dien verstande dat waar in [artikel 11][ref3] wordt uitgegaan van hetgeen uit de
-      dienstbetrekking waarin de arbeidsongeschiktheid is ingetreden is genoten in een bepaald aangiftetijdvak, bij de
-      vaststelling van dit dagloon wordt uitgegaan van hetgeen de persoon als werknemer of gelijkgestelde als bedoeld in
-      [artikel 3:6, eerste lid, van die wet][ref4] heeft genoten in het aangiftetijdvak voorafgaande aan het tijdstip,
-      dat hij niet langer werknemer of die gelijkgestelde was.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel11
-      [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel11
-      [ref4]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel10
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref2
+        artikel: 3:10
+      - id: ref8
         bwb_id: BWBR0018842
         artikel: '11'
         hoofdstuk: '2'
         paragraaf: '5'
-      - id: ref3
+      - id: ref9
         bwb_id: BWBR0018842
         artikel: '11'
         hoofdstuk: '2'
         paragraaf: '5'
-      - id: ref4
+      - id: ref10
         bwb_id: BWBR0013008
-        artikel: '3'
-  - number: '11.1'
+        artikel: 3:6
+  - number: '11'
     text: |-
-      Het ZW-dagloon van de werknemer, bedoeld in de [artikelen 29b][ref1] en [29d van de ZW][ref2], is, in afwijking van
-      [artikel 3, eerste lid][ref3], de uitkomst van de volgende berekening: ((A – B – C) + D + E) / F waarbij: A staat
-      voor het loon dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden,
-      heeft genoten in het laatste aangiftetijdvak voorafgaande aan het aangiftetijdvak waarin die arbeidsongeschiktheid
-      is ingetreden; B staat voor de bedragen aan vakantiebijslag die de werknemer, uit de dienstbetrekking waarin hij
-      wegens ziekte arbeidsongeschikt is geworden, onder die titel in dat laatste aangiftetijdvak heeft genoten; C staat
-      voor de bedragen die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden,
-      in dat laatste aangiftetijdvak onder die titel heeft genoten aan uitkeringen die het karakter hebben van een extra
-      periodiek salaris; D staat voor het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte
-      arbeidsongeschikt is geworden, in dat laatste aangiftetijdvak heeft opgebouwd aan vakantiebijslag; E staat voor
-      het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden, in dat
-      laatste aangiftetijdvak heeft opgebouwd aan uitkeringen als bedoeld onder C; F staat voor het aantal dagloondagen
-      in dat laatste aangiftetijdvak binnen de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden,
-      dan wel indien het een aangiftetijdvak van een maand betreft en de betreffende dienstbetrekking dat gehele tijdvak
-      heeft geduurd, voor 21,75.
+      1 Het ZW-dagloon van de werknemer, bedoeld in de [artikelen 29b][ref1] en [29d van de ZW][ref2], is, in afwijking
+      van [artikel 3, eerste lid][ref3], de uitkomst van de volgende berekening:
+
+      ((A – B – C) + D + E) / F
+
+      waarbij:
+
+      A staat voor het loon dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt
+      is geworden, heeft genoten in het laatste aangiftetijdvak voorafgaande aan het aangiftetijdvak waarin die
+      arbeidsongeschiktheid is ingetreden;
+
+      B staat voor de bedragen aan vakantiebijslag die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte
+      arbeidsongeschikt is geworden, onder die titel in dat laatste aangiftetijdvak heeft genoten;
+
+      C staat voor de bedragen die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, in dat laatste aangiftetijdvak onder die titel heeft genoten aan uitkeringen die het karakter hebben van
+      een extra periodiek salaris;
+
+      D staat voor het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, in dat laatste aangiftetijdvak heeft opgebouwd aan vakantiebijslag;
+
+      E staat voor het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, in dat laatste aangiftetijdvak heeft opgebouwd aan uitkeringen als bedoeld onder C;
+
+      F staat voor het aantal dagloondagen in dat laatste aangiftetijdvak binnen de dienstbetrekking waarin hij
+      wegens ziekte arbeidsongeschikt is geworden, dan wel indien het een aangiftetijdvak van een maand betreft en de
+      betreffende dienstbetrekking dat gehele tijdvak heeft geduurd, voor 21,75.
+
+      2 Het dagloon van de werknemer, bedoeld in het eerste lid, die in het laatste aangiftetijdvak voorafgaande aan het
+      aangiftetijdvak waarin hij wegens ziekte arbeidsongeschikt is geworden niet in de dienstbetrekking stond waaruit
+      hij arbeidsongeschikt is geworden, is, in afwijking van [artikel 3, eerste lid][ref4], de uitkomst van de volgende
+      berekening:
+
+      ((A – B – C) + D + E) / F
+
+      waarbij:
+
+      A staat voor het loon dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid heeft genoten in het aangiftetijdvak waarin
+      die arbeidsongeschiktheid is ingetreden;
+
+      B staat voor de bedragen aan vakantiebijslag die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte
+      arbeidsongeschikt is geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid, onder die titel in dat
+      aangiftetijdvak heeft genoten;
+
+      C staat voor de bedragen die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid, in dat aangiftetijdvak heeft genoten aan
+      uitkeringen die het karakter hebben van een extra periodiek salaris;
+
+      D staat voor het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid, in dat aangiftetijdvak heeft opgebouwd aan
+      vakantiebijslag;
+
+      E staat voor het bedrag dat de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
+      geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid, in dat aangiftetijdvak heeft opgebouwd aan
+      uitkeringen als bedoeld onder C;
+
+      F staat voor het aantal dagloondagen in dat aangiftetijdvak in de dienstbetrekking waarin hij wegens ziekte
+      arbeidsongeschikt is geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid wegens ziekte.
+
+      3 Indien bij de toepassing van het tweede lid F nul is, is het dagloon in afwijking van het tweede lid, de uitkomst
+      van de volgende berekening:
+
+      A / B
+
+      waarbij:
+
+      A staat voor het overeengekomen loon van de werknemer in de dienstbetrekking waarin hij wegens ziekte
+      arbeidsongeschikt tot het verrichten van werkzaamheden is geworden over het aangiftetijdvak waarin die
+      arbeidsongeschiktheid is ingetreden;
+
+      B staat voor het aantal dagloondagen in het aangiftetijdvak waarin de arbeidsongeschiktheid is ingetreden, dan wel
+      indien het een aangiftetijdvak van een maand betreft, voor 21,75.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel29b
       [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel29d
       [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0018842#Artikel3
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel11
     references:
       - id: ref1
@@ -879,79 +831,40 @@ articles:
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '11.2'
-    text: |-
-      Het dagloon van de werknemer, bedoeld in het eerste lid, die in het laatste aangiftetijdvak voorafgaande aan het
-      aangiftetijdvak waarin hij wegens ziekte arbeidsongeschikt is geworden niet in de dienstbetrekking stond waaruit
-      hij arbeidsongeschikt is geworden, is, in afwijking van [artikel 3, eerste lid][ref1], de uitkomst van de volgende
-      berekening: '((A – B – C) + D + E) / F waarbij: A staat voor het loon dat de werknemer, uit de dienstbetrekking'
-      waarin hij wegens ziekte arbeidsongeschikt is geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid
-      heeft genoten in het aangiftetijdvak waarin die arbeidsongeschiktheid is ingetreden; B staat voor de bedragen aan
-      vakantiebijslag die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden,
-      voorafgaande aan het intreden van die arbeidsongeschiktheid, onder die titel in dat aangiftetijdvak heeft genoten;
-      C staat voor de bedragen die de werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is
-      geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid, in dat aangiftetijdvak heeft genoten aan
-      uitkeringen die het karakter hebben van een extra periodiek salaris; D staat voor het bedrag dat de werknemer, uit
-      de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden, voorafgaande aan het intreden van die
-      arbeidsongeschiktheid, in dat aangiftetijdvak heeft opgebouwd aan vakantiebijslag; E staat voor het bedrag dat de
-      werknemer, uit de dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt is geworden, voorafgaande aan het
-      intreden van die arbeidsongeschiktheid, in dat aangiftetijdvak heeft opgebouwd aan uitkeringen als bedoeld onder
-      C; F staat voor het aantal dagloondagen in dat aangiftetijdvak in de dienstbetrekking waarin hij wegens ziekte
-      arbeidsongeschikt is geworden, voorafgaande aan het intreden van die arbeidsongeschiktheid wegens ziekte.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel11
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0018842
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '11.3'
+  - number: '12'
     text: |-
-      Indien bij de toepassing van het tweede lid F nul is, is het dagloon in afwijking van het tweede lid, de
-      uitkomst van de volgende berekening: A / B waarbij: A staat voor het overeengekomen loon van de werknemer in de
-      dienstbetrekking waarin hij wegens ziekte arbeidsongeschikt tot het verrichten van werkzaamheden is geworden over
-      het aangiftetijdvak waarin die arbeidsongeschiktheid is ingetreden; B staat voor het aantal dagloondagen in het
-      aangiftetijdvak waarin de arbeidsongeschiktheid is ingetreden, dan wel indien het een aangiftetijdvak van een maand
-      betreft, voor 21,75.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel11
-  - number: '12.1'
-    text: |-
-      Het ZW-dagloon van de persoon, die op de dag van het ontstaan van zijn ongeschiktheid tot werken op grond van
+      1 Het ZW-dagloon van de persoon, die op de dag van het ontstaan van zijn ongeschiktheid tot werken op grond van
       [artikel 7 van de ZW][ref1] als werknemer wordt aangemerkt, wordt vastgesteld op het WW-dagloon.
+
+      2 Indien de uitkering op grond van de [WW][ref2] in verband met niet volledig arbeidsurenverlies is vastgesteld of
+      op die uitkering inkomsten uit arbeid worden verrekend met toepassing van [artikel 35aa WW][ref3], wordt het ZW-
+      dagloon, bedoeld in het eerste lid, vastgesteld op 100/70 van het bedrag van de WW-uitkering per dag over de vier
+      kalenderweken voorafgaande aan de dag van het ontstaan van de arbeidsongeschiktheid.
+
+      3 Voor de toepassing van dit besluit is de maandag de eerste dag van de kalenderweek.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel7
+      [ref2]: https://wetten.overheid.nl/BWBR0004045
+      [ref3]: https://wetten.overheid.nl/BWBR0004045#Artikel35aa
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel12
     references:
       - id: ref1
         bwb_id: BWBR0001888
         artikel: '7'
-  - number: '12.2'
-    text: |-
-      Indien de uitkering op grond van de [WW][ref1] in verband met niet volledig arbeidsurenverlies is vastgesteld of
-      op die uitkering inkomsten uit arbeid worden verrekend met toepassing van [artikel 35aa WW][ref2], wordt het ZW-
-      dagloon, bedoeld in het eerste lid, vastgesteld op 100/70 van het bedrag van de WW-uitkering per dag over de vier
-      kalenderweken voorafgaande aan de dag van het ontstaan van de arbeidsongeschiktheid.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-      [ref2]: https://wetten.overheid.nl/BWBR0004045#Artikel35aa
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel12
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
       - id: ref2
         bwb_id: BWBR0004045
+      - id: ref3
+        bwb_id: BWBR0004045
         artikel: 35aa
-  - number: '12.3'
-    text: Voor de toepassing van dit besluit is de maandag de eerste dag van de kalenderweek.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel12
-  - number: '13.1'
+  - number: '13'
     text: |-
-      Het WW-dagloon van de werknemer die op de dag voorafgaande aan de eerste werkloosheidsdag een
+      1 Het WW-dagloon van de werknemer die op de dag voorafgaande aan de eerste werkloosheidsdag een
       arbeidsongeschiktheidsuitkering op grond van de [WAO][ref1] heeft ontvangen, is, indien die uitkering met ingang
       van de eerste werkloosheidsdag wordt ingetrokken op grond van [artikel 43, eerste lid, van de WAO][ref2], gelijk
       aan het laatstelijk geldende WAO-dagloon. Het WAO-dagloon van de werknemer die een uitkering op grond van de
@@ -959,11 +872,76 @@ articles:
       de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld, in de plaats is gekomen voor de uitkering op
       grond van de [WAO][ref4].
 
+      2 Het WW-dagloon van de werknemer die op de eerste werkloosheidsdag, of op de eerste dag van herleving van het
+      recht op werkloosheidsuitkering, een uitkering op grond van de [WAO][ref5] naar een arbeidsongeschiktheid van
+      minder dan 80% ontvangt, wordt vastgesteld door evenredige verlaging van het laatstelijk geldende WAO-dagloon. Dit
+      WAO-dagloon wordt in aanmerking genomen naar de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld,
+      in de plaats is gekomen voor de uitkering op grond van de [WAO][ref6].
+
+      3 Indien op een tijdstip na de in het tweede lid bedoelde dagloonvaststelling
+
+      a. de werknemer wordt ingedeeld in een andere arbeidsongeschiktheidsklasse, of
+
+      b. diens arbeidsongeschiktheidsuitkering niet meer volledig wordt uitbetaald op grond van
+      [artikel 44, eerste lid, onderdeel b, van de WAO][ref7], wordt het WW-dagloon opnieuw vastgesteld. Het WAO-dagloon
+      wordt in aanmerking genomen naar de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld, in de plaats
+      is gekomen voor de uitkering op grond van de [WAO][ref8].
+
+      4 De vaststelling, bedoeld in het tweede lid, en de hernieuwde vaststelling, bedoeld in het derde lid, geschieden
+      volgens de volgende berekening:
+
+      A x (100 – B) / 100
+
+      waarin:
+
+      A staat voor het WAO-dagloon, bedoeld in het tweede lid; en
+
+      B staat voor het midden van de arbeidsongeschiktheidsklasse die bij de vaststelling of hernieuwde vaststelling in
+      acht wordt genomen.
+
+      5 Voor de werknemer, bedoeld in het tweede lid, wiens arbeidsongeschiktheidsuitkering op een tijdstip na de in dat
+      lid bedoelde dagloonberekening wordt ingetrokken op grond van [artikel 43, eerste lid van de WAO][ref9], is het WW-
+      dagloon het in de eerste zin van het tweede lid bedoelde WAO-dagloon respectievelijk het zesde lid bedoelde WAO-
+      vervolgdagloon.
+
+      6 Indien de arbeidsongeschiktheidsuitkering laatstelijk was gebaseerd op een WAO-vervolgdagloon wordt bij de
+      toepassing van het eerste, tweede, vierde en vijfde lid voor «WAO-dagloon» gelezen: WAO-vervolgdagloon.
+
+      7 Voor de toepassing van het eerste en tweede lid wordt met het ontvangen van een WAO-uitkering gelijkgesteld: het
+      zouden hebben ontvangen van een dergelijke uitkering indien de [artikelen 25][ref10], [28][ref11], [30][ref12] of
+      [33][ref13] van die wet niet van toepassing zouden zijn geweest.
+
+      8 Dit artikel is niet van toepassing zolang bij de vaststelling van de mate van arbeidsongeschiktheid rekening
+      wordt gehouden met de arbeid die de werknemer na het intreden van zijn arbeidsongeschiktheid heeft verricht in de
+      dienstbetrekking waaruit hij werkloos is geworden.
+
+      9 Dit artikel is evenmin van toepassing indien de werknemer, bedoeld in het tweede lid, een wachtgeld als bedoeld
+      in [artikel 1, onderdeel r, van de Wet overheidspersoneel onder de werknemersverzekeringen][ref14] ontleent of mede
+      ontleent aan de dienstbetrekking waaraan hij zijn uitkering op grond van de [WAO][ref15] ontleent of mede ontleent,
+      tenzij hij aan die dienstbetrekking tevens een recht op uitkering op grond van de [WW][ref16] ontleent.
+
+      10 De dagloonvaststelling op grond van het eerste lid is van overeenkomstige toepassing voor de werknemer die
+      voorafgaande aan de eerste werkloosheidsdag een arbeidsongeschiktheidsuitkering op grond van de [Wet WIA][ref17]
+      ontvangt.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002524
       [ref2]: https://wetten.overheid.nl/BWBR0002524#Artikel43
       [ref3]: https://wetten.overheid.nl/BWBR0002524
       [ref4]: https://wetten.overheid.nl/BWBR0002524
+      [ref5]: https://wetten.overheid.nl/BWBR0002524
+      [ref6]: https://wetten.overheid.nl/BWBR0002524
+      [ref7]: https://wetten.overheid.nl/BWBR0002524#Artikel44
+      [ref8]: https://wetten.overheid.nl/BWBR0002524
+      [ref9]: https://wetten.overheid.nl/BWBR0002524#Artikel43
+      [ref10]: https://wetten.overheid.nl/BWBR0002524#Artikel25
+      [ref11]: https://wetten.overheid.nl/BWBR0002524#Artikel28
+      [ref12]: https://wetten.overheid.nl/BWBR0002524#Artikel30
+      [ref13]: https://wetten.overheid.nl/BWBR0002524#Artikel33
+      [ref14]: https://wetten.overheid.nl/BWBR0009267#Artikel1
+      [ref15]: https://wetten.overheid.nl/BWBR0002524
+      [ref16]: https://wetten.overheid.nl/BWBR0004045
+      [ref17]: https://wetten.overheid.nl/BWBR0019057
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
     references:
       - id: ref1
@@ -975,142 +953,78 @@ articles:
         bwb_id: BWBR0002524
       - id: ref4
         bwb_id: BWBR0002524
-  - number: '13.2'
-    text: |-
-      Het WW-dagloon van de werknemer die op de eerste werkloosheidsdag, of op de eerste dag van herleving van het recht
-      op werkloosheidsuitkering, een uitkering op grond van de [WAO][ref1] naar een arbeidsongeschiktheid van minder dan
-      80% ontvangt, wordt vastgesteld door evenredige verlaging van het laatstelijk geldende WAO-dagloon. Dit WAO-dagloon
-      wordt in aanmerking genomen naar de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld, in de plaats
-      is gekomen voor de uitkering op grond van de [WAO][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524
-      [ref2]: https://wetten.overheid.nl/BWBR0002524
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0002524
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0002524
-  - number: '13.3'
-    text: Indien op een tijdstip na de in het tweede lid bedoelde dagloonvaststelling
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-  - number: 13.3.a
-    text: de werknemer wordt ingedeeld in een andere arbeidsongeschiktheidsklasse, of
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-  - number: 13.3.b
-    text: |-
-      diens arbeidsongeschiktheidsuitkering niet meer volledig wordt uitbetaald op grond van
-      [artikel 44, eerste lid, onderdeel b, van de WAO][ref1], wordt het WW-dagloon opnieuw vastgesteld. Het WAO-dagloon
-      wordt in aanmerking genomen naar de mate waarin de uitkering, waarvoor het dagloon wordt vastgesteld, in de plaats
-      is gekomen voor de uitkering op grond van de [WAO][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel44
-      [ref2]: https://wetten.overheid.nl/BWBR0002524
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0002524
         artikel: '44'
-      - id: ref2
+      - id: ref8
         bwb_id: BWBR0002524
-  - number: '13.4'
-    text: |-
-      De vaststelling, bedoeld in het tweede lid, en de hernieuwde vaststelling, bedoeld in het derde lid, geschieden
-      volgens de volgende berekening: A x (100 – B) / 100 waarin: A staat voor het WAO-dagloon, bedoeld in het tweede
-      lid; en B staat voor het midden van de arbeidsongeschiktheidsklasse die bij de vaststelling of hernieuwde
-      vaststelling in acht wordt genomen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-  - number: '13.5'
-    text: |-
-      Voor de werknemer, bedoeld in het tweede lid, wiens arbeidsongeschiktheidsuitkering op een tijdstip na de in dat
-      lid bedoelde dagloonberekening wordt ingetrokken op grond van [artikel 43, eerste lid van de WAO][ref1], is het WW-
-      dagloon het in de eerste zin van het tweede lid bedoelde WAO-dagloon respectievelijk het zesde lid bedoelde WAO-
-      vervolgdagloon.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel43
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref9
         bwb_id: BWBR0002524
         artikel: '43'
-  - number: '13.6'
-    text: |-
-      Indien de arbeidsongeschiktheidsuitkering laatstelijk was gebaseerd op een WAO-vervolgdagloon wordt bij de
-      toepassing van het eerste, tweede, vierde en vijfde lid voor «WAO-dagloon» gelezen: WAO-vervolgdagloon.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-  - number: '13.7'
-    text: |-
-      Voor de toepassing van het eerste en tweede lid wordt met het ontvangen van een WAO-uitkering gelijkgesteld: het
-      zouden hebben ontvangen van een dergelijke uitkering indien de [artikelen 25][ref1], [28][ref2], [30][ref3] of
-      [33][ref4] van die wet niet van toepassing zouden zijn geweest.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524#Artikel25
-      [ref2]: https://wetten.overheid.nl/BWBR0002524#Artikel28
-      [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel30
-      [ref4]: https://wetten.overheid.nl/BWBR0002524#Artikel33
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref10
         bwb_id: BWBR0002524
         artikel: '25'
-      - id: ref2
+      - id: ref11
         bwb_id: BWBR0002524
         artikel: '28'
-      - id: ref3
+      - id: ref12
         bwb_id: BWBR0002524
         artikel: '30'
-      - id: ref4
+      - id: ref13
         bwb_id: BWBR0002524
         artikel: '33'
-  - number: '13.8'
-    text: |-
-      Dit artikel is niet van toepassing zolang bij de vaststelling van de mate van arbeidsongeschiktheid rekening
-      wordt gehouden met de arbeid die de werknemer na het intreden van zijn arbeidsongeschiktheid heeft verricht in de
-      dienstbetrekking waaruit hij werkloos is geworden.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-  - number: '13.9'
-    text: |-
-      Dit artikel is evenmin van toepassing indien de werknemer, bedoeld in het tweede lid, een wachtgeld als bedoeld
-      in [artikel 1, onderdeel r, van de Wet overheidspersoneel onder de werknemersverzekeringen][ref1] ontleent of mede
-      ontleent aan de dienstbetrekking waaraan hij zijn uitkering op grond van de [WAO][ref2] ontleent of mede ontleent,
-      tenzij hij aan die dienstbetrekking tevens een recht op uitkering op grond van de [WW][ref3] ontleent.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009267#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0002524
-      [ref3]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref14
         bwb_id: BWBR0009267
         artikel: '1'
-      - id: ref2
+      - id: ref15
         bwb_id: BWBR0002524
-      - id: ref3
+      - id: ref16
         bwb_id: BWBR0004045
-  - number: '13.10'
-    text: |-
-      De dagloonvaststelling op grond van het eerste lid is van overeenkomstige toepassing voor de werknemer die
-      voorafgaande aan de eerste werkloosheidsdag een arbeidsongeschiktheidsuitkering op grond van de [Wet WIA][ref1]
-      ontvangt.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019057
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel13
-    references:
-      - id: ref1
+      - id: ref17
         bwb_id: BWBR0019057
-  - number: '14.1'
+  - number: '14'
     text: |-
-      In afwijking van [artikel 13, tweede tot en met vierde lid][ref1], vindt de evenredige verlaging respectievelijk
+      1 In afwijking van [artikel 13, tweede tot en met vierde lid][ref1], vindt de evenredige verlaging respectievelijk
       herziening plaats overeenkomstig het tweede lid van dit artikel indien:
+
+      a. de werknemer zijn recht op uitkering op grond van de [WW][ref2] ontleent aan artikel 71, eerste lid, onder
+      a ii of b ii, van [verordening (EEG) nr. 1408/71](31971R1408) van de Raad van de Europese gemeenschappen van 14
+      juni 1971 betreffende de toepassing van de socialezekerheidsregelingen op loontrekkenden en hun gezinnen, die zich
+      binnen de gemeenschap verplaatsen (PbEG L 149);
+
+      b. aan de werknemer op grond van die verordening overeenkomstig de bepalingen van de [WAO][ref3] een
+      arbeidsongeschiktheidsuitkering is toegekend, waarvan het bedrag is bepaald naar de verhouding tussen enerzijds de
+      duur van de Nederlandse verzekering en anderzijds de totale duur van
+
+      1°. de tijdvakken van Nederlandse verzekering en
+
+      2°. de tijdvakken van verzekering of arbeid, vervuld ingevolge de sociale wetgeving van een andere lidstaat of van
+      andere lidstaten; en
+
+      c. de werknemer geen recht heeft op toekenning van een invaliditeitsuitkering van een of meer lidstaten, dan
+      wel dergelijke invaliditeitsuitkeringen alle zijn ingetrokken, omdat niet of niet meer wordt voldaan aan de
+      openingsvoorwaarden voor het recht op invaliditeitsuitkering.
+
+      2 De evenredige verlaging of herziening vindt plaats door het WAO-dagloon of WAO-vervolgdagloon te vermenigvuldigen
+      met de breuk
+
+      (100 – (A x B)) / 100
+
+      waarbij:
+
+      A staat voor het midden van de arbeidsongeschiktheidsklasse die bij de vaststelling of hernieuwde vaststelling in
+      acht wordt genomen;
+
+      B staat voor de verhouding, bedoeld in het eerste lid, onderdeel b.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel13
+      [ref2]: https://wetten.overheid.nl/BWBR0004045
+      [ref3]: https://wetten.overheid.nl/BWBR0002524
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
     references:
       - id: ref1
@@ -1118,62 +1032,43 @@ articles:
         artikel: '13'
         hoofdstuk: '2'
         paragraaf: '6'
-  - number: 14.1.a
-    text: |-
-      de werknemer zijn recht op uitkering op grond van de [WW][ref1] ontleent aan artikel 71, eerste lid, onder a ii of
-      b ii, van [verordening (EEG) nr. 1408/71](31971R1408) van de Raad van de Europese gemeenschappen van 14 juni 1971
-      betreffende de toepassing van de socialezekerheidsregelingen op loontrekkenden en hun gezinnen, die zich binnen de
-      gemeenschap verplaatsen (PbEG L 149);
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0004045
-  - number: 14.1.b
-    text: |-
-      aan de werknemer op grond van die verordening overeenkomstig de bepalingen van de [WAO][ref1] een
-      arbeidsongeschiktheidsuitkering is toegekend, waarvan het bedrag is bepaald naar de verhouding tussen enerzijds de
-      duur van de Nederlandse verzekering en anderzijds de totale duur van
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002524
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002524
-  - number: 14.1.b.1°
-    text: de tijdvakken van Nederlandse verzekering en
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-  - number: 14.1.b.2°
+  - number: '15'
     text: |-
-      de tijdvakken van verzekering of arbeid, vervuld ingevolge de sociale wetgeving van een andere lidstaat of van
-      andere lidstaten; en
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-  - number: 14.1.c
-    text: |-
-      de werknemer geen recht heeft op toekenning van een invaliditeitsuitkering van een of meer lidstaten, dan
-      wel dergelijke invaliditeitsuitkeringen alle zijn ingetrokken, omdat niet of niet meer wordt voldaan aan de
-      openingsvoorwaarden voor het recht op invaliditeitsuitkering.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-  - number: '14.2'
-    text: |-
-      De evenredige verlaging of herziening vindt plaats door het WAO-dagloon of WAO-vervolgdagloon te vermenigvuldigen
-      met de breuk (100 – (A x B)) / 100 waarbij: A staat voor het midden van de arbeidsongeschiktheidsklasse die bij de
-      vaststelling of hernieuwde vaststelling in acht wordt genomen; B staat voor de verhouding, bedoeld in het eerste
-      lid, onderdeel b.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel14
-  - number: '15.1'
-    text: |-
-      Bij het vaststellen van het WW-dagloon van de werknemer, op wie in verband met opeenvolgende verliezen van
+      1 Bij het vaststellen van het WW-dagloon van de werknemer, op wie in verband met opeenvolgende verliezen van
       arbeidsuren [artikel 2 van het Besluit nadere regeling verlies van arbeidsuren][ref1] van toepassing is, eindigt
       bij toepassing van [artikel 3, eerste lid][ref2], het refertejaar op de laatste dag van het aangiftetijdvak
       voorafgaand aan het aangiftetijdvak waarin het eerste verlies van arbeidsuren is ingetreden.
 
+      2 Het WW-dagloon van de werknemer, op wie in verband met opeenvolgende verliezen van arbeidsuren
+      [artikel 3 van het Besluit nadere regeling verlies van arbeidsuren][ref3] van toepassing is, wordt vastgesteld door
+      de berekening op grond van [artikel 3, eerste lid][ref4], te vervangen door:
+
+      (A + B) x C / D
+
+      waarbij:
+
+      A staat voor het dagloon dat ten grondslag ligt aan de uitkering terzake van zijn arbeidsurenverlies waarbij
+      op grond van [artikel 3 van het Besluit nadere regeling verlies van arbeidsuren][ref5] een daaropvolgend
+      arbeidsurenverlies wordt samengeteld;
+
+      B staat voor de evenredige verhoging van het dagloon, in de mate waarin het minimumloon in de periode bedoeld in C
+      is herzien;
+
+      C staat voor het gemiddelde aantal gewerkte arbeidsuren in de kalenderweek van het voorgaande arbeidsurenverlies
+      tot en met de kalenderweek voorafgaande aan die waarin het volgende arbeidsurenverlies plaatsvindt;
+
+      D staat voor het gemiddelde aantal gewerkte arbeidsuren voorafgaande aan het voorgaande arbeidsurenverlies.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0004096#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref3]: https://wetten.overheid.nl/BWBR0004096#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0004096#Artikel3
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel15
     references:
       - id: ref1
@@ -1184,110 +1079,85 @@ articles:
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '15.2'
-    text: |-
-      Het WW-dagloon van de werknemer, op wie in verband met opeenvolgende verliezen van arbeidsuren
-      [artikel 3 van het Besluit nadere regeling verlies van arbeidsuren][ref1] van toepassing is, wordt vastgesteld
-      door de berekening op grond van [artikel 3, eerste lid][ref2], te vervangen door: (A + B) x C / D waarbij: A staat
-      voor het dagloon dat ten grondslag ligt aan de uitkering terzake van zijn arbeidsurenverlies waarbij op grond van
-      [artikel 3 van het Besluit nadere regeling verlies van arbeidsuren][ref3] een daaropvolgend arbeidsurenverlies
-      wordt samengeteld; B staat voor de evenredige verhoging van het dagloon, in de mate waarin het minimumloon in
-      de periode bedoeld in C is herzien; C staat voor het gemiddelde aantal gewerkte arbeidsuren in de kalenderweek
-      van het voorgaande arbeidsurenverlies tot en met de kalenderweek voorafgaande aan die waarin het volgende
-      arbeidsurenverlies plaatsvindt; D staat voor het gemiddelde aantal gewerkte arbeidsuren voorafgaande aan het
-      voorgaande arbeidsurenverlies.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004096#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0004096#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel15
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0004096
         artikel: '3'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0018842
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-      - id: ref3
+      - id: ref5
         bwb_id: BWBR0004096
         artikel: '3'
   - number: '16'
     text: |-
       Het WW-dagloon van de werknemer, die in privaatrechtelijke of publiekrechtelijke dienstbetrekking staat, en die
       recht heeft op uitkering:
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel16
-  - number: 16.a
-    text: |-
-      op grond van [artikel 18 van de WW][ref1]; of
+
+      a. op grond van [artikel 18 van de WW][ref1]; of
+
+      b. op grond van werkloosheid die verband houdt met een verleende ontheffing krachtens
+      [artikel 8, derde lid, van het Buitengewoon Besluit Arbeidsverhoudingen 1945][ref2],
+
+      wordt vastgesteld overeenkomstig [artikel 11][ref3], waarbij het arbeidsongeschikt worden of het intreden van
+      arbeidsongeschiktheid wordt aangemerkt als het intreden van arbeidsurenverlies.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel18
+      [ref2]: https://wetten.overheid.nl/BWBR0002014#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel11
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel16
     references:
       - id: ref1
         bwb_id: BWBR0004045
         artikel: '18'
-  - number: 16.b
-    text: |-
-      op grond van werkloosheid die verband houdt met een verleende ontheffing krachtens
-      [artikel 8, derde lid, van het Buitengewoon Besluit Arbeidsverhoudingen 1945][ref1],
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002014#Artikel8
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel16
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002014
         artikel: '8'
-  - number: '17.1'
+      - id: ref3
+        bwb_id: BWBR0018842
+        artikel: '11'
+        hoofdstuk: '2'
+        paragraaf: '5'
+  - number: '17'
     text: |-
-      Het WW-dagloon van de werknemer die binnen 24 maanden na de dag van beëindiging van een eerdere dienstbetrekking
+      1 Het WW-dagloon van de werknemer die binnen 24 maanden na de dag van beëindiging van een eerdere dienstbetrekking
       een andere dienstbetrekking is aangegaan, wordt, bij beëindiging van deze nieuwe dienstbetrekking binnen 36
       maanden na die eerdere beëindiging, niet lager vastgesteld dan op het WW-dagloon dat gold of zou hebben gegolden
       vanwege die eerdere dienstbetrekking. Het dagloon wordt in aanmerking genomen naar de mate waarin de nieuwe
       dienstbetrekking in de plaats is gekomen van de eerdere dienstbetrekking.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: '17.2'
-    text: |-
-      De in het eerste lid genoemde termijn van 24 maanden wordt verlengd met in deze periode gelegen perioden van
+
+      2 De in het eerste lid genoemde termijn van 24 maanden wordt verlengd met in deze periode gelegen perioden van
       arbeidsongeschiktheid.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: '17.3'
-    text: |-
-      Het eerste lid is van overeenkomstige toepassing op het vast te stellen WW-dagloon vanwege alle doch binnen
+
+      3 Het eerste lid is van overeenkomstige toepassing op het vast te stellen WW-dagloon vanwege alle doch binnen
       de termijn van 36 maanden na de dag van beëindiging van de in het eerste lid bedoelde eerdere dienstbetrekking
       aangegane en beëindigde nieuwe dienstbetrekkingen.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: '17.4'
-    text: |-
-      Indien de werknemer op de dag van het beëindigen van de eerste dienstbetrekking de leeftijd van 55 jaar had
+
+      4 Indien de werknemer op de dag van het beëindigen van de eerste dienstbetrekking de leeftijd van 55 jaar had
       bereikt, is de in het eerste en derde lid genoemde termijn van 36 maanden niet van toepassing.
+
+      5 Het eerste lid is niet van toepassing op het vaststellen van het WW-dagloon indien de eerste dienstbetrekking
+      is beëindigd:
+
+      a. als gevolg van verwijtbare werkloosheid van de werknemer;
+
+      b. als gevolg van het bereiken van de leeftijd waarop het uit deze dienstbetrekking voortvloeiende
+      ouderdomspensioen aanvangt.
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: '17.5'
+  - number: '18'
     text: |-
-      Het eerste lid is niet van toepassing op het vaststellen van het WW-dagloon indien de eerste dienstbetrekking is
-      beëindigd:
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: 17.5.a
-    text: als gevolg van verwijtbare werkloosheid van de werknemer;
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: 17.5.b
-    text: |-
-      als gevolg van het bereiken van de leeftijd waarop het uit deze dienstbetrekking voortvloeiende ouderdomspensioen
-      aanvangt.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel17
-  - number: '18.1'
-    text: |-
-      Bij de vaststelling van het WW-dagloon van de werknemer die in het refertejaar, anders dan in een vaste
+      1 Bij de vaststelling van het WW-dagloon van de werknemer die in het refertejaar, anders dan in een vaste
       dienstbetrekking, uitsluitend of vrijwel uitsluitend op basis van losse optredens als musicus of artiest werkzaam
       is geweest, wordt, bij de toepassing van [artikel 3, eerste lid][ref1], voorzover het betreft het loon dat met die
       optredens is verworven, rekening gehouden met 100/70 van dat loon.
 
+      2 Indien het eerste lid van toepassing is, is [artikel 6][ref2] niet van toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel6
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel18
     references:
       - id: ref1
@@ -1295,15 +1165,7 @@ articles:
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '18.2'
-    text: |-
-      Indien het eerste lid van toepassing is, is [artikel 6][ref1] niet van toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel6
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel18
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0018842
         artikel: '6'
         hoofdstuk: '2'
@@ -1369,9 +1231,9 @@ articles:
         artikel: '14'
       - id: ref7
         bwb_id: BWBR0019057
-  - number: '21.1'
+  - number: '21'
     text: |-
-      Indien de werknemer op de eerste dag waarop recht bestaat op uitkering op grond van de [ZW][ref1], de
+      1 Indien de werknemer op de eerste dag waarop recht bestaat op uitkering op grond van de [ZW][ref1], de
       [Wet WIA][ref2], de [WAO][ref3], de [Wet arbeid en zorg][ref4] of de [WW][ref5] jonger is dan 23 jaar en het op
       grond van [paragraaf 1 tot en met 6 ][ref6]berekende dagloon bij verjaring minder bedraagt dan het minimumloon,
       dat behoort bij de leeftijd van de werknemer bij zijn verjaring, vermeerderd met de vakantiebijslag, bedoeld in
@@ -1379,6 +1241,9 @@ articles:
       een breuk waarvan de teller wordt gevormd door het minimumjeugdloonpercentage dat verbonden is aan de leeftijd
       van de werknemer of door 100 indien de werknemer de leeftijd van 23 jaar heeft bereikt, en de noemer door het
       minimumjeugdloonpercentage dat verbonden is aan de leeftijd van de werknemer op de laatste dag voor zijn verjaring.
+
+      2 Het verhoogde dagloon bedraagt niet meer dan het minimumloon, dat behoort bij de leeftijd van de werknemer na
+      verjaring, vermeerderd met de vakantiebijslag, bedoeld in [artikel 15 van de WML][ref8].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001888
@@ -1388,6 +1253,7 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0004045
       [ref6]: https://wetten.overheid.nl/BWBR0018842#Hoofdstuk2
       [ref7]: https://wetten.overheid.nl/BWBR0002638#Artikel15
+      [ref8]: https://wetten.overheid.nl/BWBR0002638#Artikel15
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel21
     references:
       - id: ref1
@@ -1407,63 +1273,54 @@ articles:
       - id: ref7
         bwb_id: BWBR0002638
         artikel: '15'
-  - number: '21.2'
-    text: |-
-      Het verhoogde dagloon bedraagt niet meer dan het minimumloon, dat behoort bij de leeftijd van de werknemer na
-      verjaring, vermeerderd met de vakantiebijslag, bedoeld in [artikel 15 van de WML][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel15
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel21
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0002638
         artikel: '15'
-  - number: '22.1'
+  - number: '22'
     text: |-
-      Het dagloon bedraagt ten hoogste het op grond van
+      1 Het dagloon bedraagt ten hoogste het op grond van
       [artikel 17, eerste lid, van de Wet financiering sociale verzekeringen][ref1] geldende bedrag met betrekking tot
       een loontijdvak van een dag.
 
+      2 Indien een werknemer gelijktijdig aanspraak heeft op meerdere uitkeringen op grond van de [ZW][ref2], de
+      [WW][ref3], de [Wet arbeid en zorg][ref4], de [WAO][ref5] of de [Wet WIA][ref6] en de som van de uitkeringen op
+      grond van die wetten per dag meer bedraagt dan 70% van het bedrag, bedoeld in het eerste lid, worden de aan die
+      uitkeringen ten grondslag liggende daglonen zodanig evenredig verminderd dat de som van de uitkeringen per dag niet
+      langer meer bedraagt dan 70% van het bedrag, bedoeld in het eerste lid.
+
+      3 Indien van een uitkering als bedoeld in het tweede lid het uitkeringspercentage hoger is dan 70 % wordt 70% van
+      het bedrag, bedoeld in het eerste lid, verhoogd met:
+
+      ((A – 70) / 100) x B
+
+      waarbij:
+
+      A staat voor het hogere uitkeringspercentage;
+
+      B staat voor het dagloon van de uitkering, waarvoor het uitkeringspercentage A geldt.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0017745#Artikel17
+      [ref2]: https://wetten.overheid.nl/BWBR0001888
+      [ref3]: https://wetten.overheid.nl/BWBR0004045
+      [ref4]: https://wetten.overheid.nl/BWBR0013008
+      [ref5]: https://wetten.overheid.nl/BWBR0002524
+      [ref6]: https://wetten.overheid.nl/BWBR0019057
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel22
     references:
       - id: ref1
         bwb_id: BWBR0017745
         artikel: '17'
-  - number: '22.2'
-    text: |-
-      Indien een werknemer gelijktijdig aanspraak heeft op meerdere uitkeringen op grond van de [ZW][ref1], de
-      [WW][ref2], de [Wet arbeid en zorg][ref3], de [WAO][ref4] of de [Wet WIA][ref5] en de som van de uitkeringen op
-      grond van die wetten per dag meer bedraagt dan 70% van het bedrag, bedoeld in het eerste lid, worden de aan die
-      uitkeringen ten grondslag liggende daglonen zodanig evenredig verminderd dat de som van de uitkeringen per dag niet
-      langer meer bedraagt dan 70% van het bedrag, bedoeld in het eerste lid.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001888
-      [ref2]: https://wetten.overheid.nl/BWBR0004045
-      [ref3]: https://wetten.overheid.nl/BWBR0013008
-      [ref4]: https://wetten.overheid.nl/BWBR0002524
-      [ref5]: https://wetten.overheid.nl/BWBR0019057
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel22
-    references:
-      - id: ref1
-        bwb_id: BWBR0001888
       - id: ref2
-        bwb_id: BWBR0004045
+        bwb_id: BWBR0001888
       - id: ref3
-        bwb_id: BWBR0013008
+        bwb_id: BWBR0004045
       - id: ref4
-        bwb_id: BWBR0002524
+        bwb_id: BWBR0013008
       - id: ref5
+        bwb_id: BWBR0002524
+      - id: ref6
         bwb_id: BWBR0019057
-  - number: '22.3'
-    text: |-
-      Indien van een uitkering als bedoeld in het tweede lid het uitkeringspercentage hoger is dan 70 % wordt 70%
-      van het bedrag, bedoeld in het eerste lid, verhoogd met: ((A – 70) / 100) x B waarbij: A staat voor het hogere
-      uitkeringspercentage; B staat voor het dagloon van de uitkering, waarvoor het uitkeringspercentage A geldt.
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel22
   - number: '23'
     text: |-
       Indien aan een wijziging van de [Wet op de loonbelasting 1964][ref1] of een daarop gebaseerde
@@ -1488,19 +1345,41 @@ articles:
       - id: ref3
         bwb_id: BWBR0017745
         paragraaf: '1'
-  - number: '24.1'
+  - number: '24'
     text: |-
-      Op het loon, dat is genoten in aangiftetijdvakken voorafgaand aan de dag
+      1 Op het loon, dat is genoten in aangiftetijdvakken voorafgaand aan de dag
       waarop dit besluit in werking treedt en voorafgaande aan de dag, waarop
       [artikel 48, derde lid, van de Invoeringswet Wet financiering sociale verzekeringen][ref1] in
       werking treedt, blijven de bepalingen van de [Coördinatiewet Sociale Verzekeringen][ref2],
       zoals die luidde op de dag voorafgaande aan de dag van inwerkingtreding van
       [artikel 48, derde lid, van de Invoeringswet Wet financiering sociale verzekeringen][ref3] van toepassing.
 
+      2 Indien de werknemer in de aangiftetijdvakken in refertejaren gelegen vóór 1 januari 2007 loon heeft
+      genoten, waarin bedragen aan vakantiebijslag en van extra periodiek salaris zijn opgenomen, blijft
+      [artikel 3, eerste lid][ref4], voor de dagloonberekening buiten aanmerking en wordt het dagloon berekend door het
+      loon, dat de werknemer heeft genoten in het refertejaar te delen door 261.
+
+      3 Het tweede lid is van overeenkomstige toepassing voor de dagloonberekening, bedoeld
+      in[ artikel 2, zesde lid][ref5],[ 6, tweede lid][ref6], en [11, eerste en tweede lid][ref7], met dien verstande,
+      dat daarbij alleen het loon, dat de werknemer heeft genoten in aanmerking wordt genomen.
+
+      4 [Artikel 12][ref8] zoals dat luidde op de dag voor inwerkingtreding van artikel I, onderdeel B, onder 1, 2, 3 of
+      4, van het besluit van 28 september 2006 tot wijziging van enige algemene maatregelen van bestuur in verband met de
+      inwerkingtreding van de Wet wijziging WW-stelsel en in verband met enige technische verbeteringen (Stb. 435) blijft
+      van toepassing met betrekking tot een recht op uitkering waarvan de eerste werkloosheidsdag is gelegen voor de dag
+      van inwerkingtreding van het desbetreffende subonderdeel alsmede op een recht op vervolguitkering dat is ontstaan
+      op grond van [artikel 130h, eerste lid, aanhef en onderdelen b of c, of tweede lid, van de WW][ref9].
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0017747#Artikel48
       [ref2]: https://wetten.overheid.nl/BWBR0002126
       [ref3]: https://wetten.overheid.nl/BWBR0017747#Artikel48
+      [ref4]: https://wetten.overheid.nl/BWBR0018842#Artikel3
+      [ref5]: https://wetten.overheid.nl/BWBR0018842#Artikel2
+      [ref6]: https://wetten.overheid.nl/BWBR0018842#Artikel6
+      [ref7]: https://wetten.overheid.nl/BWBR0018842#Artikel11
+      [ref8]: https://wetten.overheid.nl/BWBR0018842#Artikel12
+      [ref9]: https://wetten.overheid.nl/BWBR0004045#Artikel130h
     url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel24
     references:
       - id: ref1
@@ -1511,68 +1390,31 @@ articles:
       - id: ref3
         bwb_id: BWBR0017747
         artikel: '48'
-  - number: '24.2'
-    text: |-
-      Indien de werknemer in de aangiftetijdvakken in refertejaren gelegen vóór 1 januari 2007 loon heeft genoten, waarin
-      bedragen aan vakantiebijslag en van extra periodiek salaris zijn opgenomen, blijft [artikel 3, eerste lid][ref1],
-      voor de dagloonberekening buiten aanmerking en wordt het dagloon berekend door het loon, dat de werknemer heeft
-      genoten in het refertejaar te delen door 261.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel24
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0018842
         artikel: '3'
         hoofdstuk: '2'
         paragraaf: '1'
-  - number: '24.3'
-    text: |-
-      Het tweede lid is van overeenkomstige toepassing voor de dagloonberekening, bedoeld
-      in[ artikel 2, zesde lid][ref1],[ 6, tweede lid][ref2], en [11, eerste en tweede lid][ref3], met dien verstande,
-      dat daarbij alleen het loon, dat de werknemer heeft genoten in aanmerking wordt genomen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0018842#Artikel6
-      [ref3]: https://wetten.overheid.nl/BWBR0018842#Artikel11
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel24
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0018842
         artikel: '2'
         hoofdstuk: '1'
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0018842
         artikel: '6'
         hoofdstuk: '2'
         paragraaf: '3'
-      - id: ref3
+      - id: ref7
         bwb_id: BWBR0018842
         artikel: '11'
         hoofdstuk: '2'
         paragraaf: '5'
-  - number: '24.4'
-    text: |-
-      [Artikel 12][ref1] zoals dat luidde op de dag voor inwerkingtreding van artikel I, onderdeel B, onder 1, 2, 3 of
-      4, van het besluit van 28 september 2006 tot wijziging van enige algemene maatregelen van bestuur in verband met de
-      inwerkingtreding van de Wet wijziging WW-stelsel en in verband met enige technische verbeteringen (Stb. 435) blijft
-      van toepassing met betrekking tot een recht op uitkering waarvan de eerste werkloosheidsdag is gelegen voor de dag
-      van inwerkingtreding van het desbetreffende subonderdeel alsmede op een recht op vervolguitkering dat is ontstaan
-      op grond van [artikel 130h, eerste lid, aanhef en onderdelen b of c, of tweede lid, van de WW][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018842#Artikel12
-      [ref2]: https://wetten.overheid.nl/BWBR0004045#Artikel130h
-    url: https://wetten.overheid.nl/BWBR0018842/2013-01-01#Artikel24
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0018842
         artikel: '12'
         hoofdstuk: '2'
         paragraaf: '5'
-      - id: ref2
+      - id: ref9
         bwb_id: BWBR0004045
         artikel: 130h
   - number: '25'
