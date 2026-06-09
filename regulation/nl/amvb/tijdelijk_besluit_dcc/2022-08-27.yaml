@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: tijdelijk_besluit_dcc
 regulatory_layer: AMVB
 publication_date: '2021-06-23'
@@ -25,8 +25,10 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      In dit besluit en de daarop berustende bepalingen wordt verstaan onder: - *applicatie:* door de minister
-      beschikbaar gestelde applicatie, waaronder een mobiele applicatie, een webapplicatie en een portalapplicatie;
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+        - *applicatie:* door de minister beschikbaar gestelde applicatie, waaronder een mobiele applicatie, een
+      webapplicatie en een portalapplicatie;
         - *betrokkene:* persoon waarop het certificaat betrekking heeft;
         - *certificaat:* vaccinatiecertificaat, testcertificaat of herstelcertificaat;
         - *CIBG:* agentschap Centraal Informatiepunt Beroepen Gezondheidszorg, bedoeld in
@@ -98,12 +100,11 @@ articles:
   - number: '3'
     text: Een certificaat wordt uitsluitend op verzoek van betrokkene aangemaakt.
     url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel3
-  - number: '4.1'
-    text: Een certificaat wordt voorzien van een digitale handtekening van de minister.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel4
-  - number: '4.2'
+  - number: '4'
     text: |-
-      De minister is verwerkingsverantwoordelijke voor het verwerken van de persoonsgegevens, waaronder in ieder geval
+      1 Een certificaat wordt voorzien van een digitale handtekening van de minister.
+
+      2 De minister is verwerkingsverantwoordelijke voor het verwerken van de persoonsgegevens, waaronder in ieder geval
       de persoonsgegevens uit de bijlage van de verordening, voor zover dit noodzakelijk is voor het verstrekken van een
       certificaat en voor de werking van de applicatie.
     url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel4
@@ -113,32 +114,26 @@ articles:
       er op verzoek van betrokkene, gedaan met een mobiele applicatie of webapplicatie, zorg voor dat de persoonsgegevens
       die nodig zijn voor het aanmaken van een testcertificaat op zodanige wijze verstrekt worden dat betrokkene door
       middel van de:
+
+      a. mobiele applicatie een digitaal testcertificaat kan aanmaken;
+
+      b. webapplicatie een testcertificaat kan aanmaken om op papier af te drukken.
     url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel5
-  - number: 5.a
-    text: mobiele applicatie een digitaal testcertificaat kan aanmaken;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel5
-  - number: 5.b
-    text: webapplicatie een testcertificaat kan aanmaken om op papier af te drukken.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Het RIVM of, indien het RIVM niet in CIMS over de benodigde persoonsgegevens beschikt, de vaccineerder dan
+      1 Het RIVM of, indien het RIVM niet in CIMS over de benodigde persoonsgegevens beschikt, de vaccineerder dan
       wel, indien het vaccin is toegediend in de openbare lichamen Bonaire, Sint Eustatius of Saba, de desbetreffende
       gemeentelijke gezondheidsdienst draagt er op verzoek van betrokkene, gedaan met een mobiele applicatie of
       webapplicatie, zorg voor dat de persoonsgegevens die nodig zijn voor het aanmaken van een vaccinatiecertificaat op
       zodanige wijze verstrekt worden dat betrokkene door middel van de:
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel6
-  - number: 6.1.a
-    text: mobiele applicatie een digitaal vaccinatiecertificaat kan aanmaken;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel6
-  - number: 6.1.b
-    text: webapplicatie een vaccinatiecertificaat kan aanmaken om op papier af te drukken.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel6
-  - number: '6.2'
-    text: |-
-      Indien bij het aanmaken van een vaccinatiecertificaat met de mobiele applicatie of de webapplicatie uit raadpleging
-      van bestanden met persoonsgegevens waarover de gemeentelijke gezondheidsdienst beschikt uit hoofde van de
-      uitvoering van testen op infectie met het virus SARS-CoV-2, van op deze applicaties aangesloten registraties als
+
+      a. mobiele applicatie een digitaal vaccinatiecertificaat kan aanmaken;
+
+      b. webapplicatie een vaccinatiecertificaat kan aanmaken om op papier af te drukken.
+
+      2 Indien bij het aanmaken van een vaccinatiecertificaat met de mobiele applicatie of de webapplicatie uit
+      raadpleging van bestanden met persoonsgegevens waarover de gemeentelijke gezondheidsdienst beschikt uit hoofde van
+      de uitvoering van testen op infectie met het virus SARS-CoV-2, van op deze applicaties aangesloten registraties als
       bedoeld in [artikel 29, eerste lid, van de wet][ref1] van infecties met dat virus of van bij ministeriële regeling
       te bepalen bestanden met persoonsgegevens, blijkt dat betrokkene geïnfecteerd is geweest met het virus SARS-CoV-
       2, wordt de vaccinatiecyclus reeds als voltooid aangemerkt na toediening van de eerste dosis van een vaccinatie die
@@ -151,22 +146,18 @@ articles:
       - id: ref1
         bwb_id: BWBR0024705
         artikel: '29'
-  - number: '7.1'
+  - number: '7'
     text: |-
-      De tester die een test op infectie met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag positief is, draagt
-      er op verzoek van betrokkene, gedaan met een mobiele applicatie of webapplicatie, zorg voor dat de persoonsgegevens
-      die nodig zijn voor het aanmaken van een herstelcertificaat op zodanige wijze verstrekt worden dat betrokkene door
-      middel van de:
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel7
-  - number: 7.1.a
-    text: mobiele applicatie een digitaal herstelcertificaat kan aanmaken;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel7
-  - number: 7.1.b
-    text: webapplicatie een herstelcertificaat kan aanmaken om op papier af te drukken.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel7
-  - number: '7.2'
-    text: |-
-      Voor het aanmaken van een herstelcertificaat met de mobiele applicatie of de webapplicatie kunnen worden
+      1 De tester die een test op infectie met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag positief
+      is, draagt er op verzoek van betrokkene, gedaan met een mobiele applicatie of webapplicatie, zorg voor dat de
+      persoonsgegevens die nodig zijn voor het aanmaken van een herstelcertificaat op zodanige wijze verstrekt worden dat
+      betrokkene door middel van de:
+
+      a. mobiele applicatie een digitaal herstelcertificaat kan aanmaken;
+
+      b. webapplicatie een herstelcertificaat kan aanmaken om op papier af te drukken.
+
+      2 Voor het aanmaken van een herstelcertificaat met de mobiele applicatie of de webapplicatie kunnen worden
       geraadpleegd op deze applicaties aangesloten registraties als bedoeld in [artikel 29, eerste lid, van de wet][ref1]
       van infecties met dat virus of bij ministeriële regeling te bepalen bestanden met persoonsgegevens waaruit blijkt
       dat betrokkene is getest op infectie met het virus SARS-CoV-2 en de uitslag van de test positief is.
@@ -178,34 +169,26 @@ articles:
       - id: ref1
         bwb_id: BWBR0024705
         artikel: '29'
-  - number: '8.1'
+  - number: '8'
     text: |-
-      Op verzoek van betrokkene wordt een testcertificaat op papier verstrekt door de tester die een test op infectie
+      1 Op verzoek van betrokkene wordt een testcertificaat op papier verstrekt door de tester die een test op infectie
       met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag negatief is, een vaccinatiecertificaat op papier
       door de vaccineerder of, indien het vaccin is toegediend in de openbare lichamen Bonaire, Sint Eustatius of Saba,
       de desbetreffende gemeentelijke gezondheidsdienst, en een herstelcertificaat op papier door de tester die een
       test op infectie met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag positief is. De daarvoor benodigde
       persoonsgegevens worden verwerkt met een portalapplicatie.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel8
-  - number: '8.2'
-    text: |-
-      Een vaccinatiecertificaat of herstelcertificaat op papier kan voorts op telefonisch of schriftelijk verzoek van
+
+      2 Een vaccinatiecertificaat of herstelcertificaat op papier kan voorts op telefonisch of schriftelijk verzoek van
       betrokkene per post worden verstrekt door het CIBG door middel van een portalapplicatie, indien:
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel8
-  - number: 8.2.a
-    text: betrokkene identificerende persoonsgegevens kan verstrekken;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel8
-  - number: 8.2.b
-    text: |-
-      de daarvoor benodigde persoonsgegevens beschikbaar zijn gesteld door de vaccineerder respectievelijk de tester die
-      een test op infectie met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag positief is; en
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel8
-  - number: 8.2.c
-    text: betrokkene is ingeschreven in de basisregistratie personen.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel8
-  - number: '8.3'
-    text: |-
-      [Artikel 6, tweede lid][ref1], is van overeenkomstige toepassing op een vaccinatiecertificaat als bedoeld in het
+
+      a. betrokkene identificerende persoonsgegevens kan verstrekken;
+
+      b. de daarvoor benodigde persoonsgegevens beschikbaar zijn gesteld door de vaccineerder respectievelijk de tester
+      die een test op infectie met het virus SARS-CoV-2 heeft uitgevoerd waarvan de uitslag positief is; en
+
+      c. betrokkene is ingeschreven in de basisregistratie personen.
+
+      3 [Artikel 6, tweede lid][ref1], is van overeenkomstige toepassing op een vaccinatiecertificaat als bedoeld in het
       eerste en tweede lid.
 
 
@@ -215,17 +198,41 @@ articles:
       - id: ref1
         bwb_id: BWBR0045651
         artikel: '6'
-  - number: '9.1'
+  - number: '9'
     text: |-
-      De gemeentelijke gezondheidsdiensten, bedoeld in [artikel 14, tweede lid, van de wet][ref1], in de regio’s Utrecht,
-      Groningen, Rotterdam-Rijnmond, Twente, en Amsterdam-Amstelland, genoemd in de [bijlage](onbekend), bedoeld in
-      [artikel 8 van de Wet veiligheidsregio’s][ref2], en de openbare lichamen Bonaire, Sint Eustatius of Saba kunnen
-      op verzoek van betrokkene met een portalapplicatie een vaccinatiecertificaat als bedoeld in artikel 8, eerste lid,
-      van de verordening op papier verstrekken en de daarvoor noodzakelijke persoonsgegevens verwerken.
+      1 De gemeentelijke gezondheidsdiensten, bedoeld in [artikel 14, tweede lid, van de wet][ref1], in de regio’s
+      Utrecht, Groningen, Rotterdam-Rijnmond, Twente, en Amsterdam-Amstelland, genoemd in de [bijlage](onbekend), bedoeld
+      in [artikel 8 van de Wet veiligheidsregio’s][ref2], en de openbare lichamen Bonaire, Sint Eustatius of Saba
+      kunnen op verzoek van betrokkene met een portalapplicatie een vaccinatiecertificaat als bedoeld in artikel 8,
+      eerste lid, van de verordening op papier verstrekken en de daarvoor noodzakelijke persoonsgegevens verwerken.
+
+      2 Het verzoek, bedoeld in het eerste lid:
+
+      a. kan worden gedaan door een in het Europese deel van Nederland of in een van de openbare lichamen Bonaire, Sint
+      Eustatius of Saba woonachtige betrokkene of door een in een derde land woonachtige betrokkene met de Nederlandse
+      nationaliteit;
+
+      b. wordt in persoon of op een bij ministeriele regeling te bepalen wijze onder daarbij te stellen voorwaarden
+      gedaan, waarbij betrokkene zich legitimeert aan de hand van een geldig identiteitsdocument als bedoeld in
+      [artikel 1 van de Wet op de identificatieplicht][ref3] of [artikel 2 van de Wet identificatieplicht BES][ref4]; en
+
+      c. gaat vergezeld van een betrouwbaar vaccinatiebewijs waarop in het Nederlands, Engels, Duits, Frans, Italiaans,
+      Portugees of Spaans de in een vaccinatiecertificaat als bedoeld in artikel 8, eerste lid, van de verordening op te
+      nemen persoonsgegevens zijn vermeld en dat is voorzien van een logo of kenmerk van een instituut of arts.
+
+      3 Een vaccinatiecertificaat als bedoeld in artikel 8, eerste lid, van de verordening wordt uitsluitend verstrekt
+      voor een vaccin dat is goedgekeurd door het College ter beoordeling van geneesmiddelen, het Europees Medicijn
+      Agentschap of de Wereldgezondheidsorganisatie of voor een vaccin dat bij ministeriële regeling is aangewezen.
+
+      4 [Artikel 6, tweede lid][ref5], is van overeenkomstige toepassing op een vaccinatiecertificaat als bedoeld in
+      artikel 8, eerste lid, van de verordening.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0024705#Artikel14
       [ref2]: https://wetten.overheid.nl/BWBR0027466#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0006297#Artikel1
+      [ref4]: https://wetten.overheid.nl/BWBR0028575#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0045651#Artikel6
     url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
     references:
       - id: ref1
@@ -234,68 +241,52 @@ articles:
       - id: ref2
         bwb_id: BWBR0027466
         artikel: '8'
-  - number: '9.2'
-    text: 'Het verzoek, bedoeld in het eerste lid:'
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-  - number: 9.2.a
-    text: |-
-      kan worden gedaan door een in het Europese deel van Nederland of in een van de openbare lichamen Bonaire, Sint
-      Eustatius of Saba woonachtige betrokkene of door een in een derde land woonachtige betrokkene met de Nederlandse
-      nationaliteit;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-  - number: 9.2.b
-    text: |-
-      wordt in persoon of op een bij ministeriele regeling te bepalen wijze onder daarbij te stellen voorwaarden
-      gedaan, waarbij betrokkene zich legitimeert aan de hand van een geldig identiteitsdocument als bedoeld in
-      [artikel 1 van de Wet op de identificatieplicht][ref1] of [artikel 2 van de Wet identificatieplicht BES][ref2]; en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006297#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0028575#Artikel2
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0006297
         artikel: '1'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0028575
         artikel: '2'
-  - number: 9.2.c
-    text: |-
-      gaat vergezeld van een betrouwbaar vaccinatiebewijs waarop in het Nederlands, Engels, Duits, Frans, Italiaans,
-      Portugees of Spaans de in een vaccinatiecertificaat als bedoeld in artikel 8, eerste lid, van de verordening op te
-      nemen persoonsgegevens zijn vermeld en dat is voorzien van een logo of kenmerk van een instituut of arts.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-  - number: '9.3'
-    text: |-
-      Een vaccinatiecertificaat als bedoeld in artikel 8, eerste lid, van de verordening wordt uitsluitend verstrekt voor
-      een vaccin dat is goedgekeurd door het College ter beoordeling van geneesmiddelen, het Europees Medicijn Agentschap
-      of de Wereldgezondheidsorganisatie of voor een vaccin dat bij ministeriële regeling is aangewezen.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-  - number: '9.4'
-    text: |-
-      [Artikel 6, tweede lid][ref1], is van overeenkomstige toepassing op een vaccinatiecertificaat als bedoeld in
-      artikel 8, eerste lid, van de verordening.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0045651#Artikel6
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0045651
         artikel: '6'
-  - number: 9a.1
+  - number: 9a
     text: |-
-      De gemeentelijke gezondheidsdiensten, bedoeld in [artikel 14, tweede lid, van de Wet publieke gezondheid][ref1],
+      1 De gemeentelijke gezondheidsdiensten, bedoeld in [artikel 14, tweede lid, van de Wet publieke gezondheid][ref1],
       in de regio’s Utrecht, Groningen, Rotterdam-Rijnmond, Amsterdam-Amstelland en Twente, genoemd in de [bijlage]
       (onbekend), bedoeld in [artikel 8 van de Wet veiligheidsregio’s][ref2], en de openbare lichamen Bonaire, Sint
       Eustatius en Saba, kunnen op verzoek van betrokkenen met een portalapplicatie een vaccinatiecertificaat als
       bedoeld in artikel 3, eerste lid, onderdeel a, van de verordening op papier of digitaal verstrekken en de daarvoor
       noodzakelijke persoonsgegevens verwerken.
 
+      2 Het verzoek, bedoeld in het eerste lid:
+
+      a. kan worden gedaan door eenieder die in een lidstaat van de Europese Unie is gevaccineerd met een:
+
+      1°. vaccin dat is goedgekeurd door het College ter beoordeling van geneesmiddelen, het Europees Medicijn Agentschap
+      of de Wereldgezondheidsorganisatie;
+
+      2°. in artikel 5, vijfde lid, van de verordening, bedoeld COVID-19 vaccin; of
+
+      3°. met een vaccin dat bij ministeriële regeling is aangewezen;
+
+      b. wordt in persoon gedaan, waarbij betrokkene zich legitimeert aan de hand van een geldig
+      identiteitsdocument, bedoeld in [artikel 1 van de Wet op de identificatieplicht][ref3] of
+      [artikel 2 van de Wet identificatieplicht BES][ref4]; en
+
+      c. gaat vergezeld van een betrouwbaar vaccinatiebewijs waarop in ten minste in de officiële taal of talen van de
+      lidstaat van afgifte, de persoonsgegevens, bedoeld in artikel 5, tweede lid, van de verordening zijn vermeld en dat
+      is voorzien van een logo of kenmerk van een instituut of arts.
+
+      3 In het geval de persoon in kwestie bij het verzoek aangeeft gebruik te willen maken van de reeds geregistreerde
+      vaccinatiegegevens die staan opgenomen in het digitale patiëntendossier, zijn in afwijking van het tweede lid, de
+      eisen onder b en c, niet van toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0024705#Artikel14
       [ref2]: https://wetten.overheid.nl/BWBR0027466#Artikel8
+      [ref3]: https://wetten.overheid.nl/BWBR0006297#Artikel1
+      [ref4]: https://wetten.overheid.nl/BWBR0028575#Artikel2
     url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
     references:
       - id: ref1
@@ -304,52 +295,12 @@ articles:
       - id: ref2
         bwb_id: BWBR0027466
         artikel: '8'
-  - number: 9a.2
-    text: 'Het verzoek, bedoeld in het eerste lid:'
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.2.a
-    text: 'kan worden gedaan door eenieder die in een lidstaat van de Europese Unie is gevaccineerd met een:'
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.2.a.1°
-    text: |-
-      vaccin dat is goedgekeurd door het College ter beoordeling van geneesmiddelen, het Europees Medicijn Agentschap of
-      de Wereldgezondheidsorganisatie;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.2.a.2°
-    text: in artikel 5, vijfde lid, van de verordening, bedoeld COVID-19 vaccin; of
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.2.a.3°
-    text: met een vaccin dat bij ministeriële regeling is aangewezen;
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.2.b
-    text: |-
-      wordt in persoon gedaan, waarbij betrokkene zich legitimeert aan de hand van een geldig
-      identiteitsdocument, bedoeld in [artikel 1 van de Wet op de identificatieplicht][ref1] of
-      [artikel 2 van de Wet identificatieplicht BES][ref2]; en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006297#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0028575#Artikel2
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0006297
         artikel: '1'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0028575
         artikel: '2'
-  - number: 9a.2.c
-    text: |-
-      gaat vergezeld van een betrouwbaar vaccinatiebewijs waarop in ten minste in de officiële taal of talen van de
-      lidstaat van afgifte, de persoonsgegevens, bedoeld in artikel 5, tweede lid, van de verordening zijn vermeld en dat
-      is voorzien van een logo of kenmerk van een instituut of arts.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
-  - number: 9a.3
-    text: |-
-      In het geval de persoon in kwestie bij het verzoek aangeeft gebruik te willen maken van de reeds geregistreerde
-      vaccinatiegegevens die staan opgenomen in het digitale patiëntendossier, zijn in afwijking van het tweede lid, de
-      eisen onder b en c, niet van toepassing.
-    url: https://wetten.overheid.nl/BWBR0045651/2022-08-27#Artikel9a
   - number: '10'
     text: |-
       Betrokkene kan zijn persoonsgegevens, opgenomen op papier uitgegeven certificaat, met de mobiele applicatie
