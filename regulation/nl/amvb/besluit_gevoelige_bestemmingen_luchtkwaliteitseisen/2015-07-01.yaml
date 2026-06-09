@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_gevoelige_bestemmingen_luchtkwaliteitseisen
 regulatory_layer: AMVB
 publication_date: '2020-10-28'
@@ -25,8 +25,10 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      In dit besluit en de daarop berustende bepalingen wordt verstaan onder: - *gebouw:* gebouw als bedoeld in
-      [artikel 1, eerste lid, van de Woningwet][ref1], met inbegrip van de daarbij behorende terreinen;
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+        - *gebouw:* gebouw als bedoeld in [artikel 1, eerste lid, van de Woningwet][ref1], met inbegrip van de daarbij
+      behorende terreinen;
         - *provinciale weg:* autoweg als bedoeld in [artikel 1 van het Reglement verkeersregels en verkeerstekens 1990][ref2]
       of andere voor motorvoertuigen bestemde weg, voorzover in beheer bij een provincie;
         - *rijksweg:* autoweg of autosnelweg als bedoeld in
@@ -39,7 +41,7 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005181#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0004825#Artikel1
       [ref3]: https://wetten.overheid.nl/BWBR0004825#Artikel1
-      [ref4]: https://wetten.overheid.nl/BWBR0003245#Artikel5
+      [ref4]: https://wetten.overheid.nl/BWBR0003245#Artikel5.16
       [ref5]: https://wetten.overheid.nl/BWBR0003245
     url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel1
     references:
@@ -54,81 +56,67 @@ articles:
         artikel: '1'
       - id: ref4
         bwb_id: BWBR0003245
-        artikel: '5'
+        artikel: '5.16'
       - id: ref5
         bwb_id: BWBR0003245
-  - number: '2.1'
+  - number: '2'
     text: |-
-      Indien de uitoefening van een bevoegdheid of toepassing van een wettelijk voorschrift betrekking heeft op een geval
-      dat behoort tot een bij [artikel 3][ref1] aangewezen categorie waarvan de locatie geheel of gedeeltelijk is of zal
-      zijn gelegen op een afstand van:
+      1 Indien de uitoefening van een bevoegdheid of toepassing van een wettelijk voorschrift betrekking heeft op een
+      geval dat behoort tot een bij [artikel 3][ref1] aangewezen categorie waarvan de locatie geheel of gedeeltelijk is
+      of zal zijn gelegen op een afstand van:
+
+      a. minder dan 300 meter vanaf de rand van een rijksweg, of
+
+      b. minder dan 50 meter vanaf de rand van een provinciale weg,
+
+      en op die locatie sprake is van een overschrijding of dreigende overschrijding op of na het daarbij behorende
+      tijdstip van een in [voorschrift 2.1 of 4.1 van bijlage 2 van de wet][ref2] opgenomen grenswaarde, vindt die
+      uitoefening of toepassing op een zodanige wijze plaats dat deze niet leidt tot een toename van het aantal ter
+      plaatse verblijvende personen.
+
+      2 Bij de uitvoering van dit besluit blijven op de [voorschriften 2.1a en 4.2 van bijlage 2 van de wet][ref3]
+      berustende bepalingen buiten toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0025181#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0003245
+      [ref3]: https://wetten.overheid.nl/BWBR0003245
     url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0025181
         artikel: '3'
         paragraaf: '2'
-  - number: 2.1.a
-    text: minder dan 300 meter vanaf de rand van een rijksweg, of
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel2
-  - number: 2.1.b
-    text: minder dan 50 meter vanaf de rand van een provinciale weg,
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel2
-  - number: '2.2'
-    text: |-
-      Bij de uitvoering van dit besluit blijven op de [voorschriften 2.1a en 4.2 van bijlage 2 van de wet][ref1]
-      berustende bepalingen buiten toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel2
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0003245
-  - number: '3.1'
+      - id: ref3
+        bwb_id: BWBR0003245
+  - number: '3'
     text: |-
-      Als categorieën van gevallen, bedoeld in [artikel 2][ref1], worden aangewezen gebouwen, geheel of gedeeltelijk
+      1 Als categorieën van gevallen, bedoeld in [artikel 2][ref1], worden aangewezen gebouwen, geheel of gedeeltelijk
       bestemd of in gebruik:
 
+      a. ten behoeve van basisonderwijs, voortgezet onderwijs of overig onderwijs aan minderjarigen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0025181#Artikel2
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0025181
-        artikel: '2'
-        paragraaf: '2'
-  - number: 3.1.a
-    text: ten behoeve van basisonderwijs, voortgezet onderwijs of overig onderwijs aan minderjarigen;
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-  - number: 3.1.b
-    text: ten behoeve van kinderopvang;
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-  - number: 3.1.c
-    text: als verzorgingstehuis, verpleegtehuis of bejaardentehuis;
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-  - number: 3.1.d
-    text: ten behoeve van een combinatie van functies als genoemd onder a, b of c.
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-  - number: '3.2'
-    text: |-
-      De aanwijzing, bedoeld in het eerste lid, is van toepassing op nieuw te bouwen gebouwen alsmede op bestaande
+      b. ten behoeve van kinderopvang;
+
+      c. als verzorgingstehuis, verpleegtehuis of bejaardentehuis;
+
+      d. ten behoeve van een combinatie van functies als genoemd onder a, b of c.
+
+      2 De aanwijzing, bedoeld in het eerste lid, is van toepassing op nieuw te bouwen gebouwen alsmede op bestaande
       gebouwen indien deze worden uitgebreid of een functiewijziging ondergaan.
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
-  - number: '3.3'
-    text: |-
-      Indien de uitoefening van een bevoegdheid of toepassing van een wettelijk voorschrift als bedoeld in
-      [artikel 2, eerste lid][ref1], betrekking heeft op de uitbreiding van een bestaand gebouw of op de uitbreiding
-      van een door dat gebouw vervulde functie als bedoeld in het eerste lid is in afwijking van [artikel 2][ref2] een
+
+      3 Indien de uitoefening van een bevoegdheid of toepassing van een wettelijk voorschrift als bedoeld in
+      [artikel 2, eerste lid][ref2], betrekking heeft op de uitbreiding van een bestaand gebouw of op de uitbreiding
+      van een door dat gebouw vervulde functie als bedoeld in het eerste lid is in afwijking van [artikel 2][ref3] een
       eenmalige toename van ten hoogste tien procent van het rechtens toegestane aantal personen dat op de desbetreffende
       locatie verblijft, toegestaan.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0025181#Artikel2
       [ref2]: https://wetten.overheid.nl/BWBR0025181#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0025181#Artikel2
     url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel3
     references:
       - id: ref1
@@ -136,6 +124,10 @@ articles:
         artikel: '2'
         paragraaf: '2'
       - id: ref2
+        bwb_id: BWBR0025181
+        artikel: '2'
+        paragraaf: '2'
+      - id: ref3
         bwb_id: BWBR0025181
         artikel: '2'
         paragraaf: '2'
@@ -151,36 +143,31 @@ articles:
       rechtshandelingen en feitelijke handelingen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel5
+      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel5.16
     url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel5
     references:
       - id: ref1
         bwb_id: BWBR0003245
-        artikel: '5'
-  - number: '6.1'
+        artikel: '5.16'
+  - number: '6'
     text: |-
-      Dit besluit, met uitzondering van [artikel 2, tweede lid][ref1], treedt in werking met ingang van de dag na de
+      1 Dit besluit, met uitzondering van [artikel 2, tweede lid][ref1], treedt in werking met ingang van de dag na de
       datum van uitgifte van het Staatsblad waarin het wordt geplaatst.
+
+      2 [Artikel 2, tweede lid][ref2], treedt in werking op het tijdstip waarop het bij koninklijke boodschap van 9
+      september 2008 ingediende voorstel van wet tot wijziging van de Wet milieubeheer (implementatie en derogatie
+      luchtkwaliteitseisen) (Kamerstukken II 2008/2009, 31 589, nr. 2), na tot wet te zijn verheven, in werking treedt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0025181#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0025181#Artikel2
     url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel6
     references:
       - id: ref1
         bwb_id: BWBR0025181
         artikel: '2'
         paragraaf: '2'
-  - number: '6.2'
-    text: |-
-      [Artikel 2, tweede lid][ref1], treedt in werking op het tijdstip waarop het bij koninklijke boodschap van 9
-      september 2008 ingediende voorstel van wet tot wijziging van de Wet milieubeheer (implementatie en derogatie
-      luchtkwaliteitseisen) (Kamerstukken II 2008/2009, 31 589, nr. 2), na tot wet te zijn verheven, in werking treedt.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0025181#Artikel2
-    url: https://wetten.overheid.nl/BWBR0025181/2015-07-01#Artikel6
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0025181
         artikel: '2'
         paragraaf: '2'
