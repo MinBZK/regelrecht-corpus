@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_samenwerking_vo_bve_bes
 regulatory_layer: WET
 publication_date: '2014-09-25'
@@ -26,40 +26,29 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#Artikel1
-  - number: 1.a
     text: |-
-      *WVO BES:* [Wet voortgezet onderwijs BES][ref1];
+      In dit besluit wordt verstaan onder:
+
+      a. *WVO BES:* [Wet voortgezet onderwijs BES][ref1];
+
+      b. *WEB BES:* [Wet educatie en beroepsonderwijs BES][ref2];
+
+      c. *VAVO:* voortgezet algemeen volwassenenonderwijs als bedoeld in
+      [artikel 7.3.1, eerste lid, onder a, van de WEB BES][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0030284
+      [ref2]: https://wetten.overheid.nl/BWBR0028395
+      [ref3]: https://wetten.overheid.nl/BWBR0028395#Artikel7.3.1
     url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0030284
-  - number: 1.b
-    text: |-
-      *WEB BES:* [Wet educatie en beroepsonderwijs BES][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0028395
-    url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0028395
-  - number: 1.c
-    text: |-
-      *VAVO:* voortgezet algemeen volwassenenonderwijs als bedoeld in
-      [artikel 7.3.1, eerste lid, onder a, van de WEB BES][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0028395#Artikel7
-    url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0028395
-        artikel: '7'
+        artikel: 7.3.1
   - number: '5'
     text: |-
       Het bevoegd gezag van een ingevolge [artikel 112 van de WVO BES][ref1] aangewezen school kan leerlingen van 16
@@ -72,7 +61,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0030284#Artikel112
       [ref2]: https://wetten.overheid.nl/BWBR0030284#Artikel72
-      [ref3]: https://wetten.overheid.nl/BWBR0028395#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0028395#Artikel1.4.2
     url: https://wetten.overheid.nl/BWBR0029591/2015-01-01#Artikel5
     references:
       - id: ref1
@@ -83,7 +72,7 @@ articles:
         artikel: '72'
       - id: ref3
         bwb_id: BWBR0028395
-        artikel: '1'
+        artikel: 1.4.2
   - number: '6'
     text: |-
       Dit besluit treedt in werking met ingang van een bij koninklijk besluit te bepalen tijdstip dat voor de
