@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: uitvoeringsbesluit_onderwijsvoorzieningen
 regulatory_layer: AMVB
 publication_date: '2025-10-03'
@@ -27,51 +27,46 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel1
-  - number: 1.a
     text: |-
-      *wet:* de [Wet overige OCW-subsidies][ref1];
+      In dit besluit wordt verstaan onder:
+
+      a. *wet:* de [Wet overige OCW-subsidies][ref1];
+
+      b. *UWV:* het Uitvoeringsinstituut werknemersverzekeringen, genoemd in
+      [hoofdstuk 5 van de Wet structuur uitvoeringsorganisatie werk en inkomen][ref2];
+
+      c. *intermediaire activiteit:* persoonlijke dienstverlening die gericht is op de vervanging of ondersteuning van
+      een door ziekte of gebrek geheel of gedeeltelijk ontbrekende lichaamsfunctie;
+
+      d. *cluster 1, 2, 3 onderscheidenlijk 4:* de clusters, bedoeld in
+      [artikel 2, vierde lid, van de Wet op de expertisecentra][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458
+      [ref2]: https://wetten.overheid.nl/BWBR0013060#Hoofdstuk5
+      [ref3]: https://wetten.overheid.nl/BWBR0003549#Artikel2
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0009458
-  - number: 1.b
-    text: |-
-      *UWV:* het Uitvoeringsinstituut werknemersverzekeringen, genoemd in
-      [hoofdstuk 5 van de Wet structuur uitvoeringsorganisatie werk en inkomen][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0013060#Hoofdstuk5
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0013060
         hoofdstuk: '5'
-  - number: 1.c
-    text: |-
-      *intermediaire activiteit:* persoonlijke dienstverlening die gericht is op de vervanging of ondersteuning van een
-      door ziekte of gebrek geheel of gedeeltelijk ontbrekende lichaamsfunctie;
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel1
-  - number: 1.d
-    text: |-
-      *cluster 1, 2, 3 onderscheidenlijk 4:* de clusters, bedoeld in
-      [artikel 2, vierde lid, van de Wet op de expertisecentra][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003549#Artikel2
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0003549
         artikel: '2'
-  - number: '2.1'
+  - number: '2'
     text: |-
-      Een voorziening als bedoeld in [artikel 19a van de wet][ref1] wordt niet verstrekt respectievelijk verleend indien
-      het kosten van een voorziening of een voorziening betreft
+      1 Een voorziening als bedoeld in [artikel 19a van de wet][ref1] wordt niet verstrekt respectievelijk verleend
+      indien het kosten van een voorziening of een voorziening betreft
+
+      a. die algemeen gebruikelijk is; of
+
+      b. waarvoor vergoeding op grond van een andere wettelijke regeling mogelijk is.
+
+      2 Bij de toepassing van dit besluit en de daarop berustende bepalingen wordt bij de beoordeling en berekening van
+      de kosten en de verlening van een voorziening als bedoeld in het eerste lid uitgegaan van de goedkoopste adequate
+      voorziening.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
@@ -80,30 +75,25 @@ articles:
       - id: ref1
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: 2.1.a
-    text: die algemeen gebruikelijk is; of
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel2
-  - number: 2.1.b
-    text: waarvoor vergoeding op grond van een andere wettelijke regeling mogelijk is.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel2
-  - number: '2.2'
+  - number: '3'
     text: |-
-      Bij de toepassing van dit besluit en de daarop berustende bepalingen wordt bij de beoordeling en berekening van
-      de kosten en de verlening van een voorziening als bedoeld in het eerste lid uitgegaan van de goedkoopste adequate
-      voorziening.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel2
-  - number: '3.1'
-    text: |-
-      Een voorziening als bedoeld in [artikel 19a van de wet][ref1] wordt niet verstrekt indien de
+      1 Een voorziening als bedoeld in [artikel 19a van de wet][ref1] wordt niet verstrekt indien de
       kosten, bedoeld in [dat artikel][ref2], minder bedragen dan 1,85 maal het minimumloon, bedoeld in
       [artikel 8, eerste lid, onderdeel b, van de Wet minimumloon en minimumvakantiebijslag][ref3], gedeeld door 21,75,
       zoals [laatstgenoemd artikel][ref4] luidde op 1 januari van het kalenderjaar waarin de kosten zijn gemaakt.
+
+      2 Indien de gezamenlijke waarde van voorzieningen als bedoeld in [artikel 19a van de wet][ref5] die
+      in een kalenderjaar zijn aangevraagd, een bedrag ter hoogte van 1,85 maal het minimumloon, bedoeld in
+      [artikel 8, eerste lid, onderdeel b, van de Wet minimumloon en minimumvakantiebijslag][ref6], gedeeld door 21,75,
+      overtreft, kan het UWV voorzieningen verstrekken ter hoogte van die gezamenlijke waarde.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
       [ref2]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
       [ref3]: https://wetten.overheid.nl/BWBR0002638#Artikel8
       [ref4]: https://wetten.overheid.nl/BWBR0002638#Artikel8
+      [ref5]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref6]: https://wetten.overheid.nl/BWBR0002638#Artikel8
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel3
     references:
       - id: ref1
@@ -118,22 +108,10 @@ articles:
       - id: ref4
         bwb_id: BWBR0002638
         artikel: '8'
-  - number: '3.2'
-    text: |-
-      Indien de gezamenlijke waarde van voorzieningen als bedoeld in [artikel 19a van de wet][ref1] die in
-      een kalenderjaar zijn aangevraagd, een bedrag ter hoogte van 1,85 maal het minimumloon, bedoeld in
-      [artikel 8, eerste lid, onderdeel b, van de Wet minimumloon en minimumvakantiebijslag][ref2], gedeeld door 21,75,
-      overtreft, kan het UWV voorzieningen verstrekken ter hoogte van die gezamenlijke waarde.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-      [ref2]: https://wetten.overheid.nl/BWBR0002638#Artikel8
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel3
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0009458
         artikel: 19a
-      - id: ref2
+      - id: ref6
         bwb_id: BWBR0002638
         artikel: '8'
   - number: '4'
@@ -148,155 +126,138 @@ articles:
       - id: ref1
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Onder voorzieningen als bedoeld in [artikel 19a, tweede lid, van de wet][ref1] worden uitsluitend verstaan:
+      1 Onder voorzieningen als bedoeld in [artikel 19a, tweede lid, van de wet][ref1] worden uitsluitend verstaan:
 
+      a. vervoersvoorzieningen die er toe strekken dat de persoon, bedoeld in
+      [artikel 19a, eerste lid, van de wet][ref2], zijn opleidingslocatie kan bereiken;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: 5.1.a
-    text: |-
-      vervoersvoorzieningen die er toe strekken dat de persoon, bedoeld in [artikel 19a, eerste lid, van de wet][ref1],
-      zijn opleidingslocatie kan bereiken;
+      b. intermediaire activiteiten;
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: 5.1.b
-    text: intermediaire activiteiten;
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-  - number: 5.1.c
-    text: |-
-      meeneembare voorzieningen ten behoeve van de inrichting van de opleidingslocatie en de bij de
+      c. meeneembare voorzieningen ten behoeve van de inrichting van de opleidingslocatie en de bij de
       opleiding te gebruiken hulpmiddelen, die in overwegende mate op het individu van de persoon, bedoeld in
-      [artikel 19a, eerste lid, van de wet][ref1], zijn afgestemd.
+      [artikel 19a, eerste lid, van de wet][ref3], zijn afgestemd.
 
+      2 Onder voorzieningen als bedoeld in [artikel 19a, tweede en derde lid, van de wet][ref4] worden niet verstaan:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: '5.2'
-    text: |-
-      Onder voorzieningen als bedoeld in [artikel 19a, tweede en derde lid, van de wet][ref1] worden niet verstaan:
+      a. voorzieningen waarvoor een regeling is getroffen bij of krachtens:
 
+      1°. de [Wet op het primair onderwijs][ref5], de [Wet voortgezet onderwijs 2020][ref6], de
+      [Wet educatie en beroepsonderwijs][ref7] of de [Wet op het hoger onderwijs en wetenschappelijk onderzoek][ref8]; of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: 5.2.a
-    text: 'voorzieningen waarvoor een regeling is getroffen bij of krachtens:'
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-  - number: 5.2.a.1°
-    text: |-
-      de [Wet op het primair onderwijs][ref1], de [Wet voortgezet onderwijs 2020][ref2], de
-      [Wet educatie en beroepsonderwijs][ref3] of de [Wet op het hoger onderwijs en wetenschappelijk onderzoek][ref4]; of
+      2°. de [Wet op de expertisecentra][ref9], tenzij het gaat om intermediaire activiteiten voor
+      leerlingen die ingeschreven zijn op een school behorend tot cluster 2, ten behoeve van het
+      volgen van een stage of symbiose-onderwijs als bedoeld in [artikel 9][ref10], respectievelijk
+      [artikel 12 van het Onderwijskundig besluit WEC][ref11], of om intermediaire activiteiten voor leerlingen die
+      ingeschreven staan op een school behorend tot cluster 1, 3 of 4;
 
+      b. voorzieningen waarvoor een regeling is getroffen onder verantwoordelijkheid van Onze Minister van
+      Volksgezondheid, Welzijn en Sport of aanvullingen op die voorzieningen waarvoor een eigen bijdrage
+      wordt betaald, met uitzondering van bij ministeriële regeling aangewezen hulpmiddelen, genoemd in de
+      [Regeling zorgverzekering][ref12], voor zover die hulpmiddelen vrijwel uitsluitend worden gebruikt in de
+      onderwijssituatie;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003420
-      [ref2]: https://wetten.overheid.nl/BWBR0044212
-      [ref3]: https://wetten.overheid.nl/BWBR0007625
-      [ref4]: https://wetten.overheid.nl/BWBR0005682
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0003420
-      - id: ref2
-        bwb_id: BWBR0044212
-      - id: ref3
-        bwb_id: BWBR0007625
-      - id: ref4
-        bwb_id: BWBR0005682
-  - number: 5.2.a.2°
-    text: |-
-      de [Wet op de expertisecentra][ref1], tenzij het gaat om intermediaire activiteiten voor leerlingen die
-      ingeschreven zijn op een school behorend tot cluster 2, ten behoeve van het volgen van een stage of symbiose-
-      onderwijs als bedoeld in [artikel 9][ref2], respectievelijk [artikel 12 van het Onderwijskundig besluit WEC][ref3],
-      of om intermediaire activiteiten voor leerlingen die ingeschreven staan op een school behorend tot cluster 1, 3
-      of 4;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003549
-      [ref2]: https://wetten.overheid.nl/BWBR0003848#Artikel9
-      [ref3]: https://wetten.overheid.nl/BWBR0003848#Artikel12
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0003549
-      - id: ref2
-        bwb_id: BWBR0003848
-        artikel: '9'
-      - id: ref3
-        bwb_id: BWBR0003848
-        artikel: '12'
-  - number: 5.2.b
-    text: |-
-      voorzieningen waarvoor een regeling is getroffen onder verantwoordelijkheid van Onze Minister van Volksgezondheid,
-      Welzijn en Sport of aanvullingen op die voorzieningen waarvoor een eigen bijdrage wordt betaald, met uitzondering
-      van bij ministeriële regeling aangewezen hulpmiddelen, genoemd in de [Regeling zorgverzekering][ref1], voor zover
-      die hulpmiddelen vrijwel uitsluitend worden gebruikt in de onderwijssituatie;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018715
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0018715
-  - number: 5.2.c
-    text: |-
-      personele onderwijsfaciliteiten, waaronder in elk geval wordt verstaan activiteiten als remedial teaching,
+      c. personele onderwijsfaciliteiten, waaronder in elk geval wordt verstaan activiteiten als remedial teaching,
       ambulante begeleiding of het geven van begeleidingslessen;
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-  - number: 5.2.d
-    text: |-
-      voorzieningen voor het vervoer van leerlingen naar en van school
-      als bedoeld in de [Wet op het primair onderwijs][ref1], de
-      [Wet op de expertisecentra][ref2] en de [Wet voortgezet onderwijs 2020][ref3], tenzij
+
+      d. voorzieningen voor het vervoer van leerlingen naar en van
+      school als bedoeld in de [Wet op het primair onderwijs][ref13], de
+      [Wet op de expertisecentra][ref14] en de [Wet voortgezet onderwijs 2020][ref15], tenzij
       __REF003___________________________________________________________________________________________________________
-      __________________________________________________________________________________________________ (Stb. 59) van
+      ___________________________________________________________________________________________________ (Stb. 59) van
       toepassing is;
 
+      e. voorzieningen die verband houden met dyslexie.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003420
-      [ref2]: https://wetten.overheid.nl/BWBR0003549
-      [ref3]: https://wetten.overheid.nl/BWBR0044212
-      [ref4]: https://wetten.overheid.nl/BWBR0013353#ArtikelV
+
+      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref2]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref3]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref4]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref5]: https://wetten.overheid.nl/BWBR0003420
+      [ref6]: https://wetten.overheid.nl/BWBR0044212
+      [ref7]: https://wetten.overheid.nl/BWBR0007625
+      [ref8]: https://wetten.overheid.nl/BWBR0005682
+      [ref9]: https://wetten.overheid.nl/BWBR0003549
+      [ref10]: https://wetten.overheid.nl/BWBR0003848#Artikel9
+      [ref11]: https://wetten.overheid.nl/BWBR0003848#Artikel12
+      [ref12]: https://wetten.overheid.nl/BWBR0018715
+      [ref13]: https://wetten.overheid.nl/BWBR0003420
+      [ref14]: https://wetten.overheid.nl/BWBR0003549
+      [ref15]: https://wetten.overheid.nl/BWBR0044212
+      [ref16]: https://wetten.overheid.nl/BWBR0013353#ArtikelV
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
     references:
       - id: ref1
-        bwb_id: BWBR0003420
+        bwb_id: BWBR0009458
+        artikel: 19a
       - id: ref2
-        bwb_id: BWBR0003549
+        bwb_id: BWBR0009458
+        artikel: 19a
       - id: ref3
-        bwb_id: BWBR0044212
+        bwb_id: BWBR0009458
+        artikel: 19a
       - id: ref4
+        bwb_id: BWBR0009458
+        artikel: 19a
+      - id: ref5
+        bwb_id: BWBR0003420
+      - id: ref6
+        bwb_id: BWBR0044212
+      - id: ref7
+        bwb_id: BWBR0007625
+      - id: ref8
+        bwb_id: BWBR0005682
+      - id: ref9
+        bwb_id: BWBR0003549
+      - id: ref10
+        bwb_id: BWBR0003848
+        artikel: '9'
+      - id: ref11
+        bwb_id: BWBR0003848
+        artikel: '12'
+      - id: ref12
+        bwb_id: BWBR0018715
+      - id: ref13
+        bwb_id: BWBR0003420
+      - id: ref14
+        bwb_id: BWBR0003549
+      - id: ref15
+        bwb_id: BWBR0044212
+      - id: ref16
         bwb_id: BWBR0013353
         artikel: V
-  - number: 5.2.e
-    text: voorzieningen die verband houden met dyslexie.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel5
-  - number: '6.1'
+  - number: '6'
     text: |-
-      Vervoersvoorzieningen als bedoeld in [artikel 19a, derde lid, van de wet][ref1], worden niet verleend
+      1 Vervoersvoorzieningen als bedoeld in [artikel 19a, derde lid, van de wet][ref1], worden niet verleend
       of worden beëindigd, indien het inkomen van de persoon die de voorziening aanvraagt of aan wie de
       voorziening is verleend, in het kalenderjaar waarin de voorziening is aangevraagd of voortzetting van
       een verleende voorziening wordt overwogen, meer bedraagt dan 261 maal 70% van het bedrag, bedoeld in
       [artikel 17, eerste lid, van de Wet financiering sociale verzekeringen][ref2] met betrekking tot een loontijdvak
       van een dag.
+
+      2 Indien het inkomen van de persoon, bedoeld in het eerste lid, in betekenende mate aan fluctuaties onderhevig is,
+      wordt voor de toepassing van het eerste lid de som van het inkomen over het in het eerste lid bedoelde kalenderjaar
+      en het inkomen over de twee daaraan voorafgaande kalenderjaren gedeeld door drie.
+
+      3 Onder vervoersvoorzieningen als bedoeld in het eerste lid worden in elk geval verstaan een bruikleenauto, een
+      taxikostenvergoeding en een kilometervergoeding voor het gebruik van een eigen auto of van een bruikleenauto.
+
+      4 Bij ministeriële regeling:
+
+      a. worden regels gesteld over de wijze van vaststelling van het inkomen, bedoeld in het eerste lid, waarbij kan
+      worden bepaald dat bij de vaststelling van het inkomen mede in aanmerking wordt genomen het inkomen van de ouders,
+      de echtgenoot, de partner of een ander gezinslid van de in het eerste lid bedoelde persoon;
+
+      b. kan het in het eerste lid bedoelde percentage voor categorieën van personen worden verhoogd; en
+
+      c. kan worden bepaald dat het eerste lid geen toepassing vindt bij de verlening van nader te bepalen
+      vervoersvoorzieningen.
+
+      5 Beëindiging van de vervoersvoorzieningen wegens overschrijding van de inkomensgrens, bedoeld in het eerste lid,
+      vindt plaats met ingang van de datum die is gelegen zes maanden nadat de persoon aan wie de voorziening is verleend
+      van de voorgenomen beëindiging in kennis is gesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
@@ -309,60 +270,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0017745
         artikel: '17'
-  - number: '6.2'
+  - number: '7'
     text: |-
-      Indien het inkomen van de persoon, bedoeld in het eerste lid, in betekenende mate aan fluctuaties onderhevig is,
-      wordt voor de toepassing van het eerste lid de som van het inkomen over het in het eerste lid bedoelde kalenderjaar
-      en het inkomen over de twee daaraan voorafgaande kalenderjaren gedeeld door drie.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: '6.3'
-    text: |-
-      Onder vervoersvoorzieningen als bedoeld in het eerste lid worden in elk geval verstaan een bruikleenauto, een
-      taxikostenvergoeding en een kilometervergoeding voor het gebruik van een eigen auto of van een bruikleenauto.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: '6.4'
-    text: 'Bij ministeriële regeling:'
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: 6.4.a
-    text: |-
-      worden regels gesteld over de wijze van vaststelling van het inkomen, bedoeld in het eerste lid, waarbij kan worden
-      bepaald dat bij de vaststelling van het inkomen mede in aanmerking wordt genomen het inkomen van de ouders, de
-      echtgenoot, de partner of een ander gezinslid van de in het eerste lid bedoelde persoon;
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: 6.4.b
-    text: kan het in het eerste lid bedoelde percentage voor categorieën van personen worden verhoogd; en
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: 6.4.c
-    text: |-
-      kan worden bepaald dat het eerste lid geen toepassing vindt bij de verlening van nader te bepalen
-      vervoersvoorzieningen.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: '6.5'
-    text: |-
-      Beëindiging van de vervoersvoorzieningen wegens overschrijding van de inkomensgrens, bedoeld in het eerste lid,
-      vindt plaats met ingang van de datum die is gelegen zes maanden nadat de persoon aan wie de voorziening is verleend
-      van de voorgenomen beëindiging in kennis is gesteld.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel6
-  - number: '7.1'
-    text: |-
-      Een leefvervoersvoorziening als bedoeld in [artikel 19a, derde lid, van de wet][ref1] wordt slechts verleend indien
-      daarmee de uit ziekte of gebrek voortvloeiende beperkingen worden opgeheven of verminderd.
+      1 Een leefvervoersvoorziening als bedoeld in [artikel 19a, derde lid, van de wet][ref1] wordt slechts verleend
+      indien daarmee de uit ziekte of gebrek voortvloeiende beperkingen worden opgeheven of verminderd.
 
+      2 Een leefvervoersvoorziening als bedoeld in [artikel 19a, derde lid, van de wet][ref2] wordt slechts verleend
+      indien op grond van [artikel 19a, tweede lid, van de wet][ref3] een vervoersvoorziening is verleend.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel7
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: '7.2'
-    text: |-
-      Een leefvervoersvoorziening als bedoeld in [artikel 19a, derde lid, van de wet][ref1] wordt slechts verleend indien
-      op grond van [artikel 19a, tweede lid, van de wet][ref2] een vervoersvoorziening is verleend.
+      3 Na beëindiging van de vervoersvoorziening, verleend op grond van [artikel 19a, tweede lid, van de wet][ref4],
+      wordt de leefvervoersvoorziening voortgezet gedurende de termijn die is voorzien in de beschikking van UWV waarbij
+      de voorziening is toegekend, doch ten hoogste voor de duur van twaalf maanden.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
       [ref2]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref3]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref4]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel7
     references:
       - id: ref1
@@ -371,27 +295,18 @@ articles:
       - id: ref2
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '7.3'
-    text: |-
-      Na beëindiging van de vervoersvoorziening, verleend op grond van [artikel 19a, tweede lid, van de wet][ref1], wordt
-      de leefvervoersvoorziening voortgezet gedurende de termijn die is voorzien in de beschikking van UWV waarbij de
-      voorziening is toegekend, doch ten hoogste voor de duur van twaalf maanden.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel7
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '8.1'
+      - id: ref4
+        bwb_id: BWBR0009458
+        artikel: 19a
+  - number: '8'
     text: |-
-      De verlening van een intermediaire activiteit vindt plaats door vergoeding van de kosten voor bemiddeling bij het
+      1 De verlening van een intermediaire activiteit vindt plaats door vergoeding van de kosten voor bemiddeling bij het
       vinden van en voor het gebruik van een intermediaire activiteit.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel8
-  - number: '8.2'
-    text: |-
-      Een intermediaire activiteit, bedoeld in het eerste lid, worden verleend indien er een verklaring is van
+
+      2 Een intermediaire activiteit, bedoeld in het eerste lid, worden verleend indien er een verklaring is van
       de huisarts of de behandelend medisch specialist, waaruit blijkt dat deze persoon op het gebruik van een
       intermediaire activiteit is aangewezen. Deze verklaring wordt eenmalig gevraagd, tenzij het UWV op grond
       van [artikel 73a van de Wet structuur uitvoeringsorganisatie werk en inkomen][ref1] deze al heeft verkregen
@@ -420,15 +335,18 @@ articles:
         bwb_id: BWBR0035362
       - id: ref5
         bwb_id: BWBR0015703
-  - number: '9.1'
+  - number: '9'
     text: |-
-      Het UWV kan, indien een of meer feiten op grond waarvan een voorziening als bedoeld in
+      1 Het UWV kan, indien een of meer feiten op grond waarvan een voorziening als bedoeld in
       [artikel 19a, tweede lid, van de wet][ref1] is verleend, zodanig wijzigen dat de verlening niet langer
       is aangewezen, of indien een met betrekking tot een voorziening afgesloten bruikleencontract afloopt, de
       desbetreffende persoon de niet in de vorm van een financiële tegemoetkoming verleende voorziening doen behouden of
       doen kopen, voor een prijs die de op dat moment in het maatschappelijk verkeer geldende waarde van een dergelijke
       voorziening niet te boven gaat.
 
+      2 Indien de voorziening, bedoeld in het eerste lid, een vervoermiddel betreft, wordt bij het bepalen van de waarde,
+      bedoeld in het eerste lid, uitgegaan van de voorziening zonder specifieke aanpassingen.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel9
@@ -436,124 +354,97 @@ articles:
       - id: ref1
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '9.2'
+  - number: '10'
     text: |-
-      Indien de voorziening, bedoeld in het eerste lid, een vervoermiddel betreft, wordt bij het bepalen van de waarde,
-      bedoeld in het eerste lid, uitgegaan van de voorziening zonder specifieke aanpassingen.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel9
-  - number: '10.1'
-    text: |-
-      Onze Minister vergoedt aan het UWV de kosten van de voorzieningen die op grond van [artikel 19a van de wet][ref1]
+      1 Onze Minister vergoedt aan het UWV de kosten van de voorzieningen die op grond van [artikel 19a van de wet][ref1]
       door het UWV zijn betaald.
 
+      2 Onze Minister vergoedt aan het UWV de kosten die door het UWV bij de uitvoering van zijn taak, bedoeld in
+      [artikel 19a van de wet][ref2], worden gemaakt.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel10
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: '10.2'
-    text: |-
-      Onze Minister vergoedt aan het UWV de kosten die door het UWV bij de uitvoering van zijn taak, bedoeld in
-      [artikel 19a van de wet][ref1], worden gemaakt.
+      3 Onze Minister vergoedt aan het UWV de kosten die verband houden met het beëindigen door het UWV van de
+      werkzaamheden ter uitvoering van zijn taak bedoeld in [artikel 19a van de wet][ref3].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel10
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: '10.3'
-    text: |-
-      Onze Minister vergoedt aan het UWV de kosten die verband houden met het beëindigen door het UWV van de
-      werkzaamheden ter uitvoering van zijn taak bedoeld in [artikel 19a van de wet][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel10
-    references:
-      - id: ref1
-        bwb_id: BWBR0009458
-        artikel: 19a
-  - number: '10.4'
-    text: |-
-      Op de kosten komen in mindering de voorzieningen die zijn terugbetaald en de baten die voortvloeien uit de
+      4 Op de kosten komen in mindering de voorzieningen die zijn terugbetaald en de baten die voortvloeien uit de
       uitvoering van deze regeling.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref2]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref3]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel10
-  - number: '11.1'
+    references:
+      - id: ref1
+        bwb_id: BWBR0009458
+        artikel: 19a
+      - id: ref2
+        bwb_id: BWBR0009458
+        artikel: 19a
+      - id: ref3
+        bwb_id: BWBR0009458
+        artikel: 19a
+  - number: '11'
     text: |-
-      Het UWV biedt jaarlijks vóór 15 maart het gedeelte van het bestuursverslag dat betrekking heeft op de uitvoering
+      1 Het UWV biedt jaarlijks vóór 15 maart het gedeelte van het bestuursverslag dat betrekking heeft op de uitvoering
       van dit besluit met het gedeelte van de jaarrekening dat daarop betrekking heeft aan Onze Minister aan. De
       verklaring omtrent de getrouwheid, bedoeld in [artikel 35 van de Kaderwet zelfstandige bestuursorganen][ref1],
       bevat een afzonderlijke verklaring over het gedeelte dat betrekking heeft op de uitvoering van dit besluit.
 
+      2 De tussentijdse verslagen die het UWV opstelt op grond van
+      [artikel 49, achtste lid, van de Wet structuur uitvoeringsorganisatie][ref2] bevatten tevens een gedeelte over de
+      uitvoering van dit besluit, welk gedeelte door het UWV wordt aangeboden aan Onze Minister.
+
+      3 UWV biedt het gedeelte van de verslagen, bedoeld in het tweede lid, vóór 15 juni en 15 oktober aan.
+
+      4 Het UWV neemt in het gedeelte van het bestuursverslag met jaarrekening, bedoeld in het eerste lid, ten
+      minste een verslag van de werkzaamheden en het gevoerde beleid met betrekking tot de voorzieningen, bedoeld in
+      [artikel 19a van de wet][ref3], op en tevens een toelichting op het gedeelte van de jaarrekening en de balans dat
+      betrekking heeft op de uitvoering van dit besluit.
+
+      5 De gedeelten van de tussentijdse verslagen, bedoeld in het tweede lid, geven, uitgesplitst naar de voorzieningen,
+      bedoeld in [artikel 5, eerste lid][ref4], ten minste inzicht in de gerealiseerde uitgaven en ontvangsten, op grond
+      van [artikel 19a van de wet][ref5], ten opzichte van de voor deze doeleinden verstrekte voorschotten.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0020495#Artikel35
+      [ref2]: https://wetten.overheid.nl/BWBR0013060#Artikel49
+      [ref3]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
+      [ref4]: https://wetten.overheid.nl/BWBR0024869#Artikel5
+      [ref5]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
     url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel11
     references:
       - id: ref1
         bwb_id: BWBR0020495
         artikel: '35'
-  - number: '11.2'
-    text: |-
-      De tussentijdse verslagen die het UWV opstelt op grond van
-      [artikel 49, achtste lid, van de Wet structuur uitvoeringsorganisatie][ref1] bevatten tevens een gedeelte over de
-      uitvoering van dit besluit, welk gedeelte door het UWV wordt aangeboden aan Onze Minister.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0013060#Artikel49
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel11
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0013060
         artikel: '49'
-  - number: '11.3'
-    text: UWV biedt het gedeelte van de verslagen, bedoeld in het tweede lid, vóór 15 juni en 15 oktober aan.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel11
-  - number: '11.4'
-    text: |-
-      Het UWV neemt in het gedeelte van het bestuursverslag met jaarrekening, bedoeld in het eerste lid, ten minste
-      een verslag van de werkzaamheden en het gevoerde beleid met betrekking tot de voorzieningen, bedoeld in
-      [artikel 19a van de wet][ref1], op en tevens een toelichting op het gedeelte van de jaarrekening en de balans dat
-      betrekking heeft op de uitvoering van dit besluit.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel11
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '11.5'
-    text: |-
-      De gedeelten van de tussentijdse verslagen, bedoeld in het tweede lid, geven, uitgesplitst naar de voorzieningen,
-      bedoeld in [artikel 5, eerste lid][ref1], ten minste inzicht in de gerealiseerde uitgaven en ontvangsten, op grond
-      van [artikel 19a van de wet][ref2], ten opzichte van de voor deze doeleinden verstrekte voorschotten.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024869#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0009458#Artikel19a
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel11
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0024869
         artikel: '5'
         paragraaf: '2'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0009458
         artikel: 19a
-  - number: '12.1'
+  - number: '12'
     text: |-
-      Het UWV dient jaarlijks vóór 1 december van het jaar voorafgaand aan het begrotingsjaar waarin de kosten zullen
+      1 Het UWV dient jaarlijks vóór 1 december van het jaar voorafgaand aan het begrotingsjaar waarin de kosten zullen
       worden gemaakt de aanvraag om een voorschot aan Onze Minister in.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel12
-  - number: '12.2'
-    text: |-
-      De aanvraag om een voorschot heeft betrekking op de kosten, bedoeld in [artikel 10][ref1], en de ontvangsten
+
+      2 De aanvraag om een voorschot heeft betrekking op de kosten, bedoeld in [artikel 10][ref1], en de ontvangsten
       op grond van [artikel 19a van de wet][ref2] en is ten minste uitgesplitst naar de voorzieningen, bedoeld in
       [artikel 5, eerste lid][ref3].
+
+      3 Onze Minister stelt de hoogte van het voorschot vast en verstrekt met ingang van het begrotingsjaar waarop het
+      voorschot betrekking heeft maandelijks voor de 11e van de maand een twaalfde deel van het vastgestelde voorschot.
+
+      4 Onze Minister kan, op verzoek van het UWV, de bevoorschotting aanpassen in de loop van een kalenderjaar.
+
+      5 Onze Minister stelt binnen acht weken na ontvangst van het gedeelte van het bestuursverslag en de jaarrekening
+      dat betrekking heeft op de uitvoering van dit besluit de eindafrekening vast.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0024869#Artikel10
@@ -572,19 +463,6 @@ articles:
         bwb_id: BWBR0024869
         artikel: '5'
         paragraaf: '2'
-  - number: '12.3'
-    text: |-
-      Onze Minister stelt de hoogte van het voorschot vast en verstrekt met ingang van het begrotingsjaar waarop het
-      voorschot betrekking heeft maandelijks voor de 11e van de maand een twaalfde deel van het vastgestelde voorschot.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel12
-  - number: '12.4'
-    text: Onze Minister kan, op verzoek van het UWV, de bevoorschotting aanpassen in de loop van een kalenderjaar.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel12
-  - number: '12.5'
-    text: |-
-      Onze Minister stelt binnen acht weken na ontvangst van het gedeelte van het bestuursverslag en de jaarrekening dat
-      betrekking heeft op de uitvoering van dit besluit de eindafrekening vast.
-    url: https://wetten.overheid.nl/BWBR0024869/2025-10-04#Artikel12
   - number: '13'
     text: |-
       Bij ministeriële regeling kan Onze Minister van Onderwijs, Cultuur en Wetenschap in overeenstemming met Onze
