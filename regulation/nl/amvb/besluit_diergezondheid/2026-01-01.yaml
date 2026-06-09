@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: besluit_diergezondheid
 regulatory_layer: AMVB
 publication_date: '2025-11-04'
@@ -42,8 +42,9 @@ preamble:
 articles:
   - number: '1.1'
     text: |-
-      In dit besluit en de daarop berustende bepalingen wordt verstaan onder: - *besmet dier:* dier dat is aangewezen als
-      besmet als bedoeld in [artikel 2.2][ref1];
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+        - *besmet dier:* dier dat is aangewezen als besmet als bedoeld in [artikel 2.2][ref1];
         - *deskundige:* deskundige als bedoeld in [artikel 9.8, vijfde lid, van de wet][ref2];
         - *verdacht dier:* dier dat is aangewezen als verdacht als bedoeld in [artikel 2.1][ref3];
         - *verordening (EU) nr. 2016/429:* verordening (EU) 2016/429 van het Europees Parlement en de Raad van 9 maart 2016
@@ -52,104 +53,87 @@ articles:
         - *wet:* [Wet dieren][ref4].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-      [ref3]: https://wetten.overheid.nl/BWBR0045039#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel2.2
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref3]: https://wetten.overheid.nl/BWBR0045039#Artikel2.1
       [ref4]: https://wetten.overheid.nl/BWBR0030250
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel1.1
     references:
       - id: ref1
         bwb_id: BWBR0045039
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
       - id: ref2
         bwb_id: BWBR0030250
-        artikel: '9'
+        artikel: '9.8'
       - id: ref3
         bwb_id: BWBR0045039
-        artikel: '2'
+        artikel: '2.1'
         hoofdstuk: '2'
       - id: ref4
         bwb_id: BWBR0030250
-  - number: 2.1.1
+  - number: '2.1'
     text: |-
-      Onze Minister wijst een dier of groep dieren aan als verdacht van besmetting met een dierziekte of zoönose als
+      1 Onze Minister wijst een dier of groep dieren aan als verdacht van besmetting met een dierziekte of zoönose als
       bedoeld in [artikel 5.3, tweede lid, van de wet][ref1], anders dan een ziekte als bedoeld in artikel 9, eerste lid,
       van verordening (EU) nr. 2016/429, indien:
 
+      a. uit klinisch, post-mortem- of laboratoriumonderzoeken blijkt dat een of meer klinische tekenen of post-
+      mortemlaesies of histologische bevindingen op die ziekte wijzen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5
+      b. een of meer resultaten van een diagnostische methode op de waarschijnlijke aanwezigheid van de ziekte in een
+      monster van een dier of een groep dieren wijzen; of
+
+      c. er een epidemiologisch verband met een bevestigd geval is vastgesteld.
+
+      2 Onze Minister trekt een aanwijzing als bedoeld in het eerste lid in, indien:
+
+      a. er geen agens, antigeen of indirecte immunologische reactie is aangetoond; of
+
+      b. Onze Minister anderszins de overtuiging heeft gekregen dat het dier niet aan een ziekte als bedoeld in de aanhef
+      van het eerste lid lijdt.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5.3
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '5'
-  - number: 2.1.1.a
-    text: |-
-      uit klinisch, post-mortem- of laboratoriumonderzoeken blijkt dat een of meer klinische tekenen of post-
-      mortemlaesies of histologische bevindingen op die ziekte wijzen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
-  - number: 2.1.1.b
-    text: |-
-      een of meer resultaten van een diagnostische methode op de waarschijnlijke aanwezigheid van de ziekte in een
-      monster van een dier of een groep dieren wijzen; of
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
-  - number: 2.1.1.c
-    text: er een epidemiologisch verband met een bevestigd geval is vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
-  - number: 2.1.2
-    text: 'Onze Minister trekt een aanwijzing als bedoeld in het eerste lid in, indien:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
-  - number: 2.1.2.a
-    text: er geen agens, antigeen of indirecte immunologische reactie is aangetoond; of
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
-  - number: 2.1.2.b
-    text: |-
-      Onze Minister anderszins de overtuiging heeft gekregen dat het dier niet aan een ziekte als bedoeld in de aanhef
-      van het eerste lid lijdt.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.1
+        artikel: '5.3'
   - number: '2.2'
     text: |-
       Onze Minister wijst een dier of een groep dieren aan als besmet met een dierziekte of zoönose als bedoeld in
       [artikel 5.3, tweede lid, van de wet][ref1], anders dan een ziekte als bedoeld in artikel 9, eerste lid, van
       verordening (EU) nr. 2016/429, indien:
 
+      a. de ziekteverwekker, vaccinstammen uitgezonderd, is geïsoleerd in een monster van een dier of een groep dieren;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5
+      b. een antigeen of nucleïnezuur dat specifiek is voor de ziekteverwekker en niet het gevolg is van vaccinatie, is
+      aangetroffen in een monster van een dier of een groep dieren waarbij klinische symptomen die bij de ziekte passen
+      of een epidemiologisch verband met een vermoedelijk of bevestigd geval zijn vastgesteld; of
+
+      c. een positief resultaat van een indirecte diagnostische methode dat niet het gevolg is van vaccinatie, is
+      verkregen in een monster van een dier of een groep dieren waarbij klinische symptomen die bij de ziekte passen of
+      een epidemiologisch verband met een vermoedelijk of bevestigd geval zijn vastgesteld.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5.3
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.2
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '5'
-  - number: 2.2.a
-    text: de ziekteverwekker, vaccinstammen uitgezonderd, is geïsoleerd in een monster van een dier of een groep dieren;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.2
-  - number: 2.2.b
-    text: |-
-      een antigeen of nucleïnezuur dat specifiek is voor de ziekteverwekker en niet het gevolg is van vaccinatie, is
-      aangetroffen in een monster van een dier of een groep dieren waarbij klinische symptomen die bij de ziekte passen
-      of een epidemiologisch verband met een vermoedelijk of bevestigd geval zijn vastgesteld; of
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.2
-  - number: 2.2.c
-    text: |-
-      een positief resultaat van een indirecte diagnostische methode dat niet het gevolg is van vaccinatie, is verkregen
-      in een monster van een dier of een groep dieren waarbij klinische symptomen die bij de ziekte passen of een
-      epidemiologisch verband met een vermoedelijk of bevestigd geval zijn vastgesteld.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel2.2
+        artikel: '5.3'
   - number: '3.1'
-    text: 'Voor daartoe aangewezen monitoringsprogramma’s wijst Onze Minister een instelling met een laboratorium aan die:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.1
-  - number: 3.1.a
-    text: monsters neemt;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.1
-  - number: 3.1.b
-    text: laboratoriumanalyses, -tests en -diagnoses uitvoert;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.1
-  - number: 3.1.c
-    text: ander onderzoek verricht in het kader van de opsporing en bestrijding van dierziektes; of
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.1
-  - number: 3.1.d
-    text: rapportages maakt over de verrichte werkzaamheden.
+    text: |-
+      Voor daartoe aangewezen monitoringsprogramma’s wijst Onze Minister een instelling met een laboratorium aan die:
+
+      a. monsters neemt;
+
+      b. laboratoriumanalyses, -tests en -diagnoses uitvoert;
+
+      c. ander onderzoek verricht in het kader van de opsporing en bestrijding van dierziektes; of
+
+      d. rapportages maakt over de verrichte werkzaamheden.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.1
   - number: '3.2'
     text: |-
@@ -157,12 +141,12 @@ articles:
       instructies geven over de uitvoering en verantwoording van de aangewezen monitoringsprogramma’s.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel3.1
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.2
     references:
       - id: ref1
         bwb_id: BWBR0045039
-        artikel: '3'
+        artikel: '3.1'
         hoofdstuk: '3'
   - number: '3.3'
     text: |-
@@ -172,12 +156,12 @@ articles:
       aangewezen monitoringsprogramma’s.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel3.1
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel3.3
     references:
       - id: ref1
         bwb_id: BWBR0045039
-        artikel: '3'
+        artikel: '3.1'
         hoofdstuk: '3'
   - number: '4.1'
     text: |-
@@ -187,222 +171,173 @@ articles:
       waardevaststelling, bedoeld in [artikel 9.8, zesde lid, onderdeel a, van de wet][ref3].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5
-      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5.4
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel5.5
+      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.1
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '5'
+        artikel: '5.4'
       - id: ref2
         bwb_id: BWBR0030250
-        artikel: '5'
+        artikel: '5.5'
       - id: ref3
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.2.1
+        artikel: '9.8'
+  - number: '4.2'
     text: |-
-      De waardevaststelling, bedoeld in [artikel 9.8, derde lid, van de wet][ref1] geschiedt op basis van:
+      1 De waardevaststelling, bedoeld in [artikel 9.8, derde lid, van de wet][ref1] geschiedt op basis van:
 
+      a. het in [artikel 5.4, vijfde lid, van de wet][ref2] bedoelde vastgestelde aantal dieren; en
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.2.1.a
-    text: |-
-      het in [artikel 5.4, vijfde lid, van de wet][ref1] bedoelde vastgestelde aantal dieren; en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel5
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '5'
-  - number: 4.2.1.b
-    text: |-
-      de waarde die het dier, product of voorwerp had op het moment waarop aan de desbetreffende houder is medegedeeld
+      b. de waarde die het dier, product of voorwerp had op het moment waarop aan de desbetreffende houder is medegedeeld
       dat ten aanzien van zijn dier, product of voorwerp een bestrijdingsmaatregel wordt of is toegepast.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.2
-  - number: 4.2.2
-    text: |-
-      Bij toepassing van het eerste lid, onderdeel b, wordt rekening gehouden met de bij ministeriele regeling vast te
+
+      2 Bij toepassing van het eerste lid, onderdeel b, wordt rekening gehouden met de bij ministeriele regeling vast te
       stellen indeling van dieren, producten of voorwerpen in soorten, categorieën of andere onderverdelingen.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.2
-  - number: 4.2.3
-    text: |-
-      De deskundige, bedoeld in [artikel 9.8, vijfde lid, van de wet][ref1], verstrekt de houder van het dier, product of
-      voorwerp een afschrift van het formulier, bedoeld in artikel 9.8, zevende lid, van de wet.
+
+      3 De deskundige, bedoeld in [artikel 9.8, vijfde lid, van de wet][ref3], verstrekt de houder van het dier, product
+      of voorwerp een afschrift van het formulier, bedoeld in artikel 9.8, zevende lid, van de wet.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel5.4
+      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.2
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.3.1
+        artikel: '9.8'
+      - id: ref2
+        bwb_id: BWBR0030250
+        artikel: '5.4'
+      - id: ref3
+        bwb_id: BWBR0030250
+        artikel: '9.8'
+  - number: '4.3'
     text: |-
-      De waarde van een verdacht dier en de marktwaarde van een product, bedoeld in
+      1 De waarde van een verdacht dier en de marktwaarde van een product, bedoeld in
       [artikel 9.8, eerste lid, onderdelen a en c, van de wet][ref1], zijn het bedrag dat de eigenaar onder normale
       omstandigheden voor dat dier of product had kunnen ontvangen op de markt, al naar gelang de conditie, de kwaliteit,
       het gewicht, het ras of type, de leeftijd of ouderdom.
 
+      2 In afwijking van het eerste lid is de waarde van een dier of product dat zich bevindt in een levensfase of fase
+      van het productieproces waarin het onder normale omstandigheden niet verhandelbaar is, de waarde, al naar gelang
+      het gebruiksdoel, de aanwending, de leeftijd of ouderdom.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.3.2
-    text: |-
-      In afwijking van het eerste lid is de waarde van een dier of product dat zich bevindt in een levensfase of fase van
-      het productieproces waarin het onder normale omstandigheden niet verhandelbaar is, de waarde, al naar gelang het
-      gebruiksdoel, de aanwending, de leeftijd of ouderdom.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.3
-  - number: 4.3.3
-    text: |-
-      De vervangingswaarde van een voorwerp, bedoeld in [artikel 9.8, eerste lid, onderdeel d, van de wet][ref1], is het
-      bedrag benodigd voor het verkrijgen van naar soort, kwaliteit, hoeveelheid, staat en ouderdom gelijkwaardige zaken.
+      3 De vervangingswaarde van een voorwerp, bedoeld in [artikel 9.8, eerste lid, onderdeel d, van de wet][ref2], is
+      het bedrag benodigd voor het verkrijgen van naar soort, kwaliteit, hoeveelheid, staat en ouderdom gelijkwaardige
+      zaken.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.3.4
-    text: |-
-      De waarde van een ziek dier, bedoeld in [artikel 9.8, eerste lid, onderdeel b, van de wet][ref1], is 50% van het
+      4 De waarde van een ziek dier, bedoeld in [artikel 9.8, eerste lid, onderdeel b, van de wet][ref3], is 50% van het
       bedrag, bedoeld in het eerste of tweede lid.
 
+      5 De waarde van een dood dier, bedoeld in [artikel 9.8, eerste lid, onderdeel b, van de wet][ref4], is nihil.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref3]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref4]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.3
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.3.5
-    text: |-
-      De waarde van een dood dier, bedoeld in [artikel 9.8, eerste lid, onderdeel b, van de wet][ref1], is nihil.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.3
-    references:
-      - id: ref1
+        artikel: '9.8'
+      - id: ref2
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.4.2
+        artikel: '9.8'
+      - id: ref3
+        bwb_id: BWBR0030250
+        artikel: '9.8'
+      - id: ref4
+        bwb_id: BWBR0030250
+        artikel: '9.8'
+  - number: '4.4'
     text: |-
-      In afwijking van het eerste lid bedraagt de tegemoetkoming in de schade voor pluimvee als bedoeld in artikel 4,
+      1
+
+      De tegemoetkoming in de schade bedraagt voor alle dieren ten hoogste tienduizend euro per dier.
+
+      2 In afwijking van het eerste lid bedraagt de tegemoetkoming in de schade voor pluimvee als bedoeld in artikel 4,
       onderdeel 9, van [verordening (EU) nr. 2016/429](32016R0429), honderd euro per dier.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.4
-  - number: 4.5.1
+  - number: '4.5'
     text: |-
-      Een houder die zich niet met het advies van de deskundige, bedoeld in [artikel 9.8, vijfde lid, van de wet][ref1],
+      1 Een houder die zich niet met het advies van de deskundige, bedoeld in [artikel 9.8, vijfde lid, van de wet][ref1],
       kan verenigen, kan Onze Minister gemotiveerd verzoeken om een herwaardering.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.5.2
-    text: |-
-      Een verzoek als bedoeld in het eerste lid wordt gedaan binnen een week te rekenen vanaf de dag na de dagtekening
+      2 Een verzoek als bedoeld in het eerste lid wordt gedaan binnen een week te rekenen vanaf de dag na de dagtekening
       van het advies.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.5
-  - number: 4.5.3
-    text: |-
-      Indien het verzoek, bedoeld in het eerste lid, aanleiding geeft tot het opstellen van een nieuw advies, wijst Onze
-      Minister drie deskundigen aan, waaronder de deskundige die het oorspronkelijke advies uitbracht, die Onze Minister
-      adviseren over de waarde van het dier, product of voorwerp.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.5
-  - number: 4.5.4
-    text: |-
-      Indien de drie deskundigen geen overeenstemming bereiken, wordt het advies over de waarde bepaald door de som van
+
+      3 Indien het verzoek, bedoeld in het eerste lid, aanleiding geeft tot het opstellen van een nieuw advies, wijst
+      Onze Minister drie deskundigen aan, waaronder de deskundige die het oorspronkelijke advies uitbracht, die Onze
+      Minister adviseren over de waarde van het dier, product of voorwerp.
+
+      4 Indien de drie deskundigen geen overeenstemming bereiken, wordt het advies over de waarde bepaald door de som van
       de door de drie deskundigen voorgestelde waarden te delen door drie.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.5
-  - number: 4.5.5
-    text: |-
-      De drie deskundigen verstrekken de houder van het dier, product of voorwerp afschriften van de formulieren, bedoeld
-      in [artikel 9.8, zevende lid, van de wet][ref1].
+
+      5 De drie deskundigen verstrekken de houder van het dier, product of voorwerp afschriften van de formulieren,
+      bedoeld in [artikel 9.8, zevende lid, van de wet][ref2].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9.8
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.5
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 4.6.1
-    text: 'Een deskundige heeft in ieder geval theoretische kennis over:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.a
-    text: marktontwikkelingen en marktprijzen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.b
-    text: productiekengetallen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.c
-    text: administratieve processen en bescheiden;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.d
-    text: dierenrassen, hun eigenschappen en productiekenmerken;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.e
-    text: bedrijfskolommen; en
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.1.f
+        artikel: '9.8'
+      - id: ref2
+        bwb_id: BWBR0030250
+        artikel: '9.8'
+  - number: '4.6'
     text: |-
-      de aanwezige en gebruikte producten en voorwerpen van het bedrijf of bedrijfstype waar de waardevaststelling
+      1 Een deskundige heeft in ieder geval theoretische kennis over:
+
+      a. marktontwikkelingen en marktprijzen;
+
+      b. productiekengetallen;
+
+      c. administratieve processen en bescheiden;
+
+      d. dierenrassen, hun eigenschappen en productiekenmerken;
+
+      e. bedrijfskolommen; en
+
+      f. de aanwezige en gebruikte producten en voorwerpen van het bedrijf of bedrijfstype waar de waardevaststelling
       betrekking op heeft.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.2
-    text: 'Een deskundige kan in ieder geval:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.2.a
-    text: fokvee, gebruiksvee en slachtvee beoordelen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.2.b
-    text: het ras of de kruising, de leeftijd, de lichamelijke conditie, het gewicht van dieren bepalen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.2.c
-    text: het exterieur, de productiviteit en het gebruiksdoel van dieren beoordelen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
-  - number: 4.6.2.d
-    text: |-
-      de waarde van dieren, producten en voorwerpen bepalen in gevallen als bedoeld in [artikel 4.3][ref1]; en
+
+      2 Een deskundige kan in ieder geval:
+
+      a. fokvee, gebruiksvee en slachtvee beoordelen;
+
+      b. het ras of de kruising, de leeftijd, de lichamelijke conditie, het gewicht van dieren bepalen;
+
+      c. het exterieur, de productiviteit en het gebruiksdoel van dieren beoordelen;
+
+      d. de waarde van dieren, producten en voorwerpen bepalen in gevallen als bedoeld in [artikel 4.3][ref1]; en
+
+      e. mondeling, schriftelijk of digitaal rapporteren in de Nederlandse taal over uitgevoerde en uit te voeren
+      werkzaamheden.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel4.3
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
     references:
       - id: ref1
         bwb_id: BWBR0045039
-        artikel: '4'
+        artikel: '4.3'
         hoofdstuk: '4'
-  - number: 4.6.2.e
-    text: |-
-      mondeling, schriftelijk of digitaal rapporteren in de Nederlandse taal over uitgevoerde en uit te voeren
-      werkzaamheden.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.6
   - number: '4.7'
     text: Een deskundige adviseert onpartijdig en naar beste weten over de waardevaststelling.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel4.7
   - number: '5.1'
     text: |-
-      In dit hoofdstuk wordt verstaan onder: - *A-, B-, C-, D-, E- of F-bedrijf:* bedrijf dat op grond van
+      In dit hoofdstuk wordt verstaan onder:
+
+        - *A-, B-, C-, D-, E- of F-bedrijf:* bedrijf dat op grond van
       [artikel 2.27a van het Besluit houders van dieren][ref1] is geregistreerd als A-, B-, C-, D-, E- of F-bedrijf;
         - *beer:* geslachtsrijp varken van het mannelijk geslacht; bestemd voor de fokkerij;
         - *big:* varken vanaf de geboorte tot aan het spenen;
@@ -430,76 +365,59 @@ articles:
         - *zeug:* varken van het vrouwelijk geslacht na de worp van haar eerste biggen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0035217#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      [ref1]: https://wetten.overheid.nl/BWBR0035217#Artikel2.27a
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9.14
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.1
     references:
       - id: ref1
         bwb_id: BWBR0035217
-        artikel: '2'
+        artikel: 2.27a
       - id: ref2
         bwb_id: BWBR0030250
-        artikel: '9'
+        artikel: '9.14'
   - number: '5.2'
-    text: 'De aan te wijzen diersoorten en het voor die diersoorten te bepalen aantal, bedoeld in:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a
     text: |-
-      [artikel 9.15, derde lid, van de wet][ref1], zijn:
+      De aan te wijzen diersoorten en het voor die diersoorten te bepalen aantal, bedoeld in:
+
+      a. [artikel 9.15, derde lid, van de wet][ref1], zijn:
+
+      1. 249 kippen;
+
+      2. 249 kalkoenen;
+
+      3. 249 eenden;
+
+      4. 25 schapen;
+
+      5. 25 geiten;
+
+      6. 5 runderen;
+
+      7. 5 varkens.
+
+      b. [artikel 9.16, derde lid, van de wet][ref2], zijn:
+
+      1. 25 schapen;
+
+      2. 25 geiten.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9.15
+      [ref2]: https://wetten.overheid.nl/BWBR0030250#Artikel9.16
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 5.2.a.1
-    text: 249 kippen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.2
-    text: 249 kalkoenen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.3
-    text: 249 eenden;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.4
-    text: 25 schapen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.5
-    text: 25 geiten;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.6
-    text: 5 runderen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.a.7
-    text: 5 varkens.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.b
-    text: |-
-      [artikel 9.16, derde lid, van de wet][ref1], zijn:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-    references:
-      - id: ref1
+        artikel: '9.15'
+      - id: ref2
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 5.2.b.1
-    text: 25 schapen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.2.b.2
-    text: 25 geiten.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.2
-  - number: 5.3.1
+        artikel: '9.16'
+  - number: '5.3'
     text: |-
-      Het aantal in een kalenderjaar gehouden varkens wordt bepaald op basis van het aantal dieren dat in het
+      1 Het aantal in een kalenderjaar gehouden varkens wordt bepaald op basis van het aantal dieren dat in het
       kalenderjaar uit de stal is afgevoerd.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.3
-  - number: 5.3.2
-    text: |-
-      Het aantal in een kalenderjaar gehouden runderen, jonger dan een jaar, wordt bepaald op basis van het aantal
+
+      2 Het aantal in een kalenderjaar gehouden runderen, jonger dan een jaar, wordt bepaald op basis van het aantal
       dieren dat in het kalenderjaar uit de stal is afgevoerd om te worden geëxporteerd of om te worden vervoerd naar een
       slachthuis, al dan niet via een verzamelcentrum.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.3
@@ -507,247 +425,180 @@ articles:
     text: |-
       De tarieven voor de diergezondheidsheffing worden voor de jaren 2025 tot en met 2029 zodanig vastgesteld dat de
       totale opbrengst in die periode niet meer bedraagt dan:
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
-  - number: 5.4.a
-    text: 'voor runderen: € 90.000.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
-  - number: 5.4.b
-    text: 'voor varkens: € 85.000.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
-  - number: 5.4.c
-    text: 'voor kippen, kalkoenen, eenden en broedeieren: € 130.000.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
-  - number: 5.4.d
-    text: 'voor geiten: € 9.700.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
-  - number: 5.4.e
-    text: 'voor schapen: € 8.900.000.'
+
+      a. voor runderen: € 90.000.000;
+
+      b. voor varkens: € 85.000.000;
+
+      c. voor kippen, kalkoenen, eenden en broedeieren: € 130.000.000;
+
+      d. voor geiten: € 9.700.000;
+
+      e. voor schapen: € 8.900.000.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.4
   - number: '5.5'
     text: |-
       De omvang van de in [artikel 9.23, derde lid, van de wet][ref1] bedoelde reserve bedraagt:
 
+      a. voor runderen: € 1.800.000;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9
+      b. voor varkens: € 7.400.000;
+
+      c. voor kippen, kalkoenen, eenden en broedeieren: € 7.423.000;
+
+      d. voor geiten: € 49.000;
+
+      e. voor schapen: € 49.000.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0030250#Artikel9.23
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
     references:
       - id: ref1
         bwb_id: BWBR0030250
-        artikel: '9'
-  - number: 5.5.a
-    text: 'voor runderen: € 1.800.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
-  - number: 5.5.b
-    text: 'voor varkens: € 7.400.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
-  - number: 5.5.c
-    text: 'voor kippen, kalkoenen, eenden en broedeieren: € 7.423.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
-  - number: 5.5.d
-    text: 'voor geiten: € 49.000;'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
-  - number: 5.5.e
-    text: 'voor schapen: € 49.000.'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.5
-  - number: 5.6.1
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een vleesras bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.1.a
-    text: € 0,754455 per kip die bestemd is om te worden opgefokt tot grootouderdier;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.1.b
-    text: € 0,067361 per kip die bestemd is om te worden opgefokt tot ouderdier.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.2
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een vleesras bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.2.a
-    text: € 0,203214 per ouderdier;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.2.b
-    text: € 0,986291 per grootouderdier.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.3
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van vleeskuikens bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.3.a
-    text: € 0,018404 per vleeskuiken van een traaggroeiend ras;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.3.b
-    text: € 0,007947 per vleeskuiken van andere rassen dan bedoeld in onderdeel a.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.4
+        artikel: '9.23'
+  - number: '5.6'
     text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van de inleg van broedeieren, afkomstig van kippen die behoren
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een vleesras
+      bedraagt:
+
+      a. € 0,754455 per kip die bestemd is om te worden opgefokt tot grootouderdier;
+
+      b. € 0,067361 per kip die bestemd is om te worden opgefokt tot ouderdier.
+
+      2 Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een vleesras
+      bedraagt:
+
+      a. € 0,203214 per ouderdier;
+
+      b. € 0,986291 per grootouderdier.
+
+      3 Het tarief voor de diergezondheidsheffing ter zake van het houden van vleeskuikens bedraagt:
+
+      a. € 0,018404 per vleeskuiken van een traaggroeiend ras;
+
+      b. € 0,007947 per vleeskuiken van andere rassen dan bedoeld in onderdeel a.
+
+      4 Het tarief voor de diergezondheidsheffing ter zake van de inleg van broedeieren, afkomstig van kippen die behoren
       tot een vleesras, bedraagt:
+
+      a. nihil per broedei voor fok- en vermeerderingspluimvee;
+
+      b. nihil per broedei voor gebruikspluimvee.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.4.a
-    text: nihil per broedei voor fok- en vermeerderingspluimvee;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.6.4.b
-    text: nihil per broedei voor gebruikspluimvee.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.6
-  - number: 5.7.1
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een legras bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.1.a
-    text: € 1,030925 per kip die bestemd is om te worden opgefokt tot grootouderdier;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.1.b
-    text: € 0,112193 per kip die bestemd is om te worden opgefokt tot ouderdier;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.1.c
-    text: € 0,034027 per kip die bestemd is om te worden opgefokt tot legkip.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.2
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een legras bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.2.a
-    text: € 1,430447 per grootouderdier;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.2.b
-    text: € 0,194406 per ouderdier.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.3
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van legkippen bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.3.a
+  - number: '5.7'
     text: |-
-      € 0,561462 per legkip die wordt gehouden voor de productie van biologische eieren als bedoeld in artikel 30, eerste
-      lid, van [verordening (EU) 2018/848](32748R2018);
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.3.b
-    text: |-
-      € 0,291961 per legkip die wordt gehouden voor de productie van eieren van hennen met vrije uitloop als bedoeld in
-      bijlage II, onderdeel 1, van [verordening (EU) 2023/2465](32023R2465);
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.3.c
-    text: |-
-      € 0,182475 per legkip die wordt gehouden voor de productie van scharreleieren als bedoeld in bijlage II, onderdeel
-      2, van [verordening (EU) 2023/2465](32023R2465) of vaccinbroedeieren;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.3.d
-    text: |-
-      € 0,118802 per legkip die wordt gehouden voor de productie van eieren uit aangepaste kooien als bedoeld in bijlage
-      II, onderdeel 3, van [verordening (EU) 2023/2465](32023R2465).
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.4
-    text: |-
-      Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van kippen die behoren tot een
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een legras bedraagt:
+
+      a. € 1,030925 per kip die bestemd is om te worden opgefokt tot grootouderdier;
+
+      b. € 0,112193 per kip die bestemd is om te worden opgefokt tot ouderdier;
+
+      c. € 0,034027 per kip die bestemd is om te worden opgefokt tot legkip.
+
+      2 Het tarief voor de diergezondheidsheffing ter zake van het houden van kippen die behoren tot een legras bedraagt:
+
+      a. € 1,430447 per grootouderdier;
+
+      b. € 0,194406 per ouderdier.
+
+      3 Het tarief voor de diergezondheidsheffing ter zake van het houden van legkippen bedraagt:
+
+      a. € 0,561462 per legkip die wordt gehouden voor de productie van biologische eieren als bedoeld in artikel 30,
+      eerste lid, van [verordening (EU) 2018/848](32748R2018);
+
+      b. € 0,291961 per legkip die wordt gehouden voor de productie van eieren van hennen met vrije uitloop als bedoeld
+      in bijlage II, onderdeel 1, van [verordening (EU) 2023/2465](32023R2465);
+
+      c. € 0,182475 per legkip die wordt gehouden voor de productie van scharreleieren als bedoeld in bijlage II,
+      onderdeel 2, van [verordening (EU) 2023/2465](32023R2465) of vaccinbroedeieren;
+
+      d. € 0,118802 per legkip die wordt gehouden voor de productie van eieren uit aangepaste kooien als bedoeld in
+      bijlage II, onderdeel 3, van [verordening (EU) 2023/2465](32023R2465).
+
+      4 Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van kippen die behoren tot een
       legras, bedraagt:
+
+      a. nihil per broedei voor fok- en vermeerderingspluimvee;
+
+      b. nihil per broedei voor gebruikspluimvee;
+
+      c. nihil per vaccinbroedei.
+
+      5 Het tarief voor de diergezondheidsheffing ter zake van het houden van leghanen bedraagt € 0,023217 per leghaan.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.4.a
-    text: nihil per broedei voor fok- en vermeerderingspluimvee;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.4.b
-    text: nihil per broedei voor gebruikspluimvee;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.4.c
-    text: nihil per vaccinbroedei.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.7.5
-    text: Het tarief voor de diergezondheidsheffing ter zake van het houden van leghanen bedraagt € 0,023217 per leghaan.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.7
-  - number: 5.8.1
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van vleeskalkoenen bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.8
-  - number: 5.8.1.a
-    text: € 0,073748 per vrouwelijke vleeskalkoen;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.8
-  - number: 5.8.1.b
-    text: € 0,136832 per mannelijke vleeskalkoen.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.8
-  - number: 5.8.2
+  - number: '5.8'
     text: |-
-      Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van kalkoenen, bedraagt nihil
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van vleeskalkoenen bedraagt:
+
+      a. € 0,073748 per vrouwelijke vleeskalkoen;
+
+      b. € 0,136832 per mannelijke vleeskalkoen.
+
+      2 Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van kalkoenen, bedraagt nihil
       per broedei.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.8
-  - number: 5.9.1
-    text: Het tarief voor de diergezondheidsheffing ter zake van het houden van eenden bedraagt € 0,020061 per eend.
+  - number: '5.9'
+    text: |-
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van eenden bedraagt € 0,020061 per eend.
+
+      2 Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van eenden, bedraagt nihil
+      per broedei.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.9
-  - number: 5.9.2
+  - number: '5.10'
     text: |-
-      Het tarief voor de diergezondheidsheffing voor de inleg van broedeieren, afkomstig van eenden, bedraagt nihil per
-      broedei.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.9
-  - number: 5.10.1
-    text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van runderen van 1 jaar of ouder bedraagt € 5,075
-      per rund.
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van runderen van 1 jaar of ouder bedraagt
+      € 5,075 per rund.
+
+      2 Het tarief voor de diergezondheidsheffing ter zake van het houden van runderen, jonger dan 1 jaar, bedraagt
+      € 0,607 per rund.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.10
-  - number: 5.10.2
+  - number: '5.11'
     text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van runderen, jonger dan 1 jaar, bedraagt € 0,607
-      per rund.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.10
-  - number: 5.11.1
-    text: Het tarief voor de diergezondheidsheffing ter zake van het houden van schapen bedraagt € 1,231 per schaap.
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van schapen bedraagt € 1,231 per schaap.
+
+      2 Het tarief voor de diergezondheidsheffing ter zake van het houden van geiten bedraagt € 1,918 per geit.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.11
-  - number: 5.11.2
-    text: Het tarief voor de diergezondheidsheffing ter zake van het houden van geiten bedraagt € 1,918 per geit.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.11
-  - number: 5.12.1
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een A-bedrijf bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.1.a
+  - number: '5.12'
     text: |-
-      € 0,221 per vleesvarken dat is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan niet
-      via een verzamelcentrum;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.1.b
-    text: |-
-      € 0,111 per zeug, beer, gelt of big die is afgevoerd naar een A-, B-, C- of D-bedrijf, naar een slachthuis of naar
-      een bestemming buiten Nederland, al dan niet via een verzamelcentrum;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.1.c
-    text: € 0,077 per big die is afgevoerd naar een E-bedrijf.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.2
-    text: 'Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een B-bedrijf bedraagt:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.2.a
-    text: |-
-      € 0,221 per vleesvarken dat is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan niet
-      via een verzamelcentrum;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.2.b
-    text: |-
-      € 0,111 per zeug, beer of gelt die is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan
+      1 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een A-bedrijf bedraagt:
+
+      a. € 0,221 per vleesvarken dat is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan
       niet via een verzamelcentrum;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.2.c
-    text: |-
-      € 0,111 per big die is afgevoerd naar een D-bedrijf, naar een slachthuis of naar een bestemming buiten Nederland,
-      al dan niet via een verzamelcentrum;
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.2.d
-    text: € 0,077 per big die is afgevoerd naar een F-bedrijf.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.3
-    text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een C-bedrijf bedraagt € 0,111 per
-      varken dat is afgevoerd naar A-, B-, of D-bedrijf, naar een slachthuis of naar een bestemming buiten Nederland, al
-      dan niet via een verzamelcentrum.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.4
-    text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een D-bedrijf bedraagt € 0,111
+
+      b. € 0,111 per zeug, beer, gelt of big die is afgevoerd naar een A-, B-, C- of D-bedrijf, naar een slachthuis of
+      naar een bestemming buiten Nederland, al dan niet via een verzamelcentrum;
+
+      c. € 0,077 per big die is afgevoerd naar een E-bedrijf.
+
+      2 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een B-bedrijf bedraagt:
+
+      a. € 0,221 per vleesvarken dat is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan
+      niet via een verzamelcentrum;
+
+      b. € 0,111 per zeug, beer of gelt die is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al
+      dan niet via een verzamelcentrum;
+
+      c. € 0,111 per big die is afgevoerd naar een D-bedrijf, naar een slachthuis of naar een bestemming buiten
+      Nederland, al dan niet via een verzamelcentrum;
+
+      d. € 0,077 per big die is afgevoerd naar een F-bedrijf.
+
+      3 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een C-bedrijf bedraagt € 0,111
+      per varken dat is afgevoerd naar A-, B-, of D-bedrijf, naar een slachthuis of naar een bestemming buiten Nederland,
+      al dan niet via een verzamelcentrum.
+
+      4 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een D-bedrijf bedraagt € 0,111
       per varken dat is afgevoerd naar een slachthuis of naar een bestemming buiten Nederland, al dan niet via een
       verzamelcentrum.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.5
-    text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een E-bedrijf bedraagt € 0,033
+
+      5 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een E-bedrijf bedraagt € 0,033
       per varken.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.6
-    text: |-
-      Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een F-bedrijf bedraagt € 0,033
+
+      6 Het tarief voor de diergezondheidsheffing ter zake van het houden van varkens op een F-bedrijf bedraagt € 0,033
       per varken.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
-  - number: 5.12.7
-    text: |-
-      Op geslachtsrijpe varkens die eerder bestemd waren voor de fokkerij en van een A-bedrijf of een B-bedrijf zijn
+
+      7 Op geslachtsrijpe varkens die eerder bestemd waren voor de fokkerij en van een A-bedrijf of een B-bedrijf zijn
       afgevoerd naar een slachthuis, al dan niet via een verzamelcentrum, is uitsluitend het eerste lid, onderdeel b, dan
       wel het tweede lid, onderdeel b, van toepassing.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel5.12
@@ -760,166 +611,105 @@ articles:
       verordening (EU) [2019/2035](32019L2035) onder dezelfde voorschriften, beperkingen en voorwaarden.
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.1
   - number: '7.2'
-    text: 'De volgende besluiten worden ingetrokken:'
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-  - number: 7.2.a
     text: |-
-      het [Besluit aanwijzing diersoorten besmettelijke dierziekten][ref1];
+      De volgende besluiten worden ingetrokken:
+
+      a. het [Besluit aanwijzing diersoorten besmettelijke dierziekten][ref1];
+
+      b. het [Besluit eisen dierlijk sperma en spermawincentra][ref2];
+
+      c. het [Besluit gebruik sera en entstoffen][ref3];
+
+      d. het [Besluit niet gehouden dieren][ref4];
+
+      e. het [Besluit uitvoer dieren en produkten van dierlijke oorsprong][ref5];
+
+      f. het [Besluit uitvoering verordening officiële controles diergezondheid][ref6];
+
+      g. het [Besluit verdachte dieren][ref7];
+
+      h. het [Besluit verlaging tegemoetkoming aangewezen dierziekten][ref8];
+
+      i. het [Besluit vervoer van en naar besmette of van besmetting verdachte gebouwen en terreinen][ref9];
+
+      j. het [Besluit waardevaststelling bij dierziektebestrijding][ref10];
+
+      k. het [Besluit zoönosen][ref11];
+
+      l. het [Embryobesluit][ref12].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0006450
+      [ref2]: https://wetten.overheid.nl/BWBR0010619
+      [ref3]: https://wetten.overheid.nl/BWBR0009198
+      [ref4]: https://wetten.overheid.nl/BWBR0006815
+      [ref5]: https://wetten.overheid.nl/BWBR0006427
+      [ref6]: https://wetten.overheid.nl/BWBR0042383
+      [ref7]: https://wetten.overheid.nl/BWBR0006829
+      [ref8]: https://wetten.overheid.nl/BWBR0011707
+      [ref9]: https://wetten.overheid.nl/BWBR0006830
+      [ref10]: https://wetten.overheid.nl/BWBR0023074
+      [ref11]: https://wetten.overheid.nl/BWBR0036054
+      [ref12]: https://wetten.overheid.nl/BWBR0006426
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
     references:
       - id: ref1
         bwb_id: BWBR0006450
-  - number: 7.2.b
-    text: |-
-      het [Besluit eisen dierlijk sperma en spermawincentra][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0010619
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0010619
-  - number: 7.2.c
-    text: |-
-      het [Besluit gebruik sera en entstoffen][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009198
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0009198
-  - number: 7.2.d
-    text: |-
-      het [Besluit niet gehouden dieren][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006815
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006815
-  - number: 7.2.e
-    text: |-
-      het [Besluit uitvoer dieren en produkten van dierlijke oorsprong][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006427
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006427
-  - number: 7.2.f
-    text: |-
-      het [Besluit uitvoering verordening officiële controles diergezondheid][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0042383
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0042383
-  - number: 7.2.g
-    text: |-
-      het [Besluit verdachte dieren][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006829
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006829
-  - number: 7.2.h
-    text: |-
-      het [Besluit verlaging tegemoetkoming aangewezen dierziekten][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011707
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0011707
-  - number: 7.2.i
-    text: |-
-      het [Besluit vervoer van en naar besmette of van besmetting verdachte gebouwen en terreinen][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006830
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006830
-  - number: 7.2.j
-    text: |-
-      het [Besluit waardevaststelling bij dierziektebestrijding][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023074
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0023074
-  - number: 7.2.k
-    text: |-
-      het [Besluit zoönosen][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0036054
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0036054
-  - number: 7.2.l
-    text: |-
-      het [Embryobesluit][ref1].
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006426
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006426
-  - number: 7.5.1
-    text: |-
-      Dit besluit treedt in werking met ingang van 21 april 2021, met uitzondering van [artikel 6.4, onderdeel B][ref1],
-      ten aanzien van de [artikelen 1.29](onbekend), [1.30](onbekend) en [1.31 van het Besluit houders van dieren]
-      (onbekend), en van [artikel 6.5][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0045039#Artikel6
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.5
-    references:
-      - id: ref1
-        bwb_id: BWBR0045039
-        artikel: '6'
-        hoofdstuk: '6'
       - id: ref2
-        bwb_id: BWBR0045039
-        artikel: '6'
-        hoofdstuk: '6'
-  - number: 7.5.2
+        bwb_id: BWBR0010619
+      - id: ref3
+        bwb_id: BWBR0009198
+      - id: ref4
+        bwb_id: BWBR0006815
+      - id: ref5
+        bwb_id: BWBR0006427
+      - id: ref6
+        bwb_id: BWBR0042383
+      - id: ref7
+        bwb_id: BWBR0006829
+      - id: ref8
+        bwb_id: BWBR0011707
+      - id: ref9
+        bwb_id: BWBR0006830
+      - id: ref10
+        bwb_id: BWBR0023074
+      - id: ref11
+        bwb_id: BWBR0036054
+      - id: ref12
+        bwb_id: BWBR0006426
+  - number: '7.5'
     text: |-
-      Indien het bij koninklijke boodschap van 17 februari 2020 ingediende voorstel van wet tot wijziging van de Wet
+      1 Dit besluit treedt in werking met ingang van 21 april 2021, met uitzondering van
+      [artikel 6.4, onderdeel B][ref1], ten aanzien van de [artikelen 1.29](onbekend), [1.30](onbekend) en [1.31 van het
+      Besluit houders van dieren](onbekend), en van [artikel 6.5][ref2].
+
+      2 Indien het bij koninklijke boodschap van 17 februari 2020 ingediende voorstel van wet tot wijziging van de Wet
       dieren in verband met de uitvoering van de herziene Europese diergezondheidswetgeving (Kamerstukken ) tot wet is
       of wordt verheven en artikel I, onderdeel B, van die wet in werking treedt, treedt artikel 6.4, onderdeel B, ten
       aanzien van de [artikelen 1.29](onbekend), [1.30](onbekend) en [1.31 van het Besluit houders van dieren](onbekend),
       op hetzelfde tijdstip in werking.
-    url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.5
-  - number: 7.5.3
-    text: |-
-      [Artikel 6.5][ref1] treedt in werking op het tijdstip dat artikel I, onderdeel A, onderdeel 3, van het besluit van
-      15 oktober 2020 tot wijziging van het Besluit diergezondheidsheffing in verband met de vaststelling van de tarieven
-      voor 2021 (Stb. 399) in werking treedt.
+
+      3 [Artikel 6.5][ref3] treedt in werking op het tijdstip dat artikel I, onderdeel A, onderdeel 3, van het besluit
+      van 15 oktober 2020 tot wijziging van het Besluit diergezondheidsheffing in verband met de vaststelling van de
+      tarieven voor 2021 (Stb. 399) in werking treedt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0045039#Artikel6.4
+      [ref2]: https://wetten.overheid.nl/BWBR0045039#Artikel6.5
+      [ref3]: https://wetten.overheid.nl/BWBR0045039#Artikel6.5
     url: https://wetten.overheid.nl/BWBR0045039/2026-01-01#Artikel7.5
     references:
       - id: ref1
         bwb_id: BWBR0045039
-        artikel: '6'
+        artikel: '6.4'
+        hoofdstuk: '6'
+      - id: ref2
+        bwb_id: BWBR0045039
+        artikel: '6.5'
+        hoofdstuk: '6'
+      - id: ref3
+        bwb_id: BWBR0045039
+        artikel: '6.5'
         hoofdstuk: '6'
   - number: '7.6'
     text: 'Dit besluit wordt aangehaald als: Besluit diergezondheid.'
