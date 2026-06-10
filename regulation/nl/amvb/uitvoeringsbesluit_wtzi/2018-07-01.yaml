@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/schema.json
 $id: uitvoeringsbesluit_wtzi
 regulatory_layer: AMVB
 publication_date: '2021-03-31'
@@ -25,49 +25,83 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#ArtikelAanhef
 articles:
   - number: '1.1'
-    text: 'In dit besluit wordt, tenzij anders bepaald, verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel1.1
-  - number: 1.1.a
     text: |-
-      de wet: de [Wet toelating zorginstellingen][ref1];
+      In dit besluit wordt, tenzij anders bepaald, verstaan onder:
+
+      a. de wet: de [Wet toelating zorginstellingen][ref1];
+
+      b. Wlz-verblijf: het verblijf, bedoeld in [artikel 3.1.1, eerste lid, onderdeel a, van de Wet langdurige zorg][ref2];
+
+      c. Zvw-verblijf: het verblijf, omschreven in [artikel 2.10 van het Besluit zorgverzekering][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018906
+      [ref2]: https://wetten.overheid.nl/BWBR0035917#Artikel3.1.1
+      [ref3]: https://wetten.overheid.nl/BWBR0018492#Artikel2.10
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel1.1
     references:
       - id: ref1
         bwb_id: BWBR0018906
-  - number: 1.1.b
-    text: |-
-      Wlz-verblijf: het verblijf, bedoeld in [artikel 3.1.1, eerste lid, onderdeel a, van de Wet langdurige zorg][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0035917#Artikel3
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel1.1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0035917
-        artikel: '3'
-  - number: 1.1.c
-    text: |-
-      Zvw-verblijf: het verblijf, omschreven in [artikel 2.10 van het Besluit zorgverzekering][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018492#Artikel2
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel1.1
-    references:
-      - id: ref1
+        artikel: 3.1.1
+      - id: ref3
         bwb_id: BWBR0018492
-        artikel: '2'
+        artikel: '2.10'
   - number: '1.2'
     text: |-
       Voor de toepassing van [artikel 5, eerste lid, van de wet][ref1] worden de volgende categorieën van instellingen
-      aangewezen: 1. instellingen voor medisch-specialistische zorg; 2. audiologische centra; 3. trombosediensten;
-      alsmede instellingen voor: 5. huisartsenzorg; 6. verloskundige zorg; 7. kraamzorg; 8. mondzorg; 9. paramedische
-      zorg; 10. het verstrekken van hulpmiddelen; 11. het verlenen van farmaceutische zorg; 12. ziekenvervoer; 13.
-      erfelijkheidsadvisering; 14. behandeling van gedragswetenschappelijke aard in verband met een psychiatrische
-      aandoening; 17. persoonlijke verzorging; 18. verpleging; 19. begeleiding; 20. ADL-assistentie; 21. behandeling,
-      anders dan bedoeld onder nummer 14; 24. de uitleen van verpleegartikelen.
+      aangewezen:
+
+      1. instellingen voor medisch-specialistische zorg;
+
+      2. audiologische centra;
+
+      3. trombosediensten;
+
+      alsmede instellingen voor:
+
+      4.
+
+      5. huisartsenzorg;
+
+      6. verloskundige zorg;
+
+      7. kraamzorg;
+
+      8. mondzorg;
+
+      9. paramedische zorg;
+
+      10. het verstrekken van hulpmiddelen;
+
+      11. het verlenen van farmaceutische zorg;
+
+      12. ziekenvervoer;
+
+      13. erfelijkheidsadvisering;
+
+      14. behandeling van gedragswetenschappelijke aard in verband met een psychiatrische aandoening;
+
+      15.
+
+      16.
+
+      17. persoonlijke verzorging;
+
+      18. verpleging;
+
+      19. begeleiding;
+
+      20. ADL-assistentie;
+
+      21. behandeling, anders dan bedoeld onder nummer 14;
+
+      22.
+
+      23.
+
+      24. de uitleen van verpleegartikelen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel5
@@ -76,196 +110,152 @@ articles:
       - id: ref1
         bwb_id: BWBR0018906
         artikel: '5'
-  - number: 2.1.1
+  - number: '2.1'
     text: |-
-      Niet tot de in [artikel 1.2][ref1] genoemde instellingen behoren militaire instellingen als ziekenboegen,
+      1 Niet tot de in [artikel 1.2][ref1] genoemde instellingen behoren militaire instellingen als ziekenboegen,
       gezondheidscentra en operationeel geneeskundige instellingen.
 
+      2 Op de instellingen, genoemd in [artikel 1.2, onder nummer 1][ref2], voor zover het betreft militaire ziekenhuizen
+      en militaire revalidatiecentra, zijn de [artikelen 7, derde lid, onder c][ref3], [9, eerste lid, onder b][ref4], en
+      [13, eerste lid, eerste volzin, van de wet][ref5] niet van toepassing.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-  - number: 2.1.2
-    text: |-
-      Op de instellingen, genoemd in [artikel 1.2, onder nummer 1][ref1], voor zover het betreft militaire ziekenhuizen
-      en militaire revalidatiecentra, zijn de [artikelen 7, derde lid, onder c][ref2], [9, eerste lid, onder b][ref3], en
-      [13, eerste lid, eerste volzin, van de wet][ref4] niet van toepassing.
+      3 Op de instellingen, genoemd in [artikel 1.2, onder nummer 1][ref6], voor zover het betreft academische
+      ziekenhuizen, zijn de [artikelen 6.1][ref7] en [6.2][ref8] van dit besluit niet van toepassing.
 
+      4 [Artikel 6.1][ref9] is uitsluitend van toepassing op:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0018906#Artikel7
-      [ref3]: https://wetten.overheid.nl/BWBR0018906#Artikel9
-      [ref4]: https://wetten.overheid.nl/BWBR0018906#Artikel13
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-      - id: ref2
-        bwb_id: BWBR0018906
-        artikel: '7'
-      - id: ref3
-        bwb_id: BWBR0018906
-        artikel: '9'
-      - id: ref4
-        bwb_id: BWBR0018906
-        artikel: '13'
-  - number: 2.1.3
-    text: |-
-      Op de instellingen, genoemd in [artikel 1.2, onder nummer 1][ref1], voor zover het betreft academische
-      ziekenhuizen, zijn de [artikelen 6.1][ref2] en [6.2][ref3] van dit besluit niet van toepassing.
+      a. de instellingen, bedoeld in het vijfde lid, met uitzondering van academische ziekenhuizen, en
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel6
-      [ref3]: https://wetten.overheid.nl/BWBR0018983#Artikel6
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-      - id: ref2
-        bwb_id: BWBR0018983
-        artikel: '6'
-        hoofdstuk: VI
-        paragraaf: '1'
-      - id: ref3
-        bwb_id: BWBR0018983
-        artikel: '6'
-        hoofdstuk: VI
-        paragraaf: '1'
-  - number: 2.1.4
-    text: |-
-      [Artikel 6.1][ref1] is uitsluitend van toepassing op:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel6
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '6'
-        hoofdstuk: VI
-        paragraaf: '1'
-  - number: 2.1.4.a
-    text: de instellingen, bedoeld in het vijfde lid, met uitzondering van academische ziekenhuizen, en
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-  - number: 2.1.4.b
-    text: |-
-      op overige instellingen wanneer daarop [artikel 2, eerste lid, van de Wet op de ondernemingsraden][ref1] van
+      b. op overige instellingen wanneer daarop [artikel 2, eerste lid, van de Wet op de ondernemingsraden][ref10] van
       toepassing is.
 
+      5 De [artikelen 15][ref11] en [16 van de wet][ref12] zijn uitsluitend van toepassing op de instellingen, bedoeld in
+      [artikel 1.2, onder de nummers 1, 17, 18, 19, en 21][ref13] alsmede op de Regionale Ambulancevoorzieningen, bedoeld
+      in de [Tijdelijke wet ambulancezorg][ref14].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002747#Artikel2
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002747
-        artikel: '2'
-  - number: 2.1.5
-    text: |-
-      De [artikelen 15][ref1] en [16 van de wet][ref2] zijn uitsluitend van toepassing op de instellingen, bedoeld in
-      [artikel 1.2, onder de nummers 1, 17, 18, 19, en 21][ref3] alsmede op de Regionale Ambulancevoorzieningen, bedoeld
-      in de [Tijdelijke wet ambulancezorg][ref4].
+      6 [Artikel 18 van de wet][ref15] is uitsluitend van toepassing op:
 
+      a. de instellingen, bedoeld in [artikel 1.2, nummer 1][ref16],
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel15
-      [ref2]: https://wetten.overheid.nl/BWBR0018906#Artikel16
-      [ref3]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-      [ref4]: https://wetten.overheid.nl/BWBR0031557
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018906
-        artikel: '15'
-      - id: ref2
-        bwb_id: BWBR0018906
-        artikel: '16'
-      - id: ref3
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-      - id: ref4
-        bwb_id: BWBR0031557
-  - number: 2.1.6
-    text: |-
-      [Artikel 18 van de wet][ref1] is uitsluitend van toepassing op:
+        - die zorg verlenen in combinatie met Zvw-verblijf;
+        - voor welke zorg op grond van de [Wet marktordening gezondheidszorg][ref17] een tarief is vastgesteld; en
+        - welke zorg behoort tot de ingevolge de [Zorgverzekeringswet][ref18] te verzekeren prestaties,
 
+      een en ander met uitzondering van militaire instellingen;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel18
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018906
-        artikel: '18'
-  - number: 2.1.6.a
-    text: |-
-      de instellingen, bedoeld in [artikel 1.2, nummer 1][ref1], - die zorg verlenen in combinatie met Zvw-verblijf;
-        - voor welke zorg op grond van de [Wet marktordening gezondheidszorg][ref2] een tarief is vastgesteld; en
-        - welke zorg behoort tot de ingevolge de [Zorgverzekeringswet][ref3] te verzekeren prestaties, een en ander met
-      uitzondering van militaire instellingen;
+      b. instellingen die zorg verlenen in combinatie met Wlz-verblijf.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0020078
-      [ref3]: https://wetten.overheid.nl/BWBR0018450
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-      - id: ref2
-        bwb_id: BWBR0020078
-      - id: ref3
-        bwb_id: BWBR0018450
-  - number: 2.1.6.b
-    text: instellingen die zorg verlenen in combinatie met Wlz-verblijf.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-  - number: 2.1.7
-    text: |-
-      In afwijking van het zesde lid geldt [artikel 18 van de wet][ref1] niet voor kleinschalige woonvoorzieningen,
+      7 In afwijking van het zesde lid geldt [artikel 18 van de wet][ref19] niet voor kleinschalige woonvoorzieningen,
       zijnde instellingen of delen daarvan die:
 
+      a. bestaan uit zelfstandige woningen, dat wil zeggen woningen die naast één of meer privévertrekken een eigen
+      voordeur, een eigen keuken, een eigen toilet en een eigen badkamer hebben,
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel18
+      b. een beperkte omvang hebben, dat wil zeggen dat zij huisvesting bieden aan ten hoogste zes personen, en
+
+      c. samen met andere in de directe omgeving gelegen zodanige voorzieningen aan niet meer dan 50 personen verblijf
+      bieden.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref3]: https://wetten.overheid.nl/BWBR0018906#Artikel7
+      [ref4]: https://wetten.overheid.nl/BWBR0018906#Artikel9
+      [ref5]: https://wetten.overheid.nl/BWBR0018906#Artikel13
+      [ref6]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref7]: https://wetten.overheid.nl/BWBR0018983#Artikel6.1
+      [ref8]: https://wetten.overheid.nl/BWBR0018983#Artikel6.2
+      [ref9]: https://wetten.overheid.nl/BWBR0018983#Artikel6.1
+      [ref10]: https://wetten.overheid.nl/BWBR0002747#Artikel2
+      [ref11]: https://wetten.overheid.nl/BWBR0018906#Artikel15
+      [ref12]: https://wetten.overheid.nl/BWBR0018906#Artikel16
+      [ref13]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref14]: https://wetten.overheid.nl/BWBR0031557
+      [ref15]: https://wetten.overheid.nl/BWBR0018906#Artikel18
+      [ref16]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref17]: https://wetten.overheid.nl/BWBR0020078
+      [ref18]: https://wetten.overheid.nl/BWBR0018450
+      [ref19]: https://wetten.overheid.nl/BWBR0018906#Artikel18
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
     references:
       - id: ref1
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref2
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref3
+        bwb_id: BWBR0018906
+        artikel: '7'
+      - id: ref4
+        bwb_id: BWBR0018906
+        artikel: '9'
+      - id: ref5
+        bwb_id: BWBR0018906
+        artikel: '13'
+      - id: ref6
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref7
+        bwb_id: BWBR0018983
+        artikel: '6.1'
+        hoofdstuk: VI
+        paragraaf: '1'
+      - id: ref8
+        bwb_id: BWBR0018983
+        artikel: '6.2'
+        hoofdstuk: VI
+        paragraaf: '1'
+      - id: ref9
+        bwb_id: BWBR0018983
+        artikel: '6.1'
+        hoofdstuk: VI
+        paragraaf: '1'
+      - id: ref10
+        bwb_id: BWBR0002747
+        artikel: '2'
+      - id: ref11
+        bwb_id: BWBR0018906
+        artikel: '15'
+      - id: ref12
+        bwb_id: BWBR0018906
+        artikel: '16'
+      - id: ref13
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref14
+        bwb_id: BWBR0031557
+      - id: ref15
         bwb_id: BWBR0018906
         artikel: '18'
-  - number: 2.1.7.a
-    text: |-
-      bestaan uit zelfstandige woningen, dat wil zeggen woningen die naast één of meer privévertrekken een eigen
-      voordeur, een eigen keuken, een eigen toilet en een eigen badkamer hebben,
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-  - number: 2.1.7.b
-    text: een beperkte omvang hebben, dat wil zeggen dat zij huisvesting bieden aan ten hoogste zes personen, en
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
-  - number: 2.1.7.c
-    text: |-
-      samen met andere in de directe omgeving gelegen zodanige voorzieningen aan niet meer dan 50 personen verblijf
-      bieden.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.1
+      - id: ref16
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref17
+        bwb_id: BWBR0020078
+      - id: ref18
+        bwb_id: BWBR0018450
+      - id: ref19
+        bwb_id: BWBR0018906
+        artikel: '18'
   - number: '2.2'
     text: |-
       De instellingen, genoemd in [artikel 1.2, onder de nummers 5 tot en met 14, 20 en 24][ref1] worden voor de
       toepassing van [artikel 5, eerste lid, van de wet][ref2] aangemerkt als in het bezit van een toelating.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
+      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
       [ref2]: https://wetten.overheid.nl/BWBR0018906#Artikel5
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel2.2
     references:
       - id: ref1
         bwb_id: BWBR0018983
-        artikel: '1'
+        artikel: '1.2'
         hoofdstuk: I
       - id: ref2
         bwb_id: BWBR0018906
@@ -286,88 +276,65 @@ articles:
       - id: ref2
         bwb_id: BWBR0029333
   - number: '3.1'
-    text: 'Als instellingen waarvoor winstoogmerk is toegestaan, worden aangewezen:'
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel3.1
-  - number: 3.1.a
     text: |-
-      de instellingen, behorend tot de categorie, genoemd in [artikel 1.2, onder nummer 1][ref1], die uitsluitend de daar
-      genoemde zorg verlenen in verband met een psychiatrische aandoening, niet in combinatie met Zvw-verblijf;
+      Als instellingen waarvoor winstoogmerk is toegestaan, worden aangewezen:
 
+      a. de instellingen, behorend tot de categorie, genoemd in [artikel 1.2, onder nummer 1][ref1], die uitsluitend de
+      daar genoemde zorg verlenen in verband met een psychiatrische aandoening, niet in combinatie met Zvw-verblijf;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel3.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-  - number: 3.1.b
-    text: |-
-      de instellingen, behorend tot de categorieën, genoemd in
-      [artikel 1.2, onder de nummers 2, 3, 5 tot en met 12, 14 en 24][ref1];
+      b. de instellingen, behorend tot de categorieën, genoemd in
+      [artikel 1.2, onder de nummers 2, 3, 5 tot en met 12, 14 en 24][ref2];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel3.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '1'
-        hoofdstuk: I
-  - number: 3.1.c
-    text: |-
-      de instellingen, behorend tot de categorieën, genoemd in [artikel 1.2, onder de nummers 17, 18, 19 en 21][ref1],
+      c. de instellingen, behorend tot de categorieën, genoemd in [artikel 1.2, onder de nummers 17, 18, 19 en 21][ref3],
       die de desbetreffende zorg niet verlenen in combinatie met Wlz-verblijf;
 
+      d. de instellingen, bedoeld in [artikel 2.1, zevende lid][ref4].
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1
+
+      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref3]: https://wetten.overheid.nl/BWBR0018983#Artikel1.2
+      [ref4]: https://wetten.overheid.nl/BWBR0018983#Artikel2.1
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel3.1
     references:
       - id: ref1
         bwb_id: BWBR0018983
-        artikel: '1'
+        artikel: '1.2'
         hoofdstuk: I
-  - number: 3.1.d
-    text: |-
-      de instellingen, bedoeld in [artikel 2.1, zevende lid][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel2
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel3.1
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0018983
-        artikel: '2'
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref3
+        bwb_id: BWBR0018983
+        artikel: '1.2'
+        hoofdstuk: I
+      - id: ref4
+        bwb_id: BWBR0018983
+        artikel: '2.1'
         hoofdstuk: II
   - number: '4.1'
     text: |-
       De aanvraag aan Onze Minister om een toelating wordt ingediend onder gebruikmaking van een door Onze Minister
       beschikbaar te stellen formulier.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel4.1
-  - number: 6.1.1
-    text: 'Met betrekking tot de bestuursstructuur van instellingen gelden de volgende eisen:'
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.1
-  - number: 6.1.1.a
+  - number: '6.1'
     text: |-
-      er is een orgaan dat toezicht houdt op het beleid van de dagelijkse of algemene leiding van de instelling en deze
-      met raad ter zijde staat; geen persoon kan tegelijk deel uitmaken van het toezichthoudend orgaan en de dagelijkse
-      of algemene leiding;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.1
-  - number: 6.1.1.b
-    text: |-
-      het toezichthoudend orgaan is zodanig samengesteld dat de leden ten opzichte van elkaar, de dagelijkse en algemene
-      leiding van de instelling en welk deelbelang dan ook onafhankelijk en kritisch kunnen opereren;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.1
-  - number: 6.1.1.c
-    text: |-
-      de instelling legt inzichtelijk de verantwoordelijkheidsverdeling tussen het toezichthoudend orgaan en de
+      1 Met betrekking tot de bestuursstructuur van instellingen gelden de volgende eisen:
+
+      a. er is een orgaan dat toezicht houdt op het beleid van de dagelijkse of algemene leiding van de instelling
+      en deze met raad ter zijde staat; geen persoon kan tegelijk deel uitmaken van het toezichthoudend orgaan en de
+      dagelijkse of algemene leiding;
+
+      b. het toezichthoudend orgaan is zodanig samengesteld dat de leden ten opzichte van elkaar, de dagelijkse en
+      algemene leiding van de instelling en welk deelbelang dan ook onafhankelijk en kritisch kunnen opereren;
+
+      c. de instelling legt inzichtelijk de verantwoordelijkheidsverdeling tussen het toezichthoudend orgaan en de
       dagelijkse of algemene leiding vast, alsmede de wijze waarop interne conflicten tussen beide organen worden
       geregeld.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.1
-  - number: 6.1.2
-    text: |-
-      Instellingen die rechtspersoon zijn, met uitzondering van kerkgenootschappen, leggen het in het eerste lid bepaalde
-      vast in de statuten; de overige instellingen leggen dat anderszins schriftelijk vast.
+
+      2 Instellingen die rechtspersoon zijn, met uitzondering van kerkgenootschappen, leggen het in het eerste lid
+      bepaalde vast in de statuten; de overige instellingen leggen dat anderszins schriftelijk vast.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.1
   - number: '6.2'
     text: |-
@@ -398,15 +365,13 @@ articles:
       De instelling heeft schriftelijk vastgelegd welk orgaan of welke organen van de instelling welke bevoegdheden heeft
       onderscheidenlijk hebben ten aanzien van welk onderdeel of aspect van de bedrijfsvoering.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.3
-  - number: 6.4.1
+  - number: '6.4'
     text: |-
-      De instelling heeft schriftelijk en inzichtelijk vastgelegd hoe de zorgverlening georganiseerd wordt, van welke
+      1 De instelling heeft schriftelijk en inzichtelijk vastgelegd hoe de zorgverlening georganiseerd wordt, van welke
       andere organisatorische verbanden daarbij gebruik wordt gemaakt en wat de aard is van de relaties met die andere
       verbanden, waaronder begrepen verantwoordelijkheden, taken en beslissingsbevoegdheden.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.4
-  - number: 6.4.2
-    text: |-
-      De activiteiten van de instelling waarvoor de toelating geldt, worden in ieder geval financieel onderscheiden van
+
+      2 De activiteiten van de instelling waarvoor de toelating geldt, worden in ieder geval financieel onderscheiden van
       andere activiteiten van de instelling.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel6.4
   - number: '6.5'
@@ -417,14 +382,17 @@ articles:
   - number: '7.1'
     text: |-
       Dit hoofdstuk heeft betrekking op de in [artikel 16 van de wet][ref1] bedoelde gegevens van de in
-      [artikel 2.1, vijfde lid][ref2], bedoelde instellingen, voor zover die betreffen: - de structuur van de
-      instellingen;
+      [artikel 2.1, vijfde lid][ref2], bedoelde instellingen, voor zover die betreffen:
+
+        - de structuur van de instellingen;
         - het gebruik van de instellingen;
-        - de investeringen en de exploitatiekosten van de instellingen, in de volgende artikelen «gegevens» genoemd.
+        - de investeringen en de exploitatiekosten van de instellingen,
+
+      in de volgende artikelen «gegevens» genoemd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel16
-      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel2
+      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel2.1
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.1
     references:
       - id: ref1
@@ -432,72 +400,58 @@ articles:
         artikel: '16'
       - id: ref2
         bwb_id: BWBR0018983
-        artikel: '2'
+        artikel: '2.1'
         hoofdstuk: II
-  - number: 7.2.1
+  - number: '7.2'
     text: |-
-      Onze Minister geeft per categorie van instellingen en per categorie van personen die bij de exploitatie van een
+      1 Onze Minister geeft per categorie van instellingen en per categorie van personen die bij de exploitatie van een
       instelling betrokken zijn, aan, welke gegevens jaarlijks dienen te worden verstrekt.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.2
-  - number: 7.2.2
-    text: |-
-      Onze Minister kan voor instellingen gelegen binnen een door hem aan te wijzen gebied en voor personen die bij de
+
+      2 Onze Minister kan voor instellingen gelegen binnen een door hem aan te wijzen gebied en voor personen die bij de
       exploitatie van die instellingen betrokken zijn, aangeven welke gegevens op zijn desbetreffend verzoek dienen te
       worden verstrekt.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.2
-  - number: 7.2.3
-    text: |-
-      Met betrekking tot academische en militaire ziekenhuizen geeft Onze Minister in overeenstemming met Onze Minister
+
+      3 Met betrekking tot academische en militaire ziekenhuizen geeft Onze Minister in overeenstemming met Onze Minister
       van Onderwijs, Cultuur en Wetenschappen onderscheidenlijk in overeenstemming met Onze Minister van Defensie aan
       welke gegevens dienen te worden verstrekt.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.2
-  - number: 7.3.1
+  - number: '7.3'
     text: |-
-      De gegevens bedoeld in [artikel 7.2, eerste lid][ref1], dienen jaarlijks uiterlijk vijf maanden na het verstrijken
-      van het jaar waarop zij betrekking hebben te worden verstrekt.
+      1 De gegevens bedoeld in [artikel 7.2, eerste lid][ref1], dienen jaarlijks uiterlijk vijf maanden na het
+      verstrijken van het jaar waarop zij betrekking hebben te worden verstrekt.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel7
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '7'
-        hoofdstuk: VII
-  - number: 7.3.2
-    text: |-
-      De gegevens, bedoeld in [artikel 7.2, tweede lid][ref1], dienen te worden verstrekt telkens uiterlijk zes maanden
+      2 De gegevens, bedoeld in [artikel 7.2, tweede lid][ref2], dienen te worden verstrekt telkens uiterlijk zes maanden
       na een desbetreffend verzoek van Onze Minister.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel7
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0018983
-        artikel: '7'
-        hoofdstuk: VII
-  - number: 7.3.3
-    text: |-
-      Met betrekking tot academische ziekenhuizen en militaire ziekenhuizen geeft Onze Minister in overeenstemming met
+      3 Met betrekking tot academische ziekenhuizen en militaire ziekenhuizen geeft Onze Minister in overeenstemming met
       Onze Minister van Onderwijs, Cultuur en Wetenschappen onderscheidenlijk in overeenstemming met Onze Minister van
-      Defensie aan, op welke termijn de gegevens bedoeld in [artikel 7.2, derde lid][ref1], dienen te worden verstrekt.
+      Defensie aan, op welke termijn de gegevens bedoeld in [artikel 7.2, derde lid][ref3], dienen te worden verstrekt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel7
+      [ref1]: https://wetten.overheid.nl/BWBR0018983#Artikel7.2
+      [ref2]: https://wetten.overheid.nl/BWBR0018983#Artikel7.2
+      [ref3]: https://wetten.overheid.nl/BWBR0018983#Artikel7.2
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.3
     references:
       - id: ref1
         bwb_id: BWBR0018983
-        artikel: '7'
+        artikel: '7.2'
         hoofdstuk: VII
-  - number: 7.4.1
-    text: Onze Minister kan regels vaststellen over de wijze waarop en de vorm waarin de gegevens dienen te worden verstrekt.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.4
-  - number: 7.4.2
+      - id: ref2
+        bwb_id: BWBR0018983
+        artikel: '7.2'
+        hoofdstuk: VII
+      - id: ref3
+        bwb_id: BWBR0018983
+        artikel: '7.2'
+        hoofdstuk: VII
+  - number: '7.4'
     text: |-
-      Onze Minister wijst instanties aan die de te verstrekken gegevens verzamelen en verwerken. Hij stelt voorschriften
-      die door die instanties in acht worden genomen.
+      1 Onze Minister kan regels vaststellen over de wijze waarop en de vorm waarin de gegevens dienen te worden
+      verstrekt.
+
+      2 Onze Minister wijst instanties aan die de te verstrekken gegevens verzamelen en verwerken. Hij stelt
+      voorschriften die door die instanties in acht worden genomen.
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel7.4
   - number: '7.5'
     text: |-
@@ -526,17 +480,44 @@ articles:
       - id: ref2
         bwb_id: BWBR0018906
         artikel: '18'
-  - number: 8.2.1
+  - number: '8.2'
     text: |-
-      De financiële gevolgen van sanering, bedoeld in [artikel 17, eerste lid, van de wet][ref1] bestaan uit
-      het verschil tussen de door het College sanering aanvaardbaar geachte lasten terzake van de sanering
+      1 De financiële gevolgen van sanering, bedoeld in [artikel 17, eerste lid, van de wet][ref1] bestaan
+      uit het verschil tussen de door het College sanering aanvaardbaar geachte lasten terzake van de sanering
       en de door het College sanering vastgestelde opbrengsten daarvan. Het College sanering stelt het
       verschil niet vast dan nadat de liquidatiebegroting is geverifieerd door een accountant als bedoeld in
       [artikel 393, eerste lid, van Boek 2 van het Burgerlijk Wetboek][ref2].
 
+      2 Bij het vaststellen van de lasten terzake van sanering neemt het College sanering in beschouwing:
+
+      a. onderbezettingsverliezen;
+
+      b. uitkeringen aan werknemers of gewezen werknemers;
+
+      c. uitkeringen aan personen die krachtens overeenkomst met de instelling voor eigen rekening een medisch beroep
+      uitoefenen of hebben uitgeoefend;
+
+      d. boekverliezen als gevolg van de vervreemding van zaken;
+
+      e. andere uitgaven ten behoeve van de sanering.
+
+      3 Voor de toepassing van het tweede lid blijven buiten beschouwing lasten die in aanmerking zijn genomen of kunnen
+      worden genomen bij de vaststelling van een tarief als bedoeld in de [Wet marktordening gezondheidszorg][ref3].
+
+      4 Bij het vaststellen van de opbrengsten van sanering neemt het College sanering in beschouwing de opbrengsten
+      van vermogensbestanddelen die als gevolg van de sanering niet meer bij de instelling in gebruik zullen zijn, met
+      uitzondering van de vermogensbestanddelen die naar het oordeel van het College sanering, gelet op hun herkomst en
+      bestemming, behoren te worden uitgezonderd, alsmede opbrengsten die in aanmerking zijn genomen of kunnen worden
+      genomen bij de vaststelling van een tarief als bedoeld in de [Wet marktordening gezondheidszorg][ref4].
+
+      5 Het College sanering kan nadere regels stellen terzake van de lasten en opbrengsten bedoeld in de voorgaande
+      leden.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel17
       [ref2]: https://wetten.overheid.nl/BWBR0003045#Artikel393
+      [ref3]: https://wetten.overheid.nl/BWBR0020078
+      [ref4]: https://wetten.overheid.nl/BWBR0020078
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
     references:
       - id: ref1
@@ -545,61 +526,16 @@ articles:
       - id: ref2
         bwb_id: BWBR0003045
         artikel: '393'
-  - number: 8.2.2
-    text: 'Bij het vaststellen van de lasten terzake van sanering neemt het College sanering in beschouwing:'
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.2.a
-    text: onderbezettingsverliezen;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.2.b
-    text: uitkeringen aan werknemers of gewezen werknemers;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.2.c
-    text: |-
-      uitkeringen aan personen die krachtens overeenkomst met de instelling voor eigen rekening een medisch beroep
-      uitoefenen of hebben uitgeoefend;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.2.d
-    text: boekverliezen als gevolg van de vervreemding van zaken;
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.2.e
-    text: andere uitgaven ten behoeve van de sanering.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.2.3
-    text: |-
-      Voor de toepassing van het tweede lid blijven buiten beschouwing lasten die in aanmerking zijn genomen of kunnen
-      worden genomen bij de vaststelling van een tarief als bedoeld in de [Wet marktordening gezondheidszorg][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020078
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0020078
-  - number: 8.2.4
-    text: |-
-      Bij het vaststellen van de opbrengsten van sanering neemt het College sanering in beschouwing de opbrengsten
-      van vermogensbestanddelen die als gevolg van de sanering niet meer bij de instelling in gebruik zullen zijn, met
-      uitzondering van de vermogensbestanddelen die naar het oordeel van het College sanering, gelet op hun herkomst en
-      bestemming, behoren te worden uitgezonderd, alsmede opbrengsten die in aanmerking zijn genomen of kunnen worden
-      genomen bij de vaststelling van een tarief als bedoeld in de [Wet marktordening gezondheidszorg][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020078
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0020078
-  - number: 8.2.5
-    text: Het College sanering kan nadere regels stellen terzake van de lasten en opbrengsten bedoeld in de voorgaande leden.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.2
-  - number: 8.3.1
-    text: Het College sanering kan ten behoeve van de sanering en het toezicht daarop een gemachtigde aanwijzen.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.3
-  - number: 8.3.2
+  - number: '8.3'
     text: |-
-      De gemachtigde is onder verantwoordelijkheid van het College sanering belast met het toezicht op de naleving van de
-      bij of krachtens [artikel 17 van de wet][ref1] gestelde regels.
+      1 Het College sanering kan ten behoeve van de sanering en het toezicht daarop een gemachtigde aanwijzen.
+
+      2 De gemachtigde is onder verantwoordelijkheid van het College sanering belast met het toezicht op de naleving van
+      de bij of krachtens [artikel 17 van de wet][ref1] gestelde regels.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018906#Artikel17
@@ -608,54 +544,45 @@ articles:
       - id: ref1
         bwb_id: BWBR0018906
         artikel: '17'
-  - number: 8.4.1
+  - number: '8.4'
     text: |-
-      De instelling is verplicht aan het College sanering de gegevens en bescheiden te verstrekken die het in verband met
-      de sanering nodig acht.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.4
-  - number: 8.4.2
-    text: |-
-      Het College sanering kan nadere regels stellen terzake van het verstrekken van de gegevens en bescheiden bedoeld in
-      het vorige lid.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.4
-  - number: 8.4.3
-    text: |-
-      Het College sanering kan de instelling verplichtingen opleggen als bedoeld in
+      1 De instelling is verplicht aan het College sanering de gegevens en bescheiden te verstrekken die het in verband
+      met de sanering nodig acht.
+
+      2 Het College sanering kan nadere regels stellen terzake van het verstrekken van de gegevens en bescheiden bedoeld
+      in het vorige lid.
+
+      3 Het College sanering kan de instelling verplichtingen opleggen als bedoeld in
       [artikel 4:38 van de Algemene wet bestuursrecht][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel4
+      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel438
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.4
     references:
       - id: ref1
         bwb_id: BWBR0005537
-        artikel: '4'
-  - number: 8.5.1
-    text: Het College sanering kan de instelling aanwijzingen geven ten behoeve van het goede verloop van de sanering.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.5
-  - number: 8.5.2
-    text: De instelling is verplicht uitvoering te geven aan aanwijzingen als bedoeld in het eerste lid.
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.5
-  - number: 8.8.1
+        artikel: 4:38
+  - number: '8.5'
     text: |-
-      Het [Besluit sanering instellingen voor gezondheidszorg][ref1] wordt ingetrokken.
+      1 Het College sanering kan de instelling aanwijzingen geven ten behoeve van het goede verloop van de sanering.
+
+      2 De instelling is verplicht uitvoering te geven aan aanwijzingen als bedoeld in het eerste lid.
+    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.5
+  - number: '8.8'
+    text: |-
+      1 Het [Besluit sanering instellingen voor gezondheidszorg][ref1] wordt ingetrokken.
+
+      2 Na de inwerkingtreding van dit artikel berusten de regels ter uitvoering van het
+      [Besluit sanering instellingen voor gezondheidszorg][ref2] op de overeenkomstige bepalingen van dit hoofdstuk.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0011192
+      [ref2]: https://wetten.overheid.nl/BWBR0011192
     url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.8
     references:
       - id: ref1
         bwb_id: BWBR0011192
-  - number: 8.8.2
-    text: |-
-      Na de inwerkingtreding van dit artikel berusten de regels ter uitvoering van het
-      [Besluit sanering instellingen voor gezondheidszorg][ref1] op de overeenkomstige bepalingen van dit hoofdstuk.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011192
-    url: https://wetten.overheid.nl/BWBR0018983/2018-07-01#Artikel8.8
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0011192
   - number: '9.1'
     text: |-
