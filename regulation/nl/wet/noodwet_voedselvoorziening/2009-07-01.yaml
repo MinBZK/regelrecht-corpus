@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/schema.json
 $id: noodwet_voedselvoorziening
 regulatory_layer: WET
 publication_date: '1999-06-29'
@@ -19,52 +19,77 @@ preamble:
     verstaan, gelijk Wij goedvinden en verstaan bij deze:
   url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#ArtikelAanhef
 articles:
-  - number: '1.1'
+  - number: '1'
     text: |-
-      Voor de toepassing van het bepaalde bij of krachtens deze wet wordt verstaan onder: Onze Minister: Onze Minister
-      van Landbouw en Visserij; landbouw: akkerbouw, weidebouw, veehouderij, pluimveehouderij, bijenhouderij, tuinbouw
-        - daaronder begrepen fruitteelt en het kweken van bomen, bloemen en bloembollen -, teelt van griendhout en elke
-      andere vorm van bodemcultuur met uitzondering van bosbouw; produkten:
+      1 Voor de toepassing van het bepaalde bij of krachtens deze wet wordt verstaan onder:
+
+      Onze Minister: Onze Minister van Landbouw en Visserij;
+
+      landbouw: akkerbouw, weidebouw, veehouderij, pluimveehouderij, bijenhouderij, tuinbouw - daaronder begrepen
+      fruitteelt en het kweken van bomen, bloemen en bloembollen -, teelt van griendhout en elke andere vorm van
+      bodemcultuur met uitzondering van bosbouw;
+
+      produkten:
+
+      a. alle voortbrengselen, welke, al dan niet na bewerking of verwerking, kunnen dienen als voedsel voor mens of
+      dier, alsmede de bij bewerking of verwerking van die voortbrengselen verkregen derivaten en afvallen;
+
+      b. de niet reeds onder *a* begrepen, al dan niet bewerkte of verwerkte voortbrengselen van de landbouw en de
+      visserij, alsmede de bij bewerking of verwerking van die voortbrengselen verkregen derivaten en afvallen;
+
+      bedrijfslichaam: een bedrijfslichaam als bedoeld in [artikel 66 van de Wet op de bedrijfsorganisatie][ref1];
+
+      College: College van Beroep voor het bedrijfsleven.
+
+      2 Voor de toepassing van het bepaalde bij of krachtens deze wet wordt mede verstaan onder:
+
+      handelaren: tussenpersonen;
+
+      visserij: mosselteelt, oesterteelt en viskwekerij.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0002058#Artikel66
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel1
-  - number: 1.1.a
+    references:
+      - id: ref1
+        bwb_id: BWBR0002058
+        artikel: '66'
+  - number: '2'
     text: |-
-      alle voortbrengselen, welke, al dan niet na bewerking of verwerking, kunnen dienen als voedsel voor mens of dier,
-      alsmede de bij bewerking of verwerking van die voortbrengselen verkregen derivaten en afvallen;
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel1
-  - number: 1.1.b
-    text: |-
-      de niet reeds onder *a* begrepen, al dan niet bewerkte of verwerkte voortbrengselen van de landbouw en de visserij,
-      alsmede de bij bewerking of verwerking van die voortbrengselen verkregen derivaten en afvallen;
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel1
-  - number: '1.2'
-    text: |-
-      Voor de toepassing van het bepaalde bij of krachtens deze wet wordt mede verstaan onder: handelaren:
-      tussenpersonen; visserij: mosselteelt, oesterteelt en viskwekerij.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel1
-  - number: '2.1'
-    text: Er is in iedere provincie een voedselcommissaris, die door Ons wordt benoemd en ontslagen.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel2
-  - number: '2.2'
-    text: |-
-      Onze Minister bepaalt het ambtsgebied van de voedselcommissaris, al dan niet in afwijking van het gebied van de
+      1 Er is in iedere provincie een voedselcommissaris, die door Ons wordt benoemd en ontslagen.
+
+      2 Onze Minister bepaalt het ambtsgebied van de voedselcommissaris, al dan niet in afwijking van het gebied van de
       desbetreffende provincie.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel2
-  - number: '2.3'
-    text: |-
-      De voedselcommissaris is, tenzij het tegendeel blijkt, onder de bevelen van Onze Minister belast met de uitvoering
-      van de krachtens deze wet vastgestelde regelen.
+
+      3 De voedselcommissaris is, tenzij het tegendeel blijkt, onder de bevelen van Onze Minister belast met de
+      uitvoering van de krachtens deze wet vastgestelde regelen.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel2
   - number: '3'
     text: |-
       Onze Minister kan in door hem te bepalen gebieden voedselcommissarissen aanwijzen, die in die gebieden belast zijn
       met de uitvoering van krachtens deze wet vastgestelde regelen.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel3
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Onverminderd de [artikelen 7, eerste lid,][ref1] en
+      1 Onverminderd de [artikelen 7, eerste lid,][ref1] en
       [8, eerste lid, van de Coördinatiewet uitzonderingstoestanden][ref2] kunnen, ingeval buitengewone omstandigheden
       dit noodzakelijk maken, bij koninklijk besluit, op voordracht van Onze Minister-President, voor het gehele land of
       een gedeelte daarvan de [artikelen 6 tot en met 14][ref3] gezamenlijk of afzonderlijk in werking worden gesteld.
+
+      2 Wanneer het in het eerste lid bedoelde besluit is genomen, wordt onverwijld een voorstel van wet aan de Tweede
+      Kamer gezonden omtrent het voortduren van de werking van de bij dat besluit in werking gestelde bepalingen.
+
+      3 Wordt het voorstel van wet door de Staten-Generaal verworpen, dan worden bij koninklijk besluit, op voordracht
+      van Onze Minister-President, de bepalingen die ingevolge het eerste lid in werking zijn gesteld, onverwijld buiten
+      werking gesteld.
+
+      4 Bij koninklijk besluit, op voordracht van Onze Minister-President, worden de bepalingen die ingevolge het eerste
+      lid in werking zijn gesteld, buiten werking gesteld, zodra de omstandigheden dit naar Ons oordeel toelaten.
+
+      5 Het besluit, bedoeld in het eerste, derde en vierde lid, wordt op de daarin te bepalen wijze bekendgemaakt. Het
+      treedt in werking terstond na de bekendmaking.
+
+      6 Het besluit, bedoeld in het eerste, derde en vierde lid, wordt in ieder geval geplaatst in het *Staatsblad*.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0007981#Artikel7
@@ -82,35 +107,25 @@ articles:
         bwb_id: BWBR0002392
         artikel: '6'
         hoofdstuk: III
-  - number: '4.2'
+  - number: '15'
     text: |-
-      Wanneer het in het eerste lid bedoelde besluit is genomen, wordt onverwijld een voorstel van wet aan de Tweede
-      Kamer gezonden omtrent het voortduren van de werking van de bij dat besluit in werking gestelde bepalingen.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel4
-  - number: '4.3'
-    text: |-
-      Wordt het voorstel van wet door de Staten-Generaal verworpen, dan worden bij koninklijk besluit, op voordracht
-      van Onze Minister-President, de bepalingen die ingevolge het eerste lid in werking zijn gesteld, onverwijld buiten
-      werking gesteld.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel4
-  - number: '4.4'
-    text: |-
-      Bij koninklijk besluit, op voordracht van Onze Minister-President, worden de bepalingen die ingevolge het eerste
-      lid in werking zijn gesteld, buiten werking gesteld, zodra de omstandigheden dit naar Ons oordeel toelaten.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel4
-  - number: '4.5'
-    text: |-
-      Het besluit, bedoeld in het eerste, derde en vierde lid, wordt op de daarin te bepalen wijze bekendgemaakt. Het
-      treedt in werking terstond na de bekendmaking.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel4
-  - number: '4.6'
-    text: Het besluit, bedoeld in het eerste, derde en vierde lid, wordt in ieder geval geplaatst in het *Staatsblad*.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel4
-  - number: '15.1'
-    text: |-
-      Ten aanzien van de uitoefening van bevoegdheden, welke hem toekomen ingevolge het bepaalde bij of krachtens
+      1 Ten aanzien van de uitoefening van bevoegdheden, welke hem toekomen ingevolge het bepaalde bij of krachtens
       deze wet en de [Distributiewet][ref1], kan Onze Minister de medewerking vorderen van een bestuur van een
       bedrijfslichaam. [Artikel 6, derde lid][ref2], is van overeenkomstige toepassing.
+
+      2 Indien de van het bestuur van het bedrijfslichaam gevorderde medewerking bestaat in het stellen van nadere regels
+      bij verordening, behoeft zodanige verordening de goedkeuring van Onze Minister en indien het voorschrift waarbij
+      de medewerking gevorderd is, door Onze Minister is vastgesteld in overeenstemming met Onze Minister van Economische
+      Zaken, mede van die Minister.
+
+      3 Krachtens de verordening genomen besluiten behoeven, voor zover dit bij de vordering van de medewerking, bedoeld
+      in het eerste lid, is bepaald, de goedkeuring van de daarbij aangewezen autoriteit.
+
+      4 Regelen, bedoeld in het tweede lid, en nadere regelen, bedoeld in het derde lid, zijn verbindend voor een ieder,
+      voorzover daarbij niet anders is bepaald.
+
+      5 Besluiten zonder algemene gelding, tot het nemen waarvan medewerking is gevorderd, kunnen worden genomen ten
+      aanzien van een ieder, voorzover bij die vordering niet anders is bepaald.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001997
@@ -123,28 +138,6 @@ articles:
         bwb_id: BWBR0002392
         artikel: '6'
         hoofdstuk: III
-  - number: '15.2'
-    text: |-
-      Indien de van het bestuur van het bedrijfslichaam gevorderde medewerking bestaat in het stellen van nadere regels
-      bij verordening, behoeft zodanige verordening de goedkeuring van Onze Minister en indien het voorschrift waarbij
-      de medewerking gevorderd is, door Onze Minister is vastgesteld in overeenstemming met Onze Minister van Economische
-      Zaken, mede van die Minister.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel15
-  - number: '15.3'
-    text: |-
-      Krachtens de verordening genomen besluiten behoeven, voor zover dit bij de vordering van de medewerking, bedoeld in
-      het eerste lid, is bepaald, de goedkeuring van de daarbij aangewezen autoriteit.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel15
-  - number: '15.4'
-    text: |-
-      Regelen, bedoeld in het tweede lid, en nadere regelen, bedoeld in het derde lid, zijn verbindend voor een ieder,
-      voorzover daarbij niet anders is bepaald.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel15
-  - number: '15.5'
-    text: |-
-      Besluiten zonder algemene gelding, tot het nemen waarvan medewerking is gevorderd, kunnen worden genomen ten
-      aanzien van een ieder, voorzover bij die vordering niet anders is bepaald.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel15
   - number: '16'
     text: |-
       Tegen een op grond van deze wet genomen besluit kan een belanghebbende beroep instellen bij het College van Beroep
@@ -240,21 +233,25 @@ articles:
       het tijdstip, waarop zij wordt uitgesproken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel8
+      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel872
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel21
     references:
       - id: ref1
         bwb_id: BWBR0005537
-        artikel: '8'
-  - number: '22.1'
+        artikel: 8:72
+  - number: '22'
     text: |-
-      Zolang de [artikelen 6-14][ref1] in werking zijn, is een ieder verplicht bij het verrichten van gedragingen,
+      1 Zolang de [artikelen 6-14][ref1] in werking zijn, is een ieder verplicht bij het verrichten van gedragingen,
       genoemd in [artikel 6, tweede lid][ref2], ten aanzien van de desbetreffende produkten die zorg aan te wenden, welke
       onder de met betrekking tot de voedselvoorziening bestaande omstandigheden redelijkerwijze kan worden verwacht.
+
+      2 Het bepaalde bij het vorige lid is van overeenkomstige toepassing bij het verrichten van gedragingen, in
+      [artikel 9, eerste lid][ref3], genoemd.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel6
       [ref2]: https://wetten.overheid.nl/BWBR0002392#Artikel6
+      [ref3]: https://wetten.overheid.nl/BWBR0002392#Artikel9
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel22
     references:
       - id: ref1
@@ -265,30 +262,24 @@ articles:
         bwb_id: BWBR0002392
         artikel: '6'
         hoofdstuk: III
-  - number: '22.2'
-    text: |-
-      Het bepaalde bij het vorige lid is van overeenkomstige toepassing bij het verrichten van gedragingen, in
-      [artikel 9, eerste lid][ref1], genoemd.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel9
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel22
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002392
         artikel: '9'
         hoofdstuk: III
-  - number: '23.1'
+  - number: '23'
     text: |-
-      Onze Minister kan ten aanzien van degenen, die een of meer der in [artikel 6, tweede lid][ref1], en
+      1 Onze Minister kan ten aanzien van degenen, die een of meer der in [artikel 6, tweede lid][ref1], en
       [artikel 9, eerste lid][ref2], genoemde gedragingen verrichten of plegen te verrichten, regelen vaststellen
       betreffende het beantwoorden van vragen en verstrekken van gegevens, welke naar het oordeel van Onze Minister nodig
       zijn ter voorbereiding of uitvoering van enige krachtens deze wet te nemen of genomen maatregel, aan lichamen,
       organen of personen, die Onze Minister daartoe heeft aangewezen.
 
+      2 [Artikel 6, derde lid][ref3], is van overeenkomstige toepassing.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel6
       [ref2]: https://wetten.overheid.nl/BWBR0002392#Artikel9
+      [ref3]: https://wetten.overheid.nl/BWBR0002392#Artikel6
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel23
     references:
       - id: ref1
@@ -299,28 +290,18 @@ articles:
         bwb_id: BWBR0002392
         artikel: '9'
         hoofdstuk: III
-  - number: '23.2'
-    text: |-
-      [Artikel 6, derde lid][ref1], is van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel6
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel23
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002392
         artikel: '6'
         hoofdstuk: III
-  - number: '24.1'
+  - number: '24'
     text: |-
-      Ieder, die ingevolge het bij of krachtens deze wet bepaalde in het bezit dient te zijn van een of meer bescheiden,
-      is verplicht die bescheiden steeds bij zich te hebben bij gedragingen met betrekking tot welke het bezit van
-      zodanige bescheiden verplicht is gesteld.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel24
-  - number: '24.2'
-    text: |-
-      Met het toezicht op de naleving van het bepaalde bij of krachtens deze wet zijn belast de bij besluit van
-      Onze Minister of bij besluit van een in [artikel 2][ref1] onderscheidenlijk [artikel 3][ref2] bedoelde
+      1 Ieder, die ingevolge het bij of krachtens deze wet bepaalde in het bezit dient te zijn van een of meer
+      bescheiden, is verplicht die bescheiden steeds bij zich te hebben bij gedragingen met betrekking tot welke het
+      bezit van zodanige bescheiden verplicht is gesteld.
+
+      2 Met het toezicht op de naleving van het bepaalde bij of krachtens deze wet zijn belast de bij besluit
+      van Onze Minister of bij besluit van een in [artikel 2][ref1] onderscheidenlijk [artikel 3][ref2] bedoelde
       voedselcommissaris aangewezen personen.
 
 
@@ -341,17 +322,23 @@ articles:
       Het is verboden ter zake van een aanvraag om een ontheffing, vergunning of restitutie, onjuiste of onvolledige
       gegevens te verstrekken.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel25
-  - number: '26.1'
+  - number: '26'
     text: |-
-      In afwijking van [artikel 5 van de Wet op de economische delicten][ref1] is Onze Minister bevoegd tot oplegging
+      1 In afwijking van [artikel 5 van de Wet op de economische delicten][ref1] is Onze Minister bevoegd tot oplegging
       van een last onder bestuursdwang ter handhaving van de krachtens de [artikelen 6][ref2], [9][ref3] en [10][ref4]
       vastgestelde verplichtingen.
+
+      2 Voor de in bezit genomen produkten wordt als schadeloosstelling toegekend een bedrag, gelijk aan de prijs,
+      onderscheidenlijk vergoeding, welke bij inlevering, onderscheidenlijk terbeschikkinghouding ter nakoming van een
+      krachtens [artikel 10][ref5] opgelegde verplichting zou zijn uitgekeerd, een en ander verminderd met de op de
+      inbezitneming vallende kosten.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002063#Artikel5
       [ref2]: https://wetten.overheid.nl/BWBR0002392#Artikel6
       [ref3]: https://wetten.overheid.nl/BWBR0002392#Artikel9
       [ref4]: https://wetten.overheid.nl/BWBR0002392#Artikel10
+      [ref5]: https://wetten.overheid.nl/BWBR0002392#Artikel10
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel26
     references:
       - id: ref1
@@ -369,18 +356,7 @@ articles:
         bwb_id: BWBR0002392
         artikel: '10'
         hoofdstuk: III
-  - number: '26.2'
-    text: |-
-      Voor de in bezit genomen produkten wordt als schadeloosstelling toegekend een bedrag, gelijk aan de prijs,
-      onderscheidenlijk vergoeding, welke bij inlevering, onderscheidenlijk terbeschikkinghouding ter nakoming van een
-      krachtens [artikel 10][ref1] opgelegde verplichting zou zijn uitgekeerd, een en ander verminderd met de op de
-      inbezitneming vallende kosten.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel10
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel26
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0002392
         artikel: '10'
         hoofdstuk: III
@@ -397,14 +373,12 @@ articles:
         bwb_id: BWBR0002392
         artikel: '8'
         hoofdstuk: III
-  - number: '29.1'
+  - number: '29'
     text: |-
-      Indien in deze wet geregelde onderwerpen in het belang van een goede uitvoering van de wet nadere regeling
+      1 Indien in deze wet geregelde onderwerpen in het belang van een goede uitvoering van de wet nadere regeling
       behoeven, kan deze geschieden bij door Onze Minister vast te stellen regeling.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel29
-  - number: '29.2'
-    text: |-
-      Een gedraging in strijd met een bepaling in zodanige regeling is een strafbaar feit, voorzover uitdrukkelijk als
+
+      2 Een gedraging in strijd met een bepaling in zodanige regeling is een strafbaar feit, voorzover uitdrukkelijk als
       zodanig aangeduid.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel29
   - number: '31'
@@ -412,11 +386,14 @@ articles:
       Krachtens deze wet vastgestelde regelen treden, tenzij daarbij anders is bepaald, in werking met ingang van de dag
       na die van hun bekendmaking. Zij kunnen bepalen, dat zij onmiddellijk na hun bekendmaking in werking treden.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel31
-  - number: '32.1'
+  - number: '32'
     text: |-
-      Besluiten, door Onze Minister krachtens de [artikelen 2][ref1], [3][ref2], [6][ref3], [7][ref4], [8][ref5],
+      1 Besluiten, door Onze Minister krachtens de [artikelen 2][ref1], [3][ref2], [6][ref3], [7][ref4], [8][ref5],
       [9][ref6], [10][ref7], [12][ref8], 13, [15][ref9], [23][ref10] en [29][ref11] vastgesteld, worden in de
       *Staatscourant* bekend gemaakt.
+
+      2 Indien het landsbelang dit naar zijn oordeel noodzakelijk maakt, kan Onze Minister een besluit, bedoeld in het
+      eerste lid, op andere wijze bekend maken.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel2
@@ -476,32 +453,24 @@ articles:
         bwb_id: BWBR0002392
         artikel: '29'
         hoofdstuk: VI
-  - number: '32.2'
+  - number: '33'
     text: |-
-      Indien het landsbelang dit naar zijn oordeel noodzakelijk maakt, kan Onze Minister een besluit, bedoeld in het
-      eerste lid, op andere wijze bekend maken.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel32
-  - number: '33.1'
-    text: |-
-      Een bij of krachtens deze wet opgelegde verplichting vervalt van rechtswege voorzover het voldoen hieraan zou
+      1 Een bij of krachtens deze wet opgelegde verplichting vervalt van rechtswege voorzover het voldoen hieraan zou
       meebrengen dat niet kan worden voldaan aan een verplichting die voortvloeit uit de uitoefening van buitengewone
       bevoegdheden ten behoeve van de uitvoering van de militaire taak.
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel33
-  - number: '33.2'
-    text: |-
-      Een bij of krachtens deze wet opgelegde verplichting die niet voortvloeit uit de uitoefening van buitengewone
+
+      2 Een bij of krachtens deze wet opgelegde verplichting die niet voortvloeit uit de uitoefening van buitengewone
       bevoegdheden ten behoeve van de uitvoering van de militaire taak, vervalt eveneens van rechtswege voorzover het
       voldoen hieraan zou meebrengen dat niet kan worden voldaan aan een verplichting die bij of krachtens deze of een
       andere wet is opgelegd in het belang van de bestrijding van een ramp, een zwaar ongeval of van een verstoring van
       de openbare orde of van ernstige vrees voor het ontstaan daarvan.
     url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel33
-  - number: '35.1'
-    text: 'Deze wet kan worden aangehaald als: Noodwet voedselvoorziening.'
-    url: https://wetten.overheid.nl/BWBR0002392/2009-07-01#Artikel35
-  - number: '35.2'
+  - number: '35'
     text: |-
-      Met uitzondering van de [artikelen 6-14][ref1] treedt zij in werking met ingang van de dag na de datum van uitgifte
-      van het *Staatsblad*, waarin zij is geplaatst.
+      1 Deze wet kan worden aangehaald als: Noodwet voedselvoorziening.
+
+      2 Met uitzondering van de [artikelen 6-14][ref1] treedt zij in werking met ingang van de dag na de datum van
+      uitgifte van het *Staatsblad*, waarin zij is geplaatst.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002392#Artikel6
