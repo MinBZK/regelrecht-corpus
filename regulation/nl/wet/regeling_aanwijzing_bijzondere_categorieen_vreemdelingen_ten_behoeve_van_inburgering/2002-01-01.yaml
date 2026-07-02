@@ -26,6 +26,25 @@ articles:
       - id: ref1
         bwb_id: BWBR0009544
         artikel: '1'
+    machine_readable:
+      implements:
+        - law: wet_inburgering_nieuwkomers
+          article: '1'
+          open_term: bijzondere_categorie_vreemdeling
+          gelet_op: Gelet op artikel 1, eerste lid, onderdeel a, onder 1°, van de Wet inburgering nieuwkomers
+      execution:
+        parameters:
+          - name: is_geestelijke_bedienaar
+            type: boolean
+            required: true
+            description: Of de vreemdeling een geestelijk bedienaar is
+        output:
+          - name: is_bijzondere_categorie_vreemdeling
+            type: boolean
+            description: Of de vreemdeling als bijzondere categorie vreemdeling is aangewezen voor inburgering
+        actions:
+          - output: is_bijzondere_categorie_vreemdeling
+            value: $is_geestelijke_bedienaar
   - number: '2'
     text: Deze regeling treedt in werking met ingang van 1 januari 2002.
     url: https://wetten.overheid.nl/BWBR0013218/2002-01-01#Artikel2
