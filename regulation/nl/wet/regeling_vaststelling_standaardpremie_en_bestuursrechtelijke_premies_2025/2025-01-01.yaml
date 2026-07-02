@@ -16,7 +16,7 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      De standaardpremie, bedoeld in de [Wet op de zorgtoeslag][ref1], bedraagt voor het berekeningsjaar 2025 € 2.112,–.
+      De standaardpremie, bedoeld in de [Wet op de zorgtoeslag][ref1], bedraagt voor het berekeningsjaar 2025 € 2.112,–.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018451
@@ -24,8 +24,15 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0018451
+    machine_readable:
+      actions:
+        - description: De standaardpremie voor het berekeningsjaar 2025 is € 2.112
+          output:
+            standaardpremie:
+              type: integer
+              value: 211200
   - number: '3'
-    text: Deze regeling treedt in werking met ingang van 1 januari 2025.
+    text: Deze regeling treedt in werking met ingang van 1 januari 2025.
     url: https://wetten.overheid.nl/BWBR0050536/2025-01-01#Artikel3
   - number: '4'
     text: 'Deze regeling wordt aangehaald als: Regeling vaststelling standaardpremie en bestuursrechtelijke premies 2025.'
