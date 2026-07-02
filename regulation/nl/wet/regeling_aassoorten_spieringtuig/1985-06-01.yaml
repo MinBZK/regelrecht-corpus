@@ -37,9 +37,37 @@ articles:
       - id: ref1
         bwb_id: BWBR0002416
         artikel: '1'
+    machine_readable:
+      parameters:
+        - name: aas_type
+          type: string
+          required: true
+        - name: grootste_afmeting_cm
+          type: number
+          required: true
+      outputs:
+        - name: is_aas
+          type: boolean
+      actions:
+        - output: is_aas
+          value:
+            operation: AND
+            conditions:
+              - operation: IN
+                subject: $aas_type
+                values: ["stukje vis", "stukje worm", "draad rode wol", "stukje zilverpapier"]
+              - operation: LESS_THAN_OR_EQUAL
+                subject: $grootste_afmeting_cm
+                value: 2
+          legal_basis:
+            law: regeling_aassoorten_spieringtuig
+            article: '1'
+      # TODO: Link to Visserijwet 1963 (BWBR0002416) if YAML exists in corpus
   - number: '2'
     text: De Beschikking aanwijzing aassoorten gewone hengel (Stcrt. 1964, 68) wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0003788/1985-06-01#Artikel2
+    machine_readable: null
+    # Non-executable: procedural only
   - number: '3'
     text: |-
       1 Deze regeling wordt bekendgemaakt in de Nederlandse Staatscourant en treedt in werking met ingang van 1 juni
@@ -47,3 +75,5 @@ articles:
 
       2 Zij kan worden aangehaald als: Regeling aassoorten spieringtuig.
     url: https://wetten.overheid.nl/BWBR0003788/1985-06-01#Artikel3
+    machine_readable: null
+    # Non-executable: metadata only
