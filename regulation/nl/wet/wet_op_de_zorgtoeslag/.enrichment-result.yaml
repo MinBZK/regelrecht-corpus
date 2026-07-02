@@ -1,0 +1,38 @@
+# .enrichment-result.yaml — result envelope, NOT part of the law schema
+law_id: wet_op_de_zorgtoeslag
+related_legislation:
+  - name: Wet minimumloon en minimumvakantiebijslag
+    relation: source_regulation
+    bwb_id: BWBR0002638
+    slug: wet_minimumloon_en_minimumvakantiebijslag
+    # Required for drempelinkomen (artikel 1f): minimumloon_per_maand output needed
+
+  - name: Algemene wet inkomensafhankelijke regelingen
+    relation: source_regulation
+    bwb_id: BWBR0018472
+    slug: algemene_wet_inkomensafhankelijke_regelingen
+    # Required for: toetsingsinkomen, gezamenlijk_toetsingsinkomen, heeft_toeslagpartner (artikel 2)
+
+  - name: Wet inkomstenbelasting 2001
+    relation: source_regulation
+    bwb_id: BWBR0011353
+    slug: wet_inkomstenbelasting_2001
+    # Required for: rendementsgrondslag, gezamenlijke_rendementsgrondslag (artikel 3)
+
+  - name: Regeling vaststelling standaardpremie en bestuursrechtelijke premie
+    relation: delegated_regeling
+    bwb_id: BWBR0037841
+    slug: regeling_standaardpremie
+    open_term: standaardpremie
+    # Implements artikel 4 open_term standaardpremie
+
+  - name: Regeling landgebonden verhoudingsgetallen zorgtoeslag
+    relation: delegated_regeling
+    open_term: verhoudingsgetal_land
+    # Implements artikel 4a, tweede lid open_term verhoudingsgetal_land per land
+
+  - name: Zorgverzekeringswet
+    relation: legal_basis
+    bwb_id: BWBR0018450
+    slug: zorgverzekeringswet
+    # Referenced for: definitie verzekerde (art 1c), partner_is_verzekerde (art 2 lid 4)
