@@ -197,6 +197,17 @@ articles:
       - id: ref1
         bwb_id: BWBR0011288
         artikel: '9'
+    machine_readable:
+      execution:
+        output:
+          - name: kosten_aanvraagdocument_nlg
+            type: number
+            description: >-
+              Bedrag voor toezending van het aanvraagdocument in gulden (NLG),
+              bedoeld in artikel 4 lid 3.
+        actions:
+          - output: kosten_aanvraagdocument_nlg
+            value: 750
   - number: '5'
     text: |-
       1 Eenieder aan wie een aanvraagdocument is toegezonden, kan vragen met betrekking tot dat document per brief of per
@@ -319,6 +330,27 @@ articles:
 
       3 De minister bevestigt schriftelijk de ontvangst van de aanvraag.
     url: https://wetten.overheid.nl/BWBR0011288/2000-04-12#Artikel8
+    machine_readable:
+      untranslatables:
+        - construct: "om 14.00 uur"
+          reason: >-
+            Tijdstip (14:00 uur) kan niet worden uitgedrukt in het date type;
+            alleen de datum (2000-06-05) is representeerbaar in de engine.
+          suggestion: "Add TIME or DATETIME type/operation to engine"
+          legal_text_excerpt: >-
+            "De aanvraag wordt uiterlijk op 5 juni 2000, om 14.00 uur ontvangen."
+            (artikel 8 lid 1)
+          accepted: false
+      execution:
+        output:
+          - name: indiening_deadline
+            type: date
+            description: >-
+              Uiterste datum voor ontvangst van de aanvraag (5 juni 2000,
+              artikel 8 lid 1). Tijdstip 14:00 uur is untranslatable.
+        actions:
+          - output: indiening_deadline
+            value: "2000-06-05"
   - number: '9'
     text: |-
       Als bijdrage in de kosten voor de bemoeiingen met betrekking tot de aanvraagprocedure wordt, onder vermelding van
@@ -970,6 +1002,48 @@ articles:
       - id: ref2
         bwb_id: BWBR0011288
         artikel: '9'
+    machine_readable:
+      untranslatables:
+        - construct: "vermeerderd met de rente van een éénmaandsdeposito van de bank"
+          reason: >-
+            Interest rate calculation (éénmaandsdeposito rente) is not available
+            as an engine operation. The engine has no INTEREST or RATE_LOOKUP operation.
+          suggestion: "Add INTEREST or FINANCIAL_RATE operation to engine"
+          legal_text_excerpt: >-
+            "deze waarborgsom vermeerderd met de rente van een éénmaandsdeposito
+            van de bank, bedoeld in artikel 9 terug" (artikel 18)
+          accepted: false
+      execution:
+        parameters:
+          - name: waarborgsom_gestort
+            type: boolean
+            required: true
+            description: >-
+              Of ter voldoening van het bedrag ter zekerstelling een waarborgsom
+              is gestort (true) of een bankgarantie is overgelegd (false).
+        output:
+          - name: waarborgsom_terug_te_betalen
+            type: boolean
+            description: >-
+              Of de waarborgsom terugbetaald wordt (zonder rente — rente-component
+              is untranslatable). Van toepassing bij aanvragers bedoeld in
+              artikel 17 tweede lid indien waarborgsom werd gestort.
+          - name: bankgarantie_terug_te_geven
+            type: boolean
+            description: >-
+              Of de bankgarantie teruggegeven wordt. Van toepassing bij
+              aanvragers bedoeld in artikel 17 tweede lid indien bankgarantie
+              werd overgelegd.
+        actions:
+          - output: waarborgsom_terug_te_betalen
+            value:
+              operation: EQUALS
+              subject: $waarborgsom_gestort
+              value: true
+          - output: bankgarantie_terug_te_geven
+            value:
+              operation: NOT
+              value: $waarborgsom_gestort
   - number: '19'
     text: Deze regeling treedt in werking met ingang van 12 april 2000.
     url: https://wetten.overheid.nl/BWBR0011288/2000-04-12#Artikel19
