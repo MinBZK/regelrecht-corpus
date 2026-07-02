@@ -117,6 +117,172 @@ articles:
       - id: ref1
         bwb_id: BWBR0034925
         artikel: 7.1.1.2
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: heeft_stappenplan
+            type: boolean
+            required: true
+            description: De meldcode bevat een stappenplan als bedoeld in artikel 2 lid 1 onder a
+          - name: heeft_afwegingskader
+            type: boolean
+            required: true
+            description: De meldcode bevat een afwegingskader als bedoeld in artikel 2 lid 1 onder b
+          - name: heeft_verantwoordelijkheidsverdeling
+            type: boolean
+            required: true
+            description: De meldcode bevat een toebedeling van verantwoordelijkheden als bedoeld in artikel 2 lid 1 onder c
+          - name: bijzondere_vormen_van_toepassing
+            type: boolean
+            required: true
+            description: Er is sprake van bijzondere vormen van geweld die speciale kennis en vaardigheden vereisen (artikel 2 lid 1 onder d)
+          - name: heeft_aandacht_bijzondere_vormen
+            type: boolean
+            required: false
+            description: De meldcode bevat specifieke aandacht voor bijzondere vormen van geweld (vereist indien bijzondere_vormen_van_toepassing)
+          - name: is_meldingsbevoegde_instantie
+            type: boolean
+            required: true
+            description: De instantie of functionaris is meldingsbevoegd op grond van artikel 7.1.1.2 Jeugdwet (artikel 2 lid 1 onder e)
+          - name: heeft_aandacht_verwijsindex
+            type: boolean
+            required: false
+            description: De meldcode bevat aandacht voor de verwijsindex risicojongeren (vereist indien is_meldingsbevoegde_instantie)
+          - name: kindcheck_van_toepassing
+            type: boolean
+            required: true
+            description: De kindcheck is van toepassing op de organisatie (artikel 2 lid 1 onder f)
+          - name: heeft_kindcheck_instructies
+            type: boolean
+            required: false
+            description: De meldcode bevat instructies voor het uitvoeren van een kindcheck (vereist indien kindcheck_van_toepassing)
+          - name: heeft_instructies_vertrouwelijke_gegevens
+            type: boolean
+            required: true
+            description: De meldcode bevat instructies voor omgaan met vertrouwelijke gegevens (artikel 2 lid 1 onder g)
+          - name: stappenplan_heeft_signalen_kaartbrengen
+            type: boolean
+            required: true
+            description: Het stappenplan bevat het in kaart brengen van signalen (artikel 2 lid 2 onder a)
+          - name: stappenplan_heeft_collegiale_consultatie
+            type: boolean
+            required: true
+            description: Het stappenplan bevat collegiale consultatie en raadplegen van Veilig Thuis (artikel 2 lid 2 onder b)
+          - name: stappenplan_heeft_gesprek_client
+            type: boolean
+            required: true
+            description: Het stappenplan bevat een gesprek met de cliënt (artikel 2 lid 2 onder c)
+          - name: stappenplan_heeft_afwegingskader_toepassen
+            type: boolean
+            required: true
+            description: Het stappenplan bevat het toepassen van het afwegingskader (artikel 2 lid 2 onder d)
+          - name: stappenplan_heeft_beslissing_melding_en_hulp
+            type: boolean
+            required: true
+            description: Het stappenplan bevat de beslissing over het doen van een melding en het inzetten van hulp (artikel 2 lid 2 onder e)
+        output:
+          - name: meldcode_voldoet_aan_vereisten_lid1
+            type: boolean
+            description: De meldcode voldoet aan de minimumeisen van artikel 2 lid 1 (elementen a t/m g)
+          - name: stappenplan_voldoet_aan_vereisten
+            type: boolean
+            description: Het stappenplan voldoet aan de minimumeisen van artikel 2 lid 2 (stappen a t/m e)
+          - name: meldcode_voldoet_aan_minimumeisen
+            type: boolean
+            description: De meldcode voldoet aan alle minimumeisen van artikel 2
+        actions:
+          # Element d: specifieke aandacht bijzondere vormen (indien van toepassing)
+          - output: vereiste_d_voldaan
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bijzondere_vormen_van_toepassing
+                    value: true
+                  then: $heeft_aandacht_bijzondere_vormen
+              default: true
+          # Element e: aandacht voor verwijsindex risicojongeren (indien meldingsbevoegd)
+          - output: vereiste_e_voldaan
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_meldingsbevoegde_instantie
+                    value: true
+                  then: $heeft_aandacht_verwijsindex
+              default: true
+          # Element f: kindcheck instructies (voor zover van toepassing)
+          - output: vereiste_f_voldaan
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $kindcheck_van_toepassing
+                    value: true
+                  then: $heeft_kindcheck_instructies
+              default: true
+          # Lid 1: alle vereiste elementen aanwezig
+          - output: meldcode_voldoet_aan_vereisten_lid1
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_stappenplan
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_afwegingskader
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verantwoordelijkheidsverdeling
+                  value: true
+                - operation: EQUALS
+                  subject: $vereiste_d_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $vereiste_e_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $vereiste_f_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_instructies_vertrouwelijke_gegevens
+                  value: true
+          # Lid 2: alle vereiste stappen in het stappenplan aanwezig
+          - output: stappenplan_voldoet_aan_vereisten
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $stappenplan_heeft_signalen_kaartbrengen
+                  value: true
+                - operation: EQUALS
+                  subject: $stappenplan_heeft_collegiale_consultatie
+                  value: true
+                - operation: EQUALS
+                  subject: $stappenplan_heeft_gesprek_client
+                  value: true
+                - operation: EQUALS
+                  subject: $stappenplan_heeft_afwegingskader_toepassen
+                  value: true
+                - operation: EQUALS
+                  subject: $stappenplan_heeft_beslissing_melding_en_hulp
+                  value: true
+          # Totaaloordeel: meldcode voldoet aan alle minimumeisen
+          - output: meldcode_voldoet_aan_minimumeisen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $meldcode_voldoet_aan_vereisten_lid1
+                  value: true
+                - operation: EQUALS
+                  subject: $stappenplan_voldoet_aan_vereisten
+                  value: true
   - number: '6'
     text: |-
       Dit besluit treedt in werking met ingang van de dag na de datum van uitgifte van het Staatsblad waarin zij wordt
