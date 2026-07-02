@@ -29,6 +29,43 @@ articles:
       - id: ref1
         bwb_id: BWBR0006548
         artikel: '17'
+    machine_readable:
+      execution:
+        parameters:
+          - name: functie
+            type: string
+            required: true
+            description: >-
+              De functie van de ambtenaar:
+              HOOFDINSPECTEUR_VOLKSGEZONDHEID_MILIEU_HYGIENE,
+              REGIONAAL_INSPECTEUR_VOLKSGEZONDHEID_MILIEU_HYGIENE,
+              AMBTENAAR_ONDER_BEVELEN, of OVERIG
+          - name: voert_voornamelijk_administratieve_werkzaamheden_uit
+            type: boolean
+            required: true
+            description: >-
+              Of de ambtenaar meer in het bijzonder administratieve
+              werkzaamheden uitoefent
+        output:
+          - name: is_aangewezen_toezichthouder
+            type: boolean
+            description: >-
+              Of de ambtenaar is aangewezen als mede belast met het toezicht
+              op de naleving van het krachtens artikel 17 Wet op de
+              openluchtrecreatie bepaalde
+        actions:
+          - output: is_aangewezen_toezichthouder
+            value:
+              operation: AND
+              conditions:
+                - operation: IN
+                  subject: $functie
+                  values:
+                    - HOOFDINSPECTEUR_VOLKSGEZONDHEID_MILIEU_HYGIENE
+                    - REGIONAAL_INSPECTEUR_VOLKSGEZONDHEID_MILIEU_HYGIENE
+                    - AMBTENAAR_ONDER_BEVELEN
+                - operation: NOT
+                  value: $voert_voornamelijk_administratieve_werkzaamheden_uit
   - number: '2'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop de [hoofdstukken III][ref1] tot en met
