@@ -270,6 +270,39 @@ articles:
         artikel: 2.3.5
       - id: ref9
         bwb_id: BWBR0011353
+    machine_readable:
+      endpoint: heeft_toeslagpartner
+      untranslatables:
+        - construct: "bepaling partnerschap op basis van BRP-inschrijving en meerdere categorieën (art. 3 lid 2 a-f)"
+          reason: "Multi-criteria relationship determination requires access to BRP registration data and temporal partnership history which cannot be fully expressed as engine operations"
+          suggestion: "Implement BRP data source with relationship fields; add temporal overlap detection"
+          legal_text_excerpt: "degene die als ingezetene op hetzelfde woonadres is ingeschreven in de basisregistratie personen als de belanghebbende en: a. uit wiens relatie met de belanghebbende een kind is geboren"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+        input:
+          - name: heeft_partner_ingevolge_awr_5a
+            type: boolean
+            source:
+              regulation: algemene_wet_inzake_rijksbelastingen
+              output: heeft_partner
+              parameters:
+                bsn: $bsn
+            description: Persoon heeft een partner ingevolge AWR art. 5a leden 1 en 3-7
+        output:
+          - name: heeft_toeslagpartner
+            type: boolean
+            description: Heeft de belanghebbende een partner voor toepassing van de AWIR (art. 3)
+        actions:
+          - output: heeft_toeslagpartner
+            value: $heeft_partner_ingevolge_awr_5a
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '3'
   - number: 3a
     text: |-
       In afwijking van [artikel 3, eerste lid][ref1], wordt degene die ingevolge
@@ -466,6 +499,85 @@ articles:
       - id: ref9
         bwb_id: BWBR0011353
         artikel: '10.2'
+    machine_readable:
+      definitions:
+        VERMOGENSGRENS_ALLEENSTAAND:
+          value: 3374800
+          description: "Vermogensgrens voor alleenstaanden: €33.748 in eurocent (art. 7 lid 3)"
+        VERMOGENSGRENS_PARTNERS:
+          value: 6749600
+          description: "Gezamenlijke vermogensgrens voor partners: €67.496 in eurocent (art. 7 lid 3)"
+        INKOMEN_VRIJSTELLING_JONG_KIND:
+          value: 543200
+          description: "Vrijstelling toetsingsinkomen jong kind als medebewoner: €5.432 in eurocent (art. 7 lid 6)"
+      untranslatables:
+        - construct: "vrijstelling toetsingsinkomen jong kind bij medebewonerschap (lid 6)"
+          reason: "Aggregation over variable-length collection of medebewoners is not available as an engine operation"
+          suggestion: "Add FILTER and SUM operations for collection types to engine"
+          legal_text_excerpt: "Het toetsingsinkomen van een medebewoner die een eerstegraads bloed- of aanverwant in de neergaande lijn of een pleegkind is ... wordt slechts in aanmerking genomen voor zover het meer bedraagt dan € 5.432"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+        input:
+          - name: heeft_toeslagpartner
+            type: boolean
+            source:
+              output: heeft_toeslagpartner
+            description: Heeft de belanghebbende een partner het gehele berekeningsjaar (art. 3 AWIR)
+          - name: rendementsgrondslag
+            type: amount
+            source:
+              regulation: wet_inkomstenbelasting_2001
+              output: rendementsgrondslag
+              parameters:
+                bsn: $bsn
+            description: Rendementsgrondslag van de belanghebbende (IB art. 5.3) aan het begin van het berekeningsjaar
+            type_spec:
+              unit: eurocent
+          - name: gezamenlijke_rendementsgrondslag
+            type: amount
+            source:
+              regulation: wet_inkomstenbelasting_2001
+              output: gezamenlijke_rendementsgrondslag
+              parameters:
+                bsn: $bsn
+            description: Gezamenlijke rendementsgrondslag van belanghebbende en partner (IB art. 5.3) indien het gehele berekeningsjaar partners
+            type_spec:
+              unit: eurocent
+        output:
+          - name: voldoet_aan_vermogenstoets
+            type: boolean
+            description: Rendementsgrondslag valt onder de toepasselijke vermogensgrens (art. 7 lid 3 AWIR)
+        actions:
+          - output: te_toetsen_vermogen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_toeslagpartner
+                    value: true
+                  then: $gezamenlijke_rendementsgrondslag
+              default: $rendementsgrondslag
+          - output: vermogensgrens
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_toeslagpartner
+                    value: true
+                  then: $VERMOGENSGRENS_PARTNERS
+              default: $VERMOGENSGRENS_ALLEENSTAAND
+          - output: voldoet_aan_vermogenstoets
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $te_toetsen_vermogen
+              value: $vermogensgrens
   - number: '8'
     text: |-
       1 Toetsingsinkomen is: het op het berekeningsjaar betrekking hebbende inkomensgegeven.
@@ -498,6 +610,43 @@ articles:
       van een of meer van de erfgenamen het toetsingsinkomen dat betrekking heeft op het jaar voorafgaand aan het
       berekeningsjaar als toetsingsinkomen in aanmerking genomen.
     url: https://wetten.overheid.nl/BWBR0018472/2023-07-01#Artikel8
+    machine_readable:
+      untranslatables:
+        - construct: "tijdsevenredig herleiden naar een jaarinkomen (lids 3-6)"
+          reason: "Time-proportional recalculation requires date difference which is not available as an engine operation"
+          suggestion: "Add DATE_DIFF or fraction-of-year operation to engine"
+          legal_text_excerpt: "het belastbare loon dat in de periode van partnerschap is genoten tijdsevenredig herleid naar een jaarloon"
+          accepted: false
+      endpoint: toetsingsinkomen
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+        input:
+          - name: inkomensgegeven
+            type: amount
+            source:
+              regulation: algemene_wet_inzake_rijksbelastingen
+              output: inkomensgegeven
+              parameters:
+                bsn: $bsn
+            description: Inkomensgegeven uit de basisregistratie inkomen (AWR art. 21 onderdeel e)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: toetsingsinkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Toetsingsinkomen voor het berekeningsjaar (art. 8 lid 1 AWIR)
+        actions:
+          - output: toetsingsinkomen
+            value: $inkomensgegeven
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '8'
   - number: 8a
     text: |-
       1 Het niet in Nederland belastbaar inkomen wordt vastgesteld door de inspecteur.
@@ -605,6 +754,47 @@ articles:
       - id: ref4
         bwb_id: BWBR0011823
         artikel: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "medebewoner verblijfseis bij inkomensafhankelijke regelingen met medebewoner draagkracht (lid 3)"
+          reason: "Conditional applicability ('indien in een inkomensafhankelijke regeling is bepaald') and iteration over a variable-length collection of medebewoners cannot be expressed as engine operations"
+          suggestion: "Add FILTER and ANY operations for collection types to engine; add medebewoners as a structured input"
+          legal_text_excerpt: "heeft de belanghebbende geen aanspraak op een tegemoetkoming ingeval een medebewoner van achttien jaar of ouder een vreemdeling is die niet rechtmatig verblijf houdt in de zin van artikel 8 van de Vreemdelingenwet 2000"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: partner_heeft_rechtmatig_verblijf
+            type: boolean
+            required: true
+            description: Partner houdt rechtmatig verblijf ingevolge art. 8 Vreemdelingenwet 2000
+        input:
+          - name: heeft_toeslagpartner
+            type: boolean
+            source:
+              output: heeft_toeslagpartner
+            description: Heeft de belanghebbende een partner (art. 3 AWIR)
+        output:
+          - name: voldoet_aan_verblijfseis
+            type: boolean
+            description: Voldoet aan verblijfseis voor aanspraak op tegemoetkoming (art. 9 lid 2 AWIR)
+        actions:
+          - output: voldoet_aan_verblijfseis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_toeslagpartner
+                    value: true
+                  then: $partner_heeft_rechtmatig_verblijf
+              default: true
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '9'
   - number: 9a
     text: |-
       1 Een uitreiziger heeft geen aanspraak op een tegemoetkoming.
@@ -623,6 +813,27 @@ articles:
         artikel: '2'
         hoofdstuk: '1'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: Persoon is aangemerkt als uitreiziger (art. 2 lid 1 onderdeel q AWIR) op basis van melding opsporings- of inlichtingendienst
+        output:
+          - name: geen_aanspraak_als_uitreiziger
+            type: boolean
+            description: Heeft geen aanspraak op tegemoetkoming vanwege uitreizigerstatus (art. 9a lid 1)
+        actions:
+          - output: geen_aanspraak_als_uitreiziger
+            value: $is_uitreiziger
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 9a
   - number: '10'
     text: |-
       1 Een minderjarige is bekwaam de rechtshandelingen te verrichten die noodzakelijk zijn om een tegemoetkoming te
@@ -634,6 +845,48 @@ articles:
       hebben, wordt voor die regeling mede als meerderjarige aangemerkt de minderjarige met een kind of de minderjarige
       van wie beide ouders zijn overleden.
     url: https://wetten.overheid.nl/BWBR0018472/2023-07-01#Artikel10
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de minderjarige
+          - name: is_minderjarig
+            type: boolean
+            required: true
+            description: Persoon is minderjarig
+          - name: heeft_kind
+            type: boolean
+            required: true
+            description: Minderjarige heeft zelf een kind
+          - name: beide_ouders_overleden
+            type: boolean
+            required: true
+            description: Beide ouders van de minderjarige zijn overleden
+        output:
+          - name: geldt_als_meerderjarig
+            type: boolean
+            description: Minderjarige wordt voor de toepassing als meerderjarige aangemerkt (art. 10 lid 2 AWIR)
+        actions:
+          - output: geldt_als_meerderjarig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_minderjarig
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $heeft_kind
+                      value: true
+                    - operation: EQUALS
+                      subject: $beide_ouders_overleden
+                      value: true
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '10'
   - number: '11'
     text: |-
       1 De bepalingen van dit hoofdstuk gelden voor de inkomensafhankelijke regelingen waarvan de uitvoering bij die
@@ -802,6 +1055,43 @@ articles:
       - id: ref2
         bwb_id: BWBR0002320
         hoofdstuk: V
+    machine_readable:
+      definitions:
+        MINIMUM_TEGEMOETKOMING:
+          value: 2400
+          description: "Minimum tegemoetkoming: €24 in eurocent (art. 14 lid 5 AWIR)"
+      untranslatables:
+        - construct: "rekenkundig afgerond op hele euro's (art. 14 lid 4)"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "Het bedrag van de tegemoetkoming wordt rekenkundig afgerond op hele euro's."
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: hoogte_tegemoetkoming
+            type: number
+            required: true
+            description: Berekende hoogte van de tegemoetkoming in eurocent, vóór toepassing drempel
+        output:
+          - name: tegemoetkoming_boven_minimumdrempel
+            type: boolean
+            description: Tegemoetkoming bedraagt ten minste €24 (art. 14 lid 5 AWIR)
+        actions:
+          - output: tegemoetkoming_boven_minimumdrempel
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $hoogte_tegemoetkoming
+              value: $MINIMUM_TEGEMOETKOMING
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '14'
   - number: '15'
     text: |-
       1 Een aanvraag om een tegemoetkoming met betrekking tot een berekeningsjaar kan tot 1 september van het jaar
@@ -1246,6 +1536,34 @@ articles:
       - id: ref3
         bwb_id: BWBR0011353
         artikel: '10.2'
+    machine_readable:
+      definitions:
+        MINIMUM_TERUGVORDERING:
+          value: 10600
+          description: "Minimumdrempel terugvordering: €106 in eurocent (art. 26a lid 1 AWIR)"
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: terugvorderingsbedrag
+            type: number
+            required: true
+            description: Te vorderen bedrag in eurocent na herziening of verrekening van voorschot
+        output:
+          - name: terugvordering_boven_minimumdrempel
+            type: boolean
+            description: Terugvordering bedraagt meer dan €106; anders wordt niet teruggevorderd (art. 26a lid 1 AWIR)
+        actions:
+          - output: terugvordering_boven_minimumdrempel
+            value:
+              operation: GREATER_THAN
+              subject: $terugvorderingsbedrag
+              value: $MINIMUM_TERUGVORDERING
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 26a
   - number: 26b
     text: |-
       1 Voordat de Belastingdienst/Toeslagen de beschikking tot toekenning van de tegemoetkoming, bedoeld in
@@ -1286,6 +1604,40 @@ articles:
         artikel: '21'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      definitions:
+        ZIENSWIJZE_DREMPEL:
+          value: 150000
+          description: "Minimumbedrag waarbij zienswijze verplicht is: €1.500 in eurocent (art. 26b lid 1 AWIR)"
+      untranslatables:
+        - construct: "beoordeling onevenredigheid (art. 26b lid 1)"
+          reason: "Discretionary judgment ('mogelijk onevenredig') cannot be expressed as a deterministic engine operation"
+          suggestion: "Model as a human decision point or add a DISCRETIONARY_JUDGMENT operation"
+          legal_text_excerpt: "waarbij die beschikking leidt tot voor de belanghebbende nadelige gevolgen die mogelijk onevenredig zijn in verhouding tot de met de betreffende beschikking te dienen doelen"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: totaal_terug_te_vorderen
+            type: number
+            required: true
+            description: Totaal terug te vorderen bedrag per berekeningsjaar in eurocent
+        output:
+          - name: zienswijze_verplicht
+            type: boolean
+            description: Belastingdienst/Toeslagen moet zienswijze bieden bij terugvordering >= €1.500 (art. 26b lid 1)
+        actions:
+          - output: zienswijze_verplicht
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $totaal_terug_te_vorderen
+              value: $ZIENSWIJZE_DREMPEL
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 26b
   - number: '27'
     text: |-
       1 Over uit te betalen bedragen wordt rente vergoed en over terug te vorderen bedragen wordt rente in rekening
@@ -2143,6 +2495,41 @@ articles:
       - id: ref8
         bwb_id: BWBR0005537
         artikel: 5:45
+    machine_readable:
+      definitions:
+        MAXIMUM_BOETE_VERZUIM:
+          value: 551400
+          description: "Maximale bestuurlijke boete bij verzuim: €5.514 in eurocent (art. 40 lid 1 AWIR)"
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de overtreder
+          - name: heeft_niet_verstrekt
+            type: boolean
+            required: true
+            description: Persoon heeft gegevens niet of niet tijdig verstrekt (art. 40 lid 1)
+        output:
+          - name: boete_oplegbaar
+            type: boolean
+            description: Bestuurlijke boete kan worden opgelegd (art. 40 lid 1 AWIR)
+          - name: maximale_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale hoogte van de op te leggen bestuurlijke boete
+        actions:
+          - output: boete_oplegbaar
+            value: $heeft_niet_verstrekt
+          - output: maximale_boete
+            value: $MAXIMUM_BOETE_VERZUIM
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '40'
   - number: '41'
     text: |-
       1 Degene die op grond van deze wet en de daarop berustende bepalingen gehouden is tot het verstrekken van gegevens
