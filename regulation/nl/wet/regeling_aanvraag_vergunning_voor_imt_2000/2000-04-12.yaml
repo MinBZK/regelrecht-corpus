@@ -187,7 +187,7 @@ articles:
         - e-mail: IMT-2000@PRDF.nl.
 
       3 Een aanvraagdocument wordt toegezonden na ontvangst van een bedrag van zevenhonderdvijftig gulden dat onder
-      vermelding van ‘aanvraagdocument vergunning voor IMT-2000’ op het in [artikel 9][ref1] genoemde bankrekeningnummer
+      vermelding van 'aanvraagdocument vergunning voor IMT-2000' op het in [artikel 9][ref1] genoemde bankrekeningnummer
       wordt overgemaakt.
 
 
@@ -242,7 +242,7 @@ articles:
       a. een kopie van een document als bedoeld in [artikel 1 van de Wet op de identificatieplicht][ref3], waaruit de
       identiteit van de houder en de geldigheid van het document blijkt;
 
-      b. twee identieke recente pasfoto’s;
+      b. twee identieke recente pasfoto's;
 
       c. de in het derde lid bedoelde, in de Nederlandse taal gestelde volmacht.
 
@@ -322,7 +322,7 @@ articles:
   - number: '9'
     text: |-
       Als bijdrage in de kosten voor de bemoeiingen met betrekking tot de aanvraagprocedure wordt, onder vermelding van
-      ‘aanvraagprocedure IMT-2000’ uiterlijk op het tijdstip, bedoeld in [artikel 8, eerste lid][ref1], een bedrag van
+      'aanvraagprocedure IMT-2000' uiterlijk op het tijdstip, bedoeld in [artikel 8, eerste lid][ref1], een bedrag van
       twintigduizend gulden van de aanvrager ontvangen op onderstaand bankrekeningnummer:
 
       22.58.49.046,
@@ -344,6 +344,15 @@ articles:
       - id: ref1
         bwb_id: BWBR0011288
         artikel: '8'
+    machine_readable:
+      execution:
+        output:
+          - name: bijdrage_aanvraagprocedure_nlg
+            type: number
+            description: Bijdrage in kosten aanvraagprocedure in gulden (NLG)
+        actions:
+          - output: bijdrage_aanvraagprocedure_nlg
+            value: 20000
   - number: '10'
     text: |-
       1 De aanvrager voldoet een bedrag ter zekerstelling dat een bod gestand wordt gedaan of kosten en schade kunnen
@@ -360,7 +369,7 @@ articles:
       [artikel 2, onder c tot en met e][ref4], bedraagt het in het eerste lid bedoelde bedrag honderd miljoen gulden.
 
       5 Uiterlijk op het tijdstip, bedoeld in [artikel 8, eerste lid][ref5], is het in het tweede, derde of vierde lid
-      bedoelde bedrag, onder vermelding van ‘zekerstelling IMT-2000’ bijgeschreven op het in [artikel 9][ref6] genoemde
+      bedoelde bedrag, onder vermelding van 'zekerstelling IMT-2000' bijgeschreven op het in [artikel 9][ref6] genoemde
       bankrekeningnummer, of is voor het bedrag ter zekerstelling een bankgarantie volgens het model dat als bijlage 2
       bij deze regeling is gevoegd, overgelegd aan de notaris.
 
@@ -391,6 +400,39 @@ articles:
       - id: ref6
         bwb_id: BWBR0011288
         artikel: '9'
+    machine_readable:
+      definitions:
+        ZEKERSTELLING_HOOG_NLG:
+          value: 100000000
+          description: 100 miljoen gulden — bij aanvraag voor kavel A of B (artikel 2 onder a of b)
+        ZEKERSTELLING_LAAG_NLG:
+          value: 90000000
+          description: 90 miljoen gulden — bij aanvraag uitsluitend voor kavel C t/m E (artikel 2 onder c t/m e)
+      execution:
+        parameters:
+          - name: aanvraag_kavel_a_of_b
+            type: boolean
+            required: true
+            description: >-
+              Aanvraag ingediend voor een of meer vergunningen bedoeld in artikel 2 onder a of onder b
+              (kavel A of kavel B). Indien true geldt het hogere zekerheidsbedrag (lid 2 en 4).
+        output:
+          - name: bedrag_ter_zekerstelling_nlg
+            type: number
+            description: >-
+              Bedrag ter zekerstelling in gulden (NLG), bedoeld in artikel 10 eerste lid.
+              100 miljoen bij kavel A of B, 90 miljoen bij uitsluitend kavel C t/m E.
+        actions:
+          - output: bedrag_ter_zekerstelling_nlg
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $aanvraag_kavel_a_of_b
+                    value: true
+                  then: $ZEKERSTELLING_HOOG_NLG
+              default: $ZEKERSTELLING_LAAG_NLG
   - number: '11'
     text: |-
       Na het tijdstip, genoemd in [artikel 8, eerste lid][ref1], wordt de aanvraag niet aangevuld.
@@ -418,6 +460,36 @@ articles:
       - id: ref2
         bwb_id: BWBR0011288
         artikel: '8'
+    machine_readable:
+      execution:
+        parameters:
+          - name: voldoet_aan_artikel4_eisen
+            type: boolean
+            required: true
+            description: >-
+              Voldoet de aanvraag aan de eisen van artikel 4 (verzoek per brief om aanvraagdocument,
+              juiste adressering, betaling 750 gulden voor aanvraagdocument).
+          - name: voldoet_aan_artikel8_eisen
+            type: boolean
+            required: true
+            description: >-
+              Voldoet de aanvraag aan de eisen van artikel 8 (tijdige ontvangst uiterlijk 5 juni 2000
+              om 14.00 uur, juiste indiening op het voorgeschreven adres).
+        output:
+          - name: aanvraag_in_behandeling
+            type: boolean
+            description: Of de aanvraag in behandeling wordt genomen (true = in behandeling)
+        actions:
+          - output: aanvraag_in_behandeling
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_artikel4_eisen
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_artikel8_eisen
+                  value: true
   - number: '13'
     text: |-
       1 Indien de aanvraag niet voldoet aan de in de [artikel 6][ref1], [7][ref2], [9][ref3] of [10][ref4] gestelde
@@ -462,6 +534,50 @@ articles:
       - id: ref8
         bwb_id: BWBR0011288
         artikel: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de minister de aanvrager in de gelegenheid stelt het verzuim te herstellen
+              (aanvang van de hersteltermijn van één week, bedoeld in lid 1).
+          - name: verzuim_hersteld_binnen_termijn
+            type: boolean
+            required: true
+            description: >-
+              Of het verzuim binnen de termijn van één week (bedoeld in lid 1) is hersteld.
+          - name: aanvraag_voldoet_na_herstel
+            type: boolean
+            required: true
+            description: >-
+              Of de aanvraag na herstel voldoet aan de eisen van artikelen 6, 7, 9 of 10
+              (lid 2, tweede zinsdeel).
+        output:
+          - name: herstel_termijn_einddatum
+            type: date
+            description: >-
+              Uiterste datum voor herstel van het verzuim (één week na de kennisgeving, lid 1).
+          - name: aanvraag_niet_in_behandeling_na_verzuim
+            type: boolean
+            description: >-
+              Of de aanvraag niet in behandeling wordt genomen wegens niet-hersteld of nog
+              steeds niet-voldoend verzuim (lid 2).
+        actions:
+          - output: herstel_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              weeks: 1
+          - output: aanvraag_niet_in_behandeling_na_verzuim
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $verzuim_hersteld_binnen_termijn
+                - operation: NOT
+                  value: $aanvraag_voldoet_na_herstel
   - number: '14'
     text: |-
       1 De minister deelt de aanvrager binnen twee weken na de datum, genoemd in [artikel 8, eerste lid][ref1],
@@ -505,6 +621,43 @@ articles:
       - id: ref8
         bwb_id: BWBR0011288
         artikel: '15'
+    machine_readable:
+      execution:
+        parameters:
+          - name: artikel8_indiening_deadline
+            type: date
+            required: true
+            description: >-
+              Datum bedoeld in artikel 8 eerste lid (5 juni 2000, het tijdstip van uiterste ontvangst
+              van de aanvraag). Startpunt voor de tweewekentermijn voor de ministeriele mededeling.
+          - name: voldoet_aan_alle_formele_eisen
+            type: boolean
+            required: true
+            description: >-
+              Of voldaan is aan de eisen van artikelen 4, 6, 7, 8, 9 en 10 (lid 2).
+              Bij true wordt de aanvrager getoetst aan artikel 15.
+        output:
+          - name: mededeling_deadline
+            type: date
+            description: >-
+              Uiterste datum waarop de minister schriftelijk meedeelt of de aanvraag in behandeling
+              wordt genomen (twee weken na de datum bedoeld in artikel 8 eerste lid, lid 1).
+          - name: toetsing_artikel15_van_toepassing
+            type: boolean
+            description: >-
+              Of de aanvrager wordt getoetst aan de eisen van artikel 15
+              (true indien aan alle formele eisen is voldaan, lid 2).
+        actions:
+          - output: mededeling_deadline
+            value:
+              operation: DATE_ADD
+              date: $artikel8_indiening_deadline
+              weeks: 2
+          - output: toetsing_artikel15_van_toepassing
+            value:
+              operation: EQUALS
+              subject: $voldoet_aan_alle_formele_eisen
+              value: true
   - number: '15'
     text: |-
       1 Een aanvrager moet voldoen aan de eisen, bedoeld in
@@ -549,6 +702,106 @@ articles:
       - id: ref2
         bwb_id: BWBR0011288
         artikel: '8'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_rechtspersoon_eer
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager is een rechtspersoon opgericht naar recht van een EER-lidstaat en heeft statutaire zetel,
+              hoofdbestuur of hoofdvestiging binnen de EER (lid 2 onder a).
+          - name: niet_in_faillissement
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager verkeert niet in staat van faillissement en er is geen verzoek tot
+              faillietverklaring ingediend (lid 2 onder b, 1°).
+          - name: geen_surceance
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager heeft geen surceance van betaling en er is geen surceance aangevraagd
+              (lid 2 onder b, 2°).
+          - name: geen_beslag_bedrijfsmiddelen
+            type: boolean
+            required: true
+            description: >-
+              Er is geen beslag gelegd op een of meer bedrijfsmiddelen van de aanvrager
+              (lid 2 onder b, 3°).
+          - name: heeft_ervaring_aanleg_telecom
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager kan aantoonbaar beschikken over ervaring met de aanleg van openbare
+              telecommunicatie-infrastructuur (lid 2 onder c, 1°).
+          - name: heeft_ervaring_instandhouding_exploitatie
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager kan aantoonbaar beschikken over ervaring met de instandhouding en exploitatie
+              van openbare telecommunicatie-infrastructuur (lid 2 onder c, 2°).
+          - name: ervaring_duur_ten_minste_een_jaar
+            type: boolean
+            required: true
+            description: >-
+              De activiteiten (instandhouding en exploitatie) beslaan ten minste een aaneengesloten
+              periode van een jaar (lid 2 onder c, 3°, eerste zinsdeel).
+          - name: ervaring_voortdurend_op_indiening_deadline
+            type: boolean
+            required: true
+            description: >-
+              De activiteiten (instandhouding en exploitatie) duren voort op de datum bedoeld in
+              artikel 8 eerste lid (5 juni 2000) (lid 2 onder c, 3°, tweede zinsdeel).
+        output:
+          - name: voldoet_aan_eisen_artikel15
+            type: boolean
+            description: >-
+              Of de aanvrager voldoet aan alle eisen van artikel 15 (rechtspersoon EER,
+              financiële positie, kennis en ervaring).
+        actions:
+          - output: financieel_gezond
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $niet_in_faillissement
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_surceance
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_beslag_bedrijfsmiddelen
+                  value: true
+          - output: voldoende_kennis_en_ervaring
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_ervaring_aanleg_telecom
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_ervaring_instandhouding_exploitatie
+                  value: true
+                - operation: EQUALS
+                  subject: $ervaring_duur_ten_minste_een_jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $ervaring_voortdurend_op_indiening_deadline
+                  value: true
+          - output: voldoet_aan_eisen_artikel15
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_rechtspersoon_eer
+                  value: true
+                - operation: EQUALS
+                  subject: $financieel_gezond
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoende_kennis_en_ervaring
+                  value: true
   - number: '16'
     text: |-
       1 De minister stelt binnen vier weken na de datum, genoemd in [artikel 8, eerste lid][ref1], vast of de aanvrager
@@ -583,6 +836,63 @@ articles:
       - id: ref4
         bwb_id: BWBR0011288
         artikel: '9'
+    machine_readable:
+      untranslatables:
+        - construct: "vermeerderd met de rente van een éénmaandsdeposito van de bank"
+          reason: >-
+            Interest rate calculation (éénmaandsdeposito rente) is not available as an
+            engine operation. The engine has no INTEREST or RATE_LOOKUP operation.
+          suggestion: "Add INTEREST or FINANCIAL_RATE operation to engine"
+          legal_text_excerpt: >-
+            "deze waarborgsom, vermeerderd met de rente van een éénmaandsdeposito van de bank,
+            bedoeld in artikel 9 terug" (lid 4)
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: artikel8_indiening_deadline
+            type: date
+            required: true
+            description: >-
+              Datum bedoeld in artikel 8 eerste lid (5 juni 2000). Startpunt voor de
+              vierwekentermijn waarbinnen de minister vaststelt of aan artikel 15 is voldaan (lid 1).
+          - name: voldoet_aan_artikel15
+            type: boolean
+            required: true
+            description: >-
+              Of de aanvrager voldoet aan de eisen van artikel 15 (rechtspersoon EER,
+              financiële positie, kennis en ervaring). Bepaalt toelating tot de veiling (lid 2).
+        output:
+          - name: vaststelling_deadline
+            type: date
+            description: >-
+              Uiterste datum waarop de minister vaststelt of de aanvrager voldoet aan artikel 15
+              (vier weken na de datum bedoeld in artikel 8 eerste lid, lid 1).
+          - name: toegelaten_tot_veiling
+            type: boolean
+            description: >-
+              Of de aanvrager wordt toegelaten tot de veiling (true indien voldaan aan artikel 15).
+          - name: aanvraag_afgewezen
+            type: boolean
+            description: >-
+              Of de aanvraag is afgewezen wegens niet-voldoen aan artikel 15 (lid 2).
+        actions:
+          - output: vaststelling_deadline
+            value:
+              operation: DATE_ADD
+              date: $artikel8_indiening_deadline
+              weeks: 4
+          - output: toegelaten_tot_veiling
+            value:
+              operation: EQUALS
+              subject: $voldoet_aan_artikel15
+              value: true
+          - output: aanvraag_afgewezen
+            value:
+              operation: NOT
+              value: $voldoet_aan_artikel15
   - number: '17'
     text: |-
       1 De minister stelt vast of op grond van het aantal aanvragen dat is ingediend door de aanvragers die aan de eisen,
@@ -621,6 +931,27 @@ articles:
       - id: ref4
         bwb_id: BWBR0011288
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: iedere_aanvrager_voorkeur_honoreerbaar
+            type: boolean
+            required: true
+            description: >-
+              Of aan iedere gekwalificeerde aanvrager (die voldoet aan artikel 15) een vergunning kan
+              worden verleend overeenkomstig de op grond van artikel 7 derde lid opgegeven voorkeur
+              (lid 2 vs lid 3 criterium).
+        output:
+          - name: veiling_vindt_plaats
+            type: boolean
+            description: >-
+              Of de veiling plaatsvindt (true indien niet aan iedere aanvrager de voorkeur
+              kan worden gehonoreerd, lid 3; false indien alle voorkeuren honoreerbaar zijn, lid 2).
+        actions:
+          - output: veiling_vindt_plaats
+            value:
+              operation: NOT
+              value: $iedere_aanvrager_voorkeur_honoreerbaar
   - number: '18'
     text: |-
       De minister betaalt de aanvragers, bedoeld in [artikel 17, tweede lid][ref1], in geval ter voldoening van
