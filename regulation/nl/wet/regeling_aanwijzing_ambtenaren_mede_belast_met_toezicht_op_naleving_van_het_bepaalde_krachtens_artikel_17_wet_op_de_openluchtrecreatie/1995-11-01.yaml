@@ -29,11 +29,27 @@ articles:
       - id: ref1
         bwb_id: BWBR0006548
         artikel: '17'
+    machine_readable:
+      competent_authority:
+        name: "Inspectie Volksgezondheid"
+        type: "INSTANCE"
+      definitions:
+        designated_authorities:
+          - "Hoofdinspector van de Volksgezondheid"
+          - "regionale inspecteurs van de Volksgezondheid"
+          - "ambtenaren werkzaam onder hun bevelen"
+        excluded_personnel:
+          - "ambtenaren die meer in het bijzonder administratieve werkzaamheden uitoefenen"
+      execution:
+        output:
+          - name: "toezichthouders"
+            type: "array"
+            description: "Lijst van ambtenaren belast met toezicht op artikel 17 Wet op de openluchtrecreatie"
+            legal_character: "INFORMATIEF"
   - number: '2'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop de [hoofdstukken III][ref1] tot en met
       [XIII van de Wet op de openluchtrecreatie][ref2] in werking treden.
-
 
       [ref1]: https://wetten.overheid.nl/BWBR0006548#HoofdstukIII
       [ref2]: https://wetten.overheid.nl/BWBR0006548#HoofdstukXIII
@@ -45,3 +61,16 @@ articles:
       - id: ref2
         bwb_id: BWBR0006548
         hoofdstuk: XIII
+    machine_readable:
+      execution:
+        output:
+          - name: "in_werking"
+            type: "boolean"
+            description: "Indicates if the regulation is in force based on Chapters III-XIII of Wet op de openluchtrecreatie"
+            legal_character: "INFORMATIEF"
+            condition:
+              type: "dependent"
+              trigger:
+                bwb_id: BWBR0006548
+                chapters: ["III", "XIII"]
+                status: "in_force"
