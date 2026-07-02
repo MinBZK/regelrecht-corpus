@@ -56,6 +56,49 @@ articles:
       Meije, de Kadewetering tot Slikkendam en de provinciale weg Slikkendam – Noordse buurt, met uitzondering van de
       Noordeinderplas tot het Brampjesgat en de Maarten Freekerweg en de Zuideinderplas.
     url: https://wetten.overheid.nl/BWBR0007415/1985-06-01#Artikel1
+    machine_readable:
+      untranslatables:
+        - construct: "geografische begrenzing van anonieme wateren (onderdelen 6, 7, 8)"
+          reason: "Items 6, 7 and 8 designate 'de wateren gelegen in het gebied begrensd door...' — anonymous water bodies defined by geographic boundaries, which require spatial/GIS computation not available as engine operations"
+          legal_text_excerpt: "De wateren, gelegen in het Ilperveld, begrensd door de Purmerlander rijweg, het Noord-Hollandschkanaal..."
+          accepted: false
+        - construct: "uitzonderingen op geografische begrenzing (onderdeel 7 en 12)"
+          reason: "Items 7 and 12 contain spatial exceptions ('met uitzondering van het Kinselmeer', 'met uitzondering van de Noordeinderplas') requiring geographic boundary subtraction, not available as engine operations"
+          legal_text_excerpt: "met uitzondering van het Kinselmeer, de binnen de bebouwde kommen gelegen wateren..."
+          accepted: false
+      execution:
+        parameters:
+          - name: naam_water
+            type: string
+            required: true
+            description: Naam van het water waarvoor gecontroleerd wordt of het is aangewezen voor het verbod op nachtvisserij
+        output:
+          - name: aangewezen_wateren
+            type: array
+            description: "Lijst van aangewezen benoemde wateren (onderdelen 1-5, 9-12; geografisch begrensde anonieme wateren 6-8: zie untranslatables)"
+          - name: is_aangewezen_water
+            type: boolean
+            description: Geeft aan of het opgegeven water is aangewezen als water waarop het verbod op nachtvisserij van toepassing is
+        actions:
+          - output: aangewezen_wateren
+            value:
+              operation: LIST
+              items:
+                - "Het Houtwiel"
+                - "Het Rottighe Meente"
+                - "De Deelen"
+                - "De Beulakerwijde"
+                - "De Kleine Beulakerwijde"
+                - "Het IJsselmeer"
+                - "De Oude Zederik"
+                - "De Hooge Boezem van de Nederwaard"
+                - "De Hooge Boezem van de Overwaard"
+                - "De Nieuwkoopse plassen"
+          - output: is_aangewezen_water
+            value:
+              operation: IN
+              subject: $naam_water
+              value: $aangewezen_wateren
   - number: '2'
     text: |-
       1 Deze regeling wordt bekendgemaakt in de Nederlandse Staatscourant en treedt in werking met ingang van 1 juni
