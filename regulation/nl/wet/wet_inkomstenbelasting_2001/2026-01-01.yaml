@@ -350,6 +350,52 @@ articles:
       - id: ref1
         bwb_id: BWBR0011353
         hoofdstuk: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: woont_in_nederland
+            type: boolean
+            required: true
+            description: Of de belastingplichtige in Nederland woont (binnenlandse belastingplichtige)
+          - name: heeft_nederlands_inkomen
+            type: boolean
+            required: true
+            description: Of de persoon Nederlands inkomen geniet als bedoeld in hoofdstuk 7 (buitenlandse belastingplichtige)
+        output:
+          - name: is_belastingplichtig
+            type: boolean
+            description: Of de persoon belastingplichtig is voor de inkomstenbelasting
+          - name: is_binnenlandse_belastingplichtige
+            type: boolean
+            description: Woont in Nederland (artikel 2.1 lid 1 onderdeel a)
+          - name: is_buitenlandse_belastingplichtige
+            type: boolean
+            description: Woont niet in Nederland maar geniet wel Nederlands inkomen (artikel 2.1 lid 1 onderdeel b)
+        actions:
+          - output: is_binnenlandse_belastingplichtige
+            value: $woont_in_nederland
+          - output: is_buitenlandse_belastingplichtige
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $woont_in_nederland
+                    value: true
+                - operation: EQUALS
+                  subject: $heeft_nederlands_inkomen
+                  value: true
+          - output: is_belastingplichtig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $woont_in_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_nederlands_inkomen
+                  value: true
   - number: '2.2'
     text: |-
       1 Een persoon die ophoudt in Nederland te wonen en binnen een jaar daarna weer in Nederland gaat wonen zonder
@@ -893,6 +939,115 @@ articles:
         artikel: '6.1'
         hoofdstuk: '6'
         afdeling: '6.1'
+    machine_readable:
+      untranslatables:
+        - construct: afronden op hele euro's
+          reason: Rounding to whole euros is not available as an engine operation
+          suggestion: Add ROUND/FLOOR operation to engine
+          legal_text_excerpt: bedraagt de belasting het in kolom III vermelde bedrag, vermeerderd met het bedrag dat wordt berekend door het in kolom IV vermelde percentage
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_inkomen_werk_woning
+            type: number
+            required: true
+            description: Belastbaar inkomen uit werk en woning in eurocent
+          - name: grondslagverminderende_posten
+            type: number
+            required: true
+            description: Totaal van grondslagverminderende posten (lid 3) in eurocent; 0 als er geen grondslagverminderende posten zijn (lid 2 is dan niet van toepassing)
+        output:
+          - name: belasting_lid1
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belasting op basis van de tarieftabel (lid 1), voor toepassing van lid 2
+          - name: aanvullende_belasting_lid2
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Aanvullende belasting vanwege grondslagverminderende posten (lid 2)
+          - name: belasting_box1
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Totale belasting op belastbaar inkomen uit werk en woning
+        actions:
+          - output: belasting_lid1
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_inkomen_werk_woning
+                    value: 3888300
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $belastbaar_inkomen_werk_woning
+                          - 810
+                      - 10000
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_inkomen_werk_woning
+                    value: 7842600
+                  then:
+                    operation: ADD
+                    values:
+                      - 314900
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - operation: SUBTRACT
+                                values:
+                                  - $belastbaar_inkomen_werk_woning
+                                  - 3888300
+                              - 3756
+                          - 10000
+              default:
+                operation: ADD
+                values:
+                  - 1800100
+                  - operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - operation: SUBTRACT
+                            values:
+                              - $belastbaar_inkomen_werk_woning
+                              - 7842600
+                          - 4950
+                      - 10000
+          - output: aanvullende_belasting_lid2
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - operation: MIN
+                      values:
+                        - $grondslagverminderende_posten
+                        - operation: MAX
+                          values:
+                            - 0
+                            - operation: SUBTRACT
+                              values:
+                                - operation: ADD
+                                  values:
+                                    - $belastbaar_inkomen_werk_woning
+                                    - $grondslagverminderende_posten
+                                - 7842600
+                    - 1194
+                - 10000
+          - output: belasting_box1
+            value:
+              operation: ADD
+              values:
+                - $belasting_lid1
+                - $aanvullende_belasting_lid2
   - number: 2.10a
     text: |-
       1 In afwijking van [artikel 2.10][ref1] wordt voor de belastingplichtige die geboren is vóór 1 januari 1946 de
@@ -1055,6 +1210,119 @@ articles:
         artikel: '6.1'
         hoofdstuk: '6'
         afdeling: '6.1'
+    machine_readable:
+      untranslatables:
+        - construct: geboren vóór 1 januari 1946
+          reason: Date comparison (birth date before fixed date) cannot be expressed with available comparison operations on date types
+          suggestion: Add DATE_BEFORE or general date comparison operation to engine
+          legal_text_excerpt: voor de belastingplichtige die geboren is vóór 1 januari 1946
+          accepted: false
+        - construct: afronden op hele euro's
+          reason: Rounding to whole euros is not available as an engine operation
+          suggestion: Add ROUND/FLOOR operation to engine
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_inkomen_werk_woning
+            type: number
+            required: true
+            description: Belastbaar inkomen uit werk en woning in eurocent
+          - name: grondslagverminderende_posten
+            type: number
+            required: true
+            description: Totaal van grondslagverminderende posten (lid 3) in eurocent; 0 als er geen grondslagverminderende posten zijn (lid 2 is dan niet van toepassing)
+        output:
+          - name: belasting_lid1
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belasting op basis van de tarieftabel voor belastingplichtigen geboren vóór 1946 (lid 1)
+          - name: aanvullende_belasting_lid2
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Aanvullende belasting vanwege grondslagverminderende posten (lid 2)
+          - name: belasting_box1
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Totale belasting op belastbaar inkomen uit werk en woning voor belastingplichtigen geboren vóór 1946
+        actions:
+          - output: belasting_lid1
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_inkomen_werk_woning
+                    value: 4112300
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $belastbaar_inkomen_werk_woning
+                          - 810
+                      - 10000
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_inkomen_werk_woning
+                    value: 7842600
+                  then:
+                    operation: ADD
+                    values:
+                      - 333000
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - operation: SUBTRACT
+                                values:
+                                  - $belastbaar_inkomen_werk_woning
+                                  - 4112300
+                              - 3756
+                          - 10000
+              default:
+                operation: ADD
+                values:
+                  - 1734100
+                  - operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - operation: SUBTRACT
+                            values:
+                              - $belastbaar_inkomen_werk_woning
+                              - 7842600
+                          - 4950
+                      - 10000
+          - output: aanvullende_belasting_lid2
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - operation: MIN
+                      values:
+                        - $grondslagverminderende_posten
+                        - operation: MAX
+                          values:
+                            - 0
+                            - operation: SUBTRACT
+                              values:
+                                - operation: ADD
+                                  values:
+                                    - $belastbaar_inkomen_werk_woning
+                                    - $grondslagverminderende_posten
+                                - 7842600
+                    - 1194
+                - 10000
+          - output: belasting_box1
+            value:
+              operation: ADD
+              values:
+                - $belasting_lid1
+                - $aanvullende_belasting_lid2
   - number: 2.11a
     text: |-
       1 De belasting op het belastbare inkomen uit werk en woning nadat de regelingen ter voorkoming van dubbele
@@ -12640,6 +12908,108 @@ articles:
         artikel: '2.17'
         hoofdstuk: '2'
         afdeling: '2.4'
+    machine_readable:
+      untranslatables:
+        - construct: tijdsevenredige herleiding (lid 6)
+          reason: Pro-rating the voordeel by number of months requires date difference calculation which is not available as an engine operation
+          suggestion: Add DATE_DIFF operation or month-count function to engine
+          legal_text_excerpt: wordt het voordeel uit sparen en beleggen naar tijdsgelang herleid, waarbij gedeelten van kalendermaanden worden verwaarloosd
+          accepted: false
+      execution:
+        parameters:
+          - name: waarde_banktegoeden
+            type: number
+            required: true
+            description: Waarde van de banktegoeden op de peildatum in eurocent (artikel 5.2 lid 3)
+          - name: waarde_overige_bezittingen
+            type: number
+            required: true
+            description: Waarde van de overige bezittingen op de peildatum in eurocent
+          - name: waarde_schulden
+            type: number
+            required: true
+            description: Waarde van de schulden op de peildatum in eurocent
+          - name: rendementsgrondslag
+            type: number
+            required: true
+            description: Rendementsgrondslag berekend conform artikel 5.3 (waarde bezittingen min schulden) in eurocent
+          - name: heffingvrij_vermogen
+            type: number
+            required: true
+            description: Heffingvrij vermogen conform artikel 5.5 in eurocent (€59.357 = 5.935.700)
+        output:
+          - name: rendement
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Rendement op basis van lid 2 (banktegoeden 1.44%, overige bezittingen 6%, schulden 2.61%); nihil indien negatief
+          - name: grondslag_sparen_beleggen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Grondslag sparen en beleggen = rendementsgrondslag minus heffingvrij vermogen (lid 1)
+          - name: voordeel_sparen_beleggen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Voordeel uit sparen en beleggen = effectief rendementspercentage maal grondslag (lid 1 en 2)
+        actions:
+          - output: rendement
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - operation: ADD
+                      values:
+                        - operation: DIVIDE
+                          values:
+                            - operation: MULTIPLY
+                              values:
+                                - $waarde_banktegoeden
+                                - 144
+                            - 10000
+                        - operation: DIVIDE
+                          values:
+                            - operation: MULTIPLY
+                              values:
+                                - $waarde_overige_bezittingen
+                                - 600
+                            - 10000
+                    - operation: DIVIDE
+                      values:
+                        - operation: MULTIPLY
+                          values:
+                            - $waarde_schulden
+                            - 261
+                        - 10000
+          - output: grondslag_sparen_beleggen
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $rendementsgrondslag
+                    - $heffingvrij_vermogen
+          - output: voordeel_sparen_beleggen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $rendementsgrondslag
+                    value: 0
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $rendement
+                          - $grondslag_sparen_beleggen
+                      - $rendementsgrondslag
+              default: 0
   - number: '5.3'
     text: |-
       1 De rendementsgrondslag is de waarde van de bezittingen verminderd met de waarde van de schulden.
@@ -12768,6 +13138,39 @@ articles:
       - id: ref15
         bwb_id: BWBR0001939
         artikel: '7'
+    machine_readable:
+      untranslatables:
+        - construct: aggregatie van bezittingen over categorieën (lid 2)
+          reason: Aggregation over variable-length sets of categorized assets is not expressible; the categorization rules in lid 2 and lid 3 require enumeration of complex exclusions
+          suggestion: Add AGGREGATE/SUM operation over structured input collections
+          legal_text_excerpt: Bezittingen zijn ... onroerende zaken; ... rechten ... roerende zaken ...
+          accepted: false
+      execution:
+        parameters:
+          - name: waarde_bezittingen
+            type: number
+            required: true
+            description: Totale waarde van de bezittingen in eurocent (gecategoriseerd conform lid 2)
+          - name: waarde_schulden
+            type: number
+            required: true
+            description: Totale waarde van de schulden in eurocent (gecategoriseerd conform lid 3)
+        output:
+          - name: rendementsgrondslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Rendementsgrondslag (lid 1) = waarde bezittingen min waarde schulden
+        actions:
+          - output: rendementsgrondslag
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $waarde_bezittingen
+                    - $waarde_schulden
   - number: '5.4'
     text: |-
       1 Tot de bezittingen behoren niet niet opeisbare geldvorderingen op de echtgenoot van een overleden ouder van de
@@ -12904,6 +13307,17 @@ articles:
   - number: '5.5'
     text: Het heffingvrije vermogen bedraagt € 59.357.
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel5.5
+    machine_readable:
+      execution:
+        output:
+          - name: heffingvrij_vermogen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het heffingvrije vermogen in eurocent
+        actions:
+          - output: heffingvrij_vermogen
+            value: 5935700
   - number: '5.7'
     text: |-
       1 Tot de bezittingen behoren niet:
@@ -16615,6 +17029,41 @@ articles:
       2 De algemene heffingskorting bedraagt € 3.115, verminderd, doch niet verder dan tot nihil, met 6,398% van het
       gedeelte van het verzamelinkomen dat meer bedraagt dan € 29.736.
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.10
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzamelinkomen
+            type: number
+            required: true
+            description: Verzamelinkomen van de belastingplichtige in eurocent
+        output:
+          - name: algemene_heffingskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Algemene heffingskorting (lid 2) — maximaal €3.115, verminderd met 6,398% van het verzamelinkomen boven €29.736
+        actions:
+          - output: algemene_heffingskorting
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - 311500
+                    - operation: DIVIDE
+                      values:
+                        - operation: MULTIPLY
+                          values:
+                            - operation: MAX
+                              values:
+                                - 0
+                                - operation: SUBTRACT
+                                  values:
+                                    - $verzamelinkomen
+                                    - 2973600
+                            - 6398
+                        - 1000000
   - number: '8.11'
     text: |-
       1 De arbeidskorting geldt voor de belastingplichtige die *arbeidsinkomen* geniet.
@@ -16648,6 +17097,116 @@ articles:
       - id: ref2
         bwb_id: BWBR0002471
         artikel: '25'
+    machine_readable:
+      untranslatables:
+        - construct: minimumararbeidskorting via loonbelastingtabellen
+          reason: The minimum arbeidskorting based on the loonbelasting table (artikel 22a Wet LB 1964) requires a cross-law lookup into loonbelastingtabellen which cannot be expressed as an engine operation
+          suggestion: Add cross-law table-lookup mechanism or resolve via source binding to wet_op_de_loonbelasting_1964
+          legal_text_excerpt: bedraagt de arbeidskorting ten minste de volgens artikel 22a van de Wet op de loonbelasting 1964 toegekende arbeidskorting
+          accepted: false
+      execution:
+        parameters:
+          - name: arbeidsinkomen
+            type: number
+            required: true
+            description: Arbeidsinkomen van de belastingplichtige in eurocent (artikel 8.1 lid 1 onderdeel e)
+        output:
+          - name: arbeidskorting_fase_a
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Fase a — 8,324% van arbeidsinkomen, max €996
+          - name: arbeidskorting_fase_ab
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Som van fase a en b — max €5.300
+          - name: arbeidskorting_fase_abc
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Som van fase a, b en c — max €5.685
+          - name: arbeidskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Arbeidskorting na aftrek fase d (niet verder dan nihil)
+        actions:
+          - output: arbeidskorting_fase_a
+            value:
+              operation: MIN
+              values:
+                - 99600
+                - operation: DIVIDE
+                  values:
+                    - operation: MULTIPLY
+                      values:
+                        - $arbeidsinkomen
+                        - 8324
+                    - 1000000
+          - output: arbeidskorting_fase_ab
+            value:
+              operation: MIN
+              values:
+                - 530000
+                - operation: ADD
+                  values:
+                    - $arbeidskorting_fase_a
+                    - operation: DIVIDE
+                      values:
+                        - operation: MULTIPLY
+                          values:
+                            - operation: MAX
+                              values:
+                                - 0
+                                - operation: SUBTRACT
+                                  values:
+                                    - $arbeidsinkomen
+                                    - 1196500
+                            - 31009
+                        - 1000000
+          - output: arbeidskorting_fase_abc
+            value:
+              operation: MIN
+              values:
+                - 568500
+                - operation: ADD
+                  values:
+                    - $arbeidskorting_fase_ab
+                    - operation: DIVIDE
+                      values:
+                        - operation: MULTIPLY
+                          values:
+                            - operation: MAX
+                              values:
+                                - 0
+                                - operation: SUBTRACT
+                                  values:
+                                    - $arbeidsinkomen
+                                    - 2584500
+                            - 1950
+                        - 100000
+          - output: arbeidskorting
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $arbeidskorting_fase_abc
+                    - operation: DIVIDE
+                      values:
+                        - operation: MULTIPLY
+                          values:
+                            - operation: MAX
+                              values:
+                                - 0
+                                - operation: SUBTRACT
+                                  values:
+                                    - $arbeidsinkomen
+                                    - 4559200
+                            - 651
+                        - 10000
   - number: 8.14a
     text: |-
       1 De inkomensafhankelijke combinatiekorting geldt voor de belastingplichtige indien:
@@ -16698,6 +17257,76 @@ articles:
         bwb_id: BWBR0011353
         artikel: '1.2'
         hoofdstuk: '1'
+    machine_readable:
+      untranslatables:
+        - construct: kind jonger dan 12 jaar gedurende ten minste zes maanden
+          reason: Checking that a child was younger than 12 at the start of the year and was part of the household for at least 6 months requires age calculation and duration tracking over a calendar year
+          suggestion: Add date-based age-at-date and period-duration operations
+          legal_text_excerpt: een kind dat bij de aanvang van het kalenderjaar de leeftijd van 12 jaar niet heeft bereikt tot hetzelfde huishouden als de belastingplichtige behoort gedurende ten minste zes maanden
+          accepted: false
+        - construct: lager arbeidsinkomen dan partner (lid 1 onderdeel c)
+          reason: Comparing this person's arbeidsinkomen to their partner's requires resolving the partner relationship and their income, which depends on partner determination from artikel 1.2
+          accepted: false
+      execution:
+        parameters:
+          - name: arbeidsinkomen
+            type: number
+            required: true
+            description: Arbeidsinkomen van de belastingplichtige in eurocent (artikel 8.1 lid 1 onderdeel e)
+          - name: heeft_kwalificerend_kind
+            type: boolean
+            required: true
+            description: Of er een kind jonger dan 12 jaar ten minste zes maanden tot het huishouden behoort (lid 1 onderdeel b)
+          - name: heeft_geen_of_lager_inkomen_dan_partner
+            type: boolean
+            required: true
+            description: Of de belastingplichtige geen partner heeft of een lager arbeidsinkomen dan zijn partner (lid 1 onderdeel c)
+        output:
+          - name: heeft_recht_op_iack
+            type: boolean
+            description: Of de belastingplichtige recht heeft op de inkomensafhankelijke combinatiekorting
+          - name: inkomensafhankelijke_combinatiekorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de inkomensafhankelijke combinatiekorting (lid 2) — 11,45% van arbeidsinkomen boven €6.239, max €3.032
+        actions:
+          - output: heeft_recht_op_iack
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $arbeidsinkomen
+                  value: 623900
+                - operation: EQUALS
+                  subject: $heeft_kwalificerend_kind
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_geen_of_lager_inkomen_dan_partner
+                  value: true
+          - output: inkomensafhankelijke_combinatiekorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_iack
+                    value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - 303200
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - operation: SUBTRACT
+                                values:
+                                  - $arbeidsinkomen
+                                  - 623900
+                              - 1145
+                          - 100000
+              default: 0
   - number: 8.16a
     text: |-
       1 De jonggehandicaptenkorting geldt voor de belastingplichtige die in het kalenderjaar op grond van de
@@ -16712,6 +17341,49 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0008657
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_recht_op_wajong_uitkering_of_arbeidsondersteuning
+            type: boolean
+            required: true
+            description: Of de belastingplichtige in het kalenderjaar op grond van de Wajong recht heeft op toekenning van een uitkering of op arbeidsondersteuning
+          - name: heeft_recht_op_ouderenkorting
+            type: boolean
+            required: true
+            description: Of voor de belastingplichtige de ouderenkorting (artikel 8.17) geldt (de jonggehandicaptenkorting geldt dan niet)
+        output:
+          - name: heeft_recht_op_jonggehandicaptenkorting
+            type: boolean
+            description: Of de belastingplichtige recht heeft op de jonggehandicaptenkorting
+          - name: jonggehandicaptenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de jonggehandicaptenkorting — €923 indien van toepassing
+        actions:
+          - output: heeft_recht_op_jonggehandicaptenkorting
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_recht_op_wajong_uitkering_of_arbeidsondersteuning
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_ouderenkorting
+                    value: true
+          - output: jonggehandicaptenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_jonggehandicaptenkorting
+                    value: true
+                  then: 92300
+              default: 0
   - number: '8.17'
     text: |-
       1 De ouderenkorting geldt voor de belastingplichtige die bij het einde van het kalenderjaar, of indien de
@@ -16728,6 +17400,64 @@ articles:
       - id: ref1
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      untranslatables:
+        - construct: pensioengerechtigde leeftijd bereikt (artikel 7a AOW)
+          reason: The AOW pension age is a dynamic age threshold defined by artikel 7a of the Algemene Ouderdomswet which requires a cross-law reference to determine the applicable age
+          suggestion: Bind to a source output from the Algemene Ouderdomswet that provides has_reached_pensioengerechtigde_leeftijd
+          legal_text_excerpt: de pensioengerechtigde leeftijd, bedoeld in artikel 7a, eerste lid, van de Algemene Ouderdomswet, heeft bereikt
+          accepted: false
+      execution:
+        parameters:
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: Of de belastingplichtige bij het einde van het kalenderjaar de pensioengerechtigde leeftijd (artikel 7a AOW) heeft bereikt
+          - name: verzamelinkomen
+            type: number
+            required: true
+            description: Verzamelinkomen van de belastingplichtige in eurocent
+        output:
+          - name: heeft_recht_op_ouderenkorting
+            type: boolean
+            description: Of de belastingplichtige recht heeft op de ouderenkorting
+          - name: ouderenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de ouderenkorting (lid 2) — €2.067 verminderd met 15% van het verzamelinkomen boven €46.002, niet negatief
+        actions:
+          - output: heeft_recht_op_ouderenkorting
+            value: $heeft_pensioengerechtigde_leeftijd_bereikt
+          - output: ouderenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_ouderenkorting
+                    value: true
+                  then:
+                    operation: MAX
+                    values:
+                      - 0
+                      - operation: SUBTRACT
+                        values:
+                          - 206700
+                          - operation: DIVIDE
+                            values:
+                              - operation: MULTIPLY
+                                values:
+                                  - operation: MAX
+                                    values:
+                                      - 0
+                                      - operation: SUBTRACT
+                                        values:
+                                          - $verzamelinkomen
+                                          - 4600200
+                                  - 1500
+                              - 10000
+              default: 0
   - number: '8.18'
     text: |-
       1 De alleenstaande ouderenkorting geldt voor de belastingplichtige indien hij in het kalenderjaar in aanmerking
@@ -16748,6 +17478,30 @@ articles:
       - id: ref2
         bwb_id: BWBR0002221
         artikel: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_recht_op_alleenstaande_aow_uitkering
+            type: boolean
+            required: true
+            description: Of de belastingplichtige in aanmerking komt voor een alleenstaande AOW-uitkering (artikel 9 lid 1 onderdeel a AOW) of daarvoor in aanmerking zou komen
+        output:
+          - name: alleenstaande_ouderenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de alleenstaande ouderenkorting — €540 indien van toepassing
+        actions:
+          - output: alleenstaande_ouderenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_alleenstaande_aow_uitkering
+                    value: true
+                  then: 54000
+              default: 0
   - number: '8.19'
     text: |-
       1 De korting voor groene beleggingen geldt voor de belastingplichtige van wie groene beleggingen zijn vrijgesteld
@@ -16773,6 +17527,26 @@ articles:
         artikel: '5.13'
         hoofdstuk: '5'
         afdeling: '5.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vrijgesteld_bedrag_groene_beleggingen
+            type: number
+            required: true
+            description: Bedrag dat ingevolge artikel 5.13 op de peildatum is vrijgesteld in eurocent
+        output:
+          - name: korting_groene_beleggingen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Korting voor groene beleggingen (lid 2) — 0,1% van het vrijgestelde bedrag
+        actions:
+          - output: korting_groene_beleggingen
+            value:
+              operation: DIVIDE
+              values:
+                - $vrijgesteld_bedrag_groene_beleggingen
+                - 1000
   - number: '8.22'
     text: |-
       .
