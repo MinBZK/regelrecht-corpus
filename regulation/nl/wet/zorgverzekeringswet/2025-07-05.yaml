@@ -232,6 +232,56 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0002656
       [ref7]: https://wetten.overheid.nl/BWBR0002656
       [ref8]: https://wetten.overheid.nl/BWBR0002656
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de persoon
+        input:
+          - name: is_wlz_verzekerd
+            type: boolean
+            source:
+              regulation: wet_langdurige_zorg
+              output: is_verzekerd
+              parameters:
+                bsn: $bsn
+            description: Persoon is van rechtswege verzekerd ingevolge de Wet langdurige zorg
+          - name: is_militaire_ambtenaar_in_werkelijke_dienst
+            type: boolean
+            source:
+              regulation: wet_ambtenaren_defensie
+              output: is_militaire_ambtenaar_in_werkelijke_dienst
+              parameters:
+                bsn: $bsn
+            description: Militaire ambtenaar in werkelijke dienst (art. 1 lid 1a+b WAD) of militair met buitengewoon verlof met behoud van militaire inkomsten
+          - name: is_ontheven_wfsv_art64
+            type: boolean
+            source:
+              regulation: wet_financiering_sociale_verzekeringen
+              output: is_ontheven_wlz_verplichtingen
+              parameters:
+                bsn: $bsn
+            description: Ontheven van WLZ-verplichtingen op grond van art. 64 lid 1 Wet financiering sociale verzekeringen
+        output:
+          - name: is_verzekeringsplichtig
+            type: boolean
+            description: Of de persoon verplicht is zich krachtens een zorgverzekering te verzekeren (art. 2 lid 1 jo. lid 2)
+        actions:
+          - output: is_verzekeringsplichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_wlz_verzekerd
+                  value: true
+                - operation: NOT
+                  value: $is_militaire_ambtenaar_in_werkelijke_dienst
+                - operation: NOT
+                  value: $is_ontheven_wfsv_art64
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel2
     references:
       - id: ref1
@@ -624,6 +674,45 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0018450#Artikel9a
       [ref2]: https://wetten.overheid.nl/BWBR0018451
       [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel553
+    machine_readable:
+      untranslatables:
+        - construct: "tot een maandbedrag herleide standaardpremie"
+          reason: "Division of annual standaardpremie by 12 with rounding is not expressible — DIVIDE is available but rounding (afronden) is not an engine operation"
+          suggestion: "Add ROUND/FLOOR/CEIL operations to engine"
+          legal_text_excerpt: "driemaal de tot een maandbedrag herleide standaardpremie, bedoeld in de Wet op de zorgtoeslag"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        input:
+          - name: standaardpremie
+            type: amount
+            source:
+              regulation: wet_op_de_zorgtoeslag
+              output: standaardpremie
+            type_spec:
+              unit: eurocent
+            description: Standaardpremie bedoeld in de Wet op de zorgtoeslag (jaarlijks bedrag)
+        output:
+          - name: hoogte_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de bestuurlijke boete wegens niet-verzekerd zijn (3x maandstandaardpremie, zonder afronden)
+        actions:
+          - output: maand_standaardpremie
+            value:
+              operation: DIVIDE
+              values:
+                - $standaardpremie
+                - 12
+          - output: hoogte_boete
+            value:
+              operation: MULTIPLY
+              values:
+                - 3
+                - $maand_standaardpremie
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel9b
     references:
       - id: ref1
@@ -1009,6 +1098,34 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005290#Artikel925
       [ref2]: https://wetten.overheid.nl/BWBR0018450#Artikel18d
       [ref3]: https://wetten.overheid.nl/BWBR0018450#Artikel18e
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de verzekerde
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum (eerste dag van de kalendermaand waarover bepaald wordt of premie verschuldigd is)
+        output:
+          - name: premie_vrijstelling_minderjarige
+            type: boolean
+            description: Of de verzekerde vrijgesteld is van premiebetaling wegens leeftijd onder de 18 jaar (art. 16 lid 2a)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: premie_vrijstelling_minderjarige
+            value:
+              operation: NOT
+              value:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $leeftijd
+                value: 18
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel16
     references:
       - id: ref1
@@ -1368,6 +1485,47 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0004815#Artikel48
       [ref4]: https://wetten.overheid.nl/BWBR0018450#Artikel18c
       [ref5]: https://wetten.overheid.nl/BWBR0001860#Artikel350
+    machine_readable:
+      open_terms:
+        - id: bestuursrechtelijke_premie_factor
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 18d lid 1 Zorgverzekeringswet (ten minste 110% en ten hoogste 130% van de gemiddelde premie)
+        - id: gemiddelde_premie
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 18d lid 6 Zorgverzekeringswet
+      execution:
+        output:
+          - name: bestuursrechtelijke_premie
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de bestuursrechtelijke premie per maand (factor × gemiddelde_premie)
+          - name: factor_binnen_wettelijk_bereik
+            type: boolean
+            description: Of de factor valt binnen het wettelijke bereik van 110%-130% (1.1-1.3)
+        actions:
+          - output: bestuursrechtelijke_premie
+            value:
+              operation: MULTIPLY
+              values:
+                - $bestuursrechtelijke_premie_factor
+                - $gemiddelde_premie
+          - output: factor_binnen_wettelijk_bereik
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $bestuursrechtelijke_premie_factor
+                  value: 1.1
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $bestuursrechtelijke_premie_factor
+                  value: 1.3
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel18d
     references:
       - id: ref1
@@ -1631,6 +1789,51 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018450#Artikel11
+    machine_readable:
+      definitions:
+        VERPLICHT_EIGEN_RISICO_BEDRAG:
+          value: 38500
+          description: "Verplicht eigen risico €385 per kalenderjaar (art. 19 lid 1 Zvw)"
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de verzekerde
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de bepaling van de leeftijd
+        output:
+          - name: verplicht_eigen_risico
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van het verplicht eigen risico per kalenderjaar (€385 voor 18+, €0 voor minderjarigen)
+          - name: heeft_verplicht_eigen_risico
+            type: boolean
+            description: Of de verzekerde een verplicht eigen risico heeft (18 jaar of ouder)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: heeft_verplicht_eigen_risico
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
+          - output: verplicht_eigen_risico
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $leeftijd
+                    value: 18
+                  then: $VERPLICHT_EIGEN_RISICO_BEDRAG
+              default: 0
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel19
     references:
       - id: ref1
@@ -1662,6 +1865,41 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018450#Artikel11
+    machine_readable:
+      execution:
+        parameters:
+          - name: vrijwillig_eigen_risico_bedrag
+            type: number
+            required: true
+            description: Opgegeven bedrag voor het vrijwillig eigen risico in eurocent
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de te verzekeren persoon
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum
+        output:
+          - name: vrijwillig_eigen_risico_toegestaan
+            type: boolean
+            description: Of het opgegeven bedrag een wettelijk toegestaan vrijwillig eigen risico is (€100/€200/€300/€400/€500 voor 18+)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: vrijwillig_eigen_risico_toegestaan
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: IN
+                  subject: $vrijwillig_eigen_risico_bedrag
+                  values: [10000, 20000, 30000, 40000, 50000]
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel20
     references:
       - id: ref1
@@ -2879,6 +3117,33 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0018450#Artikel42
+    machine_readable:
+      open_terms:
+        - id: bijdragepercentage_werkgever
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 45 lid 1 jo. lid 3 Zorgverzekeringswet
+        - id: bijdragepercentage_werknemer
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 45 lid 2 jo. lid 3 Zorgverzekeringswet
+      execution:
+        output:
+          - name: bijdragepercentage_werkgever
+            type: number
+            description: Het percentage voor de door de inhoudingsplichtige verschuldigde inkomensafhankelijke bijdrage
+          - name: bijdragepercentage_werknemer
+            type: number
+            description: Het percentage voor de door de verzekeringsplichtige verschuldigde inkomensafhankelijke bijdrage
+        actions:
+          - output: bijdragepercentage_werkgever
+            value: $bijdragepercentage_werkgever
+          - output: bijdragepercentage_werknemer
+            value: $bijdragepercentage_werknemer
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel45
     references:
       - id: ref1
