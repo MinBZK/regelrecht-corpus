@@ -24,6 +24,25 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0018451
+    machine_readable:
+      implements:
+        - law: wet_op_de_zorgtoeslag
+          article: '4'
+          open_term: standaardpremie
+          gelet_op: Gelet op artikel 4 van de Wet op de zorgtoeslag
+      execution:
+        output:
+          - name: standaardpremie
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: berekeningsjaar
+            type: number
+        actions:
+          - output: standaardpremie
+            value: 211200
+          - output: berekeningsjaar
+            value: 2025
   - number: '3'
     text: Deze regeling treedt in werking met ingang van 1 januari 2025.
     url: https://wetten.overheid.nl/BWBR0050536/2025-01-01#Artikel3
