@@ -500,12 +500,53 @@ articles:
       belasting, ook met dat niet verrekende deel verminderd.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011353#Artikel7.8
-      [ref2]: https://wetten.overheid.nl/BWBR0011353#Artikel8.3
-      [ref3]: https://wetten.overheid.nl/BWBR0011353#Artikel7.8
-      [ref4]: https://wetten.overheid.nl/BWBR0017745#Artikel12
-      [ref5]: https://wetten.overheid.nl/BWBR0017745#Artikel10
+       [ref1]: https://wetten.overheid.nl/BWBR0011353#Artikel7.8
+       [ref2]: https://wetten.overheid.nl/BWBR0011353#Artikel8.3
+       [ref3]: https://wetten.overheid.nl/BWBR0011353#Artikel7.8
+       [ref4]: https://wetten.overheid.nl/BWBR0017745#Artikel12
+       [ref5]: https://wetten.overheid.nl/BWBR0017745#Artikel10
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel2.7
+    machine_readable:
+      description: |
+        Berekening van de over een kalenderjaar verschuldigde inkomstenbelasting als het gezamenlijke bedrag van de belasting op inkomen uit werk en woning, aanmerkelijk belang, en sparen en beleggen, verminderd met de heffingskorting.
+      input:
+        - belasting_werk_en_woning:
+            type: integer
+            description: De belasting op het belastbare inkomen uit werk en woning in eurocent (artikel 2.10 of 2.10a).
+        - belasting_aanmerkelijk_belang:
+            type: integer
+            description: De belasting op het belastbare inkomen uit aanmerkelijk belang in eurocent.
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["2.15"]
+        - belasting_sparen_en_beleggen:
+            type: integer
+            description: De belasting op het belastbare inkomen uit sparen en beleggen in eurocent.
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["5.2"]
+        - heffingskorting_inkomstenbelasting:
+            type: integer
+            description: De heffingskorting voor de inkomstenbelasting in eurocent (artikel 8.3).
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["8.3"]
+      output:
+        type: integer
+        description: De verschuldigde inkomstenbelasting in eurocent.
+      logic:
+        - SUM:
+            left: { var: belasting_werk_en_woning }
+            right:
+              ADD:
+                left: { var: belasting_aanmerkelijk_belang }
+                right: { var: belasting_sparen_en_beleggen }
+        - SUBTRACT:
+               left: { result: SUM }
+               right: { var: heffingskorting_inkomstenbelasting }
     references:
       - id: ref1
         bwb_id: BWBR0011353
@@ -748,79 +789,71 @@ articles:
 
 
 
+                     Bij een belastbaar inkomen uit werk en woning van meer dan
 
 
+                     maar niet meer dan
 
-
-                    Bij een belastbaar inkomen uit werk en woning van meer dan
-
-
-                    maar niet meer dan
-
-
-                    bedraagt de belasting het in kolom III vermelde bedrag, vermeerderd met het bedrag dat wordt berekend
+                     bedraagt de belasting het in kolom III vermelde bedrag, vermeerderd met het bedrag dat wordt berekend
       door het in kolom IV vermelde percentage te nemen van het gedeelte van het belastbare inkomen uit werk en woning
       dat het in kolom I vermelde bedrag te boven gaat
 
 
 
 
-                    I
 
 
-                    II
+                     I
 
 
-                    III
+                     II
 
 
-                    IV
+                     III
 
 
-
-
-
-
-                    -
-
-
-                    € 38.883
-
-
-                    –
-
-
-                    8,10%
+                     IV
 
 
 
 
-                    € 38.883
 
 
-                    € 78.426
+                     -
 
 
-                    € 3.149
+                     € 38.883
 
 
-                    37,56%
+                     –
+
+                     8,10%
 
 
 
 
-                    € 78.426
+                     € 38.883
+
+                     € 78.426
 
 
-                    –
+                     € 3.149
 
 
-                    € 18.001
+                     37,56%
 
 
-                    49,50%
 
 
+                     € 78.426
+
+
+                     –
+
+                     € 18.001
+
+
+                     49,50%
 
 
 
@@ -856,6 +889,101 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0011353#Artikel3.120
       [ref7]: https://wetten.overheid.nl/BWBR0011353#Artikel6.1
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel2.10
+    machine_readable:
+      description: |
+        Berekening van de belasting op het belastbare inkomen uit werk en woning aan de hand van progressieve schijven.
+      input:
+        - belastbaar_inkomen_uit_werk_en_woning:
+            type: integer
+            description: Het belastbare inkomen uit werk en woning in eurocent.
+        - grondslagverminderende_posten:
+            type: integer
+            description: Totaalbedrag aan grondslagverminderende posten in eurocent.
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel:
+                  - "3.74"
+                  - "3.79a"
+                  - "3.99b"
+                  - "3.120"
+                  - "6.1"
+      output:
+        type: integer
+        description: De verschuldigde belasting in eurocent.
+      logic:
+        - IF:
+            cases:
+              - condition:
+                  LESS_THAN_OR_EQUAL:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 3888300 }
+                then:
+                  MULTIPLY:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 0.081 }
+              - condition:
+                  AND:
+                    - GREATER_THAN:
+                        left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                        right: { value: 3888300 }
+                    - LESS_THAN_OR_EQUAL:
+                        left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                        right: { value: 7842600 }
+                then:
+                  ADD:
+                    left: { value: 314900 }
+                    right:
+                      MULTIPLY:
+                        left:
+                          SUBTRACT:
+                            left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                            right: { value: 3888300 }
+                        right: { value: 0.3756 }
+              - condition:
+                  GREATER_THAN:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 7842600 }
+                then:
+                  ADD:
+                    left: { value: 1800100 }
+                    right:
+                      MULTIPLY:
+                        left:
+                          SUBTRACT:
+                            left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                            right: { value: 7842600 }
+                        right: { value: 0.495 }
+            default:
+              value: 0
+        - IF:
+            condition:
+              GREATER_THAN:
+                left: { var: grondslagverminderende_posten }
+                right: { value: 0 }
+            then:
+              ADD:
+                left: { var: output }
+                right:
+                  MIN:
+                    left:
+                      MULTIPLY:
+                        left: { value: 0.1194 }
+                        right:
+                          MAX:
+                            left:
+                              SUBTRACT:
+                                left:
+                                  ADD:
+                                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                                    right: { var: grondslagverminderende_posten }
+                                right: { value: 7842600 }
+                            right: { value: 0 }
+                    right:
+                      MULTIPLY:
+                        left: { value: 0.1194 }
+                        right: { var: grondslagverminderende_posten }
+      untranslatables: []
     references:
       - id: ref1
         bwb_id: BWBR0011353
@@ -1013,6 +1141,104 @@ articles:
       [ref7]: https://wetten.overheid.nl/BWBR0011353#Artikel3.120
       [ref8]: https://wetten.overheid.nl/BWBR0011353#Artikel6.1
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel2.10a
+    machine_readable:
+      description: |
+        Berekening van de belasting op het belastbare inkomen uit werk en woning voor belastingplichtigen geboren vóór 1 januari 1946, aan de hand van progressieve schijven.
+      input:
+        - belastbaar_inkomen_uit_werk_en_woning:
+            type: integer
+            description: Het belastbare inkomen uit werk en woning in eurocent.
+        - grondslagverminderende_posten:
+            type: integer
+            description: Totaalbedrag aan grondslagverminderende posten in eurocent.
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel:
+                  - "3.74"
+                  - "3.79a"
+                  - "3.99b"
+                  - "3.120"
+                  - "6.1"
+        - geboortedatum:
+            type: date
+            description: De geboortedatum van de belastingplichtige om te bepalen of deze geboren is vóór 1 januari 1946.
+      output:
+        type: integer
+        description: De verschuldigde belasting in eurocent.
+      logic:
+        - IF:
+            cases:
+              - condition:
+                  LESS_THAN_OR_EQUAL:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 4112300 }
+                then:
+                  MULTIPLY:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 0.081 }
+              - condition:
+                  AND:
+                    - GREATER_THAN:
+                        left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                        right: { value: 4112300 }
+                    - LESS_THAN_OR_EQUAL:
+                        left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                        right: { value: 7842600 }
+                then:
+                  ADD:
+                    left: { value: 333000 }
+                    right:
+                      MULTIPLY:
+                        left:
+                          SUBTRACT:
+                            left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                            right: { value: 4112300 }
+                        right: { value: 0.3756 }
+              - condition:
+                  GREATER_THAN:
+                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                    right: { value: 7842600 }
+                then:
+                  ADD:
+                    left: { value: 1734100 }
+                    right:
+                      MULTIPLY:
+                        left:
+                          SUBTRACT:
+                            left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                            right: { value: 7842600 }
+                        right: { value: 0.495 }
+            default:
+              value: 0
+        - IF:
+            condition:
+              GREATER_THAN:
+                left: { var: grondslagverminderende_posten }
+                right: { value: 0 }
+            then:
+              ADD:
+                left: { var: output }
+                right:
+                  MIN:
+                    left:
+                      MULTIPLY:
+                        left: { value: 0.1194 }
+                        right:
+                          MAX:
+                            left:
+                              SUBTRACT:
+                                left:
+                                  ADD:
+                                    left: { var: belastbaar_inkomen_uit_werk_en_woning }
+                                    right: { var: grondslagverminderende_posten }
+                                right: { value: 7842600 }
+                            right: { value: 0 }
+                    right:
+                      MULTIPLY:
+                        left: { value: 0.1194 }
+                        right: { var: grondslagverminderende_posten }
+      untranslatables: []
     references:
       - id: ref1
         bwb_id: BWBR0011353
@@ -16429,8 +16655,8 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0011353#Artikel8.17
       [ref6]: https://wetten.overheid.nl/BWBR0011353#Artikel8.18
       [ref7]: https://wetten.overheid.nl/BWBR0011353#Artikel8.19
-    url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.2
-    references:
+      url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.2
+      references:
       - id: ref1
         bwb_id: BWBR0011353
         artikel: '8.10'
@@ -16443,12 +16669,12 @@ articles:
         afdeling: '8.2'
       - id: ref3
         bwb_id: BWBR0011353
-        artikel: 8.14a
+        artikel: '8.14a'
         hoofdstuk: '8'
         afdeling: '8.2'
       - id: ref4
         bwb_id: BWBR0011353
-        artikel: 8.16a
+        artikel: '8.16a'
         hoofdstuk: '8'
         afdeling: '8.2'
       - id: ref5
@@ -16472,6 +16698,42 @@ articles:
       standaardheffingskorting in dezelfde verhouding staat als het *belastingtarief eerste schijf* staat tot het
       *gecombineerde heffingspercentage*.
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.3
+    machine_readable:
+      description: |
+        Berekening van de heffingskorting voor de inkomstenbelasting als een deel van de standaardheffingskorting,
+        op basis van de verhouding tussen het belastingtarief eerste schijf en het gecombineerde heffingspercentage.
+      input:
+        - standaardheffingskorting:
+            type: integer
+            description: De standaardheffingskorting in eurocent (artikel 8.2).
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["8.2"]
+        - belastingtarief_eerste_schijf:
+            type: integer
+            description: Het belastingtarief eerste schijf als percentage (bv. 3693 voor 36.93%).
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["8.1"]
+        - gecombineerd_heffingspercentage:
+            type: integer
+            description: Het gecombineerde heffingspercentage als percentage (bv. 5000 voor 50.0%).
+            source:
+              regulation:
+                bwb_id: BWBR0011353
+                artikel: ["8.1"]
+      output:
+        type: integer
+        description: De heffingskorting voor de inkomstenbelasting in eurocent.
+      logic:
+        - DIVIDE:
+            left: { var: belastingtarief_eerste_schijf }
+            right: { var: gecombineerd_heffingspercentage }
+        - MULTIPLY:
+            left: { var: standaardheffingskorting }
+            right: { result: DIVIDE }
   - number: '8.4'
     text: |-
       De heffingskorting voor de algemene ouderdomsverzekering is het deel van de standaardheffingskorting
