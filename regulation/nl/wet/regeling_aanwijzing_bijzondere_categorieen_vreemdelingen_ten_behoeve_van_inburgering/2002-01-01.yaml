@@ -16,9 +16,8 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      Tot de categorie van vreemdelingen, bedoeld in [artikel 1, eerste lid, onderdeel a, onder 1][ref1], worden
+      Tot de categorie van vreemdelingen, bedoeld in [artikel 1, eerste lid, onderdeel a, onder 1°][ref1], worden
       geestelijke bedienaren aangewezen.
-
 
       [ref1]: https://wetten.overheid.nl/BWBR0009544#Artikel1
     url: https://wetten.overheid.nl/BWBR0013218/2002-01-01#Artikel1
@@ -26,6 +25,34 @@ articles:
       - id: ref1
         bwb_id: BWBR0009544
         artikel: '1'
+    machine_readable:
+      execution:
+        output:
+          - name: is_geestelijke_bediener
+            type: boolean
+            type_spec: {}
+          - name: categorie_vreemdeling
+            type: string
+            type_spec: {}
+        parameters:
+          - name: functie
+            type: string
+        actions:
+          - output: is_geestelijke_bediener
+            value:
+              operation: EQUALS
+              subject: $functie
+              value: "geestelijke bediener"
+          - output: categorie_vreemdeling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_geestelijke_bediener
+                    value: true
+                  then: "bijzondere categorie ten behoeve van inburgering"
+              default: $functie
   - number: '2'
     text: Deze regeling treedt in werking met ingang van 1 januari 2002.
     url: https://wetten.overheid.nl/BWBR0013218/2002-01-01#Artikel2
