@@ -74,7 +74,7 @@ articles:
       a. een stappenplan, inhoudende een omschrijving van de stappen voor het omgaan door professionals met signalen van
       huiselijk geweld of kindermishandeling;
 
-      b. een afwegingskader op basis waarvan de professionals het risico op en de aard en de ernst van het huiselijk
+      b. een afwegingskader op basis waar de professionals het risico op en de aard en de ernst van het huiselijk
       geweld of de kindermishandeling wegen en dat hen in staat stelt te beoordelen of sprake is van dusdanig ernstig
       huiselijk geweld of ernstige kindermishandeling, dan wel van een vermoeden daarvan, dat een melding is aangewezen;
 
@@ -102,7 +102,7 @@ articles:
 
       c. een gesprek met de cliënt;
 
-      d. het toepassen van het afwegingskader, bedoeld in het eerste lid, onderdeel b;
+      d. het toepassen van het afwegingskader, bedoeld in het eerste lid, onderdelen b;
 
       e. het beslissen over:
 
@@ -111,12 +111,67 @@ articles:
       2°. het inzetten van de noodzakelijke hulp.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0034925#Artikel7.1.1.2
+       [ref1]: https://wetten.overheid.nl/BWBR0034925#Artikel7.1.1.2
     url: https://wetten.overheid.nl/BWBR0033723/2020-10-01#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0034925
         artikel: 7.1.1.2
+    machine_readable:
+      input:
+        - meldcode
+      output:
+        meldcode_voldoet_aan_minimumeisen:
+          datatype: boolean
+          description: Indicates whether the meldcode meets the minimum requirements as per Article 2.
+      actions:
+        - EVALUATE:
+            name: check_elements
+            description: Check if the meldcode contains all required elements from Article 2(1).
+            expression: |
+              AND(
+                HAS_KEY(meldcode, "stappenplan"),
+                HAS_KEY(meldcode, "afwegingskader"),
+                HAS_KEY(meldcode, "verantwoordelijkheden"),
+                HAS_KEY(meldcode, "specifieke_aandacht_bijzondere_geweldsvormen"),
+                IF(
+                  open_terms.jeugdwet_7_1_1_2_meldingsbevoegde_instantie,
+                  HAS_KEY(meldcode, "aandacht_verwijsindex_risicojongeren"),
+                  true
+                ),
+                IF(
+                  open_terms.kindcheck_instructies_toepasbaar,
+                  HAS_KEY(meldcode, "kindcheck_instructies"),
+                  true
+                ),
+                IF(
+                  open_terms.vertrouwelijke_gegevens_toepasbaar,
+                  HAS_KEY(meldcode, "aandacht_vertrouwelijke_gegevens"),
+                  true
+                )
+              )
+        - EVALUATE:
+            name: check_stappenplan
+            description: Check if the stappenplan contains all required steps from Article 2(2).
+            expression: |
+              AND(
+                CONTAINS(meldcode["stappenplan"], "signalen_in_kaart_brengen"),
+                CONTAINS(meldcode["stappenplan"], "collegiale_consultatie"),
+                CONTAINS(meldcode["stappenplan"], "gesprek_met_client"),
+                CONTAINS(meldcode["stappenplan"], "afwegingskader_toepassen"),
+                AND(
+                  CONTAINS(meldcode["stappenplan"], "beslissen_melding_doen"),
+                  CONTAINS(meldcode["stappenplan"], "beslissen_noodzakelijke_hulp")
+                )
+              )
+        - EVALUATE:
+            name: check_verantwoordelijkheden
+            description: Check if verantwoordelijkheden includes eindverantwoordelijke for melding decision.
+            expression: |
+              HAS_KEY(meldcode["verantwoordelijkheden"], "eindverantwoordelijke_beslissing_melding")
+        - SET:
+            name: meldcode_voldoet_aan_minimumeisen
+            expression: AND(check_elements, check_stappenplan, check_verantwoordelijkheden)
   - number: '6'
     text: |-
       Dit besluit treedt in werking met ingang van de dag na de datum van uitgifte van het Staatsblad waarin zij wordt
