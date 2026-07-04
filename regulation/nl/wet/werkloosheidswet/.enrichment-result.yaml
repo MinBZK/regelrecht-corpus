@@ -1,0 +1,86 @@
+enrichment_version: '1'
+regulation: werkloosheidswet
+bwb_id: BWBR0004045
+version: '2026-07-01'
+enriched_at: '2026-07-04'
+
+# Cross-law dependencies identified during enrichment
+dependencies:
+  - regulation: wet_financiering_sociale_verzekeringen
+    bwb_id: BWBR0017745
+    reason: >
+      Art 1b lid 1 references Art 17 lid 1 Wfsv for the maximum daily wage
+      (dagloonmaximum). Art 1b machine_readable input binding requires this
+      output from Wfsv. Corpus file does not yet exist — must be added.
+    outputs_needed:
+      - dagloonmaximum
+    status: corpus_file_missing
+
+# Articles with machine_readable sections
+machine_readable_articles:
+  - number: 1b
+    title: Dagloon en maandloon
+    outputs: [dagloon_ongelimiteerd, dagloon, maandloon]
+    untranslatables: 1
+  - number: '16'
+    title: Werkloosheid
+    outputs: [is_werkloos]
+  - number: '17'
+    title: Wekeneis
+    outputs: [recht_op_uitkering_wekeneis]
+    untranslatables: 1
+  - number: '18'
+    title: Bijzondere omstandigheid (vorst, sneeuw, hoog water)
+    outputs: [heeft_recht_op_uitkering_bijzonder]
+  - number: '19'
+    title: Uitsluitingsgronden
+    outputs: [geen_recht_op_uitkering, heeft_recht_op_uitkering]
+  - number: '41'
+    title: Minimumloondrempel
+    outputs: [uitkering_wordt_betaald]
+  - number: '42'
+    title: Uitkeringsduur
+    outputs: [uitkeringsduur_maanden]
+    untranslatables: 2
+  - number: '47'
+    title: Uitkeringshoogte (percentage-formule)
+    outputs: [uitkering_per_kalendermaand]
+  - number: 47b
+    title: Korting wegens zelfstandig werk
+    outputs: [uitkering_na_korting]
+
+# Reverse validation findings
+reverse_validation:
+  completed_at: '2026-07-04'
+  articles_checked: 9
+  fully_grounded: 8
+  elements_removed: 0
+  fixes_applied:
+    - article: '19'
+      description: >
+        Added 4 missing exclusion conditions from lid 1: sub d (WAMIL-uitkering
+        ≥80%), sub j (gemoedsbezwaren ontheffing), sub k (vakantie buiten
+        vastgestelde periode), sub l (werkstaking/uitsluiting). Parameters and
+        OR conditions added.
+  assumptions:
+    - article: '47'
+      element: MAX(0, uitkering_bruto - E)
+      description: >
+        Non-negativity floor on benefit amount. The legal text does not
+        explicitly state the benefit cannot be negative, but this is a
+        universally accepted legal interpretation.
+    - article: 47b
+      element: kortingspercentage = 0.29
+      description: >
+        29% is the statutory default from lid 1. Art 47b allows AMvB to set a
+        lower percentage, making this an open_term candidate. No AMvB override
+        is modelled; 29% is used as the law's stated value.
+  dangling_bindings:
+    - article: 1b
+      source_regulation: wet_financiering_sociale_verzekeringen
+      source_output: dagloonmaximum
+      finding: >
+        Target corpus file for Wfsv (BWBR0017745) does not exist. The legal
+        reference itself is correct (Art 17 lid 1 Wfsv is cited in Art 1b lid
+        1 WW). The binding must remain as-is until Wfsv is added to the corpus
+        with a dagloonmaximum output on Art 17.
