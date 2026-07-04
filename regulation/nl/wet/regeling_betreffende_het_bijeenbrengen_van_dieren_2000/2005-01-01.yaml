@@ -335,6 +335,17 @@ articles:
   - number: '2'
     text: Het verzamelen van varkens is verboden.
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel2
+    machine_readable:
+      logic: "Unconditional prohibition on gathering pigs (varkens)."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+      conditions:
+        - if: "dier_type == 'varkens'"
+          then: "verbod_actief = True"
+      references: ["BWBR0011441:2"]
   - number: '3.1'
     text: |-
       Het in [artikel 2][ref1] bedoelde verbod geldt niet voorzover het verzamelen betrekking heeft op:
@@ -342,6 +353,21 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0011441#Artikel2
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Exceptions to the prohibition on gathering pigs (varkens) for specific purposes."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        doel:
+          type: string
+          enum: ["slachthuis", "verzamelcentrum"]
+          description: Purpose of gathering (slaughterhouse or collection center).
+      conditions:
+        - if: "dier_type == 'varkens' AND (doel == 'slachthuis' OR doel == 'verzamelcentrum')"
+          then: "uitzondering_toegestaan = True"
+      references: ["BWBR0011441:3.1"]
     references:
       - id: ref1
         bwb_id: BWBR0011441
@@ -352,6 +378,21 @@ articles:
       het bijladen op één vervoermiddel van varkens ten vervoer naar een slachthuis, mits is voldaan aan het tweede lid;
       of
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Exception for loading pigs onto a transport vehicle for slaughterhouse delivery, subject to conditions in Article 3.2."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        doel:
+          type: string
+          enum: ["slachthuis"]
+          description: Destination of transport.
+      conditions:
+        - if: "dier_type == 'varkens' AND doel == 'slachthuis' AND voldoet_aan_artikel_3_2 == True"
+          then: "uitzondering_3_1_a = True"
+      references: ["BWBR0011441:3.1.a"]
   - number: 3.1.b
     text: |-
       het bijladen op één vervoermiddel van varkens bestemd voor de slacht, niet zijnde meer dan licht zieke of meer dan
@@ -361,6 +402,25 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0006990
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Exception for loading pigs for slaughter (not severely sick/injured) to a collection center, subject to Article 3.2 conditions."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        doel:
+          type: string
+          enum: ["verzamelcentrum"]
+          description: Destination of transport.
+        gezondheidstoestand:
+          type: string
+          enum: ["licht_ziek", "licht_gewond"]
+          description: Health status of pigs (not severely sick/injured).
+      conditions:
+        - if: "dier_type == 'varkens' AND doel == 'verzamelcentrum' AND (gezondheidstoestand == 'licht_ziek' OR gezondheidstoestand == 'licht_gewond') AND voldoet_aan_artikel_3_2 == True"
+          then: "uitzondering_3_1_b = True"
+      references: ["BWBR0011441:3.1.b", "BWBR0006990"]
     references:
       - id: ref1
         bwb_id: BWBR0006990
@@ -369,24 +429,85 @@ articles:
       het opladen op één vervoermiddel dat uit een combinatie van een voertuig met één of meer aanhangwagens bestaat van
       varkens, mits is voldaan aan het derde lid.
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Exception for loading pigs onto a transport vehicle with trailers, subject to Article 3.3 conditions."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        vervoermiddel_type:
+          type: string
+          enum: ["voertuig_met_aanhangwagens"]
+          description: Type of transport vehicle (with trailers).
+      conditions:
+        - if: "dier_type == 'varkens' AND vervoermiddel_type == 'voertuig_met_aanhangwagens' AND voldoet_aan_artikel_3_3 == True"
+          then: "uitzondering_3_1_c = True"
+      references: ["BWBR0011441:3.1.c"]
   - number: '3.2'
     text: 'Voor het bijladen, bedoeld in het eerste lid, onderdeel a en b, geldt dat:'
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Conditions for loading pigs onto transport vehicles (slaughterhouse or collection center)."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        doel:
+          type: string
+          enum: ["slachthuis", "verzamelcentrum"]
+          description: Destination of transport.
+      conditions:
+        - if: "dier_type == 'varkens' AND (doel == 'slachthuis' OR doel == 'verzamelcentrum')"
+          then: "voldoet_aan_artikel_3_2 = (voldoet_aan_3_2_a AND voldoet_aan_3_2_b AND voldoet_aan_3_2_c AND voldoet_aan_3_2_d)"
+      references: ["BWBR0011441:3.2"]
   - number: 3.2.a
     text: |-
       op het betrokken vervoermiddel per rit naar een slachthuis onderscheidenlijk verzamelcentrum zich varkens van ten
       hoogste drie verschillende bedrijven, niet zijnde verzamelcentra, bevinden;
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Max 3 source farms per transport for pigs (excluding collection centers)."
+      variables:
+        herkomstbedrijven:
+          type: integer
+          max: 3
+          description: Number of source farms for pigs in transport (excluding collection centers).
+      conditions:
+        - if: "herkomstbedrijven <= 3"
+          then: "voldoet_aan_3_2_a = True"
+      references: ["BWBR0011441:3.2.a"]
   - number: 3.2.b
     text: |-
-      het vervoermiddel, waarop de varkens worden bijgeladen, niet op het bedrijf wordt gebracht, waarop de bij te laden
+      het vervoermiddel, waar de varkens worden bijgeladen, niet op het bedrijf wordt gebracht, waarop de bij te laden
       varkens zich bevinden;
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Transport vehicle may not enter the premises of the source farm for loading pigs."
+      variables:
+        vervoermiddel_op_bedrijf:
+          type: boolean
+          description: Whether the transport vehicle enters the farm premises.
+      conditions:
+        - if: "vervoermiddel_op_bedrijf == False"
+          then: "voldoet_aan_3_2_b = True"
+      references: ["BWBR0011441:3.2.b"]
   - number: 3.2.c
     text: |-
       indien de bij te laden varkens met een vervoermiddel vanaf het bedrijf worden gebracht naar het vervoermiddel
       waarop zij worden bijgeladen, het eerstbedoelde vervoermiddel niet op de openbare weg wordt gebracht en
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Intermediate transport vehicle for pigs may not use public roads."
+      variables:
+        tussenvoertuig_op_openbare_weg:
+          type: boolean
+          description: Whether the intermediate transport vehicle uses public roads.
+      conditions:
+        - if: "tussenvoertuig_op_openbare_weg == False"
+          then: "voldoet_aan_3_2_c = True"
+      references: ["BWBR0011441:3.2.c"]
   - number: 3.2.d
     text: |-
       in het betrokken vervoermiddel door middel van een toegankelijk overzicht vanaf het moment van inladen wordt
@@ -394,34 +515,122 @@ articles:
       zes maanden na de dag waarop het bijladen heeft plaatsgevonden, op het bedrijf of de onderneming van de vervoerder
       wordt bewaard.
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Accessible overview of source farms for pigs must be maintained in the vehicle and preserved for 6 months."
+      variables:
+        documentatie_aanwezig:
+          type: boolean
+          description: Whether an accessible overview of source farms is maintained.
+        bewaartermijn:
+          type: integer
+          max: 6
+          unit: months
+          description: Duration for which the overview must be preserved.
+      conditions:
+        - if: "documentatie_aanwezig == True AND bewaartermijn <= 6"
+          then: "voldoet_aan_3_2_d = True"
+      references: ["BWBR0011441:3.2.d"]
   - number: '3.3'
     text: 'Voor het opladen, bedoeld in het eerste lid, onderdeel c, geldt dat:'
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Conditions for loading pigs onto transport vehicles with trailers (Article 3.1.c)."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+      conditions:
+        - if: "dier_type == 'varkens' AND voldoet_aan_artikel_3_3_a == True AND voldoet_aan_artikel_3_3_b == True AND voldoet_aan_artikel_3_3_c == True"
+          then: "voldoet_aan_artikel_3_3 = True"
+      references: ["BWBR0011441:3.3"]
   - number: 3.3.a
     text: |-
       op iedere afzonderlijke vervoerseenheid slechts varkens aanwezig zijn die blijkens het begeleidende
       vervoersdocument alle gelijktijdig van hetzelfde bedrijf, niet zijnde een verzamelcentrum, of, indien het bedrijf
       bestaat uit meer vestigingen, van dezelfde vestiging zijn afgevoerd;
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Pigs on each transport unit must originate from the same farm or site (excluding collection centers)."
+      variables:
+        herkomstbedrijf:
+          type: string
+          description: Source farm or site for pigs in the transport unit.
+        vervoerseenheid:
+          type: string
+          description: Transport unit (e.g., trailer).
+      conditions:
+        - if: "herkomstbedrijf is same for all pigs in vervoerseenheid"
+          then: "voldoet_aan_artikel_3_3_a = True"
+      references: ["BWBR0011441:3.3.a"]
   - number: 3.3.b
     text: |-
       bij het opladen geen vervoerseenheid op het bedrijf wordt gebracht die ten behoeve van het betrokken transport
       reeds op een ander bedrijf is geweest, en
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "No transport unit may have visited another farm for the same transport."
+      variables:
+        vervoerseenheid_bezochte_bedrijven:
+          type: array
+          description: List of farms visited by the transport unit for this transport.
+      conditions:
+        - if: "len(vervoerseenheid_bezochte_bedrijven) == 0"
+          then: "voldoet_aan_artikel_3_3_b = True"
+      references: ["BWBR0011441:3.3.b"]
   - number: 3.3.c
     text: |-
       indien bij het opladen op de ene vervoerseenheid voorwerpen worden gebruikt die behoren tot een andere
       vervoerseenheid, die voorwerpen na gebruik worden gereinigd en ontsmet.
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Shared equipment between transport units must be cleaned and disinfected after use."
+      variables:
+        gedeelde_voorwerpen:
+          type: boolean
+          description: Whether shared equipment is used between transport units.
+        gereinigd_en_ontsmet:
+          type: boolean
+          description: Whether the equipment is cleaned and disinfected after use.
+      conditions:
+        - if: "gedeelde_voorwerpen == True AND gereinigd_en_ontsmet == True"
+          then: "voldoet_aan_artikel_3_3_c = True"
+      references: ["BWBR0011441:3.3.c"]
   - number: '3.4'
     text: |-
       Indien de varkens, bedoeld in het eerste lid, onderdelen a en b, rechtstreeks uit een afleveringsvoorziening worden
       bijgeladen, is het in afwijking van het tweede lid, onderdeel b, toegestaan het vervoermiddel, waarop de varkens
       worden bijgeladen, op het bedrijf te brengen.
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Exception: Vehicle may enter the farm for loading if pigs are loaded directly from a delivery facility (Article 3.1.a and 3.1.b)."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+        herkomst:
+          type: string
+          enum: ["afleveringsvoorziening"]
+          description: Source of pigs (delivery facility).
+      conditions:
+        - if: "dier_type == 'varkens' AND herkomst == 'afleveringsvoorziening'"
+          then: "uitzondering_3_4 = True"
+      references: ["BWBR0011441:3.4"]
   - number: '3.5'
-    text: 'Onverminderd het bepaalde in het tweede lid, geldt voor het bijladen, bedoeld in het vierde lid, dat:'
+    text: 'Onverminderd het bestimmte in het tweede lid, geldt voor het bijladen, bedoeld in het vierde lid, dat:'
     url: https://wetten.overheid.nl/BWBR0011441/2005-01-01#Artikel3
+    machine_readable:
+      logic: "Health status grouping rules for loading pigs (Article 3.1.a and 3.1.b)."
+      variables:
+        dier_type:
+          type: string
+          enum: ["varkens"]
+          description: Type of animal being gathered.
+      conditions:
+        - if: "dier_type == 'varkens' AND voldoet_aan_artikel_3_5_a == True AND voldoet_aan_artikel_3_5_b == True AND voldoet_aan_artikel_3_5_c == True AND voldoet_aan_artikel_3_5_d == True"
+          then: "voldoet_aan_artikel_3_5 = True"
+      references: ["BWBR0011441:3.5"]
   - number: 3.5.a
     text: |-
       indien de bij te laden varkens afkomstig zijn van een A- of een C-bedrijf, als bedoeld in de
@@ -434,6 +643,17 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0011101
+    machine_readable:
+      logic: "Pigs from A- or C-bedrijf may only be mixed with pigs from A- or C-bedrijf."
+      variables:
+        gezondheidsstatus:
+          type: string
+          enum: ["A-bedrijf", "B-bedrijf", "C-bedrijf", "D-bedrijf"]
+          description: Health status of the source farm.
+      conditions:
+        - if: "(gezondheidsstatus == 'A-bedrijf' OR gezondheidsstatus == 'C-bedrijf') AND all other pigs in transport are from A-bedrijf or C-bedrijf"
+          then: "voldoet_aan_artikel_3_5_a = True"
+      references: ["BWBR0011441:3.5.a", "BWBR0011101"]
   - number: 3.5.b
     text: |-
       indien de bij te laden varkens afkomstig zijn van een B-bedrijf als bedoeld in de
