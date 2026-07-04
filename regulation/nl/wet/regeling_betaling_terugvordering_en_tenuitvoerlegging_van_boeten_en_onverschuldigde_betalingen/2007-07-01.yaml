@@ -346,6 +346,118 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0019057#Artikel77
       [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel316
       [ref12]: https://wetten.overheid.nl/BWBR0013008#Artikel327
+    machine_readable:
+      logic:
+         - if:
+             condition: "is_boete OR is_onverschuldigd_van_boete OR is_aangifte_of_process_verbaal"
+             then:
+               reason: "Artikel 5:1 (b, c, d) - Geen toepassing van dit artikel; zie Artikel 6 voor boetes en gedragingen met aangifte/proces-verbaal"
+               output:
+                 aflossingstermijn: null
+                 maandelijkse_betaling: null
+                 vermogen_aanwenden: null
+                 vermogen_deel: null
+         - else:
+             steps:
+               - set:
+                   default_termijn: 36
+                   reason: "Artikel 5:2 - Standaard aflossingstermijn van 36 maanden"
+               - calculate:
+                   maandelijkse_betaling: "vordering_bedrag / default_termijn"
+                   reason: "Artikel 5:2 - Periodieke betalingen gedurende 36 maanden"
+               - if:
+                   condition: "(vordering_bedrag / aflossingscapaciteit) > default_termijn"
+                   then:
+                     apply:
+                       vermogen_aanwenden: true
+                       reason: "Artikel 5:5 - Vermogen moet worden aangewend als vordering niet binnen 36 maanden kan worden voldaan"
+                     calculate:
+                       vermogen_deel: "vordering_bedrag - (aflossingscapaciteit * default_termijn)"
+                       reason: "Bedrag dat moet worden voldaan uit vermogen binnen 6 weken"
+                     exception:
+                       if: "schuldenaar_stelt_zekerheid"
+                       then:
+                         vermogen_aanwenden: false
+                         reason: "Artikel 5:5 - Geen vermogen aanwenden als zekerheid wordt gesteld"
+               - if:
+                   condition: "schuldenaar_verzoek_halve_capaciteit"
+                   then:
+                     set:
+                       aflossingscapaciteit: "aflossingscapaciteit * 0.5"
+                       reason: "Artikel 5:3 - Halve aflossingscapaciteit op verzoek van schuldenaar"
+                     ensure:
+                       condition: "(vordering_bedrag / aflossingscapaciteit) <= default_termijn"
+                       reason: "Vordering moet alsnog binnen 36 maanden worden voldaan"
+               - if:
+                   condition: "(vordering_bedrag / aflossingscapaciteit) > default_termijn AND vermogen_aanwenden"
+                   then:
+                     calculate:
+                       maandelijkse_betaling: "aflossingscapaciteit - (0.05 * bijstandsnorm)"
+                       reason: "Artikel 5:6 - Verlaagde maandelijkse betaling als schuldenaar niet kan voldoen met volledige aflossingscapaciteit + vermogen"
+                     set:
+                       aflossingstermijn: 60
+                       reason: "Artikel 5:6 - Aflossingstermijn verlengd naar 60 maanden als schuldenaar niet kan voldoen binnen 36 maanden"
+               - if:
+                   condition: "schuldenaar_voorstelt_hogere_betalingen"
+                   then:
+                     set:
+                       maandelijkse_betaling: "schuldenaar_voorgestelde_betaling"
+                       reason: "Artikel 5:4 - hogere periodieke betalingen op voorstel van schuldenaar"
+      variables:
+        - name: vordering_bedrag
+          type: number
+          description: "Totaalbedrag van de vordering (EUR)"
+          unit: EUR
+        - name: aflossingscapaciteit
+          type: number
+          description: "Maandelijkse aflossingscapaciteit van de schuldenaar (EUR)"
+          unit: EUR/month
+        - name: vermogen
+          type: number
+          description: "Totaal vermogen van de schuldenaar (alleen vermogensbestanddelen met waarde >= EUR 1134)"
+          unit: EUR
+        - name: bijstandsnorm
+          type: number
+          description: "Geldende bijstandsnorm (afgeleid van Wet werk en bijstand)"
+          unit: EUR/month
+        - name: is_boete
+          type: boolean
+          description: "Is de vordering een boete?"
+        - name: is_onverschuldigd_van_boete
+          type: boolean
+          description: "Is de onverschuldigde betaling het gevolg van een gedraging waarvoor een boete is opgelegd?"
+        - name: is_aangifte_of_process_verbaal
+          type: boolean
+          description: "Is de onverschuldigde betaling het gevolg van een gedraging waarvoor aangifte is gedaan of proces-verbaal is opgemaakt?"
+        - name: schuldenaar_verzoek_halve_capaciteit
+          type: boolean
+          description: "Heeft de schuldenaar verzocht om toepassing van de halve aflossingscapaciteit?"
+        - name: schuldenaar_stelt_zekerheid
+          type: boolean
+          description: "Heeft de schuldenaar zekerheid gesteld voor aflossing van de gehele vordering binnen 36 maanden?"
+        - name: schuldenaar_voorstelt_hogere_betalingen
+          type: boolean
+          description: "Heeft de schuldenaar voorgesteld om hogere periodieke betalingen te doen?"
+        - name: schuldenaar_voorgestelde_betaling
+          type: number
+          description: "Voorgestelde maandelijkse betaling door schuldenaar (EUR)"
+          unit: EUR/month
+      outputs:
+        - name: aflossingstermijn
+          type: number
+          description: "Vastgestelde aflossingstermijn (maanden)"
+          unit: months
+        - name: maandelijkse_betaling
+          type: number
+          description: "Maandelijkse betaling of verrekening (EUR)"
+          unit: EUR/month
+        - name: vermogen_aanwenden
+          type: boolean
+          description: "Moet het vermogen worden aangewend?"
+        - name: vermogen_deel
+          type: number
+          description: "Bedrag dat moet worden voldaan uit vermogen binnen 6 weken (EUR)"
+          unit: EUR
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
     references:
       - id: ref1
@@ -417,23 +529,96 @@ articles:
       vermogen, niet in staat is om de vordering binnen 12 maanden te voldoen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0008082#Artikel4
-      [ref3]: https://wetten.overheid.nl/BWBR0008082#Artikel8
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0008082
-        artikel: '7'
-        paragraaf: II
-      - id: ref2
-        bwb_id: BWBR0008082
-        artikel: '4'
-        paragraaf: II
-      - id: ref3
-        bwb_id: BWBR0008082
-        artikel: '8'
-        paragraaf: II
+       [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel7
+       [ref2]: https://wetten.overheid.nl/BWBR0008082#Artikel4
+       [ref3]: https://wetten.overheid.nl/BWBR0008082#Artikel8
+      machine_readable:
+        logic:
+          - set:
+              default_termijn: 12
+              reason: "Artikel 6:2 - Standaard aflossingstermijn van 12 maanden met volledige aflossingscapaciteit"
+          - calculate:
+              maandelijkse_betaling: "vordering_bedrag / default_termijn"
+              reason: "Artikel 6:2 - Periodieke betalingen gedurende 12 maanden met volledige aflossingscapaciteit"
+          - if:
+              condition: "schuldenaar_voorstelt_hogere_betalingen"
+              then:
+                set:
+                  maandelijkse_betaling: "schuldenaar_voorgestelde_betaling"
+                  reason: "Artikel 6:3 - Hogere periodieke betalingen op voorstel van schuldenaar"
+          - if:
+              condition: "(vordering_bedrag / aflossingscapaciteit) > default_termijn"
+              then:
+                apply:
+                  vermogen_aanwenden: true
+                  reason: "Artikel 6:4 - Vermogen moet worden aangewend als vordering niet binnen 12 maanden kan worden voldaan"
+                calculate:
+                  vermogen_deel: "vordering_bedrag - (aflossingscapaciteit * default_termijn)"
+                  reason: "Bedrag dat moet worden voldaan uit vermogen binnen 6 weken"
+                exception:
+                  if: "schuldenaar_stelt_zekerheid"
+                  then:
+                    vermogen_aanwenden: false
+                    reason: "Artikel 6:4 - Geen vermogen aanwenden als zekerheid wordt gesteld voor aflossing binnen 12 maanden"
+          - if:
+              condition: "(vordering_bedrag / aflossingscapaciteit) > default_termijn AND vermogen_aanwenden AND (vordering_bedrag - vermogen_deel) > (aflossingscapaciteit * default_termijn)"
+              then:
+                set:
+                  aflossingstermijn: "default_termijn + ( (vordering_bedrag - vermogen_deel - (aflossingscapaciteit * default_termijn)) / aflossingscapaciteit)"
+                  reason: "Artikel 6:5 - Aflossingstermijn verlengd als schuldenaar ook na aanwending vermogen niet binnen 12 maanden kan voldoen"
+        variables:
+          - name: vordering_bedrag
+            type: number
+            description: "Totaalbedrag van de vordering (EUR)"
+            unit: EUR
+          - name: aflossingscapaciteit
+            type: number
+            description: "Maandelijkse aflossingscapaciteit van de schuldenaar (EUR)"
+            unit: EUR/month
+          - name: vermogen
+            type: number
+            description: "Totaal vermogen van de schuldenaar (alleen vermogensbestanddelen met waarde >= EUR 1134)"
+            unit: EUR
+          - name: schuldenaar_voorstelt_hogere_betalingen
+            type: boolean
+            description: "Heeft de schuldenaar voorgesteld om hogere periodieke betalingen te doen?"
+          - name: schuldenaar_voorgestelde_betaling
+            type: number
+            description: "Voorgestelde maandelijkse betaling door schuldenaar (EUR)"
+            unit: EUR/month
+          - name: schuldenaar_stelt_zekerheid
+            type: boolean
+            description: "Heeft de schuldenaar zekerheid gesteld voor aflossing van de gehele vordering binnen 12 maanden?"
+        outputs:
+          - name: aflossingstermijn
+            type: number
+            description: "Vastgestelde aflossingstermijn (maanden)"
+            unit: months
+          - name: maandelijkse_betaling
+            type: number
+            description: "Maandelijkse betaling of verrekening (EUR)"
+            unit: EUR/month
+          - name: vermogen_aanwenden
+            type: boolean
+            description: "Moet het vermogen worden aangewend?"
+          - name: vermogen_deel
+            type: number
+            description: "Bedrag dat moet worden voldaan uit vermogen binnen 6 weken (EUR)"
+            unit: EUR
+        url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
+        references:
+       - id: ref1
+         bwb_id: BWBR0008082
+         artikel: '7'
+         paragraaf: II
+       - id: ref2
+         bwb_id: BWBR0008082
+         artikel: '4'
+         paragraaf: II
+       - id: ref3
+         bwb_id: BWBR0008082
+         artikel: '8'
+         paragraaf: II
   - number: '7'
     text: |-
       1 Indien de schuldenaar een betalingsregeling heeft getroffen met één of meer derden die beschikken over een
