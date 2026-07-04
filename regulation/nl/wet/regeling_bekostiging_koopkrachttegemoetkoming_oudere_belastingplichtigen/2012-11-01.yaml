@@ -33,9 +33,61 @@ articles:
       het totaalbedrag aan de voor het komende jaar geraamde baten en lasten met betrekking tot de toekenning van
       koopkrachttegemoetkomingen, uitgesplitst naar lasten KOB per maand en uitvoeringskosten per jaar.
     url: https://wetten.overheid.nl/BWBR0030013/2012-11-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar waarvoor de raming wordt ingediend
+          - name: indien_datum
+            type: date
+            required: true
+            description: Datum waarop de opgave wordt ingediend
+        input:
+          - name: geraamde_kob_lasten_per_maand
+            type: array
+            description: Geraamde KOB lasten per maand (12 elementen)
+            source:
+              description: Artikel 2
+          - name: geraamde_uitvoeringskosten_jaar
+            type: amount
+            description: Geraamde uitvoeringskosten voor het komende jaar
+            source:
+              description: Artikel 2
+            type_spec:
+              unit: eurocent
+        output:
+          - name: opgave_ontvangen
+            type: boolean
+            description: Indicator dat de opgave door de Minister is ontvangen
+            source:
+              description: Artikel 2
+          - name: opgave_geldig
+            type: boolean
+            description: Indicator dat de opgave tijdig is ingediend
+            source:
+              description: Artikel 2
+        actions:
+          - output: opgave_geldig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $indien_datum
+              value: "$jaar-10-01"
+          - output: opgave_ontvangen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $opgave_geldig
+                  value: true
+                - operation: NOT_NULL
+                  value: $geraamde_kob_lasten_per_maand
+                - operation: NOT_NULL
+                  value: $geraamde_uitvoeringskosten_jaar
   - number: '3.1'
     text: |-
-      De Minister stort op de rekening-courant, bedoeld in [artikel 5.16, onderdeel a, van de Regeling Wfsv][ref1], een
+      De Minister stort op de rekening-courant, bedoeld in [artikel 5.16, onderdelen a, van de Regeling Wfsv][ref1], een
       periodiek voorschot op het bedrag, bedoeld in [artikel 2][ref2], van:
 
 
@@ -52,12 +104,169 @@ articles:
   - number: 3.1.a
     text: geraamde lasten KOB met als valutadatum de tweeëntwintigste dag van elke maand, en
     url: https://wetten.overheid.nl/BWBR0030013/2012-11-01#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: maand
+            type: number
+            required: true
+            description: Maandnummer (1-12)
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar
+        input:
+          - name: geraamde_kob_lasten_maand
+            type: amount
+            description: Geraamde KOB lasten voor de specifieke maand
+            source:
+              description: Artikel 3.1.a
+            type_spec:
+              unit: eurocent
+        output:
+          - name: voorschot_bedrag
+            type: amount
+            description: Periodiek voorschot voor KOB lasten
+            source:
+              description: Artikel 3.1.a
+            type_spec:
+              unit: eurocent
+          - name: valuata_datum
+            type: date
+            description: Datum waarop het voorschot wordt gestort (22ste van de maand)
+            source:
+              description: Artikel 3.1.a
+        actions:
+          - output: voorschot_bedrag
+            value: $geraamde_kob_lasten_maand
+          - output: valuata_datum
+            value: "$jaar-$maand-22"
   - number: 3.1.b
-    text: 1/12de deel van de geraamde uitvoeringskosten met als valutadatum de vijftiende dag van elke maand.
+    text: 1/12de deel van de geraamde uitvoeringskosten met als valuata_datum de vijftiende dag van elke maand.
     url: https://wetten.overheid.nl/BWBR0030013/2012-11-01#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: maand
+            type: number
+            required: true
+            description: Maandnummer (1-12)
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar
+        input:
+          - name: geraamde_uitvoeringskosten_jaar
+            type: amount
+            description: Geraamde uitvoeringskosten voor het jaar
+            source:
+              description: Artikel 3.1.b
+            type_spec:
+              unit: eurocent
+        output:
+          - name: voorschot_bedrag
+            type: amount
+            description: Maandelijks voorschot voor uitvoeringskosten (1/12 deel)
+            source:
+              description: Artikel 3.1.b
+            type_spec:
+              unit: eurocent
+          - name: valuata_datum
+            type: date
+            description: Datum waarop het voorschot wordt gestort (15de van de maand)
+            source:
+              description: Artikel 3.1.b
+        actions:
+          - output: voorschot_bedrag
+            value:
+              operation: DIVIDE
+              left: $geraamde_uitvoeringskosten_jaar
+              right: 12
+          - output: valuata_datum
+            value: "$jaar-$maand-15"
   - number: '3.2'
     text: De Minister kan, na overleg met de SVB, van de in het eerste lid, onderdelen a en b, bedoelde bedragen afwijken.
     url: https://wetten.overheid.nl/BWBR0030013/2012-11-01#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: maand
+            type: number
+            required: true
+            description: Maandnummer (1-12)
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar
+          - name: afwijking_toegestaan
+            type: boolean
+            required: true
+            description: Indicator of de Minister afwijkt van de standaardbedragen
+        input:
+          - name: standaard_voorschot_kob
+            type: amount
+            description: Standaard voorschotbedrag voor KOB lasten volgens artikel 3.1.a
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+          - name: standaard_voorschot_uitvoeringskosten
+            type: amount
+            description: Standaard voorschotbedrag voor uitvoeringskosten volgens artikel 3.1.b
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+          - name: voorschot_kob_afwijkend
+            type: amount
+            description: Afwijkend voorschotbedrag voor KOB lasten
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+          - name: voorschot_uitvoeringskosten_afwijkend
+            type: amount
+            description: Afwijkend voorschotbedrag voor uitvoeringskosten
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+        output:
+          - name: voorschot_bedrag_kob
+            type: amount
+            description: Werkelijk voorschotbedrag voor KOB lasten (kan afwijken)
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+          - name: voorschot_bedrag_uitvoeringskosten
+            type: amount
+            description: Werkelijk voorschotbedrag voor uitvoeringskosten (kan afwijken)
+            source:
+              description: Artikel 3.2
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: voorschot_bedrag_kob
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $afwijking_toegestaan
+                  value: true
+                - operation: EQUALS
+                  subject: $voorschot_kob_afwijkend
+                  value: $voorschot_kob_afwijkend
+          - output: voorschot_bedrag_uitvoeringskosten
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $afwijking_toegestaan
+                  value: true
+                - operation: EQUALS
+                  subject: $voorschot_uitvoeringskosten_afwijkend
+                  value: $voorschot_uitvoeringskosten_afwijkend
   - number: '4.1'
     text: |-
       In de jaarrekening, bedoeld in [artikel 49 van de Wet SUWI][ref1], worden de baten en lasten, alsmede de ontvangen
@@ -75,12 +284,67 @@ articles:
       - id: ref2
         bwb_id: BWBR0030013
         artikel: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar waarvoor de jaarrekening wordt opgesteld
+        input:
+          - name: baten_kob
+            type: amount
+            description: Batalen KOB voor het desbetreffende jaar
+            source:
+              description: Artikel 4.1
+            type_spec:
+              unit: eurocent
+          - name: lasten_kob
+            type: amount
+            description: Lasten KOB voor het desbetreffende jaar
+            source:
+              description: Artikel 4.1
+            type_spec:
+              unit: eurocent
+          - name: uitvoeringskosten
+            type: amount
+            description: Uitvoeringskosten voor het desbetreffende jaar
+            source:
+              description: Artikel 4.1
+            type_spec:
+              unit: eurocent
+          - name: ontvangen_voorschotten
+            type: amount
+            description: Ontvangen voorschotten voor het desbetreffende jaar
+            source:
+              description: Artikel 4.1
+            type_spec:
+              unit: eurocent
+        output:
+          - name: jaarrekening_opgesteld
+            type: boolean
+            description: Indicator dat de jaarrekening is opgesteld met de vereiste uitgesplitste gegevens
+            source:
+              description: Artikel 4.1
+        actions:
+          - output: jaarrekening_opgesteld
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT_NULL
+                  value: $baten_kob
+                - operation: NOT_NULL
+                  value: $lasten_kob
+                - operation: NOT_NULL
+                  value: $uitvoeringskosten
+                - operation: NOT_NULL
+                  value: $ontvangen_voorschotten
   - number: '4.2'
     text: |-
       Na goedkeuring van het besluit tot vaststelling van de jaarrekening, bedoeld in
       [artikel 34, tweede lid, van de Kaderwet zelfstandige bestuursorganen][ref1], rekent de Minister de baten
       en lasten, alsmede de ontvangen voorschotten, met betrekking tot het desbetreffende kalenderjaar af, met als
-      valutadatum 1 juni van het hierop volgende kalenderjaar.
+      valuata_datum 1 juni van het hierop volgende kalenderjaar.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0020495#Artikel34
@@ -89,10 +353,72 @@ articles:
       - id: ref1
         bwb_id: BWBR0020495
         artikel: '34'
+    machine_readable:
+      execution:
+        parameters:
+          - name: afreken_jaar
+            type: number
+            required: true
+            description: Kalenderjaar waarvoor de afrekening plaatsvindt
+        input:
+          - name: jaarrekening_goedgekeurd
+            type: boolean
+            required: true
+            description: Indicator dat de jaarrekening is goedgekeurd
+            source:
+              description: Artikel 4.2
+          - name: werkelijke_baten
+            type: amount
+            description: Werkelijke baten voor het desbetreffende jaar
+            source:
+              description: Artikel 4.2
+            type_spec:
+              unit: eurocent
+          - name: werkelijke_lasten
+            type: amount
+            description: Werkelijke lasten voor het desbetreffende jaar
+            source:
+              description: Artikel 4.2
+            type_spec:
+              unit: eurocent
+          - name: werkelijke_voorschotten
+            type: amount
+            description: Werkelijke ontvangen voorschotten voor het desbetreffende jaar
+            source:
+              description: Artikel 4.2
+            type_spec:
+              unit: eurocent
+        output:
+          - name: afrekening_geldig
+            type: boolean
+            description: Indicator dat de afrekening is geldig
+            source:
+              description: Artikel 4.2
+          - name: valuata_datum
+            type: date
+            description: Datum waarop de afrekening plaatsvindt
+            source:
+              description: Artikel 4.2
+        actions:
+          - output: afrekening_geldig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $jaarrekening_goedgekeurd
+                  value: true
+                - operation: NOT_NULL
+                  value: $werkelijke_baten
+                - operation: NOT_NULL
+                  value: $werkelijke_lasten
+                - operation: NOT_NULL
+                  value: $werkelijke_voorschotten
+          - output: valuata_datum
+            value: "$(ADD $afreken_jaar 1)-06-01"
   - number: '9'
     text: |-
       Deze regeling treedt in werking met ingang van 1 juni 2011, waarbij [artikel 8][ref1] vervalt met ingang van
-      1 januari 2012.
+      1 januari 2012.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0030013#Artikel8
@@ -102,5 +428,6 @@ articles:
         bwb_id: BWBR0030013
         artikel: '8'
   - number: '10'
-    text: 'Deze regeling wordt aangehaald als: Regeling bekostiging koopkrachttegemoetkoming oudere belastingplichtigen.'
+    text: |
+      Deze regeling wordt aangehaald als: Regeling bekostiging koopkrachttegemoetkoming oudere belastingplichtigen.
     url: https://wetten.overheid.nl/BWBR0030013/2012-11-01#Artikel10
