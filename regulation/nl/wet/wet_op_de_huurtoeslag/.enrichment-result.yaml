@@ -1,0 +1,43 @@
+# .enrichment-result.yaml — result envelope, NOT part of the law schema
+law_id: wet_op_de_huurtoeslag
+related_legislation:
+  - name: Algemene wet inkomensafhankelijke regelingen (Awir)
+    relation: source_regulation
+    bwb_id: BWBR0018472
+    note: >-
+      Rekeninkomen = gezamenlijke toetsingsinkomens ex art. 8 Awir (art. 1i Wht).
+      Niet gebonden via source vanwege ontbrekend corpus-bestand.
+  - name: Uitvoeringswet huurprijzen woonruimte
+    relation: source_regulation
+    bwb_id: BWBR0014315
+    note: >-
+      Maximale huurprijsgrens voor rekenhuur (art. 5 lid 1b) ex art. 10 en 12 Uhw.
+      Niet gebonden via source vanwege ontbrekend corpus-bestand.
+  - name: Algemene Ouderdomswet
+    relation: source_regulation
+    bwb_id: BWBR0002221
+    note: >-
+      Bruto-ouderdomspensioen en vakantie-uitkering voor berekening minimum-inkomensijkpunt
+      (art. 17 lid 1). Niet gebonden; gemodelleerd als open_term per art. 27 lid 4.
+  - name: Ministeriële regeling vaststelling minimum-inkomensijkpunten
+    relation: delegated_regeling
+    open_term: minimum_inkomensijkpunt_eenpersoons
+    note: >-
+      Jaarlijkse vaststelling minimum-inkomensijkpunt eenpersoonshuishouden (art. 27 lid 4 Wht).
+  - name: Ministeriële regeling vaststelling minimum-inkomensijkpunten
+    relation: delegated_regeling
+    open_term: minimum_inkomensijkpunt_meerpersoons
+    note: >-
+      Jaarlijkse vaststelling minimum-inkomensijkpunt meerpersoonshuishouden (art. 27 lid 4 Wht).
+  - name: Besluit huurprijzen woonruimte (AMvB subsidiepercentages)
+    relation: delegated_regeling
+    open_term: subsidiepercentage_boven_kwaliteitskortingsgrens
+    note: >-
+      Subsidiepercentage voor deel rekenhuur boven kwaliteitskortingsgrens t/m aftoppingsgrens
+      (art. 21 lid 1b Wht). Vast te stellen bij AMvB.
+  - name: Besluit huurprijzen woonruimte (AMvB subsidiepercentages)
+    relation: delegated_regeling
+    open_term: subsidiepercentage_boven_aftoppingsgrens
+    note: >-
+      Subsidiepercentage voor deel rekenhuur boven aftoppingsgrens (art. 21 lid 1c Wht).
+      Vast te stellen bij AMvB.

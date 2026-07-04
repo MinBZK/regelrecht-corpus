@@ -160,6 +160,54 @@ articles:
       - id: ref2
         bwb_id: BWBR0014315
         artikel: '12'
+    machine_readable:
+      execution:
+        parameters:
+          - name: huurprijs
+            type: number
+            required: true
+            description: De maandelijkse huurprijs in eurocent
+          - name: maximale_huurprijsgrens
+            type: number
+            required: true
+            description: >-
+              Maximale huurprijsgrens ex Uitvoeringswet huurprijzen woonruimte art. 10 en 12 in eurocent.
+              Caller-supplied omdat de Uitvoeringswet huurprijzen woonruimte niet in het corpus staat.
+          - name: is_woonwagen_zonder_aandrijving
+            type: boolean
+            required: false
+            description: Of het een woonwagen zonder eigen aandrijving betreft (art. 5 lid 1 laatste zin)
+          - name: standplaatshuur
+            type: number
+            required: false
+            description: Het maandelijkse bedrag voor de huur van de standplaats in eurocent (art. 5 lid 1 laatste zin)
+        output:
+          - name: rekenhuur
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De rekenhuur overeenkomstig artikel 5 lid 1
+        actions:
+          - output: basisbedrag_rekenhuur
+            value:
+              operation: MIN
+              values:
+                - $huurprijs
+                - $maximale_huurprijsgrens
+          - output: rekenhuur
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_woonwagen_zonder_aandrijving
+                    value: true
+                  then:
+                    operation: ADD
+                    values:
+                      - $basisbedrag_rekenhuur
+                      - $standplaatshuur
+              default: $basisbedrag_rekenhuur
   - number: '7'
     text: |-
       1 Het recht op en de hoogte van de huurtoeslag is afhankelijk van de draagkracht, waaronder begrepen het vermogen,
@@ -170,6 +218,32 @@ articles:
   - number: '8'
     text: Een huurtoeslag wordt slechts toegekend aan een huurder die meerderjarig is.
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel8
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum_huurder
+            type: date
+            required: true
+            description: Geboortedatum van de huurder
+          - name: peildatum
+            type: date
+            required: true
+            description: De peildatum voor de leeftijdsbepaling
+        output:
+          - name: voldoet_aan_leeftijdseis
+            type: boolean
+            description: Of de huurder meerderjarig (18 jaar of ouder) is overeenkomstig artikel 8
+        actions:
+          - output: leeftijd_huurder
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_huurder
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_huurder
+              value: 18
   - number: '9'
     text: |-
       1 Een huurtoeslag wordt slechts toegekend:
@@ -183,12 +257,45 @@ articles:
       2 In afwijking van het eerste lid kan een huurtoeslag worden toegekend, als de onjuiste inschrijving in de
       basisregistratie personen niet aan de huurder kan worden toegerekend.
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: alle_verplichte_bewoners_ingeschreven_op_adres
+            type: boolean
+            required: true
+            description: >-
+              Of de huurder, diens partner én alle medebewoners als ingezetene op het adres van de woning
+              zijn ingeschreven in de basisregistratie personen (art. 9 lid 1a). De caller verifieert
+              dit voor alle betrokken personen gezamenlijk.
+          - name: geen_andere_inschrijvingen_op_adres
+            type: boolean
+            required: true
+            description: >-
+              Of er geen andere personen op het adres zijn ingeschreven dan de huurder, partner, medebewoners
+              en eventueel een onderhuurder met diens huishouden (art. 9 lid 1b).
+        output:
+          - name: voldoet_aan_inschrijvingseis
+            type: boolean
+            description: >-
+              Of voldaan is aan de BRP-inschrijvingseis van artikel 9 lid 1.
+              Lid 2 (discretionaire uitzondering bij niet-toerekenbare onjuiste inschrijving) is niet gemodelleerd.
+        actions:
+          - output: voldoet_aan_inschrijvingseis
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $alle_verplichte_bewoners_ingeschreven_op_adres
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_andere_inschrijvingen_op_adres
+                  value: true
   - number: '10'
     text: |-
       De huurder die tijdelijke bescherming geniet als bedoeld in [artikel 1 van de Vreemdelingenwet 2000][ref1] omdat
-      hij onder de reikwijdte valt van het Uitvoeringsbesluit (EU) 2022/382 van de Raad van 4 maart 2022 tot vaststelling
+      hij onder de reikwijdte valt van het Uitvoeringsbesluit (EU) 2022/382 van de Raad van 4 maart 2022 tot vaststelling
       van het bestaan van een massale toestroom van ontheemden uit Oekraïne in de zin van artikel 5 van [Richtlijn
-      2001/55/EG](32001L0055), en tot invoering van tijdelijke bescherming naar aanleiding daarvan (PbEU 2022, L 71/1) of
+      2001/55/EG](32001L0055), en tot invoering van tijdelijke bescherming naar aanleiding daarvan (PbEU 2022, L 71/1) of
       een verlenging van dat besluit, heeft recht op huurtoeslag.
 
 
@@ -237,7 +344,7 @@ articles:
     text: |-
       1 De maximale huurgrens is:
 
-      a. € 932,93 per maand als:
+      a. € 932,93 per maand als:
 
       1º. de huurder, diens partner of een van de medebewoners 21 jaar of ouder is, dan wel de woning deelt met een kind
       of pleegkind van de huurder, diens partner of een medebewoner of
@@ -246,9 +353,9 @@ articles:
 
       of
 
-      b. € 498,20 per maand in andere gevallen dan bedoeld onder a.
+      b. € 498,20 per maand in andere gevallen dan bedoeld onder a.
 
-      2 De in het eerste lid, onder a en b, genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
+      2 De in het eerste lid, onder a en b, genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
       overeenkomstig [artikel 27][ref1].
 
 
@@ -259,22 +366,71 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      definitions:
+        MAXIMALE_HUURGRENS_HOOG:
+          value: 93293
+          description: "€932,93 per maand - maximale huurgrens categorie a (art. 13 lid 1a)"
+        MAXIMALE_HUURGRENS_LAAG:
+          value: 49820
+          description: "€498,20 per maand - maximale huurgrens categorie b (art. 13 lid 1b)"
+      execution:
+        parameters:
+          - name: heeft_bewoner_van_21_of_ouder
+            type: boolean
+            required: true
+            description: >-
+              Of de huurder, partner of een medebewoner 21 jaar of ouder is, dan wel de woning deelt met
+              een kind of pleegkind (art. 13 lid 1a sub 1)
+          - name: heeft_bewoner_jonger_dan_21_met_handicap
+            type: boolean
+            required: false
+            description: >-
+              Of de huurder, partner of een medebewoner jonger dan 21 jaar is én een handicap heeft
+              (art. 13 lid 1a sub 2)
+        output:
+          - name: maximale_huurgrens
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De maximale huurgrens per maand overeenkomstig artikel 13
+        actions:
+          - output: valt_in_categorie_a
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_bewoner_van_21_of_ouder
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_bewoner_jonger_dan_21_met_handicap
+                  value: true
+          - output: maximale_huurgrens
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $valt_in_categorie_a
+                    value: true
+                  then: $MAXIMALE_HUURGRENS_HOOG
+              default: $MAXIMALE_HUURGRENS_LAAG
   - number: '14'
     text: |-
       1 Het norminkomen bedraagt:
 
-      a. € 29.400 bij een eenpersoonshuishouden;
+      a. € 29.400 bij een eenpersoonshuishouden;
 
-      b. € 39.925 bij een meerpersoonshuishouden;
+      b. € 39.925 bij een meerpersoonshuishouden;
 
-      c. € 28.089,78 bij een eenpersoonsouderenhuishouden;
+      c. € 28.089,78 bij een eenpersoonsouderenhuishouden;
 
-      d. € 37.183,99 bij een meerpersoonsouderenhuishouden.
+      d. € 37.183,99 bij een meerpersoonsouderenhuishouden.
 
-      2 Het norminkomen, genoemd in het eerste lid, onderdelen c en d, wordt vermeerderd met € 665 onderscheidenlijk
-      € 1 462.
+      2 Het norminkomen, genoemd in het eerste lid, onderdelen c en d, wordt vermeerderd met € 665 onderscheidenlijk
+      € 1 462.
 
-      3 De in het eerste lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
+      3 De in het eerste lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
       [artikel 27][ref1].
 
 
@@ -285,6 +441,86 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      definitions:
+        NORMINKOMEN_EENPERSOONS:
+          value: 2940000
+          description: "€29.400 norminkomen voor een eenpersoonshuishouden (art. 14 lid 1a)"
+        NORMINKOMEN_MEERPERSOONS:
+          value: 3992500
+          description: "€39.925 norminkomen voor een meerpersoonshuishouden (art. 14 lid 1b)"
+        NORMINKOMEN_EENPERSOONS_OUDEREN_BASIS:
+          value: 2808978
+          description: "€28.089,78 basis norminkomen voor een eenpersoonsouderenhuishouden (art. 14 lid 1c)"
+        NORMINKOMEN_MEERPERSOONS_OUDEREN_BASIS:
+          value: 3718399
+          description: "€37.183,99 basis norminkomen voor een meerpersoonsouderenhuishouden (art. 14 lid 1d)"
+        TOESLAG_EENPERSOONS_OUDEREN:
+          value: 66500
+          description: "€665 toeslag voor eenpersoonsouderenhuishouden (art. 14 lid 2)"
+        TOESLAG_MEERPERSOONS_OUDEREN:
+          value: 146200
+          description: "€1.462 toeslag voor meerpersoonsouderenhuishouden (art. 14 lid 2)"
+      execution:
+        parameters:
+          - name: type_huishouden
+            type: string
+            required: true
+            description: >-
+              Type huishouden: EENPERSOONS, MEERPERSOONS, EENPERSOONS_OUDEREN of MEERPERSOONS_OUDEREN
+        output:
+          - name: norminkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het norminkomen per jaar overeenkomstig artikel 14 (lid 1 + lid 2 toeslag)
+        actions:
+          - output: norminkomen_basis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS
+                  then: $NORMINKOMEN_EENPERSOONS
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: MEERPERSOONS
+                  then: $NORMINKOMEN_MEERPERSOONS
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS_OUDEREN
+                  then: $NORMINKOMEN_EENPERSOONS_OUDEREN_BASIS
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: MEERPERSOONS_OUDEREN
+                  then: $NORMINKOMEN_MEERPERSOONS_OUDEREN_BASIS
+              default: 0
+          - output: toeslag_ouderen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS_OUDEREN
+                  then: $TOESLAG_EENPERSOONS_OUDEREN
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: MEERPERSOONS_OUDEREN
+                  then: $TOESLAG_MEERPERSOONS_OUDEREN
+              default: 0
+          - output: norminkomen
+            value:
+              operation: ADD
+              values:
+                - $norminkomen_basis
+                - $toeslag_ouderen
   - number: '16'
     text: |-
       De basishuur is het gedeelte van de rekenhuur dat minimaal voor rekening van de huurder blijft. De basishuur is het
@@ -299,6 +535,40 @@ articles:
         artikel: '17'
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      definitions:
+        OPSLAG_BASISHUUR:
+          value: 1200
+          description: "€12 opslag op de normhuur voor de basishuur (art. 16)"
+      execution:
+        parameters:
+          - name: type_huishouden
+            type: string
+            required: true
+            description: "Type huishouden: EENPERSOONS of MEERPERSOONS — doorgegeven aan artikel 17 voor normhuur"
+        input:
+          - name: normhuur
+            type: amount
+            source:
+              output: normhuur
+              parameters:
+                type_huishouden: $type_huishouden
+            type_spec:
+              unit: eurocent
+            description: De normhuur overeenkomstig artikel 17 lid 2 en 3
+        output:
+          - name: basishuur
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De basishuur overeenkomstig artikel 16 (normhuur + €12)
+        actions:
+          - output: basishuur
+            value:
+              operation: ADD
+              values:
+                - $normhuur
+                - $OPSLAG_BASISHUUR
   - number: '17'
     text: |-
       1 Het minimum-inkomensijkpunt wordt verkregen door:
@@ -317,7 +587,7 @@ articles:
       zoals dat bedrag naar redelijke verwachting in het berekeningsjaar zal luiden, te herrekenen naar een jaarinkomen
       in het berekeningsjaar en dat jaarinkomen te vermeerderen met € 2 512.
 
-      2 Bij het minimum-inkomensijkpunt behoort een normhuur van € 252,49.
+      2 Bij het minimum-inkomensijkpunt behoort een normhuur van € 252,49.
 
       3 De normhuur, bedoeld in het tweede lid, wordt verlaagd met:
 
@@ -325,7 +595,7 @@ articles:
 
       b. € 3,63 als sprake is van een meerpersoonshuishouden.
 
-      4 Het in het tweede lid genoemde bedrag wordt met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
+      4 Het in het tweede lid genoemde bedrag wordt met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
       [artikel 27][ref5].
 
 
@@ -352,19 +622,100 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      untranslatables:
+        - construct: "Berekening minimum-inkomensijkpunt op basis van AOW-bedragen"
+          reason: >-
+            Vereist jaarlijkse bruto-AOW-pensioenbedragen (art. 9 AOW) en bruto-vakantie-uitkering
+            (art. 29 AOW), inclusief herrekening naar jaarinkomen. De Algemene Ouderdomswet staat niet in
+            het corpus. De minister stelt de waarden jaarlijks vast bij ministeriële regeling (art. 27 lid 4 Wht).
+            Gemodelleerd als open_term.
+          legal_text_excerpt: >-
+            Het minimum-inkomensijkpunt wordt verkregen door: a. voor een eenpersoonshuishouden: de uitkomst
+            van het bedrag van het bruto-ouderdomspensioen...
+          accepted: false
+      open_terms:
+        - id: minimum_inkomensijkpunt_eenpersoons
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 27 lid 4 Wet op de huurtoeslag
+        - id: minimum_inkomensijkpunt_meerpersoons
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 27 lid 4 Wet op de huurtoeslag
+      definitions:
+        NORMHUUR_BIJ_MINIMUM_INKOMENSIJKPUNT:
+          value: 25249
+          description: "€252,49 normhuur bij het minimum-inkomensijkpunt (art. 17 lid 2)"
+        VERLAGING_NORMHUUR_EENPERSOONS:
+          value: 182
+          description: "€1,82 verlaging normhuur voor eenpersoonshuishouden (art. 17 lid 3a)"
+        VERLAGING_NORMHUUR_MEERPERSOONS:
+          value: 363
+          description: "€3,63 verlaging normhuur voor meerpersoonshuishouden (art. 17 lid 3b)"
+      execution:
+        parameters:
+          - name: type_huishouden
+            type: string
+            required: true
+            description: "Type huishouden: EENPERSOONS of MEERPERSOONS"
+        output:
+          - name: normhuur
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De normhuur overeenkomstig artikel 17 lid 2 en 3
+          - name: minimum_inkomensijkpunt
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Het minimum-inkomensijkpunt overeenkomstig artikel 17 lid 1.
+              Waarde wordt jaarlijks vastgesteld bij ministeriële regeling (art. 27 lid 4).
+        actions:
+          - output: verlaging_normhuur
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS
+                  then: $VERLAGING_NORMHUUR_EENPERSOONS
+              default: $VERLAGING_NORMHUUR_MEERPERSOONS
+          - output: normhuur
+            value:
+              operation: SUBTRACT
+              values:
+                - $NORMHUUR_BIJ_MINIMUM_INKOMENSIJKPUNT
+                - $verlaging_normhuur
+          - output: minimum_inkomensijkpunt
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS
+                  then: $minimum_inkomensijkpunt_eenpersoons
+              default: $minimum_inkomensijkpunt_meerpersoons
   - number: '20'
     text: |-
-      1 De kwaliteitskortingsgrens is € 498,20 per maand.
+      1 De kwaliteitskortingsgrens is € 498,20 per maand.
 
       2 De aftoppingsgrens is:
 
-      a. € 713,02 per maand als het huishouden van de huurder, afgezien van eventuele onderhuurders en personen die tot
+      a. € 713,02 per maand als het huishouden van de huurder, afgezien van eventuele onderhuurders en personen die tot
       diens huishouden behoren, uit één of twee personen bestaat;
 
-      b. € 764,14 per maand als het huishouden van de huurder, afgezien van eventuele onderhuurders en personen die tot
+      b. € 764,14 per maand als het huishouden van de huurder, afgezien van eventuele onderhuurders en personen die tot
       diens huishouden behoren, uit drie of meer personen bestaat.
 
-      3 De in het eerste en tweede lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
+      3 De in het eerste en tweede lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
       overeenkomstig [artikel 27][ref1].
 
 
@@ -375,6 +726,49 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      definitions:
+        KWALITEITSKORTINGSGRENS:
+          value: 49820
+          description: "€498,20 per maand kwaliteitskortingsgrens (art. 20 lid 1)"
+        AFTOPPINGSGRENS_1_OF_2_PERSONEN:
+          value: 71302
+          description: "€713,02 per maand aftoppingsgrens voor 1 of 2 personen (art. 20 lid 2a)"
+        AFTOPPINGSGRENS_3_OF_MEER_PERSONEN:
+          value: 76414
+          description: "€764,14 per maand aftoppingsgrens voor 3 of meer personen (art. 20 lid 2b)"
+      execution:
+        parameters:
+          - name: aantal_personen_huishouden
+            type: number
+            required: true
+            description: >-
+              Het aantal personen in het huishouden, afgezien van eventuele onderhuurders en personen die
+              tot diens huishouden behoren (art. 20 lid 2)
+        output:
+          - name: kwaliteitskortingsgrens
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De kwaliteitskortingsgrens per maand overeenkomstig artikel 20 lid 1
+          - name: aftoppingsgrens
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De aftoppingsgrens per maand overeenkomstig artikel 20 lid 2
+        actions:
+          - output: kwaliteitskortingsgrens
+            value: $KWALITEITSKORTINGSGRENS
+          - output: aftoppingsgrens
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $aantal_personen_huishouden
+                    value: 2
+                  then: $AFTOPPINGSGRENS_1_OF_2_PERSONEN
+              default: $AFTOPPINGSGRENS_3_OF_MEER_PERSONEN
   - number: '21'
     text: |-
       1 De hoogte van de huurtoeslag wordt als volgt bepaald:
@@ -425,6 +819,233 @@ articles:
         artikel: '17'
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      open_terms:
+        - id: subsidiepercentage_boven_kwaliteitskortingsgrens
+          type: number
+          required: true
+          delegated_to: regering
+          delegation_type: ALGEMENE_MAATREGEL_VAN_BESTUUR
+          legal_basis: artikel 21 lid 1b Wet op de huurtoeslag
+        - id: subsidiepercentage_boven_aftoppingsgrens
+          type: number
+          required: true
+          delegated_to: regering
+          delegation_type: ALGEMENE_MAATREGEL_VAN_BESTUUR
+          legal_basis: artikel 21 lid 1c Wet op de huurtoeslag
+      definitions:
+        AFBOUWPERCENTAGE_EENPERSOONS:
+          value: 0.27
+          description: 27% afbouwpercentage voor eenpersoonshuishoudens (art. 21 lid 2a)
+        AFBOUWPERCENTAGE_MEERPERSOONS:
+          value: 0.22
+          description: 22% afbouwpercentage voor meerpersoonshuishoudens (art. 21 lid 2b)
+      execution:
+        parameters:
+          - name: type_huishouden
+            type: string
+            required: true
+            description: "Type huishouden: EENPERSOONS of MEERPERSOONS (art. 2)"
+          - name: rekeninkomen
+            type: number
+            required: true
+            description: >-
+              Het rekeninkomen (gezamenlijke toetsingsinkomens ex art. 8 Awir) in eurocent per jaar.
+              Caller-supplied omdat de Awir (BWBR0018472) niet in het corpus staat.
+          - name: aantal_personen_huishouden
+            type: number
+            required: true
+            description: >-
+              Het aantal personen in het huishouden excl. onderhuurder en diens huishouden,
+              doorgegeven aan artikel 20 voor de aftoppingsgrens
+          - name: heeft_bewoner_van_21_of_ouder
+            type: boolean
+            required: true
+            description: >-
+              Of de huurder, partner of een medebewoner 21 jaar of ouder is (dan wel woning deelt met
+              een kind/pleegkind), doorgegeven aan artikel 13
+          - name: heeft_bewoner_jonger_dan_21_met_handicap
+            type: boolean
+            required: false
+            description: >-
+              Of de huurder, partner of een medebewoner jonger dan 21 is én een handicap heeft,
+              doorgegeven aan artikel 13
+          - name: huurprijs
+            type: number
+            required: true
+            description: De maandelijkse huurprijs in eurocent, doorgegeven aan artikel 5
+          - name: maximale_huurprijsgrens
+            type: number
+            required: true
+            description: >-
+              Maximale huurprijsgrens ex Uitvoeringswet huurprijzen woonruimte in eurocent,
+              doorgegeven aan artikel 5
+          - name: is_woonwagen_zonder_aandrijving
+            type: boolean
+            required: false
+            description: Of het een woonwagen zonder eigen aandrijving betreft, doorgegeven aan artikel 5
+          - name: standplaatshuur
+            type: number
+            required: false
+            description: Maandelijkse standplaatshuur in eurocent, doorgegeven aan artikel 5
+        input:
+          - name: rekenhuur
+            type: amount
+            source:
+              output: rekenhuur
+              parameters:
+                huurprijs: $huurprijs
+                maximale_huurprijsgrens: $maximale_huurprijsgrens
+                is_woonwagen_zonder_aandrijving: $is_woonwagen_zonder_aandrijving
+                standplaatshuur: $standplaatshuur
+            type_spec:
+              unit: eurocent
+            description: De rekenhuur overeenkomstig artikel 5
+          - name: basishuur
+            type: amount
+            source:
+              output: basishuur
+              parameters:
+                type_huishouden: $type_huishouden
+            type_spec:
+              unit: eurocent
+            description: De basishuur overeenkomstig artikel 16
+          - name: kwaliteitskortingsgrens
+            type: amount
+            source:
+              output: kwaliteitskortingsgrens
+              parameters:
+                aantal_personen_huishouden: $aantal_personen_huishouden
+            type_spec:
+              unit: eurocent
+            description: De kwaliteitskortingsgrens overeenkomstig artikel 20
+          - name: aftoppingsgrens
+            type: amount
+            source:
+              output: aftoppingsgrens
+              parameters:
+                aantal_personen_huishouden: $aantal_personen_huishouden
+            type_spec:
+              unit: eurocent
+            description: De aftoppingsgrens overeenkomstig artikel 20
+          - name: maximale_huurgrens
+            type: amount
+            source:
+              output: maximale_huurgrens
+              parameters:
+                heeft_bewoner_van_21_of_ouder: $heeft_bewoner_van_21_of_ouder
+                heeft_bewoner_jonger_dan_21_met_handicap: $heeft_bewoner_jonger_dan_21_met_handicap
+            type_spec:
+              unit: eurocent
+            description: De maximale huurgrens overeenkomstig artikel 13
+          - name: minimum_inkomensijkpunt
+            type: amount
+            source:
+              output: minimum_inkomensijkpunt
+              parameters:
+                type_huishouden: $type_huishouden
+            type_spec:
+              unit: eurocent
+            description: Het minimum-inkomensijkpunt overeenkomstig artikel 17
+        output:
+          - name: hoogte_huurtoeslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De maandelijkse hoogte van de huurtoeslag overeenkomstig artikel 21
+        actions:
+          - output: deel_a
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - operation: MIN
+                      values:
+                        - $rekenhuur
+                        - $kwaliteitskortingsgrens
+                    - $basishuur
+          - output: deel_b_basis
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - operation: MIN
+                      values:
+                        - $rekenhuur
+                        - $aftoppingsgrens
+                    - $kwaliteitskortingsgrens
+          - output: deel_b
+            value:
+              operation: MULTIPLY
+              values:
+                - $deel_b_basis
+                - $subsidiepercentage_boven_kwaliteitskortingsgrens
+          - output: deel_c_basis
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - operation: MIN
+                      values:
+                        - $rekenhuur
+                        - $maximale_huurgrens
+                    - $aftoppingsgrens
+          - output: deel_c
+            value:
+              operation: MULTIPLY
+              values:
+                - $deel_c_basis
+                - $subsidiepercentage_boven_aftoppingsgrens
+          - output: hoogte_lid1
+            value:
+              operation: ADD
+              values:
+                - $deel_a
+                - $deel_b
+                - $deel_c
+          - output: inkomensverschil
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $rekeninkomen
+                    - $minimum_inkomensijkpunt
+          - output: afbouwpercentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_huishouden
+                    value: EENPERSOONS
+                  then: $AFBOUWPERCENTAGE_EENPERSOONS
+              default: $AFBOUWPERCENTAGE_MEERPERSOONS
+          - output: inkomensgerelateerde_verlaging
+            value:
+              operation: MULTIPLY
+              values:
+                - $inkomensverschil
+                - operation: DIVIDE
+                  values:
+                    - $afbouwpercentage
+                    - 12
+          - output: hoogte_huurtoeslag
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $hoogte_lid1
+                    - $inkomensgerelateerde_verlaging
   - number: '23'
     text: |-
       Bij verhuizing van de huurder blijft het in [artikel 7, eerste lid][ref1], bedoelde recht op huurtoeslag in stand,
@@ -448,7 +1069,7 @@ articles:
         paragraaf: '2'
   - number: '27'
     text: |-
-      1 Bij ministeriële regeling worden met ingang van 1 januari van elk jaar de bedragen, genoemd in de
+      1 Bij ministeriële regeling worden met ingang van 1 januari van elk jaar de bedragen, genoemd in de
       [artikelen 13, eerste lid, onderdeel a][ref1] (maximale huurgrens), en [14, eerste lid][ref2] (norminkomen),
       gewijzigd met de factor, bedoeld in [artikel 10.2 van de Wet inkomstenbelasting 2001][ref3], met dien verstande dat
       in het eerste en tweede lid van laatstgenoemd artikel voor «kalenderjaar» telkens wordt gelezen «berekeningsjaar»
@@ -459,15 +1080,15 @@ articles:
       (norminkomen), bij ministeriële regeling worden gewijzigd ter voorkoming van onbedoelde gevolgen van maatregelen
       met betrekking tot de inkomens boven het minimum-inkomensijkpunt.
 
-      3 Bij ministeriële regeling worden, met ingang van 1 januari van elk jaar, de bedragen, genoemd in de
+      3 Bij ministeriële regeling worden, met ingang van 1 januari van elk jaar, de bedragen, genoemd in de
       [artikelen 13, eerste lid, onderdeel b][ref5] (maximale huurgrens), [17, tweede lid][ref6] (bij minimum-
       inkomensijkpunt behorende normhuur), en [20, eerste en tweede lid][ref7] (kwaliteitskortingsgrens en
       aftoppingsgrenzen), gewijzigd met het percentage van de huurprijsontwikkeling, zoals die naar redelijke verwachting
-      in het tijdvak dat loopt van 1 juli van het aan het berekeningsjaar voorafgaande jaar tot 1 juli van het
+      in het tijdvak dat loopt van 1 juli van het aan het berekeningsjaar voorafgaande jaar tot 1 juli van het
       berekeningsjaar zal plaatsvinden.
 
       4 Bij ministeriële regeling wordt elk jaar, na overleg met Onze Minister van Sociale Zaken en Werkgelegenheid, de
-      hoogte vastgesteld van de bedragen, zoals die met ingang van 1 januari krachtens [artikel 17, eerste lid][ref8],
+      hoogte vastgesteld van de bedragen, zoals die met ingang van 1 januari krachtens [artikel 17, eerste lid][ref8],
       als minimum-inkomensijkpunten gelden.
 
       5 De bedragen, bedoeld in het eerste, tweede en derde lid, worden naar boven afgerond op hele eurocenten, met
@@ -478,10 +1099,10 @@ articles:
       afgerond op een veelvoud van € 25. Bij een volgende wijziging van de norminkomens en de bedragen, bedoeld in het
       vijfde lid, wordt uitgegaan van de bedragen zoals die waren, voordat zij werden afgerond.
 
-      6 De overeenkomstig het eerste tot en met vijfde lid vastgestelde, vanaf 1 januari geldende minimum-
+      6 De overeenkomstig het eerste tot en met vijfde lid vastgestelde, vanaf 1 januari geldende minimum-
       inkomensijkpunten, referentie-inkomensijkpunten, maximale inkomensgrenzen, normhuren, de als gevolg daarvan
       voor de onderscheiden typen huishouden gewijzigde factoren, bedoeld in [artikel 19, tweede lid][ref10], maximale
-      huur-, kwaliteitskortings- en aftoppingsgrenzen, worden elk jaar uiterlijk op 1 november daaraan voorafgaand in de
+      huur-, kwaliteitskortings- en aftoppingsgrenzen, worden elk jaar uiterlijk op 1 november daaraan voorafgaand in de
       Staatscourant bekendgemaakt.
 
       7 Bij algemene maatregel van bestuur kunnen de bedragen, genoemd in de artikelen [16][ref11] (verhoging van de
@@ -679,7 +1300,7 @@ articles:
 
       5 Bij de toepassing van [artikel 2][ref6], en bij de toepassing van
       [artikel 7 van de Algemene wet inkomensafhankelijke regelingen][ref7] kan de Dienst Toeslagen op verzoek van de
-      huurder het op 31 december 2005 van kracht zijnde beleid toepassen dat Onze Minister heeft getroffen op grond
+      huurder het op 31 december 2005 van kracht zijnde beleid toepassen dat Onze Minister heeft getroffen op grond
       van [artikel 9][ref8] en [artikel 26][ref9], eerste lid, zoals die artikelen onmiddellijk voorafgaand aan de
       inwerkingtreding van de [Aanpassingswet Algemene wet inkomensafhankelijke regelingen][ref10] luidden.
 
