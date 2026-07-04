@@ -163,13 +163,36 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0020809
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel1
     references:
-      - id: ref1
-        bwb_id: BWBR0020809
+       - id: ref1
+         bwb_id: BWBR0020809
   - number: '2'
     text: |-
       Instellingen doen jaarlijks in het jaarverslag of bij de aanvraag vaststelling rijksvergoeding ten aanzien van de
       publieke middelen ten minste verslag van:
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel2
+    machine_readable:
+      rule:
+        description: Instellingen moeten jaarlijks verslag doen over beleggen en belenen van publieke middelen
+        condition: instelling_type == 'onderwijs_onderzoek'
+        conclusion: verslagplicht == True
+        outputs:
+          - verslagplicht
+          - beleid_en_uitvoering
+          - soorten_en_omvang
+          - looptijden
+      outputs:
+        verslagplicht:
+          description: Verplichting tot jaarlijks verslag
+          type: boolean
+        beleid_en_uitvoering:
+          description: Beleid en uitvoering van beleggen en belenen
+          type: string
+        soorten_en_omvang:
+          description: Soorten en omvang van beleggingen en beleningen
+          type: string
+        looptijden:
+          description: Looptijden van beleggingen en beleningen
+          type: string
   - number: 2.a)
     text: het beleid en de uitvoering ten aanzien van het beleggen en belenen;
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel2
@@ -184,6 +207,17 @@ articles:
       Instellingen beleggen en belenen publieke middelen en overige middelen, voorzover deze niet zijn afgescheiden van
       de publieke middelen, risicomijdend.
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel3
+    machine_readable:
+      rule:
+        description: Instellingen moeten publieke middelen en niet-afgescheiden overige middelen risicomijdend beleggen en belenen
+        condition: (middelen_type == 'publieke_middelen') or (middelen_type == 'overige_middelen' and not gescheiden_van_publieke_middelen)
+        conclusion: beleg_en_beleen_methode == 'risicomijdend'
+        outputs:
+          - beleg_en_beleen_methode
+      outputs:
+        beleg_en_beleen_methode:
+          description: Methode voor beleggen en belenen (moet risicomijdend zijn)
+          type: string
   - number: '3.2'
     text: |-
       Instellingen leggen de hoofdlijnen van de op het beleggen en belenen betrekking hebbende administratieve
@@ -200,14 +234,51 @@ articles:
       financiële instellingen of door financiële instellingen uitgegeven papier met minimaal een A rating, afgegeven door
       tenminste één erkende rating agency, of met
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel3
+    machine_readable:
+      rule:
+        description: Transacties mogen alleen worden aangegaan met financiële instellingen of papier met minimaal A-rating
+        condition: (tegenpartij_type == 'financiële_instelling' and rating >= 'A') or (papier_type == 'financieel_papier' and rating >= 'A')
+        conclusion: transactie_toegestaan == True
+        outputs:
+          - transactie_toegestaan
+      outputs:
+        transactie_toegestaan:
+          description: Of de transactie is toegestaan op basis van A-rating
+          type: boolean
   - number: 3.3.b)
     text: rechtspersonen voor wier papier een solvabiliteitsratio van 0% geldt, of met
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel3
+    machine_readable:
+      rule:
+        description: Transacties mogen worden aangegaan met rechtspersonen met 0% solvabiliteitsratio
+        condition: (tegenpartij_type == 'rechtspersoon') and (solvabiliteitsratio == 0)
+        conclusion: transactie_toegestaan == True
+        outputs:
+          - transactie_toegestaan
+      outputs:
+        transactie_toegestaan:
+          description: Of de transactie is toegestaan op basis van 0% solvabiliteitsratio
+          type: boolean
   - number: 3.3.c)
     text: |-
       financiële instellingen, met een kredietwaardigheid vergelijkbaar met het gestelde onder a, voorzover vastgelegd en
       onderbouwd door de instelling.
     url: https://wetten.overheid.nl/BWBR0021232/2007-02-14#Artikel3
+    machine_readable:
+      rule:
+        description: Transacties mogen worden aangegaan met financiële instellingen met equivalente kredietwaardigheid aan 3.3.a
+        condition: (tegenpartij_type == 'financiële_instelling') and (kredietwaardigheid_equivalent == True) and (vastgelegd_en_onderbouwd == True)
+        conclusion: transactie_toegestaan == True
+        sources:
+          - regulation: BWBR0021232
+            output: transactie_toegestaan
+            article: 3.3.a)
+        outputs:
+          - transactie_toegestaan
+      outputs:
+        transactie_toegestaan:
+          description: Of de transactie is toegestaan op basis van equivalente kredietwaardigheid
+          type: boolean
   - number: '5'
     text: |-
       Deze regeling zal met toelichting in Uitleg OCenW-regelingen worden geplaatst. Van deze plaatsing zal mededeling
