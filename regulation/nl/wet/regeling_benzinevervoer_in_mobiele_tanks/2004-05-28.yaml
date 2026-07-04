@@ -86,7 +86,6 @@ articles:
       en terugwinning op een andere terminal, uitgezonderd de overbrenging van damp van de ene naar de andere
       opslaginstallatie op een terminal.
 
-
       [ref1]: https://wetten.overheid.nl/BWBR0007806
       [ref2]: https://wetten.overheid.nl/BWBR0007806
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel1
@@ -100,18 +99,37 @@ articles:
       Mobiele tanks worden zodanig ontworpen en geëxploiteerd, dat de restdampen na het lossen van de benzine in de tank
       blijven.
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel2
+    machine_readable:
+      logical_structure:
+        - condition: "mobiele tank wordt gebruikt voor vervoer van benzine"
+          action: "restdampen moeten na lossen in de tank blijven"
+      executable: true
   - number: '2.2'
     text: |-
       Mobiele tanks die benzine aan benzinestations of aan terminals leveren, worden zodanig ontworpen en geëxploiteerd,
       dat zij retourdampen uit de opslaginstallaties van de benzinestations of de terminals opvangen en opslaan. Voor
-      tankwagons is dit alleen vereist wanneer zij benzine leveren aan benzinestations of aan terminals met voorlopige
+      tankwagons is dit alleen vereist wanneer Zij benzine leveren aan benzinestations of aan terminals met voorlopige
       dampopslag.
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel2
+    machine_readable:
+      logical_structure:
+        - condition: "mobiele tank levert benzine aan benzinestation OF terminal"
+          action: "retourdampen moeten worden opgevangen en opgeslagen"
+        - condition: "tankwagon levert benzine"
+          subcondition: "benzinestation OF terminal heeft voorlopige dampopslag"
+          action: "retourdampen moeten worden opgevangen en opgeslagen"
+      executable: true
   - number: '2.3'
     text: |-
       De in het eerste en tweede lid bedoelde dampen blijven in de mobiele tank opgeslagen totdat in een terminal wordt
       herladen, uitgezonderd voor de afvoer via de veiligheidsoverdrukkleppen.
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel2
+    machine_readable:
+      logical_structure:
+        - condition: "dampen bedoeld in 2.1 OF 2.2"
+          action: "dampen moeten in mobiele tank blijven tot herladen in terminal"
+          exception: "afvoer via veiligheidsoverdrukkleppen"
+      executable: true
   - number: '2.4'
     text: |-
       Wanneer de schipper aannemelijk kan maken dat de mobiele tank na het lossen van de benzine
@@ -126,6 +144,13 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0010115
+    machine_readable:
+      logical_structure:
+        - condition: "schipper kan aannemelijk maken dat mobiele tank na lossen benzine wordt beladen met ander product"
+          subcondition: "geen voorzieningen voor dampterugwinning OF voorlopige dampopslag op plaats van lossen en laden"
+          action: "ontgassing is toegestaan"
+          reference: "randnummer 7.2.3.7 van bijlage 1 van Regeling vervoer over de binnenwateren van gevaarlijke stoffen"
+      executable: true
   - number: '2.5'
     text: |-
       Een aangewezen instantie als bedoeld in
@@ -141,10 +166,17 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0010115
+    machine_readable:
+      logical_structure:
+        - condition: "aangewezen instantie (bijlage 4 Regeling vervoer binnenwateren gevaarlijke stoffen) betreffende randnummer 7.2.3.7"
+          action: "kan ontgassing voor binnenvaart verbieden voor bepaalde periode"
+          subcondition: "verbod strekt ter uitvoering van geoperationaliseerd regionaal OF lokaal programma ter bestrijding van milieuverontreiniging"
+          example: "waarschuwingssysteem verhoogde luchtverontreiniging DCMR"
+      executable: true
   - number: '3.1'
     text: |-
       Op het testen van de dampdichtheid van mobiele tanks die over de weg worden vervoerd is randnummer 6.8.2.4.3 van
-      [bijlage 1 bij de Regeling vervoer over land van gevaarlijke stoffen][ref1] van toepassing.
+      [bijlage 1 bij de Regeling vervoer over land van gevaarlijke stoffen][ref1] van toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010054
@@ -152,14 +184,20 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0010054
+    machine_readable:
+      logical_structure:
+        - condition: "mobiele tank wordt over de weg vervoerd"
+          action: "toepassen randnummer 6.8.2.4.3 van bijlage 1 Regeling vervoer over land van gevaarlijke stoffen"
+          reference: "BWBR0010054 randnummer 6.8.2.4.3"
+      executable: true
   - number: '3.2'
     text: |-
       De juiste werking van de vacuümdrukkleppen van de mobiele tanks wordt
       gecontroleerd met inachtneming van de randnummers 6.8.2.4.2 en 6.8.2.4.3 van
-      [bijlage 1 bij de Regeling vervoer over land van gevaarlijke stoffen][ref1], de randnummers 6.8.2.4.2
-      en 6.8.2.4.3 van [bijlage 1 bij de Regeling vervoer over de spoorweg van gevaarlijke stoffen][ref2]
+      [bijlage 1 bij de Regeling vervoer over land van gevaarlijke stoffen][ref1], de randnummers 6.8.2.4.2
+      en 6.8.2.4.3 van [bijlage 1 bij de Regeling vervoer over de spoorweg van gevaarlijke stoffen][ref2]
       onderscheidenlijk de randnummers 8.1.8 en 9.3.2.22.4 van
-      [bijlage 1 bij de Regeling vervoer over de binnenwateren van gevaarlijke stoffen][ref3].
+      [bijlage 1 bij de Regeling vervoer over de binnenwateren van gevaarlijke stoffen][ref3].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010054
@@ -173,6 +211,18 @@ articles:
         bwb_id: BWBR0010053
       - id: ref3
         bwb_id: BWBR0010115
+    machine_readable:
+      logical_structure:
+        - condition: "mobiele tank wordt over de weg vervoerd"
+          action: "controle juiste werking vacuümdrukkleppen volgens randnummers 6.8.2.4.2 en 6.8.2.4.3 van bijlage 1 Regeling vervoer over land van gevaarlijke stoffen"
+          reference: "BWBR0010054 randnummers 6.8.2.4.2 en 6.8.2.4.3"
+        - condition: "mobiele tank wordt per spoor vervoerd"
+          action: "controle juiste werking vacuümdrukkleppen volgens randnummers 6.8.2.4.2 en 6.8.2.4.3 van bijlage 1 Regeling vervoer over spoorweg van gevaarlijke stoffen"
+          reference: "BWBR0010053 randnummers 6.8.2.4.2 en 6.8.2.4.3"
+        - condition: "mobiele tank wordt over binnenwateren vervoerd"
+          action: "controle juiste werking vacuümdrukkleppen volgens randnummers 8.1.8 en 9.3.2.22.4 van bijlage 1 Regeling vervoer over binnenwateren van gevaarlijke stoffen"
+          reference: "BWBR0010115 randnummers 8.1.8 en 9.3.2.22.4"
+      executable: true
   - number: '4.1'
     text: |-
       [Artikel 2][ref1] is van toepassing:
@@ -184,20 +234,46 @@ articles:
       - id: ref1
         bwb_id: BWBR0007744
         artikel: '2'
+    machine_readable:
+      logical_structure:
+        - condition: "toepassing van Artikel 2"
+          action: "Artikel 2 is van toepassing"
+          reference: "BWBR0007744 Artikel 2"
+      executable: true
   - number: 4.1.a)
     text: met ingang van 31 december 1995 ten aanzien van nieuwe tankwagens, tankwagons en schepen;
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel4
+    machine_readable:
+      logical_structure:
+        - condition: "nieuwe tankwagens, tankwagons OF schepen"
+          action: "Artikel 2 is van toepassing met ingang van 31 december 1995"
+          reference: "BWBR0007744 Artikel 2"
+      executable: true
   - number: 4.1.b)
     text: |-
-      met ingang van 31 december 1998 ten aanzien van voor 31 december 1995 in gebruik zijnde tankwagons en schepen,
+      met ingang van 31 december 1998 ten aanzien van voor 31 december 1995 in gebruik zijnde tankwagens en schepen,
       indien zij worden gevuld in of op een terminal waarop artikel 4, eerste lid, van de richtlijn van toepassing is;
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel4
+    machine_readable:
+      logical_structure:
+        - condition: "tankwagens OF schepen in gebruik voor 31 december 1995"
+          subcondition: "worden gevuld in OF op terminal waar artikel 4, eerste lid, van de richtlijn van toepassing is"
+          action: "Artikel 2 is van toepassing met ingang van 31 december 1998"
+          reference: "BWBR0007744 Artikel 2 en richtlijn artikel 4, eerste lid"
+      executable: true
   - number: 4.1.c)
     text: |-
       ten aanzien van voor 31 december 1995 in gebruik zijnde tankwagens, wanneer zij worden omgebouwd voor vulling langs
       de onderzijde overeenkomstig de specificaties 1.1, 1.2, 2.3, 3.1, 3.2, 3.4, 3.5, 4.1.1 tot en met 4.1.4, en 5.2 van
       bijlage IV van de richtlijn.
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel4
+    machine_readable:
+      logical_structure:
+        - condition: "tankwagens in gebruik voor 31 december 1995"
+          subcondition: "worden omgebouwd voor vulling langs de onderzijde overeenkomstig specificaties 1.1, 1.2, 2.3, 3.1, 3.2, 3.4, 3.5, 4.1.1 tot en met 4.1.4, en 5.2 van bijlage IV van de richtlijn"
+          action: "Artikel 2 is van toepassing"
+          reference: "BWBR0007744 Artikel 2 en bijlage IV van de richtlijn"
+      executable: true
   - number: '4.2'
     text: |-
       [Artikel 2][ref1] is niet van toepassing op dampverliezen ten gevolge van metingen met peilstokken bij mobiele
@@ -210,6 +286,13 @@ articles:
       - id: ref1
         bwb_id: BWBR0007744
         artikel: '2'
+    machine_readable:
+      logical_structure:
+        - condition: "dampverliezen ten gevolge van metingen met peilstokken"
+          subcondition: "mobiele tanks die voor 1 januari 2000 in gebruik zijn genomen"
+          action: "Artikel 2 is niet van toepassing"
+          reference: "BWBR0007744 Artikel 2"
+      executable: true
   - number: '5'
     text: Deze regeling treedt in werking met ingang van 31 december 1995.
     url: https://wetten.overheid.nl/BWBR0007744/2004-05-28#Artikel5
