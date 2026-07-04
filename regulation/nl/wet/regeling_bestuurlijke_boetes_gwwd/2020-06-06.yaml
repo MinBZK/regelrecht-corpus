@@ -32,20 +32,21 @@ articles:
       - id: ref1
         bwb_id: BWBR0005662
         artikel: '30'
+
   - number: '2'
     text: |-
-      1 De hoogte van de bestuurlijke boetes die de Minister op grond van [artikel 120b van de wet][ref1] voor
-      overtredingen als bedoeld in [artikel 120a, eerste lid, onderdeel a, van de wet][ref2] kan opleggen, wordt
-      vastgesteld overeenkomstig de bedragen die horen bij de boetecategorieën die in de [bijlagen 1][ref3], [2][ref4],
-      [3][ref5] of [4][ref6] voor de desbetreffende overtredingen zijn vastgelegd.
+      1 De hoogte van de bestuurlijke boetes die de Minister op grond van artikel 120b van de wet voor
+      overtredingen als bedoeld in artikel 120a, eerste lid, onderdeel a, van de wet kan opleggen, wordt
+      vastgesteld overeenkomstig de bedragen die horen bij de boetecategorieën die in de bijlagen 1, 2,
+      3 of 4 voor de desbetreffende overtredingen zijn vastgelegd.
 
       2 De bedragen bij de boetecategorieën, bedoeld in het eerste lid, zijn:
 
-      a. voor de categorie geringe overtredingen: € 500,−;
+      a. voor de categorie geringe overtredingen: € 500,−;
 
-      b. voor de categorie overtredingen: € 1.500,−;
+      b. voor de categorie overtredingen: € 1.500,−;
 
-      c. voor de categorie ernstige overtredingen: € 2.500,−.
+      c. voor de categorie ernstige overtredingen: € 2.500,−.
 
       d. voor de categorie overtredingen met verhoogde boete, zijnde overtredingen begaan ten aanzien van:
 
@@ -53,16 +54,8 @@ articles:
 
       2°. indien het pluimvee betreft:
 
-        - meer dan 7,5 procent van het aantal dieren op een transport, of
-        - meer dan 5 procent van het aantal dieren op een transport ingeval die dieren dood zijn aangetroffen: € 6000,−
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005662#Artikel120b
-      [ref2]: https://wetten.overheid.nl/BWBR0005662#Artikel120a
-      [ref3]: https://wetten.overheid.nl/BWBR0028149
-      [ref4]: https://wetten.overheid.nl/BWBR0028149
-      [ref5]: https://wetten.overheid.nl/BWBR0028149
-      [ref6]: https://wetten.overheid.nl/BWBR0028149
+        - meer dan 7,5 percent van het aantal dieren op een transport, of
+        - meer dan 5 percent van het aantal dieren op een transport ingeval die dieren dood zijn aangetroffen: € 6000,−
     url: https://wetten.overheid.nl/BWBR0028149/2020-06-06#Artikel2
     references:
       - id: ref1
@@ -79,6 +72,48 @@ articles:
         bwb_id: BWBR0028149
       - id: ref6
         bwb_id: BWBR0028149
+    machine_readable:
+      execution:
+        parameters:
+          - name: categorie
+            type: string
+            required: true
+            description: De boetecategorie zoals vastgelegd in bijlagen 1, 2, 3, of 4
+        output:
+          - name: boetebedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het boetebedrag voor de desbetreffende categorie
+        actions:
+          - output: boetebedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "geringe overtredingen"
+                  then: 50000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "overtredingen"
+                  then: 150000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "ernstige overtredingen"
+                  then: 250000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "overtredingen met verhoogde boete"
+                  then: 600000
+              legal_basis:
+                law: "Regeling bestuurlijke boetes GWWD"
+                article: "2"
+
   - number: '3'
     text: |-
       Indien in Nederland of in bepaalde gedeelten van Nederland een vervoersverbod geldt ten gevolge van een uitbraak
@@ -99,6 +134,44 @@ articles:
         bwb_id: BWBR0028149
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vervoersverbod_actief
+            type: boolean
+            required: true
+            description: Of een vervoersverbod actief is in Nederland door dierziekte-uitbraak
+          - name: risico_verspreiding_ziekte
+            type: boolean
+            required: true
+            description: Of de overtreding risico op verspreiding van de ziekte met zich meebrengt
+        output:
+          - name: boetebedrag_verhoogd
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het verhoogde boetebedrag bij actief vervoersverbod en risico op verspreiding
+        actions:
+          - output: boetebedrag_verhoogd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    values:
+                      - $vervoersverbod_actief
+                      - $risico_verspreiding_ziekte
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - source: { output: boetebedrag }
+                      - 1.5
+              default:
+                source: { output: boetebedrag }
+            legal_basis:
+              law: "Regeling bestuurlijke boetes GWWD"
+              article: "3"
+
   - number: '4'
     text: |-
       Indien binnen een tijdsbestek van vijf jaren door dezelfde persoon of rechtspersoon een eerder geconstateerde
@@ -106,6 +179,43 @@ articles:
       voor die categorie overtredingen op te leggen boete en van de voor die eerdere overtreding opgelegde bestuurlijke
       boete.
     url: https://wetten.overheid.nl/BWBR0028149/2020-06-06#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: eerdere_overtreding_binnen_5_jaar
+            type: boolean
+            required: true
+            description: Of binnen 5 jaar een eerdere overtreding is begaan door dezelfde persoon of rechtspersoon
+          - name: boetebedrag_eerdere_overtreding
+            type: amount
+            type_spec: { unit: eurocent }
+            required: true
+            description: Het boetebedrag voor de eerdere overtreding
+        output:
+          - name: boetebedrag_recidive
+            type: amount
+            type_spec: { unit: eurocent }
+            description: Het boetebedrag bij recidive
+        actions:
+          - output: boetebedrag_recidive
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $eerdere_overtreding_binnen_5_jaar
+                    value: true
+                  then:
+                    operation: ADD
+                    values:
+                      - source: { output: boetebedrag }
+                      - $boetebedrag_eerdere_overtreding
+              default:
+                source: { output: boetebedrag }
+            legal_basis:
+              law: "Regeling bestuurlijke boetes GWWD"
+              article: "4"
+
   - number: 4a
     text: |-
       Indien een overtreding is begaan van de voorschriften in de
@@ -134,9 +244,43 @@ articles:
         bwb_id: BWBR0028149
         artikel: '4'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overtreding_van_rir
+            type: boolean
+            required: true
+            description: Of de overtreding betreft de Regeling identificatie en registratie van dieren (BWBR0014538)
+          - name: niet_in_beroep_of_bedrijf
+            type: boolean
+            required: true
+            description: Of de overtreding niet in de uitoefening van een beroep of bedrijf is begaan
+        output:
+          - name: boetebedrag_gehalveerd
+            type: amount
+            type_spec: { unit: eurocent }
+            description: Het gehalveerde boetebedrag voor overtredingen van RIR niet in beroep/bedrijf
+        actions:
+          - output: boetebedrag_gehalveerd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    values: [ $overtreding_van_rir, $niet_in_beroep_of_bedrijf ]
+                  then:
+                    operation: DIVIDE
+                    values: [ source: { output: boetebedrag }, 2 ]
+              default:
+                source: { output: boetebedrag }
+            legal_basis:
+              law: "Regeling bestuurlijke boetes GWWD"
+              article: "4a"
+
   - number: '7'
     text: Deze regeling wordt aangehaald als ‘Regeling bestuurlijke boetes GWWD’.
     url: https://wetten.overheid.nl/BWBR0028149/2020-06-06#Artikel7
+
   - number: '8'
     text: |-
       Deze regeling treedt in werking met ingang van de eerste dag na de dagtekening van de Staatscourant waarin zij
