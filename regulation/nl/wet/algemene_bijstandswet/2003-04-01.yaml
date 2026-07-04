@@ -256,6 +256,34 @@ articles:
       - id: ref4
         bwb_id: BWBR0011823
         artikel: '8'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: Of de persoon de Nederlandse nationaliteit heeft
+          - name: heeft_rechtmatig_verblijf_art8_a_tm_e_of_l
+            type: boolean
+            required: false
+            description: Of de vreemdeling rechtmatig verblijft o.g.v. art. 8 a-e of l Vreemdelingenwet 2000
+        output:
+          - name: voldoet_nationaliteitsvereiste
+            type: boolean
+            description: Of de persoon op grond van nationaliteit of verblijfsstatus recht heeft op bijstand (art. 7 lid 1 en 2)
+        actions:
+          - output: voldoet_nationaliteitsvereiste
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_nederlander
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_rechtmatig_verblijf_art8_a_tm_e_of_l
+                  value: true
   - number: '8'
     text: |-
       1 Aan de zelfstandige die gedurende een redelijke termijn als zodanig werkzaam is geweest en wiens bedrijf of
@@ -399,6 +427,104 @@ articles:
       - id: ref8
         bwb_id: BWBR0004608
         artikel: '65'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_gedetineerd
+            type: boolean
+            required: true
+            description: Of aan de persoon rechtens zijn vrijheid is ontnomen (lid 1a)
+          - name: vervult_militaire_dienst
+            type: boolean
+            required: true
+            description: Of de persoon zijn militaire of vervangende dienstplicht vervult (lid 1b)
+          - name: is_gestaakt_werknemer
+            type: boolean
+            required: false
+            description: Of de persoon wegens werkstaking of uitsluiting niet deelneemt aan arbeid (lid 1c)
+          - name: gebrek_door_staking
+            type: boolean
+            required: false
+            description: Of het gebrek aan middelen het gevolg is van werkstaking (lid 1c)
+          - name: verblijft_buiten_nl_langer_dan_vakantie
+            type: boolean
+            required: false
+            description: Of de persoon langer dan de gebruikelijke vakantieduur buiten NL verblijft (lid 1d)
+          - name: leeftijd
+            type: number
+            required: true
+            description: Leeftijd van de persoon in jaren
+          - name: verblijft_in_inrichting
+            type: boolean
+            required: false
+            description: Of de persoon in een inrichting verblijft (lid 2a)
+          - name: volgt_onderwijs_studiefinanciering
+            type: boolean
+            required: false
+            description: Of de persoon onderwijs volgt als bedoeld in Wet studiefinanciering 2000 (lid 2b)
+        output:
+          - name: geen_recht_bijstand
+            type: boolean
+            description: Of de persoon geen recht op bijstand heeft op grond van art. 9 lid 1
+          - name: geen_recht_algemene_bijstand
+            type: boolean
+            description: Of de persoon geen recht op algemene bijstand heeft op grond van art. 9 lid 2
+        actions:
+          - output: uitsluiting_staking
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_gestaakt_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $gebrek_door_staking
+                  value: true
+          - output: geen_recht_bijstand
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_gedetineerd
+                  value: true
+                - operation: EQUALS
+                  subject: $vervult_militaire_dienst
+                  value: true
+                - operation: EQUALS
+                  subject: $uitsluiting_staking
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_buiten_nl_langer_dan_vakantie
+                  value: true
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 18
+          - output: uitsluiting_inrichting_18_20
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 20
+                - operation: EQUALS
+                  subject: $verblijft_in_inrichting
+                  value: true
+          - output: geen_recht_algemene_bijstand
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $geen_recht_bijstand
+                  value: true
+                - operation: EQUALS
+                  subject: $uitsluiting_inrichting_18_20
+                  value: true
+                - operation: EQUALS
+                  subject: $volgt_onderwijs_studiefinanciering
+                  value: true
   - number: '10'
     text: |-
       Een persoon van 18, 19 of 20 jaar heeft slechts recht op bijzondere bijstand voor zover zijn noodzakelijke kosten
@@ -1174,6 +1300,72 @@ articles:
       - id: ref7
         bwb_id: BWBR0011353
         hoofdstuk: '8'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: in_aanmerking_te_nemen_inkomen
+            type: number
+            required: true
+            description: Het in aanmerking te nemen inkomen per kalendermaand in eurocent (na aftrek o.g.v. afdeling 3)
+          - name: in_aanmerking_te_nemen_vermogen
+            type: number
+            required: true
+            description: Het in aanmerking te nemen vermogen in eurocent na toepassing art. 52 vrijstellingen (0 als volledig vrijgesteld)
+        input:
+          - name: bijstandsnorm
+            type: amount
+            source:
+              output: bijstandsnorm
+            type_spec:
+              unit: eurocent
+            description: Toepasselijke bijstandsnorm per kalendermaand o.g.v. paragraaf 2 en 3
+        output:
+          - name: heeft_recht_op_algemene_bijstand
+            type: boolean
+            description: Of de alleenstaande of het gezin recht heeft op algemene bijstand (lid 1)
+          - name: hoogte_algemene_bijstand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de algemene bijstand per kalendermaand (lid 2; bijstandsnorm minus inkomen)
+        actions:
+          - output: inkomen_onder_norm
+            value:
+              operation: LESS_THAN
+              subject: $in_aanmerking_te_nemen_inkomen
+              value: $bijstandsnorm
+          - output: geen_vermogen
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $in_aanmerking_te_nemen_vermogen
+              value: 0
+          - output: heeft_recht_op_algemene_bijstand
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $inkomen_onder_norm
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_vermogen
+                  value: true
+          - output: hoogte_algemene_bijstand
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_algemene_bijstand
+                    value: true
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $bijstandsnorm
+                      - $in_aanmerking_te_nemen_inkomen
+              default: 0
   - number: '27'
     text: |-
       1 De algemene bijstand wordt per kalendermaand vastgesteld.
@@ -1211,6 +1403,60 @@ articles:
 
       c. gehuwden waarvan een echtgenoot 18, 19 of 20 jaar is en de andere echtgenoot 21 jaar of ouder: f 1 587,51 .
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel29
+    machine_readable:
+      untranslatables:
+        - construct: "Bijstandsnormen in Nederlandse guldens (f)"
+          reason: "Bedragen in de wettekst zijn historische guldensbedragen (pre-euro). Art. 56 verleent de Minister indexatiebevoegdheid. Bedragen omgezet tegen officieel koers 1 EUR = 2,20371 NLG."
+          legal_text_excerpt: "een alleenstaande van 18, 19 of 20 jaar f 321,74"
+          accepted: false
+      execution:
+        parameters:
+          - name: huishoudtype
+            type: string
+            required: true
+            description: "Type huishouden: ALLEENSTAANDE | ALLEENSTAANDE_OUDER | GEHUWDEN_BEIDEN_JONG | GEHUWD_EEN_JONG_ANDERE_OUD | GEHUWDEN_BEIDEN_JONG_MET_KIND | GEHUWD_EEN_JONG_ANDERE_OUD_MET_KIND"
+        output:
+          - name: bijstandsnorm_jonger_21
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm per kalendermaand voor belanghebbenden jonger dan 21 jaar (art. 29; basisbedragen geconverteerd van NLG naar eurocent)
+        actions:
+          - output: bijstandsnorm_jonger_21
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: ALLEENSTAANDE
+                  then: 14601
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWDEN_BEIDEN_JONG
+                  then: 29200
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWD_EEN_JONG_ANDERE_OUD
+                  then: 10249
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: ALLEENSTAANDE_OUDER
+                  then: 31012
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWDEN_BEIDEN_JONG_MET_KIND
+                  then: 45613
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWD_EEN_JONG_ANDERE_OUD_MET_KIND
+                  then: 72037
+              default: 0
   - number: '30'
     text: |-
       1 Voor belanghebbenden van 21 jaar of ouder, doch jonger dan 65 jaar is de bijstandsnorm per kalendermaand, indien
@@ -1233,6 +1479,94 @@ articles:
       d. gehuwden waarvan een echtgenoot 65 jaar of ouder is en de andere echtgenoot 21 jaar of ouder, doch jonger dan 65
       jaar: f 2 009,47 .
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel30
+    machine_readable:
+      untranslatables:
+        - construct: "Bijstandsnormen in Nederlandse guldens (f)"
+          reason: "Bedragen in de wettekst zijn historische guldensbedragen (pre-euro). Art. 56 en 57 verleent de Minister indexatiebevoegdheid. Omgezet tegen 1 EUR = 2,20371 NLG."
+          legal_text_excerpt: "een alleenstaande: f 904,12"
+          accepted: false
+      execution:
+        parameters:
+          - name: huishoudtype
+            type: string
+            required: true
+            description: "Type huishouden: ALLEENSTAANDE | ALLEENSTAANDE_OUDER | GEHUWDEN_BEIDEN_JONG | GEHUWDEN_BEIDEN_OUD | GEHUWD_EEN_OUD_ANDERE_JONG"
+          - name: een_of_beide_65_of_ouder
+            type: boolean
+            required: true
+            description: Of een of beide partners 65 jaar of ouder zijn
+        output:
+          - name: bijstandsnorm
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm per kalendermaand voor 21+ jarigen (art. 30; basisbedragen geconverteerd van NLG naar eurocent)
+        actions:
+          - output: bijstandsnorm
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $huishoudtype
+                        value: ALLEENSTAANDE
+                      - operation: EQUALS
+                        subject: $een_of_beide_65_of_ouder
+                        value: false
+                  then: 41027
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $huishoudtype
+                        value: ALLEENSTAANDE_OUDER
+                      - operation: EQUALS
+                        subject: $een_of_beide_65_of_ouder
+                        value: false
+                  then: 57439
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $huishoudtype
+                        value: GEHUWDEN_BEIDEN_JONG
+                      - operation: EQUALS
+                        subject: $een_of_beide_65_of_ouder
+                        value: false
+                  then: 82053
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $huishoudtype
+                        value: ALLEENSTAANDE
+                      - operation: EQUALS
+                        subject: $een_of_beide_65_of_ouder
+                        value: true
+                  then: 64602
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $huishoudtype
+                        value: ALLEENSTAANDE_OUDER
+                      - operation: EQUALS
+                        subject: $een_of_beide_65_of_ouder
+                        value: true
+                  then: 82729
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWDEN_BEIDEN_OUD
+                  then: 92157
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWD_EEN_OUD_ANDERE_JONG
+                  then: 91184
+              default: 0
   - number: '31'
     text: |-
       1 Bij een verblijf in een inrichting is de bijstandsnorm per kalendermaand, indien het betreft:
@@ -1244,11 +1578,80 @@ articles:
       2 Indien een van de gehuwden in een inrichting verblijft, is de bijstandsnorm de som van de bijstandsnormen die
       voor ieder van hen als alleenstaande of alleenstaande ouder zouden gelden.
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel31
+    machine_readable:
+      untranslatables:
+        - construct: "Bijstandsnormen in Nederlandse guldens (f) voor verblijf in inrichting"
+          reason: "Bedragen zijn historische guldensbedragen. Art. 59 geeft de Minister indexatiebevoegdheid. Omgezet tegen 1 EUR = 2,20371 NLG."
+          legal_text_excerpt: "een alleenstaande of een alleenstaande ouder: f 509,38"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_gehuwden
+            type: boolean
+            required: true
+            description: Of het gehuwden betreft (anders alleenstaande/alleenstaande ouder)
+          - name: een_in_inrichting_ander_niet
+            type: boolean
+            required: false
+            description: Of slechts een van de gehuwden in een inrichting verblijft (lid 2)
+        input:
+          - name: bijstandsnorm_alleenstaand
+            type: amount
+            source:
+              output: bijstandsnorm
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm voor alleenstaande o.g.v. art. 30 (voor toepassing lid 2)
+        output:
+          - name: bijstandsnorm_inrichting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm per kalendermaand bij verblijf in inrichting (art. 31)
+        actions:
+          - output: bijstandsnorm_inrichting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $een_in_inrichting_ander_niet
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 2
+                      - $bijstandsnorm_alleenstaand
+                - when:
+                    operation: EQUALS
+                    subject: $is_gehuwden
+                    value: true
+                  then: 35957
+              default: 23114
   - number: '32'
     text: |-
       Indien een van de gehuwden geen recht op algemene bijstand heeft, is voor de rechthebbende echtgenoot de
       bijstandsnorm gelijk aan de bijstandsnorm die voor hem als alleenstaande of alleenstaande ouder zou gelden.
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel32
+    machine_readable:
+      execution:
+        input:
+          - name: bijstandsnorm_alleenstaande
+            type: amount
+            source:
+              output: bijstandsnorm
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm die voor de rechthebbende echtgenoot als alleenstaande/alleenstaande ouder zou gelden (art. 30)
+        output:
+          - name: bijstandsnorm_een_recht
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bijstandsnorm voor de rechthebbende echtgenoot als de andere echtgenoot geen recht op bijstand heeft (art. 32)
+        actions:
+          - output: bijstandsnorm_een_recht
+            value: $bijstandsnorm_alleenstaande
   - number: '33'
     text: |-
       1 Burgemeester en wethouders verhogen voor een belanghebbende van 21 jaar of ouder doch jonger dan 65 jaar die een
@@ -1258,6 +1661,35 @@ articles:
 
       2 De toeslag bedraagt ten hoogste f 361,65  per kalendermaand.
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel33
+    machine_readable:
+      untranslatables:
+        - construct: "Maximale toeslag in Nederlandse guldens (f)"
+          reason: "Het maximumbedrag f 361,65 is een historisch guldenbedrag. Art. 56 geeft de Minister indexatiebevoegdheid. Omgezet tegen 1 EUR = 2,20371 NLG."
+          legal_text_excerpt: "De toeslag bedraagt ten hoogste f 361,65 per kalendermaand."
+          accepted: false
+      definitions:
+        MAX_TOESLAG:
+          value: 16411
+          description: "Maximale toeslag per kalendermaand (f 361,65 omgezet van NLG naar eurocent)"
+      execution:
+        parameters:
+          - name: toeslag_bedrag
+            type: number
+            required: true
+            description: Vastgesteld toeslagbedrag in eurocent per kalendermaand conform gemeenteverordening (art. 38)
+        output:
+          - name: toeslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Toeslag op de bijstandsnorm voor alleenstaande of alleenstaande ouder 21-64 jaar (art. 33); maximaal f 361,65 (geconverteerd)
+        actions:
+          - output: toeslag
+            value:
+              operation: MIN
+              values:
+                - $toeslag_bedrag
+                - $MAX_TOESLAG
   - number: '34'
     text: |-
       Burgemeester en wethouders kunnen voor gehuwden, waarvan beide echtgenoten jonger zijn dan 65 jaar, de
@@ -1750,6 +2182,77 @@ articles:
       2 Bij de bijstandsverlening aan een zelfstandige worden de verschuldigde inkomstenbelasting en premies
       volksverzekeringen over inkomen waarover geen loonbelasting is geheven gesteld op 28  procent van dat inkomen.
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel45
+    machine_readable:
+      definitions:
+        ZELFSTANDIGE_BELASTING_PERCENTAGE:
+          value: 0.28
+          description: "Percentage te stellen loonbelasting en premies voor zelfstandige inkomen (lid 2: 28%)"
+      execution:
+        parameters:
+          - name: bruto_middelen
+            type: number
+            required: true
+            description: Bruto middelen in eurocent vóór aftrek van belastingen en premies
+          - name: loonbelasting
+            type: number
+            required: true
+            description: Verschuldigde loonbelasting of inkomstenbelasting in eurocent (lid 1a; 0 indien n.v.t.)
+          - name: premies_volksverzekeringen
+            type: number
+            required: true
+            description: Verschuldigde premies volksverzekeringen en ziekenfondspremie in eurocent (lid 1b; 0 indien n.v.t.)
+          - name: pensioen_bijdragen
+            type: number
+            required: true
+            description: Verplichte bijdragen pensioenregeling in eurocent (lid 1c; 0 indien n.v.t.)
+          - name: overige_inhoudingen
+            type: number
+            required: true
+            description: Andere verplichte inhoudingen in eurocent (lid 1d; 0 indien n.v.t.)
+          - name: is_zelfstandige
+            type: boolean
+            required: false
+            description: Of de belanghebbende een zelfstandige is (lid 2)
+          - name: inkomen_zonder_loonheffing
+            type: number
+            required: false
+            description: Inkomen in eurocent waarover geen loonbelasting is geheven (voor zelfstandige, lid 2; 0 indien n.v.t.)
+        output:
+          - name: in_aanmerking_te_nemen_middelen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: In aanmerking te nemen middelen na aftrek van belastingen en verplichte inhoudingen (art. 45)
+        actions:
+          - output: forfaitaire_belasting_zelfstandige
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_zelfstandige
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $inkomen_zonder_loonheffing
+                      - $ZELFSTANDIGE_BELASTING_PERCENTAGE
+              default: 0
+          - output: totale_aftrek
+            value:
+              operation: ADD
+              values:
+                - $loonbelasting
+                - $premies_volksverzekeringen
+                - $pensioen_bijdragen
+                - $overige_inhoudingen
+                - $forfaitaire_belasting_zelfstandige
+          - output: in_aanmerking_te_nemen_middelen
+            value:
+              operation: SUBTRACT
+              values:
+                - $bruto_middelen
+                - $totale_aftrek
   - number: '46'
     text: Onze Minister stelt regels voor het in aanmerking nemen van de aanspraak op vakantietoeslag over een inkomen.
     url: https://wetten.overheid.nl/BWBR0007333/2003-04-01#Artikel46
@@ -2010,6 +2513,45 @@ articles:
         hoofdstuk: IV
         paragraaf: '3'
         afdeling: '3'
+    machine_readable:
+      untranslatables:
+        - construct: "Vermogensgrenzen in Nederlandse guldens (f)"
+          reason: "Bedragen zijn historische guldensbedragen. Art. 61 geeft de Minister jaarlijkse indexatiebevoegdheid per prijsindexcijfer. Omgezet tegen 1 EUR = 2,20371 NLG."
+          legal_text_excerpt: "voor een alleenstaande: f 8 600"
+          accepted: false
+      execution:
+        parameters:
+          - name: huishoudtype
+            type: string
+            required: true
+            description: "Type huishouden: ALLEENSTAANDE | ALLEENSTAANDE_OUDER | GEHUWDEN"
+        output:
+          - name: vermogensgrens
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Toepasselijke vermogensgrens per huishoudtype (art. 54; basisbedragen geconverteerd van NLG naar eurocent)
+        actions:
+          - output: vermogensgrens
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: ALLEENSTAANDE
+                  then: 390264
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: ALLEENSTAANDE_OUDER
+                  then: 780527
+                - when:
+                    operation: EQUALS
+                    subject: $huishoudtype
+                    value: GEHUWDEN
+                  then: 780527
+              default: 390264
   - number: '55'
     text: |-
       1 In deze afdeling wordt onder netto minimumloon verstaan het minimumloon per maand, genoemd in
