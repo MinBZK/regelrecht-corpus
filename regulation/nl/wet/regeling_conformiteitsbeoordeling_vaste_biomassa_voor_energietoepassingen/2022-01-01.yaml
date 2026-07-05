@@ -16,7 +16,7 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      1 In deze regeling wordt onder ‘besluit’ verstaan:
+      1 In deze regeling wordt onder 'besluit' verstaan:
       [Besluit conformiteitsbeoordeling vaste biomassa voor energietoepassingen][ref1].
 
       2 [Bijlage A][ref2] bevat begripsomschrijvingen van begrippen in de [bijlagen B][ref3], [C][ref4] en [D][ref5].
@@ -57,6 +57,37 @@ articles:
         bwb_id: BWBR0040431
       - id: ref3
         bwb_id: BWBR0040431
+    machine_readable:
+      execution:
+        output:
+          - name: duurzaamheidseisen_voldaan
+            type: boolean
+            description: Indicates whether the durability requirements for solid biomass categories are met as per Annex D in conjunction with Annex B.
+        input:
+          - name: bijlage_d
+            type: object
+            source:
+              regulation: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              output: bijlage_d
+          - name: bijlage_b
+            type: object
+            source:
+              regulation: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              output: bijlage_b
+        actions:
+          - output: duurzaamheidseisen_voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $bijlage_d
+                  value: true
+                - operation: EQUALS
+                  subject: $bijlage_b
+                  value: true
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '2'
   - number: '3'
     text: |-
       De beheerseisen, bedoeld in [artikel 16, derde lid, van het besluit][ref1] zijn opgenomen in [bijlage C][ref2].
@@ -71,6 +102,27 @@ articles:
         artikel: '16'
       - id: ref2
         bwb_id: BWBR0040431
+    machine_readable:
+      execution:
+        output:
+          - name: beheerseisen_voldaan
+            type: boolean
+            description: Indicates whether the management requirements are met as per Annex C.
+        input:
+          - name: bijlage_c
+            type: object
+            source:
+              regulation: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              output: bijlage_c
+        actions:
+          - output: beheerseisen_voldaan
+            value:
+              operation: EQUALS
+              subject: $bijlage_c
+              value: true
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '3'
   - number: '4'
     text: |-
       1 Het verificatieprotocol, bedoeld in [artikel 13 van het besluit][ref1], is het Verificatieprotocol duurzaamheid
@@ -86,6 +138,9 @@ articles:
       - id: ref1
         bwb_id: BWBR0040209
         artikel: '13'
+    machine_readable:
+      untranslatable: true
+      reason: Dynamic updates to the verification protocol are published via the RVO website, which cannot be statically represented.
   - number: '5'
     text: |-
       De inspecteurs van de Nederlandse emissieautoriteit worden aangewezen als ambtenaren, belast met het toezicht op de
@@ -98,6 +153,18 @@ articles:
       - id: ref1
         bwb_id: BWBR0040209
         artikel: '19'
+    machine_readable:
+      execution:
+        output:
+          - name: toezicht_ingevoerd
+            type: boolean
+            description: Indicates whether supervision by NEa inspectors is introduced.
+        actions:
+          - output: toezicht_ingevoerd
+            value: true
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '5'
   - number: '6'
     text: |-
       De redelijke termijn, bedoeld in [artikel 20, eerste en tweede lid, van het besluit][ref1], bedraagt zes maanden.
@@ -109,9 +176,21 @@ articles:
       - id: ref1
         bwb_id: BWBR0040209
         artikel: '20'
+    machine_readable:
+      execution:
+        output:
+          - name: redelijke_termijn
+            type: number
+            description: The reasonable term for compliance, in months.
+        actions:
+          - output: redelijke_termijn
+            value: 6
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '6'
   - number: '7'
     text: |-
-      Deze regeling treedt in werking op het tijdstip waarop het Besluit van 1 november 2017, houdende regels inzake de
+      Deze regeling treedt in werking op het tijdstip waarop het Besluit van 1 november 2017, houdende regels inzake de
       conformiteitsbeoordeling van vaste biomassa voor energietoepassingen door erkende conformiteitsbeoordelingsinstanties
       ([Besluit conformiteitsbeoordeling vaste biomassa voor energietoepassingen][ref1]) (Stb. 2017, 427) in werking
       treedt. Indien de Staatscourant waarin deze regeling wordt geplaatst, wordt uitgegeven op of na de datum van
