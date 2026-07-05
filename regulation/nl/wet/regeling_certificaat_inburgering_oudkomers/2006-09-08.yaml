@@ -54,6 +54,75 @@ articles:
         bwb_id: BWBR0019824
       - id: ref7
         bwb_id: BWBR0019120
+    machine_readable:
+      inputs:
+        - name: bsn
+          type: string
+          description: Burgerservicenummer van de oudkomer
+      outputs:
+        - name: certificaat_uitreikbaar
+          type: boolean
+          description: Indieneen certificaat uitgereikt kan worden aan de oudkomer
+      actions:
+        - describe: Check of de gemeente een overeenkomst heeft met de oudkomer
+          action:
+            AND:
+              conditions:
+                - source:
+                    regulation: BWBR0014009
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0015683
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0018320
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0018100
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0019119
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0019824
+                    output: overeenkomst_gesloten
+                - source:
+                    regulation: BWBR0019120
+                    output: zelfs_overeenkomst_gesloten
+          target: overeenkomst_gesloten_met_oudkomer
+        - describe: Check of de oudkomer de NT2-Profieltoets heeft afgelegd
+          action:
+            source:
+              regulation: BWBR0014009
+              output: nt2_profieltoets_afgelegd
+          target: nt2_profieltoets_geslaagd
+        - describe: Check of de oudkomer ingeschreven staat in de gemeentelijke basisadministratie
+          action:
+            source:
+              regulation: wet_basisregistratie_personen
+              output: ingeschreven_in_nederland
+          target: ingeschreven_in_gba
+        - describe: Bepaal of het certificaat kan worden uitgereikt
+          action:
+            AND:
+              conditions:
+                - EQUALS:
+                    left:
+                      source: overeenkomst_gesloten_met_oudkomer
+                    right:
+                      value: true
+                - EQUALS:
+                    left:
+                      source: nt2_profieltoets_geslaagd
+                    right:
+                      value: true
+                - NOT:
+                    EQUALS:
+                      left:
+                        source: ingeschreven_in_gba
+                      right:
+                        value: false
+          target: certificaat_uitreikbaar
   - number: '2'
     text: |-
       1 Het college van burgemeester en wethouders vermeldt op het certificaat bij de afzonderlijke toetsonderdelen het
@@ -64,6 +133,61 @@ articles:
       3 Bij het certificaat wordt een gewaarmerkte kopie van de verklaring van de onderwijsinstelling inhoudende de
       toetsresultaten gevoegd.
     url: https://wetten.overheid.nl/BWBR0018730/2006-09-08#Artikel2
+    machine_readable:
+      inputs:
+        - name: bsn
+          type: string
+          description: Burgerservicenummer van de oudkomer
+        - name: nt2_niveaus
+          type: list
+          description: Behaalde niveaus voor elk toetsonderdeel van de NT2-Profieltoets
+          item_type: string
+        - name: model_versie
+          type: string
+          description: Versie van het model uit de bijlage
+          default: standaard_model_2006
+        - name: gewaarmerkte_kopie_aanwezig
+          type: boolean
+          description: Of er een gewaarmerkte kopie van de toetsresultaten verklaring is
+      outputs:
+        - name: certificaat_inhoud
+          type: object
+          description: Inhoud van het certificaat
+          properties:
+            toetsonderdelen:
+              type: list
+              item_type: string
+            model:
+              type: string
+            gewaarmerkte_kopie:
+              type: boolean
+      actions:
+        - describe: Voeg toetsonderdelen en behaalde niveaus toe aan certificaat
+          action:
+            SET:
+              source: nt2_niveaus
+          target: toetsonderdelen
+        - describe: Stel het model in voor het certificaat
+          action:
+            SET:
+              value: standaard_model_2006
+          target: model
+        - describe: Voeg informatie over de gewaarmerkte kopie toe
+          action:
+            SET:
+              source: gewaarmerkte_kopie_aanwezig
+          target: gewaarmerkte_kopie
+        - describe: Combineer alle onderdelen tot certificaat_inhoud
+          action:
+            SET:
+              value:
+                toetsonderdelen:
+                  source: toetsonderdelen
+                model:
+                  source: model
+                gewaarmerkte_kopie:
+                  source: gewaarmerkte_kopie
+          target: certificaat_inhoud
   - number: '3'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
