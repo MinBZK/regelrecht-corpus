@@ -1018,6 +1018,42 @@ articles:
       - id: ref5
         bwb_id: BWBR0034925
         hoofdstuk: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "met ingang van de eerste dag van de maand volgend op de maand waarin de vrijheidsontneming tenminste één maand heeft geduurd"
+          reason: "Determining the start month requires date arithmetic (month boundary of detention start) which cannot be expressed with current engine operations"
+          suggestion: "Add MONTH_START or DATE_FLOOR_MONTH operation to engine; caller must supply effective date as parameter"
+          legal_text_excerpt: "met ingang van de eerste dag van de maand volgend op de maand waarin de vrijheidsontneming tenminste één maand heeft geduurd"
+          accepted: false
+        - construct: "perioden van vrijheidsontneming samengeteld indien zij elkaar met een onderbreking van minder dan vier weken opvolgen"
+          reason: "Cumulating interrupted detention periods requires aggregation over a variable-length collection of date ranges, which the engine cannot express"
+          suggestion: "Add period-aggregation support or let caller pre-compute cumulative detention duration"
+          legal_text_excerpt: "Voor de toepassing van het eerste lid worden perioden van vrijheidsontneming samengeteld, indien zij elkaar met een onderbreking van minder dan vier weken opvolgen."
+          accepted: false
+      execution:
+        parameters:
+          - name: is_gedetineerd_min_1_maand
+            type: boolean
+            required: true
+            description: Scholier/vavo-student is rechtens vrijheid ontnomen voor ten minste één maand (rekening houdend met samentelling art. 2.22a lid 2)
+          - name: valt_onder_uitzondering_vrijheidsontneming
+            type: boolean
+            required: true
+            description: "Vrijheidsontneming valt onder een van de wettelijke uitzonderingen: Wvggz, Wzd, Wet forensische zorg art. 2.3, of Jeugdwet hoofdstuk 6"
+        output:
+          - name: heeft_alleen_recht_op_thuiswonende_basistoelage
+            type: boolean
+            description: Leerling heeft wegens detentie slechts aanspraak op basistoelage voor thuiswonende leerling (art. 2.22a lid 1)
+        actions:
+          - output: heeft_alleen_recht_op_thuiswonende_basistoelage
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_gedetineerd_min_1_maand
+                  value: true
+                - operation: NOT
+                  value: $valt_onder_uitzondering_vrijheidsontneming
   - number: 2.22b
     text: |-
       1 Een leerling of ho-student heeft geen aanspraak op tegemoetkoming indien hij een uitreiziger is.
@@ -1277,6 +1313,56 @@ articles:
         hoofdstuk: '5'
         paragraaf: 5.2.3
         afdeling: '5.2'
+    machine_readable:
+      untranslatables:
+        - construct: "de vermindering niet kan worden gerekend tot inkomensschommelingen die in het algemeen normaal kunnen worden geacht bij de gekozen wijze van inkomensverwerving"
+          reason: "Requires human judgment on what constitutes normal income fluctuation for the chosen income-generation method — this is not computable"
+          suggestion: "Model as an externally provided boolean parameter (beslissing door bevoegd bestuursorgaan)"
+          legal_text_excerpt: "de vermindering niet kan worden gerekend tot inkomensschommelingen die in het algemeen normaal kunnen worden geacht bij de gekozen wijze van inkomensverwerving"
+          accepted: false
+        - construct: "aannemelijk wordt gemaakt dat gedurende ten minste 3 kalenderjaren zal worden voldaan aan de vereisten"
+          reason: "Requires a forward-looking plausibility assessment over at least 3 calendar years — cannot be computed from available input data"
+          suggestion: "Model as externally provided boolean (decision by competent authority)"
+          legal_text_excerpt: "aannemelijk wordt gemaakt dat gedurende ten minste 3 kalenderjaren zal worden voldaan aan de vereisten"
+          accepted: false
+      execution:
+        parameters:
+          - name: draagkracht_peiljaar
+            type: number
+            required: true
+            description: Draagkracht in het peiljaar (tweede jaar voorafgaand aan het schooljaar/studiejaar), in eurocent
+          - name: draagkracht_actueel_jaar
+            type: number
+            required: true
+            description: Draagkracht in het eerste of tweede jaar na het peiljaar waarvoor terugval wordt geclaimd, in eurocent
+          - name: voldoet_aan_overige_voorwaarden_terugval
+            type: boolean
+            required: true
+            description: Voldaan aan lid 2 onderdelen a en b (geen normale inkomensschommeling; aannemelijk dat 3 jaar lang aan vereisten voldaan wordt)
+        output:
+          - name: heeft_terugval_in_inkomen
+            type: boolean
+            description: Sprake van terugval in inkomen als bedoeld in art. 2.28 lid 2 (≥15% vermindering draagkracht én voldaan aan overige voorwaarden)
+          - name: drempelpercentage_terugval
+            type: number
+            description: Maximale draagkracht waarbij nog sprake is van terugval (85% van draagkracht peiljaar)
+        actions:
+          - output: drempelpercentage_terugval
+            value:
+              operation: MULTIPLY
+              values:
+                - $draagkracht_peiljaar
+                - 0.85
+          - output: heeft_terugval_in_inkomen
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $draagkracht_actueel_jaar
+                  value: $drempelpercentage_terugval
+                - operation: EQUALS
+                  subject: $voldoet_aan_overige_voorwaarden_terugval
+                  value: true
   - number: '2.29'
     text: |-
       Voor de toepassing van [artikel 1.8, onderdeel b][ref1], en [artikel 2.25][ref2] wordt zolang het toetsingsinkomen
@@ -1684,6 +1770,20 @@ articles:
       Indien het op basis van de verstrekte gegevens onmogelijk is de draagkracht vast te stellen, kent Onze Minister de
       basistoelage toe.
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel4.9
+    machine_readable:
+      execution:
+        parameters:
+          - name: draagkracht_onbekend
+            type: boolean
+            required: true
+            description: Het is onmogelijk de draagkracht vast te stellen op basis van de verstrekte gegevens
+        output:
+          - name: basistoelage_wordt_toegekend
+            type: boolean
+            description: Basistoelage wordt toegekend wegens onbekende draagkracht (art. 4.9)
+        actions:
+          - output: basistoelage_wordt_toegekend
+            value: $draagkracht_onbekend
   - number: '4.10'
     text: |-
       1 Tegemoetkoming wordt toegekend per kalenderjaar of een gedeelte daarvan, met dien verstande dat deze periode ten
@@ -2677,6 +2777,33 @@ articles:
       - id: ref5
         bwb_id: BWBR0012438
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: school_heeft_gegevens_verstrekt_voor_1_mei
+            type: boolean
+            required: true
+            description: School heeft uiterlijk 1 mei de gegevens bedoeld in artikel 9.4 lid 2 verstrekt
+          - name: totaal_tegemoetkoming_schooljaar
+            type: number
+            required: true
+            description: Totaal bedrag tegemoetkomingen op grond van hoofdstukken 3 en 4 toegekend aan leerlingen aan de school in het desbetreffende schooljaar, in eurocent
+        output:
+          - name: vordering_op_school_9_8
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vordering van Onze Minister op de school wegens niet tijdig melden (art. 9.8) — gelijk aan het totaal der tegemoetkomingen
+        actions:
+          - output: vordering_op_school_9_8
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value: $school_heeft_gegevens_verstrekt_voor_1_mei
+                  then: $totaal_tegemoetkoming_schooljaar
+              default: 0
   - number: '9.9'
     text: |-
       Hij die niet voldoet aan een van de verplichtingen, bedoeld in [artikel 9.4][ref1], wordt gestraft met hechtenis
