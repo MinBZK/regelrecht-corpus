@@ -42,6 +42,20 @@ articles:
       b. heeft de aanvrager met goed gevolg een door Onze minister erkende opleiding en training afgerond die voldoet aan
       sectie A-VI/5, paragrafen 1 tot en met 4, van de STCW-Code.
     url: https://wetten.overheid.nl/BWBR0023729/2013-08-20#Artikel2
+    machine_readable:
+      operation: ALL_OF
+      operands:
+        - operation: INPUT_VARIABLE
+          variable: voldoet_aan_STCW_VI_5_1_1
+          type: boolean
+          description: Voldoet de aanvrager aan voorschrift VI/5, paragraaf 1.1, van de bijlage bij het STCW-Verdrag?
+        - operation: INPUT_VARIABLE
+          variable: heeft_erkende_opleiding
+          type: boolean
+          description: Heeft de aanvrager met goed gevolg een door Onze minister erkende opleiding en training afgerond die voldoet aan sectie A-VI/5, paragrafen 1 tot en met 4, van de STCW-Code?
+      output:
+        type: boolean
+        description: Wordt het certificaat scheepsbeveiligingsfunctionaris afgegeven?
   - number: '3'
     text: |-
       1 Bemanningsleden die als scheepsbeveiligingsfunctionaris zijn aangesteld, zijn in het bezit van het certificaat
@@ -57,9 +71,57 @@ articles:
       - id: ref1
         bwb_id: BWBR0023729
         artikel: '2'
+    machine_readable:
+      operation: ALL_OF
+      operands:
+        - operation: INPUT_VARIABLE
+          variable: is_aangesteld_als_scheepsbeveiligingsfunctionaris
+          type: boolean
+          description: Is het bemanningslid aangesteld als scheepsbeveiligingsfunctionaris?
+        - operation: OR
+          operands:
+            - operation: AND
+              operands:
+                - operation: INPUT_VARIABLE
+                  variable: datum
+                  type: date
+                  description: De datum waarop de controle plaatsvindt.
+                - operation: GREATER_THAN
+                  operands:
+                    - operation: INPUT_VARIABLE
+                      variable: datum
+                    - operation: LITERAL
+                      type: date
+                      value: "2009-07-01"
+                  type: boolean
+                - operation: INPUT_VARIABLE
+                  variable: heeft_certificaat
+                  type: boolean
+                  description: Is het bemanningslid in het bezit van het certificaat scheepsbeveiligingsfunctionaris?
+            - operation: AND
+              operands:
+                - operation: INPUT_VARIABLE
+                  variable: datum
+                  type: date
+                  description: De datum waarop de controle plaatsvindt.
+                - operation: LESS_THAN
+                  operands:
+                    - operation: INPUT_VARIABLE
+                      variable: datum
+                    - operation: LITERAL
+                      type: date
+                      value: "2009-07-01"
+                  type: boolean
+                - operation: INPUT_VARIABLE
+                  variable: training_voor_2008
+                  type: boolean
+                  description: Heeft het bemanningslid voor 1 januari 2008 een training als scheepsbeveiligingsfunctionaris afgerond?
+      output:
+        type: boolean
+        description: Mag het bemanningslid als scheepsbeveiligingsfunctionaris zijn aangesteld?
   - number: 3a
     text: |-
-      Deze regeling berust op [artikel 21 van de Wet zeevarenden][ref1].
+      Deze regeling berust op [artikel 21 van de Wet zeevarenden][ref1].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel21
