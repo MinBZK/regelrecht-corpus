@@ -169,8 +169,8 @@ articles:
       aan boord te houden, dan overeenkomt met het voor dat vissersvaartuig voor dat gebied toegekende contingent van de
       desbetreffende vissoort.
 
-      3 Het is verboden tong, onderscheidenlijk schol, uit het vangstgebied aan te landen met, of aan boord te houden
-      van, een ander vaartuig dan waarmee op die vissoort is gevist.
+      3 Het is verboden tong,onderscheidenlijk schol, uit het vangstgebied aan te landen met, of aan boord te houden
+      van, een ander vaartuig dan waarmede op die vissoort is gevist.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008477#Artikel25
@@ -180,6 +180,78 @@ articles:
         bwb_id: BWBR0008477
         artikel: '25'
         hoofdstuk: '6'
+    machine_readable:
+        variables:
+          - name: vrijstelling_ingetrokken
+            type: boolean
+            description: Indicates whether the minister has revoked the exemption for fishing on a specific vissoort in the designated vangstgebied.
+            source:
+              regulation: BWBR0006379
+              article: 2
+              lid: 2
+          - name: geen_contingent_toegekend
+            type: boolean
+            description: Indicates whether no contingent has been allocated to the vissersvaartuig for the specific vissoort (excluding kabeljauw, wijting, or horsmakreel).
+            source:
+              regulation: BWBR0008477
+          - name: document_niet_aan_boord
+            type: boolean
+            description: Indicates whether the document referred to in Article 25 is not on board the vesssel.
+            source:
+              regulation: BWBR0008477
+              article: 25
+          - name: vissoort
+            type: string
+            description: The species of fish being targeted or landed.
+          - name: hoeveelheid_gevist
+            type: number
+            description: The amount of fish caught (in kilograms).
+          - name: toegekend_contingent
+            type: number
+            description: The allocated contingent for the vissersvaartuig for the specific vissoort and vangstgebied (in kilograms).
+            source:
+              regulation: BWBR0008477
+          - name: aangeland_met_andere_vaartuig
+            type: boolean
+            description: Indicates whether the vissoort (tong or schol) is being landed from a different vessel than the one used for fishing.
+        conditions:
+          - if:
+              or:
+                - and:
+                    - vrijstelling_ingetrokken: true
+                - and:
+                    - geen_contingent_toegekend: true
+                    - not:
+                        or:
+                          - vissoort: kabeljauw
+                          - vissoort: wijting
+                          - vissoort: horsmakreel
+                - and:
+                    - document_niet_aan_boord: true
+            then:
+                verbod:
+                  type: vissen_of_aan_landen
+                  vissoort: '*'
+                  vangstgebied: '*'
+          - if:
+              and:
+                - hoeveelheid_gevist > toegekend_contingent
+            then:
+                verbod:
+                  type: overschrijding_contingent
+                  vissoort: '*'
+                  vangstgebied: '*'
+          - if:
+              and:
+                - or:
+                    - vissoort: tong
+                    - vissoort: schol
+                - aangeland_met_andere_vaartuig: true
+            then:
+                verbod:
+                  type: verkeerd_vaartuig
+                  vissoort: '*'
+                  vangstgebied: '*'
   - number: '3'
     text: |-
       1 Het is verboden met een vissersvaartuig op tong in het vangstgebied te vissen, dan wel tong uit dat gebied aan te
