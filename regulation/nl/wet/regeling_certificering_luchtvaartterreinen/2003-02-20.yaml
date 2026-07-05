@@ -13,224 +13,252 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      In deze regeling wordt verstaan onder:
+    - number: '1'
+      text: |-
+        In deze regeling wordt verstaan onder:
+
+        a. *certificaat:*
+          verklaring van de minister dat de exploitant van het luchtvaartterrein door het
+          veiligheidsmanagementsysteem de veiligheidsrisico's op het luchtvaartterrein beheerst en streeft naar een continue
+          verbetering van de veiligheid;
+
+        b. *veiligheidsmanagementsysteem:*
+          een systeem voor het management van de orde en de veiligheid op het luchtvaartterrein door de exploitant,
+          dat voorziet in de beheersing van de orde en de veiligheid op en het veilig gebruik van het luchtvaartterrein;
+
+        c. *minister:*
+          de Minister van Verkeer en Waterstaat.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel1
+      machine_readable:
+        definitions:
+          certificaat: "verklaring van de minister dat de exploitant van het luchtvaartterrein door het veiligheidsmanagementsysteem de veiligheidsrisico's op het luchtvaartterrein beheerst en streeft naar een continue verbetering van de veiligheid"
+          veiligheidsmanagementsysteem: "een systeem voor het management van de orde en de veiligheid op het luchtvaartterrein door de exploitant, dat voorziet in de beheersing van de orde en de veiligheid op en het veilig gebruik van het luchtvaartterrein"
+          minister: "de Minister van Verkeer en Waterstaat"
+    - number: '2'
+      text: |-
+        1. Deze regeling is van toepassing op de krachtens [artikel 18 van de Luchtvaartwet][ref1] aangewezen
+           luchtvaartterreinen, met uitzondering van de aangewezen zweefvliegterreinen Haamstede en Terlet en het terrein voor
+           ultralichte vliegtuigen Onstwedde.
+
+        2. Deze regeling is ook van toepassing op het luchthavengebied van de luchthaven Schiphol, bedoeld in
+           [hoofdstuk 8 van de Wet luchtvaart][ref2].
+
+        [ref1]: https://wetten.overheid.nl/BWBR0002267#Artikel18
+        [ref2]: https://wetten.overheid.nl/BWBR0005555#Hoofdstuk8
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel2
+      references:
+        - id: ref1
+          bwb_id: BWBR0002267
+          artikel: '18'
+        - id: ref2
+          bwb_id: BWBR0005555
+          hoofdstuk: '8'
+      machine_readable:
+        scope:
+          - condition: "luchtvaartterrein is aangwezen krachtens artikel 18 Luchtvaartwet"
+            result: "regeling is van toepassing"
+          - condition: "luchtvaartterrein is Haamstede, Terlet, of Onstwedde"
+            result: "regeling is NIET van toepassing"
+          - condition: "luchtvaartterrein is luchthavengebied Schiphol"
+            result: "regeling is van toepassing"
+    - number: '3'
+      text: |-
+        1. De exploitant dient ter verkrijging van het certificaat een aanvraag in bij de minister.
+
+        2. De aanvraag gaat vergezeld met het luchthavenbedrijfshandboek. Het luchthavenbedrijfshandboek bevat
+           een beschrijving van de aanleg, de inrichting, de uitrusting, het veilig gebruik, alsmede van het
+           veiligheidsmanagementsysteem van het luchtvaartterrein.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel3
+      machine_readable:
+        workflow:
+          steps:
+            - action: "exploitant dient aanvraag in bij minister"
+              required_document: "luchthavenbedrijfshandboek"
+              required_content: ["beschrijving van de aanleg", "beschrijving van de inrichting", "beschrijving van de uitrusting", "beschrijving van het veilig gebruik", "beschrijving van het veiligheidsmanagementsysteem"]
+    - number: '4'
+      text: |-
+        1. Om in aanmerking te komen voor een certificaat beschikt de exploitant over een werkend
+           veiligheidsmanagementsysteem.
+
+        2. Het veiligheidsmanagementsysteem bevat tenminste:
+
+           a. veiligheidsbeleid;
+           b. organisatiestructuur;
+           c. taken, bevoegdheden en verantwoordelijkheden van sleutelfunctionarissen;
+           d. relevante bedrijfsprocessen;
+           e. risico-inventarisatie en de daaruit voortvloeiende verbeteringen;
+           f. bedrijfsmiddelen;
+           g. opleiding en training;
+           h. melding van ongevallen en ernstige incidenten;
+           i. registratie, analyse en afhandeling van ongevallen en incidenten, defecten en gebreken, afwijkingen en
+              tekortkomingen en interne en externe klachten met betrekking tot de veiligheid;
+           j. documenten- en registratiebeheer;
+           k. met contractpartners gemaakte afspraken inzake de veiligheid op en rond het luchtvaartterrein;
+           l. een procedurebeschrijving waaruit blijkt hoe de exploitant nagaat of de door hem gestelde voorschriften met
+              betrekking tot de orde en veiligheid door gebruikers van het luchtvaartterrein worden nageleefd.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel4
+      machine_readable:
+        requirements:
+          veiligheidsmanagementsysteem:
+            required: true
+            components: ["veiligheidsbeleid", "organisatiestructuur", "taken_bevoegdheden_verantwoordelijkheden_sleutelfunctionarissen", "relevante_bedrijfsprocessen", "risico_inventarisatie_en_verbeteringen", "bedrijfsmiddelen", "opleiding_en_training", "melding_ongevallen_ernstige_incidenten", "registratie_analyse_afhandeling", "documenten_en_registratiebeheer", "afspraken_veiligheid_contractpartners", "procedurebeschrijving_naleving_orde_en_veiligheid"]
+    - number: '5'
+      text: |-
+        1. De minister onderzoekt of de aanleg, de inrichting, de uitrusting en het veilig gebruik van het luchtvaartterrein
+           in overeenstemming zijn met de daarvoor geldende regels en of dit door het veiligheidsmanagementsysteem van de
+           exploitant, alsmede de implementatie en naleving daarvan, geborgd wordt.
+
+        2. Daarnaast kan de minister een onderzoek uitvoeren ten behoeve van:
+
+           a. het verlengen van de geldigheidsduur van het certificaat;
+
+           b. het wijzigen van het operationeel gebruik van het luchtvaartterrein;
+
+           c. het wijzigen van het veiligheidsmanagementsysteem.
+
+        3. De minister maakt van elk onderzoek een onderzoeksrapport op.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel5
+      machine_readable:
+        investigation:
+          subject: ["aanleg", "inrichting", "uitrusting", "veilig gebruik"]
+          compliance_check: "overeenstemming met geldende regels"
+          verification: "veiligheidsmanagementsysteem en implementatie geborgd"
+          output: "onderzoeksrapport"
+          additional_purposes: ["verlengen certificaat", "wijzigen operationeel gebruik", "wijzigen veiligheidsmanagementsysteem"]
+    - number: '6'
+      text: |-
+        1. Indien uit het onderzoek, bedoeld in [artikel 5, eerste lid][ref1], blijkt dat de aanleg, de inrichting, de
+           uitrusting en het veilig gebruik van het luchtvaartterrein in overeenstemming zijn met de daarvoor geldende regels
+           en dit door het veiligheidsmanagementsysteem van de exploitant, alsmede de implementatie en naleving daarvan
+           geborgd wordt, geeft de minister een certificaat af.
+
+        2. Het certificaat heeft een geldigheidsduur van drie jaar.
+
+        3. Het certificaat vermeldt het operationeel gebruik waarvoor het certificaat is afgegeven.
 
 
+        [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel5
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel6
+      references:
+        - id: ref1
+          bwb_id: BWBR0014318
+          artikel: '5'
+      machine_readable:
+        certificate_issuance:
+          conditions: ["aanleg, inrichting, uitrusting en veilig gebruik voldoen aan geldende regels", "veiligheidsmanagementsysteem en implementatie geborgd"]
+          validity_period: "3 jaar"
+          includes: "operationeel gebruik"
+    - number: '7'
+      text: |-
+        De minister trekt het certificaat in indien:
 
-            a
+        a. het veiligheidsmanagementsysteem niet naar behoren functioneert; of
 
-              *certificaat:*
+        b. de orde of de veiligheid op het luchtvaartterrein niet meer gewaarborgd kan worden.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel7
+      machine_readable:
+        certificate_revocation:
+          conditions: ["veiligheidsmanagementsysteem functioneert niet naar behoren", "orde of veiligheid niet meer gewaarborgd"]
+    - number: '8'
+      text: |-
+        1. De exploitant controleert ten minste één maal per jaar of de werking van het veiligheidsmanagementsysteem
+           doeltreffend en doelmatig is.
 
+        2. Bij luchtvaartterreinen die beschikken over een baan die langer is dan 1200 meter en voorzieningen hebben voor
+           landingen met behulp van navigatie-instrumenten, beschikt de exploitant over een intern auditprogramma op basis
+           waarvan de jaarlijkse controle van het veiligheidsmanagementsysteem wordt uitgevoerd.
 
-              verklaring van de minister dat de exploitant van het luchtvaartterrein door het
-      veiligheidsmanagementsysteem de veiligheidsrisico's op het luchtvaartterrein beheerst en streeft naar een continue
-      verbetering van de veiligheid;
+        3. Indien de resultaten van de contrôle bedoeld in het eerste lid daartoe aanleiding geven brengt de exploitant de
+           nodige wijziging in het veiligheidsmanagementsysteem aan.
 
+        4. In door de minister te bepalen gevallen beschikt de exploitant over een monitoringsysteem ten behoeve van de
+           beoordeling van het veiligheidsmanagementsysteem van de eigen organisatie.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel8
+      machine_readable:
+        annual_control:
+          frequency: "1 maal per jaar"
+          conditions:
+            - baanlengte_gt_1200m: true
+            - navigatie_instrumenten: true
+          audit_programma_required: true
+          actions: "wijzigingen aanbrengen in veiligheidsmanagementsysteem indien nodig"
+    - number: '9'
+      text: |-
+        De exploitant gaat na of de door hem uitgevaardigde voorschriften ter beheersing van de orde en de veiligheid
+        worden nageleefd.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel9
+      machine_readable:
+        compliance_verification:
+          action: "nagaan of uitgevaardigde voorschriften worden nageleefd"
+          scope: ["orde", "veiligheid"]
+    - number: '10'
+      text: |-
+        1. De exploitant zorgt voor de vastlegging van gegevens, die noodzakelijk zijn voor de werking van het
+           veiligheidsmanagementsysteem.
 
+        2. De exploitant stelt procedures vast ten behoeve van het beheer van documentatie en registratie van deze gegevens.
 
-            b
+        3. De exploitant heeft de meest recente uitgave van documenten voorhanden op de daartoe bestemde plaatsen.
 
-              *veiligheidsmanagementsysteem:*
+        4. De exploitant registreert de uitgave van documenten alsmede de wijziging van documenten.
 
+        5. De exploitant draagt er zorg voor dat de in het eerste lid bedoelde gegevens gedurende 5 jaren zodanig worden
+           bewaard dat er geen achteruitgang van de kwaliteit plaatsvindt.
 
-              een systeem voor het management van de orde en de veiligheid op het luchtvaartterrein door de exploitant,
-      dat voorziet in de beheersing van de orde en de veiligheid op en het veilig gebruik van het luchtvaartterrein;
-
-
-
-            c
-
-              *minister:*
-
-
-              de Minister van Verkeer en Waterstaat.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel1
-  - number: '2'
-    text: |-
-      1 Deze regeling is van toepassing op de krachtens [artikel 18 van de Luchtvaartwet][ref1] aangewezen
-      luchtvaartterreinen, met uitzondering van de aangewezen zweefvliegterreinen Haamstede en Terlet en het terrein voor
-      ultralichte vliegtuigen Onstwedde.
-
-      2 Deze regeling is ook van toepassing op het luchthavengebied van de luchthaven Schiphol, bedoeld in
-      [hoofdstuk 8 van de Wet luchtvaart][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002267#Artikel18
-      [ref2]: https://wetten.overheid.nl/BWBR0005555#Hoofdstuk8
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0002267
-        artikel: '18'
-      - id: ref2
-        bwb_id: BWBR0005555
-        hoofdstuk: '8'
-  - number: '3'
-    text: |-
-      1 De exploitant dient ter verkrijging van het certificaat een aanvraag in bij de minister.
-
-      2 De aanvraag gaat vergezeld met het luchthavenbedrijfshandboek. Het luchthavenbedrijfshandboek bevat
-      een beschrijving van de aanleg, de inrichting, de uitrusting, het veilig gebruik, alsmede van het
-      veiligheidsmanagementsysteem van het luchtvaartterrein.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel3
-  - number: '4'
-    text: |-
-      1 Om in aanmerking te komen voor een certificaat beschikt de exploitant over een werkend
-      veiligheidsmanagementsysteem.
-
-      2 Het veiligheidsmanagementsysteem bevat tenminste:
-
-      a. veiligheidsbeleid;
-
-      b. organisatiestructuur;
-
-      c. taken, bevoegdheden en verantwoordelijkheden van sleutelfunctionarissen;
-
-      d. relevante bedrijfsprocessen;
-
-      e. risico-inventarisatie en de daaruit voortvloeiende verbeteringen;
-
-      f. bedrijfsmiddelen;
-
-      g. opleiding en training;
-
-      h. melding van ongevallen en ernstige incidenten;
-
-      i. registratie, analyse en afhandeling van ongevallen en incidenten, defecten en gebreken, afwijkingen en
-      tekortkomingen en interne en externe klachten met betrekking tot de veiligheid;
-
-      j. documenten- en registratiebeheer;
-
-      k. met contractpartners gemaakte afspraken inzake de veiligheid op en rond het luchtvaartterrein;
-
-      l. een procedurebeschrijving waaruit blijkt hoe de exploitant nagaat of de door hem gestelde voorschriften met
-      betrekking tot de orde en veiligheid door gebruikers van het luchtvaartterrein worden nageleefd.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel4
-  - number: '5'
-    text: |-
-      1 De minister onderzoekt of de aanleg, de inrichting, de uitrusting en het veilig gebruik van het luchtvaartterrein
-      in overeenstemming zijn met de daarvoor geldende regels en of dit door het veiligheidsmanagementsysteem van de
-      exploitant, alsmede de implementatie en naleving daarvan, geborgd wordt.
-
-      2 Daarnaast kan de minister een onderzoek uitvoeren ten behoeve van:
-
-      a. het verlengen van de geldigheidsduur van het certificaat;
-
-      b. het wijzigen van het operationeel gebruik van het luchtvaartterrein;
-
-      c. het wijzigen van het veiligheidsmanagementsysteem.
-
-      3 De minister maakt van elk onderzoek een onderzoeksrapport op.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel5
-  - number: '6'
-    text: |-
-      1 Indien uit het onderzoek, bedoeld in [artikel 5, eerste lid][ref1], blijkt dat de aanleg, de inrichting, de
-      uitrusting en het veilig gebruik van het luchtvaartterrein in overeenstemming zijn met de daarvoor geldende regels
-      en dit door het veiligheidsmanagementsysteem van de exploitant, alsmede de implementatie en naleving daarvan
-      geborgd wordt, geeft de minister een certificaat af.
-
-      2 Het certificaat heeft een geldigheidsduur van drie jaar.
-
-      3 Het certificaat vermeldt het operationeel gebruik waarvoor het certificaat is afgegeven.
+        6. De gegevens en de documenten zijn ten behoeve van het onderzoek door de minister als genoemd in
+           [artikel 5][ref1], toegankelijk.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel5
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0014318
-        artikel: '5'
-        paragraaf: '4'
-  - number: '7'
-    text: |-
-      De minister trekt het certificaat in indien:
+        [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel5
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel10
+      references:
+        - id: ref1
+          bwb_id: BWBR0014318
+          artikel: '5'
+      machine_readable:
+        data_management:
+          retention_period: "5 jaar"
+          requirements: ["vastlegging van gegevens noodzakelijk voor veiligheidsmanagementsysteem", "procedures voor beheer van documentatie en registratie", "meest recente uitgave van documenten voorhanden", "registratie van uitgave en wijziging van documenten"]
+          access: "toegankelijk voor minister"
+    - number: '11'
+      text: |-
+        1. De exploitant draagt er zorg voor dat het luchthavenbedrijfshandboek een actuele beschrijving bevat van het
+           veiligheidsmanagementsysteem alsmede van de aanleg, de inrichting, de uitrusting en het veilig gebruik van het
+           luchtvaartterrein.
 
-      a. het veiligheidsmanagementsysteem niet naar behoren functioneert; of
+        2. De exploitant draagt er zorg voor dat de minister en de op het luchtvaartterrein gevestigde bedrijven en
+           organisaties die hun werkzaamheden op het airsidegedeelte uitoefenen, beschikken over de actuele versie van het
+           luchthavenbedrijfshandboek en stelt hen onverwijld in kennis van wijzigingen daarvan.
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel11
+      machine_readable:
+        luchthavenbedrijfshandboek:
+          requirements: ["actuele beschrijving van veiligheidsmanagementsysteem", "actuele beschrijving van aanleg, inrichting, uitrusting, en veilig gebruik"]
+          distribution: ["minister ontvangt actuele versie", "bedrijven en organisaties op luchtvaartterrein ontvangen actuele versie", "onverwijld in kennis stellen van wijzigingen"]
+    - number: '12'
+      text: 'Deze regeling wordt aangehaald als: Regeling certificering luchtvaartterreinen.'
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel12
+    - number: '13'
+      text: |-
+        1 Deze regeling treedt in werking met ingang van de tweede dag na dagtekening van de Staatscourant waarin zij wordt
+        geplaatst, met uitzondering van [artikel 2, tweede lid][ref1].
 
-      b. de orde of de veiligheid op het luchtvaartterrein niet meer gewaarborgd kan worden.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel7
-  - number: '8'
-    text: |-
-      1 De exploitant controleert ten minste één maal per jaar of de werking van het veiligheidsmanagementsysteem
-      doeltreffend en doelmatig is.
-
-      2 Bij luchtvaartterreinen die beschikken over een baan die langer is dan 1200 meter en voorzieningen hebben voor
-      landingen met behulp van navigatie-instrumenten, beschikt de exploitant over een intern auditprogramma op basis
-      waarvan de jaarlijkse controle van het veiligheidsmanagementsysteem wordt uitgevoerd.
-
-      3 Indien de resultaten van de controle bedoeld in het eerste lid daartoe aanleiding geven brengt de exploitant de
-      nodige wijziging in het veiligheidsmanagementsysteem aan.
-
-      4 In door de minister te bepalen gevallen beschikt de exploitant over een monitoringsysteem ten behoeve van de
-      beoordeling van het veiligheidsmanagementsysteem van de eigen organisatie.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel8
-  - number: '9'
-    text: |-
-      De exploitant gaat na of de door hem uitgevaardigde voorschriften ter beheersing van de orde en de veiligheid
-      worden nageleefd.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel9
-  - number: '10'
-    text: |-
-      1 De exploitant zorgt voor de vastlegging van gegevens, die noodzakelijk zijn voor de werking van het
-      veiligheidsmanagementsysteem.
-
-      2 De exploitant stelt procedures vast ten behoeve van het beheer van documentatie en registratie van deze gegevens.
-
-      3 De exploitant heeft de meest recente uitgave van documenten voorhanden op de daartoe bestemde plaatsen.
-
-      4 De exploitant registreert de uitgave van documenten alsmede de wijziging van documenten.
-
-      5 De exploitant draagt er zorg voor dat de in het eerste lid bedoelde gegevens gedurende 5 jaren zodanig worden
-      bewaard dat er geen achteruitgang van de kwaliteit plaatsvindt.
-
-      6 De gegevens en de documenten zijn ten behoeve van het onderzoek door de minister als genoemd in
-      [artikel 5][ref1], toegankelijk.
+        2 [Artikel 2, tweede lid][ref2], treedt in werking op het tijdstip van inwerkingtreding van de
+        __REF001___________________________________________________________________________________________________________
+        ___________________.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel5
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel10
-    references:
-      - id: ref1
-        bwb_id: BWBR0014318
-        artikel: '5'
-        paragraaf: '4'
-  - number: '11'
-    text: |-
-      1 De exploitant draagt er zorg voor dat het luchthavenbedrijfshandboek een actuele beschrijving bevat van het
-      veiligheidsmanagementsysteem alsmede van de aanleg, de inrichting, de uitrusting en het veilig gebruik van het
-      luchtvaartterrein.
-
-      2 De exploitant draagt er zorg voor dat de minister en de op het luchtvaartterrein gevestigde bedrijven en
-      organisaties die hun werkzaamheden op het airsidegedeelte uitoefenen, beschikken over de actuele versie van het
-      luchthavenbedrijfshandboek en stelt hen onverwijld in kennis van wijzigingen daarvan.
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel11
-  - number: '12'
-    text: 'Deze regeling wordt aangehaald als: Regeling certificering luchtvaartterreinen.'
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel12
-  - number: '13'
-    text: |-
-      1 Deze regeling treedt in werking met ingang van de tweede dag na dagtekening van de Staatscourant waarin zij wordt
-      geplaatst, met uitzondering van [artikel 2, tweede lid][ref1].
-
-      2 [Artikel 2, tweede lid][ref2], treedt in werking op het tijdstip van inwerkingtreding van de
-      __REF001___________________________________________________________________________________________________________
-      ___________________.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0014318#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0013815
-    url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel13
-    references:
-      - id: ref1
-        bwb_id: BWBR0014318
-        artikel: '2'
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0014318
-        artikel: '2'
-        paragraaf: '1'
-      - id: ref3
-        bwb_id: BWBR0013815
+        [ref1]: https://wetten.overheid.nl/BWBR0014318#Artikel2
+        [ref2]: https://wetten.overheid.nl/BWBR0014318#Artikel2
+        [ref3]: https://wetten.overheid.nl/BWBR0013815
+      url: https://wetten.overheid.nl/BWBR0014318/2003-02-20#Artikel13
+      references:
+        - id: ref1
+          bwb_id: BWBR0014318
+          artikel: '2'
+          paragraaf: '1'
+        - id: ref2
+          bwb_id: BWBR0014318
+          artikel: '2'
+          paragraaf: '1'
+        - id: ref3
+          bwb_id: BWBR0013815
