@@ -132,6 +132,28 @@ articles:
   - number: '2'
     text: Ingezetene in de zin van deze wet is degene, die in Nederland woont.
     url: https://wetten.overheid.nl/BWBR0002614/2005-07-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+        input:
+          - name: woont_in_nederland
+            type: boolean
+            source:
+              regulation: wet_basisregistratie_personen
+              output: woont_in_nederland
+              parameters:
+                bsn: $bsn
+        output:
+          - name: is_ingezetene
+            type: boolean
+            description: Persoon woont in Nederland en is ingezetene in de zin van de AWBZ
+        actions:
+          - output: is_ingezetene
+            value: $woont_in_nederland
   - number: '3'
     text: |-
       1 Waar iemand woont en waar een lichaam gevestigd is, wordt naar de omstandigheden beoordeeld.
@@ -187,6 +209,91 @@ articles:
       - id: ref2
         bwb_id: BWBR0011823
         artikel: '8'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de beoordeling van verzekering
+        input:
+          - name: is_ingezetene
+            type: boolean
+            source:
+              output: is_ingezetene
+          - name: is_onderworpen_loonbelasting_nl
+            type: boolean
+            source:
+              regulation: wet_op_de_loonbelasting_1964
+              output: is_onderworpen_loonbelasting
+              parameters:
+                bsn: $bsn
+            description: Niet-ingezetene ter zake van in Nederland in dienstbetrekking verrichte arbeid aan de loonbelasting onderworpen (art 5 lid 1 sub b)
+          - name: is_vreemdeling
+            type: boolean
+            source:
+              regulation: vreemdelingenwet_2000
+              output: is_vreemdeling
+              parameters:
+                bsn: $bsn
+          - name: heeft_rechtmatig_verblijf_art8
+            type: boolean
+            source:
+              regulation: vreemdelingenwet_2000
+              output: heeft_verblijfsrecht_art8_a_tot_e_en_l
+              parameters:
+                bsn: $bsn
+            description: Verblijft rechtmatig in de zin van art 8 sub a-e en l Vreemdelingenwet 2000
+        output:
+          - name: is_verzekerd
+            type: boolean
+            description: Persoon is verzekerd ingevolge de AWBZ (art 5)
+        actions:
+          - output: voldoet_lid1a
+            value: $is_ingezetene
+          - output: voldoet_lid1b
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_ingezetene
+                - operation: EQUALS
+                  subject: $is_onderworpen_loonbelasting_nl
+                  value: true
+          - output: voldoet_lid1
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_lid1a
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_lid1b
+                  value: true
+          - output: is_uitgezonderd_lid2
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vreemdeling
+                  value: true
+                - operation: NOT
+                  value: $heeft_rechtmatig_verblijf_art8
+          - output: is_verzekerd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_lid1
+                  value: true
+                - operation: NOT
+                  value: $is_uitgezonderd_lid2
   - number: 5a
     text: |-
       1 Een overeenkomst met betrekking tot de verzekering van geneeskundige verzorging of de kosten daarvan vervalt met
@@ -800,6 +907,50 @@ articles:
       vier weken na de dag waarop de bekendmaking is geschied, wensen en bedenkingen ter kennis van Onze Minister te
       brengen. Gelijktijdig met de bekendmaking wordt het ontwerp aan de beide kamers der Staten-Generaal overgelegd.
     url: https://wetten.overheid.nl/BWBR0002614/2005-07-01#Artikel17
+    machine_readable:
+      open_terms:
+        - id: premie_awbz
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 17 lid 1 Algemene Wet Bijzondere Ziektekosten
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de verzekerde
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de leeftijdsbeoordeling
+        output:
+          - name: premie_verschuldigd
+            type: boolean
+            description: Geeft aan of de verzekerde een AWBZ-premie verschuldigd is (leeftijd >= 18)
+          - name: premie_awbz
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de door de minister vastgestelde AWBZ-premie
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: premie_verschuldigd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
+          - output: premie_awbz
+            value: $premie_awbz
   - number: '32'
     text: |-
       1 Degene, die gemoedsbezwaren heeft tegen de in deze wet geregelde verzekering, alsmede de rechtspersoon waarbij
@@ -923,6 +1074,162 @@ articles:
       - id: ref12
         bwb_id: BWBR0002638
         artikel: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "Lid 1 sub a, 3e: pensioenen op basis van arbeidsongeschiktheid (ABP, privatisering ABP, Spoorwegpensioenfonds, Algemene militaire pensioenwet)"
+          reason: "Multiple historical pension fund laws not available; complex enumeration of different pension fund regimes prior to their privatisation"
+          legal_text_excerpt: "3e een pensioen op basis van arbeidsongeschiktheid op grond van de Algemene burgerlijke pensioenwet, zoals die luidde voor 1 januari 1996..."
+          accepted: false
+        - construct: "Lid 1 sub a, 6e: uitkering of toelage Algemene Arbeidsongeschiktheidswet (AAW)"
+          reason: "AAW is a repealed law not present in the corpus; historical reference in this law version"
+          legal_text_excerpt: "6e een uitkering of toelage op grond van de Algemene Arbeidsongeschiktheidswet, zoals die luidde op de dag voorafgaand aan de inwerkingtreding van de Invoeringswet nieuwe en gewijzigde arbeidsongeschiktheidsregelingen"
+          accepted: false
+        - construct: "Lid 1 sub b: alternatieve toelatingsconditie — recht dat aansluit op verzekering van rechtswege"
+          reason: "Temporal continuity condition 'aansluit op de verzekering van rechtswege op grond van de volksverzekeringen' cannot be expressed with available date/comparison operations"
+          legal_text_excerpt: "b. recht heeft op een uitkering, een pensioen of een toelage als bedoeld onder a, indien dat recht aansluit op de verzekering van rechtswege op grond van de volksverzekeringen, dan wel, ter vervanging daarvan, op een andere uitkering..."
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de beoordeling
+          - name: aaneengesloten_verzekerd_minimaal_1_jaar
+            type: boolean
+            required: true
+            description: Onmiddellijk voor de ingangsdatum vrijwillige verzekering ten minste één jaar onafgebroken verzekerd (art 32a lid 2)
+          - name: verricht_arbeid_in_buitenland
+            type: boolean
+            required: true
+            description: Persoon verricht buiten Nederland arbeid (art 32a lid 3)
+          - name: ontvangt_buitenlandse_uitkering
+            type: boolean
+            required: true
+            description: Persoon ontvangt uitkering krachtens een buitenlandse wettelijke regeling (art 32a lid 3)
+          - name: uitkering_ten_minste_35_procent_wml
+            type: boolean
+            required: true
+            description: De uitkering, het pensioen of de toelage bedraagt ten minste 35% van het WML-bedrag (art 8 lid 1 sub a WML)
+        input:
+          - name: woont_in_nederland
+            type: boolean
+            source:
+              regulation: wet_basisregistratie_personen
+              output: woont_in_nederland
+              parameters:
+                bsn: $bsn
+          - name: heeft_wao_uitkering
+            type: boolean
+            source:
+              regulation: wet_op_de_arbeidsongeschiktheidsverzekering
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op uitkering ingevolge de Wet op de arbeidsongeschiktheidsverzekering (art 32a lid 1 sub a 1e)
+          - name: heeft_wamil_uitkering
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsvoorziening_militairen
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op uitkering ingevolge de Wet arbeidsongeschiktheidsvoorziening militairen (art 32a lid 1 sub a 2e)
+          - name: heeft_aow_uitkering
+            type: boolean
+            source:
+              regulation: algemene_ouderdomswet
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op uitkering ingevolge de Algemene Ouderdomswet (art 32a lid 1 sub a 4e)
+          - name: heeft_anw_uitkering
+            type: boolean
+            source:
+              regulation: algemene_nabestaandenwet
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op nabestaandenuitkering ingevolge de Algemene nabestaandenwet (art 32a lid 1 sub a 5e)
+          - name: heeft_waz_uitkering
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsverzekering_zelfstandigen
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op uitkering ingevolge de Wet arbeidsongeschiktheidsverzekering zelfstandigen (art 32a lid 1 sub a 7e)
+          - name: heeft_wajong_uitkering
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+              output: heeft_uitkering
+              parameters:
+                bsn: $bsn
+            description: Recht op uitkering ingevolge de Wet arbeidsongeschiktheidsvoorziening jonggehandicapten (art 32a lid 1 sub a 8e)
+        output:
+          - name: kan_vrijwillig_verzekeren
+            type: boolean
+            description: Persoon voldoet aan de voorwaarden voor vrijwillige voortzetting van de AWBZ-verzekering (art 32a)
+        actions:
+          - output: woont_buiten_nederland
+            value:
+              operation: NOT
+              value: $woont_in_nederland
+          - output: heeft_kwalificerende_uitkering_met_drempel
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $heeft_wao_uitkering
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_wamil_uitkering
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_aow_uitkering
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_anw_uitkering
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_waz_uitkering
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_wajong_uitkering
+                      value: true
+                - operation: EQUALS
+                  subject: $uitkering_ten_minste_35_procent_wml
+                  value: true
+          - output: niet_werkend_of_uitkering_buitenland
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $verricht_arbeid_in_buitenland
+                - operation: NOT
+                  value: $ontvangt_buitenlandse_uitkering
+          - output: kan_vrijwillig_verzekeren
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $woont_buiten_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_kwalificerende_uitkering_met_drempel
+                  value: true
+                - operation: EQUALS
+                  subject: $aaneengesloten_verzekerd_minimaal_1_jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_werkend_of_uitkering_buitenland
+                  value: true
   - number: 32b
     text: |-
       1 Aanmelding voor de vrijwillige verzekering geschiedt uiterlijk twaalf maanden na de dag, waarop de verzekering
@@ -972,6 +1279,38 @@ articles:
         bwb_id: BWBR0002614
         artikel: 32a
         hoofdstuk: IVA
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+          - name: datum_einde_verzekering_art5
+            type: date
+            required: true
+            description: Dag waarop de verzekering ingevolge artikel 5 is geëindigd
+        output:
+          - name: uiterste_aanmelddatum
+            type: date
+            description: Uiterste datum voor aanmelding vrijwillige verzekering (art 32b lid 1 — uiterlijk 12 maanden na einde verzekering art 5)
+          - name: ingangsdatum_vrijwillige_verzekering
+            type: date
+            description: Datum waarop de vrijwillige verzekering ingaat (art 32b lid 2 — dag volgend op einde verzekering art 5)
+        actions:
+          - output: uiterste_aanmelddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_einde_verzekering_art5
+              months: 12
+          - output: ingangsdatum_vrijwillige_verzekering
+            value:
+              operation: DATE_ADD
+              date: $datum_einde_verzekering_art5
+              days: 1
   - number: 32c
     text: |-
       1 De vrijwillige verzekering ingevolge [artikel 32a][ref1] eindigt:
@@ -1447,6 +1786,61 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 7:10
+    machine_readable:
+      untranslatables:
+        - construct: "Conditionale override: beslistermijn 21 weken geldt alleen indien CVZ-advies is gevraagd; anders is AWB 7:10 lid 1 van toepassing"
+          reason: "The override mechanism produces a single value that replaces AWB art 7:10 output; the condition under which the override applies (advies_gevraagd) cannot be modelled as a conditional override — the default value (6 weeks from AWB) must be hardcoded as an assumption from outside this article's scope"
+          legal_text_excerpt: "Indien het College zorgverzekeringen is verzocht advies uit te brengen, wordt de beslissing op bezwaar in afwijking van artikel 7:10, eerste lid, van de Algemene wet bestuursrecht genomen binnen een en twintig weken na ontvangst van het bezwaarschrift."
+          accepted: false
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: beslistermijn_bezwaar_weken
+      execution:
+        parameters:
+          - name: datum_ontvangst_bezwaar
+            type: date
+            required: true
+            description: Datum waarop het bezwaarschrift is ontvangen
+          - name: advies_gevraagd_cvz
+            type: boolean
+            required: true
+            description: College zorgverzekeringen is verzocht advies uit te brengen (art 58 lid 1)
+          - name: datum_ontvangst_alle_gegevens
+            type: date
+            required: false
+            description: Datum van ontvangst van alle voor de beoordeling benodigde gegevens (art 58 lid 4); alleen relevant indien advies gevraagd
+        output:
+          - name: beslistermijn_bezwaar_weken
+            type: number
+            description: Beslistermijn in weken voor de beslissing op bezwaar (21 weken indien CVZ-advies gevraagd, anders AWB-standaard art 7:10)
+          - name: uiterste_beslisdatum_bezwaar
+            type: date
+            description: Uiterste datum voor de beslissing op bezwaar
+          - name: advies_deadline_cvz
+            type: date
+            description: Uiterste datum voor CVZ-advies (10 weken na ontvangst alle gegevens, art 58 lid 4)
+        actions:
+          - output: beslistermijn_bezwaar_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $advies_gevraagd_cvz
+                    value: true
+                  then: 21
+              default: 6
+          - output: uiterste_beslisdatum_bezwaar
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_bezwaar
+              weeks: $beslistermijn_bezwaar_weken
+          - output: advies_deadline_cvz
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_alle_gegevens
+              weeks: 10
   - number: '59'
     text: |-
       Het beroep en het hoger beroep inzake een geschil van uitsluitend geneeskundige aard wordt behandeld met toepassing
