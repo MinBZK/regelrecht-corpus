@@ -189,7 +189,7 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0022463
       [ref3]: https://wetten.overheid.nl/BWBR0022463#Artikel10
       [ref4]: https://wetten.overheid.nl/BWBR0022463#Artikel10
-      [ref5]: https://wetten.overheid.nl/BWBR0011685#Artikel1
+       [ref5]: https://wetten.overheid.nl/BWBR0011685#Artikel1
     url: https://wetten.overheid.nl/BWBR0011685/2009-01-30#Artikel4
     references:
       - id: ref1
@@ -206,6 +206,23 @@ articles:
       - id: ref5
         bwb_id: BWBR0011685
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitvoerder_eenheid
+            type: string
+            required: true
+            description: De eenheid die de werkzaamheden uitvoert
+        output:
+          - name: is_toegestaan
+            type: boolean
+            description: Geeft aan of de uitvoering van werkzaamheden met medewerking van informanten uitsluitend door CIE mag worden verricht
+        actions:
+          - output: is_toegestaan
+            value:
+              operation: EQUALS
+              subject: $uitvoerder_eenheid
+              value: "criminele inlichtingen eenheid"
   - number: '5'
     text: |-
       Criminele inlichtingen eenheden verwerken informantgegevens overeenkomstig het bepaalde in
@@ -296,9 +313,9 @@ articles:
       krachtens de [Wet politiegegevens][ref3] aanspraak kunnen maken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0022463#Artikel10
-      [ref2]: https://wetten.overheid.nl/BWBR0011685#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0022463
+       [ref1]: https://wetten.overheid.nl/BWBR0022463#Artikel10
+       [ref2]: https://wetten.overheid.nl/BWBR0011685#Artikel5
+       [ref3]: https://wetten.overheid.nl/BWBR0022463
     url: https://wetten.overheid.nl/BWBR0011685/2009-01-30#Artikel8
     references:
       - id: ref1
@@ -314,22 +331,22 @@ articles:
       1 De ambtenaar die deel uit maakt van een criminele inlichtingen eenheid voldoet aan de eindtermen van de door de
       Ministers aan te wijzen vervolgopleiding.
 
-      2 De verantwoordelijke draagt ervoor zorg dat de kennis en vaardigheden van de ambtenaren, bedoeld in het eerste
-      lid, worden onderhouden op minimaal het niveau van de aan de in het eerste lid bedoelde eindtermen.
+       2 De verantwoordelijke draagt ervoor zorg dat de kennis en vaardigheden van de ambtenaren, bedoeld in het eerste
+         lid, worden onderhouden op minimaal het niveau van de aan de in het eerste lid bedoelde eindtermen.
     url: https://wetten.overheid.nl/BWBR0011685/2009-01-30#Artikel9
   - number: '10'
     text: |-
-      1 De verantwoordelijke bepaalt de termijn gedurende welke de ambtenaar die belast is met de werkzaamheden, bedoeld
-      in [artikel 4, eerste lid, onder c][ref1], ononderbroken deel uitmaakt van een criminele inlichtingen eenheid.
+         1 De verantwoordelijke bepaalt de termijn gedurende welke de ambtenaar die belast is met de werkzaamheden, bedoeld
+         in [artikel 4, eerste lid, onder c][ref1], ononderbroken deel uitmaakt van een criminele inlichtingen eenheid.
 
-      2 De termijn, bedoeld in het eerste lid, is ten hoogste vier jaar en kan tweemaal met twee jaar worden verlengd.
+         2 De termijn, bedoeld in het eerste lid, is ten hoogste vier jaar en kan tweemaal met twee jaar worden verlengd.
 
-      3 Voor de ambtenaar die voor de inwerkingtreding van deze regeling is aangesteld, gaat de termijn, bedoeld in het
-      eerste lid, in op het tijdstip, bedoeld in het [artikel 13, eerste lid][ref2].
+         3 Voor de ambtenaar die voor de inwerkingtreding van deze regeling is aangesteld, gaat de termijn, bedoeld in het
+         eerste lid, in op het tijdstip, bedoeld in het [artikel 13, eerste lid][ref2].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011685#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0011685#Artikel13
+         [ref1]: https://wetten.overheid.nl/BWBR0011685#Artikel4
+          [ref2]: https://wetten.overheid.nl/BWBR0011685#Artikel13
     url: https://wetten.overheid.nl/BWBR0011685/2009-01-30#Artikel10
     references:
       - id: ref1
@@ -338,19 +355,96 @@ articles:
       - id: ref2
         bwb_id: BWBR0011685
         artikel: '13'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ambtenaar_aanstellingsdatum
+            type: date
+            required: true
+            description: Datum waarop de ambtenaar is aangesteld voor de werkzaamheden bedoeld in artikel 4, eerste lid, onder c
+          - name: verlengingen
+            type: number
+            required: false
+            description: Aantal verlengingen van de termijn (0, 1, of 2)
+        output:
+          - name: termijn_einddatum
+            type: date
+            description: Einddatum van de termijn waarna de ambtenaar niet langer ononderbroken deel uitmaakt van de CIE
+          - name: is_termijn_verlengd
+            type: boolean
+            description: Geeft aan of de termijn is verlengd
+        actions:
+          - output: is_termijn_verlengd
+            value:
+              operation: GREATER_THAN
+              subject: $verlengingen
+              value: 0
+          - output: termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $ambtenaar_aanstellingsdatum
+              years:
+                operation: ADD
+                values:
+                  - 4
+                  - operation: MULTIPLY
+                    values:
+                      - 2
+                      - $verlengingen
   - number: '11'
     text: |-
       1 De bij de criminele inlichtingen eenheid in gebruik zijnde vertrekken zijn afsluitbaar en beveiligd. Tot deze
       vertrekken hebben slechts toegang ambtenaren die deel uitmaken van de criminele inlichtingen eenheid, personen die
       door deze ambtenaren worden begeleid en de CIE-officier van justitie.
 
-      2 In afwijking van het eerste lid, tweede volzin, kan de korpsbeheerder aan anderen toegang zonder begeleiding
-      toestaan, indien het betreden van de vertrekken alleen kan plaatsvinden nadat identiteitsgegevens elektronisch
-      zijn vastgelegd en de toegang noodzakelijk is vanuit de verantwoordelijkheid voor de ambtenaren van de criminele
-      inlichtingen eenheid.
+       2 In afwijking van het eerste lid, tweede volzin, kan de korpsbeheerder aan anderen toegang zonder begeleiding
+       toestaan, indien het betreden van de vertrekken alleen kan plaatsvinden nadat identiteitsgegevens elektronisch
+       zijn vastgelegd en de toegang noodzakelijk is vanuit de verantwoordelijkheid voor de ambtenaren van de criminele
+       inlichtingen eenheid.
 
-      3 Bij afwezigheid van ambtenaren van de criminele inlichtingen eenheid zijn de vertrekken deugdelijk afgesloten.
+       3 Bij afwezigheid van ambtenaren van de criminele inlichtingen eenheid zijn de vertrekken deugdelijk afgesloten.
     url: https://wetten.overheid.nl/BWBR0011685/2009-01-30#Artikel11
+    machine_readable:
+      execution:
+        parameters:
+          - name: persoon
+            type: string
+            required: true
+            description: Rol van de persoon (bijv. CIE_ambtenaar, begeleid, CIE_officier_van_justitie, korpsbeheerder)
+          - name: is_identiteit_geregistreerd
+            type: boolean
+            required: false
+            description: Of identiteitsgegevens elektronisch zijn vastgelegd
+        output:
+          - name: toegang_toegestaan
+            type: boolean
+            description: Geeft aan of toegang tot CIE-vertrekken is toegestaan
+          - name: begeleiding_vereist
+            type: boolean
+            description: Geeft aan of begeleiding vereist is voor toegang
+        actions:
+          - output: toegang_toegestaan
+            value:
+              operation: OR
+              values:
+                - operation: IN
+                  subject: $persoon
+                  value: ["CIE_ambtenaar", "CIE_officier_van_justitie", "begeleid"]
+                - operation: AND
+                  values:
+                    - operation: EQUALS
+                      subject: $persoon
+                      value: "korpsbeheerder"
+                    - operation: EQUALS
+                      subject: $is_identiteit_geregistreerd
+                      value: true
+          - output: begeleiding_vereist
+            value:
+              operation: NOT
+              subject:
+                operation: IN
+                subject: $persoon
+                value: ["CIE_ambtenaar", "CIE_officier_van_justitie"]
   - number: '12'
     text: |-
       De verantwoordelijke draagt ervoor zorg dat onbevoegde kennisneming van criminele inlichtingen en informantgegevens
