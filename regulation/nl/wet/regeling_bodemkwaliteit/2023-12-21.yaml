@@ -655,6 +655,26 @@ articles:
       silicium, calcium of aluminium daarin bepaald. Hiertoe worden aselect over de hele partij ten minste twaalf grepen
       genomen, die ieder worden verdeeld over drie mengmonsters.
     url: https://wetten.overheid.nl/BWBR0023085/2023-12-21#Artikel3.1.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_grepen
+            type: number
+            default: 12
+            description: Totaal aantal genomen grepen
+          - name: aantal_mengmonsters
+            type: number
+            default: 3
+            description: Aantal mengmonsters waarover de grepen worden verdeeld
+        output:
+          - name: aantal_grepen_per_mengmonster
+            type: number
+            description: Aantal grepen per mengmonster
+        actions:
+          - output: aantal_grepen_per_mengmonster
+            value:
+              operation: DIVIDE
+              values: [$aantal_grepen, $aantal_mengmonsters]
   - number: 3.1.1.2
     text: De mengmonsters worden voorbehandeld door ze te drogen bij 40 °C volgens NVN 7312.
     url: https://wetten.overheid.nl/BWBR0023085/2023-12-21#Artikel3.1.1
