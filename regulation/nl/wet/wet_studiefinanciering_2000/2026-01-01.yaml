@@ -450,6 +450,42 @@ articles:
         artikel: '2.14'
         hoofdstuk: '2'
         paragraaf: '2.4'
+    machine_readable:
+      endpoint: is_uitwonend_student
+      execution:
+        parameters:
+          - name: woont_op_ingeschreven_adres
+            type: boolean
+            required: true
+            description: Student woont op adres waaronder hij in de basisregistratie personen staat ingeschreven (artikel 1.5 lid 1 onderdeel a)
+          - name: woonadres_is_ouderadres
+            type: boolean
+            required: true
+            description: Woonadres student is gelijk aan het adres van een of beide ouders in de basisregistratie personen (artikel 1.5 lid 1 onderdeel b)
+          - name: opleiding_buiten_nederland
+            type: boolean
+            required: false
+            description: Student volgt een opleiding buiten Nederland als bedoeld in artikel 2.13a of 2.14 (artikel 1.5 lid 2)
+        output:
+          - name: is_uitwonend_student
+            type: boolean
+            description: Student voldoet aan de verplichtingen voor het normbedrag uitwonende student
+        actions:
+          - output: is_uitwonend_student
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $opleiding_buiten_nederland
+                      value: true
+                    - operation: EQUALS
+                      subject: $woont_op_ingeschreven_adres
+                      value: true
+                - operation: EQUALS
+                  subject: $woonadres_is_ouderadres
+                  value: false
   - number: '1.7'
     text: |-
       1 Onze Minister gebruikt het burgerservicenummer of onderwijsnummer van een student of debiteur ter zake van de
@@ -562,6 +598,40 @@ articles:
       kosten van de toegang tot het onderwijs betreft. Bij algemene maatregel van bestuur kunnen regels worden gesteld
       met betrekking tot de hoogte en de vorm van deze tegemoetkoming.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel2.2
+    machine_readable:
+      endpoint: voldoet_aan_nationaliteitseis
+      execution:
+        parameters:
+          - name: heeft_nederlandse_nationaliteit
+            type: boolean
+            required: true
+            description: Student bezit de Nederlandse nationaliteit (artikel 2.2 lid 1 onderdeel a)
+          - name: is_gelijkgesteld_via_verdrag
+            type: boolean
+            required: true
+            description: Student is op grond van een verdrag of besluit volkenrechtelijke organisatie gelijkgesteld met Nederlander (artikel 2.2 lid 1 onderdeel b)
+          - name: is_gelijkgesteld_via_amvb
+            type: boolean
+            required: true
+            description: Student behoort tot een bij AMvB aangewezen groep gelijkgesteld met Nederlanders (artikel 2.2 lid 1 onderdeel c)
+        output:
+          - name: voldoet_aan_nationaliteitseis
+            type: boolean
+            description: Student voldoet aan de nationaliteitseis voor studiefinanciering
+        actions:
+          - output: voldoet_aan_nationaliteitseis
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_nederlandse_nationaliteit
+                  value: true
+                - operation: EQUALS
+                  subject: $is_gelijkgesteld_via_verdrag
+                  value: true
+                - operation: EQUALS
+                  subject: $is_gelijkgesteld_via_amvb
+                  value: true
   - number: '2.3'
     text: |-
       1 Een mbo-student kan in aanmerking komen voor:
@@ -583,6 +653,57 @@ articles:
       4 In afwijking van het derde lid behoudt een student bij het bereiken van de leeftijd van 30 jaren zijn aanspraak,
       zolang hij zonder onderbreking studiefinanciering geniet.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel2.3
+    machine_readable:
+      untranslatables:
+        - construct: "Kwartaalgebonden aanvangsdatum mbo-student (eerste dag na kwartaal van 18e verjaardag)"
+          reason: "Quarter-boundary date calculation not available as engine operation"
+          legal_text_excerpt: "met ingang van: 1°. de eerste dag van de maand volgend op het kwartaal waarin hij de leeftijd van 18 jaren heeft bereikt; of 2°. de eerste dag van het kwartaal indien hij op die dag de leeftijd van 18 jaren heeft bereikt"
+        - construct: "Behoud aanspraak na 30e verjaardag bij ononderbroken studiefinanciering"
+          reason: "Historical continuity check (zolang hij zonder onderbreking) cannot be expressed as engine operation"
+          legal_text_excerpt: "behoudt een student bij het bereiken van de leeftijd van 30 jaren zijn aanspraak, zolang hij zonder onderbreking studiefinanciering geniet"
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+          - name: peildatum
+            type: date
+            required: true
+          - name: type_student
+            type: string
+            required: true
+            description: "MBO of HO"
+        output:
+          - name: leeftijd_in_jaren
+            type: number
+            description: Berekende leeftijd op de peildatum
+          - name: voldoet_aan_maximumleeftijd
+            type: boolean
+            description: Student heeft de leeftijd van 30 jaren nog niet bereikt (artikel 2.3 lid 3)
+          - name: ho_student_kan_studiefinanciering_aanvragen
+            type: boolean
+            description: Ho-student voldoet aan de leeftijdseis voor studiefinanciering (artikel 2.3 lid 2 en 3)
+        actions:
+          - output: leeftijd_in_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_maximumleeftijd
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $leeftijd_in_jaren
+              value: 30
+          - output: ho_student_kan_studiefinanciering_aanvragen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $type_student
+                  value: "HO"
+                - operation: EQUALS
+                  subject: $voldoet_aan_maximumleeftijd
+                  value: true
   - number: 2.3a
     text: |-
       1 In afwijking van [artikel 2.3, eerste en derde lid][ref1], kan een mbo-student voor levenlanglerenkrediet in
@@ -622,6 +743,63 @@ articles:
       - id: ref3
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      definitions:
+        MAXIMUMLEEFTIJD_LLK:
+          value: 56
+          description: Maximumleeftijd voor levenlanglerenkrediet in jaren (artikel 2.3a lid 4)
+      untranslatables:
+        - construct: "Behoud aanspraak na maximumleeftijd bij ononderbroken krediet"
+          reason: "Historical continuity check (zolang hij zonder onderbreking) cannot be expressed as engine operation"
+          legal_text_excerpt: "behoudt een student bij het bereiken van de maximumleeftijd zijn aanspraak, zolang hij zonder onderbreking levenlanglerenkrediet geniet"
+        - construct: "Dynamische verhoging maximumleeftijd gekoppeld aan AOW-leeftijd (lid 5-6)"
+          reason: "Dynamic update based on external AOW pension age changes cannot be expressed statically"
+          legal_text_excerpt: "De maximumleeftijd wordt telkens verhoogd met een volledig jaar met ingang van het studiejaar dat aanvangt in hetzelfde jaar als waarin de pensioengerechtigde leeftijd cumulatief met een volledig jaar is verhoogd"
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+          - name: peildatum
+            type: date
+            required: true
+          - name: type_student
+            type: string
+            required: true
+            description: "MBO of HO"
+        output:
+          - name: leeftijd_in_jaren
+            type: number
+          - name: recht_op_llk_naar_leeftijd
+            type: boolean
+            description: Student voldoet aan de leeftijdseis voor levenlanglerenkrediet (artikel 2.3a lid 1 en 2)
+        actions:
+          - output: leeftijd_in_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: recht_op_llk_naar_leeftijd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_student
+                    value: "MBO"
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $leeftijd_in_jaren
+                        value: 30
+                      - operation: LESS_THAN
+                        subject: $leeftijd_in_jaren
+                        value: $MAXIMUMLEEFTIJD_LLK
+              default:
+                operation: LESS_THAN
+                subject: $leeftijd_in_jaren
+                value: $MAXIMUMLEEFTIJD_LLK
   - number: '2.4'
     text: |-
       Voor studiefinanciering kan een mbo-student in aanmerking komen die is ingeschreven aan:
@@ -1285,6 +1463,40 @@ articles:
         artikel: '3.18'
         hoofdstuk: '3'
         paragraaf: '3.5'
+    machine_readable:
+      endpoint: heeft_recht_toeslag_eenoudergezin
+      execution:
+        parameters:
+          - name: heeft_partner
+            type: boolean
+            required: true
+            description: Student heeft een partner in de zin van artikel 3 Algemene wet inkomensafhankelijke regelingen
+          - name: heeft_kind_jonger_dan_18
+            type: boolean
+            required: true
+            description: Student heeft één of meer kinderen jonger dan 18 jaren die niet tot het huishouden van een ander behoren
+          - name: heeft_recht_op_kinderbijslag
+            type: boolean
+            required: true
+            description: Student heeft aanspraak op kinderbijslag op grond van de Algemene Kinderbijslagwet voor het kind
+        output:
+          - name: heeft_recht_toeslag_eenoudergezin
+            type: boolean
+            description: Student heeft recht op de toeslag voor een eenoudergezin (artikel 3.5)
+        actions:
+          - output: heeft_recht_toeslag_eenoudergezin
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_partner
+                  value: false
+                - operation: EQUALS
+                  subject: $heeft_kind_jonger_dan_18
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_recht_op_kinderbijslag
+                  value: true
   - number: '3.6'
     text: |-
       1 De hoogte van de basisbeurs is verschillend voor uit- en thuiswonende studenten. De bedragen zijn opgenomen in
@@ -1411,6 +1623,113 @@ articles:
         hoofdstuk: '4'
         paragraaf: 4.1.2
         afdeling: '4.1'
+    machine_readable:
+      open_terms:
+        - id: vrije_voet_mbo
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 3.9, tweede lid, Wet studiefinanciering 2000 (maatstaf 1 januari 2014 = 1673664 eurocent)
+        - id: vrije_voet_mbo_zonder_partner
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 3.9, tweede lid, laatste volzin, Wet studiefinanciering 2000 (maatstaf 1 januari 2014 = 2120443 eurocent)
+      untranslatables:
+        - construct: "Aftrek per studerend kind (artikel 3.9 lid 4 onderdeel b)"
+          reason: "Aggregation over collections (ieder kind) not available as engine operation"
+          legal_text_excerpt: "€ 363 voor ieder kind dat in het studiejaar ... onder de werking van ... valt"
+        - construct: "Verdeling veronderstelde ouderlijke bijdrage over meerdere studerende kinderen (artikel 3.9 lid 5 jo. 3.13 lid 3)"
+          reason: "Distribution over variable collection not available as engine operation"
+          legal_text_excerpt: "de bijdrage verdeeld over de studerende kinderen van een ouder indien meer dan een van deze kinderen voor de betreffende maand aanspraak heeft"
+      execution:
+        parameters:
+          - name: toetsingsinkomen_ouder
+            type: number
+            required: true
+            description: Toetsingsinkomen van de ouder in het peiljaar in eurocent (artikel 3.9 lid 1)
+          - name: ouder_is_zonder_partner
+            type: boolean
+            required: true
+            description: De ouder is in het peiljaar een ouder zonder partner (artikel 3.9 lid 2)
+          - name: heeft_dubbele_vrije_voet
+            type: boolean
+            required: false
+            description: Geldt een dubbele vrije voet (één ouder is overleden, slechts één ouder in BRP, of artikel 3.14 van toepassing)
+          - name: aftrek_debiteur_per_jaar
+            type: number
+            required: false
+            description: De vastgestelde termijnbetalingen van de ouder als debiteur over een jaar (of draagkracht indien lager) in eurocent (artikel 3.9 lid 4 onderdeel a)
+        output:
+          - name: toepasselijke_vrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De toe te passen vrije voet op het toetsingsinkomen (artikel 3.9 lid 2)
+          - name: inkomen_boven_vrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het toetsingsinkomen verminderd met de vrije voet, minimaal 0
+          - name: bruto_kortingsbedrag_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: 26% van het inkomen boven de vrije voet (artikel 3.9 lid 3)
+          - name: berekeningsgrondslag_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Een twaalfde deel van het netto kortingsbedrag (artikel 3.9 lid 5)
+        actions:
+          - output: toepasselijke_vrije_voet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_dubbele_vrije_voet
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $vrije_voet_mbo
+                      - 2
+                - when:
+                    operation: EQUALS
+                    subject: $ouder_is_zonder_partner
+                    value: true
+                  then: $vrije_voet_mbo_zonder_partner
+              default: $vrije_voet_mbo
+          - output: inkomen_boven_vrije_voet
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $toetsingsinkomen_ouder
+                    - $toepasselijke_vrije_voet
+          - output: bruto_kortingsbedrag_per_jaar
+            value:
+              operation: MULTIPLY
+              values:
+                - $inkomen_boven_vrije_voet
+                - 0.26
+          - output: berekeningsgrondslag_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MAX
+                  values:
+                    - 0
+                    - operation: SUBTRACT
+                      values:
+                        - $bruto_kortingsbedrag_per_jaar
+                        - $aftrek_debiteur_per_jaar
+                - 12
   - number: 3.9a
     text: |-
       [Artikel 3.9][ref1] is van overeenkomstige toepassing op de bepaling van de veronderstelde ouderlijke bijdrage voor
@@ -1453,6 +1772,112 @@ articles:
         artikel: '3.9'
         hoofdstuk: '3'
         paragraaf: '3.3'
+    machine_readable:
+      open_terms:
+        - id: vrije_voet_ho
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 3.9a onderdeel a Wet studiefinanciering 2000 (maatstaf 1 januari 2014 = 1500000 eurocent)
+        - id: vrije_voet_ho_zonder_partner
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 3.9a onderdeel b Wet studiefinanciering 2000 (maatstaf 1 januari 2014 = 1900400 eurocent)
+      untranslatables:
+        - construct: "Aftrek per studerend kind (via 3.9 lid 4 onderdeel b)"
+          reason: "Aggregation over collections (ieder kind) not available as engine operation"
+          legal_text_excerpt: "€ 363 voor ieder kind dat in het studiejaar ... onder de werking van ... valt"
+        - construct: "Verdeling veronderstelde ouderlijke bijdrage over meerdere studerende kinderen"
+          reason: "Distribution over variable collection not available as engine operation"
+          legal_text_excerpt: "de bijdrage verdeeld over de studerende kinderen van een ouder"
+      execution:
+        parameters:
+          - name: toetsingsinkomen_ouder
+            type: number
+            required: true
+            description: Toetsingsinkomen van de ouder in het peiljaar in eurocent
+          - name: ouder_is_zonder_partner
+            type: boolean
+            required: true
+            description: De ouder is in het peiljaar een ouder zonder partner
+          - name: heeft_dubbele_vrije_voet
+            type: boolean
+            required: false
+            description: Geldt een dubbele vrije voet (via artikel 3.9a jo. 3.9 lid 2)
+          - name: aftrek_debiteur_per_jaar
+            type: number
+            required: false
+            description: Termijnbetalingen van de ouder als debiteur over een jaar (of draagkracht indien lager) in eurocent
+        output:
+          - name: toepasselijke_vrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De toe te passen vrije voet voor ho-student (artikel 3.9a onderdelen a en b)
+          - name: inkomen_boven_vrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: bruto_kortingsbedrag_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: 13,6% van het inkomen boven de vrije voet (artikel 3.9a onderdeel c)
+          - name: berekeningsgrondslag_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Een twaalfde deel van het netto kortingsbedrag
+        actions:
+          - output: toepasselijke_vrije_voet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_dubbele_vrije_voet
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $vrije_voet_ho
+                      - 2
+                - when:
+                    operation: EQUALS
+                    subject: $ouder_is_zonder_partner
+                    value: true
+                  then: $vrije_voet_ho_zonder_partner
+              default: $vrije_voet_ho
+          - output: inkomen_boven_vrije_voet
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $toetsingsinkomen_ouder
+                    - $toepasselijke_vrije_voet
+          - output: bruto_kortingsbedrag_per_jaar
+            value:
+              operation: MULTIPLY
+              values:
+                - $inkomen_boven_vrije_voet
+                - 0.136
+          - output: berekeningsgrondslag_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MAX
+                  values:
+                    - 0
+                    - operation: SUBTRACT
+                      values:
+                        - $bruto_kortingsbedrag_per_jaar
+                        - $aftrek_debiteur_per_jaar
+                - 12
   - number: '3.10'
     text: |-
       1 Op aanvraag van de ouders of een van hen of op aanvraag van de student wordt bij toepassing van de
@@ -1477,6 +1902,67 @@ articles:
         artikel: 3.9a
         hoofdstuk: '3'
         paragraaf: '3.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: toetsingsinkomen_ouder1_peiljaar
+            type: number
+            required: true
+            description: Toetsingsinkomen ouder 1 in het peiljaar in eurocent
+          - name: toetsingsinkomen_ouder2_peiljaar
+            type: number
+            required: true
+            description: Toetsingsinkomen ouder 2 in het peiljaar in eurocent (0 indien geen tweede ouder)
+          - name: toetsingsinkomen_ouder1_actueel
+            type: number
+            required: true
+            description: Toetsingsinkomen ouder 1 in het eerste of tweede jaar na het peiljaar in eurocent
+          - name: toetsingsinkomen_ouder2_actueel
+            type: number
+            required: true
+            description: Toetsingsinkomen ouder 2 in het eerste of tweede jaar na het peiljaar in eurocent
+        output:
+          - name: gecombineerd_toetsingsinkomen_peiljaar
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: gecombineerd_toetsingsinkomen_actueel
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: terugval_percentage
+            type: number
+            description: Procentuele vermindering van gecombineerd toetsingsinkomen ten opzichte van peiljaar
+          - name: is_sprake_van_terugval_inkomen
+            type: boolean
+            description: Sprake van terugval in inkomen van ten minste 15% (artikel 3.10 lid 2)
+        actions:
+          - output: gecombineerd_toetsingsinkomen_peiljaar
+            value:
+              operation: ADD
+              values:
+                - $toetsingsinkomen_ouder1_peiljaar
+                - $toetsingsinkomen_ouder2_peiljaar
+          - output: gecombineerd_toetsingsinkomen_actueel
+            value:
+              operation: ADD
+              values:
+                - $toetsingsinkomen_ouder1_actueel
+                - $toetsingsinkomen_ouder2_actueel
+          - output: terugval_percentage
+            value:
+              operation: DIVIDE
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $gecombineerd_toetsingsinkomen_peiljaar
+                    - $gecombineerd_toetsingsinkomen_actueel
+                - $gecombineerd_toetsingsinkomen_peiljaar
+          - output: is_sprake_van_terugval_inkomen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $terugval_percentage
+              value: 0.15
   - number: '3.11'
     text: |-
       Voor de toepassing van de [artikelen 3.9][ref1], [3.9a][ref2] en [3.10][ref3] wordt zolang het toetsingsinkomen
@@ -1565,6 +2051,44 @@ articles:
         artikel: '3.9'
         hoofdstuk: '3'
         paragraaf: '3.3'
+    machine_readable:
+      untranslatables:
+        - construct: "Verdeling over meerdere studerende kinderen per ouder (artikel 3.13 lid 3-4)"
+          reason: "Distribution over variable collection of children not available as engine operation"
+          legal_text_excerpt: "Bij de berekening van de veronderstelde ouderlijke bijdrage per studerend kind wordt de bijdrage verdeeld over de studerende kinderen van een ouder indien meer dan een van deze kinderen voor de betreffende maand aanspraak heeft"
+      execution:
+        parameters:
+          - name: berekeningsgrondslag_per_maand_ouder1
+            type: number
+            required: true
+            description: Berekeningsgrondslag per maand van ouder 1 (artikel 3.9 lid 5 of 3.9a)
+          - name: berekeningsgrondslag_per_maand_ouder2
+            type: number
+            required: false
+            description: Berekeningsgrondslag per maand van ouder 2 (artikel 3.9 lid 5 of 3.9a), 0 indien geen tweede ouder
+          - name: max_aanvullende_beurs
+            type: number
+            required: true
+            description: Maximale aanvullende beurs voor de student in eurocent (artikel 3.18)
+        output:
+          - name: veronderstelde_ouderlijke_bijdrage
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De veronderstelde ouderlijke bijdrage voor de student (artikel 3.13 lid 1 en 2)
+        actions:
+          - output: veronderstelde_ouderlijke_bijdrage
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: MIN
+                  values:
+                    - $max_aanvullende_beurs
+                    - operation: ADD
+                      values:
+                        - $berekeningsgrondslag_per_maand_ouder1
+                        - $berekeningsgrondslag_per_maand_ouder2
   - number: '3.14'
     text: |-
       1 Op aanvraag van een student kan de aan hem toegekende aanvullende lening worden verstrekt in de vorm van een
@@ -2043,6 +2567,170 @@ articles:
         artikel: '3.2'
         hoofdstuk: '3'
         paragraaf: '3.1'
+    machine_readable:
+      endpoint: normbedragen
+      definitions:
+        NORMBEDRAG_THUISWONEND_MBO:
+          value: 55695
+          description: Normbedrag kosten levensonderhoud thuiswonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        NORMBEDRAG_UITWONEND_MBO:
+          value: 78659
+          description: Normbedrag kosten levensonderhoud uitwonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        NORMBEDRAG_THUISWONEND_HO:
+          value: 79327
+          description: Normbedrag kosten levensonderhoud thuiswonende ho-student per maand in eurocent (maatstaf 1 september 2023)
+        NORMBEDRAG_UITWONEND_HO:
+          value: 95787
+          description: Normbedrag kosten levensonderhoud uitwonende ho-student per maand in eurocent (maatstaf 1 september 2023)
+        BASISBEURS_THUISWONEND_MBO:
+          value: 9085
+          description: Basisbeurs thuiswonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        BASISBEURS_UITWONEND_MBO:
+          value: 29651
+          description: Basisbeurs uitwonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        BASISLENING_MBO:
+          value: 19793
+          description: Maximale basislening mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        MAX_AANVULLENDE_BEURS_THUISWONEND_MBO:
+          value: 26817
+          description: Maximale aanvullende beurs/lening thuiswonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        MAX_AANVULLENDE_BEURS_UITWONEND_MBO:
+          value: 29215
+          description: Maximale aanvullende beurs/lening uitwonende mbo-student per maand in eurocent (maatstaf 1 januari 2023)
+        BASISBEURS_THUISWONEND_HO:
+          value: 11030
+          description: Basisbeurs thuiswonende ho-student per maand in eurocent (maatstaf 1 september 2023)
+        BASISBEURS_UITWONEND_HO:
+          value: 27490
+          description: Basisbeurs uitwonende ho-student per maand in eurocent (maatstaf 1 september 2023)
+        BASISLENING_HO:
+          value: 26697
+          description: Maximale basislening ho-student per maand in eurocent (maatstaf 1 september 2023)
+        MAX_AANVULLENDE_BEURS_HO:
+          value: 41600
+          description: Maximale aanvullende beurs/lening ho-student per maand in eurocent, zowel thuis- als uitwonend (maatstaf 1 september 2023)
+        TOESLAG_EENOUDERGEZIN:
+          value: 27713
+          description: Toeslag eenoudergezin per maand in eurocent (maatstaf 1 januari 2023)
+      execution:
+        parameters:
+          - name: type_student
+            type: string
+            required: true
+            description: "MBO of HO"
+          - name: is_uitwonend
+            type: boolean
+            required: true
+            description: Student is een uitwonende student in de zin van artikel 1.5
+        output:
+          - name: normbedrag_levensonderhoud
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Normbedrag voor kosten van levensonderhoud per maand (overzicht 1)
+          - name: basisbeurs
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Basisbeurs per maand exclusief toeslag eenoudergezin (overzicht 2)
+          - name: basislening_max
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale basislening per maand (overzicht 2)
+          - name: max_aanvullende_beurs
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale aanvullende beurs of lening per maand (overzicht 2)
+          - name: toeslag_eenoudergezin
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Toeslag eenoudergezin per maand (overzicht 3)
+        actions:
+          - output: normbedrag_levensonderhoud
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_student
+                    value: "MBO"
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: EQUALS
+                          subject: $is_uitwonend
+                          value: true
+                        then: $NORMBEDRAG_UITWONEND_MBO
+                    default: $NORMBEDRAG_THUISWONEND_MBO
+              default:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $is_uitwonend
+                      value: true
+                    then: $NORMBEDRAG_UITWONEND_HO
+                default: $NORMBEDRAG_THUISWONEND_HO
+          - output: basisbeurs
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_student
+                    value: "MBO"
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: EQUALS
+                          subject: $is_uitwonend
+                          value: true
+                        then: $BASISBEURS_UITWONEND_MBO
+                    default: $BASISBEURS_THUISWONEND_MBO
+              default:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $is_uitwonend
+                      value: true
+                    then: $BASISBEURS_UITWONEND_HO
+                default: $BASISBEURS_THUISWONEND_HO
+          - output: basislening_max
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_student
+                    value: "MBO"
+                  then: $BASISLENING_MBO
+              default: $BASISLENING_HO
+          - output: max_aanvullende_beurs
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_student
+                    value: "MBO"
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: EQUALS
+                          subject: $is_uitwonend
+                          value: true
+                        then: $MAX_AANVULLENDE_BEURS_UITWONEND_MBO
+                    default: $MAX_AANVULLENDE_BEURS_THUISWONEND_MBO
+              default: $MAX_AANVULLENDE_BEURS_HO
+          - output: toeslag_eenoudergezin
+            value: $TOESLAG_EENOUDERGEZIN
   - number: 3.18a
     text: |-
       In het studiejaar 2023–2024 worden de normbedragen voor de kosten van levensonderhoud en de bedragen van de
@@ -3605,6 +4293,20 @@ articles:
 
       2 Gedurende de aanloopfase bestaat geen verplichting tot terugbetaling.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel6.6
+    machine_readable:
+      execution:
+        output:
+          - name: aanloopfase_duur_jaren
+            type: number
+            description: Duur van de aanloopfase in kalenderjaren (artikel 6.6 lid 1)
+          - name: terugbetalingsverplichting_aanloopfase
+            type: boolean
+            description: Bestaat er een verplichting tot terugbetaling gedurende de aanloopfase (artikel 6.6 lid 2)
+        actions:
+          - output: aanloopfase_duur_jaren
+            value: 2
+          - output: terugbetalingsverplichting_aanloopfase
+            value: false
   - number: '6.7'
     text: |-
       1 De aflosfase volgt op de aanloopfase en beslaat behoudens toepassing van [artikel 6.9, derde lid][ref1], 35
@@ -3625,6 +4327,33 @@ articles:
         artikel: '6.9'
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      untranslatables:
+        - construct: "Herberekening termijnbetaling bij aanvang aflosfase en periodes daarna"
+          reason: "Annuity calculation over remaining months requires compound interest formula not available as engine operation"
+          legal_text_excerpt: "De hoogte van de maandelijkse termijnbetalingen wordt op basis van het aantal maanden van de aflosfase onderscheidenlijk het nog resterende aantal maanden ... tot gelijke bedragen vastgesteld"
+      execution:
+        parameters:
+          - name: max_opschorting_jaren
+            type: number
+            required: false
+            description: Aantal jaren dat gebruik is gemaakt van opschorting op grond van artikel 6.7 lid 2
+        output:
+          - name: aflosfase_duur_jaren
+            type: number
+            description: Duur van de aflosfase in kalenderjaren inclusief eventuele verlenging door opschorting (artikel 6.7 lid 1)
+          - name: max_opschorting_duur_jaren
+            type: number
+            description: Maximaal aantal jaren dat de terugbetaling kan worden opgeschort (artikel 6.7 lid 2)
+        actions:
+          - output: max_opschorting_duur_jaren
+            value: 5
+          - output: aflosfase_duur_jaren
+            value:
+              operation: ADD
+              values:
+                - 35
+                - $max_opschorting_jaren
   - number: '6.8'
     text: |-
       1 Onder achterstallige schuld wordt verstaan het bedrag van de verplichte terugbetaling uit hoofde van dit
@@ -3704,6 +4433,41 @@ articles:
         artikel: '6.10'
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      definitions:
+        MINIMUM_TERMIJNBETALING_PER_JAAR:
+          value: 6000
+          description: Minimaal te betalen bedrag per jaar aan termijnbetalingen in eurocent (artikel 6.9 lid 3, € 60)
+      execution:
+        parameters:
+          - name: berekende_termijnbetaling_per_jaar
+            type: number
+            required: true
+            description: Op basis van annuïteit berekende termijnbetaling per jaar in eurocent (artikel 6.9 lid 2, zie untranslatables)
+        output:
+          - name: geldende_termijnbetaling_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Te betalen termijnbetaling per jaar met inachtneming van het minimum (artikel 6.9 lid 3)
+          - name: termijnbetaling_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maandelijkse termijnbetaling
+        actions:
+          - output: geldende_termijnbetaling_per_jaar
+            value:
+              operation: MAX
+              values:
+                - $MINIMUM_TERMIJNBETALING_PER_JAAR
+                - $berekende_termijnbetaling_per_jaar
+          - output: termijnbetaling_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - $geldende_termijnbetaling_per_jaar
+                - 12
   - number: 6.9a
     text: |-
       1 De debiteur is bevoegd om bovenop de termijnbetalingen, kosteloos extra aflossingen te doen.
@@ -3753,6 +4517,101 @@ articles:
       6 Het vierde lid is niet van toepassing indien het voor Onze Minister niet mogelijk is op grond van het vijfde lid
       bij benadering een bedrag vast te stellen.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel6.10
+    machine_readable:
+      open_terms:
+        - id: belastbaar_minimumloon
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 6.1a Wet studiefinanciering 2000 (afgeleid van minimumloon inclusief vakantietoeslag)
+      execution:
+        parameters:
+          - name: toetsingsinkomen_debiteur
+            type: number
+            required: true
+            description: Toetsingsinkomen van de debiteur in het peiljaar in eurocent
+          - name: toetsingsinkomen_partner
+            type: number
+            required: false
+            description: Toetsingsinkomen van de partner in het peiljaar in eurocent (0 indien geen partner)
+          - name: debiteur_heeft_partner
+            type: boolean
+            required: true
+            description: Debiteur heeft een partner (artikel 6.10 lid 2 onderdeel a)
+          - name: debiteur_is_ouder_zonder_partner_in_peiljaar
+            type: boolean
+            required: false
+            description: Debiteur is in het peiljaar een ouder zonder partner (artikel 6.10 lid 2 onderdeel b)
+        output:
+          - name: draagkrachtinkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Totaal toetsingsinkomen debiteur en partner (artikel 6.10 lid 1)
+          - name: draagkrachtvrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Drempelinkomen voor draagkrachtberekening (artikel 6.10 lid 2)
+          - name: inkomen_boven_draagkrachtvrije_voet
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: draagkracht_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: 4% van het inkomen boven de draagkrachtvrije voet (artikel 6.10 lid 3)
+        actions:
+          - output: draagkrachtinkomen
+            value:
+              operation: ADD
+              values:
+                - $toetsingsinkomen_debiteur
+                - $toetsingsinkomen_partner
+          - output: draagkrachtvrije_voet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $debiteur_heeft_partner
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $belastbaar_minimumloon
+                      - 1.43
+                - when:
+                    operation: EQUALS
+                    subject: $debiteur_is_ouder_zonder_partner_in_peiljaar
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $belastbaar_minimumloon
+                      - 1.43
+              default:
+                operation: MULTIPLY
+                values:
+                  - $belastbaar_minimumloon
+                  - 1.0
+          - output: inkomen_boven_draagkrachtvrije_voet
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $draagkrachtinkomen
+                    - $draagkrachtvrije_voet
+          - output: draagkracht_per_jaar
+            value:
+              operation: MULTIPLY
+              values:
+                - $inkomen_boven_draagkrachtvrije_voet
+                - 0.04
   - number: '6.11'
     text: |-
       1 Voor een debiteur die in het peiljaar niet binnenlands belastingplichtig is in de zin van de
@@ -3815,6 +4674,39 @@ articles:
         artikel: '6.10'
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: toetsingsinkomen_peiljaar
+            type: number
+            required: true
+            description: Toetsingsinkomen van de debiteur in het peiljaar in eurocent
+          - name: toetsingsinkomen_actueel
+            type: number
+            required: true
+            description: Toetsingsinkomen van de debiteur in het jaar voorafgaand aan of het jaar waarvoor draagkracht wordt vastgesteld in eurocent
+        output:
+          - name: terugval_percentage
+            type: number
+            description: Procentuele vermindering van toetsingsinkomen ten opzichte van peiljaar
+          - name: is_sprake_van_terugval_inkomen
+            type: boolean
+            description: Sprake van terugval in inkomen van ten minste 15% (artikel 6.12 lid 2)
+        actions:
+          - output: terugval_percentage
+            value:
+              operation: DIVIDE
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $toetsingsinkomen_peiljaar
+                    - $toetsingsinkomen_actueel
+                - $toetsingsinkomen_peiljaar
+          - output: is_sprake_van_terugval_inkomen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $terugval_percentage
+              value: 0.15
   - number: '6.13'
     text: |-
       Indien het een debiteur betreft die na het peiljaar een ouder zonder partner is, wordt op aanvraag van de debiteur
@@ -4017,6 +4909,105 @@ articles:
         artikel: '6.10'
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      definitions:
+        AFLOSFASE_DUUR_LLK_JAREN:
+          value: 15
+          description: Duur van de aflosfase voor levenlanglerenkrediet in jaren (artikel 6.19 lid 2 onderdeel a, in afwijking van artikel 6.7 lid 1)
+        MINIMUM_TERMIJNBETALING_LLK_PER_JAAR:
+          value: 54500
+          description: Minimale termijnbetaling levenlanglerenkrediet per jaar in eurocent (artikel 6.19 lid 2 onderdeel b, €545, in afwijking van artikel 6.9 lid 3)
+        DRAAGKRACHT_PERCENTAGE_LLK:
+          value: 0.12
+          description: Draagkrachtpercentage voor levenlanglerenkrediet (artikel 6.19 lid 2 onderdeel e, 12%, in afwijking van artikel 6.10 lid 3)
+        DRAAGKRACHTVRIJE_VOET_PERCENTAGE_MET_PARTNER_LLK:
+          value: 1.20
+          description: Percentage belastbaar minimumloon voor draagkrachtvrije voet met partner of ouder zonder partner (artikel 6.19 lid 2 onderdelen c, 120%)
+        DRAAGKRACHTVRIJE_VOET_PERCENTAGE_ZONDER_PARTNER_LLK:
+          value: 0.84
+          description: Percentage belastbaar minimumloon voor draagkrachtvrije voet overige debiteuren zonder partner (artikel 6.19 lid 2 onderdeel d, 84%)
+      execution:
+        parameters:
+          - name: toetsingsinkomen_debiteur
+            type: number
+            required: true
+            description: Toetsingsinkomen van de debiteur in het peiljaar in eurocent
+          - name: toetsingsinkomen_partner
+            type: number
+            required: false
+            description: Toetsingsinkomen van de partner in het peiljaar in eurocent (0 indien geen partner)
+          - name: debiteur_heeft_partner
+            type: boolean
+            required: true
+          - name: debiteur_is_ouder_zonder_partner_in_peiljaar
+            type: boolean
+            required: false
+          - name: belastbaar_minimumloon
+            type: number
+            required: true
+            description: Belastbaar minimumloon in eurocent (artikel 6.1a)
+        output:
+          - name: aflosfase_duur_llk_jaren
+            type: number
+            description: Duur aflosfase voor levenlanglerenkrediet in jaren
+          - name: minimum_termijnbetaling_llk_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Minimale termijnbetaling voor levenlanglerenkrediet per jaar
+          - name: draagkrachtvrije_voet_llk
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Draagkrachtvrije voet voor levenlanglerenkrediet (120% of 84% van belastbaar minimumloon)
+          - name: draagkracht_llk_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Draagkracht voor levenlanglerenkrediet (12% boven draagkrachtvrije voet)
+        actions:
+          - output: aflosfase_duur_llk_jaren
+            value: $AFLOSFASE_DUUR_LLK_JAREN
+          - output: minimum_termijnbetaling_llk_per_jaar
+            value: $MINIMUM_TERMIJNBETALING_LLK_PER_JAAR
+          - output: draagkrachtvrije_voet_llk
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $debiteur_heeft_partner
+                        value: true
+                      - operation: EQUALS
+                        subject: $debiteur_is_ouder_zonder_partner_in_peiljaar
+                        value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $belastbaar_minimumloon
+                      - $DRAAGKRACHTVRIJE_VOET_PERCENTAGE_MET_PARTNER_LLK
+              default:
+                operation: MULTIPLY
+                values:
+                  - $belastbaar_minimumloon
+                  - $DRAAGKRACHTVRIJE_VOET_PERCENTAGE_ZONDER_PARTNER_LLK
+          - output: draagkracht_llk_per_jaar
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: MAX
+                  values:
+                    - 0
+                    - operation: SUBTRACT
+                      values:
+                        - operation: ADD
+                          values:
+                            - $toetsingsinkomen_debiteur
+                            - $toetsingsinkomen_partner
+                        - $draagkrachtvrije_voet_llk
+                - $DRAAGKRACHT_PERCENTAGE_LLK
   - number: 6.19a
     text: |-
       De terugbetaling van de lening die is ontstaan door toekenning van het levenlanglerenkrediet wordt geschorst
