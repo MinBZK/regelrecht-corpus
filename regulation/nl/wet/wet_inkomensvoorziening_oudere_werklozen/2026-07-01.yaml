@@ -403,6 +403,25 @@ articles:
       waarop de aanvraag om uitkering werd ingediend. Het UWV is bevoegd in bijzondere gevallen af te wijken van de
       vorige zin.
     url: https://wetten.overheid.nl/BWBR0024394/2026-07-01#Artikel4
+    machine_readable:
+      untranslatables:
+        - construct: "Lid 3: berekening vroegste datum waarover recht kan worden vastgesteld (aanvraagdatum minus 26 weken)"
+          reason: "DATE_ADD does not support negative durations; subtraction of weeks from a date requires an operation not available in the engine"
+          legal_text_excerpt: "Het recht op uitkering kan niet worden vastgesteld over perioden gelegen voor 26 weken voorafgaand aan de dag waarop de aanvraag om uitkering werd ingediend"
+          accepted: false
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Dag waarop de aanvraag om uitkering werd ingediend (art. 4 lid 2)
+        output:
+          - name: aanvraag_datum_uitkering
+            type: date
+            description: Aanvraagdatum zoals ingediend; vroegste toetsingsperiode ligt 26 weken eerder (lid 3)
+        actions:
+          - output: aanvraag_datum_uitkering
+            value: $aanvraag_datum
   - number: '5'
     text: |-
       Indien geen recht op uitkering is ontstaan omdat op de persoon, bedoeld in [artikel 3, eerste lid][ref1], en
@@ -581,6 +600,34 @@ articles:
 
       b. de dag volgend op de dag waarop de uitkeringsgerechtigde overlijdt.
     url: https://wetten.overheid.nl/BWBR0024394/2026-07-01#Artikel7
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_gestorven
+            type: boolean
+            required: true
+            description: Uitkeringsgerechtigde is gestorven (dag volgend op dag van overlijden; art. 7 lid b)
+        input:
+          - name: heeft_uitsluitingsgrond
+            type: boolean
+            description: Op de persoon is ten minste één uitsluitingsgrond van toepassing (art. 6)
+            source:
+              output: heeft_uitsluitingsgrond
+        output:
+          - name: recht_geeindigd
+            type: boolean
+            description: Recht op uitkering is geëindigd op grond van art. 7 onderdeel a of b
+        actions:
+          - output: recht_geeindigd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_uitsluitingsgrond
+                  value: true
+                - operation: EQUALS
+                  subject: $is_gestorven
+                  value: true
   - number: '8'
     text: |-
       Indien geen recht op een uitkering meer bestaat omdat op de persoon, bedoeld in [artikel 3, eerste lid][ref1], en
@@ -1096,6 +1143,65 @@ articles:
         bwb_id: BWBR0024394
         artikel: '21'
         hoofdstuk: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "Lid 2: weigering naar mate van te missen inkomen bij schending art. 15 onderdeel c of e"
+          reason: "Proportional sanction depends on income that would have been earned — requires external labour-market data not expressible as engine operation"
+          legal_text_excerpt: "weigert... blijvend naar de mate waarin die persoon met het verrichten van de betreffende arbeid inkomen zou kunnen hebben verworven"
+          accepted: false
+        - construct: "Lid 3: tijdelijk of blijvend, geheel of gedeeltelijk weigering bij schending diverse verplichtingen, afgestemd op ernst en verwijtbaarheid"
+          reason: "Discretionary sanction 'afgestemd op de ernst van de gedraging en de mate van verwijtbaarheid' — not expressible as deterministic engine operation"
+          legal_text_excerpt: "Het UWV weigert een uitkering... tijdelijk of blijvend, geheel of gedeeltelijk indien de aanvrager of de uitkeringsgerechtigde een verplichting... niet of niet behoorlijk is nagekomen"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AFWIJZING
+        parameters:
+          - name: niet_nagekomen_art13_lid2
+            type: boolean
+            required: true
+            description: Aanvrager/uitkeringsgerechtigde heeft de verplichting van art. 13 lid 2 (voorkomen ontslag door eigen toedoen) niet nagekomen
+          - name: overwegend_verwijtbaar
+            type: boolean
+            required: true
+            description: Het niet-nakomen van art. 13 lid 2 kan de persoon in overwegende mate worden verweten (art. 19 lid 1)
+        output:
+          - name: sanctie_art19_lid1
+            type: string
+            description: "Type sanctie o.g.v. art. 19 lid 1: GEEN, HALVERING_26_WEKEN, of BLIJVEND_GEHEEL"
+          - name: halvering_duur_weken
+            type: number
+            description: Duur van de halvering in weken bij sanctie HALVERING_26_WEKEN (0 indien geen halvering)
+        actions:
+          - output: sanctie_art19_lid1
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $niet_nagekomen_art13_lid2
+                    value: true
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: EQUALS
+                          subject: $overwegend_verwijtbaar
+                          value: true
+                        then: BLIJVEND_GEHEEL
+                    default: HALVERING_26_WEKEN
+              default: GEEN
+          - output: halvering_duur_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $sanctie_art19_lid1
+                    value: HALVERING_26_WEKEN
+                  then: 26
+              default: 0
   - number: '20'
     text: |-
       Indien het UWV een maatregel als bedoeld in [artikel 19][ref1] heeft opgelegd, zet het in geval van herleving van
