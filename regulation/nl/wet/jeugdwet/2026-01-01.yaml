@@ -513,6 +513,55 @@ articles:
         bwb_id: BWBR0034925
         artikel: '9.2'
         hoofdstuk: '9'
+    machine_readable:
+      untranslatables:
+        - construct: "redelijkerwijs mag vermoeden dat een vertrouwenspersoon niet langer voldoet"
+          reason: "Discretionary assessment by supervisory official, not computable mechanically"
+          legal_text_excerpt: "Indien een ingevolge artikel 9.2 met het toezicht belaste ambtenaar redelijkerwijs mag vermoeden dat een vertrouwenspersoon niet langer voldoet aan de eisen..."
+          accepted: false
+      execution:
+        parameters:
+          - name: vog_datum
+            type: date
+            required: true
+            description: Datum waarop de verklaring omtrent het gedrag is afgegeven
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de geldigheid wordt beoordeeld
+          - name: werkt_voor_rechtspersoon
+            type: boolean
+            required: true
+            description: Is de vertrouwenspersoon werkzaam voor een rechtspersoon (lid 1) of niet (lid 2)?
+        output:
+          - name: max_geldigheids_datum
+            type: date
+            description: Uiterste datum waarop de VOG nog geldig is
+          - name: vog_geldig
+            type: boolean
+            description: Is de VOG nog geldig op de peildatum?
+        actions:
+          - output: max_geldigheids_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $werkt_voor_rechtspersoon
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $vog_datum
+                    months: 3
+              default:
+                operation: DATE_ADD
+                date: $vog_datum
+                years: 3
+          - output: vog_geldig
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $max_geldigheids_datum
+              value: $peildatum
   - number: 1a.3
     text: |-
       1 Bij het voeren van een telefonisch of elektronisch gesprek als bedoeld in [artikel 1a.1, onderdeel a][ref1],
@@ -2043,6 +2092,40 @@ articles:
       - id: ref1
         bwb_id: BWBR0002656
         artikel: '233'
+    machine_readable:
+      untranslatables:
+        - construct: "in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake"
+          reason: "Discretionary judicial assessment for minors under 12; cannot be computed mechanically"
+          legal_text_excerpt: "Hetzelfde geldt indien de minderjarige de leeftijd van twaalf jaar nog niet heeft bereikt, maar in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de minderjarige
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de bekwaamheid wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd in volledige jaren op peildatum
+          - name: bekwaam_in_rechte
+            type: boolean
+            description: Is de minderjarige op grond van leeftijd (>=12) bekwaam in en buiten rechte op te treden (lid 2, eerste volzin)?
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: bekwaam_in_rechte
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_jaren
+              value: 12
   - number: 6.1.2
     text: |-
       1 De kinderrechter kan op verzoek een machtiging verlenen om een jeugdige in een gesloten accommodatie te doen
@@ -2533,6 +2616,63 @@ articles:
         artikel: 6.1.7
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      untranslatables:
+        - construct: "tot het tijdstip waarop een beslissing op een verzoek om een machtiging is genomen"
+          reason: "Event-based termination condition (until a future decision is taken) cannot be expressed as a fixed date computation"
+          legal_text_excerpt: "De spoedmachtiging geldt tot het tijdstip waarop een beslissing op een verzoek om een machtiging is genomen, doch ten hoogste vier weken."
+          accepted: false
+        - construct: "De machtiging of spoedmachtiging vervalt indien de gecertificeerde instelling heeft bepaald dat een voorziening niet langer nodig is"
+          reason: "Conditional expiry based on an external determination by a certified institution cannot be computed mechanically"
+          legal_text_excerpt: "De machtiging of spoedmachtiging vervalt indien de gecertificeerde instelling... heeft bepaald dat een voorziening, inhoudende verblijf niet zijnde verblijf bij een pleegouder, niet langer nodig is."
+          accepted: false
+      execution:
+        parameters:
+          - name: verlening_datum
+            type: date
+            required: true
+            description: Datum waarop de machtiging is verleend door de kinderrechter
+          - name: type_machtiging
+            type: string
+            required: true
+            description: "Type machtiging: 'machtiging', 'spoedmachtiging', 'eerste_voorwaardelijke_machtiging', of 'verlenging_voorwaardelijke_machtiging'"
+        output:
+          - name: max_einddatum
+            type: date
+            description: Maximale einddatum van de machtiging op grond van lid 2
+          - name: vervaldatum_bij_niet_uitvoer
+            type: date
+            description: Datum waarop de machtiging vervalt als deze gedurende drie maanden niet ten uitvoer is gelegd (lid 3)
+        actions:
+          - output: max_einddatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_machtiging
+                    value: "spoedmachtiging"
+                  then:
+                    operation: DATE_ADD
+                    date: $verlening_datum
+                    weeks: 4
+                - when:
+                    operation: EQUALS
+                    subject: $type_machtiging
+                    value: "eerste_voorwaardelijke_machtiging"
+                  then:
+                    operation: DATE_ADD
+                    date: $verlening_datum
+                    months: 6
+              default:
+                operation: DATE_ADD
+                date: $verlening_datum
+                years: 1
+          - output: vervaldatum_bij_niet_uitvoer
+            value:
+              operation: DATE_ADD
+              date: $verlening_datum
+              months: 3
   - number: 6.1.13
     text: |-
       1 De jeugdhulpaanbieder voegt een afschrift van de beslissing, bedoeld in de [artikelen 6.1.2, eerste lid][ref1],
@@ -3428,6 +3568,28 @@ articles:
         artikel: 6.5.5
         hoofdstuk: '6'
         paragraaf: '6.5'
+    machine_readable:
+      untranslatables:
+        - construct: "onbevoegdverklaring, niet-ontvankelijkverklaring, ongegrondverklaring, gegrondverklaring"
+          reason: "Decision categories of the complaints commission require substantive assessment, not computable from fixed parameters"
+          legal_text_excerpt: "De beslissing van de commissie strekt tot: a. onbevoegdverklaring van de commissie, b. niet-ontvankelijkverklaring van de klacht, c. ongegrondverklaring van de klacht, of d. gegrondverklaring van de klacht."
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_ontvangst_klacht
+            type: date
+            required: true
+            description: Datum waarop de klacht is ontvangen door de klachtencommissie
+        output:
+          - name: uiterste_beslissingstermijn
+            type: date
+            description: Uiterste datum waarop de klachtencommissie een beslissing moet nemen (lid 3, binnen vier weken na ontvangst)
+        actions:
+          - output: uiterste_beslissingstermijn
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_klacht
+              weeks: 4
   - number: 6.5.2
     text: |-
       1 Hangende de beslissing op de klacht kan de voorzitter van een door de Raad voor strafrechtstoepassing en
@@ -3702,6 +3864,40 @@ articles:
         artikel: 6.3.1.2
         hoofdstuk: '6'
         paragraaf: '6.3'
+    machine_readable:
+      untranslatables:
+        - construct: "tenzij het informatie betreft voor de gecertificeerde instelling die noodzakelijk is voor de uitvoering van de ondertoezichtstelling"
+          reason: "Exception based on necessity for child protection execution cannot be computed mechanically; requires contextual judgment"
+          legal_text_excerpt: "tenzij het informatie betreft voor de gecertificeerde instelling die noodzakelijk is voor de uitvoering van de ondertoezichtstelling"
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jeugdige
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de instemming wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd in volledige jaren op peildatum
+          - name: instemming_jeugdige_vereist
+            type: boolean
+            description: Is instemming van de jeugdige vereist voorafgaand aan het informeren van ouders, pleegouders of gecertificeerde instelling? (lid 2 en 3)
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: instemming_jeugdige_vereist
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_jaren
+              value: 16
   - number: 6.7.3
     text: |-
       1 De jeugdhulpaanbieder zorgt ten behoeve van de uitvoering van dit hoofdstuk en van het toezicht op de naleving
@@ -4478,6 +4674,49 @@ articles:
         artikel: 7.3.15
         hoofdstuk: '7'
         paragraaf: '7.3'
+    machine_readable:
+      untranslatables:
+        - construct: "kennelijk nodig is teneinde ernstig nadeel voor de betrokkene te voorkomen"
+          reason: "Discretionary exception to parental consent requirement cannot be computed mechanically"
+          legal_text_excerpt: "De jeugdhulp kan evenwel zonder de toestemming van die ouders of de voogd worden verleend, indien zij kennelijk nodig is teneinde ernstig nadeel voor de betrokkene te voorkomen..."
+          accepted: false
+        - construct: "niet in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake"
+          reason: "Discretionary assessment of decision-making capacity for those 16+ cannot be computed mechanically"
+          legal_text_excerpt: "In het geval waarin een betrokkene van zestien jaar of ouder niet in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake..."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene (minderjarige)
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de toestemmingsvereiste wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd in volledige jaren op peildatum
+          - name: ouderlijke_toestemming_vereist
+            type: boolean
+            description: Is naast de toestemming van de betrokkene ook toestemming van de ouders/voogd vereist? (lid 2, eerste volzin; leeftijd 12 t/m 15 jaar)
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: ouderlijke_toestemming_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_jaren
+                  value: 12
+                - operation: LESS_THAN
+                  subject: $leeftijd_jaren
+                  value: 16
   - number: 7.3.5
     text: |-
       1 Een minderjarige die de leeftijd van zestien jaar heeft bereikt, is bekwaam tot het verlenen van toestemming voor
@@ -4490,6 +4729,35 @@ articles:
       3 In op die verlening van jeugdhulp betrekking hebbende aangelegenheden is de minderjarige bekwaam in en buiten
       rechte op te treden.
     url: https://wetten.overheid.nl/BWBR0034925/2026-01-01#Artikel7.3.5
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de minderjarige
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de bekwaamheid wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd in volledige jaren op peildatum
+          - name: bekwaam_tot_toestemming
+            type: boolean
+            description: Is de minderjarige op grond van leeftijd (>=16) zelf bekwaam tot het verlenen van toestemming voor jeugdhulp?
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: bekwaam_tot_toestemming
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_jaren
+              value: 16
   - number: 7.3.6
     text: |-
       Op verzoek van de betrokkene legt de jeugdhulpverlener in ieder geval schriftelijk vast voor welke verrichtingen
@@ -4522,6 +4790,28 @@ articles:
         artikel: 7.3.9
         hoofdstuk: '7'
         paragraaf: '7.3'
+    machine_readable:
+      untranslatables:
+        - construct: "of zoveel langer als redelijkerwijs uit de zorg van een goed jeugdhulpverlener voortvloeit"
+          reason: "Open-ended professional duty extending the retention period beyond 20 years cannot be computed mechanically"
+          legal_text_excerpt: "bewaart de jeugdhulpverlener het dossier gedurende twintig jaar... of zoveel langer als redelijkerwijs uit de zorg van een goed jeugdhulpverlener voortvloeit."
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_laatste_wijziging
+            type: date
+            required: true
+            description: Datum waarop de laatste wijziging in het dossier heeft plaatsgevonden
+        output:
+          - name: bewaartermijn_einddatum
+            type: date
+            description: Minimale bewaarplicht einddatum (twintig jaar na de datum van de laatste wijziging, lid 3)
+        actions:
+          - output: bewaartermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_laatste_wijziging
+              years: 20
   - number: 7.3.9
     text: |-
       1 De jeugdhulpverlener vernietigt de gegevens uit het dossier na een daartoe strekkend verzoek van de betrokkene.
