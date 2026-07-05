@@ -314,6 +314,61 @@ articles:
       - id: ref5
         bwb_id: BWBR0011823
         artikel: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "uitzonderingen lid 3 voor specifieke kinderen van vreemdelingen"
+          reason: "Requires aggregation over parentage conditions and adoption procedure status not expressible as simple operations"
+          legal_text_excerpt: "kinderen in Nederland geboren uit een in Nederland wonende vreemdeling die rechtmatig verblijf geniet..."
+          accepted: false
+        - construct: "uitbreiding/beperking kring verzekerden bij AMvB (leden 4 en 5)"
+          reason: "Delegated to general administrative measure (AMvB); not computable from this article's text"
+          legal_text_excerpt: "Bij of krachtens algemene maatregel van bestuur kan, in afwijking van het eerste lid, uitbreiding dan wel beperking worden gegeven aan de kring der verzekerden."
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de persoon
+          - name: is_ingezetene
+            type: boolean
+            required: true
+            description: Woont de persoon in Nederland (ingezetene als bedoeld in artikel 1.2.1 Wlz)
+          - name: werkt_in_nl_loonbelasting
+            type: boolean
+            required: true
+            description: Verricht de persoon in Nederland of op het continentaal plat in dienstbetrekking arbeid en is daarvoor aan de loonbelasting onderworpen
+          - name: verblijft_rechtmatig
+            type: boolean
+            required: true
+            description: Heeft de persoon als vreemdeling rechtmatig verblijf als bedoeld in artikel 8 sub a t/m e en l van de Vreemdelingenwet 2000; voor niet-vreemdelingen true
+        output:
+          - name: is_verzekerd
+            type: boolean
+            description: Geeft aan of de persoon verzekerd is ingevolge de Wet langdurige zorg
+        actions:
+          - output: voldoet_basis_voorwaarden_lid1
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingezetene
+                  value: true
+                - operation: EQUALS
+                  subject: $werkt_in_nl_loonbelasting
+                  value: true
+          - output: is_verzekerd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_basis_voorwaarden_lid1
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_rechtmatig
+                  value: true
   - number: 2.1.2
     text: |-
       Zo nodig in afwijking van [artikel 2.1.1][ref1] en de daarop berustende bepalingen:
@@ -591,6 +646,107 @@ articles:
       - id: ref1
         bwb_id: BWBR0034925
         artikel: '1.1'
+    machine_readable:
+      untranslatables:
+        - construct: "redelijkerwijs aangewezen naar aard, inhoud en omvang en uit oogpunt van doelmatige zorgverlening"
+          reason: "Professional/qualitative assessment by CIZ; not computable from discrete inputs"
+          legal_text_excerpt: "voor zover hij naar aard, inhoud en omvang en uit een oogpunt van doelmatige zorgverlening redelijkerwijs op die zorg is aangewezen"
+          accepted: false
+        - construct: "uitbreiding/beperking bij AMvB (leden 4 en 5)"
+          reason: "Delegated to AMvB; not computable from this article"
+          legal_text_excerpt: "Bij of krachtens algemene maatregel van bestuur wordt bepaald in welke gevallen een verzekerde, in afwijking van het eerste lid, geen recht heeft op vormen van zorg..."
+          accepted: false
+        - construct: "uitzonderingsregeling lid 3: meerderjarige met licht verstandelijke handicap en gedragsproblemen met tijdelijke behoefte"
+          reason: "Lid 3 requires assessing whether the need is 'tijdelijk' versus 'blijvend', and sub b requires clinical/treatment judgment ('volgens zijn behandelaar'); these are not computable"
+          legal_text_excerpt: "In afwijking van het eerste lid heeft een meerderjarige verzekerde recht op zorg voor zover hij vanwege een combinatie van een licht verstandelijke handicap en gedragsproblemen: a. tijdelijk behoefte heeft... b. volgens zijn behandelaar is aangewezen op..."
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de verzekerde
+          - name: heeft_somatische_of_psychogeriatrische_aandoening_of_beperking
+            type: boolean
+            required: true
+            description: Heeft de verzekerde een somatische of psychogeriatrische aandoening of beperking
+          - name: heeft_psychische_stoornis
+            type: boolean
+            required: true
+            description: Heeft de verzekerde een psychische stoornis
+          - name: heeft_verstandelijke_lichamelijke_of_zintuiglijke_handicap
+            type: boolean
+            required: true
+            description: Heeft de verzekerde een verstandelijke, lichamelijke of zintuiglijke handicap
+          - name: heeft_blijvende_behoefte_permanent_toezicht
+            type: boolean
+            required: true
+            description: Heeft de verzekerde een blijvende behoefte aan permanent toezicht ter voorkoming van escalatie of ernstig nadeel (lid 1 sub a)
+          - name: heeft_blijvende_behoefte_24u_zorg_nabijheid
+            type: boolean
+            required: true
+            description: Heeft de verzekerde een blijvende behoefte aan 24 uur per dag zorg in de nabijheid omdat hij zelf niet in staat is hulp in te roepen (lid 1 sub b)
+          - name: is_jeugdige
+            type: boolean
+            required: false
+            description: Is de verzekerde een jeugdige als bedoeld in de Jeugdwet artikel 1.1
+        output:
+          - name: heeft_recht_op_zorg
+            type: boolean
+            description: Geeft aan of de verzekerde recht heeft op zorg ingevolge artikel 3.2.1 Wlz
+        actions:
+          - output: heeft_kwalificerende_aandoening
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_somatische_of_psychogeriatrische_aandoening_of_beperking
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_psychische_stoornis
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verstandelijke_lichamelijke_of_zintuiglijke_handicap
+                  value: true
+          - output: heeft_blijvende_zorgbehoefte_lid1
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_blijvende_behoefte_permanent_toezicht
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_blijvende_behoefte_24u_zorg_nabijheid
+                  value: true
+          - output: voldoet_hoofdregel_lid1
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_kwalificerende_aandoening
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_blijvende_zorgbehoefte_lid1
+                  value: true
+          - output: heeft_recht_op_zorg
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_hoofdregel_lid1
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige
+                        value: true
+                      - operation: EQUALS
+                        subject: $heeft_psychische_stoornis
+                        value: true
   - number: 3.2.2
     text: |-
       1 Een verzekerde met een psychische stoornis wiens recht op verblijf en de daarbij behorende medisch noodzakelijke
@@ -606,6 +762,58 @@ articles:
       4 Een verzekerde heeft slechts recht op zorg als bedoeld in het eerste en tweede lid voor zover hij daar naar aard,
       inhoud en omvang en uit een oogpunt van doelmatige zorgverlening redelijkerwijs op is aangewezen.
     url: https://wetten.overheid.nl/BWBR0035917/2026-01-01#Artikel3.2.2
+    machine_readable:
+      untranslatables:
+        - construct: "berekening of een periode van maximaal drie jaar onafgebroken is"
+          reason: "Date duration comparison (counting elapsed days/years between two dates) is not available as an engine operation"
+          legal_text_excerpt: "heeft aansluitend recht op voortzetting van deze zorg gedurende een onafgebroken periode van maximaal drie jaar"
+          accepted: false
+        - construct: "beoordeling redelijkerwijs aangewezen (lid 4)"
+          reason: "Professional/qualitative assessment; not computable"
+          legal_text_excerpt: "voor zover hij daar naar aard, inhoud en omvang en uit een oogpunt van doelmatige zorgverlening redelijkerwijs op is aangewezen"
+          accepted: false
+      execution:
+        parameters:
+          - name: onderbreking_dagen
+            type: number
+            required: true
+            description: Aantal aaneengesloten dagen dat de zorg is onderbroken
+          - name: heeft_psychische_stoornis
+            type: boolean
+            required: true
+            description: De verzekerde heeft een psychische stoornis
+          - name: recht_op_verblijf_beeindigd_door_maximumduur_zorgverzekering
+            type: boolean
+            required: true
+            description: Het recht op verblijf en medisch noodzakelijke geneeskundige zorg op grond van zorgverzekering is beëindigd omdat de maximumduur is bereikt
+        output:
+          - name: heeft_recht_op_voortzetting_zorg
+            type: boolean
+            description: De verzekerde heeft recht op voortzetting van zorg ingevolge artikel 3.2.2 Wlz
+          - name: maximale_duur_per_periode_jaren
+            type: number
+            description: Maximale duur per onafgebroken periode in jaren (lid 1 en 2)
+          - name: onderbreking_telt_niet_als_onderbreking
+            type: boolean
+            description: De onderbreking wordt op grond van lid 3 niet als onderbreking beschouwd (ten hoogste 90 dagen)
+        actions:
+          - output: maximale_duur_per_periode_jaren
+            value: 3
+          - output: onderbreking_telt_niet_als_onderbreking
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $onderbreking_dagen
+              value: 90
+          - output: heeft_recht_op_voortzetting_zorg
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_psychische_stoornis
+                  value: true
+                - operation: EQUALS
+                  subject: $recht_op_verblijf_beeindigd_door_maximumduur_zorgverzekering
+                  value: true
   - number: 3.2.3
     text: |-
       1 Het recht op zorg wordt op aanvraag van de verzekerde in een indicatiebesluit vastgesteld door het CIZ. Het recht
@@ -786,6 +994,43 @@ articles:
       - id: ref3
         bwb_id: BWBR0034925
         artikel: '1.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verblijft_in_penitentiaire_inrichting
+            type: boolean
+            required: true
+            description: De verzekerde verblijft in een penitentiaire inrichting als bedoeld in artikel 3 lid 1 Penitentiaire beginselenwet
+          - name: verblijft_in_forensische_instelling
+            type: boolean
+            required: true
+            description: De verzekerde verblijft in een instelling als bedoeld in artikel 1.1 lid 1 sub i of j Wet forensische zorg
+          - name: verblijft_in_gesloten_accommodatie_jeugd
+            type: boolean
+            required: true
+            description: De verzekerde verblijft in een gesloten accommodatie als bedoeld in artikel 1.1 Jeugdwet
+        output:
+          - name: recht_op_zorg_kan_geldend_worden_gemaakt
+            type: boolean
+            description: Geeft aan of het recht op zorg gedurende de huidige periode tot gelding kan worden gebracht
+        actions:
+          - output: verblijft_in_detentie_of_gesloten_instelling
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verblijft_in_penitentiaire_inrichting
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_in_forensische_instelling
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_in_gesloten_accommodatie_jeugd
+                  value: true
+          - output: recht_op_zorg_kan_geldend_worden_gemaakt
+            value:
+              operation: NOT
+              value: $verblijft_in_detentie_of_gesloten_instelling
   - number: 3.2.8
     text: |-
       1 Voor militairen in werkelijke dienst als bedoeld in
@@ -991,6 +1236,88 @@ articles:
         artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "oordeel zorgkantoor: doelmatige wijze voorzien in toereikende zorg van goede kwaliteit (lid 4a)"
+          reason: "Qualitative assessment by zorgkantoor; not computable from discrete inputs"
+          legal_text_excerpt: "naar het oordeel van het zorgkantoor met het persoonsgebonden budget op doelmatige wijze zal worden voorzien in toereikende zorg van goede kwaliteit"
+          accepted: false
+        - construct: "oordeel zorgkantoor: in staat taken en verplichtingen verantwoord uit te voeren (lid 4b)"
+          reason: "Qualitative assessment by zorgkantoor; not computable"
+          legal_text_excerpt: "de verzekerde naar het oordeel van het zorgkantoor in staat is te achten op eigen kracht of met hulp van een vertegenwoordiger, de aan een budget verbonden taken en verplichtingen op verantwoorde wijze uit te voeren"
+          accepted: false
+        - construct: "oordeel zorgkantoor: in staat zorgaanbieders aan te sturen (lid 4c)"
+          reason: "Qualitative assessment by zorgkantoor; not computable"
+          legal_text_excerpt: "de verzekerde naar het oordeel van het zorgkantoor in staat is te achten op eigen kracht of met hulp van een vertegenwoordiger, de door hem verkozen zorgaanbieders en mantelzorgers op zodanige wijze aan te sturen"
+          accepted: false
+        - construct: "vaststelling hoogte persoonsgebonden budget (lid 6)"
+          reason: "Delegated to AMvB; not computable from this article"
+          legal_text_excerpt: "Bij of krachtens algemene maatregel van bestuur worden regels gesteld over de wijze waarop de hoogte van een persoonsgebonden budget wordt vastgesteld"
+          accepted: false
+        - construct: "vertegenwoordiger voldoet niet aan AMvB-regels (lid 5d)"
+          reason: "Delegated to AMvB for determination of which representatives qualify; not computable from this article"
+          legal_text_excerpt: "de vertegenwoordiger van de verzekerde niet voldoet aan regels inhoudende beperkingen of eisen die bij of krachtens algemene maatregel van bestuur aan de kring van vertegenwoordigers kunnen worden gesteld"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de verzekerde
+          - name: verzekerde_wil_pgb
+            type: boolean
+            required: true
+            description: De verzekerde heeft zich gemotiveerd op het standpunt gesteld dat hij zorg met een pgb wenst (lid 4d)
+          - name: budgetplan_ingediend
+            type: boolean
+            required: true
+            description: De verzekerde heeft bij de aanvraag een budgetplan voorgelegd (lid 4e)
+          - name: eerder_pgb_verplichtingen_niet_nagekomen
+            type: boolean
+            required: true
+            description: De verzekerde heeft zich bij eerdere verstrekking van een pgb niet gehouden aan de opgelegde verplichtingen (lid 5a)
+          - name: geen_woonadres_in_brp
+            type: boolean
+            required: true
+            description: De verzekerde beschikt blijkens de basisregistratie personen niet over een woonadres (lid 5b)
+          - name: rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: De verzekerde is rechtens zijn vrijheid ontnomen (lid 5c)
+        output:
+          - name: pgb_verplicht_geweigerd
+            type: boolean
+            description: Het persoonsgebonden budget wordt op grond van lid 5 in ieder geval geweigerd
+          - name: voldoet_toetsbare_voorwaarden_lid4
+            type: boolean
+            description: De verzekerde voldoet aan de toetsbare voorwaarden van lid 4 sub d en e
+        actions:
+          - output: pgb_verplicht_geweigerd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $eerder_pgb_verplichtingen_niet_nagekomen
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_woonadres_in_brp
+                  value: true
+                - operation: EQUALS
+                  subject: $rechtens_vrijheid_ontnomen
+                  value: true
+          - output: voldoet_toetsbare_voorwaarden_lid4
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verzekerde_wil_pgb
+                  value: true
+                - operation: EQUALS
+                  subject: $budgetplan_ingediend
+                  value: true
   - number: 3.3.4
     text: |-
       In afwijking van de [artikelen 3.3.1 tot en met 3.3.3][ref1] kan een verzekerde als bedoeld in
