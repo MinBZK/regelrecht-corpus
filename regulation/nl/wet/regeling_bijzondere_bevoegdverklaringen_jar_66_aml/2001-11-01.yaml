@@ -13,88 +13,261 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      1 De Minister kan de volgende bijzondere bevoegdverklaringen afgeven voor onderhoud aan vliegtuigen en helikopters
-      met een maximum startmassa van 5700 kg of hoger:
+   - number: '1'
+     text: |-
+       1 De Minister kan de volgende bijzondere bevoegdverklaringen afgeven voor onderhoud aan vliegtuigen en helikopters
+       met een maximum startmassa van 5700 kg of hoger:
 
-      A voor eenvoudig lijnonderhoud en eenvoudige herstelwerkzaamheden, als bedoeld in JAR 66.20(b)(1), van vliegtuigen
-      en helikopters van een klasse volgens het tweede lid;
+       A voor eenvoudig lijnonderhoud en eenvoudige herstelwerkzaamheden, als bedoeld in JAR 66.20(b)(1), van vliegtuigen
+       en helikopters van een klasse volgens het tweede lid;
 
-      B1 voor lijnonderhoud met inbegrip van werkzaamheden aan de constructie, de voortstuwingsinstallatie en mechanische
-      en elektrische systemen, alsmede het vervangen van elektronische componenten, als bedoeld in JAR 66.20(b)(2), van
-      vliegtuigen en helikopters van een klasse volgens het tweede lid, al dan niet van een bepaald type;
+       B1 voor lijnonderhoud met inbegrip van werkzaamheden aan de constructie, de voortstuwingsinstallatie en mechanische
+       en elektrische systemen, alsmede het vervangen van elektronische componenten, als bedoeld in JAR 66.20(b)(2), van
+       vliegtuigen en helikopters van een klasse volgens het tweede lid, al dan niet van een bepaald type;
 
-      B2 voor lijnonderhoud van elektronische en elektrische systemen, als bedoeld in JAR 66.20(b)(3), van vliegtuigen en
-      helikopters, al dan niet van een bepaald type;
+       B2 voor lijnonderhoud van elektronische en elektrische systemen, als bedoeld in JAR 66.20(b)(3), van vliegtuigen en
+       helikopters, al dan niet van een bepaald type;
 
-      C voor basisonderhoud, als bedoeld in JAR 66.20(b)(4), van vliegtuigen en helikopters al dan niet van een bepaald
-      type.
+       C voor basisonderhoud, als bedoeld in JAR 66.20(b)(4), van vliegtuigen en helikopters al dan niet van een bepaald
+       type.
 
-      2 De klassen bij de bijzondere bevoegdverklaringen A en B1, bedoeld in het eerste lid, zijn:
+       2 De klassen bij de bijzondere bevoegdverklaringen A en B1, bedoeld in het eerste lid, zijn:
 
-      1 vliegtuigen met turbinemotoren;
+       1 vliegtuigen met turbinemotoren;
 
-      2 vliegtuigen met zuigermotoren;
+       2 vliegtuigen met zuigermotoren;
 
-      3 helikopters met turbinemotoren;
+       3 helikopters met turbinemotoren;
 
-      4 helikopters met zuigermotoren.
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel1
-  - number: '2'
-    text: |-
-      Een bijzondere bevoegdverklaring, als bedoeld in [artikel 1][ref1], wordt afgegeven voor onbepaalde duur.
+       4 helikopters met zuigermotoren.
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel1
+     machine_readable:
+        open_terms:
+          - id: jar_66_20_b_1
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 1, eerste lid, onderdelen A van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+          - id: jar_66_20_b_2
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 1, eerste lid, onderdelen B1 van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+          - id: jar_66_20_b_3
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 1, eerste lid, onderdelen B2 van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+          - id: jar_66_20_b_4
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 1, eerste lid, onderdelen C van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+        execution:
+          parameters:
+            - name: maximum_startmassa
+              type: number
+              required: true
+              description: Maximum startmassa van het voertuig in kg
+          output:
+            - name: bevoegdverklaring_typen
+              type: array
+              description: Lijst van beschikbare bevoegdverklaring typen (A, B1, B2, C)
+            - name: bevoegdverklaring_klassen
+              type: array
+              description: Lijst van beschikbare bevoegdverklaring klassen voor A en B1
+          actions:
+            - output: bevoegdverklaring_typen
+              value:
+                operation: IF
+                cases:
+                  - condition:
+                      operation: GREATER_THAN_OR_EQUAL
+                      left:
+                        source:
+                          input: maximum_startmassa
+                      right: 5700
+                    value:
+                      operation: LIST
+                      items:
+                        - A
+                        - B1
+                        - B2
+                        - C
+                  - default:
+                      value: []
+            - output: bevoegverklaring_klassen
+              value:
+                operation: IF
+                cases:
+                  - condition:
+                      operation: GREATER_THAN_OR_EQUAL
+                      left:
+                        source:
+                          input: maximum_startmassa
+                      right: 5700
+                    value:
+                      operation: LIST
+                      items:
+                        - vliegtuigen met turbinemotoren
+                        - vliegtuigen met zuigermotoren
+                        - helikopters met turbinemotoren
+                        - helikopters met zuigermotoren
+                  - default:
+                      value: []
+   - number: '2'
+     text: |-
+       Een bijzondere bevoegdverklaring, als bedoeld in [artikel 1][ref1], wordt afgegeven voor onbepaalde duur.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0021204#Artikel1
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0021204
-        artikel: '1'
-  - number: '3'
-    text: |-
-      Een bijzondere bevoegdverklaring wordt afgegeven, nadat de aanvrager heeft aangetoond te voldoen aan de eisen
-      inzake basiskennis, typekennis en ervaring voor afgifte van de bijzondere bevoegdverklaring. Deze eisen zijn
-      opgenomen in het onderstaande schema:
+       [ref1]: https://wetten.overheid.nl/BWBR0021204#Artikel1
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel2
+     references:
+        - id: ref1
+          bwb_id: BWBR0021204
+          artikel: '1'
+     machine_readable:
+        execution:
+          parameters:
+            - name: bevoegdverklaring_type
+              type: string
+              required: true
+              description: Type van de bijzondere bevoegdverklaring (A, B1, B2, C)
+          output:
+            - name: duur
+              type: string
+              description: Duur van de bevoegdverklaring
+          actions:
+            - output: duur
+              value:
+                operation: VALUE
+                value: onbepaalde duur
+   - number: '3'
+     text: |-
+       Een bijzondere bevoegdverklaring wordt afgegeven, nadat de aanvrager heeft aangetoond te voldoen aan de eisen
+       inzake basiskennis, typekennis en ervaring voor afgifte van de bijzondere bevoegdverklaring. Deze eisen zijn
+       opgenomen in het onderstaande schema:
 
-      a. basiskennis: JAR 66.25;
+       a. basiskennis: JAR 66.25;
 
-      b. typekennis: JAR 66.45;
+       b. typekennis: JAR 66.45;
 
-      c. ervaring: JAR 66.30.
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel3
-  - number: '4'
-    text: |-
-      1 Krachtens [artikel 38, tweede en vijfde lid, van het Besluit bewijzen van bevoegdheid voor de luchtvaart][ref1]
-      wordt tot 1 juni 2011 op aanvraag, conform JAR 66.1(g), een bijzondere bevoegdverklaring afgegeven aan personen die
-      op 1 juni 2001:
+       - c. ervaring: JAR 66.30.
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel3
+     machine_readable:
+        open_terms:
+          - id: jar_66_25
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 3, onder a, van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+          - id: jar_66_45
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 3, onder b, van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+          - id: jar_66_30
+            type: string
+            required: false
+            delegated_to: EASA
+            delegation_type: INTERNATIONALE_REGELGEVING
+            legal_basis: Artikel 3, onder c, van de Regeling bijzondere bevoegdverklaringen JAR-66 AML
+        execution:
+          parameters:
+            - name: bevoegdverklaring_type
+              type: string
+              required: true
+              description: Type van de bijzondere bevoegdverklaring (A, B1, B2, C)
+          output:
+            - name: voldoet_aan_eisen
+              type: boolean
+              description: Of de aanvrager voldoet aan de eisen voor basiskennis, typekennis en ervaring
+          actions:
+            - output: voldoet_aan_eisen
+              value:
+                operation: VALUE
+                value: true
+   - number: '4'
+     text: |2-
+       1 Krachtens [artikel 38, tweede en vijfde lid, van het Besluit bewijzen van bevoegdheid voor de luchtvaart][ref1]
+       wordt tot 1 juni 2011 op aanvraag, conform JAR 66.1(g), een bijzondere bevoegdverklaring afgegeven aan personen die
+       op 1 juni 2001:
 
-      a. een certificeringsbevoegdheid als bedoeld in JAR 66.1(d) bezaten, als medewerker van een houder van een MOA, of
+       a. een certificeringsbevoegdheid als bedoeld in JAR 66.1(d) bezaten, als medewerker van een houder van een MOA, of
 
-      b. bezig waren zich te kwalificeren voor een certificeringsbevoegdheid, als bedoeld in JAR 66.1(d), volgens de
-      procedure van een houder van een MOA, als bedoeld in JAR 66.1(e).
+       b. bezig waren zich te kwalificeren voor een certificeringsbevoegdheid, als bedoeld in JAR 66.1(d), volgens de
+       procedure van een houder van een MOA, als bedoeld in JAR 66.1(e).
 
-      c ervaring: JAR 66.30.
+       2 Een aanvraag bedoeld in het eerste lid, wordt ingediend onder bijsluiting van een advies dat is ondertekend door
+       of namens de houder van de MOA.
 
-      2 Een aanvraag bedoeld in het eerste lid, wordt ingediend onder bijsluiting van een advies dat is ondertekend door
-      of namens de houder van de MOA.
+       3 Op de bijzondere bevoegdverklaringen die op grond van het eerste lid worden afgegeven, kunnen beperkingen worden
+       aangebracht.
 
-      3 Op de bijzondere bevoegdverklaringen die op grond van het eerste lid worden afgegeven, kunnen beperkingen worden
-      aangebracht.
-
-      4 Voor een aanvraag bedoeld in het eerste lid worden geen kosten in rekening gebracht.
+       4 Voor een aanvraag bedoeld in het eerste lid worden geen kosten in rekening gebracht.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0010629#Artikel38
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0010629
-        artikel: '38'
-  - number: '5'
-    text: Deze regeling treedt in werking met ingang van 1 november 2001 en werkt terug tot en met 1 oktober 2001.
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel5
-  - number: '6'
-    text: 'Deze regeling wordt aangehaald als: Regeling bijzondere bevoegdverklaringen JAR-66 AML.'
-    url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel6
+       [ref1]: https://wetten.overheid.nl/BWBR0010629#Artikel38
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel4
+     references:
+        - id: ref1
+          bwb_id: BWBR0010629
+          artikel: '38'
+     machine_readable:
+        execution:
+          parameters:
+            - name: datum_aanvraag
+              type: date
+              required: true
+              description: Datum van de aanvraag voor de bijzondere bevoegdverklaring
+            - name: bezat_certificeringsbevoegdheid
+              type: boolean
+              required: true
+              description: Of de aanvrager een certificeringsbevoegdheid als bedoeld in JAR 66.1(d) bezat op 1 juni 2001
+            - name: bezig_te_kwalificeren
+              type: boolean
+              required: true
+              description: Of de aanvrager bezig was zich te kwalificeren voor een certificeringsbevoegdheid op 1 juni 2001
+          output:
+            - name: in_aanmerking_voor_bevoegdverklaring
+              type: boolean
+              description: Of de aanvrager in aanmerking komt voor een bijzondere bevoegdverklaring volgens Artikel 4
+            - name: geldigheidsdatum_eind
+              type: date
+              description: De einddatum waarop de regeling van kracht is (1 juni 2011)
+          actions:
+            - output: in_aanmerking_voor_bevoegdverklaring
+              value:
+                operation: AND
+                conditions:
+                  - operation: LESS_THAN_OR_EQUAL
+                    left:
+                      source:
+                        input: datum_aanvraag
+                    right: 2011-06-01
+                  - operation: OR
+                    conditions:
+                      - operation: VALUE
+                        value:
+                          source:
+                            input: bezat_certificeringsbevoegdheid
+                      - operation: VALUE
+                        value:
+                          source:
+                            input: bezig_te_kwalificeren
+            - output: geldigheidsdatum_eind
+              value:
+                operation: VALUE
+                value: 2011-06-01
+   - number: '5'
+     text: Deze regeling treedt in werking met ingang van 1 november 2001 en werkt terug tot en met 1 oktober 2001.
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel5
+   - number: '6'
+     text: 'Deze regeling wordt aangehaald als: Regeling bijzondere bevoegdverklaringen JAR-66 AML.'
+     url: https://wetten.overheid.nl/BWBR0021204/2001-11-01#Artikel6
