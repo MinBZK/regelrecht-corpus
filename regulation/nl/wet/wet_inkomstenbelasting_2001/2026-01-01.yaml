@@ -1427,6 +1427,56 @@ articles:
         bwb_id: BWBR0011353
         hoofdstuk: '7'
         afdeling: '7.3'
+    machine_readable:
+      untranslatables:
+        - construct: afronden op hele euro's
+          reason: Rounding to whole euros is not available as an engine operation
+          suggestion: Add ROUND/FLOOR operation to engine
+          legal_text_excerpt: bedraagt de belasting het in kolom III vermelde bedrag, vermeerderd met het bedrag dat wordt berekend door het in kolom IV vermelde percentage
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_inkomen_aanmerkelijk_belang
+            type: number
+            required: true
+            description: Belastbaar inkomen uit aanmerkelijk belang in eurocent
+        output:
+          - name: belasting_box2
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belasting op belastbaar inkomen uit aanmerkelijk belang conform de tarieftabel
+        actions:
+          - output: belasting_box2
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_inkomen_aanmerkelijk_belang
+                    value: 6884300
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $belastbaar_inkomen_aanmerkelijk_belang
+                          - 2450
+                      - 100000
+              default:
+                operation: ADD
+                values:
+                  - 1686600
+                  - operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - operation: SUBTRACT
+                            values:
+                              - $belastbaar_inkomen_aanmerkelijk_belang
+                              - 6884300
+                          - 3100
+                      - 100000
   - number: '2.13'
     text: |-
       De belasting op het belastbare inkomen uit sparen en beleggen ([afdeling 5.1][ref1] respectievelijk
@@ -1445,6 +1495,29 @@ articles:
         bwb_id: BWBR0011353
         hoofdstuk: '7'
         afdeling: '7.4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: belastbaar_inkomen_sparen_beleggen
+            type: number
+            required: true
+            description: Belastbaar inkomen uit sparen en beleggen in eurocent (artikel 5.1)
+        output:
+          - name: belasting_box3
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belasting op belastbaar inkomen uit sparen en beleggen (36%)
+        actions:
+          - output: belasting_box3
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $belastbaar_inkomen_sparen_beleggen
+                    - 3600
+                - 100000
   - number: '2.14'
     text: |-
       1 Indien een voordeel op grond van meer dan een hoofdstuk, afdeling of paragraaf als bestanddeel, al dan niet
@@ -12829,6 +12902,30 @@ articles:
       - id: ref1
         bwb_id: BWBR0011353
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: voordeel_sparen_beleggen
+            type: number
+            required: true
+            description: Voordeel uit sparen en beleggen conform artikel 5.2 in eurocent
+          - name: persoonsgebonden_aftrek
+            type: number
+            required: true
+            description: Persoonsgebonden aftrek conform hoofdstuk 6 in eurocent (0 indien geen aftrek)
+        output:
+          - name: belastbaar_inkomen_sparen_beleggen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belastbaar inkomen uit sparen en beleggen = voordeel minus persoonsgebonden aftrek
+        actions:
+          - output: belastbaar_inkomen_sparen_beleggen
+            value:
+              operation: SUBTRACT
+              values:
+                - $voordeel_sparen_beleggen
+                - $persoonsgebonden_aftrek
   - number: '5.2'
     text: |-
       1 Het voordeel uit sparen en beleggen wordt gesteld op het product van het effectieve rendementspercentage, bedoeld
@@ -16880,12 +16977,92 @@ articles:
         artikel: '8.19'
         hoofdstuk: '8'
         afdeling: '8.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: algemene_heffingskorting
+            type: number
+            required: true
+            description: Algemene heffingskorting conform artikel 8.10 in eurocent
+          - name: arbeidskorting
+            type: number
+            required: true
+            description: Arbeidskorting conform artikel 8.11 in eurocent (0 indien niet van toepassing)
+          - name: inkomensafhankelijke_combinatiekorting
+            type: number
+            required: true
+            description: Inkomensafhankelijke combinatiekorting conform artikel 8.14a in eurocent (0 indien niet van toepassing)
+          - name: jonggehandicaptenkorting
+            type: number
+            required: true
+            description: Jonggehandicaptenkorting conform artikel 8.16a in eurocent (0 indien niet van toepassing)
+          - name: ouderenkorting
+            type: number
+            required: true
+            description: Ouderenkorting conform artikel 8.17 in eurocent (0 indien niet van toepassing)
+          - name: alleenstaande_ouderenkorting
+            type: number
+            required: true
+            description: Alleenstaande ouderenkorting conform artikel 8.18 in eurocent (0 indien niet van toepassing)
+          - name: korting_groene_beleggingen
+            type: number
+            required: true
+            description: Korting voor groene beleggingen conform artikel 8.19 in eurocent (0 indien niet van toepassing)
+        output:
+          - name: standaardheffingskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Standaardheffingskorting = gezamenlijk bedrag van alle van toepassing zijnde kortingen (artikel 8.2)
+        actions:
+          - output: standaardheffingskorting
+            value:
+              operation: ADD
+              values:
+                - $algemene_heffingskorting
+                - $arbeidskorting
+                - $inkomensafhankelijke_combinatiekorting
+                - $jonggehandicaptenkorting
+                - $ouderenkorting
+                - $alleenstaande_ouderenkorting
+                - $korting_groene_beleggingen
   - number: '8.3'
     text: |-
       De heffingskorting voor de inkomstenbelasting is het deel van de standaardheffingskorting dat tot de
       standaardheffingskorting in dezelfde verhouding staat als het *belastingtarief eerste schijf* staat tot het
       *gecombineerde heffingspercentage*.
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.3
+    machine_readable:
+      execution:
+        parameters:
+          - name: standaardheffingskorting
+            type: number
+            required: true
+            description: Standaardheffingskorting conform artikel 8.2 in eurocent
+          - name: belastingtarief_eerste_schijf
+            type: number
+            required: true
+            description: Belastingtarief eerste schijf in basispunten (bijv. 810 = 8,10%) conform artikel 8.1 lid 1 onderdeel a en artikel 2.10
+          - name: gecombineerd_heffingspercentage
+            type: number
+            required: true
+            description: Gecombineerd heffingspercentage in basispunten conform artikel 8.1 lid 1 onderdeel c (belastingtarief eerste schijf plus premiepercentages volksverzekeringen)
+        output:
+          - name: heffingskorting_inkomstenbelasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingskorting voor de inkomstenbelasting = standaardheffingskorting × (belastingtarief eerste schijf / gecombineerd heffingspercentage)
+        actions:
+          - output: heffingskorting_inkomstenbelasting
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $standaardheffingskorting
+                    - $belastingtarief_eerste_schijf
+                - $gecombineerd_heffingspercentage
   - number: '8.4'
     text: |-
       De heffingskorting voor de algemene ouderdomsverzekering is het deel van de standaardheffingskorting
@@ -16972,6 +17149,30 @@ articles:
   - number: '8.8'
     text: De *gecombineerde heffingskorting* bedraagt maximaal het bedrag van de *gecombineerde inkomensheffing.*
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel8.8
+    machine_readable:
+      execution:
+        parameters:
+          - name: gecombineerde_heffingskorting
+            type: number
+            required: true
+            description: Gecombineerde heffingskorting (som van heffingskorting IB en heffingskortingen volksverzekeringen) in eurocent
+          - name: gecombineerde_inkomensheffing
+            type: number
+            required: true
+            description: Gecombineerde inkomensheffing conform artikel 8.1 lid 1 onderdeel b in eurocent
+        output:
+          - name: gecombineerde_heffingskorting_begrensd
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Gecombineerde heffingskorting begrensd tot maximaal de gecombineerde inkomensheffing
+        actions:
+          - output: gecombineerde_heffingskorting_begrensd
+            value:
+              operation: MIN
+              values:
+                - $gecombineerde_heffingskorting
+                - $gecombineerde_inkomensheffing
   - number: '8.9'
     text: |-
       1 Indien ten aanzien van de belastingplichtige die geboren is vóór 1 januari 1963 de gecombineerde heffingskorting
