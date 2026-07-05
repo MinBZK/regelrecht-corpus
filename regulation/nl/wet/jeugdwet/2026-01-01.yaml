@@ -1231,6 +1231,38 @@ articles:
       f. de vergoeding die de gecertificeerde instelling is verschuldigd in verband met de kosten voor de controle door
       de certificerende instelling.
     url: https://wetten.overheid.nl/BWBR0034925/2026-01-01#Artikel3.4
+    machine_readable:
+      execution:
+        parameters:
+          - name: afgifte_datum
+            type: date
+            required: true
+            description: Datum waarop het certificaat of voorlopig certificaat is afgegeven (lid 5)
+          - name: is_voorlopig_certificaat
+            type: boolean
+            required: true
+            description: Is het een voorlopig certificaat (true) of een regulier certificaat (false)?
+        output:
+          - name: geldigheids_einddatum
+            type: date
+            description: Datum waarop het certificaat zijn geldigheid verliest (3 jaar voor regulier, 2 jaar voor voorlopig, lid 5)
+        actions:
+          - output: geldigheids_einddatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_voorlopig_certificaat
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $afgifte_datum
+                    years: 2
+              default:
+                operation: DATE_ADD
+                date: $afgifte_datum
+                years: 3
   - number: '3.5'
     text: |-
       1 De gecertificeerde instelling bepaalt of en, zo ja, welke jeugdhulp is aangewezen bij de uitvoering van de
@@ -1852,6 +1884,36 @@ articles:
         bwb_id: BWBR0034925
         artikel: '9.2'
         hoofdstuk: '9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_vaststelling
+            type: date
+            required: true
+            description: Datum waarop het jaarverslag is vastgesteld (lid 1)
+          - name: jaar_vaststelling
+            type: number
+            required: true
+            description: Jaar waarin het verslag is vastgesteld (voor berekening 1 juni deadline, lid 5)
+        output:
+          - name: uiterste_publicatiedatum
+            type: date
+            description: Uiterste datum voor openbaarmaking (tien dagen na vaststelling, lid 1)
+          - name: uiterste_inzending_ministers
+            type: date
+            description: Uiterste datum voor inzending aan Onze Ministers (voor 1 juni van het jaar van vaststelling, lid 5)
+        actions:
+          - output: uiterste_publicatiedatum
+            value:
+              operation: DATE_ADD
+              date: $datum_vaststelling
+              days: 10
+          - output: uiterste_inzending_ministers
+            value:
+              operation: DATE
+              year: $jaar_vaststelling
+              month: 6
+              day: 1
   - number: 4.4.1
     text: |-
       1 De jeugdhulpaanbieder die met meer dan tien jeugdhulpverleners jeugdhulp met verblijf verleent of doet verlenen,
@@ -1921,6 +1983,23 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0043797
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_overschrijding_drempel
+            type: date
+            required: true
+            description: Datum waarop het aantal jeugdhulpverleners de drempel van meer dan tien (of vijfentwintig voor andere categorie) is gaan bedragen (lid 4)
+        output:
+          - name: uiterste_compliantiedatum
+            type: date
+            description: Uiterste datum waarop de jeugdhulpaanbieder moet voldoen aan de bestuursstructuureisen (zes maanden na datum_overschrijding_drempel, lid 4)
+        actions:
+          - output: uiterste_compliantiedatum
+            value:
+              operation: DATE_ADD
+              date: $datum_overschrijding_drempel
+              months: 6
   - number: 4.5.1
     text: |-
       1 De jeugdhulpaanbieder, niet zijnde een solistisch werkende jeugdhulpverlener, en de gecertificeerde instelling
@@ -2189,6 +2268,49 @@ articles:
         bwb_id: BWBR0040635
       - id: ref3
         bwb_id: BWBR0040632
+    machine_readable:
+      untranslatables:
+        - construct: "naar het oordeel van de kinderrechter: jeugdhulp noodzakelijk is..."
+          reason: "Discretionary judicial assessment of serious developmental barriers cannot be computed mechanically"
+          legal_text_excerpt: "Een machtiging kan slechts worden verleend indien naar het oordeel van de kinderrechter: a. jeugdhulp noodzakelijk is in verband met ernstige opgroei- of opvoedingsproblemen..."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jeugdige
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de machtiging wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd in volledige jaren op peildatum
+          - name: is_minderjarig
+            type: boolean
+            description: Is de jeugdige jonger dan achttien jaar op de peildatum? (lid 3 vs lid 4)
+          - name: uiterste_datum_machtiging_18plus
+            type: date
+            description: Uiterste datum gesloten jeugdhulp voor jeugdige die 18 is (lid 4d) — zes maanden na 18e verjaardag
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: is_minderjarig
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_jaren
+              value: 18
+          - output: uiterste_datum_machtiging_18plus
+            value:
+              operation: DATE_ADD
+              date: $geboortedatum
+              years: 18
+              months: 6
   - number: 6.1.3
     text: |-
       1 De kinderrechter kan, indien een machtiging niet kan worden afgewacht, op verzoek een spoedmachtiging verlenen om
@@ -2393,6 +2515,36 @@ articles:
       - id: ref3
         bwb_id: BWBR0002656
         artikel: 265b
+    machine_readable:
+      untranslatables:
+        - construct: "voor ten hoogste de resterende geldigheidsduur van de voorwaardelijke machtiging"
+          reason: "Computing the minimum of the remaining machtiging validity and 6 months requires a date comparison (MIN), which is not available as an engine operation"
+          legal_text_excerpt: "De opneming en het verblijf vinden plaats voor ten hoogste de resterende geldigheidsduur van de voorwaardelijke machtiging, doch niet langer dan zes maanden."
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_beslissing_opneming
+            type: date
+            required: true
+            description: Datum waarop de jeugdhulpaanbieder het besluit neemt de jeugdige op te nemen (lid 6)
+        output:
+          - name: uiterste_kennisgevingsdatum
+            type: date
+            description: Uiterste datum voor schriftelijke kennisgeving aan de jeugdige (vier dagen na beslissing, lid 6)
+          - name: max_verblijf_einddatum_zes_maanden
+            type: date
+            description: Maximale einddatum verblijf op grond van de zes-maanden-grens (lid 5, exclusief resterende machtigingsduur)
+        actions:
+          - output: uiterste_kennisgevingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_beslissing_opneming
+              days: 4
+          - output: max_verblijf_einddatum_zes_maanden
+            value:
+              operation: DATE_ADD
+              date: $datum_beslissing_opneming
+              months: 6
   - number: 6.1.7
     text: |-
       1 Op verzoek van de wettelijk vertegenwoordiger of de jeugdige kan de kinderrechter de wijziging
@@ -2419,6 +2571,32 @@ articles:
         artikel: 6.1.6
         hoofdstuk: '6'
         paragraaf: '6.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoekschrift
+            type: date
+            required: true
+            description: Datum waarop het verzoekschrift is ingediend bij de kinderrechter (lid 2)
+          - name: jeugdige_verblijft_in_gesloten_accommodatie
+            type: boolean
+            required: true
+            description: Verblijft de jeugdige reeds in een gesloten accommodatie op het moment van het verzoek? (lid 2)
+        output:
+          - name: driewekentermijn_van_toepassing
+            type: boolean
+            description: Is de drie-weken-termijn van toepassing (lid 2)?
+          - name: uiterste_beslisdatum
+            type: date
+            description: Uiterste datum waarop de kinderrechter in elk geval beslist indien de jeugdige in gesloten accommodatie verblijft (drie weken na indiening, lid 2)
+        actions:
+          - output: driewekentermijn_van_toepassing
+            value: $jeugdige_verblijft_in_gesloten_accommodatie
+          - output: uiterste_beslisdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoekschrift
+              weeks: 3
   - number: 6.1.8
     text: |-
       1 Een verzoek gericht op het verkrijgen van een machtiging, een spoedmachtiging of een voorwaardelijke machtiging
@@ -2477,6 +2655,32 @@ articles:
       - id: ref5
         bwb_id: BWBR0001827
         afdeling: Eerste
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoekschrift
+            type: date
+            required: true
+            description: Datum waarop het verzoek tot verlening van een machtiging is ingediend (lid 6)
+          - name: jeugdige_verblijft_in_gesloten_accommodatie
+            type: boolean
+            required: true
+            description: Verblijft de jeugdige reeds in een gesloten accommodatie op het moment van het verzoek? (lid 6)
+        output:
+          - name: driewekentermijn_van_toepassing
+            type: boolean
+            description: Is de drie-weken-termijn van toepassing (lid 6)?
+          - name: uiterste_beslisdatum
+            type: date
+            description: Uiterste datum waarop de kinderrechter in elk geval beslist indien de jeugdige in gesloten accommodatie verblijft (drie weken na indiening, lid 6)
+        actions:
+          - output: driewekentermijn_van_toepassing
+            value: $jeugdige_verblijft_in_gesloten_accommodatie
+          - output: uiterste_beslisdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoekschrift
+              weeks: 3
   - number: 6.1.10
     text: |-
       1 De kinderrechter hoort, alvorens een machtiging, een spoedmachtiging of een voorwaardelijke machtiging te
@@ -3654,6 +3858,40 @@ articles:
         artikel: 6.5.3
         hoofdstuk: '6'
         paragraaf: '6.5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: klachtencommissie_heeft_beslist
+            type: boolean
+            required: true
+            description: Heeft de klachtencommissie een beslissing genomen? (lid 3)
+          - name: datum_ontvangst_afschrift_beslissing
+            type: date
+            description: Datum van ontvangst van het afschrift van de beslissing van de klachtencommissie (lid 3, eerste optie)
+          - name: datum_uiterste_beslissing_klachtencommissie
+            type: date
+            description: Datum waarop de klachtencommissie uiterlijk een beslissing had moeten nemen (lid 3, tweede optie; zie artikel 6.5.1 lid 3)
+        output:
+          - name: uiterste_beroepsdatum
+            type: date
+            description: Uiterste datum voor het indienen van een beroepschrift (zes weken na de toepasselijke startdatum, lid 3)
+        actions:
+          - output: uiterste_beroepsdatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $klachtencommissie_heeft_beslist
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_ontvangst_afschrift_beslissing
+                    weeks: 6
+              default:
+                operation: DATE_ADD
+                date: $datum_uiterste_beslissing_klachtencommissie
+                weeks: 6
   - number: 6.5.5
     text: |-
       1 Het indienen van een beroepschrift schorst de tenuitvoerlegging van de beslissing van de klachtencommissie niet,
@@ -4956,6 +5194,48 @@ articles:
         artikel: 7.3.11
         hoofdstuk: '7'
         paragraaf: '7.3'
+    machine_readable:
+      untranslatables:
+        - construct: "tot een redelijke waardering van zijn belangen ter zake in staat was"
+          reason: "Capacity assessment of the deceased person cannot be computed mechanically"
+          legal_text_excerpt: "...de overleden betrokkene die de leeftijd van twaalf jaar had bereikt en tot een redelijke waardering van zijn belangen ter zake in staat was..."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum_betrokkene
+            type: date
+            required: true
+            description: Geboortedatum van de deceased betrokkene
+          - name: overlijdensdatum
+            type: date
+            required: true
+            description: Datum van overlijden van de betrokkene
+        output:
+          - name: leeftijd_bij_overlijden
+            type: number
+            description: Leeftijd van de betrokkene in volledige jaren op de overlijdensdatum
+          - name: gezaghebbende_inzage_recht
+            type: boolean
+            description: Hadden degenen met gezag recht op inzage op grond van lid 2? (betrokkene was jonger dan 16 bij overlijden)
+          - name: betrokkene_had_veto_leeftijd
+            type: boolean
+            description: Had de betrokkene de leeftijd van twaalf jaar bereikt op het moment van overlijden? (lid 4, eerste voorwaarde voor veto op inzage)
+        actions:
+          - output: leeftijd_bij_overlijden
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_betrokkene
+              reference_date: $overlijdensdatum
+          - output: gezaghebbende_inzage_recht
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_bij_overlijden
+              value: 16
+          - output: betrokkene_had_veto_leeftijd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_bij_overlijden
+              value: 12
   - number: 7.3.12b
     text: |-
       1 Indien op grond van [artikel 7.3.12a, eerste lid, onderdeel b][ref1], om inzage in of afschrift van gegevens
@@ -5042,6 +5322,40 @@ articles:
       het tweede of derde lid toestemming heeft gegeven, dan kan de verrichting slechts worden uitgevoerd indien zij
       kennelijk nodig is teneinde ernstig nadeel voor de betrokkene te voorkomen.
     url: https://wetten.overheid.nl/BWBR0034925/2026-01-01#Artikel7.3.15
+    machine_readable:
+      untranslatables:
+        - construct: "niet in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake"
+          reason: "Capacity assessment cannot be computed mechanically"
+          legal_text_excerpt: "Hetzelfde geldt indien de betrokkene de leeftijd van twaalf jaar heeft bereikt, maar niet in staat kan worden geacht tot een redelijke waardering van zijn belangen ter zake..."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de vertegenwoordiging wordt beoordeeld
+        output:
+          - name: leeftijd_jaren
+            type: number
+            description: Leeftijd van de betrokkene in volledige jaren op de peildatum
+          - name: verplichtingen_jegens_wettelijk_vertegenwoordiger_lid1
+            type: boolean
+            description: Gelden de verplichtingen op grond van lid 1 jegens de ouders/voogd? (betrokkene is jonger dan 12 jaar)
+        actions:
+          - output: leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: verplichtingen_jegens_wettelijk_vertegenwoordiger_lid1
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_jaren
+              value: 12
   - number: 7.3.16
     text: |-
       1 Indien op grond van [artikel 7.3.15][ref1] voor het uitvoeren van een verrichting uitsluitend de toestemming van
@@ -6712,6 +7026,35 @@ articles:
         artikel: '1'
       - id: ref8
         bwb_id: BWBR0007376
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_kennisgeving_college
+            type: date
+            required: true
+            description: Datum waarop het college de kennisgeving doet aan het indicatieorgaan om archiefbescheiden over te dragen (lid 3)
+          - name: datum_ontvangst_archiefbescheiden_college
+            type: date
+            required: true
+            description: Datum waarop het college de archiefbescheiden van het indicatieorgaan ontvangt (lid 3, voor berekening teruggave termijn)
+        output:
+          - name: uiterste_overdracht_door_indicatieorgaan
+            type: date
+            description: Uiterste datum waarop het indicatieorgaan de archiefbescheiden aan het college overdraagt (vier weken na kennisgeving, lid 3)
+          - name: uiterste_teruggave_door_college
+            type: date
+            description: Uiterste datum waarop het college de archiefbescheiden teruggeeft aan het indicatieorgaan (vier weken na ontvangst, lid 3)
+        actions:
+          - output: uiterste_overdracht_door_indicatieorgaan
+            value:
+              operation: DATE_ADD
+              date: $datum_kennisgeving_college
+              weeks: 4
+          - output: uiterste_teruggave_door_college
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_archiefbescheiden_college
+              weeks: 4
   - number: '12.4'
     text: |-
       1 Het college en de gemeenteraad bereiden zich tijdig en adequaat voor op hetgeen waarvoor zij verantwoordelijk
