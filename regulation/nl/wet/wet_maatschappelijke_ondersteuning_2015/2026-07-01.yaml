@@ -1775,6 +1775,23 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0014194#Artikel28
       [ref2]: https://wetten.overheid.nl/BWBR0014194#Artikel28
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanzegging_datum
+            type: date
+            required: true
+            description: Datum waarop de aanbieder de beroepskracht heeft aangesproken op het ontbreken van een geldige VOG (art. 3.5 lid 2 Wmo 2015)
+        output:
+          - name: vog_deadline
+            type: date
+            description: Uiterste datum waarop de beroepskracht een VOG van niet ouder dan drie maanden moet overleggen (art. 3.5 lid 2 Wmo 2015)
+        actions:
+          - output: vog_deadline
+            value:
+              operation: DATE_ADD
+              date: $aanzegging_datum
+              weeks: 10
     url: https://wetten.overheid.nl/BWBR0035362/2026-07-01#Artikel3.5
     references:
       - id: ref1
@@ -2325,6 +2342,23 @@ articles:
       hij naar aanleiding van dat oordeel maatregelen zal nemen en zo ja welke. Bij afwijking van de in de eerste volzin
       genoemde termijn, doet Veilig Thuis daarvan met redenen omkleed mededeling aan de klager en de klachtencommissie,
       onder vermelding van de termijn waarbinnen Veilig Thuis zijn standpunt aan hen kenbaar zal maken.
+    machine_readable:
+      execution:
+        parameters:
+          - name: oordeel_ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop Veilig Thuis het oordeel van de klachtencommissie heeft ontvangen (art. 4.2.7 lid 5 Wmo 2015)
+        output:
+          - name: reactie_uiterste_datum
+            type: date
+            description: Uiterste datum waarop Veilig Thuis schriftelijk meedeelt of en welke maatregelen worden genomen (art. 4.2.7 lid 5 Wmo 2015)
+        actions:
+          - output: reactie_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $oordeel_ontvangst_datum
+              months: 1
     url: https://wetten.overheid.nl/BWBR0035362/2026-07-01#Artikel4.2.7
   - number: 4.2.8
     text: |-
@@ -2600,6 +2634,23 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0035362#Artikel4.3.1
       [ref2]: https://wetten.overheid.nl/BWBR0035362#Artikel4.3.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: bevel_datum
+            type: date
+            required: true
+            description: Datum waarop het schriftelijk bevel is gegeven (art. 4.3.2 lid 4 Wmo 2015)
+        output:
+          - name: bevel_geldig_tot
+            type: date
+            description: Datum waarop de geldigheidsduur van het bevel afloopt (art. 4.3.2 lid 4 Wmo 2015)
+        actions:
+          - output: bevel_geldig_tot
+            value:
+              operation: DATE_ADD
+              date: $bevel_datum
+              days: 7
     url: https://wetten.overheid.nl/BWBR0035362/2026-07-01#Artikel4.3.2
     references:
       - id: ref1
@@ -2674,6 +2725,24 @@ articles:
       [ref4]: https://wetten.overheid.nl/BWBR0035362#Artikel4.2.5
       [ref5]: https://wetten.overheid.nl/BWBR0035362#Artikel4.2.11
       [ref6]: https://wetten.overheid.nl/BWBR0035362#Artikel4.2.5
+    machine_readable:
+      execution:
+        output:
+          - name: maximale_boete_klachtenregistratie
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete voor overtreding van aanwijzing inzake kwaliteitsregistratie (art. 4.3.4 lid 1 Wmo 2015)
+          - name: maximale_boete_zwaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete voor overtreding van artt. 4.2.4, 4.2.5 of 4.2.11 (art. 4.3.4 lid 2 Wmo 2015)
+        actions:
+          - output: maximale_boete_klachtenregistratie
+            value: 670000
+          - output: maximale_boete_zwaar
+            value: 3350000
     url: https://wetten.overheid.nl/BWBR0035362/2026-07-01#Artikel4.3.4
     references:
       - id: ref1
