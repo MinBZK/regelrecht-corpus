@@ -136,6 +136,243 @@ articles:
         bwb_id: BWBR0037678
       - id: ref3
         bwb_id: BWBR0037678
+    machine_readable:
+      execution:
+        parameters:
+          - name: kwalificatie_crebo
+            type: string
+            required: true
+            description: Crebonummer van de kwalificatie
+          - name: onderdeel_code
+            type: string
+            required: true
+            description: Code van het onderdeel
+        output:
+          - name: certificaten
+            type: array
+            description: Lijst van certificaatcodes verbonden aan de kwalificatie en/of onderdeel
+        actions:
+          - output: certificaten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $kwalificatie_crebo
+                        values: ["23212", "23221"]
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0003"
+                  then:
+                    operation: LIST
+                    items: ["C0003"]
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $kwalificatie_crebo
+                        values: ["23212", "23221"]
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0013"
+                  then:
+                    operation: LIST
+                    items: ["C0013"]
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $kwalificatie_crebo
+                        values: ["25433", "25557"]
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0003"
+                  then:
+                    operation: LIST
+                    items: ["C0003"]
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $kwalificatie_crebo
+                        values: ["25433", "25557"]
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0013"
+                  then:
+                    operation: LIST
+                    items: ["C0013"]
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $kwalificatie_crebo
+                        values: ["25533", "25556"]
+                      - operation: IN
+                        subject: $onderdeel_code
+                        values: ["C0003", "C0004", "C0005"]
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0003"
+                        then: "C0003"
+                      - when: "C0004"
+                        then: "C0004"
+                      - when: "C0005"
+                        then: "C0005"
+                - when:
+                    operation: EQUAL
+                    subject: $kwalificatie_crebo
+                    value: "25534"
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0003"
+                        then: "C0003"
+                      - when: "C0004"
+                        then: "C0004"
+                      - when: "C0005"
+                        then: "C0005"
+                      - when: "C0013"
+                        then: "C0013"
+                - when:
+                    operation: EQUAL
+                    subject: $kwalificatie_crebo
+                    value: "25535"
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0003"
+                        then: "C0003"
+                      - when: "C0004"
+                        then: "C0004"
+                      - when: "C0005"
+                        then: "C0005"
+                      - when: "C0010"
+                        then: "C0010"
+                      - when: "C0013"
+                        then: "C0013"
+                - when:
+                    operation: EQUAL
+                    subject: $kwalificatie_crebo
+                    value: "25536"
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0003"
+                        then: "C0003"
+                      - when: "C0013"
+                        then: "C0013"
+                - when:
+                    operation: EQUAL
+                    subject: $kwalificatie_crebo
+                    value: "25537"
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0010"
+                        then: "C0010"
+                      - when: "C0003"
+                        then: "C0003"
+                      - when: "C0013"
+                        then: "C0013"
+                - when:
+                    operation: EQUAL
+                    subject: $onderdeel_code
+                    value: "K0602"
+                  then: "C0010"
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $kwalificatie_crebo
+                        value: "23214"
+                      - operation: IN
+                        subject: $onderdeel_code
+                        values: ["C0002", "C0014"]
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0002"
+                        then: "C0002"
+                      - when: "C0014"
+                        then: "C0014"
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $kwalificatie_crebo
+                        value: "25539"
+                      - operation: IN
+                        subject: $onderdeel_code
+                        values: ["C0006", "C0007", "C0008", "C0009", "C0011"]
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "C0006"
+                        then: "C0006"
+                      - when: "C0007"
+                        then: "C0007"
+                      - when: "C0008"
+                        then: "C0008"
+                      - when: "C0009"
+                        then: "C0009"
+                      - when: "C0011"
+                        then: "C0011"
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $kwalificatie_crebo
+                        value: "25540"
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0016"
+                  then: "C0016"
+                - when:
+                    operation: IN
+                    subject: $onderdeel_code
+                    values: ["K0469", "K0470", "K0471", "K0472", "K0473", "K0602", "K0606"]
+                  then:
+                    operation: SWITCH
+                    subject: $onderdeel_code
+                    cases:
+                      - when: "K0469"
+                        then: "C0006"
+                      - when: "K0470"
+                        then: "C0007"
+                      - when: "K0471"
+                        then: "C0008"
+                      - when: "K0472"
+                        then: "C0009"
+                      - when: "K0473"
+                        then: "C0011"
+                      - when: "K0602"
+                        then: "C0010"
+                      - when: "K0606"
+                        then: "C0014"
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $kwalificatie_crebo
+                        value: "23213"
+                      - operation: EQUAL
+                        subject: $onderdeel_code
+                        value: "C0001"
+                  then: "C0001"
+              default:
+                operation: LIST
+                items: []
   - number: 1a
     text: |-
       Deze regeling berust op [artikel 7.2.3 van de Wet educatie en beroepsonderwijs][ref1] en
@@ -158,7 +395,7 @@ articles:
       worden uitgereikt in het kader van een beroepsopleiding waarvan het eerste studiejaar is gestart voor 1 augustus
       2016, wordt vastgesteld volgens bijlage 1 bij deze regeling.
 
-      2 Het certificaat wordt opgemaakt op een beveiligde papiersoort met de volgende kenmerken:
+      2 Het certificaat wordt opgemaakt op een beveiligde papersoort met de volgende kenmerken:
 
       a. een uniek watermerk;
 
@@ -185,6 +422,23 @@ articles:
         artikel: 7.2.3
       - id: ref2
         bwb_id: BWBR0032494
+    machine_readable:
+      execution:
+        parameters:
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de geldigheid van Artikel 2 wordt gecontroleerd
+        output:
+          - name: is_artikel_2_vervallen
+            type: boolean
+            description: Indicatie of Artikel 2 en bijlage 1 zijn vervallen
+        actions:
+          - output: is_artikel_2_vervallen
+            value:
+              operation: GREATER_EQUAL
+              subject: $peildatum
+              value: 2022-08-01
   - number: '3'
     text: |-
       Aan een onderdeel van een kwalificatie, zoals benoemd in [artikel 1][ref1] van deze regeling op 31 augustus 2016,
@@ -197,6 +451,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0032494
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kwalificatie_startdatum
+            type: date
+            required: true
+            description: Datum van het onderdeel van de kwalificatie
+        output:
+          - name: certificaat_verbonden_retroactief
+            type: boolean
+            description: Indicatie of een certificaat retroactief verbonden is aan het onderdeel
+        actions:
+          - output: certificaat_verbonden_retroactief
+            value:
+              operation: LESS_EQUAL
+              subject: $kwalificatie_startdatum
+              value: 2016-08-31
   - number: '4'
     text: |-
       Deze regeling treedt in werking met ingang van 1 januari 2013. Indien de Staatscourant waarin deze regeling wordt
