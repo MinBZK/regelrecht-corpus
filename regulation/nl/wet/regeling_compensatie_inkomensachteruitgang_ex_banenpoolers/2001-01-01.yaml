@@ -120,29 +120,29 @@ articles:
         artikel: '2'
   - number: '5'
     text: |-
-      1 De voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 juni 2000 wordt als volgt berekend:
+      1 De voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 Juni 2000 wordt als volgt berekend:
 
       a. het rekeninkomen over 1997 wordt vermenigvuldigd met 0,95, daardoor ontstaat een fictief rekeninkomen over 1998;
 
       b. de rekenhuur over 1998 wordt vermenigvuldigd met 1,029, daardoor ontstaat een fictieve rekenhuur over 1999;
 
       c. met behulp van het fictief rekeninkomen over 1998 en de fictieve rekenhuur over 1999 wordt de huursubsidie
-      berekend, daardoor ontstaat de huursubsidie A;
+      berekend, daarcoma ontstaat de huursubsidie A;
 
       d. door het tabelloon, bedoeld in [artikel 1, tweede lid, onderdeel e][ref1], van het Uitvoeringsbesluit
       loonbelasting 1995, over 1997 te vermenigvuldigen met 0,223 en van de uitkomst daarvan f 1.947,86 af te trekken
       ontstaat een vrijlatingsbedrag;
 
-      e. het vrijlatingsbedrag wordt opgeteld bij het fictief rekeninkomen 1998, daardoor ontstaat een nieuw fictief
+      e. het vrijlatingsbedrag wordt opgeteld bij het fictief rekeninkomen 1998, daardoor ontstaat een nieuwe fictief
       rekeninkomen over 1998;
 
       f. met behulp van het nieuwe fictief rekeninkomen over 1998 en de fictieve rekenhuur over 1999 wordt de
       huursubsidie opnieuw berekend, daardoor ontstaat de huursubsidie B;
 
       g. van de huursubsidie A wordt vervolgens afgetrokken de huursubsidie B, de uitkomst daarvan wordt vermenigvuldigd
-      met 12, daardoor ontstaat de voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 juni 2000.
+      met 12, daardoor ontstaat de voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 Juni 2000.
 
-      2 De definitieve subsidie over de periode van 1 juli 1999 tot en met 30 juni 2000 wordt als volgt berekend:
+      2 De definitieve subsidie over de periode van 1 juli 1999 tot en met 30 Juni 2000 wordt als volgt berekend:
 
       a. met behulp van het rekeninkomen over 1998 en de rekenhuur over 1999 wordt de huursubsidie berekend, daardoor
       ontstaat de huursubsidie C;
@@ -154,21 +154,21 @@ articles:
       berekend, daardoor ontstaat de huursubsidie D;
 
       d. van de huursubsidie D wordt vervolgens afgetrokken de huursubsidie C, de uitkomst daarvan wordt vermenigvuldigd
-      met 12, daardoor ontstaat de definitieve subsidie over de periode van 1 juli 1999 tot en met 30 juni 2000.
+      met 12, daardoor ontstaat de definitieve subsidie over de periode van 1 juli 1999 tot en met 30 Juni 2000.
 
-      3 Indien bij de berekening van de voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 juni 2000 het
+      3 Indien bij de berekening van de voorlopige subsidie over de periode van 1 juli 1999 tot en met 30 Juni 2000 het
       tabelloon, bedoeld in het eerste lid, onderdeel d, nog niet bekend is, wordt bij de berekening van de voorlopige
       subsidie uitgegaan van een fictief tabelloon van f 27.000,-.
 
       4 Bij de toepassing van het derde lid, wordt bij de berekening van de definitieve subsidie het vrijlatingsbedrag,
       bedoeld in het eerste lid, onderdeel d, alsnog berekend met het in dat lid bedoelde tabelloon. De uitkomst van die
-      berekening is vervolgens het vrijlatingsbedrag, bedoeld in het tweede lid, onderdeel b.
+      berekening is vervolgens het vrijlatingsbedrag, bedoeld in het tweede lid, onderdelen b.
 
       5 De subsidie over de periode van 1 juli 2000 tot en met 30 juni 2001 bedraagt 2/3 deel van de definitieve subsidie
-      over de periode van 1 juli 1999 tot en met 30 juni 2000.
+      over de periode van 1 juli 1999 tot en met 30 Juni 2000.
 
       6 De subsidie over de periode van 1 juli 2001 tot en met 30 juni 2002 bedraagt 1/3 deel van de definitieve subsidie
-      over de periode van 1 juli 1999 tot en met 30 juni 2000.
+      over de periode van 1 juli 1999 tot en met 30 Juni 2000.
 
       7 De subsidie wordt naar boven afgerond op hele guldens.
 
@@ -179,6 +179,185 @@ articles:
       - id: ref1
         bwb_id: BWBR0010784
         artikel: '1'
+    machine_readable:
+        untranslatables:
+          - construct: naar boven afgerond op hele guldens
+            reason: Rounding is not available as an engine operation
+            suggestion: Add ROUND/CEIL operation to engine
+            legal_text_excerpt: De subsidie wordt naar boven afgerond op hele guldens.
+            accepted: false
+        parameters:
+          - name: rekeninkomen_1997
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: rekenhuur_1998
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: rekeninkomen_1998
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: rekenhuur_1999
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: tabelloon_1997
+            type: amount
+            type_spec:
+              unit: eurocent
+            default: 2700000
+        input:
+          - name: huursubsidie_A
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: huursubsidiewet
+              output: huursubsidie
+              parameters:
+                rekeninkomen: $fictief_rekeninkomen_1998
+                rekenhuur: $fictieve_rekenhuur_1999
+          - name: huursubsidie_B
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: huursubsidiewet
+              output: huursubsidie
+              parameters:
+                rekeninkomen: $nieuw_fictief_rekeninkomen_1998
+                rekenhuur: $fictieve_rekenhuur_1999
+          - name: huursubsidie_C
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: huursubsidiewet
+              output: huursubsidie
+              parameters:
+                rekeninkomen: $rekeninkomen_1998
+                rekenhuur: $rekenhuur_1999
+          - name: huursubsidie_D
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: huursubsidiewet
+              output: huursubsidie
+              parameters:
+                rekeninkomen: $nieuw_rekeninkomen_1998
+                rekenhuur: $rekenhuur_1999
+          - name: tabelloon_1997_extern
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: uitvoeringsbesluit_loonbelasting_1995
+              output: tabelloon_1997
+        execution:
+          output:
+            - name: fictief_rekeninkomen_1998
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: fictieve_rekenhuur_1999
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: vrijlatingsbedrag
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: nieuw_fictief_rekeninkomen_1998
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: nieuw_rekeninkomen_1998
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: voorlopige_subsidie_1999_2000
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: definitieve_subsidie_1999_2000
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: subsidie_2000_2001
+              type: amount
+              type_spec:
+                unit: eurocent
+            - name: subsidie_2001_2002
+              type: amount
+              type_spec:
+                unit: eurocent
+          actions:
+            - output: fictief_rekeninkomen_1998
+              value:
+                operation: MULTIPLY
+                values:
+                  - $rekeninkomen_1997
+                  - 0.95
+            - output: fictieve_rekenhuur_1999
+              value:
+                operation: MULTIPLY
+                values:
+                  - $rekenhuur_1998
+                  - 1.029
+            - output: vrijlatingsbedrag
+              value:
+                operation: SUBTRACT
+                values:
+                  - operation: MULTIPLY
+                    values:
+                      - $tabelloon_1997
+                      - 0.223
+                  - 194786
+            - output: nieuw_fictief_rekeninkomen_1998
+              value:
+                operation: ADD
+                values:
+                  - $fictief_rekeninkomen_1998
+                  - $vrijlatingsbedrag
+            - output: nieuw_rekeninkomen_1998
+              value:
+                operation: SUBTRACT
+                values:
+                  - $rekeninkomen_1998
+                  - $vrijlatingsbedrag
+            - output: voorlopige_subsidie_1999_2000
+              value:
+                operation: MULTIPLY
+                values:
+                  - operation: SUBTRACT
+                    values:
+                      - $huursubsidie_A
+                      - $huursubsidie_B
+                  - 12
+            - output: definitieve_subsidie_1999_2000
+              value:
+                operation: MULTIPLY
+                values:
+                  - operation: SUBTRACT
+                    values:
+                      - $huursubsidie_D
+                      - $huursubsidie_C
+                  - 12
+            - output: subsidie_2000_2001
+              value:
+                operation: MULTIPLY
+                values:
+                  - $definitieve_subsidie_1999_2000
+                  - 0.6666666666666666
+            - output: subsidie_2001_2002
+              value:
+                operation: MULTIPLY
+                values:
+                  - $definitieve_subsidie_1999_2000
+                  - 0.3333333333333333
   - number: '6'
     text: |-
       1 De over de subsidie verschuldigde belasting op grond van de [Wet inkomstenbelasting 2001][ref1] en
