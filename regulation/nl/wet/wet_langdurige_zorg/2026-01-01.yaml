@@ -575,6 +575,53 @@ articles:
         artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "recht behouden na overlijden of vertrek echtgenoot naar andere instelling (lid 1, tweede zin)"
+          reason: >
+            The article grants retention of co-residency right after the spouse's death or departure
+            to another institution. This requires tracking whether a prior valid co-residency right
+            existed, which is a historical state that cannot be expressed as a stateless condition.
+          accepted: false
+        - construct: "nadere gevallen en voorwaarden voor echtgenoot van verzekerde met handicap bij AMvB (lid 2)"
+          reason: >
+            Lid 2 delegates the specific cases and conditions for spouses of insured persons with
+            an intellectual, physical or sensory disability to AMvB. These conditions are not
+            defined in this article.
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: is_echtgenoot_van_persoon_met_aandoening_of_handicap
+            type: boolean
+            required: true
+          - name: partner_heeft_recht_op_zorg
+            type: boolean
+            required: true
+          - name: partner_verblijft_in_instelling
+            type: boolean
+            required: true
+        output:
+          - name: heeft_recht_op_verblijf_in_zelfde_instelling
+            type: boolean
+        actions:
+          - output: heeft_recht_op_verblijf_in_zelfde_instelling
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_echtgenoot_van_persoon_met_aandoening_of_handicap
+                  value: true
+                - operation: EQUALS
+                  subject: $partner_heeft_recht_op_zorg
+                  value: true
+                - operation: EQUALS
+                  subject: $partner_verblijft_in_instelling
+                  value: true
   - number: 3.1.3
     text: |-
       1 De verzekerde die recht heeft op zorg, heeft recht op een vergoeding voor een woningaanpassing die bedoeld is om
@@ -587,6 +634,59 @@ articles:
 
       2 Bij of krachtens algemene maatregel van bestuur worden regels gesteld met betrekking tot het eerste lid.
     url: https://wetten.overheid.nl/BWBR0035917/2026-01-01#Artikel3.1.3
+    machine_readable:
+      untranslatables:
+        - construct: "oordeel Wlz-uitvoerder dat investering duurzaam en doelmatig is (lid 1 sub b)"
+          reason: >
+            The assessment of whether a home adaptation investment is 'duurzaam en doelmatig'
+            (durable and efficient) is a qualitative judgment by the Wlz-uitvoerder that cannot
+            be reduced to a deterministic computation.
+          accepted: false
+        - construct: "omschrijving kleinschalig wooninitiatief bij AMvB (lid 1 sub a)"
+          reason: >
+            The definition of what constitutes a 'kleinschalig wooninitiatief' is delegated to a
+            general administrative measure (AMvB). The engine receives this determination as an
+            input boolean parameter; the AMvB criteria cannot be encoded here.
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: heeft_recht_op_zorg
+            type: boolean
+            required: true
+          - name: brengt_recht_tot_gelding_zonder_verblijf_instelling
+            type: boolean
+            required: true
+          - name: woont_in_kleinschalig_wooninitiatief
+            type: boolean
+            required: true
+          - name: wlz_uitvoerder_oordeelt_investering_duurzaam_en_doelmatig
+            type: boolean
+            required: true
+        output:
+          - name: heeft_recht_op_vergoeding_woningaanpassing
+            type: boolean
+        actions:
+          - output: heeft_recht_op_vergoeding_woningaanpassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_recht_op_zorg
+                  value: true
+                - operation: EQUALS
+                  subject: $brengt_recht_tot_gelding_zonder_verblijf_instelling
+                  value: true
+                - operation: EQUALS
+                  subject: $woont_in_kleinschalig_wooninitiatief
+                  value: false
+                - operation: EQUALS
+                  subject: $wlz_uitvoerder_oordeelt_investering_duurzaam_en_doelmatig
+                  value: true
   - number: 3.2.1
     text: |-
       1 Een verzekerde heeft recht op zorg die op zijn behoeften, persoonskenmerken en mogelijkheden is afgestemd voor
@@ -910,6 +1010,58 @@ articles:
 
       b. de verzekerde niet langer op de geïndiceerde zorg is aangewezen.
     url: https://wetten.overheid.nl/BWBR0035917/2026-01-01#Artikel3.2.4
+    machine_readable:
+      untranslatables:
+        - construct: "beoordeling of juiste gegevens tot een andere beslissing zouden hebben geleid (sub a)"
+          reason: >
+            The counterfactual assessment 'de verstrekking van juiste of volledige gegevens tot
+            een andere beslissing zou hebben geleid' requires re-evaluating the original
+            indicatiebesluit under hypothetical corrected inputs. This cannot be expressed as a
+            direct computation without re-running the full indicatiebesluit procedure.
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: indicatiebesluit_id
+            type: string
+            required: true
+          - name: onjuiste_of_onvolledige_gegevens_verstrekt
+            type: boolean
+            required: true
+          - name: juiste_gegevens_leiden_tot_andere_beslissing
+            type: boolean
+            required: true
+          - name: verzekerde_niet_langer_aangewezen_op_geïndiceerde_zorg
+            type: boolean
+            required: true
+        output:
+          - name: indicatiebesluit_kan_worden_herzien_of_ingetrokken
+            type: boolean
+        actions:
+          - output: grond_a_onjuiste_gegevens
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $onjuiste_of_onvolledige_gegevens_verstrekt
+                  value: true
+                - operation: EQUALS
+                  subject: $juiste_gegevens_leiden_tot_andere_beslissing
+                  value: true
+          - output: indicatiebesluit_kan_worden_herzien_of_ingetrokken
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $grond_a_onjuiste_gegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $verzekerde_niet_langer_aangewezen_op_geïndiceerde_zorg
+                  value: true
   - number: 3.2.5
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kan worden bepaald dat het recht op zorg slechts tot gelding kan
@@ -1345,6 +1497,36 @@ articles:
         artikel: 4.2.2
         hoofdstuk: '4'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: is_verzekerde_als_bedoeld_in_artikel_3_2_2
+            type: boolean
+            required: true
+          - name: instelling_heeft_overeenkomst_4_2_2
+            type: boolean
+            required: true
+        output:
+          - name: recht_op_zorg_in_instelling_toegestaan
+            type: boolean
+        actions:
+          - output: recht_op_zorg_in_instelling_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  condition:
+                    operation: EQUALS
+                    subject: $is_verzekerde_als_bedoeld_in_artikel_3_2_2
+                    value: true
+                - operation: EQUALS
+                  subject: $instelling_heeft_overeenkomst_4_2_2
+                  value: true
   - number: 3.3.5
     text: |-
       1 Een recht op zorg kan uitsluitend met zorg in natura tot gelding worden gebracht bij een zorgaanbieder die is
@@ -3393,6 +3575,26 @@ articles:
         artikel: 3.1.1
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: heeft_recht_op_adl_assistentie
+            type: boolean
+            required: true
+        output:
+          - name: is_uitgesloten_van_zorg_artikel_3_1_1
+            type: boolean
+        actions:
+          - output: is_uitgesloten_van_zorg_artikel_3_1_1
+            value:
+              operation: EQUALS
+              subject: $heeft_recht_op_adl_assistentie
+              value: true
   - number: 10.2.1
     text: |-
       Bij de vaststelling van de schadevergoeding, waarop de verzekerde naar burgerlijk recht aanspraak kan maken ter
@@ -3811,6 +4013,56 @@ articles:
         artikel: 4.2.1
         hoofdstuk: '4'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: heeft_rechterlijke_machtiging_wzd
+            type: boolean
+            required: true
+          - name: machtiging_nog_geldig
+            type: boolean
+            required: true
+          - name: verblijft_in_instelling
+            type: boolean
+            required: true
+          - name: geeft_toepassing_aan_artikel_3_2_3
+            type: boolean
+            required: true
+          - name: verblijf_bekostigd_door_zvw_jeugdwet_of_wmo
+            type: boolean
+            required: true
+        output:
+          - name: heeft_recht_op_zorg_3_1_1_via_rechterlijke_machtiging
+            type: boolean
+        actions:
+          - output: heeft_recht_op_zorg_3_1_1_via_rechterlijke_machtiging
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_rechterlijke_machtiging_wzd
+                  value: true
+                - operation: EQUALS
+                  subject: $machtiging_nog_geldig
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_in_instelling
+                  value: true
+                - operation: NOT
+                  condition:
+                    operation: EQUALS
+                    subject: $geeft_toepassing_aan_artikel_3_2_3
+                    value: true
+                - operation: NOT
+                  condition:
+                    operation: EQUALS
+                    subject: $verblijf_bekostigd_door_zvw_jeugdwet_of_wmo
+                    value: true
   - number: 11.1.1
     text: |-
       1 De verzekerde die onmiddellijk voorafgaand aan de intrekking van de Algemene Wet Bijzondere Ziektekosten op grond
