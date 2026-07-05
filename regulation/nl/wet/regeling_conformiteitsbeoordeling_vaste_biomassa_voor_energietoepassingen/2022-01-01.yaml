@@ -39,6 +39,26 @@ articles:
         bwb_id: BWBR0040431
       - id: ref5
         bwb_id: BWBR0040431
+    machine_readable:
+      execution:
+        output:
+          - name: besluit_gedefinieerd
+            type: boolean
+            description: Indicates whether the term 'besluit' is defined as the Besluit conformiteitsbeoordeling vaste biomassa voor energietoepassingen.
+          - name: bijlage_a_bevat_begrippen
+            type: boolean
+            description: Indicates whether Annex A contains definitions for terms in Annexes B, C, and D.
+        actions:
+          - output: besluit_gedefinieerd
+            value: true
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '1'
+          - output: bijlage_a_bevat_begrippen
+            value: true
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '1'
   - number: '2'
     text: |-
       De duurzaamheidseisen voor de categorieën vaste biomassa, bedoeld in [artikel 16, eerste lid, van het besluit][ref1]
@@ -156,7 +176,7 @@ articles:
     machine_readable:
       execution:
         output:
-          - name: toezicht_ingevoerd
+          - name: toezicht_ingevoegd
             type: boolean
             description: Indicates whether supervision by NEa inspectors is introduced.
         actions:
@@ -204,6 +224,30 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0040209
+    machine_readable:
+      execution:
+        output:
+          - name: inwerkingtreding_datum
+            type: string
+            description: The effective date of this regulation, aligned with BWBR0040209.
+        actions:
+          - output: inwerkingtreding_datum
+            value: "2022-01-01"
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '7'
   - number: '8'
     text: 'Deze regeling wordt aangehaald als: Regeling conformiteitsbeoordeling vaste biomassa voor energietoepassingen.'
     url: https://wetten.overheid.nl/BWBR0040431/2022-01-01#Artikel8
+    machine_readable:
+      execution:
+        output:
+          - name: titel
+            type: string
+            description: The short title of this regulation.
+        actions:
+          - output: titel
+            value: "Regeling conformiteitsbeoordeling vaste biomassa voor energietoepassingen"
+            legal_basis:
+              law: regeling_conformiteitsbeoordeling_vaste_biomassa_voor_energietoepassingen
+              article: '8'
