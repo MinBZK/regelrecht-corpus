@@ -14,102 +14,268 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      In deze regeling wordt verstaan onder:
+    - number: '1'
+      text: |-
+        In deze regeling wordt verstaan onder:
 
-        - *ASTM:* American Society for Testing and Materials;
-        - *besluit:* [Besluit brandstoffen luchtverontreiniging][ref1];
-        - *richtlijn (EU) 2015/652:* Richtlijn (EU) 2015/652 tot vaststelling van berekeningsmethoden en
-      rapportageverplichtingen overeenkomstig Richtlijn 98/70/EG van het Europees parlement en de Raad betreffende de
-      kwaliteit van benzine en van dieselbrandstof (PbEU 2015, L 107).
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0029909
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0029909
-  - number: '2'
-    text: |-
-      1 De testmethode, bedoeld in [artikel 2.2, derde lid, van het besluit][ref1] is de methode prEN 16135 of de methode
-      prEN 16136.
-
-      2 De testmethode, bedoeld in [artikel 2.3, tweede lid, van het besluit][ref2] is de methode EN 228:2012.
-
-      3 De testmethode, bedoeld in de [artikelen 2.5, tweede lid][ref3], en [2.6, derde lid, van het besluit][ref4] is
-      de methode EN 590:2013.
+          - *ASTM:* American Society for Testing and Materials;
+          - *besluit:* [Besluit brandstoffen luchtverontreiniging][ref1];
+          - *richtlijn (EU) 2015/652:* Richtlijn (EU) 2015/652 tot vaststelling van berekeningsmethoden en
+        rapportageverplichtingen overeenkomstig Richtlijn 98/70/EG van het Europees parlement en de Raad betreffende de
+        kwaliteit van benzine en van dieselbrandstof (PbEU 2015, L 107).
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel2.2
-      [ref2]: https://wetten.overheid.nl/BWBR0029909#Artikel2.3
-      [ref3]: https://wetten.overheid.nl/BWBR0029909#Artikel2.5
-      [ref4]: https://wetten.overheid.nl/BWBR0029909#Artikel2.6
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0029909
-        artikel: '2.2'
-      - id: ref2
-        bwb_id: BWBR0029909
-        artikel: '2.3'
-      - id: ref3
-        bwb_id: BWBR0029909
-        artikel: '2.5'
-      - id: ref4
-        bwb_id: BWBR0029909
-        artikel: '2.6'
-  - number: '3'
-    text: |-
-      Het tijdstip, bedoeld in [artikel 2.4, tweede lid, van het besluit][ref1] is, voor tankstations die in de maand
-      april van een jaar per benzinekwaliteit minder dan driemaal zijn bevoorraad, de datum waarop het tankstation na
-      15 april van dat jaar voor de tweede maal met zomerbenzine is bevoorraad, indien die datum is gelegen na 1 mei van
-      dat jaar.
+        [ref1]: https://wetten.overheid.nl/BWBR0029909
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel1
+      references:
+        - id: ref1
+          bwb_id: BWBR0029909
+    - number: '2'
+      text: |-
+        1 De testmethode, bedoeld in [artikel 2.2, derde lid, van het besluit][ref1] is de methode prEN 16135 of de methode
+        prEN 16136.
+
+        2 De testmethode, bedoeld in [artikel 2.3, tweede lid, van het besluit][ref2] is de methode EN 228:2012.
+
+        3 De testmethode, bedoeld in de [artikelen 2.5, tweede lid][ref3], en [2.6, derde lid, van het besluit][ref4] is
+        de methode EN 590:2013.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel2.4
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0029909
-        artikel: '2.4'
-  - number: '5'
-    text: |-
-      De testmethode, bedoeld in [artikel 4.2, tweede lid, van het besluit][ref1] is:
+        [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel2.2
+        [ref2]: https://wetten.overheid.nl/BWBR0029909#Artikel2.3
+        [ref3]: https://wetten.overheid.nl/BWBR0029909#Artikel2.5
+        [ref4]: https://wetten.overheid.nl/BWBR0029909#Artikel2.6
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel2
+      references:
+        - id: ref1
+          bwb_id: BWBR0029909
+          artikel: '2.2'
+        - id: ref2
+          bwb_id: BWBR0029909
+          artikel: '2.3'
+        - id: ref3
+          bwb_id: BWBR0029909
+          artikel: '2.5'
+        - id: ref4
+          bwb_id: BWBR0029909
+          artikel: '2.6'
+      machine_readable:
+        execution:
+          output:
+            - name: testmethode_artikel_2_2
+              type: string
+              description: Testmethode voor artikel 2.2, derde lid, van het besluit
+            - name: testmethode_artikel_2_3
+              type: string
+              description: Testmethode voor artikel 2.3, tweede lid, van het besluit
+            - name: testmethode_artikelen_2_5_en_2_6
+              type: string
+              description: Testmethode voor artikelen 2.5, tweede lid, en 2.6, derde lid, van het besluit
+          actions:
+            - output: testmethode_artikel_2_2
+              value: "prEN 16135 of prEN 16136"
+            - output: testmethode_artikel_2_3
+              value: "EN 228:2012"
+            - output: testmethode_artikelen_2_5_en_2_6
+              value: "EN 590:2013"
+    - number: '3'
+      text: |-
+        Het tijdstip, bedoeld in [artikel 2.4, tweede lid, van het besluit][ref1] is, voor tankstations die in de maand
+        april van een jaar per benzinekwaliteit minder dan driemaal zijn bevoorraad, de datum waarop het tankstation na
+        15 april van dat jaar voor de tweede maal met zomerbenzine is bevoorraad, indien die datum is gelegen na 1 mei van
+        dat jaar.
 
-      a. voor bemonstering van brandstof die:
 
-      1°. een vaste stof is: de Nederlandse norm NEN 3010,
+        [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel2.4
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel3
+      references:
+        - id: ref1
+          bwb_id: BWBR0029909
+          artikel: '2.4'
+      machine_readable:
+        execution:
+          parameters:
+            - name: jaar
+              type: number
+              required: true
+              description: Jaar waarin de bevoorrading plaatsvond
+          input:
+            - name: tankstation_bevoorraad_dates
+              type: array
+              description: Lijst van datums waarop het tankstation in april van het gegeven jaar met zomerbenzine is bevoorraad
+              items:
+                type: date
+          output:
+            - name: tijdstip_artikel_2_4
+              type: date
+              description: Tijdstip bedoeld in artikel 2.4, tweede lid, van het besluit
+          actions:
+            - output: apr15
+              value:
+                operation: DATE
+                year: $jaar
+                month: 4
+                day: 15
+            - output: may1
+              value:
+                operation: DATE
+                year: $jaar
+                month: 5
+                day: 1
+            - output: bevoorraad_count
+              value:
+                operation: LENGTH
+                list: $tankstation_bevoorraad_dates
+            - output: less_than_three
+              value:
+                operation: LESS_THAN
+                subject: $bevoorraad_count
+                value: 3
+            - output: filtered_dates
+              value:
+                operation: FILTER
+                list: $tankstation_bevoorraad_dates
+                condition:
+                  operation: GREATER_THAN
+                  subject: $item
+                  value: $apr15
+            - output: sorted_dates
+              value:
+                operation: SORT
+                list: $filtered_dates
+                order: ASC
+            - output: tweede_keer_na_15_april
+              value:
+                operation: INDEX
+                list: $sorted_dates
+                index: 1
+            - output: tijdstip_artikel_2_4
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $less_than_three
+                          value: true
+                        - operation: NOT
+                          value:
+                            operation: EQUALS
+                            subject: $tweede_keer_na_15_april
+                            value: null
+                        - operation: GREATER_THAN
+                          subject: $tweede_keer_na_15_april
+                          value: $may1
+                    then: $tweede_keer_na_15_april
+                default: null
+    - number: '5'
+      text: |-
+        De testmethode, bedoeld in [artikel 4.2, tweede lid, van het besluit][ref1] is:
 
-      2°. een vloeistof is: de methode ASTM D 4057,
+        a. voor bemonstering van brandstof die:
 
-      3°. een gas is: de methode ASTM D 1145,
+        1°. een vaste stof is: de Nederlandse norm NEN 3010,
 
-      4°. een vloeibaar gemaakt gas is: de methode ASTM D 1265;
+        2°. een vloeistof is: de methode ASTM D 4057,
 
-      b. voor het bepalen van het zwavelgehalte van een brandstof die:
+        3°. een gas is: de methode ASTM D 1145,
 
-      1°. een vaste stof is: de norm NEN/ISO 351,
+        4°. een vloeibaar gemaakt gas is: de methode ASTM D 1265;
 
-      2°. een vloeistof is: de methode EN ISO 14596,
+        b. voor het bepalen van het zwavelgehalte van een brandstof die:
 
-      3°. een gas of een vloeibaar gemaakt gas is: de methode ASTM D 2784;
+        1°. een vaste stof is: de norm NEN/ISO 351,
 
-      c. voor de interpretatie van de waarde, welke is gevonden volgens een in onderdeel b genoemde methode: de norm ISO
-      4259 (1992).
+        2°. een vloeistof is: de methode EN ISO 14596,
+
+        3°. een gas of een vloeibaar gemaakt gas is: de methode ASTM D 2784;
+
+        c. voor de interpretatie van de waarde, welke is gevonden volgens een in onderdeel b genoemde methode: de norm ISO
+        4259 (1992).
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel4.2
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0029909
-        artikel: '4.2'
-  - number: '6'
-    text: |-
-      Deze regeling treedt in werking met ingang van de dag na de datum van uitgifte van de Staatscourant waarin zij
-      wordt geplaatst.
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel6
-  - number: '7'
-    text: 'Deze regeling wordt aangehaald als: Regeling brandstoffen luchtverontreiniging.'
-    url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel7
+        [ref1]: https://wetten.overheid.nl/BWBR0029909#Artikel4.2
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel5
+      references:
+        - id: ref1
+          bwb_id: BWBR0029909
+          artikel: '4.2'
+      machine_readable:
+        execution:
+          input:
+            - name: brandstoftype
+              type: string
+              required: true
+              description: Type brandstof (vaste stof, vloeistof, gas, vloeibaar gemaakt gas)
+          output:
+            - name: testmethode_bemonstering
+              type: string
+              description: Testmethode voor bemonstering van de brandstof
+            - name: testmethode_zwavelgehalte
+              type: string
+              description: Testmethode voor bepalen zwavelgehalte van de brandstof
+            - name: testmethode_interpretatie
+              type: string
+              description: Testmethode voor interpretatie van de gevonden waarde
+          actions:
+            - output: testmethode_bemonstering
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "vaste stof"
+                    then: "NEN 3010"
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "vloeistof"
+                    then: "ASTM D 4057"
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "gas"
+                    then: "ASTM D 1145"
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "vloeibaar gemaakt gas"
+                    then: "ASTM D 1265"
+                default: null
+            - output: testmethode_zwavelgehalte
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "vaste stof"
+                    then: "NEN/ISO 351"
+                  - when:
+                      operation: EQUALS
+                      subject: $brandstoftype
+                      value: "vloeistof"
+                    then: "EN ISO 14596"
+                  - when:
+                      operation: OR
+                      conditions:
+                        - operation: EQUALS
+                          subject: $brandstoftype
+                          value: "gas"
+                        - operation: EQUALS
+                          subject: $brandstoftype
+                          value: "vloeibaar gemaakt gas"
+                    then: "ASTM D 2784"
+                default: null
+            - output: testmethode_interpretatie
+              value: "ISO 4259 (1992)"
+    - number: '6'
+      text: |-
+        Deze regeling treedt in werking met ingang van de dag na de datum van uitgifte van de Staatscourant waarin zij
+        wordt geplaatst.
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel6
+    - number: '7'
+      text: 'Deze regeling wordt aangehaald als: Regeling brandstoffen luchtverontreiniging.'
+      url: https://wetten.overheid.nl/BWBR0029916/2020-07-17#Artikel7
