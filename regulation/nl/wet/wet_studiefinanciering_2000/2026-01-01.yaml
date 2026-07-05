@@ -1559,6 +1559,40 @@ articles:
         artikel: '3.9'
         hoofdstuk: '3'
         paragraaf: '3.3'
+    machine_readable:
+      endpoint: aanvullende_beurs
+      execution:
+        input:
+          - name: max_aanvullende_beurs
+            type: amount
+            source:
+              output: max_aanvullende_beurs
+            type_spec:
+              unit: eurocent
+            description: Maximumbedrag van de aanvullende beurs als bedoeld in artikel 3.18
+          - name: veronderstelde_ouderlijke_bijdrage
+            type: amount
+            source:
+              output: veronderstelde_ouderlijke_bijdrage
+            type_spec:
+              unit: eurocent
+            description: Veronderstelde ouderlijke bijdrage berekend ingevolge de artikelen 3.9 tot en met 3.13
+        output:
+          - name: aanvullende_beurs
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de aanvullende beurs per maand (artikel 3.8), minimaal 0
+        actions:
+          - output: aanvullende_beurs
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $max_aanvullende_beurs
+                    - $veronderstelde_ouderlijke_bijdrage
   - number: '3.9'
     text: |-
       1 Maatstaf voor de bepaling van de veronderstelde ouderlijke bijdrage is het toetsingsinkomen van de afzonderlijke
@@ -3272,6 +3306,33 @@ articles:
       De diplomatermijn beroepsonderwijs is een periode van 10 jaren. Deze periode vangt aan op de eerste dag van de
       maand waarover voor het eerst prestatiebeurs beroepsonderwijs is toegekend.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel4.9
+    machine_readable:
+      endpoint: diplomatermijn_beroepsonderwijs
+      definitions:
+        DIPLOMATERMIJN_JAREN:
+          value: 10
+          description: Duur van de diplomatermijn beroepsonderwijs in jaren (artikel 4.9)
+      execution:
+        parameters:
+          - name: eerste_dag_prestatiebeurs
+            type: date
+            required: true
+            description: Eerste dag van de maand waarover voor het eerst prestatiebeurs beroepsonderwijs is toegekend (artikel 4.9)
+        output:
+          - name: diplomatermijn_duur_jaren
+            type: number
+            description: Duur van de diplomatermijn beroepsonderwijs in jaren (artikel 4.9)
+          - name: diplomatermijn_einddatum
+            type: date
+            description: Einddatum van de diplomatermijn beroepsonderwijs (artikel 4.9)
+        actions:
+          - output: diplomatermijn_duur_jaren
+            value: $DIPLOMATERMIJN_JAREN
+          - output: diplomatermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $eerste_dag_prestatiebeurs
+              years: $DIPLOMATERMIJN_JAREN
   - number: '4.10'
     text: |-
       1 Indien een mbo-student binnen de diplomatermijn beroepsonderwijs het afsluitend examen van een opleiding niveau
@@ -3862,6 +3923,33 @@ articles:
       De diplomatermijn hoger onderwijs is een periode van 10 jaren. Deze periode vangt aan op de eerste dag van de maand
       waarover voor het eerst studiefinanciering is toegekend voor het volgen van hoger onderwijs.
     url: https://wetten.overheid.nl/BWBR0011453/2026-01-01#Artikel5.5
+    machine_readable:
+      endpoint: diplomatermijn_hoger_onderwijs
+      definitions:
+        DIPLOMATERMIJN_JAREN:
+          value: 10
+          description: Duur van de diplomatermijn hoger onderwijs in jaren (artikel 5.5)
+      execution:
+        parameters:
+          - name: eerste_dag_studiefinanciering_ho
+            type: date
+            required: true
+            description: Eerste dag van de maand waarover voor het eerst studiefinanciering is toegekend voor het volgen van hoger onderwijs (artikel 5.5)
+        output:
+          - name: diplomatermijn_duur_jaren
+            type: number
+            description: Duur van de diplomatermijn hoger onderwijs in jaren (artikel 5.5)
+          - name: diplomatermijn_einddatum
+            type: date
+            description: Einddatum van de diplomatermijn hoger onderwijs (artikel 5.5)
+        actions:
+          - output: diplomatermijn_duur_jaren
+            value: $DIPLOMATERMIJN_JAREN
+          - output: diplomatermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $eerste_dag_studiefinanciering_ho
+              years: $DIPLOMATERMIJN_JAREN
   - number: '5.7'
     text: |-
       1 Indien een ho-student binnen de diplomatermijn hoger onderwijs met goed gevolg een associate degree-opleiding
@@ -4328,10 +4416,6 @@ articles:
         hoofdstuk: '6'
         paragraaf: '6.1'
     machine_readable:
-      untranslatables:
-        - construct: "Herberekening termijnbetaling bij aanvang aflosfase en periodes daarna"
-          reason: "Annuity calculation over remaining months requires compound interest formula not available as engine operation"
-          legal_text_excerpt: "De hoogte van de maandelijkse termijnbetalingen wordt op basis van het aantal maanden van de aflosfase onderscheidenlijk het nog resterende aantal maanden ... tot gelijke bedragen vastgesteld"
       execution:
         parameters:
           - name: max_opschorting_jaren
@@ -4434,6 +4518,11 @@ articles:
         hoofdstuk: '6'
         paragraaf: '6.1'
     machine_readable:
+      untranslatables:
+        - construct: "Annuïteitsberekening maandelijkse termijnbetaling (artikel 6.9 lid 2)"
+          reason: "Compound interest annuity formula over remaining months of aflosfase is not available as an engine operation"
+          legal_text_excerpt: "De hoogte van de maandelijkse termijnbetalingen wordt op basis van het aantal maanden van de aflosfase onderscheidenlijk het nog resterende aantal maanden van de aflosfase tot gelijke bedragen vastgesteld"
+          accepted: false
       definitions:
         MINIMUM_TERMIJNBETALING_PER_JAAR:
           value: 6000
