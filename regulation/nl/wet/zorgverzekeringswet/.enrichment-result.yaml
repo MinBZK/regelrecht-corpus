@@ -1,6 +1,7 @@
 # .enrichment-result.yaml — result envelope, NOT part of the law schema
 law_id: zorgverzekeringswet
 related_legislation:
+  # Cross-law source_regulation references (machine_readable input sources)
   - name: Wet langdurige zorg
     relation: source_regulation
     bwb_id: BWBR0035917
@@ -17,15 +18,32 @@ related_legislation:
     relation: source_regulation
     bwb_id: BWBR0018451
     slug: wet_op_de_zorgtoeslag
-  - name: Regeling zorgverzekering (bestuursrechtelijke premie percentage)
+
+  # Delegated ministeriele regelingen (open_terms in machine_readable)
+  # Art. 18d: bestuursrechtelijke premie (110%-130% van gemiddelde premie)
+  - name: Regeling zorgverzekering
     relation: delegated_regeling
+    bwb_id: BWBR0020322
     open_term: bestuursrechtelijke_premie_factor
-  - name: Regeling zorgverzekering (gemiddelde premie)
+  - name: Regeling zorgverzekering
     relation: delegated_regeling
+    bwb_id: BWBR0020322
     open_term: gemiddelde_premie
-  - name: Regeling bijdragepercentsges Zorgverzekeringswet
+  # Art. 18e: bestuursrechtelijke premie voor art. 9d-gevallen na 18e verjaardag
+  - name: Regeling zorgverzekering
     relation: delegated_regeling
+    bwb_id: BWBR0020322
+    open_term: bestuursrechtelijke_premie_percentage_9d
+  - name: Regeling zorgverzekering
+    relation: delegated_regeling
+    bwb_id: BWBR0020322
+    open_term: gemiddelde_premie_18e
+  # Art. 45: inkomensafhankelijke bijdragepercentages
+  - name: Regeling zorgverzekering
+    relation: delegated_regeling
+    bwb_id: BWBR0020322
     open_term: bijdragepercentage_werkgever
-  - name: Regeling bijdragepercentsges Zorgverzekeringswet
+  - name: Regeling zorgverzekering
     relation: delegated_regeling
+    bwb_id: BWBR0020322
     open_term: bijdragepercentage_werknemer

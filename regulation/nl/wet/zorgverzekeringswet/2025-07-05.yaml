@@ -744,6 +744,45 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0018450#Artikel9b
       [ref3]: https://wetten.overheid.nl/BWBR0018450#Artikel9d
       [ref4]: https://wetten.overheid.nl/BWBR0018450#Artikel9b
+    machine_readable:
+      untranslatables:
+        - construct: "tot een maandbedrag herleide standaardpremie"
+          reason: "Division of annual standaardpremie by 12 with rounding is not expressible — rounding (afronden) is not an engine operation"
+          suggestion: "Add ROUND/FLOOR/CEIL operations to engine"
+          legal_text_excerpt: "driemaal de tot een maandbedrag herleide standaardpremie (art. 9b lid 2 van toepassing via art. 9c lid 2)"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        input:
+          - name: standaardpremie
+            type: amount
+            source:
+              regulation: wet_op_de_zorgtoeslag
+              output: standaardpremie
+            type_spec:
+              unit: eurocent
+            description: Standaardpremie bedoeld in de Wet op de zorgtoeslag, van toepassing via art. 9b lid 2 jo. art. 9c lid 2
+        output:
+          - name: hoogte_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de herhaalde bestuurlijke boete wegens niet-verzekerd zijn (3x maandstandaardpremie, zonder afronden)
+        actions:
+          - output: maand_standaardpremie
+            value:
+              operation: DIVIDE
+              values:
+                - $standaardpremie
+                - 12
+          - output: hoogte_boete
+            value:
+              operation: MULTIPLY
+              values:
+                - 3
+                - $maand_standaardpremie
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel9c
     references:
       - id: ref1
@@ -1562,6 +1601,64 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0018450#Artikel9d
       [ref2]: https://wetten.overheid.nl/BWBR0018450#Artikel18d
+    machine_readable:
+      open_terms:
+        - id: bestuursrechtelijke_premie_percentage_9d
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 18e lid 2 Zorgverzekeringswet (percentage van de gemiddelde premie)
+        - id: gemiddelde_premie_18e
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 18e lid 3 jo. artikel 18d lid 6 Zorgverzekeringswet
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de verzekeringnemer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsbepaling (eerste dag van de kalendermaand)
+        output:
+          - name: heeft_bestuursrechtelijke_premie_18e
+            type: boolean
+            description: Of de verzekeringnemer de leeftijd van achttien jaar heeft bereikt (art. 18e lid 1)
+          - name: bestuursrechtelijke_premie_18e
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte bestuursrechtelijke premie voor verzekeringnemer in 9d-situatie na 18e verjaardag
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: heeft_bestuursrechtelijke_premie_18e
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
+          - output: bestuursrechtelijke_premie_18e
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $leeftijd
+                    value: 18
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $bestuursrechtelijke_premie_percentage_9d
+                      - $gemiddelde_premie_18e
+              default: 0
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel18e
     references:
       - id: ref1
@@ -1944,6 +2041,52 @@ articles:
       c. het op grond van onderdeel b berekende bedrag wordt gedeeld door het aantal dagen in het kalenderjaar.
 
       3 Het op grond van het eerste of tweede lid berekende bedrag wordt afgerond op hele euro’s.
+    machine_readable:
+      untranslatables:
+        - construct: "afgerond op hele euro’s"
+          reason: "Rounding to whole euros is not available as an engine operation"
+          suggestion: "Add ROUND/CEIL/FLOOR operations to engine"
+          legal_text_excerpt: "Het op grond van het eerste of tweede lid berekende bedrag wordt afgerond op hele euro’s"
+          accepted: false
+        - construct: "het aantal dagen in dat kalenderjaar waarover de zorgverzekering zal lopen of heeft gelopen"
+          reason: "Date difference (number of days between two dates) is not available as an engine operation; caller must supply the day counts"
+          suggestion: "Add DATE_DIFF operation to engine"
+          legal_text_excerpt: "breuk waarvan de teller gelijk is aan het aantal dagen in dat kalenderjaar waarover de zorgverzekering zal lopen of heeft gelopen"
+          accepted: false
+      execution:
+        parameters:
+          - name: aantal_verzekerde_dagen
+            type: number
+            required: true
+            description: Aantal dagen in het kalenderjaar waarover de zorgverzekering loopt of heeft gelopen (teller breuk)
+          - name: totaal_dagen_in_jaar
+            type: number
+            required: true
+            description: Totaal aantal dagen in het desbetreffende kalenderjaar (noemer breuk; 365 of 366)
+        input:
+          - name: verplicht_eigen_risico_jaar
+            type: amount
+            source:
+              output: verplicht_eigen_risico
+            type_spec:
+              unit: eurocent
+            description: Het voor het gehele kalenderjaar geldende verplicht eigen risico (art. 19)
+        output:
+          - name: verplicht_eigen_risico_naar_rato
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Naar rato berekend verplicht eigen risico voor gedeeltelijk jaar (vóór afronding op hele euro’s)
+        actions:
+          - output: verplicht_eigen_risico_naar_rato
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $verplicht_eigen_risico_jaar
+                    - $aantal_verzekerde_dagen
+                - $totaal_dagen_in_jaar
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel22
   - number: '23'
     text: |-
