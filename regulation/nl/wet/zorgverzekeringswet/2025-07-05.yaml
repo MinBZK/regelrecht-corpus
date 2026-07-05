@@ -1214,6 +1214,30 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0018450#Artikel11
       [ref3]: https://wetten.overheid.nl/BWBR0018450#Artikel20
       [ref4]: https://wetten.overheid.nl/BWBR0018450#Artikel20
+    machine_readable:
+      execution:
+        parameters:
+          - name: grondslag_premie
+            type: number
+            required: true
+            description: De grondslag van de premie voor de gekozen variant van de zorgverzekering, in eurocent (art. 17 lid 2-4)
+          - name: premiekorting
+            type: number
+            required: true
+            description: De premiekorting als bedoeld in artikel 20, in eurocent (0 indien niet van toepassing; art. 17 lid 5)
+        output:
+          - name: verschuldigde_premie
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De door de verzekeringnemer verschuldigde premie (grondslag verminderd met premiekorting; art. 17 lid 5)
+        actions:
+          - output: verschuldigde_premie
+            value:
+              operation: SUBTRACT
+              values:
+                - $grondslag_premie
+                - $premiekorting
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel17
     references:
       - id: ref1
@@ -2379,6 +2403,27 @@ articles:
       indien de zorgverzekeraar in het tweede of eerste jaar voorafgaande aan het jaar waarvoor de bepaling geschiedt,
       rechtsopvolger is geweest van, gefuseerd is met, of afgesplitst is van een andere zorgverzekeraar dan wel indien
       deze verzekeraar zorgverzekeringen van een andere zorgverzekeraar heeft overgenomen.
+    machine_readable:
+      definitions:
+        MAX_VERZEKERDEN_WERKGEBIED_BEPERKING:
+          value: 850000
+          description: "Maximum aantal verzekerden voor beperking werkgebied tot provincies (art. 29 lid 2 Zvw)"
+      execution:
+        parameters:
+          - name: aantal_verzekerden
+            type: number
+            required: true
+            description: Het gemiddeld aantal verzekerden in het tweede jaar voorafgaande aan het betreffende jaar (art. 29 lid 3)
+        output:
+          - name: werkgebied_beperking_toegestaan
+            type: boolean
+            description: Of de zorgverzekeraar zijn werkgebied tot een of meer provincies mag beperken (art. 29 lid 2)
+        actions:
+          - output: werkgebied_beperking_toegestaan
+            value:
+              operation: LESS_THAN
+              subject: $aantal_verzekerden
+              value: $MAX_VERZEKERDEN_WERKGEBIED_BEPERKING
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel29
   - number: '30'
     text: |-
@@ -3066,6 +3111,59 @@ articles:
       [ref14]: https://wetten.overheid.nl/BWBR0018450#Artikel2
       [ref15]: https://wetten.overheid.nl/BWBR0018450#Artikel2
       [ref16]: https://wetten.overheid.nl/BWBR0018450#Artikel70
+    machine_readable:
+      untranslatables:
+        - construct: "cumulatieve loontijdvak-berekening (lid 5)"
+          reason: "Per-period cumulative income calculation requires period state memory between loontijdvakken, which is not an available engine operation"
+          suggestion: "Add CUMULATIVE or RUNNING_TOTAL operation to engine"
+          legal_text_excerpt: "De inkomensafhankelijke bijdrage wordt per loontijdvak berekend over het verschil tussen het loon dat de werknemer in het kalenderjaar heeft genoten tot en met dat loontijdvak en het loon dat de werknemer in dat kalenderjaar heeft genoten tot en met het aan dat loontijdvak voorafgaande loontijdvak"
+          accepted: false
+      open_terms:
+        - id: maximaal_bijdrageloon_jaar
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 42 lid 2 Zorgverzekeringswet (maximum loonbedrag per kalenderjaar voor de berekening van de inkomensafhankelijke bijdrage)
+      execution:
+        parameters:
+          - name: loon
+            type: number
+            required: true
+            description: Het door de inhoudingsplichtige verstrekte loon in eurocent (art. 42 lid 1)
+        input:
+          - name: bijdragepercentage_werkgever
+            type: number
+            source:
+              output: bijdragepercentage_werkgever
+            description: Het bijdragepercentage voor de inhoudingsplichtige als bedoeld in artikel 45 lid 1
+        output:
+          - name: loon_voor_bijdrage
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het loon waarover de IAB wordt berekend (minimaal 0, maximaal de ministeriële grens; art. 42 lid 2)
+          - name: inkomensafhankelijke_bijdrage_werkgever
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De door de inhoudingsplichtige verschuldigde inkomensafhankelijke bijdrage (art. 42 lid 1)
+        actions:
+          - output: loon_voor_bijdrage
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: MIN
+                  values:
+                    - $loon
+                    - $maximaal_bijdrageloon_jaar
+          - output: inkomensafhankelijke_bijdrage_werkgever
+            value:
+              operation: MULTIPLY
+              values:
+                - $bijdragepercentage_werkgever
+                - $loon_voor_bijdrage
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel42
     references:
       - id: ref1
@@ -3181,6 +3279,42 @@ articles:
       [ref12]: https://wetten.overheid.nl/BWBR0018450#Artikel42
       [ref13]: https://wetten.overheid.nl/BWBR0018450#Artikel49
       [ref14]: https://wetten.overheid.nl/BWBR0018450#Artikel42
+    machine_readable:
+      untranslatables:
+        - construct: "aggregatie bijdrage-inkomen (lid 2): som van loon, winst, ROW en periodieke uitkeringen"
+          reason: "Aggregation of multiple income sources from Wet inkomstenbelasting 2001 (loon, winst, ROW, periodieke uitkeringen) requires complex cross-law data that cannot be expressed with available operations"
+          suggestion: "Bind to Belastingdienst outputs for inkomenscategorieën when available"
+          legal_text_excerpt: "Het bijdrage-inkomen is het gezamenlijke bedrag van hetgeen door de verzekeringsplichtige is genoten aan loon, belastbare winst uit onderneming, belastbaar resultaat uit overige werkzaamheden, en belastbare periodieke uitkeringen en verstrekkingen"
+          accepted: false
+      open_terms:
+        - id: maximaal_bijdrage_inkomen_jaar
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 43 lid 3 Zorgverzekeringswet (maximum bijdrage-inkomen per kalenderjaar)
+      execution:
+        parameters:
+          - name: bijdrage_inkomen_ruw
+            type: number
+            required: true
+            description: Het bijdrage-inkomen vóór toepassing van minimum/maximum grenzen (in eurocent; som van lid 2 onderdelen a t/m d)
+        output:
+          - name: bijdrage_inkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het bijdrage-inkomen na toepassing van minimum (nihil) en maximum (ministeriële regeling) grens (art. 43 lid 3)
+        actions:
+          - output: bijdrage_inkomen
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: MIN
+                  values:
+                    - $bijdrage_inkomen_ruw
+                    - $maximaal_bijdrage_inkomen_jaar
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel43
     references:
       - id: ref1
@@ -5125,6 +5259,49 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0018450#Artikel11
       [ref6]: https://wetten.overheid.nl/BWBR0035917#Artikel3.1.1
       [ref7]: https://wetten.overheid.nl/BWBR0018450#Artikel11
+    machine_readable:
+      definitions:
+        BIJDRAGE_PERCENTAGE_ZWANGERSCHAP_BEVALLING:
+          value: 1.0
+          description: "100% bijdrage voor zorg verband houdend met zwangerschap en bevalling (art. 122a lid 4a Zvw)"
+        BIJDRAGE_PERCENTAGE_OVERIG:
+          value: 0.8
+          description: "80% bijdrage voor overige vrij toegankelijke zorg aan vreemdelingen (art. 122a lid 4b Zvw)"
+      execution:
+        parameters:
+          - name: kosten_zorg
+            type: number
+            required: true
+            description: De kosten van de verleende vrij toegankelijke zorg in eurocent (na aftrek op grond van lid 3)
+          - name: betreft_zwangerschap_bevalling
+            type: boolean
+            required: true
+            description: Of de zorg verband houdt met zwangerschap en bevalling (art. 122a lid 4a)
+        output:
+          - name: bijdrage
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de bijdrage voor vrij toegankelijke medisch noodzakelijke zorg aan vreemdelingen (art. 122a lid 4)
+        actions:
+          - output: bijdrage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $betreft_zwangerschap_bevalling
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $BIJDRAGE_PERCENTAGE_ZWANGERSCHAP_BEVALLING
+                      - $kosten_zorg
+              default:
+                operation: MULTIPLY
+                values:
+                  - $BIJDRAGE_PERCENTAGE_OVERIG
+                  - $kosten_zorg
     url: https://wetten.overheid.nl/BWBR0018450/2025-07-05#Artikel122a
     references:
       - id: ref1
