@@ -121,6 +121,22 @@ articles:
       het gegeven geval aanleiding geeft voor de noodzaak tot ondersteuning, een voorziening op grond van een andere
       wettelijke bepaling bestaat.
     url: https://wetten.overheid.nl/BWBR0020031/2008-06-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: andere_wettelijke_voorziening_bestaat
+            type: boolean
+            required: true
+            description: Of er een voorziening op grond van een andere wettelijke bepaling bestaat voor de betreffende problematiek
+        output:
+          - name: heeft_aanspraak_op_ondersteuning
+            type: boolean
+            description: Of er aanspraak bestaat op maatschappelijke ondersteuning (geen andere wettelijke voorziening beschikbaar)
+        actions:
+          - output: heeft_aanspraak_op_ondersteuning
+            value:
+              operation: NOT
+              value: $andere_wettelijke_voorziening_bestaat
   - number: '3'
     text: |-
       1 De gemeenteraad stelt een of meer plannen vast, die richting geven aan de door de gemeenteraad en het college van
@@ -219,6 +235,31 @@ articles:
       de keuze tussen het ontvangen van een voorziening in natura of het ontvangen van een hiermee vergelijkbaar
       persoonsgebonden budget, tenzij hiertegen overwegende bezwaren bestaan.
     url: https://wetten.overheid.nl/BWBR0020031/2008-06-01#Artikel6
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_aanspraak_op_individuele_voorziening
+            type: boolean
+            required: true
+            description: Of de persoon aanspraak heeft op een individuele voorziening
+          - name: overwegende_bezwaren
+            type: boolean
+            required: true
+            description: Of hiertegen overwegende bezwaren bestaan (beoordeling door het college)
+        output:
+          - name: recht_op_keuze_pgb
+            type: boolean
+            description: Of de persoon recht heeft op keuze tussen voorziening in natura en persoonsgebonden budget
+        actions:
+          - output: recht_op_keuze_pgb
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_aanspraak_op_individuele_voorziening
+                  value: true
+                - operation: NOT
+                  value: $overwegende_bezwaren
   - number: '7'
     text: |-
       1 Op de persoonsgebonden budgetten en de financiële tegemoetkomingen is
@@ -264,6 +305,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0011823
         artikel: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verblijfsstatus_categorie
+            type: string
+            required: true
+            description: Verblijfsstatus categorie ingevolge artikel 8 Vreemdelingenwet 2000 (a, b, c, d, e of l voor rechtmatig verblijf)
+        output:
+          - name: vreemdeling_heeft_rechtmatig_verblijf
+            type: boolean
+            description: Of de vreemdeling rechtmatig verblijf houdt als bedoeld in artikel 8, a-e en l, Vreemdelingenwet 2000 en daarmee in aanmerking kan komen voor een individuele voorziening
+        actions:
+          - output: vreemdeling_heeft_rechtmatig_verblijf
+            value:
+              operation: IN
+              subject: $verblijfsstatus_categorie
+              values: ["a", "b", "c", "d", "e", "l"]
   - number: '9'
     text: |-
       1 Het college van burgemeester en wethouders publiceert jaarlijks voor 1 juli:
@@ -370,6 +428,38 @@ articles:
       3 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld met betrekking tot de eigen
       bijdrage.
     url: https://wetten.overheid.nl/BWBR0020031/2008-06-01#Artikel15
+    machine_readable:
+      execution:
+        parameters:
+          - name: leeftijd
+            type: number
+            required: true
+            description: Leeftijd van de persoon aan wie maatschappelijke ondersteuning is verleend
+          - name: ondersteuning_is_individuele_voorziening_of_pgb
+            type: boolean
+            required: true
+            description: Of de verleende ondersteuning bestaat uit een individuele voorziening of persoonsgebonden budget
+          - name: ondersteuning_is_financiele_tegemoetkoming
+            type: boolean
+            required: true
+            description: Of de verleende ondersteuning bestaat uit een financiële tegemoetkoming
+        output:
+          - name: eigen_bijdrage_kan_worden_opgelegd
+            type: boolean
+            description: Of de gemeenteraad bij verordening een eigen bijdrage kan opleggen voor de verleende ondersteuning
+        actions:
+          - output: eigen_bijdrage_kan_worden_opgelegd
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: EQUALS
+                  subject: $ondersteuning_is_individuele_voorziening_of_pgb
+                  value: true
+                - operation: NOT
+                  value: $ondersteuning_is_financiele_tegemoetkoming
   - number: '16'
     text: Een eigen bijdrage wordt vastgesteld en geïnd door een door Onze Minister aan te wijzen rechtspersoon.
     url: https://wetten.overheid.nl/BWBR0020031/2008-06-01#Artikel16
@@ -519,6 +609,53 @@ articles:
       niet vatbaar voor vervreemding, verpanding, belening of beslag, zolang die roerende zaken voor de rechthebbende op
       die zaken nodig zijn. Elk beding strijdig met dit artikel is nietig.
     url: https://wetten.overheid.nl/BWBR0020031/2008-06-01#Artikel25
+    machine_readable:
+      execution:
+        parameters:
+          - name: aangeschaft_via_financiele_tegemoetkoming
+            type: boolean
+            required: true
+            description: Of de roerende zaak is aangeschaft met een financiële tegemoetkoming op grond van deze wet
+          - name: aangeschaft_via_pgb
+            type: boolean
+            required: true
+            description: Of de roerende zaak is aangeschaft met een persoonsgebonden budget
+          - name: verleend_in_eigendom_of_bruikleen
+            type: boolean
+            required: true
+            description: Of de roerende zaak krachtens deze wet in eigendom of bruikleen is verleend
+          - name: nog_nodig_voor_rechthebbende
+            type: boolean
+            required: true
+            description: Of de roerende zaak nog nodig is voor de rechthebbende
+        output:
+          - name: beschermd_tegen_rechtshandelingen
+            type: boolean
+            description: Of de roerende zaak niet vatbaar is voor vervreemding, verpanding, belening of beslag
+        actions:
+          - output: valt_onder_bescherming
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $aangeschaft_via_financiele_tegemoetkoming
+                  value: true
+                - operation: EQUALS
+                  subject: $aangeschaft_via_pgb
+                  value: true
+                - operation: EQUALS
+                  subject: $verleend_in_eigendom_of_bruikleen
+                  value: true
+          - output: beschermd_tegen_rechtshandelingen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $valt_onder_bescherming
+                  value: true
+                - operation: EQUALS
+                  subject: $nog_nodig_voor_rechthebbende
+                  value: true
   - number: '26'
     text: |-
       1 De motivering van een beschikking op een aanvraag om een individuele voorziening vermeldt op welke wijze
@@ -541,6 +678,20 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 7:26
+    machine_readable:
+      hooks:
+        - hook_point: pre_actions
+          applies_to:
+            legal_character: BESCHIKKING
+            stage: BESLUIT
+      execution:
+        output:
+          - name: motivering_zelfredzaamheid_vereist
+            type: boolean
+            description: Of de motivering van de beschikking moet vermelden hoe het besluit bijdraagt aan zelfredzaamheid en maatschappelijke participatie
+        actions:
+          - output: motivering_zelfredzaamheid_vereist
+            value: true
   - number: '38'
     text: |-
       1 Na de inwerkingtreding van [artikel 20][ref1] van deze wet berust het
