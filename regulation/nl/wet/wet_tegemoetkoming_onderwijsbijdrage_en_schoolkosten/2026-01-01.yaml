@@ -452,6 +452,26 @@ articles:
       - id: ref2
         bwb_id: BWBR0012438
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: nationaliteit_categorie
+            type: string
+            required: true
+            description: "Categorie nationaliteit: NEDERLANDER, GELIJKGESTELD_VERDRAG, GELIJKGESTELD_AMvB, of OVERIG"
+        output:
+          - name: voldoet_aan_nationaliteitseis
+            type: boolean
+            description: Aanvrager voldoet aan de nationaliteitseis voor tegemoetkoming (art. 2.2 lid 1)
+        actions:
+          - output: voldoet_aan_nationaliteitseis
+            value:
+              operation: IN
+              subject: $nationaliteit_categorie
+              values:
+                - NEDERLANDER
+                - GELIJKGESTELD_VERDRAG
+                - GELIJKGESTELD_AMvB
   - number: '2.3'
     text: |-
       1 Op tegemoetkoming ingevolge [hoofdstuk 4][ref1] kan aanspraak bestaan met ingang van de eerste dag van het
@@ -480,6 +500,59 @@ articles:
         bwb_id: BWBR0012438
         hoofdstuk: '5'
         afdeling: '5.2'
+    machine_readable:
+      untranslatables:
+        - construct: "met ingang van de eerste dag van het kwartaal volgend op het kwartaal"
+          reason: "Quarterly boundary calculation requires date arithmetic (find quarter boundary) which cannot be expressed with current engine operations"
+          suggestion: "Add QUARTER_START or DATE_FLOOR_QUARTER operation to engine"
+          legal_text_excerpt: "met ingang van de eerste dag van het kwartaal volgend op het kwartaal waarin de leerling de leeftijd van 18 jaren heeft bereikt"
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de leerling
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de leeftijdsberekening
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd in volledige jaren op de peildatum
+          - name: voldoet_aan_leeftijdseis_hoofdstuk4
+            type: boolean
+            description: Leerling voldoet aan leeftijdseis hoofdstuk 4 (18 t/m 30 jaar)
+          - name: voldoet_aan_leeftijdseis_afdeling_5_1
+            type: boolean
+            description: Ho-student voldoet aan leeftijdseis afdeling 5.1 (ongeacht leeftijd)
+          - name: voldoet_aan_leeftijdseis_afdeling_5_2
+            type: boolean
+            description: Leerling voldoet aan leeftijdseis afdeling 5.2 (18 jaar of ouder)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis_hoofdstuk4
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 30
+          - output: voldoet_aan_leeftijdseis_afdeling_5_1
+            value: true
+          - output: voldoet_aan_leeftijdseis_afdeling_5_2
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
   - number: '2.9'
     text: |-
       Voor tegemoetkoming ingevolge [hoofdstuk 4][ref1] kan een scholier in aanmerking komen die is ingeschreven:
@@ -660,6 +733,23 @@ articles:
       Geen aanspraak op tegemoetkoming bestaat indien de leerling of ho-student is ingeschreven aan een opleiding waarvan
       de duur, daaronder begrepen ten hoogste 12 vakantieweken, korter is dan 1 jaar.
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel2.14
+    machine_readable:
+      execution:
+        parameters:
+          - name: opleidingsduur_weken
+            type: number
+            required: true
+            description: Duur van de opleiding inclusief ten hoogste 12 vakantieweken, in weken
+        output:
+          - name: heeft_geen_recht_wegens_korte_opleiding
+            type: boolean
+            description: Geen aanspraak op tegemoetkoming wegens opleidingsduur korter dan 1 jaar (52 weken)
+        actions:
+          - output: heeft_geen_recht_wegens_korte_opleiding
+            value:
+              operation: LESS_THAN
+              subject: $opleidingsduur_weken
+              value: 52
   - number: '2.15'
     text: |-
       De aanspraak op tegemoetkoming van een leerling die gedurende een aaneengesloten periode van 8 weken niet aan het
@@ -690,6 +780,32 @@ articles:
         bwb_id: BWBR0012438
         hoofdstuk: '5'
         afdeling: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: tegemoetkoming_ontvangen_maanden
+            type: number
+            required: true
+            description: Aantal maanden dat tegemoetkoming ingevolge afdeling 5.1 is ontvangen
+          - name: maanden_verstreken_since_eerste_toekenning
+            type: number
+            required: true
+            description: Aantal maanden verstreken vanaf de maand van eerste toekenning
+        output:
+          - name: heeft_geen_recht_wegens_termijn
+            type: boolean
+            description: Geen aanspraak wegens overschrijding 24-maanden of 48-maandentermijn
+        actions:
+          - output: heeft_geen_recht_wegens_termijn
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $tegemoetkoming_ontvangen_maanden
+                  value: 24
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $maanden_verstreken_since_eerste_toekenning
+                  value: 48
   - number: '2.17'
     text: |-
       Een leerling die onderwijs volgt als bedoeld in de [artikelen 2.9, onderdelen b en c][ref1], of [2.10][ref2]
@@ -711,6 +827,23 @@ articles:
         artikel: '2.10'
         hoofdstuk: '2'
         paragraaf: '2.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: studielast_klokuren_per_schooljaar
+            type: number
+            required: true
+            description: Studielast in klokuren per schooljaar besteed aan lessen of stages
+        output:
+          - name: voldoet_aan_studielasteis
+            type: boolean
+            description: Opleiding heeft studielast van ten minste 850 klokuren per schooljaar
+        actions:
+          - output: voldoet_aan_studielasteis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $studielast_klokuren_per_schooljaar
+              value: 850
   - number: '2.19'
     text: |-
       1 De aanspraak op tegemoetkoming ingevolge [hoofdstuk 4][ref1] vervalt met ingang van de maand die volgt op de dag
@@ -801,6 +934,20 @@ articles:
       - id: ref2
         bwb_id: BWBR0012438
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_aanspraak_reguliere_studiefinanciering
+            type: boolean
+            required: true
+            description: Aanvrager heeft aanspraak op reguliere studiefinanciering (WSF 2000 art. 3.1 lid 1 of 2)
+        output:
+          - name: heeft_geen_recht_wegens_studiefinanciering
+            type: boolean
+            description: Geen aanspraak op tegemoetkoming wegens aanspraak op reguliere studiefinanciering
+        actions:
+          - output: heeft_geen_recht_wegens_studiefinanciering
+            value: $heeft_aanspraak_reguliere_studiefinanciering
   - number: '2.22'
     text: |-
       De leerling heeft geen aanspraak op tegemoetkoming in de zin van [hoofdstuk 4][ref1], indien hij geen aanspraak
@@ -817,6 +964,22 @@ articles:
       - id: ref2
         bwb_id: BWBR0011453
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_aanspraak_prestatiebeurs
+            type: boolean
+            required: true
+            description: Leerling heeft aanspraak op prestatiebeurs ingevolge hoofdstuk 5 WSF 2000
+        output:
+          - name: heeft_geen_recht_wegens_geen_prestatiebeurs
+            type: boolean
+            description: Geen aanspraak wegens geen aanspraak meer op prestatiebeurs WSF 2000 hoofdstuk 5
+        actions:
+          - output: heeft_geen_recht_wegens_geen_prestatiebeurs
+            value:
+              operation: NOT
+              value: $heeft_aanspraak_prestatiebeurs
   - number: 2.22a
     text: |-
       1 Een scholier of een vavo-student als bedoeld in [hoofdstuk 4][ref1] die voor
@@ -870,6 +1033,20 @@ articles:
       3 In het besluit van Onze Minister dat een leerling of ho-student een uitreiziger is, wordt vermeld vanaf welk
       moment een leerling of ho-student als uitreiziger is aangemerkt.
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel2.22b
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: Leerling of ho-student is aangemerkt als uitreiziger door Onze Minister
+        output:
+          - name: heeft_geen_recht_wegens_uitreiziger
+            type: boolean
+            description: Geen aanspraak op tegemoetkoming wegens uitreiziger-status
+        actions:
+          - output: heeft_geen_recht_wegens_uitreiziger
+            value: $is_uitreiziger
   - number: '2.23'
     text: |-
       1 De tegemoetkoming in de onderwijsbijdrage en in de schoolkosten is afhankelijk van de hoogte van de op grond van
@@ -896,6 +1073,30 @@ articles:
       - id: ref3
         bwb_id: BWBR0012438
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: toe_te_kennen_bedrag
+            type: number
+            required: true
+            description: Toe te kennen bedrag aan tegemoetkoming per aanvrager in eurocent
+        output:
+          - name: tegemoetkoming_na_minimumtoets
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tegemoetkoming na toepassing minimumdrempel van €10 (art. 2.23 lid 3)
+        actions:
+          - output: tegemoetkoming_na_minimumtoets
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $toe_te_kennen_bedrag
+                    value: 1000
+                  then: 0
+              default: $toe_te_kennen_bedrag
   - number: '2.25'
     text: |-
       1 De tegemoetkoming wordt verminderd met een ingevolge het derde lid en [artikel 2.27][ref1] berekende korting
@@ -935,6 +1136,50 @@ articles:
         artikel: '2.23'
         hoofdstuk: '2'
         paragraaf: '2.7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: draagkracht
+            type: number
+            required: true
+            description: Draagkracht berekend op grond van artikel 7 lid 1 AWIR, in eurocent
+          - name: grensbedrag
+            type: number
+            required: true
+            description: Grensbedrag bedoeld in artikel 2.23 lid 2 (geïndexeerd), in eurocent
+        output:
+          - name: kortingsbedrag_per_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Korting op jaarbasis (30% van overschrijding grensbedrag)
+          - name: kortingsbedrag_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Kortingsbedrag per kalendermaand (jaarbedrag gedeeld door 12)
+        actions:
+          - output: overschrijding_grensbedrag
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $draagkracht
+                    - $grensbedrag
+          - output: kortingsbedrag_per_jaar
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.3
+                - $overschrijding_grensbedrag
+          - output: kortingsbedrag_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - $kortingsbedrag_per_jaar
+                - 12
   - number: '2.26'
     text: |-
       1 In geval van korting op de tegemoetkoming is de verhouding tussen de gekorte tegemoetkoming in de
@@ -966,6 +1211,34 @@ articles:
       - id: ref2
         bwb_id: BWBR0012438
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_telkinderen
+            type: number
+            required: true
+            description: Aantal telkinderen (aanvragers met dezelfde TOS-ouder die aanspraak hebben op tegemoetkoming hoofdstuk 4)
+        input:
+          - name: kortingsbedrag_per_jaar
+            type: amount
+            source:
+              output: kortingsbedrag_per_jaar
+            type_spec:
+              unit: eurocent
+            description: Kortingsbedrag bedoeld in artikel 2.25 lid 3
+        output:
+          - name: kortingsbedrag_per_telkind
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Kortingsbedrag verdeeld over het aantal telkinderen
+        actions:
+          - output: kortingsbedrag_per_telkind
+            value:
+              operation: DIVIDE
+              values:
+                - $kortingsbedrag_per_jaar
+                - $aantal_telkinderen
   - number: '2.28'
     text: |-
       1 Op aanvraag van de aanvrager of diens partner of TOS-ouder of diens partner wordt bij toepassing van
@@ -1064,6 +1337,37 @@ articles:
 
       b. uitwonende leerling:  € 197,21 .
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel4.3
+    machine_readable:
+      definitions:
+        BASISTOELAGE_THUISWONEND:
+          value: 8459
+          description: Basistoelage thuiswonende leerling per kalendermaand in eurocent (maatstaf 1 januari 2001)
+        BASISTOELAGE_UITWONEND:
+          value: 19721
+          description: Basistoelage uitwonende leerling per kalendermaand in eurocent (maatstaf 1 januari 2001)
+      execution:
+        parameters:
+          - name: is_uitwonend
+            type: boolean
+            required: true
+            description: Leerling is een uitwonende leerling
+        output:
+          - name: basistoelage_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Basistoelage per kalendermaand
+        actions:
+          - output: basistoelage_per_maand
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_uitwonend
+                    value: true
+                  then: $BASISTOELAGE_UITWONEND
+              default: $BASISTOELAGE_THUISWONEND
   - number: 4.3a
     text: |-
       In het schooljaar 2023–2024 wordt het bedrag van de basistoelage voor uitwonende leerlingen, genoemd in
@@ -1111,6 +1415,36 @@ articles:
       - id: ref1
         bwb_id: BWBR0004188
         artikel: '5'
+    machine_readable:
+      untranslatables:
+        - construct: "In het schooljaar waarin een leerling de leeftijd van 18 jaren bereikt, wordt de tegemoetkoming in de onderwijsbijdrage voor dat schooljaar niet toegekend"
+          reason: "Requires determining whether the 18th birthday falls within the current schooljaar (Aug 1 - Jul 31), which requires schooljaar-boundary date comparison not available as a single operation"
+          suggestion: "Needs caller to supply whether leerling bereikt 18 in dit schooljaar as boolean parameter, or add schooljaar-range operations to engine"
+          legal_text_excerpt: "In het schooljaar waarin een leerling de leeftijd van 18 jaren bereikt, wordt de tegemoetkoming in de onderwijsbijdrage voor dat schooljaar niet toegekend."
+          accepted: false
+      execution:
+        input:
+          - name: lesgeld_per_jaar
+            type: amount
+            source:
+              regulation: les_en_cursusgeldwet
+              output: lesgeld_jaarlijks
+            type_spec:
+              unit: eurocent
+            description: Bedrag bedoeld in artikel 5 lid 2 Les- en cursusgeldwet (BWBR0004188)
+        output:
+          - name: tegemoetkoming_onderwijsbijdrage_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tegemoetkoming in de onderwijsbijdrage per kalendermaand (eentwaalfde deel)
+        actions:
+          - output: tegemoetkoming_onderwijsbijdrage_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - $lesgeld_per_jaar
+                - 12
   - number: '4.5'
     text: |-
       1 De hoogte van de tegemoetkoming in de schoolkosten voor een schooljaar is afhankelijk van:
@@ -1255,6 +1589,74 @@ articles:
         bwb_id: BWBR0044212
       - id: ref2
         bwb_id: BWBR0044212
+    machine_readable:
+      definitions:
+        SCHOOLKOSTEN_ONDERBOUW_BEKOSTIGD:
+          value: 10411
+          description: Onderbouw bekostigd WVO onderwijs per maand 2026-2027 in eurocent
+        SCHOOLKOSTEN_BOVENBOUW_BEKOSTIGD:
+          value: 11398
+          description: Bovenbouw bekostigd WVO onderwijs per maand 2026-2027 in eurocent
+        SCHOOLKOSTEN_ONDERBOUW_NIET_BEKOSTIGD:
+          value: 14253
+          description: Onderbouw niet volledig en rechtstreeks bekostigd vo per maand 2026-2027 in eurocent
+        SCHOOLKOSTEN_BOVENBOUW_NIET_BEKOSTIGD:
+          value: 15247
+          description: Bovenbouw niet volledig en rechtstreeks bekostigd vo per maand 2026-2027 in eurocent
+        SCHOOLKOSTEN_SPECIAAL_ONDERWIJS:
+          value: 6915
+          description: Speciaal onderwijs en vso per maand 2026-2027 in eurocent
+        SCHOOLKOSTEN_VAVO:
+          value: 15247
+          description: Vavo per maand 2026-2027 in eurocent
+      execution:
+        parameters:
+          - name: soort_onderwijs
+            type: string
+            required: true
+            description: "Soort onderwijs: ONDERBOUW_BEKOSTIGD, BOVENBOUW_BEKOSTIGD, ONDERBOUW_NIET_BEKOSTIGD, BOVENBOUW_NIET_BEKOSTIGD, SPECIAAL_ONDERWIJS, VAVO"
+        output:
+          - name: tegemoetkoming_schoolkosten_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tegemoetkoming in schoolkosten per kalendermaand
+        actions:
+          - output: tegemoetkoming_schoolkosten_per_maand
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: ONDERBOUW_BEKOSTIGD
+                  then: $SCHOOLKOSTEN_ONDERBOUW_BEKOSTIGD
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: BOVENBOUW_BEKOSTIGD
+                  then: $SCHOOLKOSTEN_BOVENBOUW_BEKOSTIGD
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: ONDERBOUW_NIET_BEKOSTIGD
+                  then: $SCHOOLKOSTEN_ONDERBOUW_NIET_BEKOSTIGD
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: BOVENBOUW_NIET_BEKOSTIGD
+                  then: $SCHOOLKOSTEN_BOVENBOUW_NIET_BEKOSTIGD
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: SPECIAAL_ONDERWIJS
+                  then: $SCHOOLKOSTEN_SPECIAAL_ONDERWIJS
+                - when:
+                    operation: EQUALS
+                    subject: $soort_onderwijs
+                    value: VAVO
+                  then: $SCHOOLKOSTEN_VAVO
+              default: 0
   - number: '4.7'
     text: |-
       1 De tegemoetkoming in de onderwijsbijdrage over de maand augustus van enig kalenderjaar omvat in afwijking van
@@ -1448,9 +1850,31 @@ articles:
   - number: '5.3'
     text: De tegemoetkoming in de onderwijsbijdrage bedraagt € 567,23.
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel5.3
+    machine_readable:
+      execution:
+        output:
+          - name: tegemoetkoming_onderwijsbijdrage_ho
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tegemoetkoming in de onderwijsbijdrage voor ho-student afdeling 5.1
+        actions:
+          - output: tegemoetkoming_onderwijsbijdrage_ho
+            value: 56723
   - number: '5.4'
     text: De tegemoetkoming in de schoolkosten bedraagt naar de maatstaf van 1 januari 2008 € 647,16 .
     url: https://wetten.overheid.nl/BWBR0012438/2026-01-01#Artikel5.4
+    machine_readable:
+      execution:
+        output:
+          - name: tegemoetkoming_schoolkosten_ho
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tegemoetkoming in schoolkosten ho-student naar maatstaf 1 januari 2008 (voor indexatie)
+        actions:
+          - output: tegemoetkoming_schoolkosten_ho
+            value: 64716
   - number: '5.5'
     text: |-
       1 Onze Minister kent een tegemoetkoming toe aan de ho-student die daartoe een aanvraag heeft ingediend en die
@@ -2196,6 +2620,26 @@ articles:
         artikel: '4.2'
         hoofdstuk: '4'
         paragraaf: '4.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: totaal_tegemoetkoming_gift
+            type: number
+            required: true
+            description: Totaal bedrag tegemoetkomingen art. 4.2 als gift toegekend aan leerlingen aan de school in het schooljaar, in eurocent
+        output:
+          - name: vordering_op_school
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vordering van Onze Minister op de school (15% van als gift toegekende tegemoetkomingen)
+        actions:
+          - output: vordering_op_school
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.15
+                - $totaal_tegemoetkoming_gift
   - number: '9.8'
     text: |-
       Indien een school als bedoeld in de [artikelen 2.9, onderdelen a tot en met c][ref1], en [2.10][ref2], niet
