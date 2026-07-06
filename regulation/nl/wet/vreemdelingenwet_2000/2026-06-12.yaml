@@ -407,6 +407,31 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 4:5
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag tot erkenning als referent
+        output:
+          - name: beslistermijn_datum
+            type: date
+            description: Uiterste datum voor de beschikking op de aanvraag tot erkenning als referent (art. 2c lid 4, 3 maanden)
+          - name: maximale_beslistermijn_datum
+            type: date
+            description: Uiterste datum bij verlenging van de termijn (art. 2c lid 4, 3 + 6 = 9 maanden)
+        actions:
+          - output: beslistermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              months: 3
+          - output: maximale_beslistermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              months: 9
   - number: 2d
     text: |-
       1 Gegevens en bescheiden die van belang zijn voor de aanvraag omtrent de erkenning als referent, worden niet
@@ -484,6 +509,23 @@ articles:
         hoofdstuk: '1'
         paragraaf: '2'
         afdeling: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: schorsing_datum
+            type: date
+            required: true
+            description: Datum waarop de schorsing van de erkenning als referent is ingegaan
+        output:
+          - name: uiterste_einde_schorsing
+            type: date
+            description: Datum waarop de schorsing van rechtswege eindigt indien geen intrekkingsbeschikking is gegeven (art. 2f lid 2, 3 maanden)
+        actions:
+          - output: uiterste_einde_schorsing
+            value:
+              operation: DATE_ADD
+              date: $schorsing_datum
+              months: 3
   - number: 2g
     text: |-
       Onze Minister kan de erkenning als referent intrekken, indien:
@@ -712,6 +754,23 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: afgifte_datum_mvv
+            type: date
+            required: true
+            description: Datum van afgifte van de machtiging tot voorlopig verblijf
+        output:
+          - name: vervaldatum_mvv
+            type: date
+            description: Uiterste geldigheidsdatum van de machtiging tot voorlopig verblijf (art. 2r lid 2, 90 dagen na afgifte)
+        actions:
+          - output: vervaldatum_mvv
+            value:
+              operation: DATE_ADD
+              date: $afgifte_datum_mvv
+              days: 90
   - number: 2s
     text: |-
       1 De aanvraag omtrent de machtiging tot voorlopig verblijf wordt ingediend:
@@ -795,6 +854,63 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "zo spoedig mogelijk"
+          reason: "Best-effort obligation without a fixed earliest date cannot be expressed as a date operation"
+          suggestion: "Engine could support a SOONEST_POSSIBLE or two-value (earliest, latest) output"
+          legal_text_excerpt: "maakt Onze Minister de beslissing zo spoedig mogelijk, maar uiterlijk binnen negen maanden na indiening van de aanvraag bekend"
+          accepted: false
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag om verlening of wijziging van een machtiging tot voorlopig verblijf
+          - name: verblijfsdoel_categorie
+            type: string
+            required: true
+            description: "Categorie verblijfsdoel: 'blauwe_kaart_ict' (Europese blauwe kaart of ICT), 'onderzoek_studie_lerend_werken' (wetenschappelijk onderzoek, studie, lerend werken, uitwisseling), 'gezinshereniging_asiel' (gezinslid van vreemdeling met art. 28 vergunning, lid 4), of 'overig'"
+        output:
+          - name: beslistermijn_datum
+            type: date
+            description: Uiterste datum voor de beslissing op de aanvraag om een MvV (art. 2u)
+        actions:
+          - output: beslistermijn_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - blauwe_kaart_ict
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    days: 90
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - onderzoek_studie_lerend_werken
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    days: 60
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - gezinshereniging_asiel
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    months: 9
+              default:
+                operation: DATE_ADD
+                date: $aanvraag_datum
+                days: 90
   - number: 2v
     text: |-
       Onze Minister brengt de machtiging tot voorlopig verblijf aan in het document voor grensoverschrijding of op een
@@ -1347,6 +1463,109 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_verblijfsvergunning_regulier_bepaalde_tijd
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft verblijfsvergunning regulier voor bepaalde tijd als bedoeld in art. 14 (grond a)"
+          - name: heeft_verblijfsvergunning_regulier_onbepaalde_tijd
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft verblijfsvergunning regulier voor onbepaalde tijd als bedoeld in art. 20, of EU-vergunning langdurig ingezetene zonder art. 45c-aantekening (grond b)"
+          - name: heeft_verblijfsvergunning_asiel_bepaalde_tijd
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft verblijfsvergunning asiel voor bepaalde tijd als bedoeld in art. 28 (grond c)"
+          - name: heeft_verblijfsvergunning_asiel_onbepaalde_tijd
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft verblijfsvergunning asiel voor onbepaalde tijd als bedoeld in art. 33, of EU-vergunning langdurig ingezetene met art. 45c-aantekening (grond d)"
+          - name: is_gemeenschapsonderdaan_met_verblijfsrecht
+            type: boolean
+            required: false
+            description: "Vreemdeling is gemeenschapsonderdaan en verblijft op grond van VWEU of EER-overeenkomst (grond e)"
+          - name: aanvraag_art14_of_28_in_behandeling_uitzetting_verboden
+            type: boolean
+            required: false
+            description: "Vreemdeling is in afwachting van beslissing op aanvraag art. 14 of 28 en uitzetting dient achterwege te blijven (grond f)"
+          - name: aanvraag_art20_33_45a_of_verlenging_in_behandeling_uitzetting_verboden
+            type: boolean
+            required: false
+            description: "Vreemdeling is in afwachting van beslissing op aanvraag art. 20, 33, 45a of verlenging/wijziging en uitzetting dient achterwege te blijven (grond g)"
+          - name: bezwaar_beroep_in_behandeling_uitzetting_verboden
+            type: boolean
+            required: false
+            description: "Vreemdeling is in afwachting van beslissing op bezwaar- of beroepschrift en uitzetting dient achterwege te blijven (grond h)"
+          - name: verblijf_binnen_vrije_termijn_art12
+            type: boolean
+            required: false
+            description: "Vreemdeling verblijft gedurende de vrije termijn van art. 12 (grond i)"
+          - name: uitzetting_beletselen_art64
+            type: boolean
+            required: false
+            description: "Tegen uitzetting bestaan beletselen als bedoeld in art. 64 (grond j)"
+          - name: in_gelegenheid_gesteld_aangifte_mensenhandel
+            type: boolean
+            required: false
+            description: "Vreemdeling wordt door Onze Minister in de gelegenheid gesteld aangifte te doen van art. 273f Sr (grond k)"
+          - name: verblijfsrecht_associatiebesluit_1_80
+            type: boolean
+            required: false
+            description: "Vreemdeling ontleent verblijfsrecht aan Associatiebesluit 1/80 EEG/Turkije (grond l)"
+          - name: dublin_aanvraag_buiten_behandeling_in_afwachting_overdracht
+            type: boolean
+            required: false
+            description: "Aanvraag art. 28 niet in behandeling genomen op grond van art. 30 en vreemdeling is in afwachting van overdracht (grond m)"
+        output:
+          - name: heeft_rechtmatig_verblijf
+            type: boolean
+            description: Geeft aan of de vreemdeling rechtmatig verblijf heeft in Nederland (art. 8)
+        actions:
+          - output: heeft_rechtmatig_verblijf
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_regulier_bepaalde_tijd
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_regulier_onbepaalde_tijd
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_asiel_bepaalde_tijd
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_asiel_onbepaalde_tijd
+                  value: true
+                - operation: EQUALS
+                  subject: $is_gemeenschapsonderdaan_met_verblijfsrecht
+                  value: true
+                - operation: EQUALS
+                  subject: $aanvraag_art14_of_28_in_behandeling_uitzetting_verboden
+                  value: true
+                - operation: EQUALS
+                  subject: $aanvraag_art20_33_45a_of_verlenging_in_behandeling_uitzetting_verboden
+                  value: true
+                - operation: EQUALS
+                  subject: $bezwaar_beroep_in_behandeling_uitzetting_verboden
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijf_binnen_vrije_termijn_art12
+                  value: true
+                - operation: EQUALS
+                  subject: $uitzetting_beletselen_art64
+                  value: true
+                - operation: EQUALS
+                  subject: $in_gelegenheid_gesteld_aangifte_mensenhandel
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijfsrecht_associatiebesluit_1_80
+                  value: true
+                - operation: EQUALS
+                  subject: $dublin_aanvraag_buiten_behandeling_in_afwachting_overdracht
+                  value: true
   - number: '9'
     text: |-
       1 Onze Minister verschaft aan de vreemdeling, die rechtmatig verblijf heeft op grond van
@@ -1550,6 +1769,23 @@ articles:
         hoofdstuk: '4'
         paragraaf: '3'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanmelding_datum
+            type: date
+            required: true
+            description: Datum waarop de houder van een geldige MvV zich heeft aangemeld overeenkomstig artikel 54 lid 1 onder e
+        output:
+          - name: uiterste_datum_ambtshalve_verlening
+            type: date
+            description: Uiterste datum waarop Onze Minister ambtshalve een verblijfsvergunning voor bepaalde tijd verleent aan de MvV-houder (art. 14 lid 2, binnen 2 weken na aanmelding)
+        actions:
+          - output: uiterste_datum_ambtshalve_verlening
+            value:
+              operation: DATE_ADD
+              date: $aanmelding_datum
+              weeks: 2
   - number: 14a
     text: |-
       Onze Minister besluit niet over de verlening, verlenging of intrekking van een
@@ -2099,6 +2335,92 @@ articles:
         hoofdstuk: '3'
         paragraaf: '2'
         afdeling: '3'
+    machine_readable:
+      untranslatables:
+        - construct: "gedurende vijf achtereenvolgende jaren rechtmatig verblijf"
+          reason: "Date difference calculation (duration of consecutive lawful residence) is not available as an engine operation"
+          suggestion: "Add DATE_DIFF operation to engine"
+          legal_text_excerpt: "de vreemdeling die direct voorafgaande aan de aanvraag, gedurende vijf achtereenvolgende jaren rechtmatig verblijf heeft genoten"
+          accepted: false
+        - construct: "gedurende een tijdvak van tien aaneengesloten jaren rechtmatig verblijf"
+          reason: "Date difference calculation for 10-year period is not available as an engine operation"
+          legal_text_excerpt: "indien de vreemdeling gedurende een tijdvak van tien aaneengesloten jaren rechtmatig verblijf heeft gehad"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AFWIJZING
+        parameters:
+          - name: heeft_vijf_jaar_verblijf
+            type: boolean
+            required: true
+            description: "Vreemdeling heeft direct voorafgaand aan de aanvraag gedurende vijf achtereenvolgende jaren rechtmatig verblijf gehad als bedoeld in art. 8 onder a, c, e of l, dan wel op grond van een EU-verblijfsvergunning voor langdurig ingezetenen (berekening niet uitdrukbaar in de engine)"
+          - name: niet_voldoende_middelen_bestaan
+            type: boolean
+            required: false
+            description: "Vreemdeling beschikt niet zelfstandig en duurzaam over voldoende middelen van bestaan (art. 21 lid 1 onder a)"
+          - name: onjuiste_gegevens_verstrekt
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft onjuiste gegevens verstrekt dan wel gegevens achtergehouden die tot afwijzing zouden hebben geleid (art. 21 lid 1 onder b)"
+          - name: veroordeeld_misdrijf_3jaar
+            type: boolean
+            required: false
+            description: "Vreemdeling is bij onherroepelijk vonnis veroordeeld wegens misdrijf met gevangenisstraf 3 jaar of meer bedreigd, of maatregel art. 37a Sr opgelegd (art. 21 lid 1 onder c)"
+          - name: gevaar_nationale_veiligheid
+            type: boolean
+            required: false
+            description: "Vreemdeling vormt gevaar voor de nationale veiligheid (art. 21 lid 1 onder d)"
+          - name: hoofdverblijf_buiten_nederland
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft zijn hoofdverblijf buiten Nederland gevestigd (art. 21 lid 1 onder e)"
+          - name: verblijfsrecht_tijdelijk_van_aard
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft op de aanvraagdatum een verblijfsrecht van tijdelijke aard (art. 21 lid 1 onder f)"
+          - name: niet_voldaan_inburgeringsvereiste
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft niet voldaan aan het inburgeringsvereiste (art. 21 lid 1 onder g)"
+        output:
+          - name: aanvraag_kan_worden_afgewezen
+            type: boolean
+            description: Geeft aan of de aanvraag tot een verblijfsvergunning voor onbepaalde tijd op een van de gronden van art. 21 lid 1 kan worden afgewezen
+          - name: voldoet_aan_verblijfseis
+            type: boolean
+            description: Geeft aan of de vreemdeling voldoet aan de verblijfseis van vijf jaar (voorwaarde voor toets aan afwijzingsgronden)
+        actions:
+          - output: voldoet_aan_verblijfseis
+            value:
+              operation: EQUALS
+              subject: $heeft_vijf_jaar_verblijf
+              value: true
+          - output: aanvraag_kan_worden_afgewezen
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $niet_voldoende_middelen_bestaan
+                  value: true
+                - operation: EQUALS
+                  subject: $onjuiste_gegevens_verstrekt
+                  value: true
+                - operation: EQUALS
+                  subject: $veroordeeld_misdrijf_3jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $gevaar_nationale_veiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $hoofdverblijf_buiten_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijfsrecht_tijdelijk_van_aard
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_voldaan_inburgeringsvereiste
+                  value: true
   - number: '22'
     text: |-
       1 De verblijfsvergunning voor onbepaalde tijd, bedoeld in [artikel 20][ref1], wordt ingetrokken indien aan de
@@ -2312,6 +2634,57 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag
+          - name: verblijfsdoel_categorie
+            type: string
+            required: true
+            description: "Categorie verblijfsdoel: 'blauwe_kaart_ict' (Europese blauwe kaart of ICT, lid 5), 'onderzoek_studie_lerend_werken' (wetenschappelijk onderzoek, studie, lerend werken, uitwisseling Europees vrijwilligerswerk, lid 6), 'langdurig_ingezetene_eu' (aanvraag door langdurig ingezetene uit andere EU-lidstaat of gezinslid, lid 4), of 'overig' (lid 1)"
+        output:
+          - name: beslistermijn_datum
+            type: date
+            description: Uiterste datum voor het geven van de beschikking (art. 25)
+        actions:
+          - output: beslistermijn_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - blauwe_kaart_ict
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    days: 90
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - onderzoek_studie_lerend_werken
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    days: 60
+                - when:
+                    operation: IN
+                    subject: $verblijfsdoel_categorie
+                    values:
+                      - langdurig_ingezetene_eu
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    months: 4
+              default:
+                operation: DATE_ADD
+                date: $aanvraag_datum
+                days: 90
   - number: '26'
     text: |-
       1 De verblijfsvergunning, die van rechtswege rechtmatig verblijf inhoudt, wordt verleend met ingang van de dag
@@ -2552,6 +2925,23 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verlening_datum_asiel_vergunning
+            type: date
+            required: true
+            description: Datum waarop de verblijfsvergunning voor bepaalde tijd als bedoeld in artikel 28 is verleend aan de hoofdpersoon (vluchteling/verdragsvluchteling)
+        output:
+          - name: uiterste_nareizetermijn
+            type: date
+            description: Uiterste datum waarop gezinsleden als bedoeld in artikel 29 lid 3 moeten navolgen om in aanmerking te komen voor een asielverblijfsvergunning op grond van gezinshereniging (art. 29 lid 3, 3 maanden na verlening)
+        actions:
+          - output: uiterste_nareizetermijn
+            value:
+              operation: DATE_ADD
+              date: $verlening_datum_asiel_vergunning
+              months: 3
   - number: 29a
     text: |-
       1 Een verblijfsvergunning voor bepaalde tijd als bedoeld in [artikel 28][ref1] kan worden verleend aan de
@@ -3130,6 +3520,53 @@ articles:
         artikel: '8'
         hoofdstuk: '3'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "gedurende vijf achtereenvolgende jaren rechtmatig verblijf als bedoeld in artikel 8, onderdeel c"
+          reason: "Date difference calculation (duration of consecutive lawful residence) is not available as an engine operation"
+          suggestion: "Add DATE_DIFF operation to engine"
+          legal_text_excerpt: "de vreemdeling die direct voorafgaande aan de aanvraag gedurende vijf achtereenvolgende jaren rechtmatig verblijf heeft genoten als bedoeld in artikel 8, onderdeel c"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AFWIJZING
+        parameters:
+          - name: heeft_vijf_jaar_asiel_verblijf
+            type: boolean
+            required: true
+            description: "Vreemdeling heeft direct voorafgaand aan de aanvraag gedurende vijf achtereenvolgende jaren rechtmatig verblijf gehad als bedoeld in art. 8 onder c (berekening niet uitdrukbaar in de engine)"
+          - name: intrekkingsgrond_aanwezig_bij_afloop
+            type: boolean
+            required: false
+            description: "Op het moment van het aflopen van de asielvergunning voor bepaalde tijd doet zich een grond als bedoeld in art. 32 voor (art. 34 lid 1 onder a)"
+          - name: niet_voldaan_inburgeringsvereiste
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft niet voldaan aan het inburgeringsvereiste (art. 34 lid 1 onder b)"
+        output:
+          - name: aanvraag_kan_worden_afgewezen
+            type: boolean
+            description: Geeft aan of de aanvraag tot een asielverblijfsvergunning voor onbepaalde tijd op een van de gronden van art. 34 lid 1 kan worden afgewezen
+          - name: voldoet_aan_verblijfseis
+            type: boolean
+            description: Geeft aan of de vreemdeling voldoet aan de verblijfseis van vijf jaar (voorwaarde voor toets aan afwijzingsgronden)
+        actions:
+          - output: voldoet_aan_verblijfseis
+            value:
+              operation: EQUALS
+              subject: $heeft_vijf_jaar_asiel_verblijf
+              value: true
+          - output: aanvraag_kan_worden_afgewezen
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $intrekkingsgrond_aanwezig_bij_afloop
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_voldaan_inburgeringsvereiste
+                  value: true
   - number: '35'
     text: |-
       1 De verblijfsvergunning voor onbepaalde tijd als bedoeld in [artikel 33][ref1] kan worden ingetrokken indien:
@@ -4918,6 +5355,67 @@ articles:
         bwb_id: BWBR0011823
         artikel: '58'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bewaring_datum
+            type: date
+            required: true
+            description: Datum waarop de bewaring is aangevangen
+          - name: is_asielzoekersbewaring
+            type: boolean
+            required: true
+            description: "Bewaring op grond van art. 59 lid 1 onder b (vreemdeling met rechtmatig verblijf op grond van art. 8 f, g, h)"
+          - name: voornemen_art39_toegepast
+            type: boolean
+            required: false
+            description: "Voorafgaand aan de beslissing op de aanvraag is toepassing gegeven aan art. 39 (voornemen zienswijze; art. 59 lid 4)"
+          - name: kan_worden_verlengd_wegens_niet_meewerken
+            type: boolean
+            required: false
+            description: "Uitzetting vergt meer tijd omdat vreemdeling niet meewerkt of documentatie ontbreekt (art. 59 lid 6)"
+        output:
+          - name: maximale_bewaringsduur_datum
+            type: date
+            description: Uiterste datum waarop de bewaring moet eindigen (art. 59 leden 4-6)
+        actions:
+          - output: maximale_bewaringsduur_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_asielzoekersbewaring
+                        value: true
+                      - operation: EQUALS
+                        subject: $voornemen_art39_toegepast
+                        value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $bewaring_datum
+                    weeks: 6
+                - when:
+                    operation: EQUALS
+                    subject: $is_asielzoekersbewaring
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $bewaring_datum
+                    weeks: 4
+                - when:
+                    operation: EQUALS
+                    subject: $kan_worden_verlengd_wegens_niet_meewerken
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $bewaring_datum
+                    months: 18
+              default:
+                operation: DATE_ADD
+                date: $bewaring_datum
+                months: 6
   - number: 59a
     text: |-
       1 Onze Minister kan vreemdelingen op wie de Dublinverordening van toepassing is, met het oog op de overdracht aan
@@ -5098,6 +5596,23 @@ articles:
       regels gesteld over de duur van de verlenging en worden de gevallen aangewezen waarin de termijn kan worden
       verlengd.
     url: https://wetten.overheid.nl/BWBR0011823/2026-06-12#Artikel62
+    machine_readable:
+      execution:
+        parameters:
+          - name: terugkeerbesluit_datum
+            type: date
+            required: true
+            description: Datum waarop het terugkeerbesluit is uitgevaardigd
+        output:
+          - name: uiterste_vertrektermijn
+            type: date
+            description: Uiterste datum waarop de niet-gemeenschapsonderdaan Nederland uit eigen beweging moet hebben verlaten (art. 62 lid 1)
+        actions:
+          - output: uiterste_vertrektermijn
+            value:
+              operation: DATE_ADD
+              date: $terugkeerbesluit_datum
+              weeks: 4
   - number: 62a
     text: |-
       1 Onze Minister stelt de vreemdeling, niet zijnde gemeenschapsonderdaan, die niet of niet langer rechtmatig
@@ -5156,6 +5671,23 @@ articles:
         artikel: '8'
         hoofdstuk: '3'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overdrachtsbesluit_datum
+            type: date
+            required: true
+            description: Datum waarop het overdrachtsbesluit is uitgevaardigd
+        output:
+          - name: uiterste_vertrektermijn_dublin
+            type: date
+            description: Uiterste datum waarop de vreemdeling Nederland moet verlaten na een overdrachtsbesluit (art. 62c lid 1)
+        actions:
+          - output: uiterste_vertrektermijn_dublin
+            value:
+              operation: DATE_ADD
+              date: $overdrachtsbesluit_datum
+              weeks: 4
   - number: '63'
     text: |-
       1 De vreemdeling die geen rechtmatig verblijf heeft en die niet binnen de bij deze wet gestelde termijn Nederland
@@ -5339,6 +5871,43 @@ articles:
       - id: ref8
         bwb_id: BWBR0001854
         artikel: 37a
+    machine_readable:
+      untranslatables:
+        - construct: "tenzij de vreemdeling naar het oordeel van Onze Minister een ernstige bedreiging vormt voor de openbare orde, de openbare veiligheid of de nationale veiligheid"
+          reason: "When the ernstige bedreiging exception applies there is no upper bound on the duration, which cannot be expressed as a date output"
+          suggestion: "Engine could support optional/null output values"
+          legal_text_excerpt: "De duur wordt berekend met ingang van de datum waarop de vreemdeling Nederland daadwerkelijk heeft verlaten"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_ernstige_bedreiging
+            type: boolean
+            required: true
+            description: "Vreemdeling vormt naar het oordeel van Onze Minister een ernstige bedreiging voor de openbare orde, openbare veiligheid of nationale veiligheid (art. 66a lid 4)"
+          - name: vertrekdatum
+            type: date
+            required: true
+            description: Datum waarop de vreemdeling Nederland daadwerkelijk heeft verlaten (art. 66a lid 4)
+        output:
+          - name: inreisverbod_max_vijf_jaar
+            type: boolean
+            description: Geeft aan of het inreisverbod aan het maximum van vijf jaar is gebonden (true = max 5 jaar; false = geen wettelijk maximum bij ernstige bedreiging)
+          - name: inreisverbod_uiterste_datum
+            type: date
+            description: Uiterste datum van het inreisverbod bij toepassing van het maximum van 5 jaar, gerekend vanaf vertrekdatum (art. 66a lid 4; alleen geldig als inreisverbod_max_vijf_jaar = true)
+        actions:
+          - output: inreisverbod_max_vijf_jaar
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $is_ernstige_bedreiging
+                value: true
+          - output: inreisverbod_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $vertrekdatum
+              years: 5
   - number: 66b
     text: |-
       1 Onze Minister kan ambtshalve wegens gewijzigde omstandigheden dan wel op aanvraag van de vreemdeling besluiten
@@ -5394,6 +5963,56 @@ articles:
         artikel: '8'
         hoofdstuk: '3'
         afdeling: '1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: geen_rechtmatig_verblijf_en_herhaald_strafbaar_feit
+            type: boolean
+            required: false
+            description: "Vreemdeling heeft geen rechtmatig verblijf en heeft bij herhaling een bij deze wet strafbaar gesteld feit begaan (art. 67 lid 1 onder a)"
+          - name: veroordeeld_misdrijf_3jaar_of_tbs
+            type: boolean
+            required: false
+            description: "Vreemdeling is bij onherroepelijk vonnis veroordeeld wegens misdrijf met gevangenisstraf 3 jaar of meer bedreigd, of maatregel art. 37a Sr opgelegd (art. 67 lid 1 onder b)"
+          - name: gevaar_openbare_orde_zonder_sterk_verblijfsrecht
+            type: boolean
+            required: false
+            description: "Vreemdeling vormt gevaar voor openbare orde of nationale veiligheid en heeft geen rechtmatig verblijf als bedoeld in art. 8 onder a t/m e of l (art. 67 lid 1 onder c)"
+          - name: ongewenstverklaring_op_grond_verdrag
+            type: boolean
+            required: false
+            description: "Ongewenstverklaring ingevolge een verdrag (art. 67 lid 1 onder d)"
+          - name: ongewenstverklaring_internationaal_belang
+            type: boolean
+            required: false
+            description: "Ongewenstverklaring in het belang van de internationale betrekkingen van Nederland (art. 67 lid 1 onder e)"
+        output:
+          - name: kan_ongewenst_worden_verklaard
+            type: boolean
+            description: Geeft aan of Onze Minister de vreemdeling ongewenst kan verklaren op een van de gronden van art. 67 lid 1
+        actions:
+          - output: kan_ongewenst_worden_verklaard
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $geen_rechtmatig_verblijf_en_herhaald_strafbaar_feit
+                  value: true
+                - operation: EQUALS
+                  subject: $veroordeeld_misdrijf_3jaar_of_tbs
+                  value: true
+                - operation: EQUALS
+                  subject: $gevaar_openbare_orde_zonder_sterk_verblijfsrecht
+                  value: true
+                - operation: EQUALS
+                  subject: $ongewenstverklaring_op_grond_verdrag
+                  value: true
+                - operation: EQUALS
+                  subject: $ongewenstverklaring_internationaal_belang
+                  value: true
   - number: 67a
     text: |-
       Onze Minister kan een besluit als bedoeld in artikel 24, eerste lid, onder a, van de SIS-verordening grenscontroles
@@ -5419,6 +6038,38 @@ articles:
         artikel: '67'
         hoofdstuk: '6'
         afdeling: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "tien jaren onafgebroken buiten Nederland verblijf"
+          reason: "Date difference (duration of stay abroad) is not available as an engine operation"
+          suggestion: "Add DATE_DIFF operation to engine"
+          legal_text_excerpt: "De ongewenstverklaring wordt opgeheven indien de vreemdeling tien jaren onafgebroken buiten Nederland verblijf heeft gehad"
+          accepted: false
+      execution:
+        parameters:
+          - name: heeft_tien_jaar_onafgebroken_buiten_nederland
+            type: boolean
+            required: true
+            description: "Geeft aan of de vreemdeling tien jaren onafgebroken buiten Nederland verblijf heeft gehad (berekening niet uitdrukbaar in de engine)"
+          - name: geen_gronden_artikel_67_tijdens_periode
+            type: boolean
+            required: true
+            description: "Geeft aan dat zich in de periode van tien jaar geen van de gronden bedoeld in artikel 67 lid 1 hebben voorgedaan"
+        output:
+          - name: ongewenstverklaring_moet_worden_opgeheven
+            type: boolean
+            description: Geeft aan of de ongewenstverklaring van rechtswege moet worden opgeheven (art. 68 lid 2)
+        actions:
+          - output: ongewenstverklaring_moet_worden_opgeheven
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_tien_jaar_onafgebroken_buiten_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_gronden_artikel_67_tijdens_periode
+                  value: true
   - number: '69'
     text: |-
       1 In afwijking van [artikel 6:7 van de Algemene wet bestuursrecht][ref1] bedraagt de termijn voor het indienen van
@@ -5521,6 +6172,34 @@ articles:
         artikel: 62b
         hoofdstuk: '6'
         afdeling: '1'
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: bezwaartermijn_weken
+      execution:
+        parameters:
+          - name: besluit_categorie
+            type: string
+            required: true
+            description: "Categorie besluit: 'algemeen' (lid 1: 4 weken), 'asiel_versneld' (lid 2: asielaanvraag versneld afgedaan binnen AA-termijn, niet-ontvankelijk, buiten behandeling, of kennelijk ongegrond), of 'overdrachtsbesluit' (lid 4: overdracht op grond van art. 62b)"
+        output:
+          - name: bezwaartermijn_weken
+            type: number
+            description: Termijn in weken voor het indienen van een bezwaar- of beroepschrift (art. 69, in afwijking van AWB 6:7)
+        actions:
+          - output: bezwaartermijn_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $besluit_categorie
+                    values:
+                      - asiel_versneld
+                      - overdrachtsbesluit
+                  then: 1
+              default: 4
   - number: '70'
     text: |-
       1 In afwijking van de [artikelen 2:1, tweede en derde lid][ref1], en [8:24 van de Algemene wet bestuursrecht][ref2]

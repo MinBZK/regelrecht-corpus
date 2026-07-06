@@ -1,0 +1,83 @@
+law: vreemdelingenwet_2000
+version: '2026-06-12'
+bwb_id: BWBR0011823
+enriched_at: '2026-07-06'
+
+machine_readable_articles:
+  - number: 2c
+    description: Beslistermijn erkenning als referent (3 maanden, max 9 maanden)
+  - number: 2f
+    description: Uiterste datum einde schorsing erkenning referent (3 maanden)
+  - number: 2r
+    description: Geldigheidsduur machtiging tot voorlopig verblijf (90 dagen)
+  - number: 2u
+    description: Beslistermijn MvV-aanvraag (90 dagen standaard, 60 dagen onderzoek/studie, 9 maanden gezinshereniging asiel)
+  - number: '8'
+    description: Rechtmatig verblijf in Nederland (OR van 13 gronden a t/m m)
+  - number: '14'
+    description: Ambtshalve verlening VVR binnen 2 weken na aanmelding MvV-houder
+  - number: '21'
+    description: Afwijzingsgronden verblijfsvergunning onbepaalde tijd regulier (7 gronden, met untranslatables voor 5- en 10-jaar verblijfseis)
+  - number: '25'
+    description: Beslistermijn VVR-aanvraag (90 dagen standaard, 60 dagen onderzoek/studie, 4 maanden langdurig ingezetene EU)
+  - number: '29'
+    description: Nareizetermijn gezinsleden asielhouder (3 maanden)
+  - number: '34'
+    description: Afwijzingsgronden verblijfsvergunning onbepaalde tijd asiel (2 gronden, met untranslatable voor 5-jaar asielverblijfseis)
+  - number: '59'
+    description: Maximale bewaringsduur vreemdelingenbewaring (4-18 maanden afhankelijk van categorie)
+  - number: '62'
+    description: Uitreisplicht na terugkeerbesluit (4 weken)
+  - number: 62c
+    description: Uitreisplicht na overdrachtsbesluit Dublin (4 weken)
+  - number: 66a
+    description: Maximum duur inreisverbod (5 jaar, met untranslatable voor ernstige bedreiging)
+  - number: '67'
+    description: Gronden ongewenstverklaring (OR van 5 gronden)
+  - number: '68'
+    description: Opheffing ongewenstverklaring (AND-conditie, met untranslatable voor 10-jaar buitenverblijf)
+  - number: '69'
+    description: Bezwaartermijn in afwijking van AWB 6:7 (4 weken standaard, 1 week asiel versneld/Dublin; overrides AWB 6:7)
+
+untranslatables:
+  - article: '21'
+    construct: gedurende vijf achtereenvolgende jaren rechtmatig verblijf
+    reason: DATE_DIFF not available as engine operation
+  - article: '21'
+    construct: gedurende een tijdvak van tien aaneengesloten jaren rechtmatig verblijf
+    reason: DATE_DIFF not available as engine operation
+  - article: 2u
+    construct: zo spoedig mogelijk
+    reason: Best-effort obligation without fixed earliest date cannot be expressed
+  - article: '34'
+    construct: gedurende vijf achtereenvolgende jaren rechtmatig verblijf als bedoeld in artikel 8, onderdeel c
+    reason: DATE_DIFF not available as engine operation
+  - article: 66a
+    construct: tenzij de vreemdeling naar het oordeel van Onze Minister een ernstige bedreiging vormt
+    reason: No upper bound on duration when ernstige bedreiging exception applies
+  - article: '68'
+    construct: tien jaren onafgebroken buiten Nederland verblijf
+    reason: DATE_DIFF not available as engine operation
+
+related_legislation:
+  - bwb_id: BWBR0005537
+    id: algemene_wet_bestuursrecht
+    relation: overridden_by_article_69
+    note: Art. 69 overrides AWB art. 6:7 bezwaartermijn
+  - bwb_id: BWBR0001854
+    id: wetboek_van_strafrecht
+    relation: referenced
+    note: Art. 37a (TBS), art. 273f (mensenhandel) referenced in arts. 21, 34, 59b, 67, 68
+  - bwb_id: BWBR0014194
+    id: wet_justitiele_en_strafvorderlijke_gegevens
+    relation: referenced
+    note: VOG vereiste voor erkenning referent (art. 2c)
+  - bwb_id: BWBR0021777
+    id: handelsregisterwet_2007
+    relation: referenced
+    note: Inschrijving handelsregister als voorwaarde erkenning referent (art. 2e)
+
+mvt_research:
+  documents_found: 0
+  reason: Web tools not available during enrichment session
+  feature_file: null
