@@ -280,12 +280,128 @@ articles:
       zijn Nederlandse echtgenoot, geregistreerde partner of levensgezel en kinderen, voor zover dezen met hem een
       gemeenschappelijke huishouding voeren.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelB_1
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de persoon
+          - name: stemming_datum
+            type: date
+            required: true
+            description: Dag van de stemming
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: Nederlander op de dag van de kandidaatstelling
+          - name: woont_in_aruba_curacao_sint_maarten
+            type: boolean
+            required: true
+            description: Werkelijke woonplaats op de dag van de kandidaatstelling in Aruba, Curaçao of Sint Maarten
+          - name: heeft_tien_jaar_ingezetene_geweest
+            type: boolean
+            required: true
+            description: Gedurende ten minste tien jaren ingezetene van Nederland geweest (lid 2 onderdeel a)
+          - name: werkt_in_openbare_dienst_abc
+            type: boolean
+            required: true
+            description: In Nederlandse openbare dienst werkzaam in Aruba, Curaçao of Sint Maarten, dan wel familielid meeleidend huishoudend (lid 2 onderdeel b)
+        output:
+          - name: kiesgerechtigd_tweede_kamer
+            type: boolean
+            description: Kiesgerechtigd voor de verkiezing van de leden van de Tweede Kamer
+        actions:
+          - output: leeftijd_op_stemdag
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $stemming_datum
+          - output: voldoet_aan_leeftijdseis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_op_stemdag
+              value: 18
+          - output: uitzondering_geldt_niet
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_tien_jaar_ingezetene_geweest
+                  value: true
+                - operation: EQUALS
+                  subject: $werkt_in_openbare_dienst_abc
+                  value: true
+          - output: niet_uitgezonderd_van_kiesrecht
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $woont_in_aruba_curacao_sint_maarten
+                - operation: EQUALS
+                  subject: $uitzondering_geldt_niet
+                  value: true
+          - output: kiesgerechtigd_tweede_kamer
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_nederlander
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_leeftijdseis
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_uitgezonderd_van_kiesrecht
+                  value: true
   - number: B 2
     text: |-
       De leden van provinciale staten worden gekozen door degenen die op de dag van de kandidaatstelling ingezetenen
       zijn van de provincie, mits zij Nederlander zijn en op de dag van de stemming de leeftijd van achttien jaar hebben
       bereikt.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelB_2
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de persoon
+          - name: stemming_datum
+            type: date
+            required: true
+            description: Dag van de stemming
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: Nederlander op de dag van de kandidaatstelling
+          - name: is_ingezetene_provincie
+            type: boolean
+            required: true
+            description: Ingezetene van de provincie op de dag van de kandidaatstelling
+        output:
+          - name: kiesgerechtigd_provinciale_staten
+            type: boolean
+            description: Kiesgerechtigd voor de verkiezing van de leden van provinciale staten
+        actions:
+          - output: leeftijd_op_stemdag
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $stemming_datum
+          - output: kiesgerechtigd_provinciale_staten
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingezetene_provincie
+                  value: true
+                - operation: EQUALS
+                  subject: $is_nederlander
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_op_stemdag
+                  value: 18
   - number: B 2a
     text: |-
       1 De leden van het algemeen bestuur worden gekozen door degenen die op de dag van de kandidaatstelling ingezetenen
@@ -302,6 +418,43 @@ articles:
         artikel: B_3
         hoofdstuk: B
         afdeling: II
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de persoon
+          - name: stemming_datum
+            type: date
+            required: true
+            description: Dag van de stemming
+          - name: is_ingezetene_waterschap
+            type: boolean
+            required: true
+            description: Ingezetene van het waterschap op de dag van de kandidaatstelling
+        output:
+          - name: kiesgerechtigd_algemeen_bestuur
+            type: boolean
+            description: >
+              Kiesgerechtigd voor de verkiezing van de leden van het algemeen bestuur (lid 1).
+              Artikel B 3 lid 2 en lid 3 zijn van overeenkomstige toepassing (lid 2 van dit artikel).
+        actions:
+          - output: leeftijd_op_stemdag
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $stemming_datum
+          - output: kiesgerechtigd_algemeen_bestuur
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingezetene_waterschap
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_op_stemdag
+                  value: 18
   - number: B 3
     text: |-
       1 De leden van de gemeenteraden worden gekozen door degenen die op de dag van de kandidaatstelling ingezetenen zijn
@@ -338,6 +491,78 @@ articles:
       - id: ref3
         bwb_id: BWBR0028571
         artikel: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de persoon
+          - name: stemming_datum
+            type: date
+            required: true
+            description: Dag van de stemming
+          - name: is_ingezetene_gemeente
+            type: boolean
+            required: true
+            description: Ingezetene van de gemeente op de dag van de kandidaatstelling
+          - name: is_eu_onderdaan
+            type: boolean
+            required: true
+            description: Onderdaan van een lidstaat van de Europese Unie (of Nederlander)
+          - name: is_rechtmatig_verblijf_vreemdelingenwet
+            type: boolean
+            description: Rechtmatig verblijf op grond van artikel 8 onderdeel a/b/c/d/e/l Vreemdelingenwet 2000 of verdrag zetelovereenkomst (lid 2 onderdeel a; alleen relevant voor niet-EU-onderdanen)
+          - name: heeft_vijf_jaar_aaneengesloten_ingezetene
+            type: boolean
+            description: Onmiddellijk voorafgaand aan kandidaatstelling gedurende onafgebroken ≥5 jaar ingezetene van Nederland met verblijfsrecht (lid 2 onderdeel b; alleen relevant voor niet-EU-onderdanen)
+          - name: is_diplomatiek_consulair_niet_nederlander
+            type: boolean
+            required: true
+            description: Niet-Nederlander uitgezonden als lid van diplomatieke/consulaire vertegenwoordiging, of niet-Nederlands familielid meeleidend huishoudend (lid 3)
+        output:
+          - name: kiesgerechtigd_gemeenteraad
+            type: boolean
+            description: Kiesgerechtigd voor de verkiezing van de leden van de gemeenteraad
+        actions:
+          - output: leeftijd_op_stemdag
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $stemming_datum
+          - output: voldoet_aan_nationaliteitseis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_eu_onderdaan
+                    value: true
+                  then: true
+              default:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $is_rechtmatig_verblijf_vreemdelingenwet
+                    value: true
+                  - operation: EQUALS
+                    subject: $heeft_vijf_jaar_aaneengesloten_ingezetene
+                    value: true
+          - output: kiesgerechtigd_gemeenteraad
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingezetene_gemeente
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_op_stemdag
+                  value: 18
+                - operation: EQUALS
+                  subject: $voldoet_aan_nationaliteitseis
+                  value: true
+                - operation: NOT
+                  value: $is_diplomatiek_consulair_niet_nederlander
   - number: B 4
     text: |-
       1 Onder ingezetenen van Nederland, van de provincie, van het waterschap en van de gemeente verstaat deze wet hen
@@ -367,6 +592,20 @@ articles:
       3 De burgemeester respectievelijk de burgemeester van 's-Gravenhage stelt de persoon na ontvangst van de mededeling
       in kennis van zijn uitsluiting en de duur daarvan.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelB_5
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontzet_bij_onherroepelijke_rechterlijke_uitspraak
+            type: boolean
+            required: true
+            description: Bij onherroepelijke rechterlijke uitspraak van het kiesrecht ontzet (beoordeeld naar toestand op dag van kandidaatstelling)
+        output:
+          - name: uitgesloten_van_kiesrecht
+            type: boolean
+            description: Van het kiesrecht uitgesloten op grond van artikel B 5 Kieswet
+        actions:
+          - output: uitgesloten_van_kiesrecht
+            value: $ontzet_bij_onherroepelijke_rechterlijke_uitspraak
   - number: B 6
     text: |-
       1 Kiesgerechtigde personen aan wie op de dag van de stemming rechtmatig hun vrijheid is ontnomen, oefenen hun
@@ -518,6 +757,26 @@ articles:
         artikel: D_6
         hoofdstuk: D
         afdeling: II
+    machine_readable:
+      untranslatables:
+        - construct: "deadline als stemdag minus X dagen"
+          reason: "DATE_ADD does not support negative durations; date subtraction is not available as an engine operation"
+          suggestion: "Add DATE_SUBTRACT or allow negative values in DATE_ADD"
+          legal_text_excerpt: "Een aanvraag dient uiterlijk op de tweeënveertigste dag voor de dag van de stemming te zijn ontvangen"
+          accepted: false
+      execution:
+        output:
+          - name: aanvraag_termijn_dagen_voor_stemming
+            type: number
+            description: Uiterste ontvangst van aanvraag kiesregistratie in aantal dagen voor de stemdag (lid 2)
+          - name: wijziging_termijn_dagen_voor_stemming
+            type: number
+            description: Uiterste ontvangst van wijzigingsaanvraag in aantal dagen voor de stemdag (lid 3)
+        actions:
+          - output: aanvraag_termijn_dagen_voor_stemming
+            value: 42
+          - output: wijziging_termijn_dagen_voor_stemming
+            value: 63
   - number: D 4
     text: |-
       Bij algemene maatregel van bestuur wordt vastgesteld uit welke gegevens en bescheiden een registratie als bedoeld
@@ -617,6 +876,21 @@ articles:
       - id: ref4
         bwb_id: BWBR0005537
         afdeling: 8.2.4
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '8:41'
+          output: betaaltermijn_weken
+      execution:
+        output:
+          - name: betaaltermijn_weken
+            type: number
+            description: >
+              In afwijking van artikel 8:41 lid 5 AWB bedraagt de betaaltermijn twee weken
+              voor beschikkingen ingevolge hoofdstuk D Kieswet
+        actions:
+          - output: betaaltermijn_weken
+            value: 2
   - number: D 9
     text: |-
       Bij algemene maatregel van bestuur kunnen nadere regels worden gesteld met betrekking tot de registratie van de
@@ -2015,6 +2289,29 @@ articles:
         artikel: D_8
         hoofdstuk: D
         afdeling: II
+    machine_readable:
+      untranslatables:
+        - construct: "override AWB 6:7 termijn van weken naar dagen"
+          reason: "AWB 6:7 produces bezwaartermijn_weken (integer weeks); this article overrides that to 6 days — the unit type mismatch (weeks → days) cannot be expressed via the override mechanism"
+          suggestion: "Add support for bezwaartermijn_dagen output in AWB, or allow unit-typed override values"
+          legal_text_excerpt: "In afwijking van de artikelen 6:7 en 6:8, eerste lid, van de Algemene wet bestuursrecht wordt een beroepschrift ingediend uiterlijk op de zesde dag"
+          accepted: false
+      execution:
+        parameters:
+          - name: publicatiedatum_beschikking
+            type: date
+            required: true
+            description: Dagtekening van het publicatieblad waarin de beschikking inzake partijregistratie is medegedeeld of bekendgemaakt
+        output:
+          - name: uiterste_beroepsdatum
+            type: date
+            description: Uiterste dag voor indiening beroepschrift (6 dagen na publicatiedatum, in afwijking van AWB art 6:7)
+        actions:
+          - output: uiterste_beroepsdatum
+            value:
+              operation: DATE_ADD
+              date: $publicatiedatum_beschikking
+              days: 6
   - number: G 6
     text: |-
       1 Bij algemene maatregel van bestuur worden nadere regels gesteld betreffende het betalen van waarborgsommen ten
@@ -2155,6 +2452,59 @@ articles:
       - id: ref1
         bwb_id: BWBR0006297
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kieskring_nummer
+            type: string
+            required: true
+            description: Nummer van de kieskring (bijv. "20" voor Bonaire)
+          - name: type_verkiezing
+            type: string
+            required: true
+            description: "Type verkiezing: TWEEDE_KAMER, PROVINCIALE_STATEN, ALGEMEEN_BESTUUR of GEMEENTERAAD"
+          - name: aantal_te_verdelen_zetels
+            type: number
+            required: true
+            description: Aantal te verdelen zetels in de kieskring
+        output:
+          - name: minimum_ondersteuningsverklaringen
+            type: number
+            description: Minimaal vereist aantal ondersteuningsverklaringen per kieskring
+        actions:
+          - output: minimum_ondersteuningsverklaringen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $kieskring_nummer
+                    value: "20"
+                  then: 10
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type_verkiezing
+                        value: "GEMEENTERAAD"
+                      - operation: LESS_THAN
+                        subject: $aantal_te_verdelen_zetels
+                        value: 19
+                  then: 10
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type_verkiezing
+                        value: "GEMEENTERAAD"
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_te_verdelen_zetels
+                        value: 19
+                      - operation: LESS_THAN
+                        subject: $aantal_te_verdelen_zetels
+                        value: 39
+                  then: 20
+              default: 30
   - number: H 5
     text: |-
       Op de lijst worden een of meer personen vermeld die bij verhindering van de inleveraar bevoegd zijn tot het herstel
@@ -2181,6 +2531,28 @@ articles:
       mag een aantal namen worden geplaatst dat ten hoogste tachtig bedraagt. Het bepaalde in de vorige volzin is van
       overeenkomstige toepassing ten aanzien van samenvoeging van aanduidingen van twee of meer groeperingen.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelH_6
+    machine_readable:
+      execution:
+        parameters:
+          - name: zetels_vorige_verkiezing
+            type: number
+            required: true
+            description: Aantal zetels toegekend aan de lijst bij de laatstgehouden verkiezing van het desbetreffende orgaan (0 indien geen vorige deelname)
+        output:
+          - name: maximum_kandidaten
+            type: number
+            description: Maximum aantal kandidaten dat op de lijst mag worden geplaatst
+        actions:
+          - output: maximum_kandidaten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $zetels_vorige_verkiezing
+                    value: 15
+                  then: 80
+              default: 50
   - number: H 7
     text: |-
       1 De naam van een kandidaat mag niet voorkomen op een lijst, indien de kandidaat tijdens de zittingsperiode van
@@ -6786,9 +7158,44 @@ articles:
 
       2 Het aldus verkregen quotiënt wordt kiesdeler genoemd.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelP_5
+    machine_readable:
+      untranslatables:
+        - construct: "de som van de stemcijfers van alle lijsten"
+          reason: "Aggregation over a variable-length collection of lists is not supported by the engine"
+          suggestion: "Add SUM/AGGREGATE operation over collections to the engine"
+          legal_text_excerpt: "Het centraal stembureau deelt de som van de stemcijfers van alle lijsten door het aantal te verdelen zetels"
+          accepted: false
+      execution:
+        parameters:
+          - name: som_stemcijfers
+            type: number
+            required: true
+            description: De som van de stemcijfers van alle lijsten (extern aangeleverd, aggregatie is untranslatable)
+          - name: aantal_te_verdelen_zetels
+            type: number
+            required: true
+            description: Het aantal te verdelen zetels bij de verkiezing
+        output:
+          - name: kiesdeler
+            type: number
+            description: Het quotiënt van de som van alle stemcijfers gedeeld door het aantal te verdelen zetels
+        actions:
+          - output: kiesdeler
+            value:
+              operation: DIVIDE
+              values:
+                - $som_stemcijfers
+                - $aantal_te_verdelen_zetels
   - number: P 6
     text: Zoveel maal als de kiesdeler is begrepen in het stemcijfer van een lijst wordt aan die lijst een zetel toegewezen.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelP_6
+    machine_readable:
+      untranslatables:
+        - construct: "zoveel maal als de kiesdeler is begrepen in het stemcijfer (vloerdeling)"
+          reason: "Floor division (integer division) is not available as an engine operation; DIVIDE returns a float"
+          suggestion: "Add FLOOR, CEIL, or DIVIDE_INT operation to the engine"
+          legal_text_excerpt: "Zoveel maal als de kiesdeler is begrepen in het stemcijfer van een lijst wordt aan die lijst een zetel toegewezen"
+          accepted: false
   - number: P 7
     text: |-
       1 De overblijvende zetels, die restzetels worden genoemd, worden, indien het aantal te verdelen zetels negentien
@@ -6904,6 +7311,64 @@ articles:
       bedraagt, wordt bij de toepassing van het eerste lid niet 25% van de kiesdeler, maar de helft van de kiesdeler in
       aanmerking genomen.
     url: https://wetten.overheid.nl/BWBR0004627/2026-01-01#ArtikelP_15
+    machine_readable:
+      execution:
+        parameters:
+          - name: stemmen_op_kandidaat
+            type: number
+            required: true
+            description: Aantal stemmen uitgebracht op de kandidaat
+          - name: kiesdeler
+            type: number
+            required: true
+            description: De kiesdeler berekend op grond van artikel P 5
+          - name: type_verkiezing
+            type: string
+            required: true
+            description: "Type verkiezing: TWEEDE_KAMER, PROVINCIALE_STATEN, ALGEMEEN_BESTUUR of GEMEENTERAAD"
+          - name: aantal_te_verdelen_zetels
+            type: number
+            required: true
+            description: Aantal te verdelen zetels (bij gemeenteraad relevant voor drempelkeuze)
+        output:
+          - name: voorkeursstemmen_drempel
+            type: number
+            description: Minimaal aantal stemmen voor verkiezing via voorkeursstemmen (25% of 50% van kiesdeler)
+          - name: heeft_voorkeursstemmendrempel_gehaald
+            type: boolean
+            description: Of de kandidaat via voorkeursstemmen verkozen is
+        actions:
+          - output: is_kleine_gemeenteraad
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $type_verkiezing
+                  value: "GEMEENTERAAD"
+                - operation: LESS_THAN
+                  subject: $aantal_te_verdelen_zetels
+                  value: 19
+          - output: drempel_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_kleine_gemeenteraad
+                    value: true
+                  then: 0.5
+              default: 0.25
+          - output: voorkeursstemmen_drempel
+            value:
+              operation: MULTIPLY
+              values:
+                - $drempel_percentage
+                - $kiesdeler
+          - output: heeft_voorkeursstemmendrempel_gehaald
+            value:
+              operation: GREATER_THAN
+              subject: $stemmen_op_kandidaat
+              value: $voorkeursstemmen_drempel
   - number: P 16
     text: |-
       1 Betreft het een lijstengroep, dan geldt, indien een aldus gekozen kandidaat op meer dan één lijst is vermeld,
