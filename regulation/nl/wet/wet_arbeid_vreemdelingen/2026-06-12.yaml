@@ -999,6 +999,48 @@ articles:
       - id: ref6
         bwb_id: BWBR0011823
         artikel: '14'
+    machine_readable:
+      execution:
+        parameters:
+          - name: werkgever_niet_erkend_referent_door_intrekking_schorsing_of_afwijzing
+            type: boolean
+            required: true
+            description: Werkgever is geen erkend referent omdat erkenning ingetrokken of geschorst, of aanvraag tot erkenning afgewezen (onderdeel a)
+          - name: werkgever_als_referent_boete_of_straf_binnen_vijf_jaar
+            type: boolean
+            required: true
+            description: Werkgever als referent bestuurlijke boete opgelegd op grond van art 55a Vw2000 of gestraft op grond van art 108 Vw2000 binnen vijf jaar voor de aanvraag (onderdeel b)
+          - name: is_gecombineerde_vergunning
+            type: boolean
+            required: true
+            description: Het betreft een gecombineerde vergunning (onderdeel c)
+          - name: vw2000_intrekkingsgrond_van_toepassing
+            type: boolean
+            required: true
+            description: Een intrekkingsgrond als bedoeld in artikel 19 Vreemdelingenwet 2000 voor verblijfsvergunning regulier bepaalde tijd is van toepassing (onderdeel c)
+        output:
+          - name: vergunning_kan_worden_ingetrokken_artikel12a
+            type: boolean
+            description: De tewerkstellingsvergunning of gecombineerde vergunning kan worden ingetrokken op grond van artikel 12a
+        actions:
+          - output: vergunning_kan_worden_ingetrokken_artikel12a
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $werkgever_niet_erkend_referent_door_intrekking_schorsing_of_afwijzing
+                  value: true
+                - operation: EQUALS
+                  subject: $werkgever_als_referent_boete_of_straf_binnen_vijf_jaar
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_gecombineerde_vergunning
+                      value: true
+                    - operation: EQUALS
+                      subject: $vw2000_intrekkingsgrond_van_toepassing
+                      value: true
   - number: 12b
     text: |-
       Onze Minister kan voorts een tewerkstellingsvergunning intrekken of Onze Minister van Veiligheid en Justitie kan
@@ -1061,6 +1103,32 @@ articles:
       - id: ref8
         bwb_id: BWBR0010346
         artikel: '32'
+    machine_readable:
+      execution:
+        parameters:
+          - name: werkgever_boete_opgelegd_vijf_jaar_voor_intrekking
+            type: boolean
+            required: true
+            description: Werkgever is binnen vijf jaar voor het intrekkingsmoment een bestuurlijke boete opgelegd op grond van Arbeidstijdenwet art 10:1, Arbeidsomstandighedenwet art 33, WML art 18b, Wav art 18 of WAADI art 16 (onderdeel a)
+          - name: werkgever_gestraft_vijf_jaar_voor_intrekking
+            type: boolean
+            required: true
+            description: Werkgever is binnen vijf jaar voor het intrekkingsmoment gestraft op grond van Sr art 273f, Arbeidstijdenwet art 11:3 of Arbeidsomstandighedenwet art 32 (onderdeel b)
+        output:
+          - name: vergunning_kan_voorts_worden_ingetrokken_artikel12b
+            type: boolean
+            description: De tewerkstellingsvergunning of gecombineerde vergunning kan voorts worden ingetrokken op grond van artikel 12b
+        actions:
+          - output: vergunning_kan_voorts_worden_ingetrokken_artikel12b
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $werkgever_boete_opgelegd_vijf_jaar_voor_intrekking
+                  value: true
+                - operation: EQUALS
+                  subject: $werkgever_gestraft_vijf_jaar_voor_intrekking
+                  value: true
   - number: '13'
     text: |-
       Onverminderd de [artikelen 12, eerste lid][ref1], [12a][ref2] en [12b][ref3], en onverminderd
@@ -1093,6 +1161,32 @@ articles:
       - id: ref4
         bwb_id: BWBR0011823
         artikel: '19'
+    machine_readable:
+      execution:
+        parameters:
+          - name: beperking_vergunning_niet_nageleefd
+            type: boolean
+            required: true
+            description: Een beperking waaronder de tewerkstellingsvergunning is verleend is niet in acht genomen (onderdeel a)
+          - name: voorschrift_vergunning_niet_nageleefd
+            type: boolean
+            required: true
+            description: Een aan de tewerkstellingsvergunning verbonden voorschrift is niet nageleefd (onderdeel b)
+        output:
+          - name: intrekking_toegestaan_artikel13
+            type: boolean
+            description: Intrekking van de tewerkstellingsvergunning is op grond van artikel 13 toegestaan (naast art 12, 12a, 12b en art 19 Vw2000)
+        actions:
+          - output: intrekking_toegestaan_artikel13
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $beperking_vergunning_niet_nageleefd
+                  value: true
+                - operation: EQUALS
+                  subject: $voorschrift_vergunning_niet_nageleefd
+                  value: true
   - number: '14'
     text: |-
       1 Met het toezicht op de naleving van het bepaalde bij of krachtens deze wet zijn belast de bij besluit van Onze
@@ -1461,6 +1555,23 @@ articles:
       Indien een bestuurlijke boete ten onrechte is opgelegd, wordt deze binnen zes weken nadat is vastgesteld dat de
       bestuurlijke boete ten onrechte is opgelegd, aan de rechthebbende terugbetaald.
     url: https://wetten.overheid.nl/BWBR0007149/2026-06-12#Artikel19f
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_vaststelling_ten_onrechte
+            type: date
+            required: true
+            description: De datum waarop is vastgesteld dat de bestuurlijke boete ten onrechte is opgelegd
+        output:
+          - name: uiterste_terugbetalingsdatum
+            type: date
+            description: De uiterste datum waarop de ten onrechte opgelegde bestuurlijke boete terugbetaald moet zijn (zes weken na datum vaststelling)
+        actions:
+          - output: uiterste_terugbetalingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_vaststelling_ten_onrechte
+              weeks: 6
   - number: 19g
     text: |-
       1 De toezichthouder of de door Onze Minister aangewezen ambtenaren, bedoeld in [artikel 19a, eerste lid][ref1],
