@@ -37,7 +37,7 @@ articles:
         - *declaratie:* rekening van de zorgaanbieder aan het zorgkantoor/de Wlz-uitvoerder voor de verrichte
       zorgprestatie(s).
         - *declaratieperiode:* een periode van vier weken of een kalendermaand waarover de zorgaanbieders de geleverde zorg
-      declareren, overeenkomstig de daartoe gemaakte afspraken met het zorgkantoor/de Wlz-uitvoerder.
+      declareren, overeenkomstig de daartoe gemaakt afspraken met het zorgkantoor/de Wlz-uitvoerder.
         - *deeltijdverblijf (dtv):* verblijf in de instelling zonder behandeling gedurende gemiddeld 3½, 4, of 4½ etmalen
       per week via een vast patroon binnen een tijdspanne van 14 etmalen.
         - *instelling voor medisch specialistische zorg:* een instelling als bedoeld in
@@ -69,7 +69,7 @@ articles:
         - *verkeerde bed medisch specialistische zorg:* Het noodgedwongen verblijf in een instelling die medisch
       specialistische zorg levert na een opname in deze instelling, dat tot stand komt doordat er nog geen plek bij een
       Wlz-zorgaanbieder beschikbaar is, of de client de Wlz-zorg nog niet thuis kan ontvangen.
-        - *verkeerd bed ggz, Wlz indicatie:* Het noodgedwongen verblijf in een instelling die geneeskundige geestelijke
+        - *verkeerde bed ggz, Wlz indicatie:* Het noodgedwongen verblijf in een instelling die geneeskundige geestelijke
       gezondheidszorg levert na een opname in deze instelling, dat tot stand komt doordat er nog geen plek bij een Wlz-
       zorgaanbieder beschikbaar is, of de client de Wlz-zorg nog niet thuis kan ontvangen.
         - *verkeerde bed-dag:* een te registreren kalenderdag, welke minimaal één overnachting in een verkeerd bed omvat.
@@ -120,6 +120,12 @@ articles:
       - id: ref8
         bwb_id: BWBR0036014
         artikel: '2'
+    machine_readable:
+      untranslatables:
+        - construct: rekenkundige methode
+          reason: Rounding is not available as an engine operation (RFC-012)
+          legal_text_excerpt: "bedragen waarbij het derde cijfer achter de komma vijf of hoger is, worden afgerond naar het naastliggende hogere bedrag in hele eurocenten. Bedragen waarbij dit een vier of lager is, worden afgerond naar het naastliggende lagere bedrag in hele eurocenten"
+          accepted: false
   - number: '2'
     text: |-
       Deze regeling beoogt inzichtelijke, rechtmatige declaraties te bevorderen en dubbele declaraties te voorkomen.
