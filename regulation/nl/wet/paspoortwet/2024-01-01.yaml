@@ -509,6 +509,37 @@ articles:
       2 In afwijking van het eerste lid heeft een Nederlander die de leeftijd van achttien jaar nog niet heeft bereikt,
       recht op een nationaal paspoort geldig voor vijf jaren en voor alle landen.
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de aanvrager
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de geldigheidsduur wordt berekend
+        output:
+          - name: geldigheidsduur_paspoort_jaren
+            type: number
+            description: Geldigheidsduur van het nationaal paspoort in jaren (10 jaar voor personen van 18 jaar of ouder, 5 jaar voor minderjarigen)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: geldigheidsduur_paspoort_jaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $leeftijd
+                    value: 18
+                  then: 5
+              default: 10
   - number: '10'
     text: |-
       Aan Nederlanders die zich ten behoeve van het Koninkrijk of een der landen van het Koninkrijk naar het buitenland
@@ -530,6 +561,33 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel33
       [ref2]: https://wetten.overheid.nl/BWBR0011823#Artikel28
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel11
+    machine_readable:
+      untranslatables:
+        - construct: "ten minste een jaar en ten hoogste drie jaren"
+          reason: "Exact validity within range [1,3] years is discretionary; the law sets only a minimum and maximum, not a computable exact value"
+          legal_text_excerpt: "recht op een reisdocument voor vluchtelingen, geldig voor ten minste een jaar en ten hoogste drie jaren"
+          accepted: false
+      execution:
+        parameters:
+          - name: toegelaten_ingevolge_artikel
+            type: string
+            required: true
+            description: Artikel van de Vreemdelingenwet 2000 op grond waarvan de vreemdeling tot Nederland is toegelaten ('33' of '28')
+        output:
+          - name: geldigheidsduur_vluchtelingendocument_jaren
+            type: number
+            description: Minimale geldigheidsduur van het reisdocument voor vluchtelingen in jaren (5 voor art 33; 1 voor art 28, exact binnen [1,3] is discretionair)
+        actions:
+          - output: geldigheidsduur_vluchtelingendocument_jaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $toegelaten_ingevolge_artikel
+                    value: "33"
+                  then: 5
+              default: 1
     references:
       - id: ref1
         bwb_id: BWBR0011823
@@ -646,6 +704,37 @@ articles:
       2 In afwijking van het eerste lid heeft een Nederlander als bedoeld in het eerste lid, die de leeftijd van achttien
       jaar nog niet heeft bereikt, recht op een Nederlandse identiteitskaart geldig voor vijf jaren.
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel16a
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de aanvrager
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de geldigheidsduur wordt berekend
+        output:
+          - name: geldigheidsduur_identiteitskaart_jaren
+            type: number
+            description: Geldigheidsduur van de Nederlandse identiteitskaart in jaren (10 jaar voor 18+, 5 jaar voor minderjarigen)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: geldigheidsduur_identiteitskaart_jaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $leeftijd
+                    value: 18
+                  then: 5
+              default: 10
   - number: '17'
     text: |-
       1 Aan een Nederlander als bedoeld in [artikel 16a, eerste lid][ref1], aan wie een verbod is opgelegd als bedoeld
@@ -661,6 +750,39 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0039210#Artikel3
       [ref3]: https://wetten.overheid.nl/BWBR0039210#Artikel3
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel17
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: heeft_uitreisverbod
+            type: boolean
+            required: true
+            description: Of aan de aanvrager een verbod is opgelegd als bedoeld in artikel 3 Tijdelijke wet bestuurlijke maatregelen terrorismebestrijding
+          - name: verblijft_in_verboden_land
+            type: boolean
+            required: true
+            description: Of de aanvrager verblijft in een land tot welke het uitreisverbod zich uitstrekt (lid 2 uitzondering)
+        output:
+          - name: recht_op_vervangende_identiteitskaart
+            type: boolean
+            description: Of de aanvrager recht heeft op een vervangende Nederlandse identiteitskaart
+          - name: geldigheidsduur_vervangende_nik_jaren
+            type: number
+            description: Geldigheidsduur van de vervangende Nederlandse identiteitskaart in jaren (altijd 5)
+        actions:
+          - output: recht_op_vervangende_identiteitskaart
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_uitreisverbod
+                  value: true
+                - operation: NOT
+                  value: $verblijft_in_verboden_land
+          - output: geldigheidsduur_vervangende_nik_jaren
+            value: 5
     references:
       - id: ref1
         bwb_id: BWBR0005212
@@ -1111,6 +1233,61 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0034925#Artikel1.1
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel34
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de aanvrager
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsbepaling
+          - name: is_minderjarige
+            type: boolean
+            required: true
+            description: Of de aanvrager minderjarig is (jonger dan 18 jaar)
+          - name: soort_document
+            type: string
+            required: true
+            description: Soort aangevraagd document ('identiteitskaart', 'vervangende_identiteitskaart', of overig)
+        output:
+          - name: toestemming_vereist
+            type: boolean
+            description: Of een verklaring van toestemming vereist is bij de aanvraag (lid 1); false indien vrijgesteld op grond van lid 6
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: is_nik_aanvraag
+            value:
+              operation: IN
+              subject: $soort_document
+              values:
+                - "identiteitskaart"
+                - "vervangende_identiteitskaart"
+          - output: vrijgesteld_lid6
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_nik_aanvraag
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 12
+          - output: toestemming_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_minderjarige
+                  value: true
+                - operation: NOT
+                  value: $vrijgesteld_lid6
     references:
       - id: ref1
         bwb_id: BWBR0034925
@@ -1416,6 +1593,23 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0005212#Artikel25
       [ref4]: https://wetten.overheid.nl/BWBR0005212#Artikel40
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel41
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van indiening van de aanvraag bij de bevoegde autoriteit
+        output:
+          - name: beslistermijn_datum
+            type: date
+            description: Uiterste datum waarop het reisdocument verstrekt moet worden (4 weken na aanvraag, lid 1)
+        actions:
+          - output: beslistermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: 4
     references:
       - id: ref1
         bwb_id: BWBR0005212
@@ -1466,6 +1660,37 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0005212#Artikel25
       [ref4]: https://wetten.overheid.nl/BWBR0005212#Artikel47
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel42
+    machine_readable:
+      execution:
+        parameters:
+          - name: verstrekking_datum
+            type: date
+            required: true
+            description: Datum van verstrekking van het reisdocument
+          - name: uitreiking_in_koninkrijk
+            type: boolean
+            required: true
+            description: Of de uitreiking plaatsvindt in het Koninkrijk (true = binnen 2 weken, false = buiten Koninkrijk binnen 4 weken)
+        output:
+          - name: uiterste_uitreiking_datum
+            type: date
+            description: Uiterste datum voor uitreiking van het reisdocument (lid 2)
+        actions:
+          - output: uitreiking_termijn_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $uitreiking_in_koninkrijk
+                    value: true
+                  then: 2
+              default: 4
+          - output: uiterste_uitreiking_datum
+            value:
+              operation: DATE_ADD
+              date: $verstrekking_datum
+              weeks: $uitreiking_termijn_weken
     references:
       - id: ref1
         bwb_id: BWBR0005212
@@ -1776,6 +2001,77 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0005212#Artikel3
       [ref10]: https://wetten.overheid.nl/BWBR0005212#Artikel25
     url: https://wetten.overheid.nl/BWBR0005212/2024-01-01#Artikel47
+    machine_readable:
+      execution:
+        parameters:
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum waarop wordt vastgesteld of het reisdocument vervallen is
+          - name: reisdocument_einddatum
+            type: date
+            required: true
+            description: Einddatum van de geldigheidsduur van het reisdocument (lid 1d)
+          - name: nederlanderschap_verloren
+            type: boolean
+            required: true
+            description: (lid 1a) Of de houder het Nederlanderschap heeft verloren
+          - name: status_verblijfstitel_vervallen
+            type: boolean
+            required: true
+            description: (lid 1b) Of de houder niet meer beschikt over de status of verblijfstitel op grond waarvan het document is verstrekt
+          - name: reden_diplomatiek_vervallen
+            type: boolean
+            required: true
+            description: (lid 1c) Of de redenen voor het diplomatiek paspoort, dienstpaspoort of nooddocument zijn vervallen
+          - name: persoonsgegevens_gewijzigd
+            type: boolean
+            required: true
+            description: (lid 1e) Of geslachtsnaam, voornamen, geboortedatum, geslacht of BSN van de houder zijn gewijzigd
+          - name: houder_overleden
+            type: boolean
+            required: true
+            description: (lid 1f) Of de houder is overleden
+          - name: ingenomen_verklaard
+            type: boolean
+            required: true
+            description: (lid 1g) Of ingevolge artikel 31 schriftelijk is verklaard dat het reisdocument door een bevoegde autoriteit is ingenomen
+          - name: onjuiste_gegevens_bij_aanvraag
+            type: boolean
+            required: true
+            description: (lid 1h) Of bij de aanvraag gebruik is gemaakt van onjuiste gegevens die hebben geleid tot verstrekking
+          - name: terrorisme_uitreisverbod_opgelegd
+            type: boolean
+            required: true
+            description: (lid 1i) Of aan de houder een verbod is opgelegd als bedoeld in artikel 3 Tijdelijke wet bestuurlijke maatregelen terrorismebestrijding
+          - name: vermissing_of_fraude_gemeld
+            type: boolean
+            required: true
+            description: (lid 1j) Of de houder op grond van artikel 5a heeft verklaard dat het reisdocument is vermist of mogelijk voorwerp is van fraude
+        output:
+          - name: reisdocument_vervallen
+            type: boolean
+            description: Of het reisdocument van rechtswege is vervallen (artikel 47 lid 1, gronden a t/m j)
+        actions:
+          - output: geldigheidsduur_verstreken
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $reisdocument_einddatum
+          - output: reisdocument_vervallen
+            value:
+              operation: OR
+              conditions:
+                - $nederlanderschap_verloren
+                - $status_verblijfstitel_vervallen
+                - $reden_diplomatiek_vervallen
+                - $geldigheidsduur_verstreken
+                - $persoonsgegevens_gewijzigd
+                - $houder_overleden
+                - $ingenomen_verklaard
+                - $onjuiste_gegevens_bij_aanvraag
+                - $terrorisme_uitreisverbod_opgelegd
+                - $vermissing_of_fraude_gemeld
     references:
       - id: ref1
         bwb_id: BWBR0005212
