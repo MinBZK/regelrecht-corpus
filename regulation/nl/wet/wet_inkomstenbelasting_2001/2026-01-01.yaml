@@ -574,6 +574,69 @@ articles:
       - id: ref5
         bwb_id: BWBR0017745
         artikel: '10'
+    machine_readable:
+      untranslatables:
+        - construct: tijdsevenredige vermindering heffingskorting (lid 2)
+          reason: Pro-rating the heffingskorting by the duration of binnenlandse belastingplicht requires date difference calculation, delegated to ministerial regulation
+          suggestion: Add DATE_DIFF operation and implement ministerial regulation delegation via open_terms
+          legal_text_excerpt: tijdsevenredig verminderd volgens bij ministeriële regeling te stellen regels
+          accepted: false
+        - construct: niet-verrekenbare heffingskorting volksverzekeringen (lid 3)
+          reason: Computing the unverrekend deel of the heffingskorting voor de volksverzekeringen requires cross-system input from the Wet financiering sociale verzekeringen
+          accepted: false
+      execution:
+        parameters:
+          - name: belasting_box1
+            type: number
+            required: true
+            description: Berekende belasting op belastbaar inkomen uit werk en woning in eurocent (artikel 2.10)
+          - name: belasting_box2
+            type: number
+            required: true
+            description: Berekende belasting op belastbaar inkomen uit aanmerkelijk belang in eurocent (artikel 2.12); 0 indien niet van toepassing
+          - name: belasting_box3
+            type: number
+            required: true
+            description: Berekende belasting op belastbaar inkomen uit sparen en beleggen in eurocent (artikel 2.13); 0 indien niet van toepassing
+          - name: heffingskorting_inkomstenbelasting
+            type: number
+            required: true
+            description: Heffingskorting voor de inkomstenbelasting in eurocent (artikel 8.3)
+          - name: is_binnenlandse_of_kwalificerende_buitenlandse_belastingplichtige
+            type: boolean
+            required: true
+            description: Of de belastingplichtige (een deel van) het kalenderjaar binnenlandse belastingplichtige of kwalificerende buitenlandse belastingplichtige is (artikel 7.8)
+        output:
+          - name: verschuldigde_inkomstenbelasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De over het kalenderjaar verschuldigde inkomstenbelasting (lid 1) — som van belasting over de drie boxes, voor binnenlandse belastingplichtigen verminderd met heffingskorting IB; niet negatief
+        actions:
+          - output: totale_belasting_voor_korting
+            value:
+              operation: ADD
+              values:
+                - $belasting_box1
+                - $belasting_box2
+                - $belasting_box3
+          - output: verschuldigde_inkomstenbelasting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_binnenlandse_of_kwalificerende_buitenlandse_belastingplichtige
+                    value: true
+                  then:
+                    operation: MAX
+                    values:
+                      - 0
+                      - operation: SUBTRACT
+                        values:
+                          - $totale_belasting_voor_korting
+                          - $heffingskorting_inkomstenbelasting
+              default: $totale_belasting_voor_korting
   - number: '2.8'
     text: |-
       1 Indien in het belastbare inkomen uit werk en woning of het belastbare inkomen uit aanmerkelijk belang te
@@ -1998,6 +2061,35 @@ articles:
 
       c. het belastbare inkomen uit sparen en beleggen, verminderd met daarin begrepen te conserveren inkomen
     url: https://wetten.overheid.nl/BWBR0011353/2026-01-01#Artikel2.18
+    machine_readable:
+      execution:
+        parameters:
+          - name: inkomen_werk_woning
+            type: number
+            required: true
+            description: Inkomen uit werk en woning conform artikel 3.1 lid 2 in eurocent
+          - name: inkomen_aanmerkelijk_belang
+            type: number
+            required: true
+            description: Inkomen uit aanmerkelijk belang conform artikel 4.12 in eurocent (0 indien niet van toepassing)
+          - name: belastbaar_inkomen_sparen_beleggen
+            type: number
+            required: true
+            description: Belastbaar inkomen uit sparen en beleggen conform artikel 5.1 in eurocent, verminderd met te conserveren inkomen (0 indien niet van toepassing)
+        output:
+          - name: verzamelinkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verzamelinkomen = inkomen werk en woning + inkomen aanmerkelijk belang + belastbaar inkomen sparen en beleggen (minus te conserveren inkomen)
+        actions:
+          - output: verzamelinkomen
+            value:
+              operation: ADD
+              values:
+                - $inkomen_werk_woning
+                - $inkomen_aanmerkelijk_belang
+                - $belastbaar_inkomen_sparen_beleggen
   - number: '3.1'
     text: |-
       1 Belastbaar inkomen uit werk en woning is het inkomen uit werk en woning verminderd met de te verrekenen verliezen
@@ -2084,6 +2176,95 @@ articles:
       - id: ref11
         bwb_id: BWBR0011353
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: belastbare_winst_onderneming
+            type: number
+            required: true
+            description: Belastbare winst uit onderneming conform artikel 3.2 in eurocent (0 indien niet van toepassing)
+          - name: belastbaar_loon
+            type: number
+            required: true
+            description: Belastbaar loon conform afdeling 3.3 in eurocent (0 indien niet van toepassing)
+          - name: belastbaar_resultaat_overige_werkzaamheden
+            type: number
+            required: true
+            description: Belastbaar resultaat uit overige werkzaamheden conform afdeling 3.4 in eurocent (0 indien niet van toepassing)
+          - name: belastbare_periodieke_uitkeringen
+            type: number
+            required: true
+            description: Belastbare periodieke uitkeringen en verstrekkingen conform afdeling 3.5 in eurocent (0 indien niet van toepassing)
+          - name: belastbare_inkomsten_eigen_woning
+            type: number
+            required: true
+            description: Belastbare inkomsten uit eigen woning conform afdeling 3.6 in eurocent (negatief indien aftrekpost; 0 indien niet van toepassing)
+          - name: negatieve_uitgaven_inkomensvoorzieningen
+            type: number
+            required: true
+            description: Negatieve uitgaven voor inkomensvoorzieningen conform afdeling 3.8 in eurocent (0 indien niet van toepassing)
+          - name: negatieve_persoonsgebonden_aftrekposten
+            type: number
+            required: true
+            description: Negatieve persoonsgebonden aftrekposten conform afdeling 3.9 in eurocent (0 indien niet van toepassing)
+          - name: aftrek_geen_of_geringe_eigenwoningschuld
+            type: number
+            required: true
+            description: Aftrek wegens geen of geringe eigenwoningschuld conform afdeling 3.6a in eurocent (0 indien niet van toepassing)
+          - name: uitgaven_inkomensvoorzieningen
+            type: number
+            required: true
+            description: Uitgaven voor inkomensvoorzieningen conform afdeling 3.7 in eurocent (0 indien niet van toepassing)
+          - name: persoonsgebonden_aftrek
+            type: number
+            required: true
+            description: Persoonsgebonden aftrek conform hoofdstuk 6 in eurocent (0 indien niet van toepassing)
+          - name: te_verrekenen_verliezen_werk_woning
+            type: number
+            required: true
+            description: Te verrekenen verliezen uit werk en woning conform afdeling 3.13 in eurocent (0 indien niet van toepassing)
+        output:
+          - name: inkomen_werk_woning
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Inkomen uit werk en woning (lid 2) — som van componenten a t/m g minus aftrekposten h t/m j
+          - name: belastbaar_inkomen_werk_woning
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belastbaar inkomen uit werk en woning (lid 1) — inkomen uit werk en woning minus te verrekenen verliezen
+        actions:
+          - output: positieve_componenten
+            value:
+              operation: ADD
+              values:
+                - $belastbare_winst_onderneming
+                - $belastbaar_loon
+                - $belastbaar_resultaat_overige_werkzaamheden
+                - $belastbare_periodieke_uitkeringen
+                - $belastbare_inkomsten_eigen_woning
+                - $negatieve_uitgaven_inkomensvoorzieningen
+                - $negatieve_persoonsgebonden_aftrekposten
+          - output: aftrekposten
+            value:
+              operation: ADD
+              values:
+                - $aftrek_geen_of_geringe_eigenwoningschuld
+                - $uitgaven_inkomensvoorzieningen
+                - $persoonsgebonden_aftrek
+          - output: inkomen_werk_woning
+            value:
+              operation: SUBTRACT
+              values:
+                - $positieve_componenten
+                - $aftrekposten
+          - output: belastbaar_inkomen_werk_woning
+            value:
+              operation: SUBTRACT
+              values:
+                - $inkomen_werk_woning
+                - $te_verrekenen_verliezen_werk_woning
   - number: '3.2'
     text: |-
       Belastbare winst uit onderneming is het gezamenlijke bedrag van de winst die de belastingplichtige als
@@ -2111,6 +2292,40 @@ articles:
         hoofdstuk: '3'
         paragraaf: 3.2.5
         afdeling: '3.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: winst_onderneming
+            type: number
+            required: true
+            description: Winst die de belastingplichtige als ondernemer geniet uit een of meer ondernemingen conform paragraaf 3.2.2 in eurocent
+          - name: ondernemersaftrek
+            type: number
+            required: true
+            description: Ondernemersaftrek conform paragraaf 3.2.4 in eurocent (0 indien niet van toepassing)
+          - name: mkb_winstvrijstelling
+            type: number
+            required: true
+            description: MKB-winstvrijstelling conform paragraaf 3.2.5 in eurocent (0 indien niet van toepassing)
+        output:
+          - name: belastbare_winst_onderneming
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belastbare winst uit onderneming = winst minus ondernemersaftrek minus MKB-winstvrijstelling
+        actions:
+          - output: winst_na_ondernemersaftrek
+            value:
+              operation: SUBTRACT
+              values:
+                - $winst_onderneming
+                - $ondernemersaftrek
+          - output: belastbare_winst_onderneming
+            value:
+              operation: SUBTRACT
+              values:
+                - $winst_na_ondernemersaftrek
+                - $mkb_winstvrijstelling
   - number: '3.3'
     text: |-
       1 Belastbare winst uit onderneming is mede:
@@ -13552,6 +13767,58 @@ articles:
         artikel: '2.17'
         hoofdstuk: '2'
         afdeling: '2.4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: waarde_groene_beleggingen
+            type: number
+            required: true
+            description: Waarde van de groene beleggingen van de belastingplichtige op de peildatum in eurocent
+          - name: heeft_fiscaal_partner_hele_jaar
+            type: boolean
+            required: true
+            description: Of de belastingplichtige het gehele kalenderjaar dezelfde partner heeft of wordt geacht te hebben gehad (artikel 2.17)
+          - name: waarde_groene_beleggingen_partner
+            type: number
+            required: true
+            description: Waarde van de groene beleggingen van de partner op de peildatum in eurocent (0 indien geen partner)
+        output:
+          - name: vrijgesteld_bedrag_groene_beleggingen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag aan groene beleggingen dat niet tot de bezittingen behoort (lid 1) — max €26.715, of bij partner €53.430 gezamenlijk
+        actions:
+          - output: maximum_vrijstelling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_fiscaal_partner_hele_jaar
+                    value: true
+                  then: 5343000
+              default: 2671500
+          - output: totale_groene_beleggingen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_fiscaal_partner_hele_jaar
+                    value: true
+                  then:
+                    operation: ADD
+                    values:
+                      - $waarde_groene_beleggingen
+                      - $waarde_groene_beleggingen_partner
+              default: $waarde_groene_beleggingen
+          - output: vrijgesteld_bedrag_groene_beleggingen
+            value:
+              operation: MIN
+              values:
+                - $totale_groene_beleggingen
+                - $maximum_vrijstelling
   - number: '5.14'
     text: |-
       1 Groene beleggingen zijn aandelen in, winstbewijzen van en geldleningen aan aangewezen groene fondsen. Aanwijzing
@@ -17077,6 +17344,37 @@ articles:
       - id: ref1
         bwb_id: BWBR0017745
         artikel: '11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: standaardheffingskorting
+            type: number
+            required: true
+            description: Standaardheffingskorting conform artikel 8.2 in eurocent
+          - name: premiepercentage_aow
+            type: number
+            required: true
+            description: Premiepercentage AOW vastgesteld op grond van artikel 11 lid 1 Wet financiering sociale verzekeringen in basispunten
+          - name: gecombineerd_heffingspercentage
+            type: number
+            required: true
+            description: Gecombineerd heffingspercentage in basispunten conform artikel 8.1 lid 1 onderdeel c
+        output:
+          - name: heffingskorting_aow
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingskorting voor de algemene ouderdomsverzekering = standaardheffingskorting × (premiepercentage AOW / gecombineerd heffingspercentage)
+        actions:
+          - output: heffingskorting_aow
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $standaardheffingskorting
+                    - $premiepercentage_aow
+                - $gecombineerd_heffingspercentage
   - number: '8.5'
     text: |-
       De heffingskorting voor de nabestaandenverzekering is het deel van de standaardheffingskorting
@@ -17091,6 +17389,37 @@ articles:
       - id: ref1
         bwb_id: BWBR0017745
         artikel: '11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: standaardheffingskorting
+            type: number
+            required: true
+            description: Standaardheffingskorting conform artikel 8.2 in eurocent
+          - name: premiepercentage_nabestaanden
+            type: number
+            required: true
+            description: Premiepercentage nabestaandenverzekering vastgesteld op grond van artikel 11 lid 2 Wet financiering sociale verzekeringen in basispunten
+          - name: gecombineerd_heffingspercentage
+            type: number
+            required: true
+            description: Gecombineerd heffingspercentage in basispunten conform artikel 8.1 lid 1 onderdeel c
+        output:
+          - name: heffingskorting_nabestaanden
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingskorting voor de nabestaandenverzekering = standaardheffingskorting × (premiepercentage nabestaanden / gecombineerd heffingspercentage)
+        actions:
+          - output: heffingskorting_nabestaanden
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $standaardheffingskorting
+                    - $premiepercentage_nabestaanden
+                - $gecombineerd_heffingspercentage
   - number: '8.6'
     text: |-
       De heffingskorting voor de verzekering langdurige zorg is het deel van de standaardheffingskorting
@@ -17105,6 +17434,37 @@ articles:
       - id: ref1
         bwb_id: BWBR0017745
         artikel: '11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: standaardheffingskorting
+            type: number
+            required: true
+            description: Standaardheffingskorting conform artikel 8.2 in eurocent
+          - name: premiepercentage_langdurige_zorg
+            type: number
+            required: true
+            description: Premiepercentage verzekering langdurige zorg vastgesteld op grond van artikel 11 lid 3 Wet financiering sociale verzekeringen in basispunten
+          - name: gecombineerd_heffingspercentage
+            type: number
+            required: true
+            description: Gecombineerd heffingspercentage in basispunten conform artikel 8.1 lid 1 onderdeel c
+        output:
+          - name: heffingskorting_langdurige_zorg
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingskorting voor de verzekering langdurige zorg = standaardheffingskorting × (premiepercentage langdurige zorg / gecombineerd heffingspercentage)
+        actions:
+          - output: heffingskorting_langdurige_zorg
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $standaardheffingskorting
+                    - $premiepercentage_langdurige_zorg
+                - $gecombineerd_heffingspercentage
   - number: '8.7'
     text: |-
       Bij de toepassing van [artikel 8.3][ref1], [artikel 8.5][ref2] en [artikel 8.6][ref3] op het deel van de
