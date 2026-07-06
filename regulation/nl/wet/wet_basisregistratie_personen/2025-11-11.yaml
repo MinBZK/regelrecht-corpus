@@ -575,6 +575,39 @@ articles:
 
       3 Inschrijving geschiedt niet dan nadat de identiteit van de betrokkene deugdelijk is vastgesteld.
     url: https://wetten.overheid.nl/BWBR0033715/2025-11-11#Artikel2.4
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtmatig_verblijf
+            type: boolean
+            required: true
+            description: Geeft aan of de persoon rechtmatig verblijf geniet
+          - name: al_ingeschreven
+            type: boolean
+            required: true
+            description: Geeft aan of de persoon al is ingeschreven in de basisregistratie
+          - name: verwacht_verblijf_tweederde_half_jaar
+            type: boolean
+            required: true
+            description: Naar redelijke verwachting gedurende een half jaar ten minste twee derde van de tijd in Nederland verblijf houden
+        output:
+          - name: in_aanmerking_voor_inschrijving
+            type: boolean
+            description: Geeft aan of de persoon in aanmerking komt voor inschrijving in de basisregistratie
+        actions:
+          - output: in_aanmerking_voor_inschrijving
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $rechtmatig_verblijf
+                  value: true
+                - operation: EQUALS
+                  subject: $al_ingeschreven
+                  value: false
+                - operation: EQUALS
+                  subject: $verwacht_verblijf_tweederde_half_jaar
+                  value: true
   - number: '2.5'
     text: |-
       1 Inschrijving op grond van [artikel 2.4][ref1] van een persoon die komt vanuit Aruba, Curaçao, Sint Maarten, of
@@ -1760,6 +1793,62 @@ articles:
         hoofdstuk: '2'
         paragraaf: '2'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verwacht_verblijf_tweederde_half_jaar
+            type: boolean
+            required: true
+            description: Naar redelijke verwachting gedurende een half jaar ten minste twee derde van de tijd in Nederland verblijf houden
+          - name: aanvang_verblijf_datum
+            type: date
+            required: true
+            description: Datum van aanvang van het verblijf in Nederland
+          - name: inschrijving_op_grond_van_geboorteakte
+            type: boolean
+            required: true
+            description: Verblijf aanvangt door geboorte en inschrijving geschiedt op grond van de geboorteakte
+          - name: behoort_tot_categorie_2_6
+            type: boolean
+            required: true
+            description: Betrokkene behoort tot een categorie als bedoeld in artikel 2.6
+          - name: vreemdeling_zonder_rechtmatig_verblijf
+            type: boolean
+            required: true
+            description: Betrokkene is een vreemdeling die geen rechtmatig verblijf geniet
+        output:
+          - name: aangifte_verplicht
+            type: boolean
+            description: Geeft aan of aangifte van verblijf en adres verplicht is
+          - name: uiterste_aangifte_datum
+            type: date
+            description: Uiterste datum voor het doen van aangifte van verblijf en adres (vijfde dag na aanvang verblijf)
+        actions:
+          - output: aangifte_verplicht
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verwacht_verblijf_tweederde_half_jaar
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $inschrijving_op_grond_van_geboorteakte
+                        value: true
+                      - operation: EQUALS
+                        subject: $behoort_tot_categorie_2_6
+                        value: true
+                      - operation: EQUALS
+                        subject: $vreemdeling_zonder_rechtmatig_verblijf
+                        value: true
+          - output: uiterste_aangifte_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvang_verblijf_datum
+              days: 5
   - number: '2.39'
     text: |-
       1 De ingezetene die zijn adres wijzigt doet hiervan schriftelijk aangifte bij het college van burgemeester en
@@ -1772,6 +1861,28 @@ articles:
       3 Indien een ingezetene geen woonadres heeft, kiest hij een briefadres. Het eerste en tweede lid zijn van
       overeenkomstige toepassing.
     url: https://wetten.overheid.nl/BWBR0033715/2025-11-11#Artikel2.39
+    machine_readable:
+      untranslatables:
+        - construct: "niet eerder dan vier weken vóór de beoogde datum van adreswijziging"
+          reason: "DATE_ADD does not support negative durations for calculating the earliest permitted date"
+          legal_text_excerpt: "Hij doet niet eerder aangifte dan vier weken vóór de beoogde datum van adreswijziging"
+          accepted: false
+      execution:
+        parameters:
+          - name: adreswijziging_datum
+            type: date
+            required: true
+            description: Datum van de (beoogde) adreswijziging
+        output:
+          - name: uiterste_aangifte_datum_adreswijziging
+            type: date
+            description: Uiterste datum voor het doen van aangifte van adreswijziging (vijfde dag na adreswijziging)
+        actions:
+          - output: uiterste_aangifte_datum_adreswijziging
+            value:
+              operation: DATE_ADD
+              date: $adreswijziging_datum
+              days: 5
   - number: '2.40'
     text: |-
       1 Degene die zijn woonadres heeft in een instelling die is aangewezen op grond van het derde of het vierde lid kan,
@@ -1880,6 +1991,28 @@ articles:
       5 Bij algemene maatregel van bestuur kunnen regels worden gesteld omtrent bijzondere gevallen waarin het eerste of
       vierde lid niet van toepassing is.
     url: https://wetten.overheid.nl/BWBR0033715/2025-11-11#Artikel2.43
+    machine_readable:
+      untranslatables:
+        - construct: "de aangiftetermijn vangt aan op de vijfde dag voor de dag van vertrek"
+          reason: "DATE_ADD does not support negative durations for calculating the start of the aangifte period"
+          legal_text_excerpt: "De aangiftetermijn vangt aan op de vijfde dag voor de dag van vertrek"
+          accepted: false
+      execution:
+        parameters:
+          - name: verwacht_verblijf_tweederde_jaar_buitenland
+            type: boolean
+            required: true
+            description: Naar redelijke verwachting gedurende een jaar ten minste twee derde van de tijd buiten Nederland verblijven
+        output:
+          - name: aangifte_vertrek_verplicht
+            type: boolean
+            description: Geeft aan of aangifte van vertrek verplicht is
+        actions:
+          - output: aangifte_vertrek_verplicht
+            value:
+              operation: EQUALS
+              subject: $verwacht_verblijf_tweederde_jaar_buitenland
+              value: true
   - number: '2.44'
     text: |-
       De ingezetene brengt alle feiten betreffende zijn burgerlijke staat en nationaliteit die zich buiten Nederland
@@ -1986,6 +2119,60 @@ articles:
         hoofdstuk: '2'
         paragraaf: '5'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de leeftijdscheck wordt gedaan
+          - name: is_inwonend_minderjarige
+            type: boolean
+            required: true
+            description: Geeft aan of de betrokkene een inwonende minderjarige is
+          - name: minderjarige_vervult_zelf_verplichting
+            type: boolean
+            required: true
+            description: Geeft aan of de minderjarige zelf de verplichting vervult
+          - name: staat_onder_curatele
+            type: boolean
+            required: true
+            description: Geeft aan of de betrokkene onder curatele staat
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de betrokkene in jaren
+          - name: verplichting_op_wettelijk_vertegenwoordiger
+            type: boolean
+            description: Geeft aan of de aangifte­verplichting rust op de wettelijk vertegenwoordiger (ouder, voogd, verzorger of curator)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: verplichting_op_wettelijk_vertegenwoordiger
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 16
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_inwonend_minderjarige
+                      value: true
+                    - operation: EQUALS
+                      subject: $minderjarige_vervult_zelf_verplichting
+                      value: false
+                - operation: EQUALS
+                  subject: $staat_onder_curatele
+                  value: true
   - number: '2.49'
     text: |-
       1 De verplichtingen, vermeld in de [artikelen 2.39][ref1] en [2.44 tot en met 2.46][ref2], kunnen worden vervuld
@@ -2189,6 +2376,23 @@ articles:
         hoofdstuk: '2'
         paragraaf: '6'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: inschrijving_datum
+            type: date
+            required: true
+            description: Datum van de inschrijving in de basisregistratie
+        output:
+          - name: uiterste_datum_overzicht
+            type: date
+            description: Uiterste datum voor het sturen van het overzicht van de persoonslijst (vier weken na inschrijving)
+        actions:
+          - output: uiterste_datum_overzicht
+            value:
+              operation: DATE_ADD
+              date: $inschrijving_datum
+              weeks: 4
   - number: '2.55'
     text: |-
       1 Het college van burgemeester en wethouders voldoet binnen vier weken aan het verzoek van eenieder die het recht
@@ -2205,6 +2409,23 @@ articles:
 
       4 Het college draagt zorg voor een deugdelijke vaststelling van de identiteit van de verzoeker.
     url: https://wetten.overheid.nl/BWBR0033715/2025-11-11#Artikel2.55
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum van het inzageverzoek
+        output:
+          - name: uiterste_datum_reactie_inzage
+            type: date
+            description: Uiterste datum voor het voldoen aan het inzageverzoek (vier weken na verzoekdatum)
+        actions:
+          - output: uiterste_datum_reactie_inzage
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 4
   - number: '2.56'
     text: |-
       1 Het college van burgemeester en wethouders neemt op schriftelijk verzoek van de daartoe krachtens
@@ -4679,6 +4900,17 @@ articles:
         hoofdstuk: '2'
         paragraaf: '5'
         afdeling: '1'
+    machine_readable:
+      execution:
+        output:
+          - name: maximale_bestuurlijke_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete bij overtreding van de genoemde artikelen (€325)
+        actions:
+          - output: maximale_bestuurlijke_boete
+            value: 32500
   - number: '4.18'
     text: |-
       De termijn, bedoeld in [artikel 12, eerste lid, van de Archiefwet 1995][ref1], vangt aan:
@@ -4695,6 +4927,44 @@ articles:
       - id: ref1
         bwb_id: BWBR0007376
         artikel: '12'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_overlijden
+            type: date
+            required: false
+            description: Datum van overlijden van de betrokkene (indien van toepassing)
+          - name: is_ingezetene_bij_overlijden
+            type: boolean
+            required: true
+            description: Geeft aan of de betrokkene op de dag van overlijden ingezetene of ingezetene van een openbaar lichaam was
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene
+        output:
+          - name: datum_honderd_jaar
+            type: date
+            description: Datum honderd jaar na de geboorte
+          - name: archiefwet_termijn_start
+            type: date
+            description: Datum waarop de archieftermijn begint (artikel 12 Archiefwet 1995)
+        actions:
+          - output: datum_honderd_jaar
+            value:
+              operation: DATE_ADD
+              date: $geboortedatum
+              years: 100
+          - output: archiefwet_termijn_start
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_ingezetene_bij_overlijden
+                    value: true
+                  then: $datum_overlijden
+              default: $datum_honderd_jaar
   - number: '4.19'
     text: |-
       De [Wet gemeentelijke basisadministratie persoonsgegevens][ref1] wordt ingetrokken.
