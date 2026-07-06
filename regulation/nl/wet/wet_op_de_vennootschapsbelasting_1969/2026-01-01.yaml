@@ -676,6 +676,69 @@ articles:
         bwb_id: BWBR0002672
         artikel: '4'
         hoofdstuk: I
+    machine_readable:
+      untranslatables:
+        - construct: "som van winsten over vijf achtereenvolgende jaren"
+          reason: "Aggregation over a time-series (vijf opeenvolgende belastingjaren optellen) is not available as engine operation"
+          suggestion: "Add time-series aggregation to engine; caller must pre-compute winst_vijf_jaar_totaal"
+          legal_text_excerpt: "van het jaar en de daaraan voorafgaande vier jaren tezamen niet meer bedraagt dan € 75 000"
+      execution:
+        parameters:
+          - name: winst_jaar
+            type: number
+            required: true
+            description: >-
+              Winst van het huidige belastingjaar in eurocent, bepaald conform
+              Hoofdstuk II met uitzondering van artikelen 9a en 12 (art. 6 lid 1
+              Vpb). Geef de werkelijke winst op; verliezen worden intern
+              gecorrigeerd naar 0.
+          - name: winst_vijf_jaar_totaal
+            type: number
+            required: true
+            description: >-
+              Gecorrigeerde winst van het huidig jaar en de vier voorafgaande
+              jaren tezamen in eurocent. Per jaar geldt: verliesjaren tellen als
+              0 (art. 6 lid 1 tweede zin Vpb). Caller dient dit te berekenen.
+          - name: verricht_vut_werkzaamheid
+            type: boolean
+            required: true
+            description: >-
+              True als het lichaam een werkzaamheid verricht als bedoeld in
+              artikel 4, onderdeel b Vpb (VUT/pensioenuitvoerder). In dat geval
+              is de vrijstelling van artikel 6 niet van toepassing (lid 2).
+        output:
+          - name: winst_jaar_gecorrigeerd
+            type: number
+            description: >-
+              Winst van het jaar, waarbij een verlies op nihil wordt gesteld
+              conform artikel 6 lid 1 tweede zin Vpb.
+          - name: is_vrijgesteld_kleine_onderneming
+            type: boolean
+            description: >-
+              True als het lichaam op grond van artikel 6 lid 1 en lid 2 Vpb
+              vrijgesteld is van vennootschapsbelasting (winst ≤ €15.000 of
+              vijfjaarswinst ≤ €75.000, en geen VUT-werkzaamheid).
+        actions:
+          - output: winst_jaar_gecorrigeerd
+            value:
+              operation: MAX
+              values:
+                - $winst_jaar
+                - 0
+          - output: is_vrijgesteld_kleine_onderneming
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $verricht_vut_werkzaamheid
+                - operation: OR
+                  conditions:
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $winst_jaar_gecorrigeerd
+                      value: 1500000
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $winst_vijf_jaar_totaal
+                      value: 7500000
   - number: 6a
     text: |-
       1 Van de belasting wordt op verzoek vrijgesteld een beleggingsinstelling of icbe als bedoeld in artikel 1:1 van
@@ -825,6 +888,54 @@ articles:
         artikel: '15'
         hoofdstuk: II
         afdeling: '2.9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: winst
+            type: number
+            required: true
+            description: >-
+              Winst van het jaar in eurocent, bepaald conform Hoofdstuk II Vpb.
+          - name: aftrekbare_giften
+            type: number
+            required: true
+            description: >-
+              Aftrekbare giften in eurocent als bedoeld in artikel 16 Vpb.
+          - name: te_verrekenen_verliezen
+            type: number
+            required: true
+            description: >-
+              Te verrekenen verliezen in eurocent op de voet van Hoofdstuk IV Vpb
+              (artikelen 20 e.v.), vastgesteld door de inspecteur.
+        output:
+          - name: belastbare_winst
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Belastbare winst: winst verminderd met aftrekbare giften
+              (artikel 7 lid 3 Vpb).
+          - name: belastbaar_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Belastbaar bedrag: belastbare winst verminderd met te verrekenen
+              verliezen (artikel 7 lid 2 Vpb). Grondslag voor de
+              vennootschapsbelasting.
+        actions:
+          - output: belastbare_winst
+            value:
+              operation: SUBTRACT
+              values:
+                - $winst
+                - $aftrekbare_giften
+          - output: belastbaar_bedrag
+            value:
+              operation: SUBTRACT
+              values:
+                - $belastbare_winst
+                - $te_verrekenen_verliezen
   - number: '8'
     text: |-
       1 De winst wordt opgevat en bepaald op de voet van de [artikelen 3.8][ref1],
@@ -7721,6 +7832,70 @@ articles:
       - id: ref1
         bwb_id: BWBR0017745
         artikel: '64'
+    machine_readable:
+      untranslatables:
+        - construct: "achterwaartse en voorwaartse verliesverrekening over meerdere jaren"
+          reason: >-
+            Aggregation over a time-series (verliezen uit meerdere voorgaande
+            en volgende jaren accumuleren en verrekenen) is not available as
+            engine operation
+          suggestion: "Add time-series aggregation and carry-forward/carry-back operations to engine"
+          legal_text_excerpt: >-
+            Een verlies wordt verrekend met de belastbare winsten van het
+            voorafgaande jaar en de volgende jaren
+      execution:
+        parameters:
+          - name: belastbare_winst
+            type: number
+            required: true
+            description: >-
+              Belastbare winst van het jaar in eurocent (negatieve waarde
+              duidt op een verlies conform artikel 20 lid 1 Vpb).
+        output:
+          - name: is_verliesjaar
+            type: boolean
+            description: >-
+              True als de belastbare winst negatief is; het negatieve bedrag
+              wordt aangemerkt als een verlies (artikel 20 lid 1 Vpb).
+          - name: winst_boven_drempel
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Deel van de belastbare winst dat de drempel van €1.000.000
+              overschrijdt; minimaal 0.
+          - name: maximale_verliesverrekening
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Maximaal in dit jaar te verrekenen verliesbedrag conform artikel
+              20 lid 2 Vpb: €1.000.000 vermeerderd met 50% van de belastbare
+              winst boven €1.000.000.
+        actions:
+          - output: is_verliesjaar
+            value:
+              operation: LESS_THAN
+              subject: $belastbare_winst
+              value: 0
+          - output: winst_boven_drempel
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $belastbare_winst
+                    - 100000000
+          - output: maximale_verliesverrekening
+            value:
+              operation: ADD
+              values:
+                - 100000000
+                - operation: MULTIPLY
+                  values:
+                    - 0.5
+                    - $winst_boven_drempel
   - number: 20a
     text: |-
       1 Indien aannemelijk is dat in vergelijking met het begin van het oudste jaar waarvan een verlies nog niet
@@ -8008,6 +8183,67 @@ articles:
 
                   25,8%
     url: https://wetten.overheid.nl/BWBR0002672/2026-01-01#Artikel22
+    machine_readable:
+      untranslatables:
+        - construct: "afronden op hele euro's"
+          reason: "Rounding is not available as an engine operation; the computed belasting may be a non-integer eurocent amount for certain inputs"
+          suggestion: "Add ROUND/FLOOR/CEIL operation to engine"
+          legal_text_excerpt: "De belasting wordt bepaald aan de hand van de volgende tabel"
+      execution:
+        parameters:
+          - name: belastbaar_bedrag
+            type: number
+            required: true
+            description: >-
+              Belastbaar bedrag of belastbaar Nederlands bedrag in eurocent,
+              berekend conform artikel 7 of 17 Vpb.
+        output:
+          - name: belasting_eerste_schijf
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Belasting berekend over het gedeelte tot en met €200.000 (19%)
+              voor de tweede-schijf-berekening.
+          - name: verschuldigde_belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Verschuldigde vennootschapsbelasting in eurocent vóór afronden.
+              Eerste schijf (≤ €200.000): 19%. Tweede schijf (> €200.000):
+              €38.000 + 25,8% over het meerdere (artikel 22 Vpb tabel).
+        actions:
+          - output: belasting_eerste_schijf
+            value:
+              operation: MULTIPLY
+              values:
+                - 20000000
+                - 0.19
+          - output: verschuldigde_belasting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_bedrag
+                    value: 20000000
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $belastbaar_bedrag
+                      - 0.19
+              default:
+                operation: ADD
+                values:
+                  - $belasting_eerste_schijf
+                  - operation: MULTIPLY
+                    values:
+                      - 0.258
+                      - operation: SUBTRACT
+                        values:
+                          - $belastbaar_bedrag
+                          - 20000000
   - number: 23b
     text: |-
       1 Bij een aangewezen bank of beleggingsinstelling als bedoeld in
