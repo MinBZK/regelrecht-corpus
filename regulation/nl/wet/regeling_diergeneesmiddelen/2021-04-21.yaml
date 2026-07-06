@@ -464,6 +464,38 @@ articles:
       b. een werkzame stof bevat die niet voldoet aan de in de desbetreffende monografie gegeven specificaties ten
       aanzien van de kwaliteit.
     url: https://wetten.overheid.nl/BWBR0032626/2021-04-21#Artikel2.10
+    machine_readable:
+      execution:
+        input:
+          - name: werkzame_stof_in_europese_farmacopee
+            type: boolean
+            description: Indicates whether the active substance is included in a monograph in the European Pharmacopoeia or a pharmacopoeia of an EEA member state.
+          - name: monografie_ingediend
+            type: boolean
+            description: Indicates whether a monograph was submitted with the application in accordance with Annex 1 of Directive 2001/82/EC.
+          - name: voldoet_aan_monografie_specificaties
+            type: boolean
+            description: Indicates whether the active substance meets the quality specifications given in the relevant monograph.
+        output:
+          - name: vergunning_geweigerd
+            type: boolean
+            description: Indicates whether the marketing authorization for the veterinary medicinal product is rejected.
+        actions:
+          - output: vergunning_geweigerd
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $werkzame_stof_in_europese_farmacopee
+                      value: false
+                    - operation: EQUALS
+                      subject: $monografie_ingediend
+                      value: false
+                - operation: EQUALS
+                  subject: $voldoet_aan_monografie_specificaties
+                  value: false
   - number: '2.11'
     text: |-
       Een aanvraag om een vergunning voor het in de handel brengen van een diergeneesmiddel wordt niet in behandeling
@@ -476,6 +508,36 @@ articles:
 
       c. een niet-geïnactiveerd hondsdolheidvirus bevat.
     url: https://wetten.overheid.nl/BWBR0032626/2021-04-21#Artikel2.11
+    machine_readable:
+      execution:
+        input:
+          - name: bereid_met_verboden_ziekteverwekker
+            type: boolean
+            description: Indicates whether the veterinary medicinal product is prepared, processed, or treated with a pathogen that can cause brucellosis melitensis, brucellosis suis, brucellosis bang, or bovine tuberculosis.
+          - name: bevat_somatotropine
+            type: boolean
+            description: Indicates whether the veterinary medicinal product contains somatotropin, including somatotropin as referred to in Decision 1999/879/EC.
+          - name: bevat_niet_geinactiveerd_hondsdolheidvirus
+            type: boolean
+            description: Indicates whether the veterinary medicinal product contains a non-inactivated rabies virus.
+        output:
+          - name: aanvraag_niet_in_behandeling
+            type: boolean
+            description: Indicates whether the application for marketing authorization is not processed.
+        actions:
+          - output: aanvraag_niet_in_behandeling
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $bereid_met_verboden_ziekteverwekker
+                  value: true
+                - operation: EQUALS
+                  subject: $bevat_somatotropine
+                  value: true
+                - operation: EQUALS
+                  subject: $bevat_niet_geinactiveerd_hondsdolheidvirus
+                  value: true
   - number: '2.12'
     text: |-
       Een vergunning voor het in de handel brengen van een diergeneesmiddel wordt geweigerd indien het diergeneesmiddel
@@ -491,18 +553,31 @@ articles:
       37/2010,
 
       d. een substantie bevat als bedoeld in bijlage II bij [Richtlijn 96/22/EG](31996L0022), tenzij de aanvraag
-      uitsluitend betrekking heeft op een toepassing voor therapeutische doeleinden als bedoeld in artikel 4, punt 2, van
-      [Richtlijn nr. 96/22/EG](31996L0022) en het diergeneesmiddel niet een product als bedoeld in artikel 6, tweede lid,
+      uitsluitend betrekking heeft op een toepassing voor therapeutische doeleinden als bedoeld in Artikel 4, punt 2, van
+      [Richtlijn nr. 96/22/EG](31996L0022) en het diergeneesmiddel niet een product als bedoeld in Artikel 6, tweede lid,
       van [richtlijn 96/22/EG](31996L0022) is,
 
       e. een substantie bevat als bedoeld in bijlage III bij [Richtlijn 96/22/EG](31996L0022), tenzij de aanvraag
-      uitsluitend betrekking heeft op een toepassing voor doeleinden als bedoeld in artikel 4 of 5 van [Richtlijn nr.
-      96/22/EG](31996L0022) en het diergeneesmiddel niet een product als bedoeld in artikel 6, tweede lid, van [richtlijn
+      uitsluitend betrekking heeft op een toepassing voor doeleinden als bedoeld in Artikel 4 of 5 van [Richtlijn nr.
+      96/22/EG](31996L0022) en het diergeneesmiddel niet een product als bedoeld in Artikel 6, tweede lid, van [richtlijn
       96/22/EG](31996L0022) is,
 
       f. is bestemd voor de behandeling van paardachtigen met een substantie als bedoeld in bijlage I bij [Verordening
       (EG) nr. 1950/2006](32006R1950) en de aanvraag niet voldoet aan de in deze verordening gestelde voorwaarden.
     url: https://wetten.overheid.nl/BWBR0032626/2021-04-21#Artikel2.12
+    machine_readable:
+      execution:
+        input:
+          - name: bestemd_voor_levensmiddelen_dieren
+            type: boolean
+            description: Indicates whether the veterinary medicinal product is intended or also intended for use in animals destined for food production.
+        output:
+          - name: vergunning_geweigerd
+            type: boolean
+            description: Indicates whether the marketing authorization for the veterinary medicinal product is rejected.
+        untranslatables:
+          - reason: "EU table references (Verordening (EU) nr. 37/2010, Annex 1/2; Richtlijn 96/22/EG, Annex II/III; Verordening (EG) nr. 1950/2006, Annex I)"
+            description: "Requires runtime access to external EU regulation tables (e.g., Annex 1/2 of Regulation (EU) No 37/2010, Annex II/III of Directive 96/22/EC, Annex I of Regulation (EC) No 1950/2006). Cannot be modeled as IF trees."
   - number: '2.13'
     text: |-
       De minister verbindt aan de vergunning voor het in de handel brengen van een diergeneesmiddel het
