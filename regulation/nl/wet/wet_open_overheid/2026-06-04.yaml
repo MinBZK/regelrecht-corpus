@@ -635,6 +635,72 @@ articles:
       - id: ref3
         bwb_id: BWBR0005537
         artikel: 8:81
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek is ontvangen
+          - name: is_verdaagd
+            type: boolean
+            required: true
+            description: Of de beslistermijn is verdaagd op grond van het tweede lid
+          - name: verwacht_bezwaar_derde
+            type: boolean
+            required: true
+            description: Of naar verwachting een belanghebbende bezwaar heeft tegen verstrekking
+          - name: besluit_datum
+            type: date
+            required: true
+            description: Datum waarop het besluit is bekendgemaakt
+        output:
+          - name: beslistermijn_weken
+            type: number
+            description: Maximale beslistermijn in weken (4 of 6)
+          - name: termijn_startdatum
+            type: date
+            description: Dag na ontvangst — startpunt termijn (lid 1 - dag na ontvangst)
+          - name: uiterste_beslisdatum
+            type: date
+            description: Uiterste datum waarop het bestuursorgaan moet beslissen
+          - name: uiterste_verstrekkingsdatum
+            type: date
+            description: Uiterste datum waarop de informatie moet worden verstrekt
+        actions:
+          - output: beslistermijn_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_verdaagd
+                    value: true
+                  then: 6
+              default: 4
+          - output: termijn_startdatum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum
+              days: 1
+          - output: uiterste_beslisdatum
+            value:
+              operation: DATE_ADD
+              date: $termijn_startdatum
+              weeks: $beslistermijn_weken
+          - output: uiterste_verstrekkingsdatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verwacht_bezwaar_derde
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $besluit_datum
+                    weeks: 2
+              default: $besluit_datum
   - number: '4.5'
     text: |-
       1 Het bestuursorgaan verstrekt de informatie in de door verzoeker verzochte vorm of, indien dit redelijkerwijs niet
@@ -742,6 +808,102 @@ articles:
       - id: ref3
         bwb_id: BWBR0040940
         artikel: '46'
+    machine_readable:
+      execution:
+        parameters:
+          - name: eenheid_kroon_gevaar
+            type: boolean
+            required: true
+            description: Lid 1a - openbaar maken zou eenheid van de Kroon in gevaar brengen
+          - name: veiligheid_staat_schade
+            type: boolean
+            required: true
+            description: Lid 1b - openbaar maken zou veiligheid van de Staat schaden
+          - name: vertrouwelijke_bedrijfsgegevens
+            type: boolean
+            required: true
+            description: Lid 1c - betreft bedrijfs- en fabricagegegevens vertrouwelijk medegedeeld
+          - name: bijzondere_persoonsgegevens
+            type: boolean
+            required: true
+            description: Lid 1d - betreft bijzondere persoonsgegevens (AVG paragraaf 3.1 of 3.2 UAVG)
+          - name: identificatienummers
+            type: boolean
+            required: true
+            description: Lid 1e - betreft wettelijk voorgeschreven identificatienummers (artikel 46 UAVG)
+          - name: relatieve_weigeringsgrond_van_toepassing
+            type: boolean
+            required: true
+            description: Lid 2 - een relatieve weigeringsgrond weegt zwaarder dan het belang van openbaarheid
+          - name: is_milieu_informatie
+            type: boolean
+            required: true
+            description: Of de informatie milieu-informatie is in de zin van Wet milieubeheer 19.1a
+          - name: betreft_emissies_in_milieu
+            type: boolean
+            required: true
+            description: Lid 7 - of de informatie betrekking heeft op emissies in het milieu
+        output:
+          - name: absolute_weigeringsgrond
+            type: boolean
+            description: Of een absolute weigeringsgrond van lid 1 van toepassing is
+          - name: milieu_emissie_uitzondering
+            type: boolean
+            description: Of de uitzondering van lid 7 (emissies) van toepassing is waardoor lid 1 en 2 niet gelden
+          - name: openbaarmaking_verplicht_geweigerd
+            type: boolean
+            description: Of openbaarmaking verplicht achterwege blijft (absolute grond, niet overruled door emissieuitz.)
+          - name: openbaarmaking_mag_worden_geweigerd
+            type: boolean
+            description: Of openbaarmaking op relatieve grond (lid 2) mag worden geweigerd, mits niet emissieuitz.
+        actions:
+          - output: absolute_weigeringsgrond
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $eenheid_kroon_gevaar
+                  value: true
+                - operation: EQUALS
+                  subject: $veiligheid_staat_schade
+                  value: true
+                - operation: EQUALS
+                  subject: $vertrouwelijke_bedrijfsgegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $bijzondere_persoonsgegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $identificatienummers
+                  value: true
+          - output: milieu_emissie_uitzondering
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_milieu_informatie
+                  value: true
+                - operation: EQUALS
+                  subject: $betreft_emissies_in_milieu
+                  value: true
+          - output: openbaarmaking_verplicht_geweigerd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $absolute_weigeringsgrond
+                  value: true
+                - operation: NOT
+                  value: $milieu_emissie_uitzondering
+          - output: openbaarmaking_mag_worden_geweigerd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $relatieve_weigeringsgrond_van_toepassing
+                  value: true
+                - operation: NOT
+                  value: $milieu_emissie_uitzondering
   - number: '5.2'
     text: |-
       1 In geval van een verzoek om informatie uit documenten, opgesteld ten behoeve van intern beraad, wordt geen
@@ -786,6 +948,35 @@ articles:
         bwb_id: BWBR0045754
         artikel: '5.2'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: informatie_datum
+            type: date
+            required: true
+            description: Datum waarop de gevraagde informatie is vastgesteld of ontvangen
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum van het verzoek om informatie
+        output:
+          - name: informatie_leeftijd_jaren
+            type: number
+            description: Leeftijd van de informatie in complete jaren op de peildatum
+          - name: verzwaarde_motiveringsplicht
+            type: boolean
+            description: Of er een verzwaarde motiveringsplicht geldt bij weigering (informatie ouder dan vijf jaar)
+        actions:
+          - output: informatie_leeftijd_jaren
+            value:
+              operation: AGE
+              date_of_birth: $informatie_datum
+              reference_date: $peildatum
+          - output: verzwaarde_motiveringsplicht
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $informatie_leeftijd_jaren
+              value: 5
   - number: '5.4'
     text: |-
       In afwijking van de [artikelen 5.1][ref1] en [5.2][ref2] is informatie die berust bij de formateur of de
@@ -805,6 +996,31 @@ articles:
         bwb_id: BWBR0045754
         artikel: '5.2'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: informatie_betreft_formateur_of_informateur
+            type: boolean
+            required: true
+            description: Of de informatie berust bij of is gezonden aan de formateur of informateur
+          - name: formatie_afgerond
+            type: boolean
+            required: true
+            description: Of de formatie is afgerond
+        output:
+          - name: niet_openbaar_formateur_uitzondering
+            type: boolean
+            description: Of de informatie niet openbaar is op grond van de formateur/informateur-uitzondering
+        actions:
+          - output: niet_openbaar_formateur_uitzondering
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $informatie_betreft_formateur_of_informateur
+                  value: true
+                - operation: NOT
+                  value: $formatie_afgerond
   - number: 5.4a
     text: |-
       1 In afwijking van de [artikelen 5.1][ref1] en [5.2][ref2] is niet openbaar de informatie betreffende de
@@ -1094,6 +1310,32 @@ articles:
       - id: ref3
         bwb_id: BWBR0005537
         artikel: 7:10
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: beslistermijn_bezwaar_weken
+      execution:
+        parameters:
+          - name: college_advies_datum
+            type: date
+            required: true
+            description: Datum waarop het Adviescollege advies heeft uitgebracht of heeft meegedeeld geen advies uit te brengen
+        output:
+          - name: beslistermijn_bezwaar_weken
+            type: number
+            description: Beslistermijn op bezwaar in weken (2 weken, in afwijking van AWB 7:10 eerste lid)
+          - name: uiterste_beslisdatum_bezwaar
+            type: date
+            description: Uiterste datum waarop het bestuursorgaan op het bezwaar moet beslissen
+        actions:
+          - output: beslistermijn_bezwaar_weken
+            value: 2
+          - output: uiterste_beslisdatum_bezwaar
+            value:
+              operation: DATE_ADD
+              date: $college_advies_datum
+              weeks: 2
   - number: '7.4'
     text: Een bestuursorgaan verstrekt desgevraagd het college alle gegevens die het nodig heeft voor zijn taak.
     url: https://wetten.overheid.nl/BWBR0045754/2026-06-04#Artikel7.4
@@ -1270,6 +1512,20 @@ articles:
         bwb_id: BWBR0045754
         artikel: '5.2'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bijlage_bepaling_van_toepassing
+            type: boolean
+            required: true
+            description: Of de informatie valt onder een bepaling opgenomen in de bijlage bij deze wet
+        output:
+          - name: woo_kernbepalingen_niet_van_toepassing
+            type: boolean
+            description: Of artikelen 3.1, 3.3, 4.1, 5.1 lid 1/2/5 en 5.2 niet van toepassing zijn
+        actions:
+          - output: woo_kernbepalingen_niet_van_toepassing
+            value: $bijlage_bepaling_van_toepassing
   - number: '8.9'
     text: |-
       1 Onze Minister zendt binnen vijf jaar na de inwerkingtreding van deze wet aan de Staten-Generaal een verslag over
