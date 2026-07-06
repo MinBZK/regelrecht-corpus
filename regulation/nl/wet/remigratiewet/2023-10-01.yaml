@@ -188,6 +188,61 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0004338#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0011823#Artikel8
+    machine_readable:
+      execution:
+        parameters:
+          - name: behoort_tot_categorie_a
+            type: boolean
+            required: true
+            description: >-
+              Persoon is geboren in en bezit/bezat nationaliteit van EU-lidstaat met bilateraal
+              wervingsverdrag, en is voor toetreding van dat land tot de EU in Nederland gevestigd
+          - name: behoort_tot_categorie_b
+            type: boolean
+            required: true
+            description: >-
+              Persoon is geboren in en bezit/bezat nationaliteit van niet-EU-land met
+              wervingsovereenkomst, gevestigd voor inwerkingtreding van dit artikel
+          - name: behoort_tot_categorie_c
+            type: boolean
+            required: true
+            description: >-
+              Persoon heeft Nederlandse of Surinaamse nationaliteit, geboren in Suriname,
+              gevestigd voor inwerkingtreding van dit artikel
+          - name: behoort_tot_categorie_d
+            type: boolean
+            required: true
+            description: Persoon komt voor in het register bedoeld in Wet Rietkerk-uitkering art. 1 onderdeel b
+          - name: behoort_tot_categorie_e
+            type: boolean
+            required: true
+            description: >-
+              Vreemdeling met vergunning o.g.v. Vreemdelingenwet 2000 art. 8 onderdeel c of d,
+              of in kader van gezinshereniging gevestigd voor inwerkingtreding
+        output:
+          - name: behoort_tot_doelgroep
+            type: boolean
+            description: Geeft aan of de persoon behoort tot de doelgroep van de Remigratiewet (art. 1a)
+        actions:
+          - output: behoort_tot_doelgroep
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $behoort_tot_categorie_a
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_categorie_b
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_categorie_c
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_categorie_d
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_categorie_e
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel1a
     references:
       - id: ref1
@@ -210,6 +265,78 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_meerderjarig
+            type: boolean
+            required: true
+            description: Persoon is meerderjarig
+          - name: is_vreemdeling_art1_rwn
+            type: boolean
+            required: true
+            description: >-
+              Persoon is vreemdeling als bedoeld in art. 1 lid 1 onderdeel e
+              Rijkswet op het Nederlanderschap
+          - name: is_nederlander_zonder_andere_nationaliteit
+            type: boolean
+            required: true
+            description: Persoon is Nederlander die niet tevens een andere nationaliteit bezit
+          - name: verklaart_bereid_nationaliteit_te_verkrijgen
+            type: boolean
+            required: true
+            description: >-
+              Nederlander verklaart bereid te zijn al hetgeen te doen wat in redelijkheid
+              mogelijk is om de nationaliteit van het bestemmingsland met bekwame spoed te verkrijgen
+        input:
+          - name: behoort_tot_doelgroep
+            type: boolean
+            source:
+              output: behoort_tot_doelgroep
+        output:
+          - name: wet_van_toepassing
+            type: boolean
+            description: Geeft aan of de Remigratiewet van toepassing is op deze persoon (art. 2)
+        actions:
+          - output: vreemdeling_in_doelgroep
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $is_vreemdeling_art1_rwn
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_doelgroep
+                  value: true
+          - output: nederlander_in_doelgroep
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $is_nederlander_zonder_andere_nationaliteit
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_doelgroep
+                  value: true
+                - operation: EQUALS
+                  subject: $verklaart_bereid_nationaliteit_te_verkrijgen
+                  value: true
+          - output: wet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $vreemdeling_in_doelgroep
+                  value: true
+                - operation: EQUALS
+                  subject: $nederlander_in_doelgroep
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel2
     references:
       - id: ref1
@@ -366,6 +493,130 @@ articles:
       [ref16]: https://wetten.overheid.nl/BWBR0011955
       [ref17]: https://wetten.overheid.nl/BWBR0015703
       [ref18]: https://wetten.overheid.nl/BWBR0015703#Artikel48
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van de aanvraag bij de Sociale verzekeringsbank
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de aanvrager
+          - name: schulden_voldaan
+            type: boolean
+            required: true
+            description: >-
+              Schulden aan het Rijk zijn voldaan dan wel ten behoeve daarvan een
+              afbetalingsregeling getroffen (art. 2b lid 1 onderdeel d)
+          - name: niet_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: >-
+              Persoon is niet rechtens zijn vrijheid ontnomen op tijdstip aanvraag
+              (art. 2b lid 1 onderdeel e)
+          - name: onttrekt_niet_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: >-
+              Persoon onttrekt zich niet aan de tenuitvoerlegging van een vrijheidsstraf
+              of vrijheidsbenemende maatregel (art. 2b lid 1 onderdeel f)
+          - name: heeft_bewijs_toelating
+            type: boolean
+            required: true
+            description: >-
+              Schriftelijk bewijs van toelating tot bestemmingsland overgelegd indien naar
+              ander land dan land van herkomst wordt geremigreerd (art. 2b lid 1 onderdeel g)
+          - name: heeft_8_jaar_verblijf
+            type: boolean
+            required: true
+            description: >-
+              Voldoet aan de 8-jaar verblijfseis (Nederlander: 8 jaar verblijf; vreemdeling:
+              8 jaar ononderbroken rechtmatig verblijf) (art. 2b lid 1 onderdeel h)
+          - name: heeft_1_jaar_uitkering
+            type: boolean
+            required: true
+            description: >-
+              Over een periode van ten minste 1 jaar onmiddellijk voor de aanvraag een
+              rechtmatige uitkering of inkomensvoorziening ontvangen als bedoeld in
+              art. 2b lid 1 onderdeel i
+          - name: minimaal_18_bij_vestiging
+            type: boolean
+            required: true
+            description: >-
+              Persoon had de leeftijd van 18 jaar bereikt op het moment dat hij zich
+              in Nederland vestigde (art. 2b lid 1 onderdeel j)
+          - name: is_geen_uitreiziger
+            type: boolean
+            required: true
+            description: Persoon is geen uitreiziger (art. 2b lid 1 onderdeel k)
+        input:
+          - name: behoort_tot_doelgroep
+            type: boolean
+            source:
+              output: behoort_tot_doelgroep
+        output:
+          - name: voldoet_aan_voorwaarden_2b
+            type: boolean
+            description: >-
+              Voldoet aan alle voorwaarden van artikel 2b voor remigratievoorzieningen
+        actions:
+          - output: aanvraag_voor_2025
+            value:
+              operation: LESS_THAN
+              subject: $aanvraag_datum
+              value: "2025-01-01"
+          - output: leeftijd_op_aanvraag
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $aanvraag_datum
+          - output: minimaal_55_jaar
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_op_aanvraag
+              value: 55
+          - output: voldoet_aan_voorwaarden_2b
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanvraag_voor_2025
+                  value: true
+                - operation: EQUALS
+                  subject: $behoort_tot_doelgroep
+                  value: true
+                - operation: EQUALS
+                  subject: $minimaal_55_jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $schulden_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_rechtens_vrijheid_ontnomen
+                  value: true
+                - operation: EQUALS
+                  subject: $onttrekt_niet_aan_vrijheidsstraf
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_bewijs_toelating
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_8_jaar_verblijf
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_1_jaar_uitkering
+                  value: true
+                - operation: EQUALS
+                  subject: $minimaal_18_bij_vestiging
+                  value: true
+                - operation: EQUALS
+                  subject: $is_geen_uitreiziger
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel2b
     references:
       - id: ref1
@@ -450,6 +701,65 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0010424#Artikel5
       [ref10]: https://wetten.overheid.nl/BWBR0010424#Artikel6
       [ref11]: https://wetten.overheid.nl/BWBR0010424#Artikel7
+    machine_readable:
+      open_terms:
+        - id: hoogte_periodieke_uitkering
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 7 lid 1 onderdeel a Remigratiewet
+        - id: hoogte_tegemoetkoming_ziektekosten
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 7 lid 1 onderdeel a Remigratiewet
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: heeft_eu_of_verdragsaanspraak_ziektekosten
+            type: boolean
+            required: true
+            description: >-
+              Remigrant kan op grond van EU-verordening of sociaalzekerheidsverdrag aanspraak
+              maken op verstrekkingen ten laste van het Zorgverzekeringsfonds (art. 4 lid 2)
+        input:
+          - name: voldoet_aan_voorwaarden_2b
+            type: boolean
+            source:
+              output: voldoet_aan_voorwaarden_2b
+        output:
+          - name: heeft_recht_op_periodieke_uitkering
+            type: boolean
+            description: >-
+              Remigrant heeft recht op periodieke uitkering ter voorziening in de
+              noodzakelijke kosten van bestaan in het bestemmingsland (art. 4 lid 1)
+          - name: heeft_recht_op_tegemoetkoming_ziektekosten
+            type: boolean
+            description: >-
+              Remigrant heeft recht op tegemoetkoming in kosten zorgverzekering
+              bestemmingsland (art. 4 lid 2)
+        actions:
+          - output: heeft_recht_op_periodieke_uitkering
+            value:
+              operation: EQUALS
+              subject: $voldoet_aan_voorwaarden_2b
+              value: true
+          - output: heeft_recht_op_tegemoetkoming_ziektekosten
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_voorwaarden_2b
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $heeft_eu_of_verdragsaanspraak_ziektekosten
+                    value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel4
     references:
       - id: ref1
@@ -562,6 +872,68 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0010424#Artikel5
       [ref2]: https://wetten.overheid.nl/BWBR0010424#Artikel5
+    machine_readable:
+      untranslatables:
+        - construct: eerste dag van de maand volgend op die waarin hoofdverblijf in Nederland is
+          reason: >-
+            Calculating "first day of the following month" requires date decomposition
+            (extracting year/month from a date) which is not available as an engine operation.
+            Only DATE_ADD is available, but the number of days to add depends on the current
+            month's length.
+          suggestion: Add date decomposition operations (YEAR_OF, MONTH_OF, DAY_OF_MONTH) to engine
+          legal_text_excerpt: >-
+            met ingang van de eerste dag van de maand volgend op die waarin de remigrant
+            zijn hoofdverblijf wederom in Nederland heeft
+          accepted: false
+      execution:
+        parameters:
+          - name: remigrant_heeft_hoofdverblijf_nl
+            type: boolean
+            required: true
+            description: >-
+              Remigrant heeft zijn hoofdverblijf wederom in Nederland gevestigd (art. 6 lid 1)
+          - name: partner_heeft_hoofdverblijf_nl
+            type: boolean
+            required: true
+            description: >-
+              Partner heeft zijn hoofdverblijf in Nederland gevestigd (art. 6 lid 2)
+          - name: kind_heeft_hoofdverblijf_nl
+            type: boolean
+            required: true
+            description: >-
+              Kind heeft zijn hoofdverblijf in Nederland gevestigd (art. 6 lid 3)
+        output:
+          - name: recht_remigrant_eindigt
+            type: boolean
+            description: >-
+              Recht van de remigrant op remigratievoorzieningen eindigt omdat hij
+              wederom hoofdverblijf in Nederland heeft (art. 6 lid 1)
+          - name: recht_partner_eindigt
+            type: boolean
+            description: >-
+              Recht van de partner op de voorzieningen eindigt omdat partner
+              hoofdverblijf in Nederland heeft (art. 6 lid 2)
+          - name: recht_kind_eindigt
+            type: boolean
+            description: >-
+              Recht van het kind op de voorzieningen eindigt omdat kind
+              hoofdverblijf in Nederland heeft (art. 6 lid 3)
+        actions:
+          - output: recht_remigrant_eindigt
+            value:
+              operation: EQUALS
+              subject: $remigrant_heeft_hoofdverblijf_nl
+              value: true
+          - output: recht_partner_eindigt
+            value:
+              operation: EQUALS
+              subject: $partner_heeft_hoofdverblijf_nl
+              value: true
+          - output: recht_kind_eindigt
+            value:
+              operation: EQUALS
+              subject: $kind_heeft_hoofdverblijf_nl
+              value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6
     references:
       - id: ref1
@@ -596,6 +968,57 @@ articles:
       met ingang van de eerste dag van de maand nadat hij in vrijheid is gesteld met inachtneming van de bepalingen van
       deze wet recht op remigratievoorzieningen, in welk geval remigratievoorzieningen als bedoeld in het derde lid,
       vervallen.
+    machine_readable:
+      execution:
+        parameters:
+          - name: onttrekt_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: >-
+              Remigrant of partner onttrekt zich aan de tenuitvoerlegging van een
+              vrijheidsstraf of vrijheidsbenemende maatregel (art. 6a lid 1)
+          - name: rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: >-
+              Remigrant of partner is rechtens zijn vrijheid ontnomen (art. 6a lid 2)
+          - name: duur_vrijheidsbeneming_maanden
+            type: number
+            required: true
+            description: >-
+              Duur van de vrijheidsbeneming in maanden (art. 6a lid 2 vereist >= 1 maand)
+        output:
+          - name: recht_eindigt_door_onttrekking
+            type: boolean
+            description: >-
+              Recht op remigratievoorzieningen eindigt omdat remigrant of partner zich
+              onttrekt aan tenuitvoerlegging vrijheidsstraf (art. 6a lid 1)
+          - name: recht_eindigt_door_detentie
+            type: boolean
+            description: >-
+              Recht op remigratievoorzieningen eindigt omdat remigrant of partner
+              rechtens vrijheid ontnomen is gedurende ten minste een maand (art. 6a lid 2)
+        actions:
+          - output: recht_eindigt_door_onttrekking
+            value:
+              operation: EQUALS
+              subject: $onttrekt_aan_vrijheidsstraf
+              value: true
+          - output: detentie_minimaal_een_maand
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $duur_vrijheidsbeneming_maanden
+              value: 1
+          - output: recht_eindigt_door_detentie
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $rechtens_vrijheid_ontnomen
+                  value: true
+                - operation: EQUALS
+                  subject: $detentie_minimaal_een_maand
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6a
   - number: 6aa
     text: |-
@@ -616,6 +1039,41 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0010424#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: remigrant_is_uitreiziger
+            type: boolean
+            required: true
+            description: Remigrant is uitreiziger als bedoeld in artikel 1 (art. 6aa lid 1)
+          - name: partner_is_uitreiziger
+            type: boolean
+            required: true
+            description: Partner is uitreiziger als bedoeld in artikel 1 (art. 6aa lid 1)
+          - name: kind_is_uitreiziger
+            type: boolean
+            required: true
+            description: Een minderjarig kind is uitreiziger als bedoeld in artikel 1 (art. 6aa lid 1)
+        output:
+          - name: recht_eindigt_door_uitreiziger
+            type: boolean
+            description: >-
+              Recht op remigratievoorzieningen eindigt omdat remigrant, partner of
+              minderjarig kind uitreiziger is (art. 6aa lid 1)
+        actions:
+          - output: recht_eindigt_door_uitreiziger
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $remigrant_is_uitreiziger
+                  value: true
+                - operation: EQUALS
+                  subject: $partner_is_uitreiziger
+                  value: true
+                - operation: EQUALS
+                  subject: $kind_is_uitreiziger
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6aa
     references:
       - id: ref1
@@ -745,6 +1203,118 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0010424#Artikel5a
       [ref7]: https://wetten.overheid.nl/BWBR0010424#Artikel4
       [ref8]: https://wetten.overheid.nl/BWBR0005537#Artikel869
+    machine_readable:
+      execution:
+        parameters:
+          - name: benadelingsbedrag
+            type: number
+            required: true
+            description: >-
+              Bruto bedrag dat ten onrechte of tot te hoog bedrag aan remigratievoorzieningen
+              is verleend als gevolg van schending informatieverplichting art. 5a (in eurocent)
+          - name: heeft_benadelingsbedrag
+            type: boolean
+            required: true
+            description: >-
+              De niet-nakoming van art. 5a heeft geleid tot een benadelingsbedrag (lid 1 vs lid 2)
+          - name: is_opzettelijk
+            type: boolean
+            required: true
+            description: De overtreding (schending informatieverplichting art. 5a) is opzettelijk begaan
+          - name: heeft_eerdere_sanctie_binnen_5_jaar
+            type: boolean
+            required: true
+            description: >-
+              Binnen 5 jaar voor het begaan van de overtreding is een eerdere bestuurlijke boete
+              of strafrechtelijke sanctie opgelegd wegens eenzelfde gedraging (onherroepelijk)
+          - name: eerdere_sanctie_was_onvoorwaardelijke_gevangenisstraf
+            type: boolean
+            required: true
+            description: >-
+              De eerdere sanctie betrof een onvoorwaardelijke gevangenisstraf
+              (relevant voor 10-jaar termijn art. 6b lid 4)
+          - name: heeft_eerdere_sanctie_binnen_10_jaar
+            type: boolean
+            required: true
+            description: >-
+              Binnen 10 jaar voor het begaan van de overtreding is een eerdere sanctie opgelegd
+              (relevant indien eerdere straf een gevangenisstraf was, art. 6b lid 4)
+          - name: max_boete_2e_categorie
+            type: number
+            required: true
+            description: >-
+              Maximumbedrag 2e categorie WvSr art. 23 lid 4 (in eurocent)
+          - name: max_boete_3e_categorie
+            type: number
+            required: true
+            description: >-
+              Maximumbedrag 3e categorie WvSr art. 23 lid 4 (in eurocent)
+          - name: max_boete_5e_categorie
+            type: number
+            required: true
+            description: >-
+              Maximumbedrag 5e categorie WvSr art. 23 lid 4 (in eurocent)
+        output:
+          - name: maximale_boete
+            type: number
+            description: >-
+              Maximum op te leggen bestuurlijke boete in eurocent (art. 6b)
+        actions:
+          - output: is_recidive
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $heeft_eerdere_sanctie_binnen_5_jaar
+                      value: true
+                    - operation: NOT
+                      value:
+                        operation: EQUALS
+                        subject: $eerdere_sanctie_was_onvoorwaardelijke_gevangenisstraf
+                        value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $eerdere_sanctie_was_onvoorwaardelijke_gevangenisstraf
+                      value: true
+                    - operation: EQUALS
+                      subject: $heeft_eerdere_sanctie_binnen_10_jaar
+                      value: true
+          - output: max_boete_basis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value:
+                      operation: EQUALS
+                      subject: $heeft_benadelingsbedrag
+                      value: true
+                  then: $max_boete_2e_categorie
+                - when:
+                    operation: EQUALS
+                    subject: $is_opzettelijk
+                    value: true
+                  then: $max_boete_5e_categorie
+              default: $max_boete_3e_categorie
+          - output: boete_bij_recidive
+            value:
+              operation: MULTIPLY
+              values:
+                - $benadelingsbedrag
+                - 1.5
+          - output: maximale_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_recidive
+                    value: true
+                  then: $boete_bij_recidive
+              default: $max_boete_basis
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6b
     references:
       - id: ref1
@@ -1210,6 +1780,32 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel73
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel710
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_ontvangst_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag bij de Sociale verzekeringsbank
+        output:
+          - name: maximale_beslistermijn_weken
+            type: number
+            description: >-
+              Maximale beslistermijn in weken; in ieder geval verstreken na 16 weken
+              (art. 6g lid 2)
+          - name: beslistermijn_einddatum
+            type: date
+            description: >-
+              Uiterste datum voor het geven van een beschikking: aanvraag_ontvangst_datum
+              + 16 weken (art. 6g lid 2)
+        actions:
+          - output: maximale_beslistermijn_weken
+            value: 16
+          - output: beslistermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_ontvangst_datum
+              weeks: 16
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6g
     references:
       - id: ref1
