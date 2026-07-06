@@ -73,6 +73,36 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0002629#Artikel5a
       [ref4]: https://wetten.overheid.nl/BWBR0002629#Artikel1
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel1a
+    machine_readable:
+      definitions:
+        DREMPELWAARDE_ICA:
+          value: 1000000
+          description: "Drempel intracommunautaire verwervingen per kalenderjaar: €10.000"
+      execution:
+        parameters:
+          - name: totaal_vergoedingen_lopend_jaar
+            type: number
+            required: true
+            description: Totaal vergoedingen ICA in lopend kalenderjaar (eurocent)
+          - name: totaal_vergoedingen_vorig_jaar
+            type: number
+            required: true
+            description: Totaal vergoedingen ICA in voorafgaand kalenderjaar (eurocent)
+        output:
+          - name: ica_niet_van_toepassing
+            type: boolean
+            description: Artikel 1 onderdeel b is niet van toepassing (drempel niet overschreden in beide jaren)
+        actions:
+          - output: ica_niet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $totaal_vergoedingen_lopend_jaar
+                  value: $DREMPELWAARDE_ICA
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $totaal_vergoedingen_vorig_jaar
+                  value: $DREMPELWAARDE_ICA
     references:
       - id: ref1
         bwb_id: BWBR0002629
@@ -506,6 +536,31 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0002629#Artikel34
       [ref9]: https://wetten.overheid.nl/BWBR0002629#Artikel3a
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel3b
+    machine_readable:
+      execution:
+        parameters:
+          - name: aankomst_datum
+            type: date
+            required: true
+            description: Datum van aankomst van de goederen in de lidstaat van bestemming
+        output:
+          - name: uiterste_levering_datum
+            type: date
+            description: Uiterste datum voor levering aan de ondernemer (12 maanden na aankomst; lid 4)
+          - name: veronderstelde_overbrenging_datum
+            type: date
+            description: Datum waarop overbrenging ex artikel 3a geacht wordt te zijn verricht (dag na verstrijken 12 maanden)
+        actions:
+          - output: uiterste_levering_datum
+            value:
+              operation: DATE_ADD
+              date: $aankomst_datum
+              months: 12
+          - output: veronderstelde_overbrenging_datum
+            value:
+              operation: DATE_ADD
+              date: $uiterste_levering_datum
+              days: 1
     references:
       - id: ref1
         bwb_id: BWBR0002629
@@ -1108,6 +1163,40 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0005806
       [ref9]: https://wetten.overheid.nl/BWBR0002629#Artikel4
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel8
+    machine_readable:
+      untranslatables:
+        - construct: afronden op eurocenten
+          reason: Rounding is not available as an engine operation; belasting may be fractional
+          suggestion: Add ROUND/FLOOR/CEIL operation to engine
+          legal_text_excerpt: De belasting wordt berekend over de vergoeding
+          accepted: false
+      execution:
+        parameters:
+          - name: vergoeding
+            type: number
+            required: true
+            description: Vergoeding voor de levering of dienst exclusief omzetbelasting (eurocent)
+        input:
+          - name: belastingtarief_percent
+            type: number
+            source:
+              output: belastingtarief_percent
+        output:
+          - name: verschuldigde_belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Berekende omzetbelasting over de vergoeding (voor afronden)
+        actions:
+          - output: verschuldigde_belasting
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $vergoeding
+                    - $belastingtarief_percent
+                - 100
     references:
       - id: ref1
         bwb_id: BWBR0002629
@@ -1185,6 +1274,43 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0002629
       [ref2]: https://wetten.overheid.nl/BWBR0002629
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel9
+    machine_readable:
+      untranslatables:
+        - construct: "bij algemene maatregel van bestuur vast te stellen voorwaarden (tabel II nultarief)"
+          reason: AMvB-conditions for zero rate are delegated to Uitvoeringsbesluit omzetbelasting 1968 and cannot be expressed here
+          suggestion: Model Uitvoeringsbesluit and reference its output via source.regulation
+          legal_text_excerpt: "nihil voor leveringen van goederen en diensten, genoemd in de bij deze wet behorende tabel II, mits is voldaan aan bij algemene maatregel van bestuur vast te stellen voorwaarden"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_levering_tabel_I
+            type: boolean
+            required: true
+            description: Levering of dienst is vermeld in tabel I bij de wet (verlaagd tarief 9%)
+          - name: is_levering_tabel_II
+            type: boolean
+            required: true
+            description: Levering of dienst is vermeld in tabel II bij de wet (nultarief)
+        output:
+          - name: belastingtarief_percent
+            type: number
+            description: Toepasselijk belastingtarief in procenten (21, 9 of 0)
+        actions:
+          - output: belastingtarief_percent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_levering_tabel_II
+                    value: true
+                  then: 0
+                - when:
+                    operation: EQUALS
+                    subject: $is_levering_tabel_I
+                    value: true
+                  then: 9
+              default: 21
     references:
       - id: ref1
         bwb_id: BWBR0002629
@@ -1872,6 +1998,46 @@ articles:
       Ingeval de voor aftrek in aanmerking komende belasting meer bedraagt dan de in het tijdvak verschuldigd geworden
       belasting, wordt het verschil aan de ondernemer op zijn verzoek terugbetaald.
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel17
+    machine_readable:
+      execution:
+        parameters:
+          - name: aftrekbare_belasting
+            type: number
+            required: true
+            description: Voor aftrek in aanmerking komende belasting in het tijdvak (eurocent)
+          - name: verschuldigde_belasting
+            type: number
+            required: true
+            description: In het tijdvak verschuldigd geworden belasting (eurocent)
+        output:
+          - name: recht_op_teruggaaf
+            type: boolean
+            description: Aftrekbare belasting is groter dan verschuldigde belasting
+          - name: teruggaaf_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het te restitueren verschil (nul indien geen recht op teruggaaf)
+        actions:
+          - output: recht_op_teruggaaf
+            value:
+              operation: GREATER_THAN
+              subject: $aftrekbare_belasting
+              value: $verschuldigde_belasting
+          - output: teruggaaf_bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $recht_op_teruggaaf
+                    value: true
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $aftrekbare_belasting
+                      - $verschuldigde_belasting
+              default: 0
   - number: 17a
     text: |-
       1 Intracommunautaire verwerving van goederen is de verwerving van goederen ingevolge een levering van deze goederen
@@ -2565,6 +2731,66 @@ articles:
       niet langer van toepassing voor de levering van het goed of de dienst waardoor die overschrijding tot stand komt,
       gedurende het resterende kalenderjaar en het daaropvolgende kalenderjaar.
     url: https://wetten.overheid.nl/BWBR0002629/2026-01-01#Artikel25a
+    machine_readable:
+      definitions:
+        DREMPEL_JAAROMZET_NEDERLAND:
+          value: 2000000
+          description: "Drempel jaaromzet in Nederland voor kleine ondernemersregeling: €20.000"
+        DREMPEL_JAAROMZET_UNIE:
+          value: 10000000
+          description: "Drempel jaaromzet in de Unie voor EU-ondernemers: €100.000"
+      execution:
+        parameters:
+          - name: jaaromzet_nederland
+            type: number
+            required: true
+            description: Jaaromzet in Nederland als bedoeld in artikel 25 (eurocent)
+          - name: jaaromzet_unie
+            type: number
+            description: Jaaromzet in de Unie als bedoeld in artikel 25 (eurocent; voor in Unie maar niet in Nederland gevestigde ondernemers)
+          - name: is_gevestigd_in_nederland
+            type: boolean
+            required: true
+            description: De ondernemer is in Nederland gevestigd
+        output:
+          - name: voldoet_aan_voorwaarden_vrijstelling_nl
+            type: boolean
+            description: In Nederland gevestigde ondernemer voldoet aan omzetdrempel (lid 1)
+          - name: voldoet_aan_voorwaarden_vrijstelling_eu
+            type: boolean
+            description: In Unie maar niet in Nederland gevestigde ondernemer voldoet aan omzetdrempel (lid 2)
+          - name: voldoet_aan_voorwaarden_vrijstelling
+            type: boolean
+            description: Ondernemer kan kiezen voor toepassing van de vrijstelling
+        actions:
+          - output: voldoet_aan_voorwaarden_vrijstelling_nl
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_gevestigd_in_nederland
+                  value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $jaaromzet_nederland
+                  value: $DREMPEL_JAAROMZET_NEDERLAND
+          - output: voldoet_aan_voorwaarden_vrijstelling_eu
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_gevestigd_in_nederland
+                    value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $jaaromzet_unie
+                  value: $DREMPEL_JAAROMZET_UNIE
+          - output: voldoet_aan_voorwaarden_vrijstelling
+            value:
+              operation: OR
+              conditions:
+                - $voldoet_aan_voorwaarden_vrijstelling_nl
+                - $voldoet_aan_voorwaarden_vrijstelling_eu
   - number: 25b
     text: |-
       1 Een ondernemer die in Nederland is gevestigd kan de vrijstelling toepassen zonder de melding te doen, bedoeld in
