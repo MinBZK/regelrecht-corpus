@@ -1358,6 +1358,108 @@ articles:
       - id: ref4
         bwb_id: BWBR0004538
         artikel: '25'
+    machine_readable:
+      untranslatables:
+        - construct: "Eerste dag van de tweede maand volgend op de maand van ontvangst schriftelijke opzegging (art 32c lid 1 sub b)"
+          reason: "Requires extracting month and year from a date to construct DATE(year, month+2, 1); the engine has no date field extraction operations (month(), year())"
+          legal_text_excerpt: "met ingang van de eerste dag van de tweede maand volgend op die waarin de Sociale verzekeringsbank een schriftelijke opzegging van de verzekerde heeft ontvangen"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de vrijwillig verzekerde
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de beoordeling van beëindigingsgronden
+          - name: premie_niet_tijdig_betaald
+            type: boolean
+            required: true
+            description: Premie niet betaald binnen de door SVB gestelde termijn; grond d van toepassing (art 32c lid 1 sub d)
+          - name: termijn_deadline_premie
+            type: date
+            required: false
+            description: Laatste dag van de door SVB gestelde termijn voor premiebetaling (art 25 Wet financiering volksverzekeringen); relevant indien premie_niet_tijdig_betaald = true
+          - name: gegevens_niet_tijdig_verstrekt
+            type: boolean
+            required: true
+            description: Gegevens niet verstrekt binnen de door SVB gestelde termijn; grond e van toepassing (art 32c lid 1 sub e)
+          - name: termijn_deadline_gegevens
+            type: date
+            required: false
+            description: Laatste dag van de door SVB gestelde termijn voor het verstrekken van gegevens voor uitvoering vrijwillige verzekering; relevant indien gegevens_niet_tijdig_verstrekt = true
+        input:
+          - name: voldoet_nog_aan_32a
+            type: boolean
+            source:
+              output: kan_vrijwillig_verzekeren
+            description: Verzekerde voldoet nog aan de voorwaarden van art 32a — binding op output van artikel 32a (beëindigingsgrond a)
+          - name: is_van_rechtswege_verzekerd_art5
+            type: boolean
+            source:
+              output: is_verzekerd
+            description: Verzekerde is van rechtswege verzekerd ingevolge art 5 — binding op output van artikel 5 (beëindigingsgrond c)
+        output:
+          - name: grond_a_van_toepassing
+            type: boolean
+            description: Beëindigingsgrond a is van toepassing — verzekerde voldoet niet meer aan de voorwaarden van art 32a (art 32c lid 1 sub a)
+          - name: grond_c_van_toepassing
+            type: boolean
+            description: Beëindigingsgrond c is van toepassing — verzekerde wordt van rechtswege verzekerd ingevolge art 5 (art 32c lid 1 sub c)
+          - name: grond_d_van_toepassing
+            type: boolean
+            description: Beëindigingsgrond d is van toepassing — premie niet tijdig betaald (art 32c lid 1 sub d)
+          - name: einddatum_grond_d
+            type: date
+            description: Datum van beëindiging op grond d — dag volgend op de laatste dag van de door SVB gestelde premiebetalingstermijn (art 32c lid 1 sub d)
+          - name: grond_e_van_toepassing
+            type: boolean
+            description: Beëindigingsgrond e is van toepassing — gegevens niet tijdig verstrekt (art 32c lid 1 sub e)
+          - name: einddatum_grond_e
+            type: date
+            description: Datum van beëindiging op grond e — dag volgend op de laatste dag van de door SVB gestelde gegevenstermijn (art 32c lid 1 sub e)
+          - name: vrijwillige_verzekering_geëindigd
+            type: boolean
+            description: De vrijwillige verzekering ingevolge art 32a is geëindigd op grond van art 32c lid 1 (grond a, c, d of e)
+        actions:
+          - output: grond_a_van_toepassing
+            value:
+              operation: NOT
+              value: $voldoet_nog_aan_32a
+          - output: grond_c_van_toepassing
+            value: $is_van_rechtswege_verzekerd_art5
+          - output: grond_d_van_toepassing
+            value: $premie_niet_tijdig_betaald
+          - output: einddatum_grond_d
+            value:
+              operation: DATE_ADD
+              date: $termijn_deadline_premie
+              days: 1
+          - output: grond_e_van_toepassing
+            value: $gegevens_niet_tijdig_verstrekt
+          - output: einddatum_grond_e
+            value:
+              operation: DATE_ADD
+              date: $termijn_deadline_gegevens
+              days: 1
+          - output: vrijwillige_verzekering_geëindigd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $grond_a_van_toepassing
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_c_van_toepassing
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_d_van_toepassing
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_e_van_toepassing
+                  value: true
   - number: '33'
     text: |-
       1 Een rechtspersoon welke als ziektekostenverzekeraar werkzaam is, moet daartoe zijn toegelaten door het College
