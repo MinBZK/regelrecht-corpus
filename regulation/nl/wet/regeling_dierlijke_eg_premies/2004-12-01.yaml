@@ -900,12 +900,12 @@ articles:
       2 De aanvraag oppervlakten heeft betrekking op percelen landbouwgrond die elk een oppervlakte hebben van ten minste
       0,3 hectare.
 
-      3 Het eerste lid is niet van toepassing op de producent die wordt vrijgesteld van de toepassing van het
-      veebezettingsgetal en geen aanvullende premie aanvraagt.
-    url: https://wetten.overheid.nl/BWBR0008007/2004-12-01#Artikel4.2
+        3 Het eerste lid is niet van toepassing op de producent die wordt vrijgesteld van de toepassing van het
+        veebezettingsgetal en geen aanvullende premie aanvraagt.
+      url: https://wetten.overheid.nl/BWBR0008007/2004-12-01#Artikel4.2
   - number: 4.2a
     text: |-
-      1 Om voor het extensiveringsbedrag in aanmerking te komen, vraagt de producent zulks aan in zijn aanvraag
+      1 Om voor het extensiveringsbedrag in aanmerking te komen, vraagt de producer zulks aan in zijn aanvraag
       oppervlakten.
 
       2 In de kalenderjaren 2000 en 2001 komt slechts in aanmerking voor het extensiveringsbedrag de producent die op
@@ -922,6 +922,34 @@ articles:
 
       b. gelijk is of groter is dan 1,4 GVE per hectare, doch niet meer dan 1,8 GVE per hectare.
     url: https://wetten.overheid.nl/BWBR0008007/2004-12-01#Artikel4.2a
+    machine_readable:
+      input:
+        - name: veebezettingsgetal
+          type: number
+          description: Veebezettingsgetal in GVE per hectare
+        - name: kalenderjaar
+          type: integer
+          description: Kalenderjaar waarvoor de aanvraag wordt ingediend
+      output:
+        type: boolean
+        description: Of de producent in aanmerking komt voor het extensiveringsbedrag
+      logic:
+        - IF:
+            condition: kalenderjaar <= 2001
+            THEN:
+              - OR:
+                  - LT: [veebezettingsgetal, 1.6]
+                  - AND:
+                      - GE: [veebezettingsgetal, 1.6]
+                      - LE: [veebezettingsgetal, 2.0]
+        - IF:
+            condition: kalenderjaar >= 2002
+            THEN:
+              - OR:
+                  - LT: [veebezettingsgetal, 1.4]
+                  - AND:
+                      - GE: [veebezettingsgetal, 1.4]
+                      - LE: [veebezettingsgetal, 1.8]
   - number: 4.2b
     text: |-
       1 De aanvraag voor het extensiveringsbedrag kan worden ingetrokken tot het tijdstip waarop controle van het
@@ -1033,6 +1061,21 @@ articles:
       het aantal ooien dat op de dag van indiening van de aanvraag op het bedrijf van de producent voor diens rekening
       wordt aangehouden, doch nooit groter dan het aantal premierechten waarover de producent beschikt.
     url: https://wetten.overheid.nl/BWBR0008007/2004-12-01#Artikel5.2
+    machine_readable:
+      input:
+        - name: aantal_ooien_op_bedrijf
+          type: integer
+          description: Aantal ooien dat op de dag van indiening van de aanvraag op het bedrijf wordt aangehouden
+        - name: aantal_premierechten
+          type: integer
+          description: Aantal premierechten waarover de producent beschikt
+      output:
+        type: integer
+        description: Aantal ooien dat in aanmerking komt voor de premie
+      logic:
+        - MIN:
+            - MAX: [aantal_ooien_op_bedrijf, aantal_premierechten]
+            - 10
   - number: '5.3'
     text: |-
       1 De producent doet, indien hij de aan te houden ooien dan wel een gedeelte daarvan gaat aanhouden op gronden of in
