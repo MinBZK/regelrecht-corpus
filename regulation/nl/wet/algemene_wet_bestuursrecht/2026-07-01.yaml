@@ -1962,12 +1962,60 @@ articles:
         artikel: 3:40
         hoofdstuk: '3'
         afdeling: '3.6'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: beslistermijn_einddatum
+            type: date
+            required: true
+            description: De datum waarop de beslistermijn is verstreken
+        output:
+          - name: van_rechtswege_verleend
+            type: boolean
+            description: De gevraagde beschikking is van rechtswege gegeven (AWB 4:20b lid 1)
+          - name: inwerkingtreding_datum
+            type: date
+            description: >-
+              De beschikking treedt in werking op de derde dag na afloop van de
+              beslistermijn (AWB 4:20b lid 3)
+        actions:
+          - output: van_rechtswege_verleend
+            value: true
+          - output: inwerkingtreding_datum
+            value:
+              operation: DATE_ADD
+              date: $beslistermijn_einddatum
+              days: 3
   - number: 4:20c
     text: |-
       1 Het bestuursorgaan maakt de beschikking bekend binnen twee weken nadat zij van rechtswege is gegeven.
 
       2 Bij de bekendmaking en mededeling van de beschikking wordt vermeld dat de beschikking van rechtswege is gegeven.
     url: https://wetten.overheid.nl/BWBR0005537/2026-07-01#Artikel420c
+    machine_readable:
+      execution:
+        parameters:
+          - name: van_rechtswege_datum
+            type: date
+            required: true
+            description: >-
+              De datum waarop de beschikking van rechtswege is gegeven
+              (AWB 4:20b lid 1)
+        output:
+          - name: bekendmaking_deadline
+            type: date
+            description: >-
+              Uiterste datum voor bekendmaking van de van rechtswege gegeven
+              beschikking (twee weken na van rechtswege datum)
+        actions:
+          - output: bekendmaking_deadline
+            value:
+              operation: DATE_ADD
+              date: $van_rechtswege_datum
+              weeks: 2
   - number: 4:20d
     text: |-
       1 Indien het bestuursorgaan de beschikking niet overeenkomstig [artikel 4:20c][ref1] binnen twee weken heeft
@@ -3243,6 +3291,18 @@ articles:
       2 Na voltooiing van de verjaring kan het bestuursorgaan zijn bevoegdheden tot aanmaning en verrekening en tot
       uitvaardiging en tenuitvoerlegging van een dwangbevel niet meer uitoefenen.
     url: https://wetten.overheid.nl/BWBR0005537/2026-07-01#Artikel4104
+    machine_readable:
+      endpoint: verjaringstermijn_jaren
+      execution:
+        output:
+          - name: verjaringstermijn_jaren
+            type: number
+            description: >-
+              De verjaringstermijn voor rechtsvorderingen tot betaling van een
+              geldsom bedraagt vijf jaren (AWB 4:104 lid 1)
+        actions:
+          - output: verjaringstermijn_jaren
+            value: 5
   - number: 4:105
     text: |-
       1 De verjaring wordt gestuit door een daad van rechtsvervolging overeenkomstig
@@ -4090,6 +4150,25 @@ articles:
   - number: 5:33
     text: Een verbeurde dwangsom wordt betaald binnen zes weken nadat zij van rechtswege is verbeurd.
     url: https://wetten.overheid.nl/BWBR0005537/2026-07-01#Artikel533
+    machine_readable:
+      execution:
+        parameters:
+          - name: verbeur_datum
+            type: date
+            required: true
+            description: De dag waarop de dwangsom van rechtswege is verbeurd
+        output:
+          - name: betaaltermijn_einddatum
+            type: date
+            description: >-
+              Uiterste datum voor betaling van de verbeurde dwangsom (zes weken
+              na de datum van verbeurring)
+        actions:
+          - output: betaaltermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $verbeur_datum
+              weeks: 6
   - number: 5:34
     text: |-
       1 Het bestuursorgaan dat een last onder dwangsom heeft opgelegd, kan op verzoek van de overtreder de last opheffen,
@@ -4351,6 +4430,32 @@ articles:
       2 De beslistermijn wordt opgeschort met ingang van de dag waarop de gedraging aan het openbaar ministerie is
       voorgelegd, tot de dag waarop het bestuursorgaan weer bevoegd wordt een bestuurlijke boete op te leggen.
     url: https://wetten.overheid.nl/BWBR0005537/2026-07-01#Artikel551
+    machine_readable:
+      execution:
+        parameters:
+          - name: rapport_datum
+            type: date
+            required: true
+            description: De dagtekening van het rapport omtrent de overtreding (AWB 5:48)
+        output:
+          - name: boete_beslistermijn_weken
+            type: number
+            description: >-
+              Termijn waarbinnen beslist moet worden over oplegging bestuurlijke
+              boete: dertien weken (AWB 5:51 lid 1)
+          - name: boete_beslistermijn_einddatum
+            type: date
+            description: >-
+              Uiterste datum voor het nemen van de beschikking tot oplegging van
+              de bestuurlijke boete (dertien weken na dagtekening rapport)
+        actions:
+          - output: boete_beslistermijn_weken
+            value: 13
+          - output: boete_beslistermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $rapport_datum
+              weeks: 13
   - number: 5:52
     text: |-
       De beschikking tot oplegging van de bestuurlijke boete vermeldt:
@@ -4383,6 +4488,27 @@ articles:
         bwb_id: BWBR0005537
         hoofdstuk: '4'
         afdeling: 4.1.2
+    machine_readable:
+      execution:
+        parameters:
+          - name: maximale_boete_eurocent
+            type: number
+            required: true
+            description: >-
+              Het maximale bedrag van de bestuurlijke boete dat voor de
+              overtreding kan worden opgelegd (in eurocent)
+        output:
+          - name: rapport_verplicht
+            type: boolean
+            description: >-
+              Of steeds een rapport of proces-verbaal moet worden opgemaakt
+              (AWB 5:53 lid 2: verplicht bij maximale boete boven € 340)
+        actions:
+          - output: rapport_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $maximale_boete_eurocent
+              value: 34000
   - number: 5:54
     text: |-
       Deze titel is van overeenkomstige toepassing op andere bestraffende sancties, voor zover dit bij wettelijk
@@ -5179,6 +5305,36 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0006368
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_herroepen
+            type: boolean
+            required: true
+            description: Is het bestreden besluit herroepen in de bezwaarprocedure?
+          - name: wegens_onrechtmatigheid_bestuursorgaan
+            type: boolean
+            required: true
+            description: >-
+              Is de herroeping te wijten aan een onrechtmatigheid van het
+              bestuursorgaan?
+        output:
+          - name: recht_kostenvergoeding_bezwaar
+            type: boolean
+            description: >-
+              Heeft de belanghebbende recht op vergoeding van kosten van de
+              bezwaarprocedure? (AWB 7:15 lid 2)
+        actions:
+          - output: recht_kostenvergoeding_bezwaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $besluit_herroepen
+                  value: true
+                - operation: EQUALS
+                  subject: $wegens_onrechtmatigheid_bestuursorgaan
+                  value: true
   - number: 7:16
     text: |-
       1 Voordat een beroepsorgaan op het beroep beslist, stelt het belanghebbenden in de gelegenheid te worden gehoord.
