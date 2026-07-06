@@ -375,6 +375,94 @@ articles:
       - id: ref2
         bwb_id: BWBR0002656
         artikel: '169'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_gehuwd_met_ander
+            type: boolean
+            required: true
+            description: "True als belastingplichtige gehuwd is met de andere persoon (BRP)"
+          - name: belastingplichtige_is_ongehuwd
+            type: boolean
+            required: true
+            description: "True als belastingplichtige ongehuwd is (of van tafel en bed gescheiden, lid 3)"
+          - name: belastingplichtige_is_meerderjarig
+            type: boolean
+            required: true
+            description: "True als belastingplichtige meerderjarig is"
+          - name: ander_is_ongehuwd
+            type: boolean
+            required: true
+            description: "True als de andere persoon ongehuwd is"
+          - name: ander_is_meerderjarig
+            type: boolean
+            required: true
+            description: "True als de andere persoon meerderjarig is"
+          - name: heeft_notarieel_samenlevingscontract
+            type: boolean
+            required: true
+            description: "True als er een notarieel samenlevingscontract bestaat tussen beiden (lid 1b)"
+          - name: zelfde_woonadres_brp
+            type: boolean
+            required: true
+            description: "True als beiden staan ingeschreven op hetzelfde woonadres in BRP of vergelijkbare buitenlandse registratie (lid 1b)"
+          - name: echtscheiding_verzoek_ingediend
+            type: boolean
+            required: true
+            description: "True als verzoek tot echtscheiding of scheiding van tafel en bed is ingediend (lid 4a, verwijzing BW 1:150/169)"
+        output:
+          - name: is_partner
+            type: boolean
+            description: "True als de persoon als partner wordt aangemerkt in de zin van art. 5a AWR"
+        actions:
+          - output: is_partner_als_echtgenoot
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_gehuwd_met_ander
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $echtscheiding_verzoek_ingediend
+                        value: true
+                      - operation: NOT
+                        value: $zelfde_woonadres_brp
+          - output: is_partner_als_samenwoner
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $belastingplichtige_is_ongehuwd
+                  value: true
+                - operation: EQUALS
+                  subject: $belastingplichtige_is_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $ander_is_ongehuwd
+                  value: true
+                - operation: EQUALS
+                  subject: $ander_is_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_notarieel_samenlevingscontract
+                  value: true
+                - operation: EQUALS
+                  subject: $zelfde_woonadres_brp
+                  value: true
+          - output: is_partner
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_partner_als_echtgenoot
+                  value: true
+                - operation: EQUALS
+                  subject: $is_partner_als_samenwoner
+                  value: true
   - number: 5b
     text: |-
       1 Een algemeen nut beogende instelling is een instelling – niet zijnde een vennootschap met een in aandelen
@@ -2425,6 +2513,87 @@ articles:
       - id: ref1
         bwb_id: BWBR0004770
         artikel: '9'
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend over het tijdvak... en heeft als grondslag het te betalen bedrag aan belasting"
+          accepted: false
+        - construct: "eerste dag van de vijfde (onderscheidenlijk zesde) maand na afloop van het tijdvak"
+          reason: "Setting day-of-month to 1 on a computed date is not available; DATE_ADD cannot truncate to month start"
+          suggestion: "Add FIRST_OF_MONTH or DATE_TRUNCATE operation"
+          legal_text_excerpt: "voor de eerste dag van de vijfde, onderscheidenlijk zesde, maand na afloop van het tijdvak"
+          accepted: false
+      execution:
+        parameters:
+          - name: tijdvak_einde
+            type: date
+            required: true
+            description: "Einddatum van het belastingtijdvak (bijv. 2025-12-31 voor kalenderjaar 2025)"
+          - name: aanslag_datum
+            type: date
+            required: true
+            description: "Datum vaststelling voorlopige aanslag"
+          - name: aanslag_bedrag_positief
+            type: boolean
+            required: true
+            description: "True als te betalen bedrag positief is (belastingplichtige moet betalen)"
+          - name: overeenkomstig_verzoek
+            type: boolean
+            required: false
+            description: "True als voorlopige aanslag is vastgesteld overeenkomstig ingediend verzoek (lid 3)"
+          - name: overeenkomstig_aangifte
+            type: boolean
+            required: false
+            description: "True als voorlopige aanslag is vastgesteld overeenkomstig ingediende aangifte (lid 3)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: false
+            description: "Datum ontvangst verzoek (relevant als overeenkomstig_verzoek = true)"
+          - name: ontvangst_datum_aangifte
+            type: date
+            required: false
+            description: "Datum ontvangst aangifte (relevant als overeenkomstig_aangifte = true)"
+        output:
+          - name: belastingrente_verschuldigd
+            type: boolean
+            description: "True als belastingrente in rekening wordt gebracht (art. 30f lid 1)"
+          - name: rente_periode_start
+            type: date
+            description: "Startdatum rentetijdvak: 6 maanden na einde tijdvak (art. 30f lid 2)"
+          - name: rente_periode_einde_verzoek
+            type: date
+            description: "Uiterste einddatum rentetijdvak bij verzoek: 14 weken na ontvangst verzoek (art. 30f lid 3)"
+          - name: rente_periode_einde_aangifte
+            type: date
+            description: "Uiterste einddatum rentetijdvak bij aangifte: 19 weken na ontvangst aangifte (art. 30f lid 3)"
+        actions:
+          - output: rente_periode_start
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              months: 6
+          - output: belastingrente_verschuldigd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanslag_bedrag_positief
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $aanslag_datum
+                  value: $rente_periode_start
+          - output: rente_periode_einde_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 14
+          - output: rente_periode_einde_aangifte
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_aangifte
+              weeks: 19
   - number: 30fa
     text: |-
       1 Indien met betrekking tot de inkomstenbelasting of de vennootschapsbelasting na het verstrijken van een periode
@@ -2443,6 +2612,151 @@ articles:
       van het tijdvak waarover de belasting wordt geheven, en eindigt 6 weken na de dagtekening van het aanslagbiljet en
       heeft als grondslag het te betalen bedrag aan belasting.
     url: https://wetten.overheid.nl/BWBR0002320/2026-01-01#Artikel30fa
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend over het tijdvak... en heeft als grondslag het te betalen bedrag aan belasting"
+          accepted: false
+      execution:
+        parameters:
+          - name: tijdvak_einde
+            type: date
+            required: true
+            description: "Einddatum van het belastingtijdvak (art. 30fa lid 1)"
+          - name: aanslag_datum
+            type: date
+            required: true
+            description: "Datum vaststelling voorlopige aanslag (art. 30fa lid 1b)"
+          - name: aanslag_bedrag_negatief
+            type: boolean
+            required: true
+            description: "True als het te betalen bedrag negatief is (teruggaaf, art. 30fa lid 1)"
+          - name: overeenkomstig_verzoek
+            type: boolean
+            required: false
+            description: "True als aanslag is vastgesteld overeenkomstig ingediend verzoek (art. 30fa lid 1a)"
+          - name: overeenkomstig_aangifte
+            type: boolean
+            required: false
+            description: "True als aanslag is vastgesteld overeenkomstig ingediende aangifte (art. 30fa lid 1a)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: false
+            description: "Datum ontvangst verzoek (art. 30fa lid 1b en 2)"
+          - name: ontvangst_datum_aangifte
+            type: date
+            required: false
+            description: "Datum ontvangst aangifte (art. 30fa lid 1b en 2)"
+          - name: aanslagbiljet_dagtekening
+            type: date
+            required: true
+            description: "Dagtekening van het aanslagbiljet (art. 30fa lid 2)"
+        output:
+          - name: belastingrente_vergoed_aanwezig
+            type: boolean
+            description: "True als aan de voorwaarden voor belastingrentevergoeding is voldaan (art. 30fa lid 1)"
+          - name: weken_grens_verzoek
+            type: date
+            description: "8 weken na ontvangst verzoek (art. 30fa lid 1b)"
+          - name: weken_grens_aangifte
+            type: date
+            description: "13 weken na ontvangst aangifte (art. 30fa lid 1b)"
+          - name: meer_dan_8_weken_verzoek
+            type: boolean
+            description: "True als tussen ontvangst verzoek en aanslag meer dan 8 weken zijn verstreken (art. 30fa lid 1b)"
+          - name: meer_dan_13_weken_aangifte
+            type: boolean
+            description: "True als tussen ontvangst aangifte en aanslag meer dan 13 weken zijn verstreken (art. 30fa lid 1b)"
+          - name: zes_maanden_grens
+            type: date
+            description: "6 maanden na einde tijdvak — vroegste startdatum rente (art. 30fa lid 2)"
+          - name: rente_start_verzoek
+            type: date
+            description: "Startdatum rentetijdvak bij verzoek: later van 8 weken na ontvangst of 6 maanden na tijdvak einde (art. 30fa lid 2)"
+          - name: rente_start_aangifte
+            type: date
+            description: "Startdatum rentetijdvak bij aangifte: later van 13 weken na ontvangst of 6 maanden na tijdvak einde (art. 30fa lid 2)"
+          - name: rente_periode_einde
+            type: date
+            description: "Einddatum rentetijdvak: 6 weken na dagtekening aanslagbiljet (art. 30fa lid 2)"
+        actions:
+          - output: weken_grens_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 8
+          - output: weken_grens_aangifte
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_aangifte
+              weeks: 13
+          - output: meer_dan_8_weken_verzoek
+            value:
+              operation: GREATER_THAN
+              subject: $aanslag_datum
+              value: $weken_grens_verzoek
+          - output: meer_dan_13_weken_aangifte
+            value:
+              operation: GREATER_THAN
+              subject: $aanslag_datum
+              value: $weken_grens_aangifte
+          - output: zes_maanden_grens
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              months: 6
+          - output: belastingrente_vergoed_aanwezig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanslag_bedrag_negatief
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $overeenkomstig_verzoek
+                          value: true
+                        - operation: EQUALS
+                          subject: $meer_dan_8_weken_verzoek
+                          value: true
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $overeenkomstig_aangifte
+                          value: true
+                        - operation: EQUALS
+                          subject: $meer_dan_13_weken_aangifte
+                          value: true
+          - output: rente_start_verzoek
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $weken_grens_verzoek
+                    value: $zes_maanden_grens
+                  then: $weken_grens_verzoek
+              default: $zes_maanden_grens
+          - output: rente_start_aangifte
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $weken_grens_aangifte
+                    value: $zes_maanden_grens
+                  then: $weken_grens_aangifte
+              default: $zes_maanden_grens
+          - output: rente_periode_einde
+            value:
+              operation: DATE_ADD
+              date: $aanslagbiljet_dagtekening
+              weeks: 6
   - number: 30fb
     text: |-
       1 Bij herziening van een voorlopige aanslag inkomstenbelasting of vennootschapsbelasting met een positief bedrag
@@ -2612,6 +2926,91 @@ articles:
       - id: ref8
         bwb_id: BWBR0002672
         artikel: '21'
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend over het tijdvak... en heeft als grondslag het te betalen bedrag aan belasting"
+          accepted: false
+        - construct: "eerste dag van de vijfde, onderscheidenlijk zesde, maand na afloop van het tijdvak"
+          reason: "Setting day-of-month to 1 on a computed date is not available; DATE_ADD cannot truncate to month start"
+          suggestion: "Add FIRST_OF_MONTH or DATE_TRUNCATE operation"
+          legal_text_excerpt: "overeenkomstig een ingediende aangifte die is ontvangen voor de eerste dag van de vijfde, onderscheidenlijk zesde, maand na afloop van het tijdvak"
+          accepted: false
+      execution:
+        parameters:
+          - name: tijdvak_einde
+            type: date
+            required: true
+            description: "Einddatum van het belastingtijdvak (art. 30fc lid 1)"
+          - name: aanslag_datum
+            type: date
+            required: true
+            description: "Datum vaststelling aanslag of navorderingsaanslag"
+          - name: is_navorderingsaanslag
+            type: boolean
+            required: true
+            description: "True als het een navorderingsaanslag betreft (onderscheid lid 3 vs lid 5)"
+          - name: aanslag_bedrag_positief
+            type: boolean
+            required: true
+            description: "True als te betalen bedrag positief is (belastingplichtige moet betalen, art. 30fc lid 1)"
+          - name: overeenkomstig_aangifte
+            type: boolean
+            required: false
+            description: "True als aanslag is vastgesteld overeenkomstig ingediende aangifte (art. 30fc lid 3)"
+          - name: ontvangst_datum_aangifte
+            type: date
+            required: false
+            description: "Datum ontvangst aangifte (art. 30fc lid 3)"
+          - name: naar_aanleiding_verzoek
+            type: boolean
+            required: false
+            description: "True als navorderingsaanslag is vastgesteld naar aanleiding van verzoek (art. 30fc lid 5)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: false
+            description: "Datum ontvangst verzoek (art. 30fc lid 5)"
+        output:
+          - name: belastingrente_verschuldigd
+            type: boolean
+            description: "True als belastingrente in rekening wordt gebracht (art. 30fc lid 1)"
+          - name: rente_periode_start
+            type: date
+            description: "Startdatum rentetijdvak: 6 maanden na einde tijdvak (art. 30fc lid 2)"
+          - name: rente_periode_einde_aangifte
+            type: date
+            description: "Uiterste einddatum bij aangifte: 19 weken na ontvangst aangifte (art. 30fc lid 3)"
+          - name: rente_periode_einde_verzoek_navordering
+            type: date
+            description: "Uiterste einddatum bij navorderingsverzoek: 12 weken na ontvangst verzoek (art. 30fc lid 5)"
+        actions:
+          - output: rente_periode_start
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              months: 6
+          - output: belastingrente_verschuldigd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanslag_bedrag_positief
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $aanslag_datum
+                  value: $rente_periode_start
+          - output: rente_periode_einde_aangifte
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_aangifte
+              weeks: 19
+          - output: rente_periode_einde_verzoek_navordering
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 12
   - number: 30fd
     text: |-
       1 Indien met betrekking tot de inkomstenbelasting of de vennootschapsbelasting na het verstrijken van een periode
@@ -2743,6 +3142,145 @@ articles:
       - id: ref6
         bwb_id: BWBR0002226
         artikel: '45'
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend... en heeft als grondslag het te betalen bedrag aan belasting"
+          accepted: false
+        - construct: "eerste dag van de eenentwintigste maand na het overlijden (lid 4)"
+          reason: "Setting day-of-month to 1 on a computed date is not available; DATE_ADD cannot truncate to month start"
+          suggestion: "Add FIRST_OF_MONTH or DATE_TRUNCATE operation"
+          legal_text_excerpt: "indien het verzoek, onderscheidenlijk de aangifte, is ontvangen voor de eerste dag van de eenentwintigste maand na het overlijden"
+          accepted: false
+      execution:
+        parameters:
+          - name: aanslag_datum
+            type: date
+            required: true
+            description: "Datum vaststelling erfbelasting aanslag (art. 30g lid 1)"
+          - name: aanslag_bedrag_positief
+            type: boolean
+            required: true
+            description: "True als te betalen bedrag positief is (art. 30g lid 1)"
+          - name: is_geval_overlijden
+            type: boolean
+            required: true
+            description: "True als aanslag ter zake van een overlijden (art. 30g lid 2a)"
+          - name: datum_overlijden
+            type: date
+            required: false
+            description: "Datum van overlijden (art. 30g lid 2a)"
+          - name: is_geval_vervulling_voorwaarde
+            type: boolean
+            required: true
+            description: "True als aanslag ter zake van verkrijging door vervulling van voorwaarde (art. 30g lid 2b)"
+          - name: datum_vervulling_voorwaarde
+            type: date
+            required: false
+            description: "Datum vervulling van de voorwaarde (art. 30g lid 2b)"
+          - name: is_geval_natuurschoonwet
+            type: boolean
+            required: true
+            description: "True als aanslag als bedoeld in art. 8 lid 5 Natuurschoonwet 1928 (art. 30g lid 2c)"
+          - name: datum_geval_natuurschoonwet
+            type: date
+            required: false
+            description: "Datum waarop het geval als bedoeld in art. 8 lid 1 Natuurschoonwet 1928 zich voordoet (art. 30g lid 2c)"
+          - name: overeenkomstig_verzoek
+            type: boolean
+            required: false
+            description: "True als aanslag is vastgesteld overeenkomstig verzoek (art. 30g lid 3)"
+          - name: overeenkomstig_aangifte
+            type: boolean
+            required: false
+            description: "True als aanslag is vastgesteld overeenkomstig aangifte (art. 30g lid 3)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: false
+            description: "Datum ontvangst verzoek (art. 30g lid 3)"
+          - name: ontvangst_datum_aangifte
+            type: date
+            required: false
+            description: "Datum ontvangst aangifte (art. 30g lid 3)"
+          - name: is_navorderingsverzoek
+            type: boolean
+            required: false
+            description: "True als navorderingsaanslag naar aanleiding van verzoek (art. 30g lid 3 tweede volzin)"
+        output:
+          - name: belastingrente_verschuldigd
+            type: boolean
+            description: "True als belastingrente in rekening wordt gebracht (art. 30g lid 1)"
+          - name: rente_periode_start_overlijden
+            type: date
+            description: "Startdatum rentetijdvak bij overlijden: 20 maanden na overlijden (art. 30g lid 2a)"
+          - name: rente_periode_start_voorwaarde
+            type: date
+            description: "Startdatum rentetijdvak bij vervulling voorwaarde: 20 maanden na vervulling (art. 30g lid 2b)"
+          - name: rente_periode_start
+            type: date
+            description: "Toepasselijke startdatum rentetijdvak op basis van aanslag-categorie (art. 30g lid 2)"
+          - name: rente_periode_einde_verzoek
+            type: date
+            description: "Uiterste einddatum bij gewoon verzoek: 14 weken na ontvangst (art. 30g lid 3)"
+          - name: rente_periode_einde_navorderingsverzoek
+            type: date
+            description: "Uiterste einddatum bij navorderingsverzoek: 12 weken na ontvangst (art. 30g lid 3)"
+          - name: rente_periode_einde_aangifte
+            type: date
+            description: "Uiterste einddatum bij aangifte: 19 weken na ontvangst (art. 30g lid 3)"
+        actions:
+          - output: rente_periode_start_overlijden
+            value:
+              operation: DATE_ADD
+              date: $datum_overlijden
+              months: 20
+          - output: rente_periode_start_voorwaarde
+            value:
+              operation: DATE_ADD
+              date: $datum_vervulling_voorwaarde
+              months: 20
+          - output: rente_periode_start
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_geval_overlijden
+                    value: true
+                  then: $rente_periode_start_overlijden
+                - when:
+                    operation: EQUALS
+                    subject: $is_geval_vervulling_voorwaarde
+                    value: true
+                  then: $rente_periode_start_voorwaarde
+              default: $datum_geval_natuurschoonwet
+          - output: belastingrente_verschuldigd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanslag_bedrag_positief
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $aanslag_datum
+                  value: $rente_periode_start
+          - output: rente_periode_einde_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 14
+          - output: rente_periode_einde_navorderingsverzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 12
+          - output: rente_periode_einde_aangifte
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_aangifte
+              weeks: 19
   - number: 30h
     text: |-
       1 Met betrekking tot naheffingsaanslagen ter zake van loonbelasting, dividendbelasting, bronbelasting,
@@ -2802,6 +3340,101 @@ articles:
       - id: ref4
         bwb_id: BWBR0002471
         artikel: 28a
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend over het tijdvak... en heeft als grondslag de nageheven belasting"
+          accepted: false
+      execution:
+        parameters:
+          - name: tijdvak_einde
+            type: date
+            required: true
+            description: "Laatste dag van het kalenderjaar of boekjaar waarop de nageheven belasting betrekking heeft (art. 30h lid 2)"
+          - name: aanslag_datum
+            type: date
+            required: true
+            description: "Datum vaststelling naheffingsaanslag (art. 30h lid 1)"
+          - name: aanslag_bedrag_positief
+            type: boolean
+            required: true
+            description: "True als de naheffingsaanslag een positief bedrag betreft"
+          - name: overeenkomstig_verzoek
+            type: boolean
+            required: false
+            description: "True als naheffingsaanslag is vastgesteld overeenkomstig verzoek (art. 30h lid 3)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: false
+            description: "Datum ontvangst verzoek (art. 30h lid 3 en 4)"
+          - name: naheffing_gevolg_van_verzoek
+            type: boolean
+            required: false
+            description: "True als naheffingsaanslag het gevolg is van een verzoek (art. 30h lid 4)"
+        output:
+          - name: rente_periode_start
+            type: date
+            description: "Startdatum rentetijdvak: dag volgend op het tijdvak (art. 30h lid 2)"
+          - name: belastingrente_verschuldigd
+            type: boolean
+            description: "True als belastingrente in rekening wordt gebracht (art. 30h lid 1)"
+          - name: drie_maanden_grens
+            type: date
+            description: "3 maanden na einde tijdvak — grens voor vrijstelling lid 4 (art. 30h lid 4)"
+          - name: verzoek_binnen_3_maanden
+            type: boolean
+            description: "True als verzoek is ontvangen binnen 3 maanden na tijdvak einde (art. 30h lid 4)"
+          - name: geen_belastingrente_lid4
+            type: boolean
+            description: "True als lid 4 van toepassing is: naheffing gevolg van verzoek binnen 3 maanden (art. 30h lid 4)"
+          - name: rente_periode_einde_verzoek
+            type: date
+            description: "Uiterste einddatum rentetijdvak bij verzoek: 10 weken na ontvangst verzoek (art. 30h lid 3)"
+        actions:
+          - output: rente_periode_start
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              days: 1
+          - output: drie_maanden_grens
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              months: 3
+          - output: verzoek_binnen_3_maanden
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $ontvangst_datum_verzoek
+              value: $drie_maanden_grens
+          - output: geen_belastingrente_lid4
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $naheffing_gevolg_van_verzoek
+                  value: true
+                - operation: EQUALS
+                  subject: $verzoek_binnen_3_maanden
+                  value: true
+          - output: belastingrente_verschuldigd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanslag_bedrag_positief
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $aanslag_datum
+                  value: $tijdvak_einde
+                - operation: NOT
+                  value: $geen_belastingrente_lid4
+          - output: rente_periode_einde_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 10
   - number: 30ha
     text: |-
       1 Met betrekking tot de in [artikel 30h][ref1] bedoelde belastingen wordt rente – belastingrente – vergoed ingeval
@@ -2880,12 +3513,103 @@ articles:
       - id: ref9
         bwb_id: BWBR0002629
         artikel: 32b
+    machine_readable:
+      untranslatables:
+        - construct: "belastingrente bedragberekening (bedrag × dagenteller / 365 × percentage)"
+          reason: "Date difference (number of days between two dates) is not available as engine operation"
+          suggestion: "Add DATE_DIFF operation returning number of days"
+          legal_text_excerpt: "De belastingrente wordt enkelvoudig berekend over het tijdvak... en eindigt 14 dagen na de dagtekening van de teruggaafbeschikking"
+          accepted: false
+      execution:
+        parameters:
+          - name: tijdvak_einde
+            type: date
+            required: true
+            description: "Laatste dag van het kalenderjaar of boekjaar waarop de teruggaaf betrekking heeft (art. 30ha lid 1)"
+          - name: ontvangst_datum_verzoek
+            type: date
+            required: true
+            description: "Datum ontvangst verzoek om teruggaafbeschikking (art. 30ha lid 1)"
+          - name: beschikking_datum
+            type: date
+            required: false
+            description: "Datum vaststelling teruggaafbeschikking (art. 30ha lid 1)"
+          - name: beschikking_dagtekening
+            type: date
+            required: true
+            description: "Dagtekening van de teruggaafbeschikking (art. 30ha lid 1)"
+          - name: is_binnen_8_weken_vastgesteld
+            type: boolean
+            required: true
+            description: "True als teruggaafbeschikking binnen 8 weken na verzoek is vastgesteld (art. 30ha lid 1)"
+        output:
+          - name: belastingrente_vergoed_aanwezig
+            type: boolean
+            description: "True als belastingrentevergoeding van toepassing is (art. 30ha lid 1)"
+          - name: acht_weken_na_verzoek
+            type: date
+            description: "8 weken na ontvangst verzoek (art. 30ha lid 1)"
+          - name: drie_maanden_na_tijdvak
+            type: date
+            description: "3 maanden na einde tijdvak (art. 30ha lid 1)"
+          - name: rente_periode_start
+            type: date
+            description: "Startdatum rentetijdvak: later van 8 weken na verzoek of 3 maanden na tijdvak einde (art. 30ha lid 1)"
+          - name: rente_periode_einde
+            type: date
+            description: "Einddatum rentetijdvak: 14 dagen na dagtekening teruggaafbeschikking (art. 30ha lid 1)"
+        actions:
+          - output: belastingrente_vergoed_aanwezig
+            value:
+              operation: NOT
+              value: $is_binnen_8_weken_vastgesteld
+          - output: acht_weken_na_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum_verzoek
+              weeks: 8
+          - output: drie_maanden_na_tijdvak
+            value:
+              operation: DATE_ADD
+              date: $tijdvak_einde
+              months: 3
+          - output: rente_periode_start
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $acht_weken_na_verzoek
+                    value: $drie_maanden_na_tijdvak
+                  then: $acht_weken_na_verzoek
+              default: $drie_maanden_na_tijdvak
+          - output: rente_periode_einde
+            value:
+              operation: DATE_ADD
+              date: $beschikking_dagtekening
+              days: 14
   - number: 30hb
     text: |-
       Het percentage van de belastingrente bedraagt een bij algemene maatregel van bestuur vast te stellen percentage,
       dat voor verschillende belastingen en voor in rekening te brengen rente en te vergoeden rente verschillend kan
       worden vastgesteld.
     url: https://wetten.overheid.nl/BWBR0002320/2026-01-01#Artikel30hb
+    machine_readable:
+      open_terms:
+        - id: belastingrente_percentage
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 30hb Algemene wet inzake rijksbelastingen
+      execution:
+        output:
+          - name: belastingrente_percentage
+            type: number
+            description: Het bij AMvB vastgestelde belastingrentepercentage
+        actions:
+          - output: belastingrente_percentage
+            value: $belastingrente_percentage
   - number: 30i
     text: |-
       1 Met betrekking tot de inkomstenbelasting wordt rente – revisierente – verschuldigd, indien:
@@ -3034,6 +3758,38 @@ articles:
         bwb_id: BWBR0002320
         artikel: 30fc
         hoofdstuk: VA
+    machine_readable:
+      untranslatables:
+        - construct: "alternatieve revisierente berekening lid 3 via artikel 30fc"
+          reason: "Requires cross-reference interest calculation (article 30fc) which itself requires date-difference — not available as engine operation"
+          suggestion: "Add DATE_DIFF operation; implement cross-article calculation reference"
+          legal_text_excerpt: "de revisierente gesteld op het... bedrag dat ingevolge artikel 30fc aan belastingrente in rekening zou worden gebracht"
+          accepted: false
+      definitions:
+        REVISIERENTE_PERCENTAGE:
+          value: 0.20
+          description: "Revisierente bedraagt 20% van de waarde in het economische verkeer (art. 30i lid 2)"
+      execution:
+        parameters:
+          - name: waarde_aanspraken
+            type: amount
+            required: true
+            description: "Waarde in het economische verkeer van de aanspraken ingevolge pensioenregeling of periodieke uitkeringen (lid 2)"
+            type_spec:
+              unit: eurocent
+        output:
+          - name: revisierente
+            type: amount
+            description: "Verschuldigde revisierente (20% van waarde aanspraken, art. 30i lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: revisierente
+            value:
+              operation: MULTIPLY
+              values:
+                - $waarde_aanspraken
+                - $REVISIERENTE_PERCENTAGE
   - number: 30ia
     text: |-
       1 Voor zover gedurende het tijdvak waarover de belastingrente wordt berekend het te betalen bedrag aan belasting
@@ -4144,6 +4900,41 @@ articles:
         bwb_id: BWBR0002320
         artikel: '9'
         hoofdstuk: II
+    machine_readable:
+      definitions:
+        MAX_VERZUIMBOETE_AANGIFTE:
+          value: 670900
+          description: "Maximum verzuimboete aangifte aanslagbelasting (art. 67a lid 1): €6.709"
+      execution:
+        parameters:
+          - name: aangifte_gedaan
+            type: boolean
+            required: true
+            description: "True als aangifte is gedaan"
+          - name: aangifte_tijdig
+            type: boolean
+            required: true
+            description: "True als aangifte tijdig is gedaan (binnen door inspecteur gestelde termijn art. 9 lid 3)"
+        output:
+          - name: verzuim_aangifte_aanwezig
+            type: boolean
+            description: "True als sprake is van een aangifte-verzuim (art. 67a lid 1)"
+          - name: max_verzuimboete_aangifte
+            type: amount
+            description: "Maximum op te leggen verzuimboete aangifte aanslagbelasting"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: verzuim_aangifte_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $aangifte_gedaan
+                - operation: NOT
+                  value: $aangifte_tijdig
+          - output: max_verzuimboete_aangifte
+            value: $MAX_VERZUIMBOETE_AANGIFTE
   - number: 67b
     text: |-
       1 Indien de belastingplichtige of de inhoudingsplichtige de aangifte voor een belasting welke op aangifte moet
@@ -4168,6 +4959,56 @@ articles:
         bwb_id: BWBR0002320
         artikel: '10'
         hoofdstuk: II
+    machine_readable:
+      definitions:
+        MAX_BOETE_AANGIFTE_AFDRACHT:
+          value: 16500
+          description: "Maximum verzuimboete aangifte afdrachtsbelasting (art. 67b lid 1): €165"
+        MAX_BOETE_AANGIFTE_LOONBELASTING:
+          value: 167500
+          description: "Maximum verzuimboete aangifte loonbelasting inclusief inhoudingsplichtige (art. 67b lid 2): €1.675"
+      execution:
+        parameters:
+          - name: is_loonbelasting
+            type: boolean
+            required: true
+            description: "True als het loonbelasting betreft (inhoudingsplichtige)"
+          - name: aangifte_gedaan
+            type: boolean
+            required: true
+            description: "True als aangifte is gedaan"
+          - name: aangifte_tijdig
+            type: boolean
+            required: true
+            description: "True als aangifte tijdig is gedaan"
+        output:
+          - name: verzuim_aangifte_afdracht_aanwezig
+            type: boolean
+            description: "True als sprake is van aangifte-verzuim (art. 67b lid 1)"
+          - name: max_verzuimboete_aangifte_afdracht
+            type: amount
+            description: "Maximum op te leggen verzuimboete (€165 voor afdrachtsbelasting, €1.675 voor loonbelasting)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: verzuim_aangifte_afdracht_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $aangifte_gedaan
+                - operation: NOT
+                  value: $aangifte_tijdig
+          - output: max_verzuimboete_aangifte_afdracht
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_loonbelasting
+                    value: true
+                  then: $MAX_BOETE_AANGIFTE_LOONBELASTING
+              default: $MAX_BOETE_AANGIFTE_AFDRACHT
   - number: 67c
     text: |-
       1 Indien de belastingplichtige of de inhoudingsplichtige de belasting welke op aangifte moet worden voldaan of
@@ -4190,6 +5031,41 @@ articles:
         bwb_id: BWBR0002320
         artikel: '20'
         hoofdstuk: IV
+    machine_readable:
+      definitions:
+        MAX_VERZUIMBOETE_NIET_BETAALD:
+          value: 670900
+          description: "Maximum verzuimboete niet-betalen (art. 67c lid 1): €6.709"
+      execution:
+        parameters:
+          - name: belasting_volledig_betaald
+            type: boolean
+            required: true
+            description: "True als belasting volledig is betaald"
+          - name: belasting_tijdig_betaald
+            type: boolean
+            required: true
+            description: "True als belasting tijdig is betaald"
+        output:
+          - name: verzuim_betaling_aanwezig
+            type: boolean
+            description: "True als sprake is van een betalingsverzuim (art. 67c lid 1)"
+          - name: max_verzuimboete_betaling
+            type: amount
+            description: "Maximum op te leggen verzuimboete niet-betalen"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: verzuim_betaling_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $belasting_volledig_betaald
+                - operation: NOT
+                  value: $belasting_tijdig_betaald
+          - output: max_verzuimboete_betaling
+            value: $MAX_VERZUIMBOETE_NIET_BETAALD
   - number: 67ca
     text: |-
       1 Degene die niet voldoet aan de verplichting hem opgelegd bij of krachtens:
@@ -4423,6 +5299,40 @@ articles:
       - id: ref2
         bwb_id: BWBR0011353
         artikel: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: te_weinig_geheven_door_opzet
+            type: amount
+            required: true
+            description: "Bedrag dat door opzet van belastingplichtige niet zou zijn geheven (grondslag lid 2)"
+            type_spec:
+              unit: eurocent
+          - name: heeft_box3_inkomen
+            type: boolean
+            required: true
+            description: "True als aanslag betrekking heeft op belastbaar inkomen box 3 (art. 5.1 IB 2001) — lid 5"
+        output:
+          - name: max_vergrijpboete_opzet
+            type: amount
+            description: "Maximum vergrijpboete bij opzet onjuiste aangifte: 100% of 300% voor box 3 (art. 67d lid 1/5)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_vergrijpboete_opzet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_box3_inkomen
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $te_weinig_geheven_door_opzet
+                      - 3
+              default: $te_weinig_geheven_door_opzet
   - number: 67e
     text: |-
       1 Indien het met betrekking tot een belasting welke bij wege van aanslag wordt geheven aan opzet of grove schuld
@@ -4479,6 +5389,40 @@ articles:
       - id: ref3
         bwb_id: BWBR0011353
         artikel: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: te_weinig_geheven_door_opzet_of_grove_schuld
+            type: amount
+            required: true
+            description: "Bedrag navorderingsaanslag voor zover dit door opzet of grove schuld niet geheven zou zijn (grondslag lid 2)"
+            type_spec:
+              unit: eurocent
+          - name: heeft_box3_inkomen
+            type: boolean
+            required: true
+            description: "True als navorderingsaanslag betrekking heeft op belastbaar inkomen box 3 (art. 5.1 IB 2001) — lid 6"
+        output:
+          - name: max_vergrijpboete_navordering
+            type: amount
+            description: "Maximum vergrijpboete bij navordering: 100% of 300% voor box 3 (art. 67e lid 1/6)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_vergrijpboete_navordering
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_box3_inkomen
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $te_weinig_geheven_door_opzet_of_grove_schuld
+                      - 3
+              default: $te_weinig_geheven_door_opzet_of_grove_schuld
   - number: 67f
     text: |-
       1 Indien het aan opzet of grove schuld van de belastingplichtige of de inhoudingsplichtige is te wijten dat
@@ -4516,6 +5460,24 @@ articles:
         bwb_id: BWBR0002320
         artikel: '20'
         hoofdstuk: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: te_weinig_betaald_door_opzet_of_grove_schuld
+            type: amount
+            required: true
+            description: "Bedrag van belasting dat door opzet of grove schuld niet of niet tijdig is betaald (grondslag lid 2)"
+            type_spec:
+              unit: eurocent
+        output:
+          - name: max_vergrijpboete_betaling
+            type: amount
+            description: "Maximum vergrijpboete bij opzet of grove schuld niet-betalen: 100% van grondslag (art. 67f lid 1)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_vergrijpboete_betaling
+            value: $te_weinig_betaald_door_opzet_of_grove_schuld
   - number: 67g
     text: |-
       1 De inspecteur legt de bestuurlijke boete op bij voor bezwaar vatbare beschikking.
@@ -4538,6 +5500,46 @@ articles:
       voor zover deze vermindering, teruggaaf, terugbetaling of kwijtschelding het bedrag betreft waarover de boete is
       berekend.
     url: https://wetten.overheid.nl/BWBR0002320/2026-01-01#Artikel67h
+    machine_readable:
+      execution:
+        parameters:
+          - name: opgelegde_boete
+            type: amount
+            required: true
+            description: "Eerder opgelegde bestuurlijke boete"
+            type_spec:
+              unit: eurocent
+          - name: vermindering_belasting
+            type: amount
+            required: true
+            description: "Bedrag van de belastingvermindering (teruggaaf, kwijtschelding) waarover de boete was berekend"
+            type_spec:
+              unit: eurocent
+          - name: grondslag_belasting
+            type: amount
+            required: true
+            description: "Oorspronkelijk belastingbedrag dat als grondslag voor de boete diende"
+            type_spec:
+              unit: eurocent
+        output:
+          - name: verminderde_boete
+            type: amount
+            description: "Proportioneel verlaagde boete naar evenredigheid van de belastingvermindering (art. 67h)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: verminderde_boete
+            value:
+              operation: SUBTRACT
+              values:
+                - $opgelegde_boete
+                - operation: MULTIPLY
+                  values:
+                    - $opgelegde_boete
+                    - operation: DIVIDE
+                      values:
+                        - $vermindering_belasting
+                        - $grondslag_belasting
   - number: 67n
     text: |-
       1 Wanneer de belastingplichtige uiterlijk twee jaar nadat hij een onjuiste of onvolledige aangifte heeft gedaan of
@@ -4567,6 +5569,51 @@ articles:
       - id: ref2
         bwb_id: BWBR0011353
         artikel: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aangifte_datum
+            type: date
+            required: true
+            description: "Datum waarop de onjuiste of onvolledige aangifte is gedaan (of had moeten worden gedaan)"
+          - name: juiste_aangifte_datum
+            type: date
+            required: true
+            description: "Datum waarop alsnog juiste en volledige aangifte is gedaan of inlichtingen zijn verstrekt"
+          - name: inspecteur_al_op_de_hoogte
+            type: boolean
+            required: true
+            description: "Belastingplichtige weet of redelijkerwijs moet vermoeden dat inspecteur met onjuistheid bekend is of bekend zal worden (lid 1)"
+          - name: betreft_box3_of_aanmerkelijk_belang
+            type: boolean
+            required: true
+            description: "Inkeer heeft betrekking op box 3 (art. 5.1 IB 2001) of aanmerkelijk belang (art. 4.12 IB 2001) — lid 3 uitzondering"
+        output:
+          - name: geen_vergrijpboete_door_inkeer
+            type: boolean
+            description: "True indien inkeer binnen 2 jaar leidt tot vrijstelling van vergrijpboete (art. 67n lid 1)"
+        actions:
+          - output: twee_jaar_grens
+            value:
+              operation: DATE_ADD
+              date: $aangifte_datum
+              years: 2
+          - output: tijdig_ingekeerd
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $juiste_aangifte_datum
+              value: $twee_jaar_grens
+          - output: geen_vergrijpboete_door_inkeer
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $tijdig_ingekeerd
+                  value: true
+                - operation: NOT
+                  value: $inspecteur_al_op_de_hoogte
+                - operation: NOT
+                  value: $betreft_box3_of_aanmerkelijk_belang
   - number: 67o
     text: |-
       1 In afwijking van [artikel 5:1 van de Algemene wet bestuursrecht][ref1] wordt onder overtreder mede verstaan:
@@ -4649,6 +5696,43 @@ articles:
         hoofdstuk: VIIIA
         paragraaf: '2'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_medeplichtige
+            type: boolean
+            required: true
+            description: "True als de overtreder een medeplichtige is (art. 67o lid 3)"
+          - name: max_boete_hoofdovertreder
+            type: amount
+            required: true
+            description: "Maximum boete zoals geldend voor de hoofdovertreder"
+            type_spec:
+              unit: eurocent
+        output:
+          - name: max_boete_medeplichtige
+            type: amount
+            description: "Maximum boete voor medeplichtige (2/3 van de hoofdovertreder boete, art. 67o lid 3)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_boete_medeplichtige
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_medeplichtige
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $max_boete_hoofdovertreder
+                      - operation: DIVIDE
+                        values:
+                          - 2
+                          - 3
+              default: $max_boete_hoofdovertreder
   - number: 67oa
     text: |-
       Indien aan een ander dan de belastingplichtige of inhoudingsplichtige een bestuurlijke boete wordt opgelegd, zijn
