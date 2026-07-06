@@ -818,6 +818,107 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0010424#Artikel1
       [ref2]: https://wetten.overheid.nl/BWBR0010424#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_partner
+            type: boolean
+            required: true
+            description: Remigrant heeft een partner (art. 5)
+          - name: zijn_gehuwd_of_geregistreerd
+            type: boolean
+            required: true
+            description: >-
+              Remigrant en partner zijn gehuwd of hebben geregistreerd partnerschap
+              (relevant voor de duurzaam gescheiden-voorwaarde in lid 1)
+          - name: ophouden_gezamenlijke_huishouding
+            type: boolean
+            required: true
+            description: >-
+              Remigrant en partner zijn opgehouden met elkaar een gezamenlijke
+              huishouding te voeren (art. 5 lid 1)
+          - name: duurzaam_gescheiden
+            type: boolean
+            required: true
+            description: >-
+              Remigrant en partner gaan duurzaam gescheiden leven; vereist indien
+              zij gehuwd of geregistreerde partners zijn (art. 5 lid 1)
+          - name: een_partner_is_overleden
+            type: boolean
+            required: true
+            description: >-
+              De remigrant of zijn partner is overleden; de langstlevende verkrijgt
+              dan recht als alleenstaande (art. 5 lid 2)
+          - name: beide_partners_zijn_overleden
+            type: boolean
+            required: true
+            description: >-
+              Zowel de remigrant als zijn partner zijn overleden; minderjarige
+              kinderen verkrijgen dan een evenredig deel (art. 5 lid 3)
+        output:
+          - name: ieder_verkrijgt_recht_als_alleenstaande
+            type: boolean
+            description: >-
+              Bij scheiding verkrijgt ieder der partijen recht op voorzieningen
+              als ware hij een alleenstaande remigrant (art. 5 lid 1)
+          - name: langstlevende_verkrijgt_recht_als_alleenstaande
+            type: boolean
+            description: >-
+              Bij overlijden van één partner verkrijgt de langstlevende recht
+              op voorzieningen als alleenstaande remigrant (art. 5 lid 2)
+          - name: kinderen_verkrijgen_evenredig_deel
+            type: boolean
+            description: >-
+              Bij overlijden van beide partners verkrijgen de minderjarige kinderen
+              een evenredig deel van het recht op de helft van de voorzieningen
+              (art. 5 lid 3)
+        actions:
+          - output: scheiding_conditie_voldaan
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $zijn_gehuwd_of_geregistreerd
+                    value: true
+                  then:
+                    operation: EQUALS
+                    subject: $duurzaam_gescheiden
+                    value: true
+              default: true
+          - output: ieder_verkrijgt_recht_als_alleenstaande
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_partner
+                  value: true
+                - operation: EQUALS
+                  subject: $ophouden_gezamenlijke_huishouding
+                  value: true
+                - operation: EQUALS
+                  subject: $scheiding_conditie_voldaan
+                  value: true
+          - output: langstlevende_verkrijgt_recht_als_alleenstaande
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_partner
+                  value: true
+                - operation: EQUALS
+                  subject: $een_partner_is_overleden
+                  value: true
+          - output: kinderen_verkrijgen_evenredig_deel
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_partner
+                  value: true
+                - operation: EQUALS
+                  subject: $beide_partners_zijn_overleden
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel5
     references:
       - id: ref1
@@ -1113,6 +1214,28 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0010424#Artikel5a
       [ref4]: https://wetten.overheid.nl/BWBR0010424#Artikel8g
       [ref5]: https://wetten.overheid.nl/BWBR0010424#Artikel6b
+    machine_readable:
+      execution:
+        parameters:
+          - name: bestuurlijke_boete_opgelegd_voor_zelfde_gedraging
+            type: boolean
+            required: true
+            description: >-
+              Voor dezelfde gedraging wordt een bestuurlijke boete als bedoeld in
+              artikel 6b opgelegd; in dat geval blijft de maatregel achterwege
+              (art. 6ab lid 5)
+        output:
+          - name: maatregel_blijft_achterwege
+            type: boolean
+            description: >-
+              Het opleggen van de maatregel blijft achterwege omdat voor dezelfde
+              gedraging een bestuurlijke boete wordt opgelegd (art. 6ab lid 5)
+        actions:
+          - output: maatregel_blijft_achterwege
+            value:
+              operation: EQUALS
+              subject: $bestuurlijke_boete_opgelegd_voor_zelfde_gedraging
+              value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6ab
     references:
       - id: ref1
@@ -1386,6 +1509,60 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0010424#Artikel8g
       [ref7]: https://wetten.overheid.nl/BWBR0010424#Artikel2
       [ref8]: https://wetten.overheid.nl/BWBR0010424#Artikel6d
+    machine_readable:
+      execution:
+        parameters:
+          - name: niet_nakomen_heeft_geleid_tot_onterecht_verlenen
+            type: boolean
+            required: true
+            description: >-
+              Het niet of niet behoorlijk nakomen van art. 2a, 5a of 8g heeft geleid
+              tot ten onrechte of te hoog verlenen van remigratievoorzieningen
+              (art. 6c lid 1 onderdeel a)
+          - name: anderszins_onterecht_of_te_hoog_vastgesteld
+            type: boolean
+            required: true
+            description: >-
+              De remigratievoorzieningen zijn anderszins ten onrechte of op een te
+              hoog bedrag vastgesteld (art. 6c lid 1 onderdeel b)
+          - name: niet_nakomen_maakt_recht_niet_vaststelbaar
+            type: boolean
+            required: true
+            description: >-
+              Het niet of niet behoorlijk nakomen van art. 2a, 5a of 8g leidt ertoe
+              dat niet kan worden vastgesteld in hoeverre nog recht bestaat op
+              remigratievoorzieningen (art. 6c lid 1 onderdeel c)
+          - name: nederlander_nalaat_nationaliteit_te_verkrijgen
+            type: boolean
+            required: true
+            description: >-
+              Een persoon als bedoeld in art. 2 onderdeel b heeft nagelaten al hetgeen
+              te doen wat in redelijkheid mogelijk is om de nationaliteit van het
+              bestemmingsland met bekwame spoed te verkrijgen (art. 6c lid 1 onderdeel d)
+        output:
+          - name: wijziging_of_intrekking_verplicht
+            type: boolean
+            description: >-
+              De Sociale verzekeringsbank is verplicht het besluit tot toekenning van
+              remigratievoorzieningen te wijzigen of in te trekken op grond van een
+              of meer van de voorwaarden in art. 6c lid 1 (onderdelen a t/m d)
+        actions:
+          - output: wijziging_of_intrekking_verplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $niet_nakomen_heeft_geleid_tot_onterecht_verlenen
+                  value: true
+                - operation: EQUALS
+                  subject: $anderszins_onterecht_of_te_hoog_vastgesteld
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_nakomen_maakt_recht_niet_vaststelbaar
+                  value: true
+                - operation: EQUALS
+                  subject: $nederlander_nalaat_nationaliteit_te_verkrijgen
+                  value: true
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6c
     references:
       - id: ref1
@@ -1465,6 +1642,64 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0002524
       [ref9]: https://wetten.overheid.nl/BWBR0008657
       [ref10]: https://wetten.overheid.nl/BWBR0019057
+    machine_readable:
+      execution:
+        parameters:
+          - name: gegrond_vermoeden_recht_niet_meer
+            type: boolean
+            required: true
+            description: >-
+              Gegrond vermoeden dat het recht op remigratievoorzieningen niet meer
+              bestaat (art. 6d lid 1 onderdeel a)
+          - name: gegrond_vermoeden_recht_lager_bedrag
+            type: boolean
+            required: true
+            description: >-
+              Gegrond vermoeden dat het recht op remigratievoorzieningen bestaat
+              tot een lager bedrag (art. 6d lid 1 onderdeel b)
+          - name: gegrond_vermoeden_niet_nakomen_verplichtingen
+            type: boolean
+            required: true
+            description: >-
+              Gegrond vermoeden dat de remigrant, partner, kinderen of hun
+              vertegenwoordiger verplichtingen art. 2a, 5a of 8g niet nakomen
+              (art. 6d lid 1 onderdeel c)
+          - name: gegrond_vermoeden_recht_andere_uitkering_zonder_aanvraag
+            type: boolean
+            required: true
+            description: >-
+              Gegrond vermoeden dat remigrant, partner of kinderen recht hebben
+              op een uitkering als bedoeld in art. 6d lid 1 onderdeel d maar
+              geen aanvraag hebben ingediend of weigeren mee te werken
+        output:
+          - name: schorsing_bevoegd
+            type: boolean
+            description: >-
+              De Sociale verzekeringsbank is bevoegd de betaling van de
+              remigratievoorzieningen te schorsen (art. 6d lid 1)
+          - name: maximale_schorsing_maanden
+            type: number
+            description: >-
+              Maximale duur van de schorsing in maanden (art. 6d lid 2): 6 maanden
+        actions:
+          - output: schorsing_bevoegd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $gegrond_vermoeden_recht_niet_meer
+                  value: true
+                - operation: EQUALS
+                  subject: $gegrond_vermoeden_recht_lager_bedrag
+                  value: true
+                - operation: EQUALS
+                  subject: $gegrond_vermoeden_niet_nakomen_verplichtingen
+                  value: true
+                - operation: EQUALS
+                  subject: $gegrond_vermoeden_recht_andere_uitkering_zonder_aanvraag
+                  value: true
+          - output: maximale_schorsing_maanden
+            value: 6
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel6d
     references:
       - id: ref1
@@ -1862,6 +2097,27 @@ articles:
 
       2 Bij of krachtens algemene maatregel van bestuur worden nadere regels gesteld over een terugkeer naar Nederland
       als bedoeld in het eerste lid en de daaraan te verbinden voorwaarden.
+    machine_readable:
+      execution:
+        parameters:
+          - name: vestigingsdatum_bestemmingsland
+            type: date
+            required: true
+            description: >-
+              Het tijdstip waarop de remigrant zich in het bestemmingsland heeft
+              gevestigd (art. 8 lid 1)
+        output:
+          - name: terugkeer_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum waarop de remigrant nog naar Nederland kan terugkeren:
+              één jaar na de vestigingsdatum in het bestemmingsland (art. 8 lid 1)
+        actions:
+          - output: terugkeer_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $vestigingsdatum_bestemmingsland
+              years: 1
     url: https://wetten.overheid.nl/BWBR0010424/2023-10-01#Artikel8
   - number: 8a
     text: |-
