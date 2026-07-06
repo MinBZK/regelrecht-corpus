@@ -164,6 +164,41 @@ articles:
       - id: ref15
         bwb_id: BWBR0002672
         artikel: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: percentage_jaarwinst
+            type: number
+            required: true
+            description: >-
+              Percentage van de jaarwinst waarop het lidmaatschapsrecht recht
+              geeft, al dan niet tezamen met verbonden leden (artikel 1, zevende
+              lid, eerste volzin)
+          - name: percentage_liquidatie
+            type: number
+            required: true
+            description: >-
+              Percentage van de liquidatie-uitkering waarop het
+              lidmaatschapsrecht recht geeft, al dan niet tezamen met verbonden
+              leden (artikel 1, zevende lid, eerste volzin)
+        output:
+          - name: is_kwalificerend_lidmaatschapsrecht
+            type: boolean
+            description: >-
+              Of het lidmaatschapsrecht een kwalificerend lidmaatschapsrecht is
+              als bedoeld in artikel 1, zevende lid (ten minste 5% van de
+              jaarwinst of ten minste 5% van de liquidatie-uitkering)
+        actions:
+          - output: is_kwalificerend_lidmaatschapsrecht
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $percentage_jaarwinst
+                  value: 5
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $percentage_liquidatie
+                  value: 5
   - number: 1a
     text: |-
       1 Als degene die – rechtstreeks of door middel van certificaten – voor de toepassing van
@@ -914,6 +949,31 @@ articles:
   - number: '5'
     text: De belasting bedraagt 15% van de opbrengst.
     url: https://wetten.overheid.nl/BWBR0002515/2024-01-01#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: opbrengst
+            type: number
+            required: true
+            description: >-
+              De opbrengst van de in artikel 1 bedoelde aandelen, winstbewijzen,
+              kapitaalverstrekkingen en geldleningen, uitgedrukt in eurocent
+        output:
+          - name: belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De verschuldigde dividendbelasting (15% van de opbrengst)
+        actions:
+          - output: belasting
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $opbrengst
+                    - 15
+                - 100
   - number: '6'
     text: |-
       1 Neemt de vennootschap die de opbrengst verschuldigd is, de belasting voor haar rekening, dan wordt voor het
@@ -931,6 +991,47 @@ articles:
         bwb_id: BWBR0002515
         artikel: 4c
         hoofdstuk: II
+    machine_readable:
+      execution:
+        parameters:
+          - name: opbrengst
+            type: number
+            required: true
+            description: >-
+              De opbrengst van de in artikel 1 bedoelde aandelen,
+              uitgedrukt in eurocent
+          - name: vennootschap_neemt_belasting_voor_rekening
+            type: boolean
+            required: true
+            description: >-
+              Of de vennootschap die de opbrengst verschuldigd is de belasting
+              voor haar rekening neemt (artikel 6, eerste lid)
+        output:
+          - name: belasting_grondslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              De grondslag voor de berekening van de belasting na eventuele
+              brutering met factor 100/85
+        actions:
+          - output: belasting_grondslag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $vennootschap_neemt_belasting_voor_rekening
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $opbrengst
+                          - 100
+                      - 85
+              default: $opbrengst
   - number: '7'
     text: |-
       1 De belasting wordt geheven door inhouding op de opbrengst.
@@ -1166,6 +1267,55 @@ articles:
         bwb_id: BWBR0002515
         artikel: '10'
         hoofdstuk: IV
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            Aggregatie van winstuitkeringen ontvangen in het lopende kalenderjaar
+            en de twee voorafgaande kalenderjaren, voor zover nog niet eerder in
+            aanmerking genomen bij een eerdere vermindering
+          reason: >-
+            Aggregation over a variable-length collection of historical amounts
+            across multiple calendar years is not expressible with available
+            engine operations
+          suggestion: >-
+            Add a SUM_HISTORICAL or AGGREGATE operation that can collect and sum
+            values over a time range
+          legal_text_excerpt: >-
+            in het kalenderjaar tot het tijdstip van inhouding alsmede in de
+            twee daaraan voorafgaande kalenderjaren heeft ontvangen voor zover
+            die winstuitkeringen nog niet in aanmerking zijn genomen bij de
+            vaststelling van een eerdere vermindering
+          accepted: false
+      execution:
+        parameters:
+          - name: opbrengst_waarop_ingehouden
+            type: number
+            required: true
+            description: >-
+              De door de inhoudingsplichtige ter beschikking gestelde opbrengst
+              waarop hij dividendbelasting heeft ingehouden, in eurocent
+              (artikel 11, tweede lid)
+        output:
+          - name: vermindering_basis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              De vermindering op basis van 3% van de opbrengst waarop
+              dividendbelasting is ingehouden (artikel 11, tweede lid, eerste
+              volzin); de maximumbeperking op basis van de ontvangen
+              winstuitkeringen in het lopende en twee voorafgaande jaren is als
+              untranslatable gemarkeerd
+        actions:
+          - output: vermindering_basis
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $opbrengst_waarop_ingehouden
+                    - 3
+                - 100
   - number: 11a
     text: |-
       1 Een inhoudingsplichtige die voor de heffing van de vennootschapsbelasting is aangemerkt als beleggingsinstelling
