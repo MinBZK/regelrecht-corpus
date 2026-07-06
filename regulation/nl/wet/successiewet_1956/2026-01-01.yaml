@@ -182,6 +182,81 @@ articles:
       - id: ref3
         bwb_id: BWBR0002320
         artikel: 5a
+    machine_readable:
+      execution:
+        parameters:
+          - name: persoon_1_meerderjarig
+            type: boolean
+            required: true
+            description: Eerste persoon is meerderjarig (>= 18 jaar)
+          - name: persoon_2_meerderjarig
+            type: boolean
+            required: true
+            description: Tweede persoon is meerderjarig (>= 18 jaar)
+          - name: zelfde_woonadres
+            type: boolean
+            required: true
+            description: Beide personen staan op hetzelfde woonadres ingeschreven in de BRP
+          - name: heeft_notarieel_contract
+            type: boolean
+            required: true
+            description: Ingevolge een notarieel samenlevingscontract een wederzijdse zorgverplichting
+          - name: niet_bloedverwanten_rechte_lijn
+            type: boolean
+            required: true
+            description: Geen bloedverwanten in de rechte lijn
+          - name: niet_partner_van_ander
+            type: boolean
+            required: true
+            description: Niet met een ander aan alle voorwaarden voldoen
+          - name: aaneengesloten_periode_5_jaar
+            type: boolean
+            required: true
+            description: "Ten minste 5 jaren aaneengesloten op hetzelfde woonadres ingeschreven (lid 3: contract niet vereist)"
+        output:
+          - name: zijn_partners
+            type: boolean
+            description: De twee personen worden als partners aangemerkt voor de Successiewet
+        actions:
+          - output: basisvoorwaarden_voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $persoon_1_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $persoon_2_meerderjarig
+                  value: true
+                - operation: EQUALS
+                  subject: $zelfde_woonadres
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_bloedverwanten_rechte_lijn
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_partner_van_ander
+                  value: true
+          - output: samenlevingscontract_of_5jaar
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_notarieel_contract
+                  value: true
+                - operation: EQUALS
+                  subject: $aaneengesloten_periode_5_jaar
+                  value: true
+          - output: zijn_partners
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $basisvoorwaarden_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $samenlevingscontract_of_5jaar
+                  value: true
   - number: 1b
     text: |-
       Voor de toepassing van deze wet en de daarop berustende bepalingen worden de landen van het Koninkrijk der
@@ -222,6 +297,66 @@ articles:
       hij Nederland metterwoon heeft verlaten een schenking heeft gedaan, geacht ten tijde van het doen van de schenking
       in Nederland te hebben gewoond.
     url: https://wetten.overheid.nl/BWBR0002226/2026-01-01#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: Persoon heeft de Nederlandse nationaliteit
+          - name: heeft_in_nl_gewoond
+            type: boolean
+            required: true
+            description: Persoon heeft in Nederland gewoond
+          - name: jaren_na_vertrek
+            type: number
+            required: true
+            description: Aantal jaren na het metterwoon verlaten van Nederland
+          - name: doel
+            type: string
+            required: true
+            description: "overlijden of schenking"
+        output:
+          - name: geacht_woonachtig_nederland
+            type: boolean
+            description: Persoon wordt geacht ten tijde van overlijden of schenking in Nederland te wonen
+        actions:
+          - output: geacht_woonachtig_10jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_nederlander
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_in_nl_gewoond
+                  value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $jaren_na_vertrek
+                  value: 10
+          - output: geacht_woonachtig_1jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_in_nl_gewoond
+                  value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $jaren_na_vertrek
+                  value: 1
+                - operation: EQUALS
+                  subject: $doel
+                  value: "schenking"
+          - output: geacht_woonachtig_nederland
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $geacht_woonachtig_10jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $geacht_woonachtig_1jaar
+                  value: true
   - number: '4'
     text: |-
       1 De vaststelling van vermissing wordt, voor de toepassing van deze wet, met werkelijk overlijden in alle opzichten
@@ -576,6 +711,30 @@ articles:
         bwb_id: BWBR0002226
         artikel: '67'
         hoofdstuk: XI
+    machine_readable:
+      execution:
+        parameters:
+          - name: schenking_datum
+            type: date
+            required: true
+            description: Datum van de schenking
+          - name: overlijden_datum
+            type: date
+            required: true
+            description: Datum van overlijden van de erflater
+        output:
+          - name: geldt_als_erfrecht
+            type: boolean
+            description: Schenking binnen 180 dagen voor overlijden wordt geacht krachtens erfrecht te zijn verkregen
+        actions:
+          - output: geldt_als_erfrecht
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $overlijden_datum
+              value:
+                operation: DATE_ADD
+                date: $schenking_datum
+                days: 180
   - number: '13'
     text: |-
       1 Al wat ten gevolge van of na het overlijden van een erflater wordt verkregen krachtens een overeenkomst
@@ -851,6 +1010,55 @@ articles:
       - id: ref5
         bwb_id: BWBR0011353
         artikel: 4.5a
+    machine_readable:
+      execution:
+        parameters:
+          - name: type_reserve
+            type: string
+            required: true
+            description: "Type vermogensbestanddeel: oudedagsreserve, overige_reserves, stamrechten, aanmerkelijk_belang"
+          - name: waarde
+            type: number
+            required: true
+            description: Waarde van het vermogensbestanddeel in eurocent
+        output:
+          - name: aftrek_latente_belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Te verrekenen latente inkomstenbelasting op grond van artikel 20 lid 6
+        actions:
+          - output: percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_reserve
+                    value: "oudedagsreserve"
+                  then: 0.30
+                - when:
+                    operation: EQUALS
+                    subject: $type_reserve
+                    value: "overige_reserves"
+                  then: 0.20
+                - when:
+                    operation: EQUALS
+                    subject: $type_reserve
+                    value: "stamrechten"
+                  then: 0.30
+                - when:
+                    operation: EQUALS
+                    subject: $type_reserve
+                    value: "aanmerkelijk_belang"
+                  then: 0.0625
+              default: 0
+          - output: aftrek_latente_belasting
+            value:
+              operation: MULTIPLY
+              values:
+                - $percentage
+                - $waarde
   - number: '21'
     text: |-
       1 Het verkregene wordt in aanmerking genomen naar de waarde welke daaraan op het tijdstip van de verkrijging in het
@@ -1086,6 +1294,112 @@ articles:
       - id: ref1
         bwb_id: BWBR0002740
         artikel: '13'
+    machine_readable:
+      definitions:
+        GRENS_EERSTE_SCHIJF:
+          value: 15866900
+          description: "Grens eerste schijf: €158.669 in eurocent (2026)"
+      execution:
+        parameters:
+          - name: belaste_verkrijging
+            type: number
+            required: true
+            description: Belaste verkrijging na aftrek vrijstelling in eurocent
+          - name: verkrijgerskategorie
+            type: string
+            required: true
+            description: "I (partner of afstammelingen rechte lijn) of II (overige gevallen)"
+          - name: is_afstammeling_tweede_of_verdere_graad
+            type: boolean
+            required: true
+            description: Afstammeling in tweede of verdere graad (bijv. kleinkind, achterkleinkind) — kolom I tarief x 1,80
+          - name: overdrachtsbelasting_betaald
+            type: number
+            required: true
+            description: Betaalde overdrachtsbelasting over het schenkbedrag in eurocent (0 indien niet van toepassing)
+        output:
+          - name: verschuldigde_belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde erfbelasting of schenkbelasting na aftrek overdrachtsbelasting
+        actions:
+          - output: tarief_eerste_schijf
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie
+                    value: "I"
+                  then: 0.10
+              default: 0.30
+          - output: tarief_tweede_schijf
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie
+                    value: "I"
+                  then: 0.20
+              default: 0.40
+          - output: bedrag_eerste_schijf
+            value:
+              operation: MIN
+              values:
+                - $belaste_verkrijging
+                - $GRENS_EERSTE_SCHIJF
+          - output: belasting_eerste_schijf
+            value:
+              operation: MULTIPLY
+              values:
+                - $bedrag_eerste_schijf
+                - $tarief_eerste_schijf
+          - output: tweede_schijf_basis
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $belaste_verkrijging
+                    - $GRENS_EERSTE_SCHIJF
+          - output: belasting_tweede_schijf
+            value:
+              operation: MULTIPLY
+              values:
+                - $tweede_schijf_basis
+                - $tarief_tweede_schijf
+          - output: belasting_basis
+            value:
+              operation: ADD
+              values:
+                - $belasting_eerste_schijf
+                - $belasting_tweede_schijf
+          - output: belasting_voor_aftrek_ovb
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_afstammeling_tweede_of_verdere_graad
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $belasting_basis
+                      - 1.80
+              default: $belasting_basis
+          - output: verschuldigde_belasting
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $belasting_voor_aftrek_ovb
+                    - $overdrachtsbelasting_betaald
   - number: '25'
     text: |-
       Verkrijgingen krachtens erfrecht door partners worden voor de berekening van de erfbelasting aangemerkt als
@@ -1315,6 +1629,110 @@ articles:
       - id: ref10
         bwb_id: BWBR0011353
         artikel: '5.16'
+    machine_readable:
+      definitions:
+        VRIJSTELLING_PARTNER:
+          value: 82803500
+          description: "Vrijstelling partner: €828.035 in eurocent (2026)"
+        VRIJSTELLING_GEHANDICAPT_KIND:
+          value: 7867100
+          description: "Vrijstelling gehandicapt/ziek kind: €78.671 in eurocent (2026)"
+        VRIJSTELLING_KIND:
+          value: 2623000
+          description: "Vrijstelling kind: €26.230 in eurocent (2026)"
+        VRIJSTELLING_KLEINKIND:
+          value: 2623000
+          description: "Vrijstelling kleinkind: €26.230 in eurocent (2026)"
+        VRIJSTELLING_OUDER:
+          value: 6211000
+          description: "Vrijstelling ouder: €62.110 in eurocent (2026)"
+        VRIJSTELLING_OVERIG:
+          value: 276900
+          description: "Vrijstelling overige verkrijgers: €2.769 in eurocent (2026)"
+        MINIMUM_VRIJSTELLING_PARTNER_NA_KORTING:
+          value: 21391500
+          description: "Minimumvrijstelling partner na korting pensioenaanspraken: €213.915 in eurocent (2026)"
+      execution:
+        parameters:
+          - name: verkrijgerskategorie_32
+            type: string
+            required: true
+            description: "partner, gehandicapt_kind, kind, kleinkind, ouder, overig"
+          - name: waarde_pensioenaanspraken
+            type: number
+            required: true
+            description: Waarde pensioenaanspraken en lijfrenten verkregen door partner (0 indien niet van toepassing)
+        output:
+          - name: vrijstelling_erfbelasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vrijstelling erfbelasting op grond van artikel 32
+        actions:
+          - output: vrijstelling_basis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "partner"
+                  then: $VRIJSTELLING_PARTNER
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "gehandicapt_kind"
+                  then: $VRIJSTELLING_GEHANDICAPT_KIND
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "kind"
+                  then: $VRIJSTELLING_KIND
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "kleinkind"
+                  then: $VRIJSTELLING_KLEINKIND
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "ouder"
+                  then: $VRIJSTELLING_OUDER
+              default: $VRIJSTELLING_OVERIG
+          - output: korting_pensioenaanspraken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "partner"
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 0.50
+                      - $waarde_pensioenaanspraken
+              default: 0
+          - output: vrijstelling_na_korting
+            value:
+              operation: SUBTRACT
+              values:
+                - $vrijstelling_basis
+                - $korting_pensioenaanspraken
+          - output: vrijstelling_erfbelasting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_32
+                    value: "partner"
+                  then:
+                    operation: MAX
+                    values:
+                      - $MINIMUM_VRIJSTELLING_PARTNER_NA_KORTING
+                      - $vrijstelling_na_korting
+              default: $vrijstelling_basis
   - number: '33'
     text: |-
       Van schenkbelasting is vrijgesteld, hetgeen wordt verkregen:
@@ -1391,6 +1809,88 @@ articles:
       - id: ref1
         bwb_id: BWBR0005289
         artikel: '3'
+    machine_readable:
+      definitions:
+        VRIJSTELLING_KIND_BASIS:
+          value: 690800
+          description: "Vrijstelling kind basis: €6.908 in eurocent (2026)"
+        VRIJSTELLING_KIND_VERHOOGD:
+          value: 3312900
+          description: "Vrijstelling kind verhoogd (18-40 jaar): €33.129 in eurocent (2026)"
+        VRIJSTELLING_OVERIG:
+          value: 276900
+          description: "Vrijstelling overige gevallen: €2.769 in eurocent (2026)"
+      open_terms:
+        - id: vrijstelling_kind_studie
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: "artikel 33, onderdeel 5°, onderdeel b Successiewet 1956"
+      execution:
+        parameters:
+          - name: verkrijgerskategorie_33
+            type: string
+            required: true
+            description: "kind of overig"
+          - name: leeftijd_kind
+            type: number
+            required: true
+            description: Leeftijd van het kind in jaren (0 indien niet kind)
+          - name: type_vrijstelling
+            type: string
+            required: true
+            description: "basis, verhoogd of studie (alleen voor kind tussen 18 en 40 jaar)"
+        output:
+          - name: vrijstelling_schenkbelasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vrijstelling schenkbelasting op grond van artikel 33
+        actions:
+          - output: kind_18_tot_40
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_kind
+                  value: 18
+                - operation: LESS_THAN
+                  subject: $leeftijd_kind
+                  value: 40
+          - output: vrijstelling_schenkbelasting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verkrijgerskategorie_33
+                    value: "kind"
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: AND
+                          conditions:
+                            - operation: EQUALS
+                              subject: $kind_18_tot_40
+                              value: true
+                            - operation: EQUALS
+                              subject: $type_vrijstelling
+                              value: "studie"
+                        then: $vrijstelling_kind_studie
+                      - when:
+                          operation: AND
+                          conditions:
+                            - operation: EQUALS
+                              subject: $kind_18_tot_40
+                              value: true
+                            - operation: EQUALS
+                              subject: $type_vrijstelling
+                              value: "verhoogd"
+                        then: $VRIJSTELLING_KIND_VERHOOGD
+                    default: $VRIJSTELLING_KIND_BASIS
+              default: $VRIJSTELLING_OVERIG
   - number: '34'
     text: |-
       Wij behouden Ons voor bij algemene maatregel van bestuur regelen te stellen, ten doel hebbende te bevorderen,
@@ -1543,6 +2043,80 @@ articles:
         bwb_id: BWBR0002226
         artikel: 35e
         hoofdstuk: IIIA
+    machine_readable:
+      definitions:
+        BOV_DREMPEL:
+          value: 154350000
+          description: "BOV-drempel: €1.543.500 in eurocent (2026)"
+      execution:
+        parameters:
+          - name: waarde_ondernemingsvermogen
+            type: number
+            required: true
+            description: Totale waarde van het ondernemingsvermogen van de objectieve onderneming in eurocent
+          - name: waarde_going_concern
+            type: number
+            required: true
+            description: Waarde going concern van het ondernemingsvermogen in eurocent
+          - name: liquidatiewaarde
+            type: number
+            required: true
+            description: Liquidatiewaarde van het ondernemingsvermogen in eurocent
+        output:
+          - name: vrijstelling_bov
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de voorwaardelijke vrijstelling bedrijfsopvolging op grond van artikel 35b
+        actions:
+          - output: liquidatiewaarde_excess
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $liquidatiewaarde
+                    - $waarde_going_concern
+          - output: vermogen_na_liquidatie_aftrek
+            value:
+              operation: SUBTRACT
+              values:
+                - $waarde_ondernemingsvermogen
+                - $liquidatiewaarde_excess
+          - output: vrijstelling_deel_b
+            value:
+              operation: MIN
+              values:
+                - $vermogen_na_liquidatie_aftrek
+                - $BOV_DREMPEL
+          - output: vrijstelling_deel_c
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.75
+                - operation: MAX
+                  values:
+                    - 0
+                    - operation: SUBTRACT
+                      values:
+                        - $vermogen_na_liquidatie_aftrek
+                        - $BOV_DREMPEL
+          - output: vrijstelling_bov
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $waarde_ondernemingsvermogen
+                    value: $BOV_DREMPEL
+                  then: $waarde_ondernemingsvermogen
+              default:
+                operation: ADD
+                values:
+                  - $liquidatiewaarde_excess
+                  - $vrijstelling_deel_b
+                  - $vrijstelling_deel_c
   - number: 35c
     text: |-
       1 Voor de toepassing van dit hoofdstuk en de daarop berustende bepalingen wordt onder de verkrijging van
@@ -1832,6 +2406,48 @@ articles:
       - id: ref9
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      untranslatables:
+        - construct: "verlenging bezitsperiode erflater met 6 maanden per jaar ouder dan AOW-leeftijd + 2 (lid 2)"
+          reason: "Requires AGE calculation relative to AOW retirement age from external law (Algemene Ouderdomswet art. 7a) — cross-law date arithmetic not directly expressible"
+          suggestion: "Add support for cross-law date-based duration calculations"
+          legal_text_excerpt: "De periodes van één jaar, bedoeld in het eerste lid, aanhef en onderdelen c en d, worden verlengd met zes maanden per jaar dat de erflater ten tijde van het overlijden meer dan twee jaar ouder is dan de pensioengerechtigde leeftijd"
+          accepted: false
+        - construct: "verlenging bezitsperiode schenker met 6 maanden per jaar ouder dan AOW-leeftijd + 6 (lid 3)"
+          reason: "Requires AGE calculation relative to AOW retirement age from external law (Algemene Ouderdomswet art. 7a) — cross-law date arithmetic not directly expressible"
+          suggestion: "Add support for cross-law date-based duration calculations"
+          legal_text_excerpt: "De periodes van vijf jaren, bedoeld in het eerste lid, aanhef en onderdelen c en d, worden verlengd met zes maanden per jaar dat de schenker op het moment van schenking meer dan zes jaar ouder is dan de pensioengerechtigde leeftijd"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_erflater
+            type: boolean
+            required: true
+            description: "true = erflater (1 jaar bezitseis), false = schenker (5 jaar bezitseis)"
+          - name: bezitsperiode_jaren
+            type: number
+            required: true
+            description: Aantal jaren dat erflater/schenker het ondernemingsvermogen in bezit had
+        output:
+          - name: voldoet_bezitseis
+            type: boolean
+            description: Erflater of schenker voldoet aan de bezitstermijn van artikel 35d
+        actions:
+          - output: vereiste_periode
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_erflater
+                    value: true
+                  then: 1
+              default: 5
+          - output: voldoet_bezitseis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $bezitsperiode_jaren
+              value: $vereiste_periode
   - number: 35e
     text: |-
       1 Een verkrijger voldoet aan het voortzettingsvereiste indien gedurende de periode van drie jaren, bedoeld in
@@ -2122,11 +2738,51 @@ articles:
       - id: ref2
         bwb_id: BWBR0002761
         artikel: '33'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overlijden_datum
+            type: date
+            required: true
+            description: Datum van overlijden van de erflater
+        output:
+          - name: uiterste_aangiftedatum_erf
+            type: date
+            description: Uiterste datum voor het doen van aangifte erfbelasting (20 maanden na overlijden)
+        actions:
+          - output: uiterste_aangiftedatum_erf
+            value:
+              operation: DATE_ADD
+              date: $overlijden_datum
+              months: 20
   - number: '46'
     text: |-
       De inspecteur stelt de termijn voor het doen van aangifte voor de schenkbelasting zodanig vast, dat deze niet
       eerder verstrijkt dan twee maanden na het einde van het kalenderjaar waarin de schenking heeft plaatsgevonden.
     url: https://wetten.overheid.nl/BWBR0002226/2026-01-01#Artikel46
+    machine_readable:
+      execution:
+        parameters:
+          - name: kalenderjaar_schenking
+            type: number
+            required: true
+            description: Kalenderjaar waarin de schenking heeft plaatsgevonden
+        output:
+          - name: uiterste_aangiftedatum_schenk
+            type: date
+            description: Uiterste datum voor het doen van aangifte schenkbelasting (2 maanden na einde kalenderjaar)
+        actions:
+          - output: einde_kalenderjaar
+            value:
+              operation: DATE
+              year: $kalenderjaar_schenking
+              month: 12
+              day: 31
+          - output: uiterste_aangiftedatum_schenk
+            value:
+              operation: DATE_ADD
+              date: $einde_kalenderjaar
+              months: 2
   - number: '47'
     text: |-
       Ingeval sprake is van meer dan één verkrijger van dezelfde erflater of krachtens een gezamenlijke schenking, kunnen
@@ -2219,6 +2875,30 @@ articles:
         bwb_id: BWBR0002226
         artikel: '45'
         hoofdstuk: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: verkrijging_datum
+            type: date
+            required: true
+            description: Datum van de eerste verkrijging krachtens erfrecht
+          - name: overlijden_datum_verkrijger
+            type: date
+            required: true
+            description: Datum van overlijden van de verkrijger (die zelf ook overleed)
+        output:
+          - name: vermindering_tot_nihil
+            type: boolean
+            description: "Erfbelasting wordt verminderd tot nihil: verkrijger overleed binnen 30 dagen na verkrijging (art. 53 lid 4)"
+        actions:
+          - output: vermindering_tot_nihil
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $overlijden_datum_verkrijger
+              value:
+                operation: DATE_ADD
+                date: $verkrijging_datum
+                days: 30
   - number: '54'
     text: |-
       Een beroepschrift kan op de voet van [artikel 26a van de Algemene wet inzake rijksbelastingen][ref1] eveneens
@@ -2339,6 +3019,40 @@ articles:
       Staat. Het bedrag van de kwijtschelding beloopt 120 percent van de waarde van de overgedragen voorwerpen maar niet
       meer dan de verschuldigde belasting en de in rekening gebrachte belastingrente.
     url: https://wetten.overheid.nl/BWBR0002226/2026-01-01#Artikel67
+    machine_readable:
+      execution:
+        parameters:
+          - name: waarde_overgedragen_voorwerpen
+            type: number
+            required: true
+            description: Waarde van de aan de Staat overgedragen voorwerpen met nationaal cultuurhistorisch of kunsthistorisch belang in eurocent
+          - name: verschuldigde_belasting
+            type: number
+            required: true
+            description: Verschuldigde erfbelasting in eurocent
+          - name: belastingrente
+            type: number
+            required: true
+            description: In rekening gebrachte belastingrente in eurocent
+        output:
+          - name: kwijtschelding_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van kwijtschelding bij overdracht cultuurhistorische voorwerpen (art. 67 lid 3)
+        actions:
+          - output: kwijtschelding_bedrag
+            value:
+              operation: MIN
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - 1.20
+                    - $waarde_overgedragen_voorwerpen
+                - operation: ADD
+                  values:
+                    - $verschuldigde_belasting
+                    - $belastingrente
   - number: '71'
     text: |-
       1 Het aanvaarden van een nalatenschap onder het voorrecht van boedelbeschrijving ontheft niet van de

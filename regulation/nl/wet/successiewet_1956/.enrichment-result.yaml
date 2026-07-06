@@ -1,0 +1,100 @@
+law: Successiewet 1956
+bwb_id: BWBR0002226
+valid_from: "2026-01-01"
+enriched_at: "2026-07-06"
+
+summary:
+  articles_with_machine_readable: 13
+  untranslatables: 2
+  open_terms: 1
+
+articles_enriched:
+  - number: 1a
+    topic: Partner definition for unmarried persons
+  - number: 3
+    topic: Deemed Dutch residency (10-year Nederlander rule, 1-year general rule)
+  - number: 12
+    topic: Gifts within 180 days before death treated as inheritance
+  - number: 20
+    topic: Latent income tax deduction percentages (lid 6)
+  - number: 24
+    topic: Inheritance/gift tax tariff calculation (two brackets, two categories)
+  - number: 32
+    topic: Erfbelasting exemptions by heir category (partner, children, etc.)
+  - number: 33
+    topic: Schenkbelasting exemptions (child basis/verhoogd/studie)
+  - number: 35b
+    topic: Bedrijfsopvolgingsregeling (BOV) conditional exemption calculation
+  - number: 35d
+    topic: Bezitseis (holding period) for BOV — 1 year erflater, 5 years schenker
+  - number: 45
+    topic: Erfbelasting filing deadline (20 months after death)
+  - number: 46
+    topic: Schenkbelasting filing deadline (2 months after calendar year end)
+  - number: 53
+    topic: Double inheritance reduction to nil within 30 days (lid 4)
+  - number: 67
+    topic: Kwijtschelding for transferred cultural heritage items (lid 3)
+
+untranslatables:
+  - article: 35d
+    construct: Verlenging bezitsperiode erflater — 6 maanden per jaar boven AOW-leeftijd + 2 (lid 2)
+    reason: Cross-law AGE calculation against Algemene Ouderdomswet art. 7a not expressible
+  - article: 35d
+    construct: Verlenging bezitsperiode schenker — 6 maanden per jaar boven AOW-leeftijd + 6 (lid 3)
+    reason: Cross-law AGE calculation against Algemene Ouderdomswet art. 7a not expressible
+
+open_terms:
+  - article: 33
+    id: vrijstelling_kind_studie
+    delegation_type: MINISTERIELE_REGELING
+    note: >
+      The studie exemption amount (€69.009) is stated in the law text, but eligibility
+      conditions are delegated to ministerial regulation. The open_term covers the
+      delegated conditions; the amount itself could alternatively be a constant definition.
+
+reverse_validation_assumptions:
+  - article: 1a
+    description: >
+      Time period validation (lid 2) not modelled: 6 months for erfbelasting, 2 years
+      for schenkbelasting. Parameters are boolean flags pre-computed for the relevant
+      period by the caller. The period selection logic requires knowing which tax is
+      at issue and the reference date.
+  - article: 12
+    description: >
+      Residency condition omitted: "erflater die ten tijde van dat overlijden in Nederland
+      woonde" is not a parameter. Callers are expected to pre-check Dutch residency via
+      Arts. 2-3 before invoking this article's machine_readable.
+  - article: 20
+    description: >
+      Aanmerkelijk belang: the waarde parameter is assumed to represent the excess over
+      verkrijgingsprijs (art. 20 lid 6d: "voorzover deze de verkrijgingsprijs... overtreft").
+      The parameter description should make this explicit.
+  - article: 24
+    description: >
+      Implicit constraint: is_afstammeling_tweede_of_verdere_graad=true is legally
+      impossible when verkrijgerskategorie="II". The 1.80 multiplier from footnote 1
+      applies only to column I (category I) verkrijgers. The code does not guard against
+      this invalid parameter combination, relying on callers to pass consistent inputs.
+
+related_legislation:
+  - bwb_id: BWBR0002221
+    title: Algemene Ouderdomswet
+    reason: Art. 35d lid 2-3 — pensioengerechtigde leeftijd (art. 7a) for BOV bezitseis extension
+  - bwb_id: BWBR0011353
+    title: Wet inkomstenbelasting 2001
+    reason: Art. 20 lid 5-6 — latente inkomstenbelasting categorieën; art. 35c/35d — ondernemingsvermogen definitie
+  - bwb_id: BWBR0002740
+    title: Wet op belastingen van rechtsverkeer
+    reason: Art. 24 lid 2 — overdrachtsbelasting aftrek op schenkbelasting
+  - bwb_id: BWBR0002320
+    title: Algemene wet inzake rijksbelastingen
+    reason: Art. 1a lid 1 — in afwijking van art. 5a AWR (partner definition)
+  - bwb_id: BWBR0002761
+    title: Burgerlijk Wetboek Boek 4
+    reason: Art. 53 lid 1 — legitieme portie, wilsrecht; art. 45 lid 2 — bijzondere verkrijgingsgronden
+
+mvt_research:
+  documents_found: 0
+  reason: WebFetch not available during enrichment session
+  feature_file: null
