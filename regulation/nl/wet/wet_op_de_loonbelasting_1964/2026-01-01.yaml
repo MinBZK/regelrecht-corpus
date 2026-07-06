@@ -2255,6 +2255,82 @@ articles:
       - id: ref1
         bwb_id: BWBR0011353
         artikel: '2.2'
+    machine_readable:
+      untranslatables:
+        - construct: "heffingskorting-deel betrekking hebbend op arbeidskorting voor EU/EEA-werknemers (art. 20 lid 3)"
+          reason: >-
+            Het 'deel van de heffingskorting dat betrekking heeft op de arbeidskorting' is
+            eigenlijk arbeidskorting * (belastingtarief / gecombineerd_heffingspercentage).
+            Dit vereist een aanvullende berekening die niet direct beschikbaar is als los
+            output. Als benadering wordt de ruwe arbeidskorting-waarde gebruikt.
+          legal_text_excerpt: "alleen het deel van de heffingskorting voor de loonbelasting dat betrekking heeft op de arbeidskorting in aanmerking genomen"
+          accepted: false
+      execution:
+        parameters:
+          - name: woont_in_nederland
+            type: boolean
+            required: true
+            description: Werknemer woont in Nederland of wordt geacht in Nederland te wonen (art. 2.2 IB 2001)
+          - name: woont_in_eu_eea_ch_bes
+            type: boolean
+            required: true
+            description: Werknemer woont in EU, EEA, Zwitserland of op BES eilanden (niet in Nederland)
+        input:
+          - name: belasting_op_jaarloon
+            type: amount
+            source:
+              output: belasting_op_jaarloon
+            type_spec:
+              unit: eurocent
+          - name: heffingskorting_loonbelasting
+            type: amount
+            source:
+              output: heffingskorting_loonbelasting
+            type_spec:
+              unit: eurocent
+          - name: arbeidskorting
+            type: amount
+            source:
+              output: arbeidskorting
+            type_spec:
+              unit: eurocent
+        output:
+          - name: verschuldigde_belasting_jaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde loonbelasting over een loontijdvak van een jaar (art. 20)
+        actions:
+          - output: toepasselijke_heffingskorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $woont_in_nederland
+                    value: true
+                  then: $heffingskorting_loonbelasting
+                - when:
+                    operation: EQUALS
+                    subject: $woont_in_eu_eea_ch_bes
+                    value: true
+                  then: $arbeidskorting
+              default: 0
+          - output: gecorrigeerde_heffingskorting
+            value:
+              operation: MIN
+              values:
+                - $toepasselijke_heffingskorting
+                - $belasting_op_jaarloon
+          - output: verschuldigde_belasting_jaar
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $belasting_op_jaarloon
+                    - $gecorrigeerde_heffingskorting
   - number: 20a
     text: |-
       1 De belasting over een loontijdvak van een jaar wordt bepaald aan de hand van de navolgende tabel (tarieftabel).
@@ -2356,6 +2432,64 @@ articles:
       - id: ref2
         bwb_id: BWBR0011353
         artikel: '2.10'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van belastingberekening op geheel getal (eurocent)"
+          reason: "Percentage-berekeningen (8,10%, 37,56%, 49,50%) over belastbaar loon produceren mogelijk niet-geheel getal in eurocent; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "het bedrag dat wordt berekend door het in kolom IV vermelde percentage te nemen van het gedeelte van het belastbare loon dat het in kolom I vermelde bedrag te boven gaat"
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_loon
+            type: number
+            required: true
+            description: Belastbaar loon op jaarbasis in eurocent
+        output:
+          - name: belasting_op_jaarloon
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Berekende belasting op het belastbare loon volgens tarieftabel (art. 20a, 2026)
+        actions:
+          - output: belasting_op_jaarloon
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_loon
+                    value: 3888300
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 0.081
+                      - $belastbaar_loon
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_loon
+                    value: 7842600
+                  then:
+                    operation: ADD
+                    values:
+                      - 314900
+                      - operation: MULTIPLY
+                        values:
+                          - 0.3756
+                          - operation: SUBTRACT
+                            values:
+                              - $belastbaar_loon
+                              - 3888300
+              default:
+                operation: ADD
+                values:
+                  - 1800100
+                  - operation: MULTIPLY
+                    values:
+                      - 0.495
+                      - operation: SUBTRACT
+                        values:
+                          - $belastbaar_loon
+                          - 7842600
   - number: 20b
     text: |-
       1 In afwijking van [artikel 20a, eerste lid][ref1], wordt indien de werknemer vóór 1 januari 1946 is geboren, de
@@ -2464,6 +2598,64 @@ articles:
       - id: ref3
         bwb_id: BWBR0011353
         artikel: 2.10a
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van belastingberekening op geheel getal (eurocent)"
+          reason: "Percentage-berekeningen (8,10%, 37,56%, 49,50%) over belastbaar loon produceren mogelijk niet-geheel getal in eurocent; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "het bedrag dat wordt berekend door het in kolom IV vermelde percentage te nemen van het gedeelte van het belastbare loon dat het in kolom I vermelde bedrag te boven gaat"
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_loon
+            type: number
+            required: true
+            description: Belastbaar loon op jaarbasis in eurocent (voor werknemers geboren vóór 1 januari 1946)
+        output:
+          - name: belasting_op_jaarloon
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Berekende belasting voor werknemers geboren vóór 1 januari 1946 (art. 20b, 2026)
+        actions:
+          - output: belasting_op_jaarloon
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_loon
+                    value: 4112300
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 0.081
+                      - $belastbaar_loon
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $belastbaar_loon
+                    value: 7842600
+                  then:
+                    operation: ADD
+                    values:
+                      - 333000
+                      - operation: MULTIPLY
+                        values:
+                          - 0.3756
+                          - operation: SUBTRACT
+                            values:
+                              - $belastbaar_loon
+                              - 4112300
+              default:
+                operation: ADD
+                values:
+                  - 1734100
+                  - operation: MULTIPLY
+                    values:
+                      - 0.495
+                      - operation: SUBTRACT
+                        values:
+                          - $belastbaar_loon
+                          - 7842600
   - number: '21'
     text: |-
       In [dit hoofdstuk][ref1] en de daarop berustende bepalingen wordt verstaan onder:
@@ -2491,12 +2683,86 @@ articles:
       - id: ref3
         bwb_id: BWBR0017745
         artikel: '11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aow_premiepercentage
+            type: number
+            required: true
+            description: Premiepercentage voor de algemene ouderdomsverzekering (Wfsv art. 11, eerste lid)
+          - name: anw_premiepercentage
+            type: number
+            required: true
+            description: Premiepercentage voor de nabestaandenverzekering (Wfsv art. 11, eerste lid)
+          - name: wlz_premiepercentage
+            type: number
+            required: true
+            description: Premiepercentage voor de verzekering langdurige zorg (Wfsv art. 11, eerste lid)
+        output:
+          - name: belastingtarief_eerste_schijf
+            type: number
+            description: Belastingtarief eerste schijf — percentage uit eerste regel vierde kolom van de tabel in art. 20a
+          - name: gecombineerd_heffingspercentage
+            type: number
+            description: Gecombineerd heffingspercentage — som van belastingtarief eerste schijf en volksverzekeringspremies
+        actions:
+          - output: belastingtarief_eerste_schijf
+            value: 0.081
+          - output: gecombineerd_heffingspercentage
+            value:
+              operation: ADD
+              values:
+                - $belastingtarief_eerste_schijf
+                - $aow_premiepercentage
+                - $anw_premiepercentage
+                - $wlz_premiepercentage
   - number: 21a
     text: |-
       De heffingskorting voor de loonbelasting is het deel van de standaardloonheffingskorting dat tot de
       standaardloonheffingskorting in dezelfde verhouding staat als het belastingtarief eerste schijf staat tot het
       gecombineerde heffingspercentage.
     url: https://wetten.overheid.nl/BWBR0002471/2026-01-01#Artikel21a
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van heffingskorting-breukberekening op geheel getal"
+          reason: "DIVIDE-operatie (belastingtarief / gecombineerd heffingspercentage) levert decimaal getal dat bij MULTIPLY met standaardloonheffingskorting niet-geheel resultaat kan geven; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "het deel van de standaardloonheffingskorting dat tot de standaardloonheffingskorting in dezelfde verhouding staat als het belastingtarief eerste schijf staat tot het gecombineerde heffingspercentage"
+          accepted: false
+      execution:
+        input:
+          - name: standaardloonheffingskorting
+            type: amount
+            source:
+              output: standaardloonheffingskorting
+            type_spec:
+              unit: eurocent
+          - name: belastingtarief_eerste_schijf
+            type: number
+            source:
+              output: belastingtarief_eerste_schijf
+          - name: gecombineerd_heffingspercentage
+            type: number
+            source:
+              output: gecombineerd_heffingspercentage
+        output:
+          - name: heffingskorting_loonbelasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingskorting voor de loonbelasting (art. 21a Wet LB 1964)
+        actions:
+          - output: verhouding_lb
+            value:
+              operation: DIVIDE
+              values:
+                - $belastingtarief_eerste_schijf
+                - $gecombineerd_heffingspercentage
+          - output: heffingskorting_loonbelasting
+            value:
+              operation: MULTIPLY
+              values:
+                - $standaardloonheffingskorting
+                - $verhouding_lb
   - number: 21b
     text: |-
       Bij de toepassing van [artikel 21a][ref1] op het deel van de standaardloonheffingskorting dat op de ouderenkorting
@@ -2516,6 +2782,32 @@ articles:
       - id: ref2
         bwb_id: BWBR0017745
         artikel: '11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aow_premiepercentage
+            type: number
+            required: true
+            description: AOW-premiepercentage vastgesteld door Wfsv artikel 11, eerste lid
+        input:
+          - name: gecombineerd_heffingspercentage
+            type: number
+            source:
+              output: gecombineerd_heffingspercentage
+        output:
+          - name: gecombineerd_heffingspercentage_voor_ouderen
+            type: number
+            description: >-
+              Gecombineerd heffingspercentage voor toepassing op ouderenkorting en
+              alleenstaande ouderenkorting: gecombineerd heffingspercentage verminderd
+              met het AOW-premiepercentage (art. 21b)
+        actions:
+          - output: gecombineerd_heffingspercentage_voor_ouderen
+            value:
+              operation: SUBTRACT
+              values:
+                - $gecombineerd_heffingspercentage
+                - $aow_premiepercentage
   - number: 21c
     text: |-
       De standaardloonheffingskorting is het gezamenlijke bedrag van:
@@ -2558,6 +2850,55 @@ articles:
         bwb_id: BWBR0002471
         artikel: 22c
         hoofdstuk: III
+    machine_readable:
+      execution:
+        input:
+          - name: algemene_heffingskorting
+            type: amount
+            source:
+              output: algemene_heffingskorting
+            type_spec:
+              unit: eurocent
+          - name: arbeidskorting
+            type: amount
+            source:
+              output: arbeidskorting
+            type_spec:
+              unit: eurocent
+          - name: jonggehandicaptenkorting
+            type: amount
+            source:
+              output: jonggehandicaptenkorting
+            type_spec:
+              unit: eurocent
+          - name: ouderenkorting
+            type: amount
+            source:
+              output: ouderenkorting
+            type_spec:
+              unit: eurocent
+          - name: alleenstaande_ouderenkorting
+            type: amount
+            source:
+              output: alleenstaande_ouderenkorting
+            type_spec:
+              unit: eurocent
+        output:
+          - name: standaardloonheffingskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Standaardloonheffingskorting — som van alle van toepassing zijnde kortingen (art. 21c)
+        actions:
+          - output: standaardloonheffingskorting
+            value:
+              operation: ADD
+              values:
+                - $algemene_heffingskorting
+                - $arbeidskorting
+                - $jonggehandicaptenkorting
+                - $ouderenkorting
+                - $alleenstaande_ouderenkorting
   - number: '22'
     text: |-
       1 Voor de werknemer is de algemene heffingskorting van toepassing.
@@ -2565,6 +2906,49 @@ articles:
       2 De algemene heffingskorting bedraagt € 3.115, verminderd, doch niet verder dan tot nihil, met 6,398% van het
       gedeelte van het belastbare loon dat meer bedraagt dan € 29.736.
     url: https://wetten.overheid.nl/BWBR0002471/2026-01-01#Artikel22
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van percentage-berekening op geheel getal"
+          reason: "Percentage berekening (6,398%) over inkomen geeft mogelijk niet-geheel getal in eurocent; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "6,398% van het gedeelte van het belastbare loon dat meer bedraagt dan € 29.736"
+          accepted: false
+      execution:
+        parameters:
+          - name: belastbaar_loon
+            type: number
+            required: true
+            description: Belastbaar loon van de werknemer in eurocent
+        output:
+          - name: algemene_heffingskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de algemene heffingskorting (art. 22 Wet LB 1964)
+        actions:
+          - output: inkomen_boven_grens
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $belastbaar_loon
+                    - 2973600
+          - output: afbouw_bedrag
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.06398
+                - $inkomen_boven_grens
+          - output: algemene_heffingskorting
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - 311500
+                    - $afbouw_bedrag
   - number: 22a
     text: |-
       1 Voor de werknemer die loon uit tegenwoordige arbeid geniet, is de arbeidskorting van toepassing.
@@ -2628,6 +3012,131 @@ articles:
         artikel: '64'
       - id: ref6
         bwb_id: BWBR0013008
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van percentage-berekeningen op geheel getal"
+          reason: "Meerdere percentage-berekeningen (bijv. 8,324%, 31,009%) produceren mogelijk niet-geheel getal in eurocent; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "8,324% van dat loon; 31,009% van dat loon voorzover dit meer bedraagt dan € 11.965; 1,950% van het arbeidsinkomen voor zover dat meer bedraagt dan € 25.845; 6,51% van dat loon voorzover dit meer bedraagt dan € 45.592"
+          accepted: false
+      execution:
+        parameters:
+          - name: loon_tegenwoordige_arbeid
+            type: number
+            required: true
+            description: Loon uit tegenwoordige arbeid (of daarmee gelijkgesteld loon) in eurocent
+        output:
+          - name: arbeidskorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de arbeidskorting (art. 22a Wet LB 1964)
+        actions:
+          - output: deel_a_gross
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.08324
+                - $loon_tegenwoordige_arbeid
+          - output: deel_a
+            value:
+              operation: MIN
+              values:
+                - $deel_a_gross
+                - 99600
+          - output: excess_boven_11965
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $loon_tegenwoordige_arbeid
+                    - 1196500
+          - output: deel_b_gross
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.31009
+                - $excess_boven_11965
+          - output: ruimte_deel_b
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - 530000
+                    - $deel_a
+          - output: deel_b
+            value:
+              operation: MIN
+              values:
+                - $deel_b_gross
+                - $ruimte_deel_b
+          - output: excess_boven_25845
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $loon_tegenwoordige_arbeid
+                    - 2584500
+          - output: deel_c_gross
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.0195
+                - $excess_boven_25845
+          - output: ruimte_deel_c
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - 568500
+                    - operation: ADD
+                      values:
+                        - $deel_a
+                        - $deel_b
+          - output: deel_c
+            value:
+              operation: MIN
+              values:
+                - $deel_c_gross
+                - $ruimte_deel_c
+          - output: deel_abc
+            value:
+              operation: ADD
+              values:
+                - $deel_a
+                - $deel_b
+                - $deel_c
+          - output: excess_boven_45592
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $loon_tegenwoordige_arbeid
+                    - 4559200
+          - output: deel_d
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.0651
+                - $excess_boven_45592
+          - output: arbeidskorting
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $deel_abc
+                    - $deel_d
   - number: 22aa
     text: |-
       1 Voor de werknemer die een uitkering geniet op grond van de
@@ -2673,6 +3182,33 @@ articles:
       - id: ref8
         bwb_id: BWBR0008657
         artikel: 3:51
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_recht_op_wajong
+            type: boolean
+            required: true
+            description: >-
+              Werknemer geniet uitkering op grond van de Wet arbeidsongeschiktheidsvoorziening
+              jonggehandicapten (Wajong), heeft recht op arbeidsondersteuning op grond van
+              die wet, of heeft recht op een arbeidsongeschiktheidsuitkering ingevolge die wet
+        output:
+          - name: jonggehandicaptenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de jonggehandicaptenkorting (art. 22aa Wet LB 1964)
+        actions:
+          - output: jonggehandicaptenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_wajong
+                    value: true
+                  then: 92300
+              default: 0
   - number: 22b
     text: |-
       1 Voor de werknemer die de pensioengerechtigde leeftijd, bedoeld in
@@ -2688,6 +3224,63 @@ articles:
       - id: ref1
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van percentage-berekening op geheel getal"
+          reason: "15%-berekening over tijdvakloon geeft mogelijk niet-geheel getal in eurocent; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "15% van het tijdvakloon op jaarbasis voor zover dat meer bedraagt dan € 46.002"
+          accepted: false
+      execution:
+        parameters:
+          - name: heeft_pensioengerechtigde_leeftijd
+            type: boolean
+            required: true
+            description: Werknemer heeft de pensioengerechtigde leeftijd (AOW-leeftijd, art. 7a AOW) bereikt
+          - name: tijdvakloon_jaarbasis
+            type: number
+            required: true
+            description: Het tijdvakloon op jaarbasis in eurocent
+        output:
+          - name: ouderenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de ouderenkorting (art. 22b Wet LB 1964)
+        actions:
+          - output: loon_boven_grens_22b
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - $tijdvakloon_jaarbasis
+                    - 4600200
+          - output: afbouw_ouderenkorting
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.15
+                - $loon_boven_grens_22b
+          - output: ouderenkorting_bruto
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - 206700
+                    - $afbouw_ouderenkorting
+          - output: ouderenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_pensioengerechtigde_leeftijd
+                    value: true
+                  then: $ouderenkorting_bruto
+              default: 0
   - number: 22c
     text: |-
       1 Voor de werknemer die een uitkering als bedoeld in
@@ -2708,6 +3301,33 @@ articles:
       - id: ref2
         bwb_id: BWBR0002221
         artikel: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangt_aow_alleenstaande
+            type: boolean
+            required: true
+            description: >-
+              Werknemer geniet een uitkering als bedoeld in artikel 9, eerste lid,
+              onderdeel a, van de Algemene Ouderdomswet, of zou deze genieten
+              indien voldaan aan de voorwaarde van artikel 7, eerste lid, onderdeel b, AOW
+        output:
+          - name: alleenstaande_ouderenkorting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Bedrag van de alleenstaande ouderenkorting (art. 22c Wet LB 1964)
+        actions:
+          - output: alleenstaande_ouderenkorting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $ontvangt_aow_alleenstaande
+                    value: true
+                  then: 54000
+              default: 0
   - number: 22d
     text: |-
       De in de [artikelen 22][ref1], [22a][ref2], [22aa][ref3], [22b][ref4] en [22c][ref5] vermelde bedragen en
@@ -3015,6 +3635,74 @@ articles:
         bwb_id: BWBR0002471
         artikel: 27b
         hoofdstuk: IV
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van 52%-berekening op geheel getal"
+          reason: "52%-berekening over loon kan niet-geheel getal in eurocent opleveren; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "bedraagt de belasting 52% van het loon"
+          accepted: false
+      execution:
+        parameters:
+          - name: identiteitsgegevens_niet_verstrekt
+            type: boolean
+            required: true
+            description: Werknemer heeft naam, adres, woonplaats of burgerservicenummer niet verstrekt (art. 26b onderdeel a)
+          - name: identiteit_niet_vastgesteld
+            type: boolean
+            required: true
+            description: Bij loon tegenwoordige dienstbetrekking, identiteit niet vastgesteld in loonadministratie (art. 26b onderdeel b)
+          - name: verblijfsrecht_niet_vastgesteld
+            type: boolean
+            required: true
+            description: Bij vreemde werknemer tegenwoordige dienstbetrekking, verblijfsrechtelijke positie niet vastgesteld (art. 26b onderdeel c)
+          - name: onjuiste_gegevens_verstrekt
+            type: boolean
+            required: true
+            description: Werknemer heeft onjuiste gegevens verstrekt en inhoudingsplichtige weet of redelijkerwijs moet weten (art. 26b onderdeel d)
+          - name: loon
+            type: number
+            required: true
+            description: Loon waarover belasting wordt berekend in eurocent
+        output:
+          - name: bijzonder_tarief_van_toepassing
+            type: boolean
+            description: Geeft aan of het bijzondere tarief van 52% van toepassing is (art. 26b)
+          - name: belasting_bijzonder_tarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Belasting op basis van bijzonder tarief van 52% (art. 26b)
+        actions:
+          - output: bijzonder_tarief_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $identiteitsgegevens_niet_verstrekt
+                  value: true
+                - operation: EQUALS
+                  subject: $identiteit_niet_vastgesteld
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijfsrecht_niet_vastgesteld
+                  value: true
+                - operation: EQUALS
+                  subject: $onjuiste_gegevens_verstrekt
+                  value: true
+          - output: belasting_bijzonder_tarief
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bijzonder_tarief_van_toepassing
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 0.52
+                      - $loon
+              default: 0
   - number: '27'
     text: |-
       1 De belasting wordt geheven door inhouding op het loon.
