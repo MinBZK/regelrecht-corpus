@@ -2404,6 +2404,37 @@ articles:
         artikel: 4:22
         hoofdstuk: '4.2'
         afdeling: 4.2.3
+    machine_readable:
+      untranslatables:
+        - construct: "Kwalitatieve aard van de betaaldienst voor onderdeel l (digitale inhoud, liefdadigheid, toegangsbewijzen)"
+          reason: "De kwalitatieve voorwaarden (type dienst via elektronischecommunicatienetwerk) kunnen niet als engine-operatie worden uitgedrukt"
+          legal_text_excerpt: "het verrichten van betalingstransacties door een aanbieder van elektronischecommunicatienetwerken of -diensten... voor de aankoop van digitale inhoud en spraakgestuurde diensten..."
+          accepted: false
+      execution:
+        parameters:
+          - name: waarde_per_betalingstransactie
+            type: number
+            required: true
+            description: "Waarde van de individuele betalingstransactie in eurocent (drempel lid 2, onderdeel l: € 50 = 5000 eurocent)"
+          - name: totale_waarde_per_maand
+            type: number
+            required: true
+            description: "Totale waarde betalingstransacties voor de abonnee per maand in eurocent (drempel: € 300 = 30000 eurocent)"
+        output:
+          - name: voldoet_aan_drempelwaarden_onderdeel_l
+            type: boolean
+            description: "Of de monetaire drempelwaarden van artikel 1:5a, tweede lid, onderdeel l worden nageleefd (max € 50 per transactie en max € 300 per maand)"
+        actions:
+          - output: voldoet_aan_drempelwaarden_onderdeel_l
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $waarde_per_betalingstransactie
+                  value: 5000
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $totale_waarde_per_maand
+                  value: 30000
   - number: 1:6
     text: |-
       1 Deze wet is niet van toepassing op:
@@ -10012,6 +10043,50 @@ articles:
         hoofdstuk: '2.2'
         paragraaf: 2.2.2.1
         afdeling: 2.2.2
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van de vergunningaanvraag door de toezichthouder (lid 3)"
+          - name: type_vergunning
+            type: string
+            required: true
+            description: "Type vergunning: 'bewaarder', 'icbe', 'beheerder_beleggingsinstelling', 'bank_artikel_211', of 'overig'"
+        output:
+          - name: beslistermijn_weken
+            type: number
+            description: "Termijn in weken waarbinnen de toezichthouder beslist of een ontwerpbesluit opstelt (lid 3: 13w, lid 4: 8w, lid 5/6: 26w)"
+          - name: uiterste_beslistermijn
+            type: date
+            description: "Uiterste datum waarop de toezichthouder beslist op de vergunningaanvraag"
+        actions:
+          - output: beslistermijn_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $type_vergunning
+                    values: ["bewaarder", "icbe"]
+                  then: 8
+                - when:
+                    operation: EQUALS
+                    subject: $type_vergunning
+                    value: "beheerder_beleggingsinstelling"
+                  then: 26
+                - when:
+                    operation: EQUALS
+                    subject: $type_vergunning
+                    value: "bank_artikel_211"
+                  then: 26
+              default: 13
+          - output: uiterste_beslistermijn
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: $beslistermijn_weken
   - number: 1:103
     text: |-
       1 In afwijking van [artikel 1:102, derde of zesde lid][ref1], houdt de toezichthouder de beslissing of het
@@ -10711,6 +10786,33 @@ articles:
         hoofdstuk: '3.3'
         paragraaf: 3.3.11.1
         afdeling: 3.3.11
+    machine_readable:
+      untranslatables:
+        - construct: "Berekening uiterste beslistermijn op basis van werkdagen (lid 1: 2 werkdagen, lid 2: 45 werkdagen, lid 3: 60 werkdagen)"
+          reason: "Werkdagen zijn niet beschikbaar als eenheid in DATE_ADD; alleen kalenderdagen worden ondersteund door de engine"
+          legal_text_excerpt: "De Nederlandsche Bank zendt binnen twee werkdagen na ontvangst van de aanvraag... beslist de Nederlandsche Bank binnen zestig werkdagen na de ontvangstbevestiging"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_bank_niet_artikel_3_4
+            type: boolean
+            required: true
+            description: "Betreft de aanvraag een gekwalificeerde deelneming in een bank die geen houder is van een vergunning als bedoeld in artikel 3:4 (lid 2)?"
+        output:
+          - name: beslistermijn_werkdagen
+            type: number
+            description: "Termijn in werkdagen waarbinnen DNB beslist of een ontwerpbesluit opstelt (lid 2: 45 werkdagen voor bank niet art. 3:4; lid 3: 60 werkdagen overige gevallen)"
+        actions:
+          - output: beslistermijn_werkdagen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_bank_niet_artikel_3_4
+                    value: true
+                  then: 45
+              default: 60
   - number: 1:106c
     text: |-
       1 De Nederlandsche Bank kan de aanvrager binnen vijftig werkdagen na de ontvangstbevestiging als bedoeld in
@@ -12048,6 +12150,41 @@ articles:
 
       c. de onderneming over een gezond toetsingsvermogen, gezonde solvabiliteitsmarge of gezond eigen vermogen beschikt.
     url: https://wetten.overheid.nl/BWBR0020368/2026-06-25#Artikel1124
+    machine_readable:
+      execution:
+        parameters:
+          - name: betreft_aanvang_werkzaamheden
+            type: boolean
+            required: true
+            description: "Heeft de gegarandeerde variabele beloning betrekking op het aanvangen van de werkzaamheden onder verantwoordelijkheid van de onderneming (lid 2, onderdeel a)?"
+          - name: werkzaam_max_een_jaar
+            type: boolean
+            required: true
+            description: "Is de persoon op het moment van toekenning niet langer dan één jaar werkzaam onder verantwoordelijkheid van de onderneming (lid 2, onderdeel b)?"
+          - name: gezond_toetsingsvermogen
+            type: boolean
+            required: true
+            description: "Beschikt de onderneming over een gezond toetsingsvermogen, gezonde solvabiliteitsmarge of gezond eigen vermogen (lid 2, onderdeel c)?"
+        output:
+          - name: gegarandeerde_variabele_beloning_verboden
+            type: boolean
+            description: "Of toekenning van gegarandeerde variabele beloning verboden is (lid 1). False indien alle uitzonderingsvoorwaarden lid 2 (a én b én c) gelden."
+        actions:
+          - output: gegarandeerde_variabele_beloning_verboden
+            value:
+              operation: NOT
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $betreft_aanvang_werkzaamheden
+                    value: true
+                  - operation: EQUALS
+                    subject: $werkzaam_max_een_jaar
+                    value: true
+                  - operation: EQUALS
+                    subject: $gezond_toetsingsvermogen
+                    value: true
   - number: 1:125
     text: |-
       1 Een financiële onderneming keert aan een natuurlijk persoon werkzaam onder haar verantwoordelijkheid geen
