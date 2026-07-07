@@ -1758,6 +1758,35 @@ articles:
         artikel: 33c
         hoofdstuk: '5'
         paragraaf: '5.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_loon_dagen
+            type: number
+            required: true
+            description: "Aantal dagen loon ontvangen in het kalenderjaar als bedoeld in artikel 42 of 42a van de Werkloosheidswet (lid 1)"
+          - name: aantal_loon_uren
+            type: number
+            required: true
+            description: "Aantal uren loon ontvangen in het kalenderjaar als bedoeld in artikel 15 van de Wet werk en inkomen naar arbeidsvermogen (lid 1)"
+        output:
+          - name: heeft_52_of_meer_loon_dagen
+            type: boolean
+            description: "Werknemer heeft in het kalenderjaar over 52 of meer dagen loon ontvangen (Werkloosheidswet, lid 1)"
+          - name: heeft_208_of_meer_loon_uren
+            type: boolean
+            description: "Werknemer heeft in het kalenderjaar over 208 of meer uren loon ontvangen (Wet werk en inkomen naar arbeidsvermogen, lid 1)"
+        actions:
+          - output: heeft_52_of_meer_loon_dagen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_loon_dagen
+              value: 52
+          - output: heeft_208_of_meer_loon_uren
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_loon_uren
+              value: 208
   - number: '34'
     text: |-
       1 De Sociale verzekeringsbank heeft tot taak:
@@ -3410,6 +3439,23 @@ articles:
       tot wet verheven, dan wordt de algemene maatregel van bestuur ingetrokken op het tijdstip van inwerkingtreding van
       die wet.
     url: https://wetten.overheid.nl/BWBR0013060/2026-07-01#Artikel82
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontwerp_overlegging_datum
+            type: date
+            required: true
+            description: "Datum waarop het ontwerp van de AMvB aan beide Kamers der Staten-Generaal is overgelegd (lid 2)"
+        output:
+          - name: vroegste_voordracht_datum
+            type: date
+            description: "Vroegste datum waarop de voordracht voor de AMvB kan worden gedaan: niet eerder dan vier weken na overlegging ontwerp (lid 2)"
+        actions:
+          - output: vroegste_voordracht_datum
+            value:
+              operation: DATE_ADD
+              date: $ontwerp_overlegging_datum
+              weeks: 4
   - number: 82a
     text: |-
       1 Bij algemene maatregel van bestuur kan bij wijze van experiment, met het oog
@@ -3644,6 +3690,35 @@ articles:
         hoofdstuk: IIA
       - id: ref40
         bwb_id: BWBR0025039
+    machine_readable:
+      execution:
+        parameters:
+          - name: inwerkingtreding_datum
+            type: date
+            required: true
+            description: "Datum van inwerkingtreding van de algemene maatregel van bestuur als bedoeld in het eerste lid (experiment)"
+          - name: ontwerp_overlegging_datum
+            type: date
+            required: true
+            description: "Datum waarop het ontwerp van de AMvB aan beide Kamers der Staten-Generaal is overgelegd (lid 7)"
+        output:
+          - name: vervaldag_amvb_experiment
+            type: date
+            description: "Datum waarop de AMvB van rechtswege vervalt: vijf jaar na inwerkingtreding, tenzij eerder bepaald of wetsvoorstel ingediend (lid 3)"
+          - name: vroegste_voordracht_datum
+            type: date
+            description: "Vroegste datum waarop de voordracht voor de AMvB kan worden gedaan: niet eerder dan vier weken na overlegging ontwerp (lid 7)"
+        actions:
+          - output: vervaldag_amvb_experiment
+            value:
+              operation: DATE_ADD
+              date: $inwerkingtreding_datum
+              years: 5
+          - output: vroegste_voordracht_datum
+            value:
+              operation: DATE_ADD
+              date: $ontwerp_overlegging_datum
+              weeks: 4
   - number: '83'
     text: |-
       Indien bezwaar wordt gemaakt tegen een besluit waaraan een medische of arbeidskundige beoordeling ten grondslag
