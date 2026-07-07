@@ -3270,6 +3270,45 @@ articles:
         bwb_id: BWBR0005682
         artikel: '6.5'
         hoofdstuk: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "drie maanden voordat aankondiging (backward date calculation)"
+          reason: "Engine DATE_ADD only supports forward date arithmetic; backward date computation ('X months before date D') cannot be expressed"
+          legal_text_excerpt: "Onze Minister stelt ten minste drie maanden voordat hij het voornemen aan de Tweede Kamer bekendmaakt, de instelling van zijn voornemen tot ontneming van rechten op de hoogte."
+          accepted: false
+      execution:
+        parameters:
+          - name: aankondigingsdatum
+            type: date
+            required: true
+            description: Datum waarop Onze Minister het voornemen aan de Tweede Kamer bekend heeft gemaakt (lid 1)
+          - name: waarschuwingsdatum
+            type: date
+            required: true
+            description: Datum waarop de waarschuwing wordt gegeven (lid 2)
+        output:
+          - name: uiterste_besluitdatum
+            type: date
+            description: Uiterste datum voor besluit na aankondiging (8 weken na aankondigingsdatum, lid 1)
+          - name: minimum_voornemen_termijn_maanden
+            type: number
+            description: Minimale termijn voor voornemenmelding aan instelling in maanden (3 maanden, lid 1)
+          - name: uiterste_waarschuwingstermijn_datum
+            type: date
+            description: Uiterste datum voor reactie op waarschuwing (ten minste 3 maanden na waarschuwing, lid 2)
+        actions:
+          - output: uiterste_besluitdatum
+            value:
+              operation: DATE_ADD
+              date: $aankondigingsdatum
+              weeks: 8
+          - output: minimum_voornemen_termijn_maanden
+            value: 3
+          - output: uiterste_waarschuwingstermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $waarschuwingsdatum
+              months: 3
   - number: '6.7'
     text: |-
       1 Onze Minister kan op aanvraag van het instellingsbestuur toestemming verlenen aspirant-studenten bij de
@@ -3305,6 +3344,28 @@ articles:
         artikel: '7.45'
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+        output:
+          - name: maximaal_hoger_collegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale hoogte van het hogere collegegeld (5x wettelijk collegegeld, lid 4)
+        actions:
+          - output: maximaal_hoger_collegegeld
+            value:
+              operation: MULTIPLY
+              values:
+                - 5
+                - $wettelijk_collegegeld
   - number: 6.7a
     text: |-
       1 Aan de toestemming, bedoeld in [artikel 6.7, eerste lid][ref1], zijn de volgende verplichtingen voor het
@@ -4602,6 +4663,27 @@ articles:
       2 Een opleiding wordt zodanig ingericht dat een student in staat is het aantal studiepunten te behalen waarop de
       studielast voor een studiejaar gebaseerd is.
     url: https://wetten.overheid.nl/BWBR0005682/2026-01-01#Artikel7.4
+    machine_readable:
+      definitions:
+        STUDIEPUNTEN_PER_STUDIEJAAR:
+          value: 60
+          description: Aantal studiepunten per studiejaar
+        UREN_PER_STUDIEJAAR:
+          value: 1680
+          description: Aantal uren studie per studiejaar (60 studiepunten)
+      execution:
+        output:
+          - name: studiepunten_per_studiejaar
+            type: number
+            description: Aantal studiepunten in een studiejaar
+          - name: uren_per_studiejaar
+            type: number
+            description: Aantal uren studie in een studiejaar (1 studiepunt = 28 uur)
+        actions:
+          - output: studiepunten_per_studiejaar
+            value: $STUDIEPUNTEN_PER_STUDIEJAAR
+          - output: uren_per_studiejaar
+            value: $UREN_PER_STUDIEJAAR
   - number: '7.5'
     text: |-
       1 Onverminderd de [artikelen 7.5a tot en met 7.5d][ref1] bedraagt de studielast van:
@@ -4628,6 +4710,47 @@ articles:
         artikel: 7.5a
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: opleidingstype
+            type: string
+            required: true
+            description: "Type opleiding: bachelor_wo, master_wo, bachelor_hbo, master_hbo, associate_degree"
+        output:
+          - name: standaard_studielast_studiepunten
+            type: number
+            description: Nominale studielast van de opleiding in studiepunten (artikel 7.5 lid 1)
+        actions:
+          - output: standaard_studielast_studiepunten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingstype
+                    value: bachelor_wo
+                  then: 180
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingstype
+                    value: master_wo
+                  then: 60
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingstype
+                    value: bachelor_hbo
+                  then: 240
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingstype
+                    value: master_hbo
+                  then: 60
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingstype
+                    value: associate_degree
+                  then: 120
   - number: 7.5a
     text: |-
       De studielast van een masteropleiding in het wetenschappelijk onderwijs:
@@ -4642,6 +4765,42 @@ articles:
 
       d. geneeskunde, klinisch onderzoeker bedraagt 240 studiepunten.
     url: https://wetten.overheid.nl/BWBR0005682/2026-01-01#Artikel7.5a
+    machine_readable:
+      untranslatables:
+        - construct: "ten minste 60 studiepunten en ten hoogste 120 studiepunten (leraar VHO)"
+          reason: "Variable range set by instellingsbestuur; no fixed value computable"
+          legal_text_excerpt: "bedraagt ten minste 60 studiepunten en ten hoogste 120 studiepunten. Het instellingsbestuur bepaalt binnen die bandbreedte de studielast van de opleiding"
+          accepted: false
+      execution:
+        parameters:
+          - name: wo_master_specialisatie
+            type: string
+            required: true
+            description: "Specialisatie: wijsgeer, arts_dierenarts_apotheker_tandarts_kt, geneeskunde_klinisch_onderzoeker"
+        output:
+          - name: studielast_wo_master_specialisatie
+            type: number
+            description: Studielast van de WO masteropleiding voor specifieke beroepen in studiepunten
+        actions:
+          - output: studielast_wo_master_specialisatie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $wo_master_specialisatie
+                    value: wijsgeer
+                  then: 120
+                - when:
+                    operation: EQUALS
+                    subject: $wo_master_specialisatie
+                    value: arts_dierenarts_apotheker_tandarts_kt
+                  then: 180
+                - when:
+                    operation: EQUALS
+                    subject: $wo_master_specialisatie
+                    value: geneeskunde_klinisch_onderzoeker
+                  then: 240
   - number: 7.5b
     text: |-
       1 De studielast van een masteropleiding in het hoger beroepsonderwijs:
@@ -4669,6 +4828,52 @@ articles:
         artikel: 7.9a
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "studielast kunst 60-120 studiepunten (range instellingsbestuur)"
+          reason: "Variable range set by instellingsbestuur; no fixed value computable"
+          legal_text_excerpt: "op het gebied van de kunst bedraagt een door het instellingsbestuur te bepalen studielast van ten minste 60 studiepunten en ten hoogste 120 studiepunten"
+          accepted: false
+      execution:
+        parameters:
+          - name: hbo_master_specialisatie
+            type: string
+            required: true
+            description: "Specialisatie: leraar_vo_eerste_graad, advanced_nurse_practitioner, physician_assistant, bouwkunst, versneld_traject"
+        output:
+          - name: studielast_hbo_master_studiepunten
+            type: number
+            description: Studielast van de HBO masteropleiding voor specifieke beroepen in studiepunten
+        actions:
+          - output: studielast_hbo_master_studiepunten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $hbo_master_specialisatie
+                    value: leraar_vo_eerste_graad
+                  then: 90
+                - when:
+                    operation: EQUALS
+                    subject: $hbo_master_specialisatie
+                    value: advanced_nurse_practitioner
+                  then: 120
+                - when:
+                    operation: EQUALS
+                    subject: $hbo_master_specialisatie
+                    value: physician_assistant
+                  then: 150
+                - when:
+                    operation: EQUALS
+                    subject: $hbo_master_specialisatie
+                    value: bouwkunst
+                  then: 240
+                - when:
+                    operation: EQUALS
+                    subject: $hbo_master_specialisatie
+                    value: versneld_traject
+                  then: 180
   - number: 7.5c
     text: |-
       1 Onze Minister kan op aanvraag bacheloropleidingen in het wetenschappelijk onderwijs aanwijzen, waarvan de
@@ -4855,6 +5060,19 @@ articles:
         artikel: 7.8b
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      definitions:
+        STUDIELAST_PROPEDEUTISCHE_FASE:
+          value: 60
+          description: Studielast van de propedeutische fase in studiepunten (lid 5)
+      execution:
+        output:
+          - name: studielast_propedeutische_fase
+            type: number
+            description: Studielast van de propedeutische fase in studiepunten
+        actions:
+          - output: studielast_propedeutische_fase
+            value: $STUDIELAST_PROPEDEUTISCHE_FASE
   - number: 7.8a
     text: |-
       1 Onze Minister kan op aanvraag van een instellingsbestuur goedkeuren dat een deel
@@ -6083,6 +6301,40 @@ articles:
         artikel: 7.25b
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de aspirant-student
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de inschrijving wordt beoordeeld
+          - name: is_gezamenlijke_opleiding
+            type: boolean
+            required: true
+            description: Of het een gezamenlijke opleiding betreft als bedoeld in artikel 7.3c
+        output:
+          - name: voldoet_aan_leeftijdseis_open_universiteit
+            type: boolean
+            description: Of de persoon voldoet aan de minimumleeftijd van 18 jaar voor inschrijving Open Universiteit (lid 3)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis_open_universiteit
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_gezamenlijke_opleiding
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
   - number: 7.24a
     text: |-
       1 Voor de inschrijving voor een opleiding in het wetenschappelijk onderwijs met alleen het oogmerk gebruik te maken
@@ -6523,6 +6775,32 @@ articles:
         artikel: '7.28'
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de persoon die dispensatie aanvraagt
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum van de aanvraag voor vrijstelling (colloquium doctum)
+        output:
+          - name: voldoet_aan_leeftijdseis_colloquium_doctum
+            type: boolean
+            description: Of de persoon minimaal 21 jaar oud is voor het colloquium doctum (lid 1)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis_colloquium_doctum
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 21
   - number: '7.30'
     text: |-
       1 Voor de inschrijving voor een bacheloropleiding na het propedeutisch examen geldt als eis het bezit van een
@@ -7439,6 +7717,24 @@ articles:
         artikel: 7.45a
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      open_terms:
+        - id: volledig_wettelijk_collegegeld
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 7.45 lid 1 Wet op het hoger onderwijs en wetenschappelijk onderzoek
+      execution:
+        output:
+          - name: volledig_wettelijk_collegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van het volledig wettelijk collegegeld (vastgesteld bij AMvB, lid 1)
+        actions:
+          - output: volledig_wettelijk_collegegeld
+            value: $volledig_wettelijk_collegegeld
   - number: 7.45a
     text: |-
       1 Het wettelijk collegegeld is verschuldigd door een student die tot één van de groepen van personen, bedoeld
@@ -7547,6 +7843,110 @@ articles:
         artikel: '18.15'
         hoofdstuk: '18'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_wsf2000_rechthebbende
+            type: boolean
+            required: true
+            description: Of de student behoort tot de groepen bedoeld in artikel 2.2 Wet studiefinanciering 2000
+          - name: heeft_surinaamse_nationaliteit
+            type: boolean
+            required: true
+            description: Of de student de Surinaamse nationaliteit bezit
+          - name: inschrijvingsvorm
+            type: string
+            required: true
+            description: "Inschrijvingsvorm: voltijds, deeltijds, duaal"
+          - name: opleidingsniveau
+            type: string
+            required: true
+            description: "Opleidingsniveau: associate_degree, bachelor, master"
+          - name: eerder_ad_behaald
+            type: boolean
+            required: true
+            description: Of de student al eerder een graad Associate degree/Bachelor/Master behaalde (voor AD-inschrijving)
+          - name: eerder_bachelor_behaald
+            type: boolean
+            required: true
+            description: Of de student al eerder een graad Bachelor behaalde (voor bachelor-inschrijving)
+          - name: eerder_master_behaald
+            type: boolean
+            required: true
+            description: Of de student al eerder een graad Master behaalde (voor master-inschrijving)
+        output:
+          - name: is_wettelijk_collegegeld_plichtig
+            type: boolean
+            description: Of de student wettelijk collegegeld verschuldigd is (lid 1)
+          - name: type_wettelijk_collegegeld
+            type: string
+            description: "Type wettelijk collegegeld: volledig, gedeeltelijk (lid 3 en 4)"
+        actions:
+          - output: is_in_rechthebbende_groep
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_wsf2000_rechthebbende
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_surinaamse_nationaliteit
+                  value: true
+          - output: voldoet_aan_graadbepaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingsniveau
+                    value: associate_degree
+                  then:
+                    operation: NOT
+                    value: $eerder_ad_behaald
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingsniveau
+                    value: bachelor
+                  then:
+                    operation: NOT
+                    value: $eerder_bachelor_behaald
+                - when:
+                    operation: EQUALS
+                    subject: $opleidingsniveau
+                    value: master
+                  then:
+                    operation: NOT
+                    value: $eerder_master_behaald
+              default: true
+          - output: is_wettelijk_collegegeld_plichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_in_rechthebbende_groep
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_graadbepaling
+                  value: true
+          - output: type_wettelijk_collegegeld
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $inschrijvingsvorm
+                    value: voltijds
+                  then: volledig
+                - when:
+                    operation: EQUALS
+                    subject: $inschrijvingsvorm
+                    value: deeltijds
+                  then: gedeeltelijk
+                - when:
+                    operation: EQUALS
+                    subject: $inschrijvingsvorm
+                    value: duaal
+                  then: gedeeltelijk
   - number: 7.45b
     text: |-
       1 Een student als bedoeld in [artikel 7.45a, eerste en tweede lid][ref1], die is ingeschreven voor een
@@ -7609,6 +8009,67 @@ articles:
         artikel: 7.45a
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: studiepunten_onderwijseenheid
+            type: number
+            required: true
+            description: Aantal studiepunten van de onderwijseenheid waarvoor collegegeld OU berekend wordt
+        input:
+          - name: volledig_wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+        output:
+          - name: minimum_collegegeld_ou
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Minimum collegegeld OU (1/60 x volledig wettelijk collegegeld x studiepunten, lid 1)
+          - name: maximum_collegegeld_ou
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximum collegegeld OU voor rechthebbenden (1/30 x volledig wettelijk collegegeld x studiepunten, lid 1)
+          - name: minimum_collegegeld_ou_niet_rechthebbende
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Minimum collegegeld OU voor niet-rechthebbenden (1/30 x volledig wettelijk collegegeld x studiepunten, lid 3)
+        actions:
+          - output: eenheid_per_punt_laag
+            value:
+              operation: DIVIDE
+              values:
+                - $volledig_wettelijk_collegegeld
+                - 60
+          - output: eenheid_per_punt_hoog
+            value:
+              operation: DIVIDE
+              values:
+                - $volledig_wettelijk_collegegeld
+                - 30
+          - output: minimum_collegegeld_ou
+            value:
+              operation: MULTIPLY
+              values:
+                - $eenheid_per_punt_laag
+                - $studiepunten_onderwijseenheid
+          - output: maximum_collegegeld_ou
+            value:
+              operation: MULTIPLY
+              values:
+                - $eenheid_per_punt_hoog
+                - $studiepunten_onderwijseenheid
+          - output: minimum_collegegeld_ou_niet_rechthebbende
+            value:
+              operation: MULTIPLY
+              values:
+                - $eenheid_per_punt_hoog
+                - $studiepunten_onderwijseenheid
   - number: '7.46'
     text: |-
       1 Een student die niet voldoet aan de voorwaarden, bedoeld in [artikel 7.45a, eerste, tweede en zesde lid][ref1],
