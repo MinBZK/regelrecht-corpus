@@ -321,9 +321,23 @@ articles:
       dat zij daarvoor niet verantwoordelijk kunnen worden geacht.
 
       3 De jongere die de leeftijd van 12 jaren heeft bereikt, is verplicht overeenkomstig de bepalingen van deze wet de
-      school waaraan hij als leerling staat ingeschreven, geregeld te bezoeken, onverminderd het bepaalde in het eerste
-      lid.
+       school waaraan hij als leerling staat ingeschreven, geregeld te bezoeken, onverminderd het bepaalde in het eerste
+       lid.
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel2
+    machine_readable:
+      obligations:
+        - subject: "guardians"
+          action: "ensure_enrollment_and_regular_attendance"
+          requirements:
+            - "submit_government_issued_document_with_personal_details"
+            - "provide_bsn_or_education_number_if_available"
+          legal_basis: "Artikel 2, eerste lid"
+        - subject: "youth_aged_12_or_older"
+          action: "attend_school_regularly"
+          legal_basis: "Artikel 2, derde lid"
+      exemptions:
+        - condition: "guardians_prove_lack_of_responsibility"
+          legal_basis: "Artikel 2, tweede lid"
   - number: '3'
     text: |-
       1 De verplichting om te zorgen, dat een jongere als leerling van een school staat ingeschreven, begint op de eerste
@@ -335,8 +349,21 @@ articles:
       b. aan het einde van het schooljaar waarin de jongere de leeftijd van zestien jaar heeft bereikt.
 
       2 Een jongere die een basisschool in minder dan acht schooljaren heeft doorlopen, wordt voor de toepassing van het
-      eerste lid onder a geacht reeds acht schooljaren een school te hebben bezocht.
+       eerste lid onder a geacht reeds acht schooljaren een school te hebben bezocht.
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel3
+    machine_readable:
+       start_condition:
+         trigger: "first_school_day_of_month_after_turning_5"
+         legal_basis: "Artikel 3, eerste lid"
+       end_conditions:
+         - condition: "after_12_full_school_years"
+           legal_basis: "Artikel 3, eerste lid, onder a"
+         - condition: "end_of_school_year_when_turning_16"
+           legal_basis: "Artikel 3, eerste lid, onder b"
+       special_rule:
+         condition: "basisschool_completed_in_less_than_8_years"
+         adjustment: "count_as_8_years_attended"
+         legal_basis: "Artikel 3, tweede lid"
   - number: 3a
     text: |-
       1 Indien het betreft een jongere die tenminste de leeftijd van 14 jaar heeft bereikt en waarvan naar het
@@ -698,8 +725,16 @@ articles:
       geregeld bezoekt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002628#Artikel2
+       [ref1]: https://wetten.overheid.nl/BWBR0002628#Artikel2
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel5
+    machine_readable:
+      exemptions:
+        - condition: "medical_or_psychological_unsuitability"
+          legal_basis: "Artikel 5, eerste lid, onder a"
+        - condition: "religious_objection_to_all_nearby_schools"
+          legal_basis: "Artikel 5, eerste lid, onder b"
+        - condition: "enrollment_in_foreign_school"
+          legal_basis: "Artikel 5, eerste lid, onder c"
     references:
       - id: ref1
         bwb_id: BWBR0002628
@@ -894,9 +929,23 @@ articles:
       bezoeken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002628#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0002628#Artikel2
+       [ref1]: https://wetten.overheid.nl/BWBR0002628#Artikel2
+       [ref2]: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel11
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel11
+    machine_readable:
+        valid_absences:
+          - condition: "school_closure_or_government_prohibition"
+            legal_basis: "Artikel 11, eerste lid, onder a"
+          - condition: "temporary_exclusion"
+            legal_basis: "Artikel 11, eerste lid, onder b"
+          - condition: "illness"
+            legal_basis: "Artikel 11, eerste lid, onder c"
+          - condition: "religious_duties"
+            legal_basis: "Artikel 11, eerste lid, onder d"
+          - condition: "family_vacation_required_by_parents_profession"
+            legal_basis: "Artikel 11, eerste lid, onder e"
+          - condition: "other_serious_circumstances"
+            legal_basis: "Artikel 11, eerste lid, onder f"
     references:
       - id: ref1
         bwb_id: BWBR0002628
