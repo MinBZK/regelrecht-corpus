@@ -4220,6 +4220,26 @@ articles:
         artikel: '32'
         hoofdstuk: '4'
         paragraaf: '4.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verkregen_voordeel
+            type: number
+            required: true
+            description: Bedrag van het door de overtreding verkregen voordeel in eurocent
+        output:
+          - name: boete_maximum_voordeel
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximum bestuurlijke boete op grond van artikel 32a (tweemaal het verkregen voordeel)
+        actions:
+          - output: boete_maximum_voordeel
+            value:
+              operation: MULTIPLY
+              values:
+                - 2
+                - $verkregen_voordeel
   - number: 32b
     text: |-
       1 Indien tegen een besluit tot het opleggen van een bestuurlijke boete bezwaar, beroep of hoger beroep wordt
@@ -4373,6 +4393,23 @@ articles:
         artikel: 32g
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum waarop het besluit openbaar is gemaakt (lid 1, 4 of 5)
+        output:
+          - name: website_beschikbaar_tot
+            type: date
+            description: Datum tot wanneer het besluit beschikbaar blijft op de website (5 jaar na bekendmaking, lid 7)
+        actions:
+          - output: website_beschikbaar_tot
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_datum
+              years: 5
   - number: 32g
     text: |-
       1 Openbaarmaking op grond van [artikel 32f][ref1] wordt uitgesteld of geschiedt in zodanige vorm dat de openbaar te
@@ -4497,6 +4534,20 @@ articles:
         artikel: 32f
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      untranslatables:
+        - construct: "vijf werkdagen"
+          reason: "Working day calculation (excluding weekends and public holidays) is not available as an engine operation"
+          legal_text_excerpt: "nadat vijf werkdagen zijn verstreken na de dag waarop de betrokken persoon van het besluit tot het publiceren van een waarschuwing of verklaring in kennis is gesteld"
+          accepted: false
+      execution:
+        output:
+          - name: min_wachttijd_werkdagen
+            type: number
+            description: Minimum wachttijd in werkdagen alvorens openbaarmaking plaatsvindt (lid 1)
+        actions:
+          - output: min_wachttijd_werkdagen
+            value: 5
   - number: 32j
     text: |-
       1 Indien wordt verzocht om een voorlopige voorziening als bedoeld in
