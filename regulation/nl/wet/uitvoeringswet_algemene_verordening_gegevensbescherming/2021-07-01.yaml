@@ -69,6 +69,46 @@ articles:
         bwb_id: BWBR0040940
         artikel: '3'
         hoofdstuk: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verwerking_geautomatiseerd
+            type: boolean
+            required: true
+            description: Is de verwerking geheel of gedeeltelijk geautomatiseerd? (lid 1)
+          - name: verwerking_in_bestand
+            type: boolean
+            required: true
+            description: Zijn de persoonsgegevens opgenomen of bestemd om te worden opgenomen in een bestand? (lid 1)
+          - name: wbp_kieswet_of_raadgevend_ref_van_toepassing
+            type: boolean
+            required: true
+            description: Is de Wet basisregistratie personen, de Kieswet of de Wet raadgevend referendum van toepassing op de verwerking? (lid 2)
+          - name: gdpr_artikel2_lid2_uitzondering
+            type: boolean
+            required: true
+            description: Valt de verwerking onder artikel 2 lid 2 van de verordening (activiteiten buiten werkingssfeer EU-recht, huishoudelijke activiteiten e.d.)? (lid 3)
+        output:
+          - name: wet_van_toepassing
+            type: boolean
+            description: De Uitvoeringswet AVG is van toepassing op de verwerking (artikel 2 lid 1, verminderd met uitzonderingen lid 2 en lid 3)
+        actions:
+          - output: wet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $verwerking_geautomatiseerd
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerking_in_bestand
+                      value: true
+                - operation: NOT
+                  value: $wbp_kieswet_of_raadgevend_ref_van_toepassing
+                - operation: NOT
+                  value: $gdpr_artikel2_lid2_uitzondering
   - number: 2a
     text: |-
       De Autoriteit persoonsgegevens neemt bij de toepassing van de verordening de specifieke behoeften van kleine,
@@ -110,6 +150,46 @@ articles:
         artikel: '97'
       - id: ref2
         bwb_id: BWBR0039896
+    machine_readable:
+      execution:
+        parameters:
+          - name: activiteiten_buiten_eu_recht
+            type: boolean
+            required: true
+            description: Betreft de verwerking activiteiten die buiten de werkingssfeer van het Unierecht vallen? (lid 1 onderdeel a)
+          - name: krijgsmacht_vgv_activiteiten
+            type: boolean
+            required: true
+            description: Betreft de verwerking verrichtingen door de krijgsmacht bij activiteiten binnen titel V, hoofdstuk 2, van het VEU? (lid 1 onderdeel b)
+          - name: defensieminister_besluit_genomen
+            type: boolean
+            required: true
+            description: Heeft Onze Minister van Defensie besloten de krijgsmacht in te zetten of ter beschikking te stellen voor grondwettelijke taken (artikel 97 Gw)? (lid 3 onderdeel a)
+          - name: wiv_van_toepassing
+            type: boolean
+            required: true
+            description: Is de Wet op de inlichtingen- en veiligheidsdiensten 2017 van toepassing op de verwerking? (lid 3 onderdeel b)
+        output:
+          - name: wet_mede_van_toepassing
+            type: boolean
+            description: De Uitvoeringswet AVG is op grond van artikel 3 mede van toepassing op de verwerking (lid 1 en 2, minus uitzonderingen lid 3)
+        actions:
+          - output: wet_mede_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $activiteiten_buiten_eu_recht
+                      value: true
+                    - operation: EQUALS
+                      subject: $krijgsmacht_vgv_activiteiten
+                      value: true
+                - operation: NOT
+                  value: $defensieminister_besluit_genomen
+                - operation: NOT
+                  value: $wiv_van_toepassing
   - number: '4'
     text: |-
       1 Deze wet en de daarop berustende bepalingen zijn van toepassing op de verwerking van persoonsgegevens in het
@@ -124,6 +204,57 @@ articles:
 
       b. het monitoren van hun gedrag, voor zover dit gedrag in Nederland plaatsvindt.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: vestiging_in_nederland
+            type: boolean
+            required: true
+            description: Heeft de verwerkingsverantwoordelijke of verwerker een vestiging in Nederland? (lid 1)
+          - name: verwerkingsverantwoordelijke_buiten_eu
+            type: boolean
+            required: true
+            description: Is de verwerkingsverantwoordelijke of verwerker niet gevestigd in de Europese Unie? (lid 2)
+          - name: betrokkenen_bevinden_zich_in_nederland
+            type: boolean
+            required: true
+            description: Bevinden de betrokkenen wier gegevens worden verwerkt zich in Nederland? (lid 2)
+          - name: aanbieden_goederen_diensten_nederland
+            type: boolean
+            required: true
+            description: Houdt de verwerking verband met het aanbieden van goederen of diensten aan betrokkenen in Nederland? (lid 2 onderdeel a)
+          - name: monitoren_gedrag_in_nederland
+            type: boolean
+            required: true
+            description: Houdt de verwerking verband met het monitoren van het gedrag van betrokkenen voor zover dat gedrag in Nederland plaatsvindt? (lid 2 onderdeel b)
+        output:
+          - name: wet_territoriaal_van_toepassing
+            type: boolean
+            description: De Uitvoeringswet AVG is territoriaal van toepassing op de verwerking (artikel 4 lid 1 of lid 2)
+        actions:
+          - output: wet_territoriaal_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $vestiging_in_nederland
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $verwerkingsverantwoordelijke_buiten_eu
+                      value: true
+                    - operation: EQUALS
+                      subject: $betrokkenen_bevinden_zich_in_nederland
+                      value: true
+                    - operation: OR
+                      conditions:
+                        - operation: EQUALS
+                          subject: $aanbieden_goederen_diensten_nederland
+                          value: true
+                        - operation: EQUALS
+                          subject: $monitoren_gedrag_in_nederland
+                          value: true
   - number: '5'
     text: |-
       1 Indien artikel 8 van de verordening niet van toepassing is, is in de plaats van de toestemming van de betrokkene
@@ -1960,6 +2091,80 @@ articles:
       tweede lid, in ieder geval getroffen indien het recht op menselijke tussenkomst, het recht voor betrokkene om zijn
       standpunt kenbaar te maken en het recht om het besluit aan te vechten, zijn geborgd.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel40
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk om te voldoen aan een wettelijke verplichting / noodzakelijk voor de vervulling van een taak van algemeen belang"
+          reason: "Necessity assessment for legal obligation or public interest task requires contextual judgment"
+          legal_text_excerpt: "lid 1: noodzakelijk is om te voldoen aan een wettelijke verplichting die op de verwerkingsverantwoordelijke rust of noodzakelijk is voor de vervulling van een taak van algemeen belang"
+          accepted: false
+      execution:
+        parameters:
+          - name: besluitvorming_niet_op_profilering
+            type: boolean
+            required: true
+            description: Is de geautomatiseerde individuele besluitvorming niet gebaseerd op profilering? (lid 1)
+          - name: noodzakelijk_voor_wettelijke_verplichting
+            type: boolean
+            required: true
+            description: Is de geautomatiseerde besluitvorming noodzakelijk om te voldoen aan een wettelijke verplichting die op de verwerkingsverantwoordelijke rust? (lid 1)
+          - name: noodzakelijk_voor_taak_algemeen_belang
+            type: boolean
+            required: true
+            description: Is de geautomatiseerde besluitvorming noodzakelijk voor de vervulling van een taak van algemeen belang? (lid 1)
+          - name: verwerkingsverantwoordelijke_is_bestuursorgaan
+            type: boolean
+            required: true
+            description: Is de verwerkingsverantwoordelijke een bestuursorgaan? (lid 3)
+          - name: menselijke_tussenkomst_geborgd
+            type: boolean
+            required: true
+            description: Is het recht op menselijke tussenkomst geborgd? (lid 3)
+          - name: recht_standpunt_kenbaar_maken_geborgd
+            type: boolean
+            required: true
+            description: Is het recht voor betrokkene om zijn standpunt kenbaar te maken geborgd? (lid 3)
+          - name: recht_besluit_aanvechten_geborgd
+            type: boolean
+            required: true
+            description: Is het recht om het besluit aan te vechten geborgd? (lid 3)
+        output:
+          - name: avg_artikel22_lid1_niet_van_toepassing
+            type: boolean
+            description: Artikel 22 lid 1 van de AVG geldt niet voor deze geautomatiseerde individuele besluitvorming (artikel 40 lid 1)
+          - name: passende_maatregelen_aanwezig_niet_bestuursorgaan
+            type: boolean
+            description: Voor een niet-bestuursorgaan zijn passende maatregelen in ieder geval getroffen indien de drie rechten van betrokkene zijn geborgd (artikel 40 lid 3)
+        actions:
+          - output: avg_artikel22_lid1_niet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $besluitvorming_niet_op_profilering
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $noodzakelijk_voor_wettelijke_verplichting
+                      value: true
+                    - operation: EQUALS
+                      subject: $noodzakelijk_voor_taak_algemeen_belang
+                      value: true
+          - output: passende_maatregelen_aanwezig_niet_bestuursorgaan
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $verwerkingsverantwoordelijke_is_bestuursorgaan
+                - operation: EQUALS
+                  subject: $menselijke_tussenkomst_geborgd
+                  value: true
+                - operation: EQUALS
+                  subject: $recht_standpunt_kenbaar_maken_geborgd
+                  value: true
+                - operation: EQUALS
+                  subject: $recht_besluit_aanvechten_geborgd
+                  value: true
   - number: '41'
     text: |-
       1 De verwerkingsverantwoordelijke kan de verplichtingen en rechten, bedoeld in de artikelen 12 tot en met 21
@@ -2012,6 +2217,93 @@ articles:
       h. het recht van betrokkenen om van de beperking op de hoogte te worden gesteld, tenzij dit afbreuk kan doen aan
       het doel van de beperking.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel41
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk en evenredig ter waarborging van"
+          reason: "Necessity and proportionality of restrictions to the listed grounds require contextual legal judgment"
+          legal_text_excerpt: "lid 1: voor zover zulks noodzakelijk en evenredig is ter waarborging van [grounds a-j]"
+          accepted: false
+      execution:
+        parameters:
+          - name: nationale_veiligheid
+            type: boolean
+            required: true
+            description: Is de beperking ter waarborging van de nationale veiligheid? (lid 1 onderdeel a)
+          - name: landsverdediging
+            type: boolean
+            required: true
+            description: Is de beperking ter waarborging van de landsverdediging? (lid 1 onderdeel b)
+          - name: openbare_veiligheid
+            type: boolean
+            required: true
+            description: Is de beperking ter waarborging van de openbare veiligheid? (lid 1 onderdeel c)
+          - name: voorkoming_opsporing_vervolging_strafbare_feiten
+            type: boolean
+            required: true
+            description: Is de beperking ter voorkoming, onderzoek, opsporing en vervolging van strafbare feiten of tenuitvoerlegging van straffen? (lid 1 onderdeel d)
+          - name: belangrijk_doelstelling_algemeen_belang
+            type: boolean
+            required: true
+            description: Is de beperking ter bescherming van andere belangrijke doelstellingen van algemeen belang van de EU of van Nederland (met name economisch/financieel belang, volksgezondheid, sociale zekerheid)? (lid 1 onderdeel e)
+          - name: bescherming_onafhankelijkheid_rechter
+            type: boolean
+            required: true
+            description: Is de beperking ter bescherming van de onafhankelijkheid van de rechter en gerechtelijke procedures? (lid 1 onderdeel f)
+          - name: voorkoming_schending_beroepscodes
+            type: boolean
+            required: true
+            description: Is de beperking ter voorkoming, onderzoek, opsporing en vervolging van schendingen van beroepscodes voor gereglementeerde beroepen? (lid 1 onderdeel g)
+          - name: toezicht_inspectie_regelgeving_openbaar_gezag
+            type: boolean
+            required: true
+            description: Is de beperking voor een taak op het gebied van toezicht, inspectie of regelgeving verband houdend met de uitoefening van openbaar gezag (in gevallen a, b, c, d, e en g)? (lid 1 onderdeel h)
+          - name: bescherming_betrokkene_of_rechten_vrijheden_anderen
+            type: boolean
+            required: true
+            description: Is de beperking ter bescherming van de betrokkene of van de rechten en vrijheden van anderen? (lid 1 onderdeel i)
+          - name: inning_civielrechtelijke_vorderingen
+            type: boolean
+            required: true
+            description: Is de beperking ter inning van civielrechtelijke vorderingen? (lid 1 onderdeel j)
+        output:
+          - name: beperking_rechten_betrokkene_grond_aanwezig
+            type: boolean
+            description: Er is ten minste één geldige grond aanwezig voor beperking van de rechten en verplichtingen bedoeld in AVG artikelen 12-21 en 34 (artikel 41 lid 1 — noodzakelijkheid en evenredigheid nog afzonderlijk te toetsen)
+        actions:
+          - output: beperking_rechten_betrokkene_grond_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $nationale_veiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $landsverdediging
+                  value: true
+                - operation: EQUALS
+                  subject: $openbare_veiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $voorkoming_opsporing_vervolging_strafbare_feiten
+                  value: true
+                - operation: EQUALS
+                  subject: $belangrijk_doelstelling_algemeen_belang
+                  value: true
+                - operation: EQUALS
+                  subject: $bescherming_onafhankelijkheid_rechter
+                  value: true
+                - operation: EQUALS
+                  subject: $voorkoming_schending_beroepscodes
+                  value: true
+                - operation: EQUALS
+                  subject: $toezicht_inspectie_regelgeving_openbaar_gezag
+                  value: true
+                - operation: EQUALS
+                  subject: $bescherming_betrokkene_of_rechten_vrijheden_anderen
+                  value: true
+                - operation: EQUALS
+                  subject: $inning_civielrechtelijke_vorderingen
+                  value: true
   - number: '42'
     text: |-
       Artikel 34 van de verordening is niet van toepassing op financiële ondernemingen als bedoeld in de
@@ -2062,6 +2354,37 @@ articles:
         bwb_id: BWBR0040940
         artikel: '5'
         hoofdstuk: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk is voor het journalistieke doel of de academische, artistieke of literaire uitdrukkingsvorm (lid 3)"
+          reason: "Necessity of processing special categories for journalistic/academic/artistic purposes requires contextual judgment"
+          legal_text_excerpt: "lid 3: De artikelen 9 en 10 van de verordening zijn niet van toepassing voor zover de verwerking van de in die artikelen bedoelde gegevens noodzakelijk is voor het journalistieke doel of de academische, artistieke of literaire uitdrukkingsvorm."
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerking_voor_journalistiek
+            type: boolean
+            required: true
+            description: Geschiedt de verwerking voor uitsluitend journalistieke doeleinden? (lid 1)
+          - name: verwerking_voor_academisch_artistiek_of_literair
+            type: boolean
+            required: true
+            description: Geschiedt de verwerking ten behoeve van uitsluitend academische, artistieke of literaire uitdrukkingsvormen? (lid 1)
+        output:
+          - name: wet_niet_van_toepassing_journalistiek_academisch
+            type: boolean
+            description: De Uitvoeringswet AVG (met uitzondering van artikelen 1-4 en artikel 5 lid 1-2) is niet van toepassing op de verwerking (artikel 43 lid 1)
+        actions:
+          - output: wet_niet_van_toepassing_journalistiek_academisch
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerking_voor_journalistiek
+                  value: true
+                - operation: EQUALS
+                  subject: $verwerking_voor_academisch_artistiek_of_literair
+                  value: true
   - number: '44'
     text: |-
       Indien een verwerking wordt verricht door instellingen of diensten voor wetenschappelijk onderzoek of statistiek,
@@ -2069,6 +2392,32 @@ articles:
       wetenschappelijke doeleinden kunnen worden gebruikt, kan de verwerkingsverantwoordelijke de artikelen 15, 16 en 18
       van de verordening buiten toepassing laten.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel44
+    machine_readable:
+      execution:
+        parameters:
+          - name: verwerking_door_onderzoeksinstelling_of_statistiek
+            type: boolean
+            required: true
+            description: Geschiedt de verwerking door instellingen of diensten voor wetenschappelijk onderzoek of statistiek?
+          - name: voorzieningen_getroffen_uitsluitend_gebruik
+            type: boolean
+            required: true
+            description: Zijn de nodige voorzieningen getroffen om te verzekeren dat persoonsgegevens uitsluitend voor statistische of wetenschappelijke doeleinden kunnen worden gebruikt?
+        output:
+          - name: avg_artikel15_16_18_buiten_toepassing_onderzoek
+            type: boolean
+            description: De verwerkingsverantwoordelijke kan de artikelen 15, 16 en 18 van de AVG buiten toepassing laten voor wetenschappelijk onderzoek of statistiek (artikel 44)
+        actions:
+          - output: avg_artikel15_16_18_buiten_toepassing_onderzoek
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerking_door_onderzoeksinstelling_of_statistiek
+                  value: true
+                - operation: EQUALS
+                  subject: $voorzieningen_getroffen_uitsluitend_gebruik
+                  value: true
   - number: '45'
     text: |-
       1 Bij de verwerking van persoonsgegevens die deel uitmaken van archiefbescheiden als bedoeld in
