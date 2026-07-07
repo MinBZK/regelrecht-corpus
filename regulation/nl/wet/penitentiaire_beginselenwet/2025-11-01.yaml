@@ -810,6 +810,26 @@ articles:
         artikel: '15'
         hoofdstuk: IV
         paragraaf: '1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: verblijf_start_datum
+            type: date
+            required: true
+            description: Datum van aanvang verblijf in de politiecel (artikel 15a)
+        output:
+          - name: max_einddatum_politiecel
+            type: date
+            description: Uiterste datum voor verblijf in politiecel (maximaal 10 dagen, artikel 15a)
+        actions:
+          - output: max_einddatum_politiecel
+            value:
+              operation: DATE_ADD
+              date: $verblijf_start_datum
+              days: 10
   - number: '16'
     text: |-
       1 De directeur bepaalt de wijze van onderbrenging van de gedetineerden die overeenkomstig [artikel 15][ref1] zijn
@@ -1044,6 +1064,23 @@ articles:
       directeur, het college van burgemeester en wethouders en de reclassering ten behoeve van de toepassing van het
       vierde lid.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel18a
+    machine_readable:
+      execution:
+        parameters:
+          - name: binnenkomst_datum
+            type: date
+            required: true
+            description: Datum van binnenkomst van de gedetineerde in de inrichting (artikel 18a lid 1)
+        output:
+          - name: plan_deadline
+            type: date
+            description: Uiterste datum voor vaststelling detentie- en re-integratieplan (uiterlijk 4 weken na binnenkomst, artikel 18a lid 1)
+        actions:
+          - output: plan_deadline
+            value:
+              operation: DATE_ADD
+              date: $binnenkomst_datum
+              weeks: 4
   - number: 18b
     text: |-
       1 Wanneer het risico aanwezig wordt geacht dat een gedetineerde een ernstig gewelds- of zedenmisdrijf zal
@@ -1067,6 +1104,23 @@ articles:
       moet voldoen en de voorschriften die bij de vaststelling of een wijziging van het plan in acht genomen moeten
       worden.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel18c
+    machine_readable:
+      execution:
+        parameters:
+          - name: binnenkomst_datum
+            type: date
+            required: true
+            description: Datum van binnenkomst van de gedetineerde in de inrichting voor stelselmatige daders (artikel 18c lid 1)
+        output:
+          - name: verblijfsplan_deadline
+            type: date
+            description: Uiterste datum voor vaststelling verblijfsplan (zo spoedig mogelijk en in ieder geval binnen 1 maand na binnenkomst, artikel 18c lid 1)
+        actions:
+          - output: verblijfsplan_deadline
+            value:
+              operation: DATE_ADD
+              date: $binnenkomst_datum
+              months: 1
   - number: 18d
     text: De directeur draagt zorg dat de tenuitvoerlegging overeenkomstig het verblijfsplan plaatsvindt.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel18d
@@ -1089,6 +1143,23 @@ articles:
       5 Bij algemene maatregel van bestuur worden regels gesteld omtrent de procedure die met betrekking tot de evaluatie
       dient te worden gevolgd en de eisen die aan het verslag daarvan ten minste dienen te worden gesteld.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel18e
+    machine_readable:
+      execution:
+        parameters:
+          - name: vorige_evaluatie_datum
+            type: date
+            required: true
+            description: Datum van de vorige periodieke evaluatie (artikel 18e lid 1)
+        output:
+          - name: volgende_evaluatie_uiterlijk
+            type: date
+            description: Uiterste datum voor de volgende evaluatie (ten minste eens per 6 maanden, artikel 18e lid 1)
+        actions:
+          - output: volgende_evaluatie_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $vorige_evaluatie_datum
+              months: 6
   - number: 18f
     text: Onze Minister kan nadere regels stellen omtrent de wijze waarop het vervoer van de gedetineerde plaatsvindt.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel18f
@@ -3416,6 +3487,23 @@ articles:
         bwb_id: BWBR0009709
         artikel: '60'
         hoofdstuk: XI
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum waarop de gedetineerde kennis heeft gekregen van de beslissing waartegen de grief zich richt (artikel 59a lid 2)
+        output:
+          - name: bemiddeling_verzoek_deadline
+            type: date
+            description: Uiterste datum voor indiening verzoek tot bemiddeling (7 dagen na kennisgeving, artikel 59a lid 2)
+        actions:
+          - output: bemiddeling_verzoek_deadline
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              days: 7
   - number: '60'
     text: |-
       1 Een gedetineerde kan bij de beklagcommissie beklag doen over een hem betreffende door of namens de directeur
