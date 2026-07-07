@@ -899,6 +899,39 @@ articles:
         artikel: '1'
       - id: ref6
         bwb_id: BWBR0018450
+    machine_readable:
+      execution:
+        parameters:
+          - name: uren_totaal_8_schooljaren
+            type: number
+            required: true
+            description: Totaal aantal onderwijsuren in 8 schooljaren (artikel 8, zevende lid, onder b)
+          - name: uren_eerste_4_schooljaren
+            type: number
+            required: true
+            description: Aantal onderwijsuren in de eerste 4 schooljaren (artikel 8, zevende lid, onder b, 1°)
+          - name: uren_laatste_4_schooljaren
+            type: number
+            required: true
+            description: Aantal onderwijsuren in de laatste 4 schooljaren (artikel 8, zevende lid, onder b, 1°)
+        output:
+          - name: voldoet_urennorm
+            type: boolean
+            description: Of de school voldoet aan de minimum urennormen uit artikel 8, zevende lid, onder b
+        actions:
+          - output: voldoet_urennorm
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $uren_totaal_8_schooljaren
+                  value: 7520
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $uren_eerste_4_schooljaren
+                  value: 3520
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $uren_laatste_4_schooljaren
+                  value: 3760
   - number: '9'
     text: |-
       1 Het onderwijs omvat, waar mogelijk in samenhang:
@@ -2657,6 +2690,49 @@ articles:
       hierover met de ouders overeenstemming bestaat. In elk geval verlaten de leerlingen de school aan het einde van het
       schooljaar waarin zij de leeftijd van 14 jaar hebben bereikt.
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel39
+    machine_readable:
+      untranslatables:
+        - construct: "leeftijdsgrens 3 jaar en 10 maanden voor pré-toelating (lid 3)"
+          reason: "AGE operation only returns complete years; sub-year precision (3 years 10 months) cannot be expressed"
+          suggestion: "Add MONTHS_OF_AGE or date comparison operation to engine"
+          legal_text_excerpt: "In de periode vanaf de leeftijd van 3 jaar en 10 maanden tot het bereiken van de leeftijd van 4 jaar kan het bevoegd gezag kinderen gedurende ten hoogste 5 dagen toelaten."
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum_kind
+            type: date
+            required: true
+            description: Geboortedatum van het kind
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de leeftijdseis wordt getoetst
+        output:
+          - name: leeftijd_volledig_jaren
+            type: number
+            description: Leeftijd van het kind in volledig afgesloten jaren op de peildatum
+          - name: mag_worden_toegelaten
+            type: boolean
+            description: Of het kind de leeftijd van 4 jaar heeft bereikt en als leerling kan worden toegelaten (lid 1)
+          - name: moet_school_verlaten
+            type: boolean
+            description: Of de leerling de leeftijd van 14 jaar heeft bereikt en de school aan het einde van het schooljaar moet verlaten (lid 4)
+        actions:
+          - output: leeftijd_volledig_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_kind
+              reference_date: $peildatum
+          - output: mag_worden_toegelaten
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_volledig_jaren
+              value: 4
+          - output: moet_school_verlaten
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_volledig_jaren
+              value: 14
   - number: '40'
     text: |-
       1 De beslissing over toelating en verwijdering van leerlingen berust bij het bevoegd gezag. De
@@ -3850,6 +3926,49 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: fusie_type
+            type: string
+            required: true
+            description: "Type fusie: 'institutioneel' (lid 2a), 'bestuursoverdracht' (lid 2b), of 'samenwerkingsschool' (lid 2c)"
+          - name: leerlingen_totaal
+            type: number
+            description: Totaal aantal leerlingen van de betrokken scholen bij institutionele fusie (lid 2a)
+          - name: scholen_aantal
+            type: number
+            description: Aantal betrokken scholen bij bestuursoverdracht (lid 2b)
+        output:
+          - name: goedkeuring_minister_vereist
+            type: boolean
+            description: Of ministeriële goedkeuring vereist is voor de fusie (lid 1, tenzij uitzondering lid 2 van toepassing is)
+        actions:
+          - output: goedkeuring_minister_vereist
+            value:
+              operation: NOT
+              value:
+                operation: OR
+                conditions:
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $fusie_type
+                        value: "institutioneel"
+                      - operation: LESS_THAN
+                        subject: $leerlingen_totaal
+                        value: 500
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $fusie_type
+                        value: "bestuursoverdracht"
+                      - operation: LESS_THAN
+                        subject: $scholen_aantal
+                        value: 10
+                  - operation: EQUALS
+                    subject: $fusie_type
+                    value: "samenwerkingsschool"
   - number: 64b
     text: |-
       1 De rechtspersoon dient dan wel de rechtspersonen gezamenlijk dienen een aanvraag in bij Onze Minister voor het
@@ -3943,6 +4062,31 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         paragraaf: 4.1.3.3
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag om goedkeuring (artikel 64b)
+        output:
+          - name: beslistermijn_datum
+            type: date
+            description: Uiterste datum voor beslissing op de aanvraag (13 weken na ontvangst, lid 1)
+          - name: maximale_verlengde_datum
+            type: date
+            description: Maximale datum bij verlenging van de beslistermijn (26 weken na ontvangst, lid 2)
+        actions:
+          - output: beslistermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: 13
+          - output: maximale_verlengde_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: 26
   - number: '65'
     text: |-
       1 De gemeenteraad is bevoegd uitsluitend in het belang van een doelmatige spreiding van de leerlingen over de
