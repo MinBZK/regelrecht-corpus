@@ -40,7 +40,7 @@ articles:
   - number: 1a
     text: |-
       Deze wet is niet van toepassing ten aanzien van de aanpassing van de arbeidsduur van de werknemer die de in
-      [artikel 7, onderdeel a, van de Algemene Ouderdomswet][ref1] bedoelde leeftijd heeft bereikt.
+      [artikel 7, onderdeel a, van de Algemene Ouderdomswet][ref1] bedoelde leeftijd heeft bereikt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002221#Artikel7
@@ -49,23 +49,43 @@ articles:
       - id: ref1
         bwb_id: BWBR0002221
         artikel: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_aow_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: >-
+              Of de werknemer de leeftijd bedoeld in artikel 7 onderdeel a van de Algemene
+              Ouderdomswet heeft bereikt
+        output:
+          - name: wet_van_toepassing_arbeidsduur
+            type: boolean
+            description: >-
+              Of de Wet flexibel werken van toepassing is ten aanzien van aanpassing van de
+              arbeidsduur van deze werknemer
+        actions:
+          - output: wet_van_toepassing_arbeidsduur
+            value:
+              operation: NOT
+              value: $heeft_aow_leeftijd_bereikt
   - number: '2'
     text: |-
       1 De werknemer kan de werkgever verzoeken om aanpassing voor al dan niet wisselende perioden en met al dan
       niet verschillende omvang van de uit zijn arbeidsovereenkomst of publiekrechtelijke aanstelling voortvloeiende
-      arbeidsduur, arbeidsplaats of werktijd, indien de werknemer ten minste 26 weken voorafgaand aan het beoogde
-      tijdstip van ingang van die aanpassing in dienst is bij die werkgever, behoudens onvoorziene omstandigheden. Voor
-      de berekening van de termijn van 26 weken worden perioden waarin arbeid wordt verricht, die elkaar opvolgen met
+      arbeidsduur, arbeidsplaats of werktijd, indien de werknemer ten minste 26 weken voorafgaand aan het beoogde
+      tijdstip van ingang van die aanpassing in dienst is bij die werkgever, behoudens onvoorziene omstandigheden. Voor
+      de berekening van de termijn van 26 weken worden perioden waarin arbeid wordt verricht, die elkaar opvolgen met
       een onderbreking van niet meer dan zes maanden, samengeteld. De vorige volzin is van overeenkomstige toepassing
       op perioden waarin voor verschillende werkgevers arbeid wordt verricht die ten aanzien van de verrichte arbeid
       redelijkerwijs geacht moeten worden elkanders opvolger te zijn.
 
-      2 Voor militaire ambtenaren wordt, met inachtneming van het vijftiende en zestiende lid en de artikelen 2a en
+      2 Voor militaire ambtenaren wordt, met inachtneming van het vijftiende en zestiende lid en de artikelen 2a en
       3a, het recht op aanpassing van de arbeidsduur geregeld bij algemene maatregel van bestuur op voordracht van Onze
       Minister van Defensie en Onze Minister van Sociale Zaken en Werkgelegenheid met gebruikmaking van onbezoldigd
       verlof in verband met deeltijdarbeid.
 
-      3 Het verzoek om aanpassing van de arbeidsduur, de arbeidsplaats of de werktijd wordt, behoudens onvoorziene
+      3 Het verzoek om aanpassing van de arbeidsduur, de arbeidsplaats of de werktijd wordt, behoudens onvoorziene
       omstandigheden, ten minste twee maanden vóór het beoogde tijdstip van ingang van de aanpassing schriftelijk bij de
       werkgever ingediend onder opgave van het tijdstip van ingang, alsmede van:
 
@@ -163,6 +183,123 @@ articles:
       binnen het in die zin bedoelde tijdvak, ten aanzien van de afwijking een nieuw tijdvak in op het tijdstip van
       inwerkingtreding van de wijziging.
     url: https://wetten.overheid.nl/BWBR0011173/2025-01-01#Artikel2
+    machine_readable:
+      untranslatables:
+        - construct: "berekening 26-weken termijn met samentelling onderbroken perioden"
+          reason: >-
+            Aggregation over a variable-length sequence of employment periods with interruptions
+            of at most six months requires summing durations across a collection, which is not
+            supported as an engine operation.
+          legal_text_excerpt: >-
+            Voor de berekening van de termijn van 26 weken worden perioden waarin arbeid wordt
+            verricht, die elkaar opvolgen met een onderbreking van niet meer dan zes maanden,
+            samengeteld.
+          suggestion: "Add aggregation/SUM operation over date-period collections"
+          accepted: false
+        - construct: "uiterste beslistermijn werkgever: één maand vóór beoogde ingangsdatum"
+          reason: >-
+            Computing 'one month before the intended start date' requires subtracting a duration
+            from a date, which is not supported — DATE_ADD only adds duration forward.
+          legal_text_excerpt: >-
+            Indien de werkgever niet een maand voor het beoogde tijdstip van ingang van de
+            aanpassing op het verzoek heeft beslist, wordt de arbeidsduur, de arbeidsplaats of
+            de werktijd aangepast overeenkomstig het verzoek van de werknemer.
+          suggestion: "Add DATE_SUBTRACT operation or allow negative values in DATE_ADD"
+          accepted: false
+        - construct: "zwaarwegend bedrijfs- of dienstbelang (ernstige problemen)"
+          reason: >-
+            Whether business interests constitute 'ernstige problemen' (serious problems) under
+            lids 9, 10 and 11 requires a factual assessment that cannot be reduced to a
+            deterministic computation.
+          legal_text_excerpt: >-
+            Bij vermindering van de arbeidsduur is in ieder geval sprake van een zwaarwegend
+            bedrijfs- of dienstbelang, indien die vermindering leidt tot ernstige problemen.
+          suggestion: "Model as a boolean input provided by the caller based on expert assessment"
+          accepted: false
+      execution:
+        parameters:
+          - name: weken_in_dienst
+            type: number
+            required: true
+            description: >-
+              Aantal aaneengesloten weken (of samengetelde perioden) dat de werknemer in dienst
+              is bij de werkgever vóór de beoogde ingangsdatum van de aanpassing (lid 1)
+          - name: aantal_werknemers
+            type: number
+            required: true
+            description: >-
+              Aantal werknemers bij de werkgever; bepaalt of artikel 2 van toepassing is (lid 18)
+          - name: verzoekdatum
+            type: date
+            required: true
+            description: Datum waarop de werknemer het verzoek indient (lid 3)
+          - name: beoogde_ingangsdatum
+            type: date
+            required: true
+            description: Beoogd tijdstip van ingang van de aanpassing (lid 1 en 3)
+          - name: zwaarwegende_belangen_aanwezig
+            type: boolean
+            required: true
+            description: >-
+              Of zwaarwegende bedrijfs- of dienstbelangen zich verzetten tegen inwilliging van
+              het verzoek om arbeidsduur- of werktijdaanpassing (lid 5; beoordeling door werkgever)
+        output:
+          - name: voldoet_aan_diensttermijn
+            type: boolean
+            description: Werknemer is ten minste 26 weken in dienst bij de werkgever (lid 1)
+          - name: artikel_2_van_toepassing
+            type: boolean
+            description: >-
+              Artikel 2 is van toepassing; werkgever heeft ten minste 10 werknemers (lid 18)
+          - name: verzoek_tijdig_ingediend
+            type: boolean
+            description: >-
+              Verzoek is ten minste twee maanden vóór de beoogde ingangsdatum ingediend (lid 3)
+          - name: recht_op_verzoek
+            type: boolean
+            description: >-
+              Werknemer heeft recht om aanpassing te verzoeken: diensttermijn vervuld en
+              artikel 2 van toepassing (lid 1 jo. lid 18)
+          - name: werkgever_moet_inwilligen_arbeidsduur_werktijd
+            type: boolean
+            description: >-
+              Werkgever is verplicht verzoek om aanpassing arbeidsduur of werktijd in te willigen,
+              tenzij zwaarwegende bedrijfs- of dienstbelangen zich daartegen verzetten (lid 5)
+        actions:
+          - output: voldoet_aan_diensttermijn
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $weken_in_dienst
+              value: 26
+          - output: artikel_2_van_toepassing
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_werknemers
+              value: 10
+          - output: verzoek_plus_twee_maanden
+            value:
+              operation: DATE_ADD
+              date: $verzoekdatum
+              months: 2
+          - output: verzoek_tijdig_ingediend
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $verzoek_plus_twee_maanden
+              value: $beoogde_ingangsdatum
+          - output: recht_op_verzoek
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_diensttermijn
+                  value: true
+                - operation: EQUALS
+                  subject: $artikel_2_van_toepassing
+                  value: true
+          - output: werkgever_moet_inwilligen_arbeidsduur_werktijd
+            value:
+              operation: NOT
+              value: $zwaarwegende_belangen_aanwezig
   - number: 2a
     text: |-
       1 De [artikelen 1a][ref1] en [2, derde lid, laatste zin, en zeventiende tot en met negentiende lid][ref2], zijn
@@ -199,10 +336,50 @@ articles:
       - id: ref4
         bwb_id: BWBR0013008
         artikel: 5:1
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_ouder_kind_jonger_dan_8
+            type: boolean
+            required: true
+            description: >-
+              Werknemer is ouder van een kind in de leeftijd tot acht jaar (lid 1 onderdeel a)
+          - name: is_mantelzorger_levensbedreigend_zieke
+            type: boolean
+            required: true
+            description: >-
+              Werknemer draagt zorg voor een levensbedreigend zieke persoon als bedoeld in
+              artikel 5:1 lid 2 Wet arbeid en zorg (lid 1 onderdeel b)
+          - name: is_mantelzorger_ziek_of_hulpbehoevend
+            type: boolean
+            required: true
+            description: >-
+              Werknemer draagt zorg voor noodzakelijke verzorging van een zieke of hulpbehoevende
+              persoon als bedoeld in artikel 5:1 lid 2 Wet arbeid en zorg (lid 1 onderdeel c)
+        output:
+          - name: uitzondering_artikel_2a_van_toepassing
+            type: boolean
+            description: >-
+              Artikelen 1a en 2 lid 3 laatste zin en lid 17-19 zijn niet van toepassing:
+              werknemer valt onder een van de categorieën van artikel 2a lid 1
+        actions:
+          - output: uitzondering_artikel_2a_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ouder_kind_jonger_dan_8
+                  value: true
+                - operation: EQUALS
+                  subject: $is_mantelzorger_levensbedreigend_zieke
+                  value: true
+                - operation: EQUALS
+                  subject: $is_mantelzorger_ziek_of_hulpbehoevend
+                  value: true
   - number: 2b
     text: |-
       1 De werknemer kan de werkgever verzoeken om een vorm van arbeid met meer voorspelbare en zekere
-      arbeidsvoorwaarden, indien de werknemer ten minste 26 weken voorafgaand aan het beoogde tijdstip van ingang van
+      arbeidsvoorwaarden, indien de werknemer ten minste 26 weken voorafgaand aan het beoogde tijdstip van ingang van
       die aanpassing in dienst is bij die werkgever. Het verzoek wordt door de werknemer schriftelijk bij de werkgever
       ingediend. De tweede en derde zin van het eerste lid van [artikel 2][ref1] zijn van overeenkomstige toepassing.
 
@@ -249,17 +426,119 @@ articles:
       - id: ref3
         bwb_id: BWBR0005290
         artikel: '739'
+    machine_readable:
+      execution:
+        parameters:
+          - name: weken_in_dienst
+            type: number
+            required: true
+            description: >-
+              Aantal weken dat de werknemer in dienst is bij de werkgever vóór de beoogde
+              ingangsdatum (lid 1)
+          - name: is_huishoudelijk_personeel_minder_dan_4_dagen
+            type: boolean
+            required: true
+            description: >-
+              Werknemer verricht doorgaans op minder dan vier dagen per week uitsluitend of
+              nagenoeg uitsluitend diensten ten behoeve van een particulier huishouden (lid 5a)
+          - name: is_zeevaarder
+            type: boolean
+            required: true
+            description: >-
+              Werknemer is werkzaam op basis van een zee-arbeidsovereenkomst (art. 694 BW7)
+              of een arbeidsovereenkomst in de zeevisserij (art. 739 BW7) (lid 5b)
+          - name: aantal_werknemers
+            type: number
+            required: true
+            description: >-
+              Aantal werknemers bij de werkgever; bepalend voor de beslistermijn (lid 2)
+        output:
+          - name: voldoet_aan_diensttermijn_2b
+            type: boolean
+            description: Werknemer is ten minste 26 weken in dienst bij de werkgever (lid 1)
+          - name: artikel_2b_niet_van_toepassing
+            type: boolean
+            description: >-
+              Artikel 2b is niet van toepassing op deze werknemer vanwege uitzondering lid 5
+          - name: recht_op_verzoek_voorspelbare_arbeid
+            type: boolean
+            description: >-
+              Werknemer heeft het recht de werkgever te verzoeken om meer voorspelbare en
+              zekere arbeidsvoorwaarden (lid 1)
+          - name: beslistermijn_maanden
+            type: number
+            description: >-
+              Wettelijke termijn waarbinnen de werkgever schriftelijk en gemotiveerd moet
+              beslissen op het verzoek: 1 maand (≥10 werknemers) of 3 maanden (<10) (lid 2)
+        actions:
+          - output: voldoet_aan_diensttermijn_2b
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $weken_in_dienst
+              value: 26
+          - output: artikel_2b_niet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_huishoudelijk_personeel_minder_dan_4_dagen
+                  value: true
+                - operation: EQUALS
+                  subject: $is_zeevaarder
+                  value: true
+          - output: recht_op_verzoek_voorspelbare_arbeid
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_diensttermijn_2b
+                  value: true
+                - operation: NOT
+                  value: $artikel_2b_niet_van_toepassing
+          - output: beslistermijn_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $aantal_werknemers
+                    value: 10
+                  then: 1
+              default: 3
   - number: '3'
     text: |-
       De werkgever kan de arbeidsverhouding van een werknemer niet beëindigen wegens de omstandigheid dat de werknemer in
       of buiten rechte om aanpassing van de arbeidsduur, arbeidsplaats of werktijd heeft verzocht.
     url: https://wetten.overheid.nl/BWBR0011173/2025-01-01#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: ontslagverbod_wegens_flexibel_werken_verzoek
+            type: boolean
+            description: >-
+              Het is verboden de arbeidsverhouding te beëindigen wegens een verzoek om
+              aanpassing van arbeidsduur, arbeidsplaats of werktijd
+        actions:
+          - output: ontslagverbod_wegens_flexibel_werken_verzoek
+            value: true
   - number: 3a
     text: |-
       De werkgever mag de werknemer niet benadelen wegens de omstandigheid dat de werknemer in of buiten rechte het recht
       op aanpassing van de arbeidsduur, de arbeidsplaats of de werktijd geldend maakt, ter zake bijstand heeft verleend,
       of hieromtrent een klacht binnen de onderneming heeft ingediend.
     url: https://wetten.overheid.nl/BWBR0011173/2025-01-01#Artikel3a
+    machine_readable:
+      execution:
+        output:
+          - name: benadelingsverbod_flexibel_werken
+            type: boolean
+            description: >-
+              Het is verboden de werknemer te benadelen wegens het geldend maken van het recht
+              op aanpassing van arbeidsduur, arbeidsplaats of werktijd, het verlenen van bijstand
+              ter zake, of het indienen van een klacht hieromtrent
+        actions:
+          - output: benadelingsverbod_flexibel_werken
+            value: true
   - number: '4'
     text: |-
       Onze Minister van Sociale Zaken en Werkgelegenheid zendt, in overeenstemming met Onze Minister van Justitie en Onze
