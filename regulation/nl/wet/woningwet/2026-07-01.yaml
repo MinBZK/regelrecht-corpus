@@ -1259,6 +1259,23 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005288#Artikel106
       [ref2]: https://wetten.overheid.nl/BWBR0005288#Artikel112
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_woongelegenheden
+            type: number
+            required: true
+            description: Aantal in elkaars nabijheid gelegen woongelegenheden waarvan de eigenaren of huurders een wooncoöperatie wensen op te richten (artikel 18a lid 2)
+        output:
+          - name: voldoet_aan_minimum_woongelegenheden
+            type: boolean
+            description: Voldoet het aantal woongelegenheden aan het minimum van vijf voor oprichting van een wooncoöperatie (artikel 18a lid 2)
+        actions:
+          - output: voldoet_aan_minimum_woongelegenheden
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_woongelegenheden
+              value: 5
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel18a
     references:
       - id: ref1
@@ -2185,6 +2202,28 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005290#Artikel610
+    machine_readable:
+      untranslatables:
+        - construct: eenmalige verlenging met ten hoogste vier weken (discretionair)
+          reason: Discretionary one-time extension of up to four weeks cannot be expressed; only the base deadline of four weeks is captured
+          legal_text_excerpt: welke termijn hij ... eenmalig met een door hem daarbij te bepalen termijn van ten hoogste vier weken kan verlengen
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_verzoek_zienswijze
+            type: date
+            required: true
+            description: Datum waarop de raad van commissarissen Onze Minister heeft verzocht om zijn zienswijze op de geschiktheid en betrouwbaarheid van betrokken personen (artikel 30 lid 3)
+        output:
+          - name: zienswijze_basistermijn_datum
+            type: date
+            description: Uiterste datum voor het uitbrengen van de zienswijze op basis van de basistermijn van vier weken (artikel 30 lid 3)
+        actions:
+          - output: zienswijze_basistermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoek_zienswijze
+              weeks: 4
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel30
     references:
       - id: ref1
@@ -3852,6 +3891,28 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005181#Artikel50a
       [ref2]: https://wetten.overheid.nl/BWBR0005181#Artikel21
       [ref3]: https://wetten.overheid.nl/BWBR0005181#Artikel53
+    machine_readable:
+      untranslatables:
+        - construct: verlenging termijn telkens met ten hoogste zes weken
+          reason: Repeated discretionary extension of the decision deadline (each up to 6 weeks, unbounded number of extensions) cannot be expressed; the engine captures only the initial 12-week base term
+          legal_text_excerpt: welke termijn hij ... telkens kan verlengen met een door hem daarbij te bepalen termijn van ten hoogste zes weken
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_ontvangst_voorstel_scheiding
+            type: date
+            required: true
+            description: Datum waarop Onze Minister het voorstel tot bewerkstelliging van de juridische scheiding heeft ontvangen (artikel 50b lid 1)
+        output:
+          - name: besluit_uiterlijkdatum_scheiding
+            type: date
+            description: Uiterste datum voor het nemen van een besluit omtrent goedkeuring op basis van de basistermijn van 12 weken na ontvangst (zonder verlengingen, artikel 50b lid 1)
+        actions:
+          - output: besluit_uiterlijkdatum_scheiding
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_voorstel_scheiding
+              weeks: 12
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel50b
     references:
       - id: ref1
@@ -4121,6 +4182,35 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005181#Artikel36
       [ref2]: https://wetten.overheid.nl/BWBR0005181#Artikel44
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_afloop_onderzoek
+            type: date
+            required: true
+            description: Datum waarop het visitatieonderzoek is afgelopen (artikel 53a lid 3)
+          - name: datum_vaststelling_rapport
+            type: date
+            required: true
+            description: Datum waarop de deskundige instantie het rapport met haar bevindingen heeft vastgesteld (artikel 53a lid 3 en 4)
+        output:
+          - name: rapport_vaststelling_deadline
+            type: date
+            description: Uiterste datum voor het vaststellen van het rapport door de deskundige instantie (6 weken na afloop van het onderzoek, artikel 53a lid 3)
+          - name: rapport_inzending_deadline
+            type: date
+            description: Uiterste datum voor toezending van het rapport door de toegelaten instelling aan alle belanghebbenden (6 weken na vaststelling rapport, artikel 53a lid 4)
+        actions:
+          - output: rapport_vaststelling_deadline
+            value:
+              operation: DATE_ADD
+              date: $datum_afloop_onderzoek
+              weeks: 6
+          - output: rapport_inzending_deadline
+            value:
+              operation: DATE_ADD
+              date: $datum_vaststelling_rapport
+              weeks: 6
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel53a
     references:
       - id: ref1
@@ -4318,6 +4408,23 @@ articles:
       [ref17]: https://wetten.overheid.nl/BWBR0005290#Artikel252c
       [ref18]: https://wetten.overheid.nl/BWBR0005181#Artikel54
       [ref19]: https://wetten.overheid.nl/BWBR0005290#Artikel252a
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ontvangst_gegevens_huurder
+            type: date
+            required: true
+            description: Datum waarop de toegelaten instelling de gegevens van de huurder (inkomen en verklaring huishoudsamenstelling) heeft ontvangen als bedoeld in artikel 54a lid 4
+        output:
+          - name: voorstel_huurverlaging_deadline
+            type: date
+            description: Uiterste datum voor het doen van het voorstel tot verlaging van de huurprijs (drie weken na ontvangst van de gegevens, artikel 54a lid 4)
+        actions:
+          - output: voorstel_huurverlaging_deadline
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_gegevens_huurder
+              weeks: 3
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel54a
     references:
       - id: ref1
@@ -4423,6 +4530,31 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005290#Artikel268
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_kennisneming_overlijden
+            type: date
+            required: true
+            description: Datum waarop het overlijden van de huurder ter kennis is gekomen van de toegelaten instelling (artikel 54c lid 2)
+        output:
+          - name: informatie_vroegste_datum
+            type: date
+            description: Vroegste datum waarop de toegelaten instelling de informatie mag verzenden (niet eerder dan twee weken na kennisneming overlijden, artikel 54c lid 2)
+          - name: informatie_uiterste_datum
+            type: date
+            description: Uiterste datum voor het verzenden van de informatie (binnen een maand na kennisneming overlijden, artikel 54c lid 2)
+        actions:
+          - output: informatie_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_kennisneming_overlijden
+              weeks: 2
+          - output: informatie_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_kennisneming_overlijden
+              months: 1
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel54c
     references:
       - id: ref1
@@ -4516,6 +4648,54 @@ articles:
       [ref18]: https://wetten.overheid.nl/BWBR0008659#Artikel13
       [ref19]: https://wetten.overheid.nl/BWBR0005290#Artikel266
       [ref20]: https://wetten.overheid.nl/BWBR0019237#Artikel10
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum_bewoner
+            type: date
+            required: true
+            description: Geboortedatum van de bewoner die de huur mogelijk kan voortzetten (artikel 54d lid 2 onderdeel a)
+          - name: datum_overlijden_huurder
+            type: date
+            required: true
+            description: Datum van overlijden van de huurder (artikel 54d lid 1)
+          - name: woonde_bij_huurder
+            type: boolean
+            required: true
+            description: Had de bewoner zijn hoofdverblijf bij de overleden huurder op het moment van diens overlijden (artikel 54d lid 2 onderdeel b)
+          - name: is_ouderloos_geworden
+            type: boolean
+            required: true
+            description: Is de bewoner door het overlijden van de huurder ouderloos geworden (artikel 54d lid 2 onderdeel c)
+        output:
+          - name: leeftijd_bewoner_bij_overlijden
+            type: number
+            description: Leeftijd van de bewoner op de datum van overlijden van de huurder in volledige jaren
+          - name: heeft_recht_op_voortzetting_huur
+            type: boolean
+            description: Heeft de bewoner het recht de huur voort te zetten op grond van artikel 54d (leeftijd 16-27, hoofdverblijf bij huurder, ouderloos geworden door overlijden huurder)
+        actions:
+          - output: leeftijd_bewoner_bij_overlijden
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_bewoner
+              reference_date: $datum_overlijden_huurder
+          - output: heeft_recht_op_voortzetting_huur
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd_bewoner_bij_overlijden
+                  value: 16
+                - operation: LESS_THAN
+                  subject: $leeftijd_bewoner_bij_overlijden
+                  value: 28
+                - operation: EQUALS
+                  subject: $woonde_bij_huurder
+                  value: true
+                - operation: EQUALS
+                  subject: $is_ouderloos_geworden
+                  value: true
     url: https://wetten.overheid.nl/BWBR0005181/2026-07-01#Artikel54d
     references:
       - id: ref1
