@@ -1481,6 +1481,111 @@ articles:
       - id: ref5
         bwb_id: BWBR0005537
         artikel: 8:69
+    machine_readable:
+      open_terms:
+        - id: boetebedrag_basis
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: BELEIDSREGEL
+          legal_basis: artikel 18f lid 6 Wet minimumloon en minimumvakantiebijslag
+      execution:
+        parameters:
+          - name: aantal_eerdere_overtredingen
+            type: number
+            required: true
+            description: >-
+              Aantal onherroepelijke eerdere boetes voor eenzelfde of soortgelijke
+              overtreding binnen het toepasselijke tijdvak (artikel 18f lid 2 en 4 WML)
+          - name: overtreding_is_ernstig
+            type: boolean
+            required: true
+            description: >-
+              De huidige overtreding is bij of krachtens AMvB aangewezen als ernstige
+              overtreding (artikel 18f lid 3 en 5 WML)
+          - name: eerdere_overtreding_is_ernstig
+            type: boolean
+            required: true
+            description: >-
+              De eerdere overtreding(en) zijn bij of krachtens AMvB aangewezen als
+              ernstige overtreding (artikel 18f lid 3 en 5 WML)
+        input:
+          - name: boetebedrag_basis
+            type: amount
+            source:
+              output: boetebedrag_basis
+            type_spec:
+              unit: eurocent
+        output:
+          - name: toepasselijk_tijdvak_jaren
+            type: number
+            description: >-
+              Terugkijkperiode in jaren voor recidive: 10 jaar indien de eerdere
+              overtreding ernstig is (AMvB-aangewezen), anders 5 jaar
+              (artikel 18f lid 5 WML)
+          - name: boete_verhogingspercentage
+            type: number
+            description: >-
+              Procentuele verhoging van de boete op grond van recidive: 0%, 100% of
+              200% (artikel 18f lid 2, 3 en 4 WML)
+          - name: boete_totaal
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Totale bestuurlijke boete inclusief recidivisteverhogingen conform
+              artikel 18f WML
+        actions:
+          - output: toepasselijk_tijdvak_jaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $eerdere_overtreding_is_ernstig
+                    value: true
+                  then: 10
+              default: 5
+          - output: boete_verhogingspercentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $aantal_eerdere_overtredingen
+                    value: 2
+                  then: 200
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_eerdere_overtredingen
+                        value: 1
+                      - operation: EQUALS
+                        subject: $overtreding_is_ernstig
+                        value: true
+                      - operation: EQUALS
+                        subject: $eerdere_overtreding_is_ernstig
+                        value: true
+                  then: 200
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $aantal_eerdere_overtredingen
+                    value: 1
+                  then: 100
+              default: 0
+          - output: boete_totaal
+            value:
+              operation: ADD
+              values:
+                - $boetebedrag_basis
+                - operation: MULTIPLY
+                  values:
+                    - $boetebedrag_basis
+                    - operation: DIVIDE
+                      values:
+                        - $boete_verhogingspercentage
+                        - 100
   - number: 18g
     text: |-
       Degene aan wie een bestuurlijke boete is opgelegd, verstrekt desgevraagd aan de daartoe op grond van
@@ -1562,6 +1667,27 @@ articles:
         artikel: 18a
         hoofdstuk: IV
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: dagtekening_waarschuwing
+            type: date
+            required: true
+            description: >-
+              Datum van dagtekening van de schriftelijke waarschuwing (artikel 18i
+              lid 1 WML)
+        output:
+          - name: vervaldatum_waarschuwing
+            type: date
+            description: >-
+              Datum waarop de waarschuwing vervalt (vijf jaar na dagtekening —
+              artikel 18i lid 4 WML)
+        actions:
+          - output: vervaldatum_waarschuwing
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_waarschuwing
+              years: 5
   - number: 18n
     text: |-
       1 Een daartoe door Onze Minister aangewezen onder hem ressorterende ambtenaar kan een werkgever die de op hem op
