@@ -334,6 +334,60 @@ articles:
       - id: ref9
         bwb_id: BWBR0005290
         artikel: 670a
+    machine_readable:
+      open_terms:
+        - id: uitvoeringskosten_jaarbasis
+          type: amount
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 7, tiende lid, onderdeel b Wet sociale werkvoorziening
+      execution:
+        parameters:
+          - name: arbeidshandicapcategorie
+            type: string
+            required: true
+            description: "Arbeidshandicapcategorie van de ingezetene: 'matig' of 'ernstig'"
+        input:
+          - name: uitkering
+            type: amount
+            source:
+              output: uitkering
+            type_spec:
+              unit: eurocent
+          - name: minimumaantal_arbeidsjaren
+            type: number
+            source:
+              output: minimumaantal_arbeidsjaren
+        output:
+          - name: maximum_subsidie_jaarbasis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Maximum bedrag van de periodieke subsidie en vergoeding op jaarbasis (artikel 7, tweede lid, onderdeel b)"
+        actions:
+          - output: factor_arbeidshandicap
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $arbeidshandicapcategorie
+                    value: "ernstig"
+                  then: 1.25
+              default: 1
+          - output: maximum_subsidie_jaarbasis
+            value:
+              operation: SUBTRACT
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - operation: DIVIDE
+                      values:
+                        - $uitkering
+                        - $minimumaantal_arbeidsjaren
+                    - $factor_arbeidshandicap
+                - $uitvoeringskosten_jaarbasis
   - number: '8'
     text: |-
       1 Onze Minister verstrekt jaarlijks ten laste van ’s Rijks kas aan het college een uitkering voor de uitvoering
@@ -361,6 +415,41 @@ articles:
       - id: ref2
         bwb_id: BWBR0008903
         hoofdstuk: '3'
+    machine_readable:
+      endpoint: uitkering_gemeente
+      open_terms:
+        - id: uitkering
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 8, tweede lid Wet sociale werkvoorziening
+        - id: minimumaantal_arbeidsjaren
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 8, tweede lid Wet sociale werkvoorziening
+      execution:
+        parameters:
+          - name: gemeente_code
+            type: string
+            required: true
+            description: "Gemeentecode ten behoeve van berekening uitkering"
+        output:
+          - name: uitkering
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Jaarlijkse uitkering aan het college voor uitvoering van de wet (artikel 8, eerste lid)"
+          - name: minimumaantal_arbeidsjaren
+            type: number
+            description: "Minimumaantal arbeidsjaren behorend bij de uitkering (artikel 8, tweede lid)"
+        actions:
+          - output: uitkering
+            value: $uitkering
+          - output: minimumaantal_arbeidsjaren
+            value: $minimumaantal_arbeidsjaren
   - number: '9'
     text: |-
       1 Indien uit de bijlage, bedoeld in [artikel 13, vierde lid][ref1], blijkt dat in het kalenderjaar waarop de
@@ -453,6 +542,64 @@ articles:
         bwb_id: BWBR0008903
         artikel: '13'
         hoofdstuk: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "percentage van de uitkering bij onbillijkheid van overwegende aard"
+          reason: "Discretionaire vaststelling percentage door Onze Minister is niet uitdrukbaar als deterministische berekening"
+          legal_text_excerpt: "Indien volledige terugvordering naar het oordeel van Onze Minister leidt tot een onbillijkheid van overwegende aard, stelt Onze Minister de terugvordering vast op een percentage van de uitkering"
+          accepted: false
+      execution:
+        parameters:
+          - name: gerealiseerde_arbeidsjaren
+            type: number
+            required: true
+            description: "Aantal gerealiseerde arbeidsjaren uit dienstbetrekkingen in het betreffende kalenderjaar"
+        input:
+          - name: minimumaantal_arbeidsjaren
+            type: number
+            source:
+              output: minimumaantal_arbeidsjaren
+          - name: uitkering
+            type: amount
+            source:
+              output: uitkering
+            type_spec:
+              unit: eurocent
+        output:
+          - name: terugvordering_van_toepassing
+            type: boolean
+            description: "Geeft aan of terugvordering van toepassing is (gerealiseerde < minimumaantal)"
+          - name: terugvordering_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Terug te vorderen bedrag van de uitkering (artikel 9, eerste lid)"
+        actions:
+          - output: terugvordering_van_toepassing
+            value:
+              operation: LESS_THAN
+              subject: $gerealiseerde_arbeidsjaren
+              value: $minimumaantal_arbeidsjaren
+          - output: terugvordering_bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $terugvordering_van_toepassing
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - operation: DIVIDE
+                        values:
+                          - operation: SUBTRACT
+                            values:
+                              - $minimumaantal_arbeidsjaren
+                              - $gerealiseerde_arbeidsjaren
+                          - $minimumaantal_arbeidsjaren
+                      - $uitkering
+              default: 0
   - number: '10'
     text: |-
       1 Bij overgang van ingezetenschap van de ene naar de andere gemeente treedt het college van de gemeente waarvan
@@ -517,6 +664,45 @@ articles:
         bwb_id: BWBR0008903
         artikel: '8'
         hoofdstuk: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden op honderdsten (vijfduizendste of meer naar boven)"
+          reason: "ROUND/CEIL operation is not available in the engine"
+          legal_text_excerpt: "berekend op honderdsten nauwkeurig waarbij vijfduizendste of meer naar boven wordt afgerond op een honderdste"
+          accepted: false
+      execution:
+        parameters:
+          - name: gerealiseerde_arbeidsjaren_ingezetene
+            type: number
+            required: true
+            description: "Aantal gerealiseerde arbeidsjaren door de ingezetene in het kalenderjaar (artikel 10, derde lid, C) — rounding niet geïmplementeerd"
+        input:
+          - name: uitkering
+            type: amount
+            source:
+              output: uitkering
+            type_spec:
+              unit: eurocent
+          - name: minimumaantal_arbeidsjaren
+            type: number
+            source:
+              output: minimumaantal_arbeidsjaren
+        output:
+          - name: vergoeding_per_kalenderjaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Vergoeding per kalenderjaar bij overgang ingezetenschap (artikel 10, derde lid)"
+        actions:
+          - output: vergoeding_per_kalenderjaar
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - $uitkering
+                    - $minimumaantal_arbeidsjaren
+                - $gerealiseerde_arbeidsjaren_ingezetene
   - number: '11'
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen stelt van personen, die daartoe een aanvraag hebben ingediend,
@@ -596,6 +782,34 @@ articles:
       - id: ref5
         bwb_id: BWBR0005537
         artikel: 7:10
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: bezwaartermijn_weken
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van de aanvraag voor indicatie of herindicatie"
+        output:
+          - name: indicatiebeschikking_deadline
+            type: date
+            description: "Uiterste datum voor afgifte van de indicatiebeschikking (aanvraag_datum + 16 weken, artikel 11, vijfde lid)"
+          - name: bezwaartermijn_weken
+            type: number
+            description: "Termijn in weken voor beslissing op bezwaar door UWV in afwijking van AWB artikel 7:10 (artikel 11, zesde lid)"
+        actions:
+          - output: indicatiebeschikking_deadline
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: 16
+          - output: bezwaartermijn_weken
+            value: 16
   - number: '12'
     text: |-
       1 Het college beheert een wachtlijst. De wachtlijst bevat een overzicht van ingezetenen die geïndiceerd zijn,
@@ -709,6 +923,32 @@ articles:
       - id: ref13
         bwb_id: BWBR0008903
         hoofdstuk: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: "Geboortedatum van de betrokkene"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Datum waarop de vervalbeoordeling plaatsvindt"
+        output:
+          - name: indicatiebeschikking_vervallen_wegens_leeftijd
+            type: boolean
+            description: "Geeft aan of de indicatiebeschikking is vervallen omdat betrokkene de leeftijd van 65 jaar heeft bereikt (artikel 12, vierde lid, onderdeel b)"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: indicatiebeschikking_vervallen_wegens_leeftijd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 65
   - number: '13'
     text: |-
       1 Onze Minister houdt toezicht op:
