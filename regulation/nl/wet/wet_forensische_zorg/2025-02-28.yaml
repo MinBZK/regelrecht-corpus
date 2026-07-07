@@ -1069,6 +1069,46 @@ articles:
         bwb_id: BWBR0040635
       - id: ref3
         bwb_id: BWBR0040632
+    machine_readable:
+      execution:
+        parameters:
+          - name: schriftelijke_instemming
+            type: boolean
+            required: true
+            description: Forensische patiënt heeft schriftelijk en vrijwillig ingestemd met de overbrenging naar de private instelling
+          - name: zorgmachtiging_aanwezig
+            type: boolean
+            required: false
+            description: Er is een zorgmachtiging afgegeven op grond van de Wet verplichte geestelijke gezondheidszorg
+          - name: rechterlijke_machtiging_aanwezig
+            type: boolean
+            required: false
+            description: Er is een rechterlijke machtiging voor onvrijwillige opname afgegeven op grond van de Wet zorg en dwang psychogeriatrische en verstandelijk gehandicapte cliënten
+        output:
+          - name: machtiging_vereist
+            type: boolean
+            description: Geeft aan of een zorgmachtiging of rechterlijke machtiging vereist is (kan achterwege blijven bij schriftelijke vrijwillige instemming)
+          - name: overbrenging_toegestaan
+            type: boolean
+            description: Geeft aan of de overbrenging van de forensische patiënt naar een private instelling is toegestaan
+        actions:
+          - output: machtiging_vereist
+            value:
+              operation: NOT
+              value: $schriftelijke_instemming
+          - output: overbrenging_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $schriftelijke_instemming
+                  value: true
+                - operation: EQUALS
+                  subject: $zorgmachtiging_aanwezig
+                  value: true
+                - operation: EQUALS
+                  subject: $rechterlijke_machtiging_aanwezig
+                  value: true
   - number: '6.8'
     text: |-
       Onze Minister draagt zorg voor overbrenging van de forensische patiënt naar de daartoe bestemde plaats, indien
