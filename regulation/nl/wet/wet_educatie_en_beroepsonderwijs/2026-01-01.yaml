@@ -4919,6 +4919,82 @@ articles:
       de betreffende opleiding aan en het aantal volledige studiejaren of gedeelten daarvan die de studieduur van die
       opleiding ten hoogste mag bedragen.
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel7.2.4a
+    machine_readable:
+      endpoint: studieduur_beroepsopleiding
+      execution:
+        parameters:
+          - name: type_opleiding
+            type: string
+            required: true
+            description: "Type beroepsopleiding: entreeopleiding | basisberoepsopleiding | vakopleiding | middenkaderopleiding | specialistenopleiding"
+        output:
+          - name: studieduur_min_studiejaren
+            type: number
+            description: "Minimum studieduur in volledige studiejaren (artikel 7.2.4a lid 3)"
+          - name: studieduur_max_studiejaren
+            type: number
+            description: "Maximum studieduur in volledige studiejaren (artikel 7.2.4a lid 3)"
+        actions:
+          - output: studieduur_min_studiejaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "entreeopleiding"
+                  then: 1
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "basisberoepsopleiding"
+                  then: 1
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "vakopleiding"
+                  then: 2
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "middenkaderopleiding"
+                  then: 3
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "specialistenopleiding"
+                  then: 1
+              default: 1
+          - output: studieduur_max_studiejaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "entreeopleiding"
+                  then: 1
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "basisberoepsopleiding"
+                  then: 2
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "vakopleiding"
+                  then: 3
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "middenkaderopleiding"
+                  then: 3
+                - when:
+                    operation: EQUALS
+                    subject: $type_opleiding
+                    value: "specialistenopleiding"
+                  then: 1
+              default: 1
   - number: 7.2.5a
     text: |-
       Bij ministeriële regeling worden op voorstel van de instellingen in overleg met de Samenwerkingsorganisatie
@@ -5057,6 +5133,123 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0007625#Artikel2.5.4
       [ref11]: https://wetten.overheid.nl/BWBR0007625#Artikel1.4.1
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel7.2.7
+    machine_readable:
+      untranslatables:
+        - construct: "evenredig verlaagd op basis van studieduur minder dan 10 maanden (lid 7)"
+          reason: "Proportional reduction based on partial months requires date arithmetic and rounding not available as engine operations"
+          legal_text_excerpt: "indien de studieduur gerekend vanaf 1 september en naar boven afgerond op hele maanden minder is dan 10 maanden, worden het aantal begeleide onderwijsuren en het aantal klokuren beroepspraktijkvorming evenredig verlaagd"
+          suggestion: "Add ROUND/DATE_DIFF operations and proportional scaling to engine"
+        - construct: "evenredig verhoogd voor opleiding met studieduur > 3 jaar op grond van artikel 7.2.4a lid 4 (lid 8)"
+          reason: "Proportional increase based on study duration beyond 3 years requires arithmetic scaling of hours not available as engine operations"
+          legal_text_excerpt: "wordt het onderwijsprogramma, bedoeld in het derde lid, onderdeel d, naar evenredigheid verhoogd met begeleide onderwijsuren en uren beroepspraktijkvorming"
+          suggestion: "Add proportional scaling operations to engine"
+      execution:
+        parameters:
+          - name: categorie_opleiding
+            type: string
+            required: true
+            description: "Categorie: bol_entreeopleiding | bol_1jr (eenjarige basisberoepsopleiding of specialistenopleiding) | bol_2jr (tweejarige basisberoepsopleiding of tweejarige vakopleiding) | bol_3jr (driejarige vakopleiding of middenkaderopleiding) | bbl"
+        output:
+          - name: min_klokuren
+            type: number
+            description: "Minimum aantal klokuren voor het onderwijsprogramma (artikel 7.2.7 lid 3-4)"
+          - name: min_begeleide_onderwijsuren
+            type: number
+            description: "Minimum aantal begeleide onderwijsuren (artikel 7.2.7 lid 3-4)"
+          - name: min_klokuren_bpv
+            type: number
+            description: "Minimum aantal klokuren beroepspraktijkvorming (artikel 7.2.7 lid 3-4)"
+        actions:
+          - output: min_klokuren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_entreeopleiding"
+                  then: 1000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_1jr"
+                  then: 1000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_2jr"
+                  then: 2000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_3jr"
+                  then: 3000
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bbl"
+                  then: 850
+              default: 1000
+          - output: min_begeleide_onderwijsuren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_entreeopleiding"
+                  then: 600
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_1jr"
+                  then: 700
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_2jr"
+                  then: 1250
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_3jr"
+                  then: 1800
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bbl"
+                  then: 200
+              default: 600
+          - output: min_klokuren_bpv
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_entreeopleiding"
+                  then: 0
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_1jr"
+                  then: 250
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_2jr"
+                  then: 450
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bol_3jr"
+                  then: 900
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_opleiding
+                    value: "bbl"
+                  then: 610
+              default: 0
     references:
       - id: ref1
         bwb_id: BWBR0007625
@@ -5536,6 +5729,62 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.4.6
       [ref2]: https://wetten.overheid.nl/BWBR0007625#Artikel7.2.3
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel7.4.6a
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_ten_minste_een_waardering
+            type: boolean
+            required: true
+            description: "Heeft de student ten minste één waardering behaald voor een onderdeel of deel van de opleiding (artikel 7.4.6a lid 1)"
+          - name: is_ingeschreven
+            type: boolean
+            required: true
+            description: "Is de student nog ingeschreven aan een instelling (artikel 7.4.6a lid 2a)"
+          - name: geboortedatum
+            type: date
+            required: true
+            description: "Geboortedatum van de student (voor leeftijdcheck lid 2b: jonger dan 27 jaar)"
+          - name: heeft_startkwalificatie
+            type: boolean
+            required: true
+            description: "Is de student in het bezit van een startkwalificatie (artikel 7.4.6a lid 2c)"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Datum waarop de beoordeling plaatsvindt"
+        output:
+          - name: leeftijd
+            type: number
+            description: "Leeftijd van de student op peildatum (in jaren)"
+          - name: recht_op_automatische_verklaring
+            type: boolean
+            description: "Student heeft recht op een automatisch afgegeven verklaring zonder verzoek (artikel 7.4.6a lid 2)"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: recht_op_automatische_verklaring
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_ten_minste_een_waardering
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_ingeschreven
+                    value: true
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 27
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $heeft_startkwalificatie
+                    value: true
     references:
       - id: ref1
         bwb_id: BWBR0007625
@@ -7048,6 +7297,80 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0007625#Artikel8.1.5
       [ref4]: https://wetten.overheid.nl/BWBR0011453
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel8.1.5a
+    machine_readable:
+      untranslatables:
+        - construct: "tot en met de maand waarin hij de leeftijd van 18 jaar heeft bereikt (lid 2)"
+          reason: "Month-boundary precision for age cutoff is not expressible with the AGE operation which returns whole years; the engine cannot determine the end-of-month of the 18th birthday"
+          legal_text_excerpt: "Een student komt uitsluitend in aanmerking voor ondersteuning als bedoeld in artikel 8.1.5, tweede lid, onderdeel c, tot en met de maand waarin hij de leeftijd van 18 jaar heeft bereikt"
+          suggestion: "Add DATE_MONTH or end-of-month boundary operations; approximate with leeftijd <= 18"
+      execution:
+        parameters:
+          - name: volgt_beroepsopleidende_leerweg
+            type: boolean
+            required: true
+            description: "Volgt de student de beroepsopleidende leerweg (BOL)"
+          - name: geboortedatum
+            type: date
+            required: true
+            description: "Geboortedatum van de student"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Peildatum voor de beoordeling"
+          - name: heeft_recht_op_basisbeurs
+            type: boolean
+            required: true
+            description: "Heeft de student (nog) recht op de basisbeurs op grond van de Wet studiefinanciering 2000"
+          - name: categorie_ondersteuning
+            type: string
+            required: true
+            description: "Gevraagde categorie: c (artikel 8.1.5 lid 2 onderdeel c: onderwijsbenodigdheden) of bijzondere_omstandigheid (artikel 8.1.5 lid 3 onderdelen a t/m e: studievertraging door bijzondere omstandigheid)"
+        output:
+          - name: leeftijd
+            type: number
+            description: "Leeftijd van de student op peildatum (in jaren)"
+          - name: komt_in_aanmerking
+            type: boolean
+            description: "Student komt in aanmerking voor de gevraagde ondersteuning (artikel 8.1.5a lid 2-3)"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: komt_in_aanmerking
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_ondersteuning
+                    value: "c"
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $volgt_beroepsopleidende_leerweg
+                        value: true
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $leeftijd
+                        value: 18
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_ondersteuning
+                    value: "bijzondere_omstandigheid"
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $volgt_beroepsopleidende_leerweg
+                        value: true
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $heeft_recht_op_basisbeurs
+                          value: true
+              default: false
     references:
       - id: ref1
         bwb_id: BWBR0007625
@@ -8852,6 +9175,86 @@ articles:
       [ref4]: https://wetten.overheid.nl/BWBR0007625#Artikel7.2.4a
       [ref5]: https://wetten.overheid.nl/BWBR0044212
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel9.1.9
+    machine_readable:
+      overrides:
+        - law: wet_educatie_en_beroepsonderwijs
+          article: '7.2.4a'
+          output: studieduur_min_studiejaren
+        - law: wet_educatie_en_beroepsonderwijs
+          article: '7.2.4a'
+          output: studieduur_max_studiejaren
+      execution:
+        parameters:
+          - name: type_diploma_doorlopende_leerroute
+            type: string
+            required: true
+            description: "Soort diploma: 1jr_basisberoepsopleiding | 2jr_basisberoepsopleiding | 2jr_vakopleiding | 3jr_vakopleiding | middenkaderopleiding | middenkaderopleiding_verlengd (artikel 7.2.4a lid 4)"
+        output:
+          - name: studieduur_min_studiejaren
+            type: number
+            description: "Minimum studieduur doorlopende leerroute vmbo-mbo in volledige studiejaren (vanaf derde leerjaar)"
+          - name: studieduur_max_studiejaren
+            type: number
+            description: "Maximum studieduur doorlopende leerroute vmbo-mbo in volledige studiejaren (vanaf derde leerjaar)"
+        actions:
+          - output: studieduur_min_studiejaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_diploma_doorlopende_leerroute
+                    value: "1jr_basisberoepsopleiding"
+                  then: 2
+                - when:
+                    operation: IN
+                    subject: $type_diploma_doorlopende_leerroute
+                    values:
+                      - "2jr_basisberoepsopleiding"
+                      - "2jr_vakopleiding"
+                  then: 3
+                - when:
+                    operation: IN
+                    subject: $type_diploma_doorlopende_leerroute
+                    values:
+                      - "3jr_vakopleiding"
+                      - "middenkaderopleiding"
+                  then: 4
+                - when:
+                    operation: EQUALS
+                    subject: $type_diploma_doorlopende_leerroute
+                    value: "middenkaderopleiding_verlengd"
+                  then: 5
+              default: 2
+          - output: studieduur_max_studiejaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_diploma_doorlopende_leerroute
+                    value: "1jr_basisberoepsopleiding"
+                  then: 3
+                - when:
+                    operation: IN
+                    subject: $type_diploma_doorlopende_leerroute
+                    values:
+                      - "2jr_basisberoepsopleiding"
+                      - "2jr_vakopleiding"
+                  then: 4
+                - when:
+                    operation: IN
+                    subject: $type_diploma_doorlopende_leerroute
+                    values:
+                      - "3jr_vakopleiding"
+                      - "middenkaderopleiding"
+                  then: 5
+                - when:
+                    operation: EQUALS
+                    subject: $type_diploma_doorlopende_leerroute
+                    value: "middenkaderopleiding_verlengd"
+                  then: 6
+              default: 3
     references:
       - id: ref1
         bwb_id: BWBR0044212
@@ -8909,6 +9312,124 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0007625#Artikel1.4.1
       [ref6]: https://wetten.overheid.nl/BWBR0044212#Artikel2.38
     url: https://wetten.overheid.nl/BWBR0007625/2026-01-01#Artikel9.1.10
+    machine_readable:
+      overrides:
+        - law: wet_educatie_en_beroepsonderwijs
+          article: '7.2.7'
+          output: min_klokuren
+        - law: wet_educatie_en_beroepsonderwijs
+          article: '7.2.7'
+          output: min_begeleide_onderwijsuren
+        - law: wet_educatie_en_beroepsonderwijs
+          article: '7.2.7'
+          output: min_klokuren_bpv
+      execution:
+        parameters:
+          - name: studieduur_studiejaren
+            type: number
+            required: true
+            description: "Studieduur van de doorlopende leerroute in volledige studiejaren (2 t/m 6)"
+        output:
+          - name: min_klokuren
+            type: number
+            description: "Minimum totaal klokuren onderwijsprogramma doorlopende leerroute vmbo-mbo BOL"
+          - name: min_begeleide_onderwijsuren
+            type: number
+            description: "Minimum begeleide onderwijsuren doorlopende leerroute vmbo-mbo BOL"
+          - name: min_klokuren_bpv
+            type: number
+            description: "Minimum klokuren beroepspraktijkvorming doorlopende leerroute vmbo-mbo BOL"
+        actions:
+          - output: min_klokuren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 2
+                  then: 2000
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 3
+                  then: 3000
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 4
+                  then: 4000
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 5
+                  then: 5000
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 6
+                  then: 6000
+              default: 2000
+          - output: min_begeleide_onderwijsuren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 2
+                  then: 1400
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 3
+                  then: 2400
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 4
+                  then: 2950
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 5
+                  then: 3500
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 6
+                  then: 4050
+              default: 1400
+          - output: min_klokuren_bpv
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 2
+                  then: 250
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 3
+                  then: 250
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 4
+                  then: 450
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 5
+                  then: 900
+                - when:
+                    operation: EQUALS
+                    subject: $studieduur_studiejaren
+                    value: 6
+                  then: 1350
+              default: 250
     references:
       - id: ref1
         bwb_id: BWBR0044212
