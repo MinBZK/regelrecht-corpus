@@ -799,6 +799,15 @@ articles:
 
       3 Vwo heeft een cursusduur van zes leerjaren.
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.4
+    machine_readable:
+      execution:
+        output:
+          - name: cursusduur_leerjaren
+            type: number
+            description: Aantal leerjaren voor vwo (lid 3)
+        actions:
+          - output: cursusduur_leerjaren
+            value: 6
   - number: '2.5'
     text: |-
       1 Havo wordt gegeven aan:
@@ -813,6 +822,28 @@ articles:
 
       4 Havo aan afdelingen van scholen voor mavo heeft een cursusduur van twee leerjaren.
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.5
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_afdeling_van_mavo
+            type: boolean
+            required: true
+            description: Of dit havo een afdeling is van een school voor mavo (lid 4)
+        output:
+          - name: cursusduur_leerjaren
+            type: number
+            description: Aantal leerjaren voor havo (lid 3 en 4)
+        actions:
+          - output: cursusduur_leerjaren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_afdeling_van_mavo
+                    value: true
+                  then: 2
+              default: 5
   - number: '2.6'
     text: |-
       1 Mavo wordt gegeven aan scholen voor mavo.
@@ -821,6 +852,15 @@ articles:
 
       3 Mavo heeft een cursusduur van vier leerjaren.
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.6
+    machine_readable:
+      execution:
+        output:
+          - name: cursusduur_leerjaren
+            type: number
+            description: Aantal leerjaren voor mavo (lid 3)
+        actions:
+          - output: cursusduur_leerjaren
+            value: 4
   - number: '2.7'
     text: |-
       1 Vbo wordt gegeven aan scholen voor vbo.
@@ -835,6 +875,15 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.2.2
       [ref2]: https://wetten.overheid.nl/BWBR0028395#Artikel7.2.2
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.7
+    machine_readable:
+      execution:
+        output:
+          - name: cursusduur_leerjaren
+            type: number
+            description: Aantal leerjaren voor vbo (lid 3)
+        actions:
+          - output: cursusduur_leerjaren
+            value: 4
     references:
       - id: ref1
         bwb_id: BWBR0007625
@@ -1663,6 +1712,70 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0044212#Artikel2.42
       [ref6]: https://wetten.overheid.nl/BWBR0044212#Artikel2.103
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.38
+    machine_readable:
+      untranslatables:
+        - construct: "ten hoogste 5,5 klokuren praktijkonderwijs per dag"
+          reason: "Decimal value (5.5) cannot be represented as integer; DIVIDE 11/2 is possible but not idiomatic for a simple threshold"
+          legal_text_excerpt: "De leerlingen ontvangen per dag ten hoogste 5,5 klokuren praktijkonderwijs"
+          accepted: false
+      execution:
+        output:
+          - name: minimum_klokuren_vwo
+            type: number
+            description: Minimum aantal klokuren voor vwo (lid 1)
+          - name: minimum_klokuren_havo_school
+            type: number
+            description: Minimum aantal klokuren voor havo aan school voor havo (lid 2)
+          - name: minimum_klokuren_havo_afdeling_mavo
+            type: number
+            description: Minimum aantal klokuren voor havo aan afdeling van school voor mavo (lid 2)
+          - name: minimum_klokuren_mavo
+            type: number
+            description: Minimum aantal klokuren voor mavo (lid 3)
+          - name: minimum_klokuren_vbo
+            type: number
+            description: Minimum aantal klokuren voor vbo (lid 4)
+          - name: minimum_klokuren_praktijkonderwijs_per_schooljaar
+            type: number
+            description: Minimum aantal klokuren praktijkonderwijs per schooljaar (lid 7)
+          - name: minimum_klokuren_eerste_twee_leerjaren
+            type: number
+            description: Minimum aantal klokuren in eerste twee leerjaren samen (lid 6)
+          - name: minimum_klokuren_buitenschools_praktijk
+            type: number
+            description: Minimum aantal klokuren buitenschools praktijkgedeelte leer-werktraject (lid 9)
+          - name: maximum_klokuren_buitenschools_praktijk
+            type: number
+            description: Maximum aantal klokuren buitenschools praktijkgedeelte leer-werktraject (lid 9)
+          - name: minimum_dagen_buitenschools_praktijk
+            type: number
+            description: Minimum aantal dagen buitenschools praktijkgedeelte leer-werktraject (lid 9)
+          - name: maximum_dagen_buitenschools_praktijk
+            type: number
+            description: Maximum aantal dagen buitenschools praktijkgedeelte leer-werktraject (lid 9)
+        actions:
+          - output: minimum_klokuren_vwo
+            value: 5700
+          - output: minimum_klokuren_havo_school
+            value: 4700
+          - output: minimum_klokuren_havo_afdeling_mavo
+            value: 1700
+          - output: minimum_klokuren_mavo
+            value: 3700
+          - output: minimum_klokuren_vbo
+            value: 3700
+          - output: minimum_klokuren_praktijkonderwijs_per_schooljaar
+            value: 1000
+          - output: minimum_klokuren_eerste_twee_leerjaren
+            value: 1425
+          - output: minimum_klokuren_buitenschools_praktijk
+            value: 640
+          - output: maximum_klokuren_buitenschools_praktijk
+            value: 1280
+          - output: minimum_dagen_buitenschools_praktijk
+            value: 80
+          - output: maximum_dagen_buitenschools_praktijk
+            value: 160
     references:
       - id: ref1
         bwb_id: BWBR0044212
@@ -1711,6 +1824,15 @@ articles:
       ander aantal dan 189 indien dit noodzakelijk is voor de spreiding van de landelijk vastgestelde vakanties over
       verschillende delen van Nederland.
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.39
+    machine_readable:
+      execution:
+        output:
+          - name: minimum_schooldagen_per_schooljaar
+            type: number
+            description: Minimum aantal dagen waarop onderwijs wordt verzorgd per schooljaar (lid 1)
+        actions:
+          - output: minimum_schooldagen_per_schooljaar
+            value: 189
   - number: '2.40'
     text: |-
       1 Indien een leerling een deel van het onderwijsprogramma ontvangt op een school voor voortgezet speciaal
@@ -2776,6 +2898,20 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0020685#Artikel3
       [ref2]: https://wetten.overheid.nl/BWBR0020685#Artikel4
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.60d
+    machine_readable:
+      untranslatables:
+        - construct: "oneven aantal leden"
+          reason: "Parity check (odd/even) requires a MODULO operation which is not available in the engine"
+          legal_text_excerpt: "De examencommissie heeft een oneven aantal leden en ten minste drie leden"
+          accepted: false
+      execution:
+        output:
+          - name: minimum_aantal_leden_examencommissie
+            type: number
+            description: Minimum aantal leden van de examencommissie (lid 2)
+        actions:
+          - output: minimum_aantal_leden_examencommissie
+            value: 3
     references:
       - id: ref1
         bwb_id: BWBR0020685
@@ -2873,6 +3009,25 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel67
       [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel724
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.63
+    machine_readable:
+      execution:
+        output:
+          - name: beroepstermijn_dagen
+            type: number
+            description: Termijn voor het indienen van beroepschrift in dagen (lid 2; in afwijking van AWB 6:7)
+          - name: beslissingstermijn_weken
+            type: number
+            description: Termijn waarbinnen de commissie van beroep beslist in weken (lid 3; in afwijking van AWB 7:24)
+          - name: maximale_verdaging_weken
+            type: number
+            description: Maximale verdaging van de beslissing in weken (lid 3)
+        actions:
+          - output: beroepstermijn_dagen
+            value: 5
+          - output: beslissingstermijn_weken
+            value: 2
+          - output: maximale_verdaging_weken
+            value: 2
     references:
       - id: ref1
         bwb_id: BWBR0044212
@@ -2904,6 +3059,25 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0044212#Artikel2.61
       [ref2]: https://wetten.overheid.nl/BWBR0005537
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.64
+    machine_readable:
+      execution:
+        output:
+          - name: verzoekschrifttermijn_dagen
+            type: number
+            description: Termijn voor indienen verzoekschrift in dagen (lid 2)
+          - name: beslissingstermijn_weken
+            type: number
+            description: Termijn waarbinnen de commissie van beroep beslist in weken (lid 3)
+          - name: maximale_verdaging_weken
+            type: number
+            description: Maximale verdaging van de beslissing in weken (lid 3)
+        actions:
+          - output: verzoekschrifttermijn_dagen
+            value: 5
+          - output: beslissingstermijn_weken
+            value: 2
+          - output: maximale_verdaging_weken
+            value: 2
     references:
       - id: ref1
         bwb_id: BWBR0044212
@@ -2967,6 +3141,28 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0044212#Artikel2.66
       [ref2]: https://wetten.overheid.nl/BWBR0044212#Artikel7.44
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.67
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag
+        output:
+          - name: uiterste_beslisdatum
+            type: date
+            description: Uiterste datum waarbinnen Onze Minister beslist (26 weken na ontvangst, lid 2)
+          - name: beslissingstermijn_weken
+            type: number
+            description: Termijn waarbinnen beslist moet worden in weken (lid 2)
+        actions:
+          - output: beslissingstermijn_weken
+            value: 26
+          - output: uiterste_beslisdatum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum
+              weeks: 26
     references:
       - id: ref1
         bwb_id: BWBR0044212
@@ -3622,6 +3818,25 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0044212#Artikel2.82
       [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel724
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel2.83
+    machine_readable:
+      execution:
+        output:
+          - name: bezwaartermijn_dagen
+            type: number
+            description: Termijn voor het indienen van bezwaarschrift in dagen (lid 1; in afwijking van AWB 6:7)
+          - name: beslissingstermijn_weken
+            type: number
+            description: Termijn waarbinnen College voor toetsen en examens beslist in weken (lid 2; in afwijking van AWB 7:24)
+          - name: maximale_verdaging_weken
+            type: number
+            description: Maximale verdaging van de beslissing in weken (lid 2)
+        actions:
+          - output: bezwaartermijn_dagen
+            value: 5
+          - output: beslissingstermijn_weken
+            value: 2
+          - output: maximale_verdaging_weken
+            value: 2
     references:
       - id: ref1
         bwb_id: BWBR0005537
@@ -6993,6 +7208,70 @@ articles:
         artikel: '4.7'
         hoofdstuk: '4'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "Schoolsoort: vwo, havo, havo_afdeling, mavo, vbo_een_profiel, vbo_meer_profielen, praktijkonderwijs"
+          - name: verwacht_aantal_leerlingen
+            type: number
+            required: true
+            description: Verwacht aantal leerlingen op basis van de belangstellingsmeting
+        output:
+          - name: voldoet_aan_leerlingeneis
+            type: boolean
+            description: Of het verwachte aantal leerlingen voldoet aan het wettelijk minimum (lid 1, onderdeel a)
+          - name: minimum_leerlingen
+            type: number
+            description: Wettelijk minimum aantal leerlingen voor de desbetreffende schoolsoort (lid 1, onderdeel a)
+        actions:
+          - output: minimum_leerlingen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: vwo
+                  then: 390
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: havo
+                  then: 325
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: havo_afdeling
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: mavo
+                  then: 260
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: vbo_een_profiel
+                  then: 260
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: vbo_meer_profielen
+                  then: 160
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: praktijkonderwijs
+                  then: 120
+              default: 0
+          - output: voldoet_aan_leerlingeneis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwacht_aantal_leerlingen
+              value: $minimum_leerlingen
   - number: 4.2a
     text: |-
       1 Onze Minister brengt een nevenvestiging van een school als bedoeld in
@@ -7095,6 +7374,60 @@ articles:
         artikel: 4.5a
         hoofdstuk: '4'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "Schoolsoort van de nevenvestiging: vwo, havo, mavo, vbo, praktijkonderwijs"
+          - name: verwacht_aantal_leerlingen
+            type: number
+            required: true
+            description: Verwacht aantal leerlingen op de nevenvestiging op basis van de belangstellingsmeting
+        output:
+          - name: voldoet_aan_leerlingeneis
+            type: boolean
+            description: Of het verwachte aantal leerlingen voldoet aan het minimum voor de nevenvestiging (lid 1, onderdeel a)
+          - name: minimum_leerlingen
+            type: number
+            description: Wettelijk minimum aantal leerlingen voor de desbetreffende schoolsoort nevenvestiging (lid 1, onderdeel a)
+        actions:
+          - output: minimum_leerlingen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: vwo
+                  then: 195
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: havo
+                  then: 195
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: mavo
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: vbo
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: praktijkonderwijs
+                  then: 120
+              default: 0
+          - output: voldoet_aan_leerlingeneis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwacht_aantal_leerlingen
+              value: $minimum_leerlingen
   - number: '4.3'
     text: |-
       1 Onze Minister brengt een nieuw te vormen profiel als bedoeld in [artikel 2.26, tweede lid][ref1], aan een al
@@ -7603,6 +7936,49 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0044212#Artikel4.5
     url: https://wetten.overheid.nl/BWBR0044212/2026-06-12#Artikel4.6
+    machine_readable:
+      open_terms:
+        - id: correctiefactor_z
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 4.6, lid 3, onderdeel a/b (z) Wet voortgezet onderwijs
+      execution:
+        parameters:
+          - name: y
+            type: number
+            required: true
+            description: Aantal leerlingen (10-12 jaar) met belangstelling voor de school (ouderverklaring of marktonderzoek)
+          - name: x
+            type: number
+            required: true
+            description: Totaal aantal leerlingen (10-12 jaar) in het voedingsgebied of de steekproef
+          - name: w
+            type: number
+            required: true
+            description: Gemiddeld aantal leerlingen van 12 en 13 jaar vermenigvuldigd met het bij ministeriële regeling te bepalen aantal verblijfsjaren (lid 3 onderdeel a/b)
+        output:
+          - name: verwacht_aantal_leerlingen
+            type: number
+            description: Verwacht aantal leerlingen op de school (q uit de formule q = y/x * w * z, lid 3)
+          - name: marktaandeel
+            type: number
+            description: Proportioneel marktaandeel y/x
+        actions:
+          - output: marktaandeel
+            value:
+              operation: DIVIDE
+              values:
+                - $y
+                - $x
+          - output: verwacht_aantal_leerlingen
+            value:
+              operation: MULTIPLY
+              values:
+                - $marktaandeel
+                - $w
+                - $correctiefactor_z
     references:
       - id: ref1
         bwb_id: BWBR0044212
