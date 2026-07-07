@@ -1668,6 +1668,23 @@ articles:
         artikel: '30'
         hoofdstuk: '5'
         paragraaf: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontwerp_overlegging_datum
+            type: date
+            required: true
+            description: "Datum waarop het ontwerp van de AMvB aan beide Kamers der Staten-Generaal is overgelegd (lid 4)"
+        output:
+          - name: vroegste_voordracht_datum
+            type: date
+            description: "Vroegste datum waarop de voordracht voor de AMvB kan worden gedaan: niet eerder dan twee weken na overlegging ontwerp (lid 4)"
+        actions:
+          - output: vroegste_voordracht_datum
+            value:
+              operation: DATE_ADD
+              date: $ontwerp_overlegging_datum
+              weeks: 2
   - number: 33b
     text: |-
       Het Uitvoeringsinstituut werknemersverzekeringen verifieert het burgerservicenummer in relatie
@@ -2098,6 +2115,23 @@ articles:
       Arbeidsinspectie relevant geachte, rapportages, in de vorm waarin deze hem zijn voorgelegd en voorzien van zijn
       oordeel, binnen vier weken na ontvangst, ter kennis aan de beide kamers der Staten-Generaal.
     url: https://wetten.overheid.nl/BWBR0013060/2026-07-01#Artikel38
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van de bescheiden (jaarplan, toezichtsplan of rapportages) door Onze Minister (lid 3)"
+        output:
+          - name: uiterste_informatiedatum_kamers
+            type: date
+            description: "Uiterste datum waarop Onze Minister de bescheiden aan beide Kamers ter kennis moet brengen (binnen vier weken na ontvangst, lid 3)"
+        actions:
+          - output: uiterste_informatiedatum_kamers
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum
+              weeks: 4
   - number: '39'
     text: |-
       1 De Nederlandse Arbeidsinspectie is met betrekking tot de haar bij of krachtens de wet opgedragen taken bevoegd
