@@ -165,11 +165,169 @@ articles:
       8 De werkgever stemt uiterlijk twee weken nadat het verzoek, bedoeld in het zesde lid, is gedaan in met het
       verzoek, tenzij een zwaarwegend bedrijfs- of dienstbelang zich hiertegen verzet.
 
-      9 Ingeval van toepassing van het vijfde lid, ziet het verzoek, bedoeld in het zesde lid, op de periode na afloop
-      van de verlenging, bedoeld in het vijfde lid.
+       9 Ingeval van toepassing van het vijfde lid, ziet het verzoek, bedoeld in het zesde lid, op de periode na afloop
+       van de verlenging, bedoeld in het vijfde lid.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0001888#Artikel29a
+    machine_readable:
+       inputs:
+          - name: verwachte_bevallingsdatum
+            type: date
+            description: "Verwachte datum van bevalling (DD-MM-JJJJ)."
+          - name: werkelijke_bevallingsdatum
+            type: date
+            description: "Werkelijke datum van bevalling (DD-MM-JJJJ)."
+          - name: meerling_zwangerschap
+            type: boolean
+            description: "Indicatie of het een meerlingzwangerschap betreft."
+          - name: ziekenhuis_opnamedatum
+            type: date
+            description: "Datum opname kind in ziekenhuis (indien van toepassing)."
+          - name: ziekenhuis_ontslagdatum
+            type: date
+            description: "Datum ontslag kind uit ziekenhuis (indien van toepassing)."
+       outputs:
+          - name: start_zwangerschapsverlof
+            type: date
+            description: "Startdatum van het zwangerschapsverlof."
+          - name: einde_bevallingsverlof
+            type: date
+            description: "Einddatum van het bevallingsverlof (inclusief verlengingen)."
+          - name: totale_duur_verlof
+            type: integer
+            unit: days
+            description: "Totale duur van zwangerschaps- en bevallingsverlof in dagen."
+       logic:
+            - name: start_zwangerschapsverlof_berekening
+              type: date
+              description: "Bepaalt de startdatum van het zwangerschapsverlof op basis van de verwachte bevallingsdatum en of het een meerlingzwangerschap betreft."
+              operation:
+                value:
+                  IF:
+                    condition: { meerling_zwangerschap: true }
+                    then:
+                      DATE_ADD:
+                        date: verwachte_bevallingsdatum
+                        days: -70
+                        unit: days
+                    else:
+                      DATE_ADD:
+                        date: verwachte_bevallingsdatum
+                        days: -42
+                        unit: days
+            - name: duur_zwangerschapsverlof_voor_bevalling
+              type: integer
+              unit: days
+              description: "Aantal dagen zwangerschapsverlof voor de bevalling."
+              operation:
+                value:
+                  DATE_DIFF:
+                    date1: start_zwangerschapsverlof_berekening
+                    date2: werkelijke_bevallingsdatum
+                    unit: days
+            - name: base_bevallingsverlof_duur
+              type: integer
+              unit: days
+              description: "Basisduur van het bevallingsverlof (10 weken)."
+              operation:
+                value: 70
+            - name: extra_bevallingsverlof_voor_korte_zwangerschapsverlof
+              type: integer
+              unit: days
+              description: "Extra dagen bevallingsverlof als het zwangerschapsverlof voor de bevalling korter was dan 6 weken (of 10 weken voor meerlingen)."
+              operation:
+                value:
+                  IF:
+                    condition: { meerling_zwangersschap: true }
+                    then:
+                      MAX:
+                        - 0
+                        - SUB:
+                            - 70
+                            - duur_zwangerschapsverlof_voor_bevalling
+                    else:
+                      MAX:
+                        - 0
+                        - SUB:
+                            - 42
+                            - duur_zwangerschapsverlof_voor_bevalling
+            - name: ziekenhuis_opname_duur
+              type: integer
+              unit: days
+              description: "Duur van de ziekenhuisopname van het kind."
+              operation:
+                value:
+                  IF:
+                    condition:
+                      AND:
+                        - NOT: { ziekenhuis_opnamedatum: null }
+                        - NOT: { ziekenhuis_ontslagdatum: null }
+                    then:
+                      DATE_DIFF:
+                        date1: ziekenhuis_opnamedatum
+                        date2: ziekenhuis_ontslagdatum
+                        unit: days
+                    else: 0
+            - name: extra_bevallingsverlof_ziekenhuis
+              type: integer
+              unit: days
+              description: "Extra dagen bevallingsverlof bij ziekenhuisopname van het kind (van dag 8, max 70 dagen)."
+              operation:
+                value:
+                  IF:
+                    condition:
+                      AND:
+                        - { ziekenhuis_opname_duur: { gt: 7 } }
+                    then:
+                      MIN:
+                        - 70
+                        - SUB:
+                            - ziekenhuis_opname_duur
+                            - 7
+                    else: 0
+            - name: totale_bevallingsverlof_duur
+              type: integer
+              unit: days
+              description: "Totale duur van het bevallingsverlof (inclusief verlengingen)."
+              operation:
+                value:
+                  ADD:
+                    - base_bevallingsverlof_duur
+                    - extra_bevallingsverlof_voor_korte_zwangerschapsverlof
+                    - extra_bevallingsverlof_ziekenhuis
+            - name: start_bevallingsverlof
+              type: date
+              description: "Startdatum van het bevallingsverlof."
+              operation:
+                value: werkelijke_bevallingsdatum
+            - name: einde_bevallingsverlof_berekening
+              type: date
+              description: "Berekende einddatum van het bevallingsverlof."
+              operation:
+                value:
+                  DATE_ADD:
+                    date: start_bevallingsverlof
+                    days: totale_bevallingsverlof_duur
+                    unit: days
+            - name: start_zwangerschapsverlof
+              type: date
+              description: "Startdatum van het zwangerschapsverlof."
+              operation:
+                value: start_zwangerschapsverlof_berekening
+            - name: einde_bevallingsverlof
+              type: date
+              description: "Einddatum van het bevallingsverlof (inclusief verlengingen)."
+              operation:
+                value: einde_bevallingsverlof_berekening
+            - name: totale_duur_verlof
+              type: integer
+              unit: days
+              description: "Totale duur van zwangerschaps- en bevallingsverlof in dagen."
+              operation:
+                value:
+                  ADD:
+                    - duur_zwangerschapsverlof_voor_bevalling
+                    - totale_bevallingsverlof_duur
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel31
     references:
       - id: ref1
