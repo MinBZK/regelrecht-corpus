@@ -175,6 +175,57 @@ articles:
       - id: ref1
         bwb_id: BWBR0001888
         artikel: 29a
+    machine_readable:
+      untranslatables:
+        - construct: "begin- en einddatum zwangerschapsverlof berekenen (aftrekken van weken van vermoedelijke datum)"
+          reason: "Date subtraction is not available as an engine operation; the engine only supports DATE_ADD for adding durations"
+          legal_text_excerpt: "Het recht op zwangerschapsverlof bestaat vanaf zes weken voor de dag na de vermoedelijke datum van bevalling... Het zwangerschapsverlof gaat in uiterlijk vier weken voor de dag na de vermoedelijke datum van bevalling"
+          accepted: false
+        - construct: "duur bevallingsverlof: tien weken vermeerderd met het aantal dagen dat het zwangerschapsverlof korter dan zes weken duurde"
+          reason: "Aggregation of calendar days taken during a variable-length period requires date difference, which is not an engine operation"
+          legal_text_excerpt: "Het bevallingsverlof gaat in op de dag na de bevalling en bedraagt tien aaneengesloten weken vermeerderd met het aantal dagen dat het zwangerschapsverlof tot en met de vermoedelijke datum van bevalling... minder dan zes weken heeft bedragen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_vrouwelijke_werknemer
+            type: boolean
+            required: true
+            description: "Is vrouwelijke werknemer als bedoeld in artikel 1:1 onderdeel b"
+          - name: bevalling_datum
+            type: date
+            required: false
+            description: "Werkelijke datum van de bevalling (voor berekening bevallingsverlof start)"
+        output:
+          - name: heeft_recht_op_zwangerschapsverlof
+            type: boolean
+            description: "Vrouwelijke werknemer heeft recht op zwangerschapsverlof (lid 1)"
+          - name: heeft_recht_op_bevallingsverlof
+            type: boolean
+            description: "Vrouwelijke werknemer heeft recht op bevallingsverlof (lid 1)"
+          - name: standaard_duur_bevallingsverlof_weken
+            type: number
+            description: "Standaard duur van het bevallingsverlof in weken (lid 3: tien aaneengesloten weken)"
+          - name: bevallingsverlof_start
+            type: date
+            description: "Eerste dag van het bevallingsverlof: de dag na de bevalling (lid 3)"
+        actions:
+          - output: heeft_recht_op_zwangerschapsverlof
+            value:
+              operation: EQUALS
+              subject: $is_vrouwelijke_werknemer
+              value: true
+          - output: heeft_recht_op_bevallingsverlof
+            value:
+              operation: EQUALS
+              subject: $is_vrouwelijke_werknemer
+              value: true
+          - output: standaard_duur_bevallingsverlof_weken
+            value: 10
+          - output: bevallingsverlof_start
+            value:
+              operation: DATE_ADD
+              date: $bevalling_datum
+              days: 1
   - number: 3:1a
     text: |-
       1 Indien op de dag van de bevalling dan wel tijdens het bevallingsverlof de vrouwelijke werknemer overlijdt en
@@ -319,6 +370,38 @@ articles:
         hoofdstuk: '5'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "begintijdstip van het tijdvak: vier weken vóór de feitelijke opneming"
+          reason: "Date subtraction is not available as an engine operation; the engine only supports DATE_ADD for adding durations"
+          legal_text_excerpt: "Het recht bestaat vanaf vier weken vóór de eerste dag dat de feitelijke opneming ter adoptie een aanvang heeft genomen of zal nemen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_werknemer
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 1:1 onderdeel b"
+        output:
+          - name: heeft_recht_op_adoptieverlof
+            type: boolean
+            description: "Werknemer heeft recht op adoptieverlof zonder behoud van loon (lid 1)"
+          - name: max_duur_adoptieverlof_weken
+            type: number
+            description: "Maximale aaneengesloten duur van het adoptieverlof in weken (lid 2)"
+          - name: window_duur_weken
+            type: number
+            description: "Tijdvak waarbinnen het adoptieverlof kan worden opgenomen in weken (lid 2)"
+        actions:
+          - output: heeft_recht_op_adoptieverlof
+            value:
+              operation: EQUALS
+              subject: $is_werknemer
+              value: true
+          - output: max_duur_adoptieverlof_weken
+            value: 6
+          - output: window_duur_weken
+            value: 26
   - number: 3:3
     text: |-
       1 De vrouwelijke werknemer meldt aan de werkgever:
@@ -622,6 +705,37 @@ articles:
         hoofdstuk: '3'
         paragraaf: '2'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "begin- en einddatum recht op uitkering (aftrekken van weken van vermoedelijke datum)"
+          reason: "Date subtraction is not available as an engine operation"
+          legal_text_excerpt: "Het recht op uitkering in verband met zwangerschap vangt aan zes weken voor de dag na de vermoedelijke datum van bevalling"
+          accepted: false
+        - construct: "duur uitkering bevalling: tien weken vermeerderd met het aantal dagen dat de uitkering zwangerschap korter dan zes weken duurde"
+          reason: "Aggregation of calendar days (date difference) is not available as an engine operation"
+          legal_text_excerpt: "Het recht op uitkering in verband met bevalling vangt aan op de dag na de bevalling en bedraagt tien aaneengesloten weken vermeerderd met het aantal dagen dat de uitkering in verband met zwangerschap... minder dan zes weken heeft bedragen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_vrouwelijke_gelijkgestelde
+            type: boolean
+            required: true
+            description: "Is vrouwelijke gelijkgestelde als bedoeld in artikel 3:6 eerste lid onderdeel b"
+        output:
+          - name: heeft_recht_op_uitkering
+            type: boolean
+            description: "Vrouwelijke gelijkgestelde heeft recht op uitkering in verband met zwangerschap en bevalling (lid 1)"
+          - name: minimum_duur_uitkering_weken
+            type: number
+            description: "Minimum duur van het recht op uitkering in weken (lid 1: ten minste zestien weken)"
+        actions:
+          - output: heeft_recht_op_uitkering
+            value:
+              operation: EQUALS
+              subject: $is_vrouwelijke_gelijkgestelde
+              value: true
+          - output: minimum_duur_uitkering_weken
+            value: 16
   - number: 3:9
     text: |-
       1 De gelijkgestelde heeft in verband met de adoptie van een kind recht op uitkering.
@@ -647,6 +761,38 @@ articles:
         hoofdstuk: '5'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "begintijdstip van het tijdvak: vier weken vóór de feitelijke opneming ter adoptie"
+          reason: "Date subtraction is not available as an engine operation"
+          legal_text_excerpt: "Het tijdvak van zesentwintig weken gaat in vier weken vóór de eerste dag dat de feitelijke opneming ter adoptie een aanvang heeft genomen of zal nemen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_gelijkgestelde
+            type: boolean
+            required: true
+            description: "Is gelijkgestelde als bedoeld in artikel 3:6 eerste lid onderdeel b"
+        output:
+          - name: heeft_recht_op_uitkering
+            type: boolean
+            description: "Gelijkgestelde heeft recht op uitkering in verband met adoptie (lid 1)"
+          - name: max_duur_uitkering_weken
+            type: number
+            description: "Maximale aaneengesloten duur van het recht op uitkering in weken (lid 2)"
+          - name: window_duur_weken
+            type: number
+            description: "Tijdvak waarbinnen het recht op uitkering bestaat in weken (lid 2)"
+        actions:
+          - output: heeft_recht_op_uitkering
+            value:
+              operation: EQUALS
+              subject: $is_gelijkgestelde
+              value: true
+          - output: max_duur_uitkering_weken
+            value: 6
+          - output: window_duur_weken
+            value: 26
   - number: 3:10
     text: |-
       1 Een recht op uitkering als bedoeld in de [artikelen 3:7, eerste lid][ref1], en [3:8, eerste en vijfde lid][ref2],
@@ -1673,6 +1819,46 @@ articles:
         hoofdstuk: '3'
         paragraaf: '2'
         afdeling: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vrouwelijke_zelfstandige_of_beroepsbeoefenaar
+            type: boolean
+            required: true
+            description: "Is vrouwelijke zelfstandige of beroepsbeoefenaar op arbeidsovereenkomst als bedoeld in artikel 3:17 (lid 1)"
+          - name: heeft_recht_op_uitkering_3_18
+            type: boolean
+            required: true
+            description: "Heeft recht op uitkering op grond van artikel 3:18"
+          - name: vervanger_is_werkzaam
+            type: boolean
+            required: true
+            description: "Een persoon is ter vervanging werkzaam gedurende de periode van het recht op uitkering (lid 2 onderdeel a)"
+          - name: vervanger_via_rechtspersoon
+            type: boolean
+            required: true
+            description: "Vervanger ter beschikking gesteld door een rechtspersoon die krachtens statuten arbeidskrachten ter beschikking stelt (lid 2 onderdeel b)"
+        output:
+          - name: heeft_recht_op_uitkering_vervanging
+            type: boolean
+            description: "Recht op uitkering ter zake van vervanging (lid 1 en 2)"
+        actions:
+          - output: heeft_recht_op_uitkering_vervanging
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vrouwelijke_zelfstandige_of_beroepsbeoefenaar
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_recht_op_uitkering_3_18
+                  value: true
+                - operation: EQUALS
+                  subject: $vervanger_is_werkzaam
+                  value: true
+                - operation: EQUALS
+                  subject: $vervanger_via_rechtspersoon
+                  value: true
   - number: 3:22
     text: |-
       1 De vrouwelijke zelfstandige of de vrouwelijke beroepsbeoefenaar op arbeidsovereenkomst, die in aanmerking wenst
@@ -2505,6 +2691,55 @@ articles:
         hoofdstuk: '5'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_werknemer
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 1:1 onderdeel b"
+          - name: reden_a_onvoorziene_omstandigheden
+            type: boolean
+            required: false
+            description: "Onvoorziene omstandigheden die een onmiddellijke onderbreking van de arbeid vergen (lid 1 onderdeel a)"
+          - name: reden_b_bijzondere_persoonlijke_omstandigheden
+            type: boolean
+            required: false
+            description: "Zeer bijzondere persoonlijke omstandigheden als bedoeld in lid 1 onderdeel b (incl. lid 2)"
+          - name: reden_c_wettelijke_verplichting
+            type: boolean
+            required: false
+            description: "Door wet of overheid opgelegde verplichting zonder geldelijke vergoeding die niet in vrije tijd vervuld kon worden (lid 1 onderdeel c)"
+          - name: reden_d_kiesrecht
+            type: boolean
+            required: false
+            description: "Uitoefening van het actief kiesrecht (lid 1 onderdeel d)"
+        output:
+          - name: heeft_recht_op_bijzonder_verlof
+            type: boolean
+            description: "Werknemer heeft recht op bijzonder verlof met behoud van loon (lid 1)"
+        actions:
+          - output: heeft_recht_op_bijzonder_verlof
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_werknemer
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $reden_a_onvoorziene_omstandigheden
+                      value: true
+                    - operation: EQUALS
+                      subject: $reden_b_bijzondere_persoonlijke_omstandigheden
+                      value: true
+                    - operation: EQUALS
+                      subject: $reden_c_wettelijke_verplichting
+                      value: true
+                    - operation: EQUALS
+                      subject: $reden_d_kiesrecht
+                      value: true
   - number: 4:2
     text: |-
       1 Na de bevalling van de echtgenote, de geregistreerde partner, de persoon met wie de werknemer ongehuwd samenwoont
@@ -3248,6 +3483,32 @@ articles:
       Indien zowel de in artikel 4:1 als de in artikel 5:1 gestelde voorwaarden worden vervuld, eindigt het in artikel
       4:1 bedoelde verlof na één dag.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel58
+    machine_readable:
+      execution:
+        parameters:
+          - name: voldaan_aan_artikel_4_1
+            type: boolean
+            required: true
+            description: "Voldaan is aan de voorwaarden van artikel 4:1 (bijzonder verlof)"
+          - name: voldaan_aan_artikel_5_1
+            type: boolean
+            required: true
+            description: "Voldaan is aan de voorwaarden van artikel 5:1 (kortdurend zorgverlof)"
+        output:
+          - name: bijzonder_verlof_maximum_een_dag
+            type: boolean
+            description: "Het bijzonder verlof (artikel 4:1) eindigt na één dag indien tevens aan de voorwaarden van artikel 5:1 is voldaan"
+        actions:
+          - output: bijzonder_verlof_maximum_een_dag
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldaan_aan_artikel_4_1
+                  value: true
+                - operation: EQUALS
+                  subject: $voldaan_aan_artikel_5_1
+                  value: true
   - number: 5:9
     text: |-
       De werknemer heeft recht op verlof zonder behoud van loon voor:
