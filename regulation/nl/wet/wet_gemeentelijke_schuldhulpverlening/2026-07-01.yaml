@@ -71,6 +71,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0020368
         artikel: 1:1
+    machine_readable:
+      execution:
+        parameters:
+          - name: plan_startdatum
+            type: date
+            required: true
+            description: Datum waarop het plan door de gemeenteraad is vastgesteld (art. 2 lid 2)
+        output:
+          - name: maximale_einddatum_plan
+            type: date
+            description: Uiterste einddatum van het schuldhulpverleningsplan (ten hoogste vier jaren na startdatum, art. 2 lid 2)
+        actions:
+          - output: maximale_einddatum_plan
+            value:
+              operation: DATE_ADD
+              date: $plan_startdatum
+              years: 4
   - number: '3'
     text: |-
       1 Het college heeft tot taak en voert daarbij het plan, bedoeld in [artikel 2, eerste lid][ref1], uit, om:
@@ -531,6 +548,27 @@ articles:
       - id: ref3
         bwb_id: BWBR0031331
         artikel: '8'
+    machine_readable:
+      definitions:
+        MAXIMALE_DUUR_AANWIJZING_JAREN:
+          value: 5
+          description: Maximale duur van de aanwijzing van experimentele signalen in jaren (art. 10 lid 1)
+      execution:
+        parameters:
+          - name: aanwijzing_startdatum
+            type: date
+            required: true
+            description: Datum waarop de ministeriële regeling betreffende de aanwijzing van het experimentele signaal in werking treedt (art. 10 lid 1)
+        output:
+          - name: maximale_einddatum_aanwijzing
+            type: date
+            description: Uiterste einddatum van de experimentele aanwijzing van het signaal (maximaal vijf jaren na startdatum, art. 10 lid 1)
+        actions:
+          - output: maximale_einddatum_aanwijzing
+            value:
+              operation: DATE_ADD
+              date: $aanwijzing_startdatum
+              years: 5
   - number: '12'
     text: |-
       Onze Minister zendt binnen vier jaar na de inwerkingtreding van deze wet aan de Staten-Generaal een verslag over de
