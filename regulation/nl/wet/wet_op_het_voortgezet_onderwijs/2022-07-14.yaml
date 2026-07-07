@@ -654,6 +654,23 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel29
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel29a
+    machine_readable:
+      execution:
+        parameters:
+          - name: stage_uren
+            type: number
+            required: true
+            description: Aantal uren van de maatschappelijke stage
+        output:
+          - name: telt_mee_voor_cijferlijst
+            type: boolean
+            description: Stage omvat tenminste 30 uren en kan worden vermeld op de cijferlijst
+        actions:
+          - output: telt_mee_voor_cijferlijst
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $stage_uren
+              value: 30
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel6f
     references:
       - id: ref1
@@ -706,6 +723,60 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0002399#Artikel11c
       [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel11f
       [ref11]: https://wetten.overheid.nl/BWBR0002399#Artikel12
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "VWO, HAVO_SCHOOL, HAVO_AFDELING, MAVO, of VBO"
+          - name: klokuren
+            type: number
+            required: true
+            description: Aantal klokuren in het onderwijsprogramma
+        output:
+          - name: minimaal_klokuren
+            type: number
+            description: Wettelijk minimum aantal klokuren voor de schoolsoort
+          - name: voldoet_aan_klokuren_eis
+            type: boolean
+            description: Voldoet het programma aan het wettelijk minimum
+        actions:
+          - output: minimaal_klokuren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VWO"
+                  then: 5700
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_SCHOOL"
+                  then: 4700
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_AFDELING"
+                  then: 1700
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "MAVO"
+                  then: 3700
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO"
+                  then: 3700
+              default: 0
+          - output: voldoet_aan_klokuren_eis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $klokuren
+              value: $minimaal_klokuren
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel6g
     references:
       - id: ref1
@@ -788,6 +859,23 @@ articles:
       gelijk behoeven te zijn. Daarbij kan het aantal dagen, genoemd in het eerste lid, voor een daarbij aan te geven
       groep scholen hoger of lager worden vastgesteld indien dit noodzakelijk is in verband met de spreiding van de
       landelijk vastgestelde vakanties over verschillende delen van Nederland.
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_schooldagen
+            type: number
+            required: true
+            description: Aantal dagen dat onderwijs wordt verzorgd in een schooljaar
+        output:
+          - name: voldoet_aan_minimum_schooldagen
+            type: boolean
+            description: Voldoet aan het minimum van 189 schooldagen per jaar
+        actions:
+          - output: voldoet_aan_minimum_schooldagen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_schooldagen
+              value: 189
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel6g1
   - number: 6h
     text: |-
@@ -1135,6 +1223,43 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007625#Artikel7.2.2
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel6f
+    machine_readable:
+      definitions:
+        MIN_KLOKUREN: 640
+        MAX_KLOKUREN: 1280
+        MIN_DAGEN: 80
+        MAX_DAGEN: 160
+      execution:
+        parameters:
+          - name: buitenschools_klokuren
+            type: number
+            required: true
+            description: Aantal klokuren van het buitenschoolse praktijkgedeelte
+          - name: buitenschools_dagen
+            type: number
+            required: true
+            description: Aantal dagen van het buitenschoolse praktijkgedeelte
+        output:
+          - name: leer_werktraject_geldig
+            type: boolean
+            description: Voldoet het leer-werktraject aan de wettelijke grenzen (lid 1)
+        actions:
+          - output: leer_werktraject_geldig
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $buitenschools_klokuren
+                  value: $MIN_KLOKUREN
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $buitenschools_klokuren
+                  value: $MAX_KLOKUREN
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $buitenschools_dagen
+                  value: $MIN_DAGEN
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $buitenschools_dagen
+                  value: $MAX_DAGEN
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel10b1
     references:
       - id: ref1
@@ -8108,6 +8233,19 @@ articles:
       [ref4]: https://wetten.overheid.nl/BWBR0007625#Artikel6a.2.1
       [ref5]: https://wetten.overheid.nl/BWBR0005537#Artikel67
       [ref6]: https://wetten.overheid.nl/BWBR0005537#Artikel710
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: bezwaartermijn_weken
+      execution:
+        output:
+          - name: bezwaartermijn_weken
+            type: number
+            description: "Bezwaartermijn voor bezwaar tegen staatsexamenbesluit: 5 dagen (let op: waarde is in dagen, niet weken; afwijking van AWB art. 6:7)"
+        actions:
+          - output: bezwaartermijn_weken
+            value: 5
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel60
     references:
       - id: ref1
@@ -8255,6 +8393,78 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0002399#Artikel67
       [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel67a
       [ref11]: https://wetten.overheid.nl/BWBR0002399#Artikel69
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "VWO, HAVO_SCHOOL, HAVO_AFDELING, MAVO, VBO_ENKELPROFIEL, VBO_MEERPROFIEL, of PRAKTIJKONDERWIJS"
+          - name: verwacht_aantal_leerlingen
+            type: number
+            required: true
+            description: Verwacht aantal leerlingen op basis van de belangstellingsmeting
+          - name: aantal_profielen
+            type: number
+            required: false
+            description: Aantal profielen (alleen relevant voor VBO_MEERPROFIEL)
+        output:
+          - name: minimum_leerlingen_stichting
+            type: number
+            description: Minimum aantal verwachte leerlingen voor bekostiging
+          - name: voldoet_aan_leerlingen_eis
+            type: boolean
+            description: Voldoet aan de leerlingeneis voor bekostiging (lid 1 onder a)
+        actions:
+          - output: minimum_leerlingen_stichting
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VWO"
+                  then: 390
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_SCHOOL"
+                  then: 325
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_AFDELING"
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "MAVO"
+                  then: 260
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO_ENKELPROFIEL"
+                  then: 260
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO_MEERPROFIEL"
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 160
+                      - $aantal_profielen
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "PRAKTIJKONDERWIJS"
+                  then: 120
+              default: 0
+          - output: voldoet_aan_leerlingen_eis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwacht_aantal_leerlingen
+              value: $minimum_leerlingen_stichting
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel64
     references:
       - id: ref1
@@ -8367,6 +8577,60 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0013800#Artikel11
       [ref9]: https://wetten.overheid.nl/BWBR0002399#Artikel67
       [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel67a
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "VWO, HAVO, MAVO, VBO, of PRAKTIJKONDERWIJS"
+          - name: verwacht_aantal_leerlingen_nevenvestiging
+            type: number
+            required: true
+            description: Verwacht aantal leerlingen voor de nevenvestiging
+        output:
+          - name: minimum_leerlingen_nevenvestiging
+            type: number
+            description: Minimum aantal verwachte leerlingen voor bekostiging nevenvestiging
+          - name: voldoet_aan_leerlingen_eis_nevenvestiging
+            type: boolean
+            description: Voldoet aan de leerlingeneis voor bekostiging nevenvestiging (lid 1 onder a)
+        actions:
+          - output: minimum_leerlingen_nevenvestiging
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VWO"
+                  then: 195
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO"
+                  then: 195
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "MAVO"
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO"
+                  then: 130
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "PRAKTIJKONDERWIJS"
+                  then: 120
+              default: 0
+          - output: voldoet_aan_leerlingen_eis_nevenvestiging
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwacht_aantal_leerlingen_nevenvestiging
+              value: $minimum_leerlingen_nevenvestiging
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel64a
     references:
       - id: ref1
@@ -8451,6 +8715,45 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0002399#Artikel67a
       [ref7]: https://wetten.overheid.nl/BWBR0002399#Artikel68
       [ref8]: https://wetten.overheid.nl/BWBR0002399#Artikel69
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_deel_van_scholengemeenschap
+            type: boolean
+            required: true
+            description: Is de school onderdeel van een scholengemeenschap
+          - name: verwacht_aantal_leerlingen_profiel
+            type: number
+            required: true
+            description: Verwacht aantal leerlingen voor het nieuwe profiel
+        output:
+          - name: minimum_leerlingen_nieuw_profiel
+            type: number
+            description: Minimum aantal verwachte leerlingen voor bekostiging nieuw profiel (lid 1 onder a)
+          - name: voldoet_aan_leerlingen_eis_nieuw_profiel
+            type: boolean
+            description: Voldoet aan de leerlingeneis voor bekostiging nieuw vbo-profiel
+        actions:
+          - output: minimum_leerlingen_nieuw_profiel
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_deel_van_scholengemeenschap
+                    value: false
+                  then: 160
+                - when:
+                    operation: EQUALS
+                    subject: $is_deel_van_scholengemeenschap
+                    value: true
+                  then: 120
+              default: 0
+          - output: voldoet_aan_leerlingen_eis_nieuw_profiel
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwacht_aantal_leerlingen_profiel
+              value: $minimum_leerlingen_nieuw_profiel
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel65
     references:
       - id: ref1
@@ -9396,6 +9699,26 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel74b
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AFWIJZING
+        parameters:
+          - name: leerlingverlies_percentage
+            type: number
+            required: true
+            description: Percentage leerlingverlies bij een vestiging van de bezwaar makende school
+        output:
+          - name: aanvraag_afgewezen
+            type: boolean
+            description: Aanvraag wordt afgewezen indien aangetoond leerlingverlies meer dan 10%
+        actions:
+          - output: aanvraag_afgewezen
+            value:
+              operation: GREATER_THAN
+              subject: $leerlingverlies_percentage
+              value: 10
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel74c
     references:
       - id: ref1
@@ -11179,6 +11502,35 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel96i
       [ref3]: https://wetten.overheid.nl/BWBR0002399#Artikel79
       [ref4]: https://wetten.overheid.nl/BWBR0002399#Artikel79a
+    machine_readable:
+      execution:
+        parameters:
+          - name: overschrijding_percentage
+            type: number
+            required: true
+            description: Percentage vastgesteld ingevolge artikel 96i, zevende lid
+          - name: totaal_ontvangsten
+            type: amount
+            required: true
+            description: Totaal van ontvangsten van de niet-gemeentelijke school (excl. admin/beheer/bestuur)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: overschrijdingsbedrag
+            type: amount
+            description: Overschrijdingsbedrag waarop het bevoegd gezag aanspraak heeft
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: overschrijdingsbedrag
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - $overschrijding_percentage
+                    - 100
+                - $totaal_ontvangsten
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel96j
     references:
       - id: ref1
@@ -12195,6 +12547,80 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
       [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
       [ref11]: https://wetten.overheid.nl/BWBR0002399#Artikel10d
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "PRO, VBO_1_2_PROF, VBO_3_4_PROF, VBO_5_PLUS_PROF, VWO, HAVO_SCHOOL, HAVO_AFDELING, of MAVO"
+          - name: aantal_leerlingen
+            type: number
+            required: true
+            description: Aantal leerlingen in het schooljaar (op 1 oktober, art. 108 lid 1)
+        output:
+          - name: opheffingsnorm
+            type: number
+            description: Minimum aantal leerlingen om opheffing te voorkomen (lid 1)
+          - name: onder_opheffingsnorm
+            type: boolean
+            description: School valt onder de opheffingsnorm (lid 1) en kan worden opgeheven
+        actions:
+          - output: opheffingsnorm
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "PRO"
+                  then: 70
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO_1_2_PROF"
+                  then: 195
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO_3_4_PROF"
+                  then: 240
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VBO_5_PLUS_PROF"
+                  then: 360
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "VWO"
+                  then: 292
+                  # UNTRANSLATABLE: 3/4 van 390 (art. 64 lid 1 VWO stichtingsnorm).
+                  # Integer afronding naar beneden; engine ondersteunt geen fractie-rekenen.
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_SCHOOL"
+                  then: 243
+                  # UNTRANSLATABLE: 3/4 van 325 (art. 64 lid 1 HAVO stichtingsnorm).
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "HAVO_AFDELING"
+                  then: 97
+                  # UNTRANSLATABLE: 3/4 van 130 (art. 64 lid 1 HAVO-afdeling stichtingsnorm).
+                - when:
+                    operation: EQUALS
+                    subject: $schoolsoort
+                    value: "MAVO"
+                  then: 195
+                  # 3/4 van 260 (art. 64 lid 1 MAVO stichtingsnorm) = 195 exact.
+              default: 0
+          - output: onder_opheffingsnorm
+            value:
+              operation: LESS_THAN
+              subject: $aantal_leerlingen
+              value: $opheffingsnorm
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel107
     references:
       - id: ref1
@@ -12328,6 +12754,171 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
       [ref6]: https://wetten.overheid.nl/BWBR0002399#Artikel107
       [ref7]: https://wetten.overheid.nl/BWBR0002399#Artikel107
+    machine_readable:
+      execution:
+        parameters:
+          - name: schoolsoort
+            type: string
+            required: true
+            description: "VWO, HAVO, MAVO, VBO_ENKELPROFIEL, VBO_MEERPROFIEL, of PRO"
+          - name: aantal_leerlingen_jaar3
+            type: number
+            required: true
+            description: Aantal leerlingen ingeschreven in het derde schooljaar van bekostiging
+          - name: aantal_profielen
+            type: number
+            required: false
+            description: Aantal profielen (alleen relevant voor VBO_MEERPROFIEL)
+          - name: is_deel_van_scholengemeenschap
+            type: boolean
+            required: true
+            description: Is de school onderdeel van een scholengemeenschap (lid 3 vs lid 4)
+        output:
+          - name: minimum_leerlingen_jaar3
+            type: number
+            description: Minimum leerlingen in jaar 3 om bekostiging te behouden
+          - name: voldoet_aan_jaar3_norm
+            type: boolean
+            description: Voldoet aan de jaar-3 norm; bij false eindigt bekostiging in jaar 4
+        actions:
+          - output: minimum_leerlingen_jaar3
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VWO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then: 195
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "HAVO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then: 195
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "MAVO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then: 195
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VBO_ENKELPROFIEL"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then: 195
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VBO_MEERPROFIEL"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 120
+                      - $aantal_profielen
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "PRO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: false
+                  then: 72
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VWO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then: 146
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "HAVO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then: 146
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "MAVO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then: 146
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VBO_ENKELPROFIEL"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then: 146
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "VBO_MEERPROFIEL"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 90
+                      - $aantal_profielen
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $schoolsoort
+                        value: "PRO"
+                      - operation: EQUALS
+                        subject: $is_deel_van_scholengemeenschap
+                        value: true
+                  then: 54
+              default: 0
+          - output: voldoet_aan_jaar3_norm
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_leerlingen_jaar3
+              value: $minimum_leerlingen_jaar3
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel108
     references:
       - id: ref1

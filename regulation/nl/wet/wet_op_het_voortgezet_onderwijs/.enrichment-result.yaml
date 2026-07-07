@@ -1,0 +1,127 @@
+enrichment:
+  source_file: 2022-07-14.yaml
+  bwb_id: BWBR0002399
+  law_title: Wet op het voortgezet onderwijs
+  valid_from: '2022-07-14'
+  valid_to: '2022-07-31'
+  enriched_at: '2026-07-07'
+
+  articles_processed: 12
+  articles_executable: 12
+  articles_skipped: 0
+
+  executable_articles:
+    - article: 6f
+      lid: 3
+      topic: Maatschappelijke stage minimum 30 uren voor cijferlijst
+      outputs:
+        - telt_mee_voor_cijferlijst
+
+    - article: 6g
+      lid: 1
+      topic: Minimum klokuren per schoolsoort (VWO/HAVO/MAVO/VBO)
+      outputs:
+        - minimaal_klokuren
+        - voldoet_aan_klokuren_eis
+
+    - article: 6g1
+      lid: 1
+      topic: Minimum 189 schooldagen per jaar
+      outputs:
+        - voldoet_aan_minimum_schooldagen
+
+    - article: 10b1
+      lid: 1
+      topic: Leer-werktraject grenzen (640–1280 klokuren, 80–160 dagen)
+      outputs:
+        - leer_werktraject_geldig
+
+    - article: 60
+      lid: 7
+      topic: Bezwaartermijn staatsexamen 5 dagen (override AWB 6:7)
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: bezwaartermijn_weken
+      outputs:
+        - bezwaartermijn_weken
+      notes: >
+        UNIT MISMATCH: AWB art. 6:7 bezwaartermijn is in weken; WVO art. 60 lid 7
+        stelt 5 DAGEN. Outputnaam bezwaartermijn_weken behouden voor schema-conformiteit;
+        waarde 5 vertegenwoordigt 5 dagen. Zie RFC-007 voor toekomstige unit-ondersteuning.
+
+    - article: 64
+      lid: 1
+      topic: Stichtingsnormen bekostiging per schoolsoort
+      outputs:
+        - minimum_leerlingen_stichting
+        - voldoet_aan_leerlingen_eis
+
+    - article: 64a
+      lid: 1
+      topic: Stichtingsnormen nevenvestiging per schoolsoort
+      outputs:
+        - minimum_leerlingen_nevenvestiging
+        - voldoet_aan_leerlingen_eis_nevenvestiging
+
+    - article: '65'
+      lid: 1
+      topic: Stichtingsnorm nieuw vbo-profiel (160 los / 120 in scholengemeenschap)
+      outputs:
+        - minimum_leerlingen_nieuw_profiel
+        - voldoet_aan_leerlingen_eis_nieuw_profiel
+
+    - article: 74c
+      topic: Afwijzingsgrond onderwijsvoorziening bij >10% leerlingverlies
+      outputs:
+        - aanvraag_afgewezen
+
+    - article: 96j
+      lid: 1
+      topic: Overschrijdingsbedrag = percentage × totaal ontvangsten
+      outputs:
+        - overschrijdingsbedrag
+
+    - article: '107'
+      lid: 1
+      topic: Opheffingsnormen per schoolsoort (3 jaar onder norm)
+      outputs:
+        - opheffingsnorm
+        - onder_opheffingsnorm
+      untranslatables:
+        - >
+          Lid 1 onder e: "drie kwart van het aantal leerlingen in artikel 64 lid 1"
+          vereist dynamische verwijzing naar art. 64 uitkomst. Waarden hardcoded als
+          integer afronding (VWO=292, HAVO_SCHOOL=243, HAVO_AFDELING=97, MAVO=195).
+          Engine ondersteunt geen deling met breuken.
+
+    - article: '108'
+      lid: "3 en 4"
+      topic: Jaar-3 normen nieuwe school (standalone en in scholengemeenschap)
+      outputs:
+        - minimum_leerlingen_jaar3
+        - voldoet_aan_jaar3_norm
+
+  related_regulations:
+    - bwb_id: BWBR0005537
+      title: Algemene wet bestuursrecht
+      relation: overridden_by_article_60_lid_7
+      articles:
+        - '6:7'
+        - '7:10'
+
+    - bwb_id: BWBR0007625
+      title: Wet educatie en beroepsonderwijs
+      relation: referenced
+      articles:
+        - 7.2.2
+
+  mvt_research:
+    status: skipped
+    reason: WebFetch and WebSearch tools not available in this session
+    feature_file: null
+
+  validation:
+    schema_validation: not_run
+    bdd_tests: not_run
+    reverse_validation: pending
