@@ -10152,6 +10152,38 @@ articles:
         hoofdstuk: '2.2'
         paragraaf: 2.2.7.1
         afdeling: 2.2.7
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van de vergunningaanvraag (lid 2: absolute termijn van 6 maanden)"
+          - name: type_vergunning
+            type: string
+            required: true
+            description: "Type vergunning: 'bank_artikel_211' (vergunning als bedoeld in artikel 2:11) of 'overig'"
+        output:
+          - name: absolute_uiterste_beslistermijn
+            type: date
+            description: "Absolute uiterste datum waarbinnen de toezichthouder in elk geval beslist of een ontwerpbesluit opstelt (lid 2: 6 maanden; lid 3: 48 weken voor bank art. 2:11)"
+        actions:
+          - output: absolute_uiterste_beslistermijn
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_vergunning
+                    value: "bank_artikel_211"
+                  then:
+                    operation: DATE_ADD
+                    date: $aanvraag_datum
+                    weeks: 48
+              default:
+                operation: DATE_ADD
+                date: $aanvraag_datum
+                months: 6
   - number: 1:104
     text: |-
       1 De toezichthouder kan een door hem verleende vergunning wijzigen, geheel of gedeeltelijk intrekken of beperken,
@@ -11799,6 +11831,40 @@ articles:
         hoofdstuk: '2.2'
         paragraaf: 2.2.12.1
         afdeling: 2.2.12
+    machine_readable:
+      definitions:
+        DE_MINIMIS_ABSOLUUT_MAXIMUM:
+          value: 5000000
+          description: "Bovengrens jaarlijkse variabele beloning voor de minimis vrijstelling: EUR 50.000 = 5.000.000 eurocent (art. 1:117 lid 5)"
+      execution:
+        parameters:
+          - name: variabele_beloning_jaarbasis
+            type: number
+            required: true
+            description: "Jaarlijkse variabele beloning van het personeelslid (in eurocent)"
+          - name: totale_beloning_jaarbasis
+            type: number
+            required: true
+            description: "Totale jaarlijkse beloning van het personeelslid (vaste + variabele, in eurocent)"
+        output:
+          - name: voldoet_aan_de_minimis_drempel
+            type: boolean
+            description: "Of de variabele beloning voldoet aan de dubbele de-minimis bovengrens: ≤ EUR 50.000 EN ≤ 10% van de totale beloning (art. 1:117 lid 5)"
+        actions:
+          - output: voldoet_aan_de_minimis_drempel
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $variabele_beloning_jaarbasis
+                  value: $DE_MINIMIS_ABSOLUUT_MAXIMUM
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $variabele_beloning_jaarbasis
+                  value:
+                    operation: DIVIDE
+                    values:
+                      - $totale_beloning_jaarbasis
+                      - 10
   - number: 1:118
     text: |-
       1 Het beloningsbeleid van een financiële onderneming waarop [artikel 3:17][ref1] van toepassing is, omschrijft
@@ -12461,6 +12527,46 @@ articles:
       - id: ref1
         bwb_id: BWBR0003045
         artikel: 24b
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_staatssteun_ontvangen
+            type: boolean
+            required: true
+            description: "Geniet de financiële onderneming steun als bedoeld in artikel 107, eerste lid, VWEU of vergelijkbare openbare financiële steun op supranationaal niveau?"
+          - name: vaste_beloning_voor_steunmaatregel
+            type: number
+            required: true
+            description: "Hoogte van de vaste beloning onmiddellijk voorafgaand aan het van kracht worden van de steunmaatregel (eurocent)"
+        output:
+          - name: staatssteun_beloningsregel_van_toepassing
+            type: boolean
+            description: "Of de beloningsbeperkingen van artikel 1:128, eerste lid, van rechtswege van toepassing zijn"
+          - name: maximum_variabele_beloning
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Maximum variabele beloning van rechtswege: €0 indien staatssteun wordt of is genoten (art. 1:128 lid 1 onderdeel a)"
+          - name: maximum_vaste_beloning
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Maximum vaste beloning: de waarde onmiddellijk voor de steunmaatregel (art. 1:128 lid 1 onderdeel b)"
+        actions:
+          - output: staatssteun_beloningsregel_van_toepassing
+            value: $heeft_staatssteun_ontvangen
+          - output: maximum_variabele_beloning
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_staatssteun_ontvangen
+                    value: true
+                  then: 0
+              default: 0
+          - output: maximum_vaste_beloning
+            value: $vaste_beloning_voor_steunmaatregel
   - number: 1:129
     text: |-
       1 Met steun aan een financiële onderneming wordt voor de toepassing van [artikel 1:128][ref1] gelijkgesteld:
