@@ -1350,6 +1350,23 @@ articles:
       - id: ref5
         bwb_id: BWBR0005537
         artikel: 4:15
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_ontvangst_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van het verzoek om een oordeel als bedoeld in artikel 32, eerste, tweede, derde en vierde lid"
+        output:
+          - name: uiterste_datum_oordeel
+            type: date
+            description: "Uiterste datum waarbinnen UWV het oordeel moet geven (twee weken na ontvangst van het verzoek)"
+        actions:
+          - output: uiterste_datum_oordeel
+            value:
+              operation: DATE_ADD
+              date: $verzoek_ontvangst_datum
+              weeks: 2
   - number: 32b
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen kan in het belang van de arbeidsintegratie
@@ -2887,6 +2904,47 @@ articles:
         bwb_id: BWBR0013060
         artikel: '64'
         hoofdstuk: '9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: opname_datum
+            type: date
+            required: true
+            description: "Datum van opneming van de gegevens in het systeem risico indicatie (lid 7)"
+          - name: risicomelding_datum
+            type: date
+            required: true
+            description: "Datum waarop de risicomelding heeft plaatsgevonden (lid 5)"
+          - name: risicomelding_ontvangst_datum
+            type: date
+            required: true
+            description: "Datum waarop het bestuursorgaan of de persoon de risicomelding heeft ontvangen (lid 6)"
+        output:
+          - name: uiterste_verwijderdatum_gegevens
+            type: date
+            description: "Uiterste datum waarop gegevens uit het systeem risico indicatie verwijderd moeten worden (lid 7: uiterlijk twee jaar na opneming)"
+          - name: uiterste_bewaardatum_risicomelding
+            type: date
+            description: "Uiterste datum waarop Onze Minister het gegeven van de risicomelding mag bewaren (lid 5: niet langer dan twee jaar)"
+          - name: uiterste_gebruiksdatum_risicomelding
+            type: date
+            description: "Uiterste datum waarop het ontvangend bestuursorgaan gebruik kan maken van de risicomelding (lid 6: twee jaar na ontvangst)"
+        actions:
+          - output: uiterste_verwijderdatum_gegevens
+            value:
+              operation: DATE_ADD
+              date: $opname_datum
+              years: 2
+          - output: uiterste_bewaardatum_risicomelding
+            value:
+              operation: DATE_ADD
+              date: $risicomelding_datum
+              years: 2
+          - output: uiterste_gebruiksdatum_risicomelding
+            value:
+              operation: DATE_ADD
+              date: $risicomelding_ontvangst_datum
+              years: 2
   - number: '72'
     text: |-
       Het Uitvoeringsinstituut werknemersverzekeringen, de colleges van burgemeester en wethouders en de Sociale
