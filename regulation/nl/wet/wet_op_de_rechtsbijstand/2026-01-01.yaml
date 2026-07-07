@@ -399,6 +399,126 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel34
       [ref2]: https://wetten.overheid.nl/BWBR0037852#Artikel17e
       [ref3]: https://wetten.overheid.nl/BWBR0037852#Artikel17ea
+    machine_readable:
+      untranslatables:
+        - construct: "in de Nederlandse rechtssfeer liggende rechtsbelangen (lid 1)"
+          reason: "Jurisdictionele beoordeling of een rechtsbelang in de Nederlandse rechtssfeer valt vereist juridisch oordeel"
+          legal_text_excerpt: "ter zake van in de Nederlandse rechtssfeer liggende rechtsbelangen"
+          accepted: false
+        - construct: "kennelijk van elke grond is ontbloot (lid 2 onder a)"
+          reason: "Rechterlijk oordeel over evident ongegrondheid is niet algoritmisch bepaalbaar"
+          legal_text_excerpt: "de daartoe strekkende aanvraag kennelijk van elke grond is ontbloot"
+          accepted: false
+        - construct: "kosten niet in redelijke verhouding tot het belang (lid 2 onder b)"
+          reason: "Proportionaliteitsoordeel vereist juridische beoordeling"
+          legal_text_excerpt: "de aan de te verlenen rechtsbijstand verbonden kosten niet in redelijke verhouding staan tot het belang van de zaak"
+          accepted: false
+        - construct: "aannemelijk dat lage boete wordt opgelegd (lid 2 onder c)"
+          reason: "Kansschatting over toekomstige strafoplegging is niet deterministisch bepaalbaar"
+          legal_text_excerpt: "het op grond van de overtreden norm aannemelijk is dat een in verhouding tot het inkomen lage boete zal worden opgelegd"
+          accepted: false
+        - construct: "belang redelijkerwijze aan aanvrager zelf te laten (lid 2 onder g)"
+          reason: "Redelijkheidstoets vereist juridische beoordeling"
+          legal_text_excerpt: "een belang waarvan de behartiging redelijkerwijze aan de aanvrager zelf kan worden overgelaten"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: "Burgerservicenummer van de rechtzoekende"
+          - name: is_rechtspersoon_voor_procedure_opgericht
+            type: boolean
+            required: true
+            description: "Aanvrager is een rechtspersoon opgericht met als doel het voeren van een gerechtelijke procedure (lid 2 onder d)"
+          - name: betreft_uitoefening_bedrijf
+            type: boolean
+            required: true
+            description: "Het rechtsbelang betreft de uitoefening van een zelfstandig beroep of bedrijf (lid 2 onder e)"
+          - name: bedrijf_voortzetting_afhankelijk
+            type: boolean
+            required: false
+            description: "Voortzetting van het beroep of bedrijf is afhankelijk van het resultaat van de rechtsbijstand (lid 2 e 1)"
+          - name: bedrijf_beeindigd_meer_dan_jaar
+            type: boolean
+            required: false
+            description: "Bedrijf ten minste een jaar geleden beeindigd en aanvrager als verweerder betrokken en kosten niet anderszins vergoed (lid 2 e 2)"
+          - name: betreft_klokkenluider
+            type: boolean
+            required: false
+            description: "Het rechtsbelang betreft benadeling als bedoeld in art. 17e of 17ea Wet bescherming klokkenluiders (lid 2 e 3)"
+          - name: internationaal_college_voorziet_in_bijstand
+            type: boolean
+            required: true
+            description: "Het internationaal college voorziet zelf in een aanspraak op vergoeding van rechtsbijstand (lid 2 onder f)"
+        input:
+          - name: voldoet_aan_draagkrachteis
+            type: boolean
+            source:
+              output: voldoet_aan_draagkrachteis
+        output:
+          - name: geen_weigeringsgrond_d
+            type: boolean
+            description: "Geen weigeringsgrond aanwezig op grond van lid 2 onder d (procedure-rechtspersoon)"
+          - name: geen_weigeringsgrond_e
+            type: boolean
+            description: "Geen weigeringsgrond aanwezig op grond van lid 2 onder e (bedrijfsbelang) of een uitzondering is van toepassing"
+          - name: geen_weigeringsgrond_f
+            type: boolean
+            description: "Geen weigeringsgrond aanwezig op grond van lid 2 onder f (internationaal college)"
+          - name: heeft_recht_op_rechtsbijstand
+            type: boolean
+            description: "De rechtzoekende heeft recht op rechtsbijstand overeenkomstig art. 12 lid 1"
+        actions:
+          - output: geen_weigeringsgrond_d
+            value:
+              operation: NOT
+              value: $is_rechtspersoon_voor_procedure_opgericht
+          - output: uitzondering_e_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $bedrijf_voortzetting_afhankelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $bedrijf_beeindigd_meer_dan_jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $betreft_klokkenluider
+                  value: true
+          - output: geen_weigeringsgrond_e
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $betreft_uitoefening_bedrijf
+                - operation: EQUALS
+                  subject: $uitzondering_e_aanwezig
+                  value: true
+          - output: geen_weigeringsgrond_f
+            value:
+              operation: NOT
+              value: $internationaal_college_voorziet_in_bijstand
+          - output: heeft_recht_op_rechtsbijstand
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_draagkrachteis
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_weigeringsgrond_d
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_weigeringsgrond_e
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_weigeringsgrond_f
+                  value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel12
     references:
       - id: ref1
@@ -919,6 +1039,87 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel7
       [ref2]: https://wetten.overheid.nl/BWBR0006368#Artikel8
       [ref3]: https://wetten.overheid.nl/BWBR0006368#Artikel12
+    machine_readable:
+      untranslatables:
+        - construct: "eenvoudig afgehandeld kan worden (lid 1 onder c)"
+          reason: "Oordeel over eenvoudigheid van een rechtsprobleem vereist juridische beoordeling"
+          legal_text_excerpt: "een rechtsprobleem betreft dat naar het oordeel van het bestuur eenvoudig afgehandeld kan worden"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AFWIJZING
+        parameters:
+          - name: aanvraag_na_verlening_rechtsbijstand
+            type: boolean
+            required: true
+            description: "Aanvraag ingediend nadat rechtsbijstand al feitelijk is verleend (lid 1 onder a)"
+          - name: eerder_toevoeging_zelfde_belang
+            type: boolean
+            required: true
+            description: "Aanvraag betreft rechtsbelang waarvoor al een eerder afgegeven toevoeging bestaat (lid 1 onder b)"
+          - name: door_voorziening_af_te_handelen
+            type: boolean
+            required: true
+            description: "Rechtsprobleem kan door de voorziening (art. 7 lid 2 of art. 8 lid 2) worden afgehandeld (lid 1 onder d)"
+          - name: betreft_eenvoudig_rechtskundig_advies
+            type: boolean
+            required: true
+            description: "Zaak betreft een toevoeging voor eenvoudig rechtskundig advies als bedoeld in art. 24a (lid 3)"
+          - name: advies_datum
+            type: date
+            required: false
+            description: "Datum waarop het eenvoudige rechtskundige advies is gegeven (art. 28 lid 3)"
+          - name: aanvraag_datum
+            type: date
+            required: false
+            description: "Datum van indiening van de toevoegingsaanvraag"
+        output:
+          - name: kan_weigeren_grond_a
+            type: boolean
+            description: "Het bestuur kan de toevoeging weigeren op grond van lid 1 onder a (na feitelijke verlening)"
+          - name: kan_weigeren_grond_b
+            type: boolean
+            description: "Het bestuur kan de toevoeging weigeren op grond van lid 1 onder b (eerder toevoeging)"
+          - name: kan_weigeren_grond_d
+            type: boolean
+            description: "Het bestuur kan de toevoeging weigeren op grond van lid 1 onder d (door voorziening af te handelen)"
+          - name: uiterste_aanvraagdatum_era
+            type: date
+            description: "Uiterste datum voor aanvraag eenvoudig rechtskundig advies toevoeging (4 weken na advies, lid 3)"
+          - name: era_aanvraag_tijdig
+            type: boolean
+            description: "De aanvraag voor eenvoudig rechtskundig advies toevoeging is tijdig ingediend binnen 4 weken (lid 3)"
+        actions:
+          - output: kan_weigeren_grond_a
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanvraag_na_verlening_rechtsbijstand
+                  value: true
+                - operation: NOT
+                  value: $betreft_eenvoudig_rechtskundig_advies
+          - output: kan_weigeren_grond_b
+            value:
+              operation: EQUALS
+              subject: $eerder_toevoeging_zelfde_belang
+              value: true
+          - output: kan_weigeren_grond_d
+            value:
+              operation: EQUALS
+              subject: $door_voorziening_af_te_handelen
+              value: true
+          - output: uiterste_aanvraagdatum_era
+            value:
+              operation: DATE_ADD
+              date: $advies_datum
+              weeks: 4
+          - output: era_aanvraag_tijdig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $aanvraag_datum
+              value: $uiterste_aanvraagdatum_era
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel28
     references:
       - id: ref1
@@ -1204,6 +1405,86 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0011353#Artikel9.4a
+    machine_readable:
+      definitions:
+        INKOMENSGRENS_ALLEENSTAAND:
+          value: 2180000
+          description: "Inkomensgrens voor alleenstaanden: € 21.800 per jaar in eurocent (art. 34 lid 1)"
+        INKOMENSGRENS_HUISHOUDING:
+          value: 3100000
+          description: "Inkomensgrens voor gemeenschappelijke huishouding: € 31.000 per jaar in eurocent (art. 34 lid 1)"
+      untranslatables:
+        - construct: "jaarlijkse indexering met afronding op veelvoud van EUR 100 (lid 4)"
+          reason: "Afronden op het naastliggende veelvoud van EUR 100 is niet beschikbaar als engine-operatie"
+          suggestion: "Voeg ROUND operatie met stap-parameter toe aan de engine"
+          legal_text_excerpt: "afronding plaatsvindt op het naastliggende veelvoud van EUR 100,-"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: "Burgerservicenummer van de rechtzoekende"
+          - name: inkomen
+            type: number
+            required: true
+            description: "Inkomen van de rechtzoekende per jaar in eurocent (zie art. 34a)"
+          - name: heeft_huishouding
+            type: boolean
+            required: true
+            description: "De rechtzoekende voert een gemeenschappelijke huishouding met een of meer anderen"
+          - name: vermogen
+            type: number
+            required: true
+            description: "Vermogen van de rechtzoekende in eurocent (rendementsgrondslag, art. 5.3 IB 2001)"
+          - name: drempelbedrag_vermogen
+            type: number
+            required: true
+            description: "Drempelbedrag voor vermogen als bedoeld in art. 9.4a lid 1 onderdeel a Wet IB 2001 (eurocent)"
+        output:
+          - name: toepasselijke_inkomensgrens
+            type: number
+            description: "De op de rechtzoekende toepasselijke inkomensgrens in eurocent"
+          - name: inkomen_binnen_grens
+            type: boolean
+            description: "Het inkomen overschrijdt de inkomensgrens van art. 34 lid 1 niet"
+          - name: vermogen_binnen_grens
+            type: boolean
+            description: "Het vermogen overschrijdt het drempelbedrag van art. 34 lid 2 niet"
+          - name: voldoet_aan_draagkrachteis
+            type: boolean
+            description: "De rechtzoekende voldoet aan de financiële draagkrachteis (lid 1 en lid 2 gecombineerd)"
+        actions:
+          - output: toepasselijke_inkomensgrens
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_huishouding
+                    value: true
+                  then: $INKOMENSGRENS_HUISHOUDING
+              default: $INKOMENSGRENS_ALLEENSTAAND
+          - output: inkomen_binnen_grens
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $inkomen
+              value: $toepasselijke_inkomensgrens
+          - output: vermogen_binnen_grens
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $vermogen
+              value: $drempelbedrag_vermogen
+          - output: voldoet_aan_draagkrachteis
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $inkomen_binnen_grens
+                  value: true
+                - operation: EQUALS
+                  subject: $vermogen_binnen_grens
+                  value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel34
     references:
       - id: ref1
@@ -1234,6 +1515,51 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel34d
       [ref2]: https://wetten.overheid.nl/BWBR0006368#Artikel34f
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_jaar
+            type: number
+            required: true
+            description: "Kalenderjaar waarin de aanvraag om een toevoeging wordt gedaan"
+          - name: inkomensgegeven_beschikbaar
+            type: boolean
+            required: true
+            description: "Er is een inkomensgegeven van de rechtzoekende beschikbaar in het peiljaar"
+          - name: inkomensgegeven
+            type: number
+            required: false
+            description: "Het inkomensgegeven van de rechtzoekende in het peiljaar (eurocent)"
+          - name: benaderd_inkomen
+            type: number
+            required: false
+            description: "Het bedrag dat het inkomen in het peiljaar zo goed mogelijk benadert als inkomensgegeven niet beschikbaar is (eurocent)"
+        output:
+          - name: peiljaar
+            type: number
+            description: "Het peiljaar: tweede kalenderjaar voorafgaand aan het aanvraagkjaar (art. 1 definitie)"
+          - name: inkomen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Het voor de draagkracht in aanmerking te nemen inkomen in eurocent (art. 34a lid 1)"
+        actions:
+          - output: peiljaar
+            value:
+              operation: SUBTRACT
+              values:
+                - $aanvraag_jaar
+                - 2
+          - output: inkomen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $inkomensgegeven_beschikbaar
+                    value: true
+                  then: $inkomensgegeven
+              default: $benaderd_inkomen
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel34a
     references:
       - id: ref1
@@ -1284,6 +1610,84 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel25
+    machine_readable:
+      definitions:
+        TERUGVAL_GRENS_FRACTIE:
+          value: 0.85
+          description: "Minimale resterende fractie: 100% - 15% = 85% (art. 34c lid 2)"
+      execution:
+        parameters:
+          - name: peiljaar_inkomen
+            type: number
+            required: true
+            description: "Inkomen in het peiljaar (eurocent)"
+          - name: huidig_inkomen
+            type: number
+            required: true
+            description: "Inkomen in het jaar van de aanvraag (eurocent)"
+          - name: peiljaar_vermogen
+            type: number
+            required: true
+            description: "Vermogen in het peiljaar (eurocent)"
+          - name: huidig_vermogen
+            type: number
+            required: true
+            description: "Vermogen in het jaar van de aanvraag (eurocent)"
+          - name: bekendmakingsdatum_besluit
+            type: date
+            required: true
+            description: "Datum waarop het besluit op de toevoegingsaanvraag is bekendgemaakt (art. 34c lid 3)"
+        output:
+          - name: inkomen_terugval
+            type: boolean
+            description: "Inkomen gedaald met ten minste 15% ten opzichte van peiljaar (art. 34c lid 2)"
+          - name: vermogen_terugval
+            type: boolean
+            description: "Vermogen gedaald met ten minste 15% ten opzichte van peiljaar (art. 34c lid 2)"
+          - name: sprake_van_terugval
+            type: boolean
+            description: "Er is sprake van een terugval in inkomen of vermogen als bedoeld in art. 34c lid 1"
+          - name: uiterste_aanvraagdatum_peiljaarverlegging
+            type: date
+            description: "Uiterste datum voor indiening aanvraag peiljaarverlegging: 6 weken na bekendmaking besluit (art. 34c lid 3)"
+        actions:
+          - output: drempel_inkomen
+            value:
+              operation: MULTIPLY
+              values:
+                - $peiljaar_inkomen
+                - $TERUGVAL_GRENS_FRACTIE
+          - output: drempel_vermogen
+            value:
+              operation: MULTIPLY
+              values:
+                - $peiljaar_vermogen
+                - $TERUGVAL_GRENS_FRACTIE
+          - output: inkomen_terugval
+            value:
+              operation: LESS_THAN
+              subject: $huidig_inkomen
+              value: $drempel_inkomen
+          - output: vermogen_terugval
+            value:
+              operation: LESS_THAN
+              subject: $huidig_vermogen
+              value: $drempel_vermogen
+          - output: sprake_van_terugval
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $inkomen_terugval
+                  value: true
+                - operation: EQUALS
+                  subject: $vermogen_terugval
+                  value: true
+          - output: uiterste_aanvraagdatum_peiljaarverlegging
+            value:
+              operation: DATE_ADD
+              date: $bekendmakingsdatum_besluit
+              weeks: 6
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel34c
     references:
       - id: ref1
@@ -1441,6 +1845,79 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel34a
       [ref2]: https://wetten.overheid.nl/BWBR0006368#Artikel34d
+    machine_readable:
+      untranslatables:
+        - construct: "zwaarwegende omstandigheden die zich verzetten tegen intrekking"
+          reason: "Afweging van zwaarwegende omstandigheden vereist juridisch oordeel"
+          legal_text_excerpt: "Tenzij zwaarwegende omstandigheden zich daartegen verzetten, wordt de toevoeging met terugwerkende kracht ingetrokken"
+          accepted: false
+      execution:
+        parameters:
+          - name: kan_kosten_verhalen_op_derde
+            type: boolean
+            required: true
+            description: "De rechtzoekende kan de kosten van rechtsbijstand verhalen op een derde (lid 1 onder a)"
+          - name: geldvordering_bedrag
+            type: number
+            required: true
+            description: "Bedrag van de geldvordering die de rechtzoekende als resultaat van de zaak heeft (eurocent)"
+          - name: drempelbedrag_vermogen
+            type: number
+            required: true
+            description: "Drempelbedrag als bedoeld in art. 9.4a lid 1 onderdeel a Wet IB 2001 (eurocent)"
+          - name: betreft_straf_of_vreemdelingenrecht
+            type: boolean
+            required: true
+            description: "De zaak betreft het strafrecht of het vreemdelingenrecht (lid 2 uitzondering)"
+        output:
+          - name: drempel_geldvordering
+            type: number
+            description: "Drempelbedrag voor geldvorderingsresultaat: 50% van vermogensdrempelbedrag (lid 1 onder b)"
+          - name: grond_a_intrekken
+            type: boolean
+            description: "Intrekkingsgrond aanwezig: kosten verhaalbaar op derde (art. 34g lid 1 onder a)"
+          - name: grond_b_intrekken
+            type: boolean
+            description: "Intrekkingsgrond aanwezig: geldvordering >= 50% drempelbedrag buiten straf/vreemdelingen (art. 34g lid 1 onder b)"
+          - name: toevoeging_intrekken
+            type: boolean
+            description: "De toevoeging dient met terugwerkende kracht te worden ingetrokken (art. 34g lid 1)"
+        actions:
+          - output: drempel_geldvordering
+            value:
+              operation: MULTIPLY
+              values:
+                - $drempelbedrag_vermogen
+                - 0.5
+          - output: grond_a_intrekken
+            value:
+              operation: EQUALS
+              subject: $kan_kosten_verhalen_op_derde
+              value: true
+          - output: grond_b_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $betreft_straf_of_vreemdelingenrecht
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $geldvordering_bedrag
+                  value: $drempel_geldvordering
+          - output: grond_b_intrekken
+            value:
+              operation: EQUALS
+              subject: $grond_b_van_toepassing
+              value: true
+          - output: toevoeging_intrekken
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $grond_a_intrekken
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_b_intrekken
+                  value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel34g
     references:
       - id: ref1
@@ -2082,6 +2559,74 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0001854
       [ref7]: https://wetten.overheid.nl/BWBR0001903
       [ref8]: https://wetten.overheid.nl/BWBR0002979#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: zaak_eindigt_zonder_straf_of_maatregel
+            type: boolean
+            required: true
+            description: "Strafzaak eindigt zonder toepassing van een straf of maatregel (lid 2 eerste volzin)"
+          - name: art9a_wvsr_niet_toegepast
+            type: boolean
+            required: true
+            description: "Artikel 9a van het Wetboek van Strafrecht is niet toegepast (lid 2 eerste volzin)"
+          - name: is_cassatieberoep_gedetineerde
+            type: boolean
+            required: true
+            description: "Betreft beroep in cassatie van verdachte wiens vrijheid is benomen door voorlopige hechtenis (lid 2 tweede volzin)"
+          - name: is_herziening_gedetineerde
+            type: boolean
+            required: true
+            description: "Betreft procedure tot herziening ten voordele waarbij gewezen verdachte vrijheid is benomen (lid 2 tweede volzin)"
+          - name: is_slachtoffer_misdrijf
+            type: boolean
+            required: true
+            description: "Aanvrager is slachtoffer van een seksueel misdrijf of geweldsmisdrijf (lid 4)"
+          - name: vervolging_ingesteld
+            type: boolean
+            required: true
+            description: "In de desbetreffende strafzaak is vervolging ingesteld (lid 4)"
+          - name: recht_op_schadefonds_uitkering
+            type: boolean
+            required: true
+            description: "Slachtoffer of nabestaande komt in aanmerking voor uitkering ex art. 3 Wet schadefonds geweldsmisdrijven (lid 4)"
+        output:
+          - name: eigen_bijdrage_niet_verschuldigd
+            type: boolean
+            description: "De eigen bijdrage is niet verschuldigd op grond van art. 44 lid 2"
+          - name: rechtsbijstand_kosteloos
+            type: boolean
+            description: "Rechtsbijstand is kosteloos voor slachtoffer of nabestaande op grond van art. 44 lid 4"
+        actions:
+          - output: eigen_bijdrage_niet_verschuldigd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $zaak_eindigt_zonder_straf_of_maatregel
+                  value: true
+                - operation: EQUALS
+                  subject: $art9a_wvsr_niet_toegepast
+                  value: true
+                - operation: EQUALS
+                  subject: $is_cassatieberoep_gedetineerde
+                  value: true
+                - operation: EQUALS
+                  subject: $is_herziening_gedetineerde
+                  value: true
+          - output: rechtsbijstand_kosteloos
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_slachtoffer_misdrijf
+                  value: true
+                - operation: EQUALS
+                  subject: $vervolging_ingesteld
+                  value: true
+                - operation: EQUALS
+                  subject: $recht_op_schadefonds_uitkering
+                  value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel44
     references:
       - id: ref1
