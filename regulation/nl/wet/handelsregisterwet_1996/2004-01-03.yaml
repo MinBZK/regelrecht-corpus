@@ -214,6 +214,31 @@ articles:
       4 Bij algemene maatregel van bestuur kunnen andere personen worden aangewezen die verplicht of bevoegd zijn tot het
       doen van daarbij aangewezen opgaven.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: lid_1_personen_in_nederland
+            type: boolean
+            required: true
+            description: Zijn er lid 1-personen (eigenaar/bestuurders) in Nederland gevestigd?
+          - name: onderneming_buiten_nederland_gevestigd
+            type: boolean
+            required: true
+            description: Is de onderneming buiten Nederland gevestigd?
+        output:
+          - name: dagelijks_leider_nl_mede_verplicht
+            type: boolean
+            description: Is de dagelijks leider in Nederland tevens verplicht tot opgave (artikel 5 lid 2)?
+          - name: dagelijks_leider_of_handelsagent_buitenland_mede_verplicht
+            type: boolean
+            description: Is de dagelijks leider van de hoofdnederzetting of handelsagent tevens verplicht tot opgave (artikel 5 lid 3)?
+        actions:
+          - output: dagelijks_leider_nl_mede_verplicht
+            value:
+              operation: NOT
+              value: $lid_1_personen_in_nederland
+          - output: dagelijks_leider_of_handelsagent_buitenland_mede_verplicht
+            value: $onderneming_buiten_nederland_gevestigd
   - number: '6'
     text: |-
       1 Tot inschrijving van een in Nederland gevestigde onderneming is bevoegd de Kamer in welker gebied de onderneming
@@ -225,6 +250,51 @@ articles:
       3 Indien inschrijving van een onderneming niet overeenkomstig het eerste of tweede lid kan geschieden, is tot
       inschrijving bevoegd de daartoe door Onze Minister aangewezen Kamer van Koophandel en Fabrieken.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel6
+    machine_readable:
+      execution:
+        parameters:
+          - name: onderneming_gevestigd_in_nederland
+            type: boolean
+            required: true
+            description: Is de onderneming in Nederland gevestigd?
+          - name: heeft_hoofdnederzetting_of_handelsagent_in_nederland
+            type: boolean
+            required: true
+            description: Heeft de buiten Nederland gevestigde onderneming een hoofdnederzetting of handelsagent in Nederland?
+        output:
+          - name: minister_aanwijzing_nodig
+            type: boolean
+            description: Moet de Minister een bevoegde Kamer aanwijzen (artikel 6 lid 3)?
+          - name: bevoegde_kamer_regime
+            type: string
+            description: Regime voor bepaling bevoegde Kamer (LID_1_VESTIGINGSGEBIED, LID_2_HOOFDNEDERZETTING, LID_3_MINISTER_AANWIJZING)
+        actions:
+          - output: valt_onder_lid_1
+            value: $onderneming_gevestigd_in_nederland
+          - output: valt_onder_lid_2
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $onderneming_gevestigd_in_nederland
+                - $heeft_hoofdnederzetting_of_handelsagent_in_nederland
+          - output: minister_aanwijzing_nodig
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $valt_onder_lid_1
+                - operation: NOT
+                  value: $valt_onder_lid_2
+          - output: bevoegde_kamer_regime
+            value:
+              operation: IF
+              cases:
+                - when: $valt_onder_lid_1
+                  then: LID_1_VESTIGINGSGEBIED
+                - when: $valt_onder_lid_2
+                  then: LID_2_HOOFDNEDERZETTING
+              default: LID_3_MINISTER_AANWIJZING
   - number: '7'
     text: |-
       Tot inschrijving van een rechtspersoon is bevoegd de Kamer in welker gebied de rechtspersoon volgens zijn statuten
@@ -244,6 +314,25 @@ articles:
         bwb_id: BWBR0007893
         artikel: '6'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_onderneming_verplicht_artikel_3
+            type: boolean
+            required: true
+            description: Behoort aan de rechtspersoon een onderneming toe die overeenkomstig artikel 3 moet worden ingeschreven?
+        output:
+          - name: bevoegde_kamer_regime
+            type: string
+            description: Regime voor bepaling bevoegde Kamer (KAMER_BIJ_ZETEL of KAMER_VIA_ARTIKEL_6)
+        actions:
+          - output: bevoegde_kamer_regime
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_onderneming_verplicht_artikel_3
+                  then: KAMER_VIA_ARTIKEL_6
+              default: KAMER_BIJ_ZETEL
   - number: '8'
     text: |-
       1 De op grond van [artikel 5][ref1] daartoe verplichte personen doen, met inachtneming van het bij algemene
@@ -429,6 +518,45 @@ articles:
       - id: ref5
         bwb_id: BWBR0015926
         artikel: '33'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoeker_categorie
+            type: string
+            required: true
+            description: >-
+              Categorie van de verzoeker
+              (MINISTER_JUSTITIE, OFFICIER_VAN_JUSTITIE, BELASTINGDIENST,
+              UWV_SVB, BURGEMEESTERS_WETHOUDERS, DIRECTEUR_GENERAAL_STATISTIEK, OVERIG)
+        output:
+          - name: gerangschikt_per_persoon_toegestaan
+            type: boolean
+            description: Mogen gegevens gerangschikt naar natuurlijke personen worden verstrekt (artikel 15 lid 2)?
+          - name: vergoeding_verplicht
+            type: boolean
+            description: Is betaling van een vergoeding verplicht (artikel 15 lid 1 en 3)?
+        actions:
+          - output: is_geautoriseerde_partij_lid_2
+            value:
+              operation: IN
+              subject: $verzoeker_categorie
+              values:
+                - MINISTER_JUSTITIE
+                - OFFICIER_VAN_JUSTITIE
+                - BELASTINGDIENST
+                - UWV_SVB
+                - BURGEMEESTERS_WETHOUDERS
+          - output: gerangschikt_per_persoon_toegestaan
+            value: $is_geautoriseerde_partij_lid_2
+          - output: is_directeur_generaal_statistiek
+            value:
+              operation: EQUALS
+              subject: $verzoeker_categorie
+              value: DIRECTEUR_GENERAAL_STATISTIEK
+          - output: vergoeding_verplicht
+            value:
+              operation: NOT
+              value: $is_directeur_generaal_statistiek
   - number: '16'
     text: |-
       Ter bescherming van de persoonlijke levenssfeer van de personen die in het handelsregister staan ingeschreven
@@ -569,6 +697,68 @@ articles:
         artikel: '29'
       - id: ref6
         bwb_id: BWBR0003045
+    machine_readable:
+      untranslatables:
+        - construct: subjectieve onmogelijkheid kennis te nemen (artikel 18 lid 2)
+          reason: >-
+            De conditie 'onmogelijk kennis heeft kunnen nemen van een mededeling'
+            vereist een feitelijke beoordeling door de rechter en is niet
+            computationeel te bepalen
+          suggestion: Voeg een beoordelingsoperator toe voor subjectieve onmogelijkheidscondities
+          legal_text_excerpt: >-
+            Indien de derde aantoont dat hij onmogelijk kennis heeft kunnen nemen
+            van een mededeling als bedoeld in artikel 17
+          accepted: false
+      execution:
+        parameters:
+          - name: inschrijving_of_deponering_gedaan
+            type: boolean
+            required: true
+            description: Is de inschrijving of deponering van het feit in het handelsregister gedaan?
+          - name: publicatie_vereist_artikel_17
+            type: boolean
+            required: true
+            description: Is voor dit feit een mededeling in het publikatieblad vereist op grond van artikel 17?
+          - name: mededeling_artikel_17_gedaan
+            type: boolean
+            required: true
+            description: Is de mededeling als bedoeld in artikel 17 gedaan?
+          - name: datum_mededeling_artikel_17
+            type: date
+            description: Datum waarop de mededeling als bedoeld in artikel 17 is gedaan
+        output:
+          - name: beroep_op_feit_mogelijk_jegens_derden
+            type: boolean
+            description: >-
+              Kan een beroep worden gedaan op het feit tegenover onkundige derden
+              (artikel 18 lid 1)?
+          - name: uiterste_datum_beroep_derde_lid_2
+            type: date
+            description: >-
+              Uiterste datum waarbinnen een derde zich op onbekendheid kan beroepen
+              na de mededeling (datum_mededeling + 15 dagen, artikel 18 lid 2)
+        actions:
+          - output: publicatie_voldaan
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $publicatie_vereist_artikel_17
+                    value: true
+                  then: $mededeling_artikel_17_gedaan
+              default: true
+          - output: beroep_op_feit_mogelijk_jegens_derden
+            value:
+              operation: AND
+              conditions:
+                - $inschrijving_of_deponering_gedaan
+                - $publicatie_voldaan
+          - output: uiterste_datum_beroep_derde_lid_2
+            value:
+              operation: DATE_ADD
+              date: $datum_mededeling_artikel_17
+              days: 15
   - number: '23'
     text: |-
       Indien een Kamer of een andere belanghebbende van mening is dat de inschrijving van een onderneming of
@@ -671,6 +861,43 @@ articles:
       2 Het eerste lid geldt niet ten aanzien van een opgave ter inschrijving van een vereniging of stichting waaraan
       niet een onderneming toebehoort.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel28
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: >-
+              Rechtsvorm van de onderneming of rechtspersoon
+              (STICHTING, VERENIGING_VOLLEDIG, VERENIGING_BEPERKT, NV, BV, etc.)
+          - name: heeft_onderneming
+            type: boolean
+            required: true
+            description: Behoort aan de stichting of vereniging een onderneming toe?
+        output:
+          - name: registratieplicht_verbod_van_toepassing
+            type: boolean
+            description: Is het verbod van artikel 28 lid 1 van toepassing?
+        actions:
+          - output: is_stichting_of_vereniging
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - STICHTING
+                - VERENIGING_VOLLEDIG
+                - VERENIGING_BEPERKT
+          - output: uitzondering_lid_2
+            value:
+              operation: AND
+              conditions:
+                - $is_stichting_of_vereniging
+                - operation: NOT
+                  value: $heeft_onderneming
+          - output: registratieplicht_verbod_van_toepassing
+            value:
+              operation: NOT
+              value: $uitzondering_lid_2
   - number: '37'
     text: De Handelsregisterwet (*Stb.* 1984, 353) wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel37
@@ -688,6 +915,45 @@ articles:
       op grond van deze wet niet behoeven te worden ingeschreven, haalt de Kamer van Koophandel en Fabrieken die gegevens
       binnen drie maanden na het eerder genoemde tijdstip door.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel38
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_inwerkingtreding
+            type: date
+            required: true
+            description: Datum van inwerkingtreding van deze wet
+        output:
+          - name: uiterste_datum_opgave_bestaande_ingeschrevenen
+            type: date
+            description: >-
+              Uiterste datum voor opgave door bestaand ingeschrevenen
+              (datum_inwerkingtreding + 1 jaar, artikel 38 lid 1)
+          - name: uiterste_datum_inschrijving_kamer
+            type: date
+            description: >-
+              Uiterste datum voor inschrijving door de Kamer
+              (datum_inwerkingtreding + 18 maanden, artikel 38 lid 2)
+          - name: uiterste_datum_doorhaling_kamer
+            type: date
+            description: >-
+              Uiterste datum voor doorhaling van niet langer vereiste gegevens
+              (datum_inwerkingtreding + 3 maanden, artikel 38 lid 3)
+        actions:
+          - output: uiterste_datum_opgave_bestaande_ingeschrevenen
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding
+              years: 1
+          - output: uiterste_datum_inschrijving_kamer
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding
+              months: 18
+          - output: uiterste_datum_doorhaling_kamer
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding
+              months: 3
   - number: '39'
     text: |-
       1 In afwijking van [artikel 25, eerste lid][ref1], kan tot drie jaar na de inwerkingtreding van deze wet op
@@ -709,6 +975,50 @@ articles:
         bwb_id: BWBR0007893
         artikel: '13'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_inwerkingtreding
+            type: date
+            required: true
+            description: Datum van inwerkingtreding van deze wet
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop getoetst wordt of het oude nummer nog gebruikt mag worden
+          - name: overdracht_artikel_13_gedaan
+            type: boolean
+            required: true
+            description: Heeft een overdracht van het beheer plaatsgevonden als bedoeld in artikel 13?
+        output:
+          - name: uiterste_datum_oud_registratienummer
+            type: date
+            description: >-
+              Uiterste datum tot wanneer het oude registratienummer mag worden gebruikt
+              (datum_inwerkingtreding + 3 jaar)
+          - name: oud_registratienummer_toegestaan
+            type: boolean
+            description: >-
+              Mag het oude handelsregisternummer nog worden vermeld op uitgaande stukken
+              (artikel 39 lid 1)?
+        actions:
+          - output: uiterste_datum_oud_registratienummer
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding
+              years: 3
+          - output: nog_binnen_termijn
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $uiterste_datum_oud_registratienummer
+          - output: oud_registratienummer_toegestaan
+            value:
+              operation: AND
+              conditions:
+                - $nog_binnen_termijn
+                - operation: NOT
+                  value: $overdracht_artikel_13_gedaan
   - number: '40'
     text: Deze wet treedt in werking op een bij koninklijk besluit te bepalen tijdstip.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel40
