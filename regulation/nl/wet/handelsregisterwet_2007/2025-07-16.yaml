@@ -161,6 +161,101 @@ articles:
       f. een onderneming die niet in Nederland is gevestigd en die toebehoort aan een in Nederland opgerichte maatschap,
       vennootschap onder firma, commanditaire vennootschap of rederij.
     url: https://wetten.overheid.nl/BWBR0021777/2025-07-16#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: onderneming_gevestigd_in_nederland
+            type: boolean
+            required: true
+            description: Of de onderneming in Nederland is gevestigd
+          - name: eigenaar_rechtsvorm
+            type: string
+            required: true
+            description: >-
+              Rechtsvorm van degene aan wie de onderneming toebehoort: NV, BV, VOF, CV, maatschap,
+              rederij, cooperatie, OWM, vereniging, stichting, kerkgenootschap,
+              publiekrechtelijke_rechtspersoon, SE, SCE, EESV, buitenlandse_rechtspersoon,
+              natuurlijk_persoon, andere
+          - name: eigenaar_zetel_in_nederland
+            type: boolean
+            required: false
+            description: Of de eigenaar (SE/SCE/EESV) statutair zetel in Nederland heeft (onderdeel c)
+          - name: eigenaar_heeft_vestiging_in_nederland
+            type: boolean
+            required: false
+            description: Of de buitenlandse rechtspersoon een hoofd- of nevenvestiging in Nederland heeft (onderdeel d)
+          - name: eigenaar_opgericht_in_nederland
+            type: boolean
+            required: false
+            description: Of de eigenaar een in Nederland opgerichte maatschap, VOF, CV of rederij is (onderdeel f)
+        output:
+          - name: moet_worden_ingeschreven
+            type: boolean
+            description: Of de onderneming in het handelsregister moet worden ingeschreven
+        actions:
+          - output: onderneming_in_nederland
+            value:
+              operation: EQUALS
+              subject: $onderneming_gevestigd_in_nederland
+              value: true
+          - output: eu_entiteit_zetel_nl
+            value:
+              operation: AND
+              conditions:
+                - operation: IN
+                  subject: $eigenaar_rechtsvorm
+                  values:
+                    - SE
+                    - SCE
+                    - EESV
+                - operation: EQUALS
+                  subject: $eigenaar_zetel_in_nederland
+                  value: true
+          - output: buitenlandse_rp_vestiging_nl
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $eigenaar_rechtsvorm
+                  value: buitenlandse_rechtspersoon
+                - operation: EQUALS
+                  subject: $eigenaar_heeft_vestiging_in_nederland
+                  value: true
+          - output: nl_entiteit_buiten_nl
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $onderneming_gevestigd_in_nederland
+                    value: true
+                - operation: IN
+                  subject: $eigenaar_rechtsvorm
+                  values:
+                    - maatschap
+                    - VOF
+                    - CV
+                    - rederij
+                - operation: EQUALS
+                  subject: $eigenaar_opgericht_in_nederland
+                  value: true
+          - output: moet_worden_ingeschreven
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $onderneming_in_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $eu_entiteit_zetel_nl
+                  value: true
+                - operation: EQUALS
+                  subject: $buitenlandse_rp_vestiging_nl
+                  value: true
+                - operation: EQUALS
+                  subject: $nl_entiteit_buiten_nl
+                  value: true
   - number: '6'
     text: |-
       1 In het handelsregister worden de volgende rechtspersonen die volgens hun statuten hun zetel in Nederland hebben
@@ -201,6 +296,104 @@ articles:
       - id: ref2
         bwb_id: BWBR0039429
         artikel: '2.20'
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: >-
+              Rechtsvorm van de rechtspersoon: NV, BV, SE, EESV, SCE, cooperatie, OWM,
+              vereniging_met_volledige_rechtsbevoegdheid, VvE, stichting,
+              privaatrechtelijke_rechtspersoon, publiekrechtelijke_rechtspersoon,
+              vereniging_zonder_volledige_rechtsbevoegdheid
+          - name: zetel_in_nederland
+            type: boolean
+            required: true
+            description: Of de rechtspersoon statutair zetel in Nederland heeft
+        output:
+          - name: inschrijving_verplicht
+            type: boolean
+            description: Of de rechtspersoon verplicht is zich in te schrijven in het handelsregister (lid 1)
+          - name: inschrijving_verplicht_lid_1_a
+            type: boolean
+            description: Of de rechtspersoon valt onder lid 1 onderdeel a (NV, BV, SE, EESV, SCE, cooperatie, OWM)
+          - name: inschrijving_verplicht_lid_1_b
+            type: boolean
+            description: Of de rechtspersoon valt onder lid 1 onderdeel b (vereniging met volledige rechtsbevoegdheid, VvE, stichting, overige privaatrechtelijke rechtspersonen)
+          - name: inschrijving_mogelijk
+            type: boolean
+            description: Of de rechtspersoon zich kan inschrijven (lid 2 - vereniging zonder volledige rechtsbevoegdheid)
+        actions:
+          - output: lid_1_a_rechtsvorm
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - NV
+                - BV
+                - SE
+                - EESV
+                - SCE
+                - cooperatie
+                - OWM
+          - output: lid_1_b_rechtsvorm
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - vereniging_met_volledige_rechtsbevoegdheid
+                - VvE
+                - stichting
+                - privaatrechtelijke_rechtspersoon
+          - output: lid_1_c_rechtsvorm
+            value:
+              operation: EQUALS
+              subject: $rechtsvorm
+              value: publiekrechtelijke_rechtspersoon
+          - output: inschrijving_verplicht_lid_1_a
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $zetel_in_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $lid_1_a_rechtsvorm
+                  value: true
+          - output: inschrijving_verplicht_lid_1_b
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $zetel_in_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $lid_1_b_rechtsvorm
+                  value: true
+          - output: inschrijving_verplicht
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $zetel_in_nederland
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $lid_1_a_rechtsvorm
+                      value: true
+                    - operation: EQUALS
+                      subject: $lid_1_b_rechtsvorm
+                      value: true
+                    - operation: EQUALS
+                      subject: $lid_1_c_rechtsvorm
+                      value: true
+          - output: inschrijving_mogelijk
+            value:
+              operation: EQUALS
+              subject: $rechtsvorm
+              value: vereniging_zonder_volledige_rechtsbevoegdheid
   - number: '7'
     text: |-
       Indien aan een rechtspersoon als bedoeld in [artikel 6][ref1] een onderneming toebehoort die als zodanig
@@ -222,6 +415,34 @@ articles:
         artikel: '5'
         hoofdstuk: '2'
         paragraaf: '2.2'
+    machine_readable:
+      execution:
+        input:
+          - name: rechtspersoon_inschrijving_verplicht
+            type: boolean
+            source:
+              output: inschrijving_verplicht
+            description: Of de rechtspersoon verplicht is in te schrijven ingevolge artikel 6
+          - name: onderneming_moet_worden_ingeschreven
+            type: boolean
+            source:
+              output: moet_worden_ingeschreven
+            description: Of de onderneming moet worden ingeschreven ingevolge artikel 5
+        output:
+          - name: inschrijving_onderneming_geldt_ook_als_inschrijving_rechtspersoon
+            type: boolean
+            description: Of de inschrijving van de onderneming tevens als inschrijving van de rechtspersoon geldt
+        actions:
+          - output: inschrijving_onderneming_geldt_ook_als_inschrijving_rechtspersoon
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $rechtspersoon_inschrijving_verplicht
+                  value: true
+                - operation: EQUALS
+                  subject: $onderneming_moet_worden_ingeschreven
+                  value: true
   - number: '8'
     text: |-
       Bij algemene maatregel van bestuur:
@@ -738,6 +959,52 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         paragraaf: 4.1.3.3
+    machine_readable:
+      untranslatables:
+        - construct: "periode begint een week vóór de aanvang van de bedrijfsuitoefening"
+          reason: "DATE_ADD does not support date subtraction; the vroegste inschrijvingsdatum (aanvang minus 1 week) cannot be computed with available operations"
+          legal_text_excerpt: "gedaan binnen een periode van twee weken, die begint een week vóór en eindigt een week ná de aanvang van de bedrijfsuitoefening"
+          accepted: false
+      execution:
+        parameters:
+          - name: aanvang_bedrijfsuitoefening
+            type: date
+            required: false
+            description: Datum van aanvang van de bedrijfsuitoefening (voor eerste inschrijving onderneming, lid 1)
+          - name: datum_feit_inschrijving_rechtspersoon
+            type: date
+            required: false
+            description: Datum van het feit waardoor verplichting tot inschrijving rechtspersoon ontstaat (lid 1)
+          - name: datum_feit_wijziging
+            type: date
+            required: false
+            description: Datum van het feit waardoor verplichting tot andere opgave ontstaat (lid 2)
+        output:
+          - name: uiterste_inschrijvingsdatum_onderneming
+            type: date
+            description: Uiterste datum voor eerste inschrijving onderneming (een week na aanvang bedrijfsuitoefening)
+          - name: uiterste_inschrijvingsdatum_rechtspersoon
+            type: date
+            description: Uiterste datum voor eerste inschrijving rechtspersoon (een week na het feit)
+          - name: uiterste_opgavedatum_wijziging
+            type: date
+            description: Uiterste datum voor overige opgaven (een week na het feit)
+        actions:
+          - output: uiterste_inschrijvingsdatum_onderneming
+            value:
+              operation: DATE_ADD
+              date: $aanvang_bedrijfsuitoefening
+              weeks: 1
+          - output: uiterste_inschrijvingsdatum_rechtspersoon
+            value:
+              operation: DATE_ADD
+              date: $datum_feit_inschrijving_rechtspersoon
+              weeks: 1
+          - output: uiterste_opgavedatum_wijziging
+            value:
+              operation: DATE_ADD
+              date: $datum_feit_wijziging
+              weeks: 1
   - number: '21'
     text: |-
       1 De in de [artikelen 9][ref1],
@@ -1052,6 +1319,25 @@ articles:
         artikel: 15a
         hoofdstuk: '2'
         paragraaf: '2.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_mededeling
+            type: date
+            required: true
+            description: Datum van de mededeling als bedoeld in artikel 24 (publicatie in publicatieblad)
+        output:
+          - name: termijn_beroep_onkundig_einddatum
+            type: date
+            description: >-
+              Einddatum van de termijn waarbinnen een derde zich kan beroepen op onkundigheid van
+              het bekendgemaakte feit (15 dagen na de mededeling; Algemene Termijnenwet niet van toepassing)
+        actions:
+          - output: termijn_beroep_onkundig_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_mededeling
+              days: 15
   - number: '26'
     text: |-
       De Kamer draagt zorg voor mededeling aan het Bureau voor officiële publicaties der Europese Gemeenschappen als
@@ -1113,6 +1399,64 @@ articles:
         artikel: '13'
         hoofdstuk: '2'
         paragraaf: '2.2'
+    machine_readable:
+      execution:
+        input:
+          - name: onderneming_ingeschreven
+            type: boolean
+            source:
+              output: moet_worden_ingeschreven
+            description: Of de onderneming moet worden ingeschreven ingevolge artikel 5
+          - name: rechtspersoon_lid_1_a
+            type: boolean
+            source:
+              output: inschrijving_verplicht_lid_1_a
+            description: Of de rechtspersoon valt onder artikel 6, eerste lid, onderdeel a
+          - name: rechtspersoon_lid_1_b
+            type: boolean
+            source:
+              output: inschrijving_verplicht_lid_1_b
+            description: Of de rechtspersoon valt onder artikel 6, eerste lid, onderdeel b
+        parameters:
+          - name: heeft_onderneming
+            type: boolean
+            required: true
+            description: Of de rechtspersoon een onderneming heeft (relevant voor onderdeel b-uitzondering)
+        output:
+          - name: kvk_nummer_vermelding_verplicht
+            type: boolean
+            description: Of vermelding van het handelsregisternummer verplicht is op uitgaande stukken
+        actions:
+          - output: verplicht_onderdeel_a
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $onderneming_ingeschreven
+                  value: true
+                - operation: EQUALS
+                  subject: $rechtspersoon_lid_1_a
+                  value: true
+          - output: verplicht_onderdeel_b
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $rechtspersoon_lid_1_b
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_onderneming
+                  value: true
+          - output: kvk_nummer_vermelding_verplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verplicht_onderdeel_a
+                  value: true
+                - operation: EQUALS
+                  subject: $verplicht_onderdeel_b
+                  value: true
   - number: '28'
     text: |-
       1 De in [artikel 10, tweede lid, onderdeel a, en derde lid, onderdeel e, onder 1°, eerste gedachtestreepje][ref1],
@@ -1266,6 +1610,23 @@ articles:
       - id: ref4
         bwb_id: BWBR0013798
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: einde_bestuursverbod
+            type: date
+            required: true
+            description: Datum waarop het bestuursverbod verstrijkt
+        output:
+          - name: gegevens_beschikbaar_tot
+            type: date
+            description: Datum tot wanneer de geregistreerde gegevens over het bestuursverbod beschikbaar blijven (8 jaar na het verstrijken)
+        actions:
+          - output: gegevens_beschikbaar_tot
+            value:
+              operation: DATE_ADD
+              date: $einde_bestuursverbod
+              years: 8
   - number: '30'
     text: |-
       1 Een bestuursorgaan als bedoeld in [artikel 1:1, eerste lid, onderdeel a, van de Algemene wet bestuursrecht][ref1]
