@@ -203,6 +203,118 @@ articles:
       - id: ref3
         bwb_id: BWBR0011823
         artikel: '21'
+    machine_readable:
+      endpoint: is_inburgeringsplichtig
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de vreemdeling
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de leeftijdsbepaling
+          - name: pensioengerechtigde_leeftijd
+            type: number
+            required: true
+            description: Pensioengerechtigde leeftijd als bedoeld in artikel 7a, eerste lid, van de Algemene Ouderdomswet
+          - name: heeft_rechtmatig_verblijf_art8ac
+            type: boolean
+            required: true
+            description: Rechtmatig verblijf op grond van artikel 8, onderdelen a en c, van de Vreemdelingenwet 2000
+          - name: verblijft_niet_voor_tijdelijk_doel
+            type: boolean
+            required: true
+            description: Anders dan voor een tijdelijk doel in Nederland verblijft (lid 1, onderdeel a)
+          - name: is_geestelijke_bedienaar
+            type: boolean
+            required: true
+            description: Is geestelijke bedienaar als bedoeld in artikel 1 (lid 1, onderdeel b)
+          - name: is_eu_eea_swiss_onderdaan
+            type: boolean
+            required: true
+            description: Onderdaan van een lidstaat van de EU, EER of Zwitserland (lid 2, onderdeel a)
+          - name: heeft_eu_familielid_verblijfsrecht
+            type: boolean
+            required: true
+            description: Familielid van EU/EER/Zwitsers onderdaan met verblijfsrecht op grond van richtlijn 2004/38/EG of EER/Zwitsers vrij verkeer (lid 2, onderdeel b)
+          - name: heeft_voldaan_inburgeringsvereiste_elders
+            type: boolean
+            required: true
+            description: Heeft voldaan aan inburgeringsvereiste voor LTR-status in een EU- of EER-lidstaat (lid 2, onderdeel c)
+          - name: heeft_verdragsrechtelijke_uitzondering
+            type: boolean
+            required: true
+            description: Op grond van verdragen of besluiten van volkenrechtelijke organisaties kan geen inburgeringsplicht worden opgelegd (lid 2, onderdeel d)
+        output:
+          - name: is_inburgeringsplichtig
+            type: boolean
+            description: Of de vreemdeling inburgeringsplichtig is op grond van artikel 3
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 16
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: $pensioengerechtigde_leeftijd
+          - output: voldoet_aan_verblijfsdoel
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verblijft_niet_voor_tijdelijk_doel
+                  value: true
+                - operation: EQUALS
+                  subject: $is_geestelijke_bedienaar
+                  value: true
+          - output: voldoet_aan_lid1
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_rechtmatig_verblijf_art8ac
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_leeftijdseis
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_verblijfsdoel
+                  value: true
+          - output: heeft_uitzondering_lid2
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_eu_eea_swiss_onderdaan
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_eu_familielid_verblijfsrecht
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_voldaan_inburgeringsvereiste_elders
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_verdragsrechtelijke_uitzondering
+                  value: true
+          - output: is_inburgeringsplichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_lid1
+                  value: true
+                - operation: NOT
+                  value: $heeft_uitzondering_lid2
   - number: '4'
     text: |-
       1 Onze Minister verleent vrijstelling van de inburgeringsplicht aan degene die:
@@ -415,6 +527,31 @@ articles:
         bwb_id: BWBR0044770
         artikel: '15'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: pippi_dagtekening
+            type: date
+            required: true
+            description: Dagtekening van het persoonlijk plan inburgering en participatie (artikel 15, derde lid)
+        output:
+          - name: inburgeringstermijn_aanvang
+            type: date
+            description: Dag waarop de inburgeringstermijn aanvangt (dag na dagtekening persoonlijk plan inburgering en participatie)
+          - name: inburgeringstermijn_einde
+            type: date
+            description: Uiterste datum voor het voldoen aan de inburgeringsplicht (drie jaar na aanvang)
+        actions:
+          - output: inburgeringstermijn_aanvang
+            value:
+              operation: DATE_ADD
+              date: $pippi_dagtekening
+              days: 1
+          - output: inburgeringstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $inburgeringstermijn_aanvang
+              years: 3
   - number: '12'
     text: |-
       1 Onze Minister verlengt telkens de termijn, bedoeld in [artikel 11, eerste lid][ref1], als de
@@ -808,6 +945,38 @@ articles:
       - id: ref5
         bwb_id: BWBR0018472
         artikel: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_inburgeringsplichtig
+            type: boolean
+            required: true
+            description: Of de persoon inburgeringsplichtig is
+          - name: voldoet_aan_amvb_voorwaarden
+            type: boolean
+            required: true
+            description: Voldoet aan bij of krachtens AMvB gestelde voorwaarden voor de lening (lid 1)
+          - name: heeft_niet_voldaan_binnen_zes_jaar_na_termijn
+            type: boolean
+            required: true
+            description: Heeft niet voldaan aan de inburgeringsplicht binnen zes jaar na het verstrijken van de termijn (lid 2, onderdeel a)
+        output:
+          - name: heeft_aanspraak_op_lening
+            type: boolean
+            description: Of de inburgeringsplichtige aanspraak heeft op een lening voor cursus, opleiding of examen
+        actions:
+          - output: heeft_aanspraak_op_lening
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_inburgeringsplichtig
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_amvb_voorwaarden
+                  value: true
+                - operation: NOT
+                  value: $heeft_niet_voldaan_binnen_zes_jaar_na_termijn
   - number: '21'
     text: |-
       1 De inburgeringsplichtige, de voormalige inburgeringsplichtige of de persoon, bedoeld in
@@ -853,6 +1022,23 @@ articles:
         bwb_id: BWBR0044770
         artikel: '20'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_voldaan_of_vervallen
+            type: date
+            required: true
+            description: Datum van voldoen aan de inburgeringsplicht (lid 3, onderdeel a) of datum van vervallen van de aanspraak op een lening (lid 3, onderdeel b, jo. artikel 20, tweede lid)
+        output:
+          - name: terugbetalingsperiode_aanvang
+            type: date
+            description: Datum waarop de terugbetalingsperiode aanvangt (zes maanden na datum_voldaan_of_vervallen)
+        actions:
+          - output: terugbetalingsperiode_aanvang
+            value:
+              operation: DATE_ADD
+              date: $datum_voldaan_of_vervallen
+              months: 6
   - number: '22'
     text: |-
       1 Het college legt een bestuurlijke boete op aan de inburgeringsplichtige als deze niet is verschenen binnen de in
@@ -981,6 +1167,23 @@ articles:
       - id: ref6
         bwb_id: BWBR0011823
         artikel: '19'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verblijfsvergunning_geweigerd_of_ingetrokken
+            type: boolean
+            required: true
+            description: Of de aanvraag tot verlenging is afgewezen krachtens artikel 18 of de verblijfsvergunning voor bepaalde tijd is ingetrokken krachtens artikel 19 van de Vreemdelingenwet 2000 (lid 3)
+        output:
+          - name: boete_artikel25_uitgesloten
+            type: boolean
+            description: Of het opleggen van de bestuurlijke boete op grond van artikel 25, eerste lid, achterwege blijft (lid 3)
+        actions:
+          - output: boete_artikel25_uitgesloten
+            value:
+              operation: EQUALS
+              subject: $verblijfsvergunning_geweigerd_of_ingetrokken
+              value: true
   - number: '26'
     text: |-
       1 De bestuurlijke boetes, bedoeld in de [artikelen 22][ref1], [23][ref2], [24][ref3] en [25][ref4], zijn niet hoger
@@ -1041,6 +1244,49 @@ articles:
         bwb_id: BWBR0044770
         artikel: '25'
         hoofdstuk: '7'
+    machine_readable:
+      definitions:
+        MAXIMUM_BOETE_ARTIKEL_22: 25000
+        MAXIMUM_BOETE_ARTIKEL_23: 80000
+        MAXIMUM_BOETE_ARTIKEL_24: 34000
+        MAXIMUM_BOETE_ARTIKEL_25: 100000
+      execution:
+        parameters:
+          - name: boete_grondslag_artikel
+            type: string
+            required: true
+            description: "Het artikel op grond waarvan de boete wordt opgelegd: '22', '23', '24' of '25'"
+        output:
+          - name: maximum_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximum hoogte van de bestuurlijke boete op grond van lid 1
+        actions:
+          - output: maximum_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $boete_grondslag_artikel
+                    value: "22"
+                  then: $MAXIMUM_BOETE_ARTIKEL_22
+                - when:
+                    operation: EQUALS
+                    subject: $boete_grondslag_artikel
+                    value: "23"
+                  then: $MAXIMUM_BOETE_ARTIKEL_23
+                - when:
+                    operation: EQUALS
+                    subject: $boete_grondslag_artikel
+                    value: "24"
+                  then: $MAXIMUM_BOETE_ARTIKEL_24
+                - when:
+                    operation: EQUALS
+                    subject: $boete_grondslag_artikel
+                    value: "25"
+                  then: $MAXIMUM_BOETE_ARTIKEL_25
   - number: '27'
     text: |-
       Het opleggen van een bestuurlijke boete blijft achterwege als voor dezelfde gedraging de bijstand is verlaagd op
@@ -1057,6 +1303,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0015703
         artikel: 18b
+    machine_readable:
+      execution:
+        parameters:
+          - name: bijstand_verlaagd_voor_zelfde_gedraging
+            type: boolean
+            required: true
+            description: Of de bijstand is verlaagd op grond van artikel 18 of artikel 18b van de Participatiewet voor dezelfde gedraging waarvoor de bestuurlijke boete wordt overwogen
+        output:
+          - name: boete_blijft_achterwege
+            type: boolean
+            description: Of het opleggen van de bestuurlijke boete achterwege blijft op grond van dit artikel
+        actions:
+          - output: boete_blijft_achterwege
+            value:
+              operation: EQUALS
+              subject: $bijstand_verlaagd_voor_zelfde_gedraging
+              value: true
   - number: '28'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld voor de afgifte van een certificaat
