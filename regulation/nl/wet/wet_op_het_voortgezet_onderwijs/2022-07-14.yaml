@@ -4544,6 +4544,64 @@ articles:
       [ref16]: https://wetten.overheid.nl/BWBR0002628#Artikel1
       [ref17]: https://wetten.overheid.nl/BWBR0002399#Artikel10f
       [ref18]: https://wetten.overheid.nl/BWBR0005537#Artikel710
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: beslistermijn_bezwaar_weken
+      execution:
+        parameters:
+          - name: aanmelding_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanmelding door het bevoegd gezag (lid 2e)
+          - name: geboortedatum_leerling
+            type: date
+            required: true
+            description: Geboortedatum van de leerling (lid 3, leeftijdsgrens praktijkonderwijs)
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de leeftijdsberekening
+        output:
+          - name: uiterste_beslisdatum_toelating
+            type: date
+            description: Uiterste datum voor de toelatingsbeslissing (lid 2e, 6 weken na aanmelding)
+          - name: tijdelijke_plaatsing_datum
+            type: date
+            description: Datum waarop tijdelijke plaatsing ingaat indien beslissing uitblijft (lid 2f, 10 weken na aanmelding)
+          - name: leeftijd_leerling
+            type: number
+            description: Leeftijd van de leerling in jaren op de peildatum
+          - name: mag_praktijkonderwijs_volgen
+            type: boolean
+            description: "Leerling heeft de leeftijd van 18 jaar nog niet bereikt (lid 3). Opmerking: de wet staat voortgang toe gedurende het gehele schooljaar waarin men 18 wordt; de peildatum-check is een vereenvoudiging"
+          - name: beslistermijn_bezwaar_weken
+            type: number
+            description: Termijn voor beslissing op bezwaar over toelating of verwijdering in weken (lid 4, override AWB 7:10)
+        actions:
+          - output: uiterste_beslisdatum_toelating
+            value:
+              operation: DATE_ADD
+              date: $aanmelding_datum
+              weeks: 6
+          - output: tijdelijke_plaatsing_datum
+            value:
+              operation: DATE_ADD
+              date: $aanmelding_datum
+              weeks: 10
+          - output: leeftijd_leerling
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_leerling
+              reference_date: $peildatum
+          - output: mag_praktijkonderwijs_volgen
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_leerling
+              value: 18
+          - output: beslistermijn_bezwaar_weken
+            value: 4
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel27
     references:
       - id: ref1
@@ -4968,6 +5026,29 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027679#Artikel2
+    machine_readable:
+      untranslatables:
+        - construct: "gemiddelde verschil over een periode van drie jaren"
+          reason: "Aggregation over a variable-length time series (three school years) is not supported as an engine operation"
+          suggestion: "Add time-series aggregation operation or supply pre-computed average as input"
+          legal_text_excerpt: "het gemiddelde verschil tussen de cijfers van het centraal examen en het schoolexamen over een periode van drie jaren meer dan een half punt bedraagt"
+          accepted: false
+      execution:
+        parameters:
+          - name: gemiddeld_verschil_ce_se
+            type: number
+            required: true
+            description: "Het vooraf berekende gemiddelde verschil (absoluut) tussen centraal examen en schoolexamen over drie jaren (lid 1a)"
+        output:
+          - name: verschil_overschrijdt_halve_punt
+            type: boolean
+            description: "Het gemiddeld verschil tussen CE en SE over drie jaren is meer dan 0,5 punt (lid 1a)"
+        actions:
+          - output: verschil_overschrijdt_halve_punt
+            value:
+              operation: GREATER_THAN
+              subject: $gemiddeld_verschil_ce_se
+              value: 0.5
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel29
     references:
       - id: ref1
@@ -5031,6 +5112,27 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel67
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel724
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: bezwaartermijn_weken
+        - law: algemene_wet_bestuursrecht
+          article: '7:24'
+          output: beslistermijn_bezwaar_weken
+      execution:
+        output:
+          - name: bezwaartermijn_weken
+            type: number
+            description: "Termijn voor het indienen van beroepschrift tegen eindexamenbesluit: 5 dagen (let op: waarde is in dagen, niet weken; afwijking van AWB art. 6:7)"
+          - name: beslistermijn_bezwaar_weken
+            type: number
+            description: "Termijn waarbinnen het beroepsorgaan beslist: 2 weken (lid 3, afwijking van AWB art. 7:24)"
+        actions:
+          - output: bezwaartermijn_weken
+            value: 5
+          - output: beslistermijn_bezwaar_weken
+            value: 2
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel30a
     references:
       - id: ref1
@@ -6101,6 +6203,27 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007625
       [ref2]: https://wetten.overheid.nl/BWBR0005682
+    machine_readable:
+      execution:
+        parameters:
+          - name: totaal_lessen_uren
+            type: number
+            required: true
+            description: Totaal aantal uren lessen en onderwijsprogramma-onderdelen in het schooljaar (lid 3)
+        output:
+          - name: verplicht_quota_ho_studenten_uren
+            type: number
+            description: Aantal uren waarvoor het bevoegd gezag verplicht is ho-studenten toe te laten (lid 3, 5% van totaal)
+        actions:
+          - output: verplicht_quota_ho_studenten_uren
+            value:
+              operation: MULTIPLY
+              values:
+                - $totaal_lessen_uren
+                - operation: DIVIDE
+                  values:
+                    - 5
+                    - 100
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel39c
     references:
       - id: ref1
@@ -9312,6 +9435,54 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel67
+    machine_readable:
+      open_terms:
+        - id: correctiefactor_z
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 68, derde lid, onderdeel a/b, Wet op het voortgezet onderwijs
+      untranslatables:
+        - construct: "gemiddelde van het aantal leerlingen in de leeftijd van 12 jaar en 13 jaar (w-variabele)"
+          reason: "Aggregation over two groups and statistical lookup from CBS data requires external data source not expressible as engine input"
+          suggestion: "Accept w_verwacht_bevolking as a pre-computed parameter combining CBS data and the ministerial verblijfsjaren factor"
+          legal_text_excerpt: "w = het gemiddelde van het aantal leerlingen in de leeftijd van 12 jaar en in de leeftijd van 13 jaar in het voedingsgebied ... vermenigvuldigd met een bij ministeriële regeling te bepalen aantal verblijfsjaren"
+          accepted: false
+      execution:
+        parameters:
+          - name: y_leerlingen_met_belangstelling
+            type: number
+            required: true
+            description: Aantal leerlingen (leeftijd 10-12) met aangegeven belangstelling (y in formule, lid 3)
+          - name: x_totaal_leerlingen_gebied
+            type: number
+            required: true
+            description: Totaal aantal leerlingen (leeftijd 10-12) in het voedingsgebied op 1 januari (x in formule, lid 3)
+          - name: w_verwacht_bevolking
+            type: number
+            required: true
+            description: "Verwachte leerlingenpopulatie: gemiddelde 12/13-jarigen * verblijfsjaren (w in formule, lid 3; CBS-data vereist)"
+        output:
+          - name: correctiefactor_z
+            type: number
+            description: Ministerieel vastgestelde correctiefactor z (lid 3)
+          - name: verwacht_aantal_leerlingen_q
+            type: number
+            description: Verwacht aantal leerlingen q op 1 januari van het elfde jaar (formule lid 3)
+        actions:
+          - output: correctiefactor_z
+            value: $correctiefactor_z
+          - output: verwacht_aantal_leerlingen_q
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - $y_leerlingen_met_belangstelling
+                    - $x_totaal_leerlingen_gebied
+                - $w_verwacht_bevolking
+                - $correctiefactor_z
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel68
     references:
       - id: ref1

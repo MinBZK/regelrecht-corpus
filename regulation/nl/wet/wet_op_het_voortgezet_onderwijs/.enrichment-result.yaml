@@ -6,8 +6,8 @@ enrichment:
   valid_to: '2022-07-31'
   enriched_at: '2026-07-07'
 
-  articles_processed: 12
-  articles_executable: 12
+  articles_processed: 17
+  articles_executable: 17
   articles_skipped: 0
 
   executable_articles:
@@ -36,6 +36,52 @@ enrichment:
       outputs:
         - leer_werktraject_geldig
 
+    - article: '27'
+      lid: "2e, 2f, 3, 4"
+      topic: Toelating leerlingen - beslisdatum, tijdelijke plaatsing, leeftijdsgrens praktijkonderwijs, bezwaartermijn
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: beslistermijn_bezwaar_weken
+      outputs:
+        - uiterste_beslisdatum_toelating
+        - tijdelijke_plaatsing_datum
+        - leeftijd_leerling
+        - mag_praktijkonderwijs_volgen
+        - beslistermijn_bezwaar_weken
+
+    - article: '29'
+      lid: 1a
+      topic: Gemiddeld verschil centraal examen vs schoolexamen > 0,5 punt
+      outputs:
+        - verschil_overschrijdt_halve_punt
+      untranslatables:
+        - >
+          Lid 1a: "gemiddelde verschil over een periode van drie jaren" vereist
+          tijdreeks-aggregatie; engine ondersteunt dit niet. Gemiddeld verschil
+          wordt als pre-computed parameter aangeboden.
+
+    - article: 30a
+      lid: "2, 3"
+      topic: Beroepstermijn eindexamenbesluit 5 dagen (override AWB 6:7); beslistermijn beroepsorgaan 2 weken
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: bezwaartermijn_weken
+      outputs:
+        - bezwaartermijn_weken
+        - beslistermijn_beroepsorgaan_weken
+      notes: >
+        UNIT MISMATCH: AWB art. 6:7 bezwaartermijn is in weken; WVO art. 30a lid 2
+        stelt 5 DAGEN. Outputnaam bezwaartermijn_weken behouden voor schema-conformiteit;
+        waarde 5 vertegenwoordigt 5 dagen.
+
+    - article: 39c
+      lid: 3
+      topic: Verplicht quota ho-studenten toe te laten = 5% van totaal lessen in schooljaar
+      outputs:
+        - verplicht_quota_ho_studenten_uren
+
     - article: 60
       lid: 7
       topic: Bezwaartermijn staatsexamen 5 dagen (override AWB 6:7)
@@ -48,9 +94,9 @@ enrichment:
       notes: >
         UNIT MISMATCH: AWB art. 6:7 bezwaartermijn is in weken; WVO art. 60 lid 7
         stelt 5 DAGEN. Outputnaam bezwaartermijn_weken behouden voor schema-conformiteit;
-        waarde 5 vertegenwoordigt 5 dagen. Zie RFC-007 voor toekomstige unit-ondersteuning.
+        waarde 5 vertegenwoordigt 5 dagen.
 
-    - article: 64
+    - article: '64'
       lid: 1
       topic: Stichtingsnormen bekostiging per schoolsoort
       outputs:
@@ -70,6 +116,21 @@ enrichment:
       outputs:
         - minimum_leerlingen_nieuw_profiel
         - voldoet_aan_leerlingen_eis_nieuw_profiel
+
+    - article: '68'
+      lid: 3
+      topic: Belangstellingsmeting formule q = (y/x) * w * z voor verwacht aantal leerlingen
+      open_terms:
+        - id: correctiefactor_z
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+      outputs:
+        - correctiefactor_z
+        - verwacht_aantal_leerlingen_q
+      untranslatables:
+        - >
+          Lid 3: w-variabele (gemiddelde 12/13-jarigen * verblijfsjaren) vereist CBS-data
+          en ministerieel vastgestelde verblijfsjaren; behandeld als pre-computed parameter.
 
     - article: 74c
       topic: Afwijzingsgrond onderwijsvoorziening bij >10% leerlingverlies
@@ -102,19 +163,20 @@ enrichment:
         - minimum_leerlingen_jaar3
         - voldoet_aan_jaar3_norm
 
-  related_regulations:
-    - bwb_id: BWBR0005537
-      title: Algemene wet bestuursrecht
-      relation: overridden_by_article_60_lid_7
-      articles:
-        - '6:7'
-        - '7:10'
+  related_legislation:
+    - name: Algemene wet bestuursrecht
+      relation: source_regulation
+      bwb_id: BWBR0005537
+      notes: "Overridden by articles 27 (7:10), 30a (6:7), 60 (6:7)"
 
-    - bwb_id: BWBR0007625
-      title: Wet educatie en beroepsonderwijs
-      relation: referenced
-      articles:
-        - 7.2.2
+    - name: Wet educatie en beroepsonderwijs
+      relation: source_regulation
+      bwb_id: BWBR0007625
+
+    - name: Regeling correctiefactor en verblijfsjaren belangstellingsmeting voortgezet onderwijs
+      relation: delegated_regeling
+      open_term: correctiefactor_z
+      notes: "Implements open_term correctiefactor_z for artikel 68 lid 3"
 
   mvt_research:
     status: skipped
@@ -124,4 +186,27 @@ enrichment:
   validation:
     schema_validation: not_run
     bdd_tests: not_run
-    reverse_validation: pending
+    reverse_validation: complete
+    reverse_validation_summary:
+      articles_checked: 17
+      fully_grounded: 15
+      contains_assumptions: 2
+      elements_removed: 1
+      elements_added: 1
+      corrections:
+        - article: 30a
+          action: added_override
+          detail: "AWB art. 7:24 override added for beslistermijn_bezwaar_weken (lid 3)"
+        - article: 68
+          action: removed_open_term
+          detail: "Unused open_term verblijfsjaren_factor removed; w absorbed as pre-computed parameter"
+        - article: 27
+          action: description_updated
+          detail: "mag_praktijkonderwijs_volgen description updated to note schooljaar-grens simplification"
+      assumptions:
+        - article: 27
+          output: mag_praktijkonderwijs_volgen
+          detail: "AGE < 18 check is more restrictive than law; law allows continuation through end of school year in which student turns 18"
+        - article: 29
+          output: verschil_overschrijdt_halve_punt
+          detail: "3-year time-series aggregation not expressible; supplied as pre-computed parameter gemiddeld_verschil_ce_se"
