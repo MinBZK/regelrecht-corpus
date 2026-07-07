@@ -1768,6 +1768,53 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden overeenkomstig artikel 140, tweede volzin"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "De uitkomst van de berekening wordt afgerond overeenkomstig artikel 140, tweede volzin"
+          accepted: false
+      execution:
+        parameters:
+          - name: leerlingen_op_teldatum
+            type: number
+            required: true
+            description: Aantal leerlingen op 1 oktober van het eerste of tweede schooljaar voorafgaand aan de fusiedatum
+        input:
+          - name: opheffingsnorm
+            type: number
+            source:
+              output: opheffingsnorm
+            description: Opheffingsnorm berekend overeenkomstig artikel 140
+        output:
+          - name: drempelwaarde
+            type: number
+            description: Maximaal toegestaan leerlingenaantal voor continuiteitseis samenwerkingsschool (voor afronden)
+          - name: voldoet_aan_continuiteitseis
+            type: boolean
+            description: Of de school voldoet aan de continuiteitseis voor een samenwerkingsschool (derde lid)
+        actions:
+          - output: drempelwaarde
+            value:
+              operation: MIN
+              values:
+                - 200
+                - operation: ADD
+                  values:
+                    - $opheffingsnorm
+                    - operation: SUBTRACT
+                      values:
+                        - 67.797
+                        - operation: MULTIPLY
+                          values:
+                            - 0.339
+                            - $opheffingsnorm
+          - output: voldoet_aan_continuiteitseis
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $leerlingen_op_teldatum
+              value: $drempelwaarde
   - number: 18a
     text: |-
       1 Het bevoegd gezag van één of meer scholen is voor elke vestiging van die school of scholen aangesloten bij een
@@ -2753,6 +2800,55 @@ articles:
       - id: ref5
         bwb_id: BWBR0005537
         artikel: 7:10
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_aanmelding_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de schriftelijke aanmelding voor toelating
+          - name: geboortedatum_kind
+            type: date
+            required: true
+            description: Geboortedatum van het kind
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsberekening (aanmelding kan vanaf dag dat kind 3 jaar wordt)
+        output:
+          - name: leeftijd_kind
+            type: number
+            description: Leeftijd van het kind op de peildatum (in jaren)
+          - name: aanmelding_toegestaan_leeftijd
+            type: boolean
+            description: Of het kind de leeftijd van 3 jaar heeft bereikt (aanmelding toegestaan, lid 2)
+          - name: beslissing_uiterlijk_datum
+            type: date
+            description: Uiterste datum voor beslissing over toelating (6 weken na ontvangst, lid 6)
+          - name: auto_plaatsing_datum
+            type: date
+            description: Datum van automatische tijdelijke plaatsing bij uitblijven beslissing (10 weken na aanvraag, lid 7)
+        actions:
+          - output: leeftijd_kind
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_kind
+              reference_date: $peildatum
+          - output: aanmelding_toegestaan_leeftijd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_kind
+              value: 3
+          - output: beslissing_uiterlijk_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_aanmelding_datum
+              weeks: 6
+          - output: auto_plaatsing_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_aanmelding_datum
+              weeks: 10
   - number: 40a
     text: |-
       1 Het bevoegd gezag stelt nadat op overeenstemming gericht overleg is gevoerd met de ouders een
@@ -4338,6 +4434,43 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '2'
+    machine_readable:
+      open_terms:
+        - id: correctiefactor_z
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 74a, derde lid, onderdeel z van de Wet op het primair onderwijs
+      execution:
+        parameters:
+          - name: y
+            type: number
+            required: true
+            description: Aantal kinderen van 2 t/m 4 jaar met belangstelling voor de school (ouderverklaring of marktonderzoek)
+          - name: x
+            type: number
+            required: true
+            description: Totaal aantal kinderen van 2 t/m 4 jaar waarop de belangstellingsmeting betrekking heeft
+          - name: w
+            type: number
+            required: true
+            description: Totaal aantal kinderen van 4 t/m 12 jaar in het voedingsgebied op 1 januari van het elfde jaar na indiening aanvraag
+        output:
+          - name: verwacht_leerlingenaantal
+            type: number
+            description: Te verwachten aantal leerlingen (q) op 1 januari van het elfde jaar na indiening aanvraag
+        actions:
+          - output: verwacht_leerlingenaantal
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - $y
+                    - $x
+                - $w
+                - $correctiefactor_z
   - number: '75'
     text: |-
       1 De aanvraag, bedoeld in [artikel 74, eerste lid][ref1], wordt ingediend voor 1 november. De inspectie adviseert
@@ -4536,6 +4669,38 @@ articles:
       - id: ref5
         bwb_id: BWBR0003718
         artikel: '1'
+    machine_readable:
+      endpoint: stichtingsnorm
+      untranslatables:
+        - construct: "afronden op geheel getal (halverwegen naar boven)"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "De uitkomst wordt afgerond, waarbij de decimalen worden verwaarloosd indien het eerste cijfer achter de komma kleiner is dan 5 en de decimalen worden verwaarloosd en het getal verhoogd met 1 indien het eerste cijfer achter de komma gelijk is aan of groter is dan 5. De stichtingsnorm bedraagt minimaal 200."
+          accepted: false
+      execution:
+        input:
+          - name: opheffingsnorm
+            type: number
+            source:
+              output: opheffingsnorm
+            description: Opheffingsnorm berekend overeenkomstig artikel 140
+        output:
+          - name: stichtingsnorm
+            type: number
+            description: Stichtingsnorm voor de gemeente (10/6 van opheffingsnorm, minimaal 200, voor afronden)
+        actions:
+          - output: stichtingsnorm
+            value:
+              operation: MAX
+              values:
+                - 200
+                - operation: MULTIPLY
+                  values:
+                    - $opheffingsnorm
+                    - operation: DIVIDE
+                      values:
+                        - 10
+                        - 6
   - number: '77'
     text: |-
       1 Indien uit schriftelijke verklaringen van ten minste 50 verschillende ouders van kinderen tot en met de leeftijd
@@ -4644,6 +4809,23 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: afstand_km
+            type: number
+            required: true
+            description: Afstand in km tussen het huidige vestigingsadres en de nieuwe locatie
+        output:
+          - name: bekostiging_gehandhaafd
+            type: boolean
+            description: Of de aanspraak op bekostiging gehandhaafd blijft bij verplaatsing binnen 3 km
+        actions:
+          - output: bekostiging_gehandhaafd
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $afstand_km
+              value: 3
   - number: 84a
     text: |-
       1 Het bevoegd gezag kan op de wijze als aangegeven in [artikel 74][ref1], met uitzondering van het tweede lid,
@@ -6671,6 +6853,30 @@ articles:
       Waar in deze paragraaf sprake is van een aantal leerlingen, is dat het aantal leerlingen op 1 oktober van het
       schooljaar, verhoogd met 3% daarvan, waarbij de uitkomst naar beneden wordt afgerond op een geheel getal.
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel138
+    machine_readable:
+      untranslatables:
+        - construct: "naar beneden afronden op een geheel getal"
+          reason: "FLOOR/rounding is not available as an engine operation"
+          suggestion: "Add FLOOR operation to engine"
+          legal_text_excerpt: "verhoogd met 3% daarvan, waarbij de uitkomst naar beneden wordt afgerond op een geheel getal"
+          accepted: false
+      execution:
+        parameters:
+          - name: leerlingen_1_oktober
+            type: number
+            required: true
+            description: Aantal leerlingen op 1 oktober van het schooljaar
+        output:
+          - name: leerlingaantal_gecorrigeerd
+            type: number
+            description: Gecorrigeerd leerlingaantal (1 oktober + 3%, voor afronden naar beneden)
+        actions:
+          - output: leerlingaantal_gecorrigeerd
+            value:
+              operation: MULTIPLY
+              values:
+                - $leerlingen_1_oktober
+                - 1.03
   - number: '139'
     text: |-
       1 De bekostiging van een bijzondere school wordt beëindigd en een openbare school wordt opgeheven indien
@@ -6793,6 +6999,65 @@ articles:
       km2, wordt voor de berekening van de leerlingdichtheid uitgegaan van 10 km2. De leerlingdichtheid bedraagt maximaal
       500.
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel140
+    machine_readable:
+      endpoint: opheffingsnorm
+      untranslatables:
+        - construct: "afronden op geheel getal (halverwegen naar boven)"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "De uitkomst van de berekening wordt afgerond, waarbij de decimalen worden verwaarloosd indien het eerste cijfer achter de komma kleiner is dan 5 en waarbij de decimalen worden verwaarloosd en het getal verhoogd met 1 indien het eerste cijfer achter de komma gelijk is aan of groter is dan 5"
+          accepted: false
+      execution:
+        parameters:
+          - name: inwoners_4_tot_12
+            type: number
+            required: true
+            description: Aantal inwoners van 4 tot en met 11 jaar in de gemeente
+          - name: oppervlakte_km2
+            type: number
+            required: true
+            description: Oppervlakte van de gemeente in km2 grondoppervlakte
+        output:
+          - name: leerlingdichtheid
+            type: number
+            description: Leerlingdichtheid (inwoners 4-11 jaar per km2; min 10 km2 grondoppervlak; maximaal 500)
+          - name: opheffingsnorm
+            type: number
+            description: Opheffingsnorm voor de gemeente (voor afronden; minimaal 23, maximaal 200)
+        actions:
+          - output: leerlingdichtheid
+            value:
+              operation: MIN
+              values:
+                - 500
+                - operation: DIVIDE
+                  values:
+                    - $inwoners_4_tot_12
+                    - operation: MAX
+                      values:
+                        - $oppervlakte_km2
+                        - 10
+          - output: opheffingsnorm
+            value:
+              operation: MAX
+              values:
+                - 23
+                - operation: MIN
+                  values:
+                    - 200
+                    - operation: MULTIPLY
+                      values:
+                        - 0.6
+                        - operation: DIVIDE
+                          values:
+                            - $leerlingdichtheid
+                            - operation: ADD
+                              values:
+                                - 0.15
+                                - operation: MULTIPLY
+                                  values:
+                                    - 0.0027
+                                    - $leerlingdichtheid
   - number: '141'
     text: |-
       1 Het college van burgemeester en wethouders kan, indien elk bevoegd gezag dat een of meer scholen in de
