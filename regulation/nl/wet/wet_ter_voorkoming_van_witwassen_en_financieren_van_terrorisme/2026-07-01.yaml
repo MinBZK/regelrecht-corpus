@@ -1754,6 +1754,15 @@ articles:
         artikel: 2f
         hoofdstuk: '1'
         paragraaf: '1.3'
+    machine_readable:
+      execution:
+        output:
+          - name: min_monitoring_termijn_voormalig_pep_maanden
+            type: number
+            description: Minimum monitoring termijn voor voormalig politiek prominente persoon in maanden (lid 8)
+        actions:
+          - output: min_monitoring_termijn_voormalig_pep_maanden
+            value: 12
   - number: '9'
     text: |-
       1 Onverminderd [artikel 8, eerste lid][ref1], verricht een instelling met betrekking tot transacties, zakelijke
@@ -2497,6 +2506,23 @@ articles:
         artikel: '5'
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: transactiebedrag
+            type: number
+            required: true
+            description: Bedrag van de (ongebruikelijke) transactie in eurocent
+        output:
+          - name: omschrijving_zaken_vereist
+            type: boolean
+            description: Of een omschrijving van de zaken van grote waarde verplicht is bij de melding (lid 2f, transactie boven EUR 10.000)
+        actions:
+          - output: omschrijving_zaken_vereist
+            value:
+              operation: GREATER_THAN
+              subject: $transactiebedrag
+              value: 1000000
   - number: 16a
     text: |-
       Een melding als bedoeld in [artikel 16][ref1] die betrekking heeft op een andere lidstaat, wordt door de Financiële
