@@ -258,6 +258,53 @@ articles:
       - id: ref6
         bwb_id: BWBR0011919
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de eigenaar-bewoner
+        input:
+          - name: voldoet_bewoningseis
+            type: boolean
+            source:
+              output: voldoet_bewoningseis
+          - name: voldoet_vermogenseis
+            type: boolean
+            source:
+              output: voldoet_vermogenseis
+          - name: voldoet_leeftijdseis
+            type: boolean
+            source:
+              output: voldoet_leeftijdseis
+          - name: voldoet_eigenaareis
+            type: boolean
+            source:
+              output: voldoet_eigenaareis
+          - name: voldoet_koopsomeis
+            type: boolean
+            source:
+              output: voldoet_koopsomeis
+        output:
+          - name: heeft_recht_op_eigenwoningbijdrage
+            type: boolean
+            description: >-
+              Eigenaar-bewoner voldoet aan de voorwaarden van de wet en heeft
+              recht op een eigenwoningbijdrage (artikel 6 lid 1)
+        actions:
+          - output: heeft_recht_op_eigenwoningbijdrage
+            value:
+              operation: AND
+              conditions:
+                - $voldoet_bewoningseis
+                - $voldoet_vermogenseis
+                - $voldoet_leeftijdseis
+                - $voldoet_eigenaareis
+                - $voldoet_koopsomeis
   - number: '7'
     text: |-
       1 Behoudens in gevallen als bedoeld in [artikel 13][ref1] wordt een eigenwoningbijdrage slechts toegekend
@@ -287,6 +334,64 @@ articles:
         artikel: '13'
         hoofdstuk: '2'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum als bedoeld in artikel 1
+          - name: huishouden_ingeschreven_op_adres_woning
+            type: boolean
+            required: true
+            description: >-
+              Alle leden van het huishouden zijn ingeschreven in de BRP op het
+              adres van de woning op de peildatum (artikel 7, eerste lid)
+          - name: eigenaar_bewoont_woning
+            type: boolean
+            required: true
+            description: >-
+              Eigenaar-bewoner woont op de peildatum in de woning waarvoor de
+              bijdrage is aangevraagd (artikel 7, derde lid)
+          - name: niet_inschrijving_niet_toerekenbaar
+            type: boolean
+            required: true
+            description: >-
+              Eventuele niet-inschrijving in BRP kan niet aan de betrokkene
+              worden toegerekend (artikel 7, tweede lid); geef false als de
+              uitzondering niet van toepassing is
+          - name: artikel_13_van_toepassing
+            type: boolean
+            required: true
+            description: >-
+              Uitzondering van artikel 13 is van toepassing (bewoning/inschrijving
+              uitgesteld door geldige reden); geef false als de uitzondering niet
+              van toepassing is
+        output:
+          - name: voldoet_bewoningseis
+            type: boolean
+            description: >-
+              Voldaan aan de bewoning- en inschrijvingseis van artikel 7;
+              of artikel 13 maakt artikel 7 niet van toepassing
+        actions:
+          - output: inschrijvingseis_voldaan
+            value:
+              operation: OR
+              conditions:
+                - $huishouden_ingeschreven_op_adres_woning
+                - $niet_inschrijving_niet_toerekenbaar
+          - output: bewoning_en_inschrijving_voldaan
+            value:
+              operation: AND
+              conditions:
+                - $inschrijvingseis_voldaan
+                - $eigenaar_bewoont_woning
+          - output: voldoet_bewoningseis
+            value:
+              operation: OR
+              conditions:
+                - $artikel_13_van_toepassing
+                - $bewoning_en_inschrijving_voldaan
   - number: '9'
     text: |-
       Een eigenwoningbijdrage wordt niet toegekend als het toetsvermogen voor een eenpersoonshuishouden
@@ -302,6 +407,55 @@ articles:
       - id: ref1
         bwb_id: BWBR0011353
         artikel: 9.4a
+    machine_readable:
+      execution:
+        parameters:
+          - name: toetsvermogen
+            type: number
+            required: true
+            description: >-
+              Toetsvermogen zoals bedoeld in artikel 4, eerste lid (in eurocent)
+          - name: is_eenpersoonshuishouden
+            type: boolean
+            required: true
+            description: >-
+              Is het huishouden een eenpersoonshuishouden of
+              eenpersoonsouderenhuishouden (artikel 2, derde lid, sub a of c)?
+              Anders: tweepersoonshuishouden of tweepersoonsouderenhuishouden.
+          - name: drempelbedrag_eenpersoon
+            type: number
+            required: true
+            description: >-
+              Drempelbedrag voor eenpersoons(ouderen)huishouden (artikel 9.4a,
+              eerste lid, sub a, Wet inkomstenbelasting 2001, in eurocent)
+          - name: drempelbedrag_tweepersoon
+            type: number
+            required: true
+            description: >-
+              Drempelbedrag voor tweepersoons(ouderen)huishouden (artikel 9.4a,
+              eerste lid, sub a, Wet inkomstenbelasting 2001, in eurocent)
+        output:
+          - name: voldoet_vermogenseis
+            type: boolean
+            description: >-
+              Toetsvermogen is niet hoger dan het toepasselijke drempelbedrag
+              (artikel 9)
+        actions:
+          - output: toepasselijk_drempelbedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_eenpersoonshuishouden
+                    value: true
+                  then: $drempelbedrag_eenpersoon
+              default: $drempelbedrag_tweepersoon
+          - output: voldoet_vermogenseis
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $toetsvermogen
+              value: $toepasselijk_drempelbedrag
   - number: '10'
     text: |-
       1 Een eigenwoningbijdrage wordt slechts toegekend als, tot zekerheid van de nakoming door de eigenaar-bewoner van
@@ -324,11 +478,73 @@ articles:
   - number: '11'
     text: Voor een primaire toekenning is vereist dat de eigenaar-bewoner op de peildatum 18 jaar of ouder is.
     url: https://wetten.overheid.nl/BWBR0011919/2026-06-04#Artikel11
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de eigenaar-bewoner
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum (eerste dag van het bijdragejaar)
+        output:
+          - name: voldoet_leeftijdseis
+            type: boolean
+            description: >-
+              Eigenaar-bewoner is op de peildatum 18 jaar of ouder (artikel 11)
+        actions:
+          - output: leeftijd_op_peildatum
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_leeftijdseis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_op_peildatum
+              value: 18
   - number: '12'
     text: |-
       Voor een primaire toekenning is vereist dat de eigenaar-bewoner gedurende een tijdvak van ten minste drie jaar tot
       de datum van eigendomsoverdracht geen eigenaar is geweest van een woning waar hij zijn hoofdverblijf had.
     url: https://wetten.overheid.nl/BWBR0011919/2026-06-04#Artikel12
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            gedurende een tijdvak van ten minste drie jaar tot de datum van
+            eigendomsoverdracht geen eigenaar is geweest
+          reason: >-
+            Date difference calculation (period of at least 3 years before
+            eigendomsoverdracht) is not expressible with available engine
+            operations; requires DATE_DIFF or equivalent
+          suggestion: >-
+            Add DATE_DIFF operation to the engine, or resolve this via an
+            external data source (kadaster history) providing a boolean
+          legal_text_excerpt: >-
+            gedurende een tijdvak van ten minste drie jaar tot de datum van
+            eigendomsoverdracht geen eigenaar is geweest van een woning waar hij
+            zijn hoofdverblijf had
+          accepted: false
+      execution:
+        parameters:
+          - name: heeft_geen_eigendom_drie_jaar
+            type: boolean
+            required: true
+            description: >-
+              Eigenaar-bewoner is gedurende ten minste drie jaar vóór de datum
+              van eigendomsoverdracht geen eigenaar geweest van een woning met
+              hoofdverblijf (te verifiëren via kadasterhistorie)
+        output:
+          - name: voldoet_eigenaareis
+            type: boolean
+            description: >-
+              Voldaan aan de eigenaar-eis van artikel 12 (geen eigendom 3 jaar
+              voor eigendomsoverdracht)
+        actions:
+          - output: voldoet_eigenaareis
+            value: $heeft_geen_eigendom_drie_jaar
   - number: '13'
     text: |-
       1 Op een primaire toekenning is [artikel 7][ref1] niet van toepassing, voorzover de bewoning of de inschrijving in
@@ -374,6 +590,57 @@ articles:
         bwb_id: BWBR0011919
         artikel: '41'
         hoofdstuk: '6'
+    machine_readable:
+      open_terms:
+        - id: maximale_koopsom
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: >-
+            artikel 15, tweede lid juncto artikel 41 Wet bevordering
+            eigenwoningbezit (geïndexeerde maximale koopsom; basis €235.525)
+      execution:
+        parameters:
+          - name: koopsom
+            type: number
+            required: true
+            description: Koopsom van de woning in eurocent (artikel 15 lid 1 sub a)
+          - name: hypothecaire_lening
+            type: number
+            required: true
+            description: >-
+              Bedrag van de hypothecaire lening in eurocent
+              (artikel 15 lid 1 sub b)
+        output:
+          - name: voldoet_koopsomeis
+            type: boolean
+            description: >-
+              Koopsom en hypothecaire lening voldoen aan de grenzen van artikel
+              15 (koopsom ≤ maximum, lening ≤ maximum + 8%)
+        actions:
+          - output: koopsom_onder_maximum
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $koopsom
+              value: $maximale_koopsom
+          - output: maximale_lening
+            value:
+              operation: MULTIPLY
+              values:
+                - $maximale_koopsom
+                - 1.08
+          - output: lening_onder_maximum
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $hypothecaire_lening
+              value: $maximale_lening
+          - output: voldoet_koopsomeis
+            value:
+              operation: AND
+              conditions:
+                - $koopsom_onder_maximum
+                - $lening_onder_maximum
   - number: '23'
     text: |-
       Voor een primaire toekenning is vereist dat de hypothecaire lening wordt afgesloten voor een bij ministeriële
@@ -469,6 +736,25 @@ articles:
       2 Het percentage, bedoeld in het eerste lid, kan bij ministeriële regeling worden gewijzigd als daartoe aanleiding
       bestaat als gevolg van de ontwikkeling van het rentetarief, bedoeld in het eerste lid.
     url: https://wetten.overheid.nl/BWBR0011919/2026-06-04#Artikel26
+    machine_readable:
+      open_terms:
+        - id: toetsrente
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 26, eerste lid Wet bevordering eigenwoningbezit
+      execution:
+        output:
+          - name: toetsrente
+            type: number
+            description: >-
+              Rentetarief waartegen een hypothecaire lening (annuïteitenhypotheek)
+              kan worden afgesloten, vastgesteld bij ministeriële regeling
+              (percentage)
+        actions:
+          - output: toetsrente
+            value: $toetsrente
   - number: '27'
     text: |-
       1 Het fiscaal effect wordt verkregen door de tot een bedrag herleide financieringslastnorm te vermenigvuldigen met:
@@ -515,6 +801,89 @@ articles:
         bwb_id: BWBR0011919
         artikel: '41'
         hoofdstuk: '6'
+    machine_readable:
+      definitions:
+        FACTOR_NIET_OUDER_LAAG:
+          value: 0.29
+          description: >-
+            Factor fiscaal effect voor eenpersoons- en tweepersoonshuishouden
+            bij toetsinkomen ≤ laagste bedrag tabel II artikel 2.10 WIB
+            (artikel 27 lid 1 sub a)
+        FACTOR_NIET_OUDER_HOOG:
+          value: 0.33
+          description: >-
+            Factor fiscaal effect voor eenpersoons- en tweepersoonshuishouden
+            bij toetsinkomen > laagste bedrag tabel II artikel 2.10 WIB
+            (artikel 27 lid 1 sub b)
+        FACTOR_OUDER_LAAG:
+          value: 0.13
+          description: >-
+            Factor fiscaal effect voor eenpersoons- en tweepersoonsouderenhuishouden
+            bij toetsinkomen ≤ laagste bedrag tabel II artikel 2.10 WIB
+            (artikel 27 lid 1 sub c)
+        FACTOR_OUDER_HOOG:
+          value: 0.16
+          description: >-
+            Factor fiscaal effect voor eenpersoons- en tweepersoonsouderenhuishouden
+            bij toetsinkomen > laagste bedrag tabel II artikel 2.10 WIB
+            (artikel 27 lid 1 sub d)
+      execution:
+        parameters:
+          - name: toetsinkomen
+            type: number
+            required: true
+            description: Toetsinkomen van het huishouden in eurocent (artikel 3)
+          - name: is_ouderenhuishouden
+            type: boolean
+            required: true
+            description: >-
+              Is het een eenpersoonsouderenhuishouden of
+              tweepersoonsouderenhuishouden (artikel 2, derde lid, sub c of d)?
+          - name: laagste_bedrag_tabel_ib
+            type: number
+            required: true
+            description: >-
+              Laagste bedrag uit de tabel onder II bij artikel 2.10, eerste lid,
+              van de Wet inkomstenbelasting 2001 in het bijdragejaar (eurocent)
+        output:
+          - name: fiscaal_effect_factor
+            type: number
+            description: >-
+              Van toepassing zijnde factor voor berekening fiscaal effect
+              conform artikel 27, eerste lid
+        actions:
+          - output: inkomen_boven_drempel
+            value:
+              operation: GREATER_THAN
+              subject: $toetsinkomen
+              value: $laagste_bedrag_tabel_ib
+          - output: fiscaal_effect_factor
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: NOT
+                        value: $is_ouderenhuishouden
+                      - operation: NOT
+                        value: $inkomen_boven_drempel
+                  then: $FACTOR_NIET_OUDER_LAAG
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: NOT
+                        value: $is_ouderenhuishouden
+                      - $inkomen_boven_drempel
+                  then: $FACTOR_NIET_OUDER_HOOG
+                - when:
+                    operation: AND
+                    conditions:
+                      - $is_ouderenhuishouden
+                      - operation: NOT
+                        value: $inkomen_boven_drempel
+                  then: $FACTOR_OUDER_LAAG
+              default: $FACTOR_OUDER_HOOG
   - number: '29'
     text: |-
       1 De financieringslastnorm wordt bij ministeriële regeling vastgesteld.
@@ -561,6 +930,38 @@ articles:
         bwb_id: BWBR0011919
         artikel: '41'
         hoofdstuk: '6'
+    machine_readable:
+      open_terms:
+        - id: financieringslastnorm
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 29, eerste lid Wet bevordering eigenwoningbezit
+        - id: opslagpercentage
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 29, tweede lid Wet bevordering eigenwoningbezit
+      execution:
+        output:
+          - name: financieringslastnorm
+            type: number
+            description: >-
+              Percentage van de financieringslast dat per maand ten minste voor
+              rekening van de eigenaar-bewoner blijft (bij ministeriële regeling
+              vastgesteld)
+          - name: opslagpercentage
+            type: number
+            description: >-
+              Opslagpercentage als bedoeld in artikel 29, tweede lid (bij
+              ministeriële regeling vastgesteld)
+        actions:
+          - output: financieringslastnorm
+            value: $financieringslastnorm
+          - output: opslagpercentage
+            value: $opslagpercentage
   - number: '30'
     text: |-
       1 De eigenwoningbijdrage, bedoeld in [artikel 6, eerste lid, onder a][ref1], bestaat uit een maandelijkse
@@ -616,6 +1017,79 @@ articles:
         artikel: '6'
         hoofdstuk: '2'
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "uitkomst van de formule (H, R, R, f) — eigenwoningbijdrage berekening"
+          reason: >-
+            De eigenlijke formule is niet als tekst opgenomen in de wettekst
+            (stond als grafisch blok in het originele document). De variabelen
+            zijn bekend (H=toetsinkomen, R=werkelijke financieringslast%,
+            R=financieringslastnorm%, f=fiscaal_effect_factor) maar de precieze
+            rekenregel kan niet worden herleid uit de beschikbare YAML-tekst.
+          suggestion: >-
+            Voeg de expliciete formule toe aan de wettekst:
+            eigenwoningbijdrage = ((R_werkelijk - R_norm) / 100 * H / 12);
+            of implementeer via MvT-rekenvoorbeeld
+          legal_text_excerpt: >-
+            De tegemoetkoming, bedoeld in het eerste lid, bedraagt de uitkomst
+            van de formule
+          accepted: false
+        - construct: "naar boven afgerond op hele eurocenten (lid 4)"
+          reason: Rounding (CEIL) is not available as an engine operation
+          suggestion: Add ROUND/CEIL/FLOOR operation to engine
+          legal_text_excerpt: >-
+            De overeenkomstig het tweede lid berekende tegemoetkoming wordt naar
+            boven afgerond op hele eurocenten
+          accepted: false
+      execution:
+        parameters:
+          - name: r_werkelijk
+            type: number
+            required: true
+            description: >-
+              Uitkomst van de berekening van de financieringslast die uit de
+              hypothecaire lening volgt bij toepassing van de NHG-normen,
+              uitgedrukt in een percentage (R, artikel 30 lid 2 eerste R)
+          - name: r_norm
+            type: number
+            required: true
+            description: >-
+              Financieringslastnorm-percentage conform artikel 29, eerste lid
+              (R, artikel 30 lid 2 tweede R)
+        input:
+          - name: opslagpercentage
+            type: number
+            source:
+              output: opslagpercentage
+        output:
+          - name: toekenning_mogelijk
+            type: boolean
+            description: >-
+              De formule-uitkomst is positief én het verschil R-R overschrijdt
+              het opslagpercentage niet (artikel 30, derde lid)
+        actions:
+          - output: verschil_r
+            value:
+              operation: SUBTRACT
+              values:
+                - $r_werkelijk
+                - $r_norm
+          - output: formule_positief
+            value:
+              operation: GREATER_THAN
+              subject: $verschil_r
+              value: 0
+          - output: opslagpercentage_niet_overschreden
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $verschil_r
+              value: $opslagpercentage
+          - output: toekenning_mogelijk
+            value:
+              operation: AND
+              conditions:
+                - $formule_positief
+                - $opslagpercentage_niet_overschreden
   - number: '39'
     text: |-
       1 Bij ministeriële regeling kan een rentevaste periode worden bepaald, waarvoor de lening of het krediet in
@@ -1108,6 +1582,65 @@ articles:
         bwb_id: BWBR0011919
         artikel: '46'
         hoofdstuk: '8'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: niet_meer_voldaan_aan_primaire_eis
+            type: boolean
+            required: true
+            description: >-
+              Niet langer wordt voldaan aan een eis voor de primaire toekenning
+              (artikel 50 lid 1 sub a)
+          - name: toekenning_in_afwijking_van_wet
+            type: boolean
+            required: true
+            description: >-
+              Toekenning heeft plaatsgevonden in afwijking van de wet of de
+              daarop berustende bepalingen (artikel 50 lid 1 sub b)
+          - name: inlichtingenplicht_niet_nageleefd
+            type: boolean
+            required: true
+            description: >-
+              Artikel 43, derde lid, of artikel 46, tweede lid, is niet nageleefd
+              (artikel 50 lid 1 sub c)
+          - name: verhoging_van_toepassing
+            type: boolean
+            required: true
+            description: >-
+              Is de grond voor herziening het niet naar waarheid invullen van het
+              aanvraagformulier dan wel het niet naleven van artikel 46?
+              (artikel 50 lid 4 — verhoogd terugvorderingsbedrag); geef false
+              als de verhoging niet van toepassing is
+        output:
+          - name: herziening_mogelijk
+            type: boolean
+            description: >-
+              Minister kan de toekenning herzien (artikel 50 lid 1; minimaal één
+              van de herzieningsgronden is aanwezig)
+          - name: verhoging_terugvordering
+            type: boolean
+            description: >-
+              Terugvorderingsbedrag kan worden verhoogd met 25% (artikel 50 lid
+              4); alleen van toepassing als herziening_mogelijk en
+              verhoging_van_toepassing
+        actions:
+          - output: herzieningsgrond_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - $niet_meer_voldaan_aan_primaire_eis
+                - $toekenning_in_afwijking_van_wet
+                - $inlichtingenplicht_niet_nageleefd
+          - output: herziening_mogelijk
+            value: $herzieningsgrond_aanwezig
+          - output: verhoging_terugvordering
+            value:
+              operation: AND
+              conditions:
+                - $herzieningsgrond_aanwezig
+                - $verhoging_van_toepassing
   - number: '51'
     text: |-
       1 Een bedrag als bedoeld in [artikel 50, derde en vierde lid][ref1], wordt ingevorderd door Onze Minister.
