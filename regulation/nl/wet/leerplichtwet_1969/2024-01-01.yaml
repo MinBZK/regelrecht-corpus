@@ -295,6 +295,52 @@ articles:
         bwb_id: BWBR0002628
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jongere
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de berekening
+          - name: is_leerplichtig_of_kwalificatieplichtig
+            type: boolean
+            required: true
+            description: "De jongere is leerplichtig of kwalificatieplichtig als bedoeld in deze wet"
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de jongere in hele jaren op de peildatum
+          - name: jongere_is_meerderjarig
+            type: boolean
+            description: De jongere is meerderjarig (18 jaar of ouder)
+          - name: verplichtingen_rusten_op_jongere_zelf
+            type: boolean
+            description: "De verplichtingen en bevoegdheden rusten op de jongere zelf in plaats van op de in artikel 2, eerste lid, bedoelde personen"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: jongere_is_meerderjarig
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
+          - output: verplichtingen_rusten_op_jongere_zelf
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_leerplichtig_of_kwalificatieplichtig
+                  value: true
+                - operation: EQUALS
+                  subject: $jongere_is_meerderjarig
+                  value: true
   - number: 1d
     text: |-
       1 Indien de kwaliteit van het niet uit 's Rijks kas bekostigde onderwijs ernstig of langdurig tekortschiet, kan
@@ -337,6 +383,56 @@ articles:
       2 Een jongere die een basisschool in minder dan acht schooljaren heeft doorlopen, wordt voor de toepassing van het
       eerste lid onder a geacht reeds acht schooljaren een school te hebben bezocht.
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel3
+    machine_readable:
+      untranslatables:
+        - construct: "eerste schooldag van de maand volgende op die waarin de jongere de leeftijd van vijf jaar bereikt"
+          reason: "Month/year extraction from a computed date is not available; 'eerste schooldag' requires school calendar data not in the engine"
+          suggestion: "Add DATE_COMPONENT operation and school_calendar external data source"
+          legal_text_excerpt: "begint op de eerste schooldag van de maand volgende op die waarin de jongere de leeftijd van vijf jaar bereikt"
+        - construct: "einde van het schooljaar"
+          reason: "School year end date requires school calendar data not available as an engine operation"
+          suggestion: "Add school_calendar external data source"
+          legal_text_excerpt: "eindigt aan het einde van het schooljaar na afloop waarvan..."
+        - construct: "ten minste twaalf volledige schooljaren een of meer scholen heeft bezocht"
+          reason: "Counting and aggregating school years visited requires educational history data not available in the engine"
+          suggestion: "Add education_history external data source"
+          legal_text_excerpt: "aan het einde van het schooljaar na afloop waarvan de jongere ten minste twaalf volledige schooljaren een of meer scholen heeft bezocht"
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jongere
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de berekening
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de jongere in hele jaren op de peildatum
+          - name: leeftijd_bereikt_5_jaar
+            type: boolean
+            description: Heeft de jongere de leeftijd van 5 jaar bereikt (aanvang leerplicht)
+          - name: leeftijd_bereikt_16_jaar
+            type: boolean
+            description: Heeft de jongere de leeftijd van 16 jaar bereikt (einde leerplicht op grond van leeftijd)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: leeftijd_bereikt_5_jaar
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 5
+          - output: leeftijd_bereikt_16_jaar
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 16
   - number: 3a
     text: |-
       1 Indien het betreft een jongere die tenminste de leeftijd van 14 jaar heeft bereikt en waarvan naar het
@@ -616,6 +712,58 @@ articles:
       - id: ref14
         bwb_id: BWBR0013105
         artikel: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: leerplicht_geëindigd
+            type: boolean
+            required: true
+            description: "De leerplicht als bedoeld in paragraaf 2 is geëindigd"
+          - name: heeft_startkwalificatie
+            type: boolean
+            required: true
+            description: "De jongere heeft een startkwalificatie behaald als bedoeld in artikel 1 onder f"
+          - name: heeft_praktijkonderwijs_diploma
+            type: boolean
+            required: true
+            description: "De jongere heeft een schooldiploma praktijkonderwijs als bedoeld in artikel 2.58, derde lid, van de Wet voortgezet onderwijs 2020"
+          - name: heeft_vso_verklaring_2_59
+            type: boolean
+            required: true
+            description: "De jongere heeft een verklaring als bedoeld in artikel 2.59, tweede lid, van de Wet voortgezet onderwijs 2020"
+          - name: heeft_vso_uitstroomprofiel_b_of_c
+            type: boolean
+            required: true
+            description: "De jongere heeft voortgezet speciaal onderwijs gevolgd in uitstroomprofiel b of c als bedoeld in artikel 14, eerste lid, onderdeel b of c, Wet op de expertisecentra"
+        output:
+          - name: is_kwalificatieplichtig
+            type: boolean
+            description: "De jongere is kwalificatieplichtig als bedoeld in artikel 4a"
+        actions:
+          - output: is_vrijgesteld_van_kwalificatieplicht_lid2
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_praktijkonderwijs_diploma
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_vso_verklaring_2_59
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_vso_uitstroomprofiel_b_of_c
+                  value: true
+          - output: is_kwalificatieplichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $leerplicht_geëindigd
+                  value: true
+                - operation: NOT
+                  value: $heeft_startkwalificatie
+                - operation: NOT
+                  value: $is_vrijgesteld_van_kwalificatieplicht_lid2
   - number: 4b
     text: |-
       De verplichting, bedoeld in [artikel 4a, eerste lid][ref1], vangt aan direct na het einde van de leerplicht,
@@ -634,6 +782,52 @@ articles:
       - id: ref2
         bwb_id: BWBR0002628
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jongere
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de berekening
+          - name: heeft_startkwalificatie
+            type: boolean
+            required: true
+            description: "De jongere heeft een startkwalificatie behaald als bedoeld in artikel 1 onder f"
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de jongere in hele jaren op de peildatum
+          - name: leeftijd_18_bereikt
+            type: boolean
+            description: Heeft de jongere de leeftijd van 18 jaar bereikt
+          - name: kwalificatieplicht_geëindigd
+            type: boolean
+            description: "De kwalificatieplicht is geëindigd: de jongere heeft de leeftijd van 18 jaar bereikt of een startkwalificatie behaald"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: leeftijd_18_bereikt
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 18
+          - output: kwalificatieplicht_geëindigd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $leeftijd_18_bereikt
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_startkwalificatie
+                  value: true
   - number: 4c
     text: |-
       1 De jongere die als leerling, vavo-student of mbo-student van een school of instelling staat ingeschreven op
@@ -705,6 +899,39 @@ articles:
         bwb_id: BWBR0002628
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jongere_niet_geschikt_wegens_gezondheid
+            type: boolean
+            required: true
+            description: "De jongere is op lichamelijke of psychische gronden niet geschikt om tot een school te worden toegelaten (artikel 5 onder a)"
+          - name: overwegende_bedenkingen_richting_onderwijs
+            type: boolean
+            required: true
+            description: "Er bestaan overwegende bedenkingen tegen de richting van het onderwijs op alle binnen redelijke afstand gelegen scholen (artikel 5 onder b)"
+          - name: ingeschreven_buitenlands_onderwijs
+            type: boolean
+            required: true
+            description: "De jongere staat ingeschreven bij een buitenlandse onderwijsinstelling en bezoekt deze geregeld (artikel 5 onder c)"
+        output:
+          - name: heeft_vrijstelling_inschrijving
+            type: boolean
+            description: "De in artikel 2 bedoelde personen zijn vrijgesteld van de verplichting de jongere in te schrijven op een school"
+        actions:
+          - output: heeft_vrijstelling_inschrijving
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $jongere_niet_geschikt_wegens_gezondheid
+                  value: true
+                - operation: EQUALS
+                  subject: $overwegende_bedenkingen_richting_onderwijs
+                  value: true
+                - operation: EQUALS
+                  subject: $ingeschreven_buitenlands_onderwijs
+                  value: true
   - number: 5a
     text: |-
       De in [artikel 2, eerste lid][ref1], bedoelde personen zijn vrijgesteld van de verplichting om te zorgen, dat
@@ -802,6 +1029,22 @@ articles:
         bwb_id: BWBR0002628
         artikel: '5'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jongere_geplaatst_bij_betreffende_richting_afgelopen_jaar
+            type: boolean
+            required: true
+            description: "De jongere is in het jaar voorafgaande aan de dagtekening van de kennisgeving geplaatst geweest op een school van de richting waartegen bedenkingen worden geuit (artikel 8, tweede lid)"
+        output:
+          - name: verklaring_richting_geldig
+            type: boolean
+            description: "De verklaring van overwegende bedenkingen tegen de richting van het onderwijs is geldig voor het beroep op vrijstelling"
+        actions:
+          - output: verklaring_richting_geldig
+            value:
+              operation: NOT
+              value: $jongere_geplaatst_bij_betreffende_richting_afgelopen_jaar
   - number: '9'
     text: |-
       Een beroep op vrijstelling op grond van [artikel 5 onder c][ref1] kan slechts worden gedaan, indien bij de
@@ -906,6 +1149,60 @@ articles:
         bwb_id: BWBR0002628
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: school_gesloten_of_onderwijs_geschorst
+            type: boolean
+            description: "De school is gesloten of het onderwijs is geschorst (artikel 11 onder a)"
+          - name: bezoek_verboden_bij_voorschrift
+            type: boolean
+            description: "Bij of op grond van algemeen verbindende voorschriften is bezoeken van de school verboden (artikel 11 onder b)"
+          - name: tijdelijk_toegang_ontzegd
+            type: boolean
+            description: "De jongere is bij wijze van tuchtmaatregel tijdelijk de toegang tot de school ontzegd (artikel 11 onder c)"
+          - name: verhinderd_wegens_ziekte
+            type: boolean
+            description: "De jongere is wegens ziekte verhinderd de school te bezoeken (artikel 11 onder d)"
+          - name: verhinderd_wegens_godsdienst_of_levensovertuiging
+            type: boolean
+            description: "De jongere is wegens plichten uit godsdienst of levensovertuiging verhinderd (artikel 11 onder e)"
+          - name: vakantie_wegens_specifiek_beroep_ouder
+            type: boolean
+            description: "De jongere kan vanwege het specifieke beroep van een ouder slechts buiten schoolvakanties op vakantie (artikel 11 onder f)"
+          - name: andere_gewichtige_omstandigheden
+            type: boolean
+            description: "Andere gewichtige omstandigheden als bedoeld in artikel 11 onder g; vergt discretionair oordeel van het hoofd of de ambtenaar"
+        output:
+          - name: heeft_vrijstelling_schoolbezoek
+            type: boolean
+            description: "De jongere is vrijgesteld van de verplichting de school geregeld te bezoeken"
+        actions:
+          - output: heeft_vrijstelling_schoolbezoek
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $school_gesloten_of_onderwijs_geschorst
+                  value: true
+                - operation: EQUALS
+                  subject: $bezoek_verboden_bij_voorschrift
+                  value: true
+                - operation: EQUALS
+                  subject: $tijdelijk_toegang_ontzegd
+                  value: true
+                - operation: EQUALS
+                  subject: $verhinderd_wegens_ziekte
+                  value: true
+                - operation: EQUALS
+                  subject: $verhinderd_wegens_godsdienst_of_levensovertuiging
+                  value: true
+                - operation: EQUALS
+                  subject: $vakantie_wegens_specifiek_beroep_ouder
+                  value: true
+                - operation: EQUALS
+                  subject: $andere_gewichtige_omstandigheden
+                  value: true
   - number: 11a
     text: |-
       1 De in [artikel 2, eerste lid][ref1], bedoelde personen zijn met betrekking tot de jongere die nog niet de
@@ -931,6 +1228,66 @@ articles:
         bwb_id: BWBR0002628
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de jongere
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de berekening
+          - name: hoofd_heeft_extra_vrijstelling_verleend
+            type: boolean
+            description: "Het hoofd heeft op aanvraag extra vrijstelling verleend als bedoeld in het tweede lid"
+        output:
+          - name: jongere_onder_zes_jaar
+            type: boolean
+            description: "De jongere heeft nog niet de leeftijd van zes jaar bereikt"
+          - name: maximale_vrijgestelde_uren_per_week_ouder
+            type: number
+            description: "Maximum uren per week waarvan de ouder vrijstelling kan claimen op grond van lid 1 (ten hoogste 5 uren)"
+          - name: maximale_vrijgestelde_uren_per_week_hoofd
+            type: number
+            description: "Maximum uren per week dat het hoofd op aanvraag aanvullend vrijstelling kan verlenen op grond van lid 2 (ten hoogste 5 uren)"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: jongere_onder_zes_jaar
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd
+              value: 6
+          - output: maximale_vrijgestelde_uren_per_week_ouder
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $jongere_onder_zes_jaar
+                    value: true
+                  then: 5
+              default: 0
+          - output: maximale_vrijgestelde_uren_per_week_hoofd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $jongere_onder_zes_jaar
+                        value: true
+                      - operation: EQUALS
+                        subject: $hoofd_heeft_extra_vrijstelling_verleend
+                        value: true
+                  then: 5
+              default: 0
   - number: '12'
     text: |-
       Een beroep op vrijstelling wegens ziekte van de jongere kan slechts worden gedaan, indien daarvan binnen twee
@@ -971,6 +1328,20 @@ articles:
         bwb_id: BWBR0002628
         artikel: 4c
         paragraaf: 2a
+    machine_readable:
+      untranslatables:
+        - construct: "kan geen betrekking hebben op de eerste twee lesweken van het schooljaar"
+          reason: "Determining which calendar days fall in the first two school weeks requires school calendar data not available in the engine"
+          suggestion: "Add school_calendar external data source"
+          legal_text_excerpt: "kan door het hoofd slechts eenmaal voor ten hoogste tien dagen per schooljaar worden verleend en kan geen betrekking hebben op de eerste twee lesweken van het schooljaar"
+      execution:
+        output:
+          - name: maximale_vakantieverlof_dagen_per_schooljaar
+            type: number
+            description: "Maximum aantal dagen vakantieverlof per schooljaar dat het hoofd kan verlenen op grond van artikel 13a, tweede lid, eerste volzin"
+        actions:
+          - output: maximale_vakantieverlof_dagen_per_schooljaar
+            value: 10
   - number: 13b
     text: |-
       Een beroep op vrijstelling wegens ziekte van de jongere, wegens vervulling van plichten voortvloeiend
@@ -1021,6 +1392,28 @@ articles:
         bwb_id: BWBR0002628
         artikel: 4c
         paragraaf: 2a
+    machine_readable:
+      execution:
+        parameters:
+          - name: gevraagde_verlof_dagen
+            type: number
+            required: true
+            description: "Aantal gevraagde verlof dagen wegens gewichtige omstandigheden in het lopende schooljaar"
+        output:
+          - name: maximale_verlof_door_hoofd_per_schooljaar
+            type: number
+            description: "Maximum aantal dagen verlof dat het hoofd per schooljaar kan verlenen op grond van artikel 14, derde lid, eerste volzin"
+          - name: beslissing_door_ambtenaar_vereist
+            type: boolean
+            description: "Het gevraagde verlof overschrijdt tien dagen per schooljaar, zodat de ambtenaar van de woongemeente beslist (artikel 14, derde lid, tweede volzin)"
+        actions:
+          - output: maximale_verlof_door_hoofd_per_schooljaar
+            value: 10
+          - output: beslissing_door_ambtenaar_vereist
+            value:
+              operation: GREATER_THAN
+              subject: $gevraagde_verlof_dagen
+              value: 10
   - number: '15'
     text: |-
       1 In andere gevallen dan genoemd in [artikel 5][ref1] kan het college van burgemeester en wethouders op grond van
@@ -1257,6 +1650,23 @@ articles:
       - id: ref3
         bwb_id: BWBR0042012
         artikel: '12'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzuimde_uren_zonder_geldige_reden
+            type: number
+            required: true
+            description: "Totaal aantal uren les- of praktijktijd verzuimd zonder geldige reden gedurende een periode van vier opeenvolgende lesweken"
+        output:
+          - name: leveringsverplichting_ontstaan
+            type: boolean
+            description: "De leveringsverplichting als bedoeld in artikel 12, derde lid, van de Wet register onderwijsdeelnemers is ontstaan"
+        actions:
+          - output: leveringsverplichting_ontstaan
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verzuimde_uren_zonder_geldige_reden
+              value: 16
   - number: '22'
     text: |-
       1 Indien blijkt, dat een leerplichtige of kwalificatieplichtige jongere niet als leerling, vavo-student of mbo-
@@ -1493,6 +1903,31 @@ articles:
       - id: ref4
         bwb_id: BWBR0042012
         artikel: '12'
+    machine_readable:
+      definitions:
+        BOETE_MAXIMUM_PER_OVERTREDING:
+          value: 100000
+          description: "Maximum bestuurlijke boete per overtreding: €1.000 in eurocent"
+        BOETE_MAXIMUM_PER_SCHOOLJAAR:
+          value: 10000000
+          description: "Maximum bestuurlijke boete per schooljaar: €100.000 in eurocent"
+      execution:
+        output:
+          - name: boete_maximum_per_overtreding
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Maximum bestuurlijke boete per overtreding (artikel 27)"
+          - name: boete_maximum_per_schooljaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Maximum bestuurlijke boete per schooljaar (artikel 27)"
+        actions:
+          - output: boete_maximum_per_overtreding
+            value: $BOETE_MAXIMUM_PER_OVERTREDING
+          - output: boete_maximum_per_schooljaar
+            value: $BOETE_MAXIMUM_PER_SCHOOLJAAR
   - number: '28'
     text: De bij deze wet strafbaar gestelde feiten worden beschouwd als overtredingen.
     url: https://wetten.overheid.nl/BWBR0002628/2024-01-01#Artikel28
