@@ -313,6 +313,28 @@ articles:
       - id: ref4
         bwb_id: BWBR0001840
         artikel: '65'
+    machine_readable:
+      untranslatables:
+        - construct: "categoriale uitzonderingen op de openbaarmakingstermijn (lid 5)"
+          reason: "Lid 5 bevat categoriale uitzonderingen (adviesaanvragen, onderzoeken, beschikkingen, vergaderstukken) afhankelijk van documentsoort; dit vereist multi-dimensionale tabellogica die het engine niet ondersteunt"
+          legal_text_excerpt: "In afwijking van het vierde lid worden/geschiedt de openbaarmaking van..."
+          accepted: false
+      execution:
+        parameters:
+          - name: vaststelling_of_ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop de informatie is vastgesteld of ontvangen (lid 4)
+        output:
+          - name: uiterste_openbaarmakingsdatum
+            type: date
+            description: Uiterste datum voor actieve openbaarmaking op grond van lid 4 (twee weken na vaststelling of ontvangst)
+        actions:
+          - output: uiterste_openbaarmakingsdatum
+            value:
+              operation: DATE_ADD
+              date: $vaststelling_of_ontvangst_datum
+              weeks: 2
   - number: 3.3a
     text: |-
       1 Een bestuursorgaan kan in plaats van door openbaarmaking overeenkomstig
@@ -511,6 +533,35 @@ articles:
       - id: ref2
         bwb_id: BWBR0045754
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek om informatie is ontvangen
+          - name: precisering_of_termijn_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek is gepreciseerd of de termijn voor precisering ongebruikt is verstreken (lid 6)
+        output:
+          - name: uiterste_datum_precisering_verzoek
+            type: date
+            description: Uiterste datum waarop het bestuursorgaan om precisering kan vragen (lid 5 — twee weken na ontvangst)
+          - name: uiterste_datum_besluit_niet_behandelen
+            type: date
+            description: Uiterste datum voor bekendmaking besluit niet-behandelen (lid 6 — twee weken na precisering of termijnverloop)
+        actions:
+          - output: uiterste_datum_precisering_verzoek
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum
+              weeks: 2
+          - output: uiterste_datum_besluit_niet_behandelen
+            value:
+              operation: DATE_ADD
+              date: $precisering_of_termijn_datum
+              weeks: 2
   - number: 4.1a
     text: Het bestuursorgaan waarborgt het behoud van de documenten waarop een door hem ontvangen verzoek betrekking heeft.
     url: https://wetten.overheid.nl/BWBR0045754/2026-06-04#Artikel4.1a
@@ -592,6 +643,46 @@ articles:
         bwb_id: BWBR0045754
         artikel: '5.7'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: schriftelijk_verzoek_afgewezen
+            type: boolean
+            required: true
+            description: Lid 2a — het schriftelijke verzoek wordt geheel of gedeeltelijk afgewezen
+          - name: mondeling_verzoek_afgewezen_en_verzoeker_wil_schriftelijk
+            type: boolean
+            required: true
+            description: Lid 2b — mondeling verzoek wordt afgewezen en verzoeker verzoekt om schriftelijk besluit
+          - name: verstrekking_uitsluitend_onder_voorwaarden_5_5_6_7
+            type: boolean
+            required: true
+            description: Lid 2c — informatie wordt slechts verstrekt overeenkomstig artikel 5.5, 5.6 of 5.7 met voorwaarden
+          - name: informatie_betreft_derde_zonder_afstand_schriftelijk
+            type: boolean
+            required: true
+            description: Lid 2d — gevraagde informatie betreft of is afkomstig van derden die niet verklaard hebben geen behoefte te hebben aan een schriftelijk besluit
+        output:
+          - name: schriftelijk_besluit_verplicht
+            type: boolean
+            description: Of het bestuursorgaan in ieder geval schriftelijk moet beslissen op het verzoek om informatie (lid 2)
+        actions:
+          - output: schriftelijk_besluit_verplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $schriftelijk_verzoek_afgewezen
+                  value: true
+                - operation: EQUALS
+                  subject: $mondeling_verzoek_afgewezen_en_verzoeker_wil_schriftelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $verstrekking_uitsluitend_onder_voorwaarden_5_5_6_7
+                  value: true
+                - operation: EQUALS
+                  subject: $informatie_betreft_derde_zonder_afstand_schriftelijk
+                  value: true
   - number: '4.4'
     text: |-
       1 Het bestuursorgaan beslist op het verzoek om informatie zo spoedig mogelijk, doch uiterlijk binnen vier weken
@@ -1050,6 +1141,20 @@ articles:
         bwb_id: BWBR0045754
         artikel: '5.2'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: informatie_betreft_ondersteuning_individueel_lid
+            type: boolean
+            required: true
+            description: Lid 1 — informatie betreft de ondersteuning van individuele Kamer-/staten-/raadsleden door griffieambtenaren
+        output:
+          - name: niet_openbaar_parlementaire_ondersteuning
+            type: boolean
+            description: Of de informatie niet openbaar is op grond van de uitzondering voor parlementaire ondersteuning (lid 1)
+        actions:
+          - output: niet_openbaar_parlementaire_ondersteuning
+            value: $informatie_betreft_ondersteuning_individueel_lid
   - number: '5.5'
     text: |-
       1 Onverminderd het elders bij wet bepaalde, verstrekt een bestuursorgaan iedere natuurlijke of rechtspersoon
