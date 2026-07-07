@@ -41,21 +41,21 @@ articles:
         artikel: '17'
   - number: '2'
     text: |-
-      De economische waarde per maand, bedoeld in [artikel 17, tweede lid, van de Rva 1997][ref1], bedraagt:
+       De economische waarde per maand, bedoeld in [artikel 17, tweede lid, van de Rva 1997][ref1], bedraagt:
 
-      a. van de verstrekkingen bedoeld in [artikel 1, onder a][ref2]: de toelage bedoeld in
-      [artikel 11, tweede lid, van de Rva 1997][ref3], die aan of ten behoeve van de alleenstaande of het gezin wordt of
-      zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
+       a. van de verstrekkingen bedoeld in [artikel 1, onder a][ref2]: de toelage bedoeld in
+       [artikel 11, tweede lid, van de Rva 1997][ref3], die aan of ten behoeve van de alleenstaande of het gezin wordt of
+       zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
 
-      b. van de verstrekkingen bedoeld in [artikel 1, onder b][ref4]: f 100,- voor een alleenstaande of eerste gezinslid,
-      f 50,-, voor het tweede gezinslid en f 25,- per volgend gezinslid, vermenigvuldigd met de factor 4,33, tot een
-      maximum van € 393,43.
+       b. van de verstrekkingen bedoeld in [artikel 1, onder b][ref4]: f 100,- voor een alleenstaande of eerste gezinslid,
+       f 50,-, voor het tweede gezinslid en f 25,- per volgend gezinslid, vermenigvuldigd met de factor 4,33, tot een
+       maximum van € 393,43.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
-      [ref2]: https://wetten.overheid.nl/BWBR0009876#Artikel1
-      [ref3]: https://wetten.overheid.nl/BWBR0009205#Artikel11
-      [ref4]: https://wetten.overheid.nl/BWBR0009876#Artikel1
+        [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
+        [ref2]: https://wetten.overheid.nl/BWBR0009876#Artikel1
+        [ref3]: https://wetten.overheid.nl/BWBR0009205#Artikel11
+        [ref4]: https://wetten.overheid.nl/BWBR0009876#Artikel1
     url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel2
     references:
       - id: ref1
@@ -72,6 +72,102 @@ articles:
         bwb_id: BWBR0009876
         artikel: '1'
         afdeling: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: false
+            description: Burgerservicenummer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor berekening
+          - name: aantal_gezinsleden
+            type: number
+            required: true
+            description: Aantal gezinsleden
+          - name: is_alleenstaande
+            type: boolean
+            required: true
+            description: Is de persoon een alleenstaande?
+          - name: toelage_volledig_zelf_verzorgen_maaltijden
+            type: amount
+            type_spec:
+              unit: eurocent
+            required: true
+            description: Toelage bedoeld in artikel 11, tweede lid, van de Rva 1997
+        input: []
+        output:
+          - name: economische_waarde_verstrekkingen_onder_a
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Economische waarde van verstrekkingen bedoeld in artikel 1, onder a
+          - name: economische_waarde_verstrekkingen_onder_b
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Economische waarde van verstrekkingen bedoeld in artikel 1, onder b
+          - name: economische_waarde_verstrekkingen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Totale economische waarde van verstrekkingen
+        actions:
+           - output: economische_waarde_verstrekkingen_onder_a
+             value:
+               operation: MULTIPLY
+               values:
+                 - $toelage_voedsel
+                 - 4.33
+           - output: economische_waarde_verstrekkingen_onder_b
+             value:
+               operation: MIN
+               values:
+                 - operation: MULTIPLY
+                   values:
+                     - operation: IF
+                       cases:
+                         - when:
+                             operation: EQUALS
+                             subject: $is_alleenstaande
+                             value: true
+                           then: 10000
+                         - when:
+                             operation: EQUALS
+                             subject: $aantal_gezinsleden
+                             value: 1
+                           then: 10000
+                         - when:
+                             operation: EQUALS
+                             subject: $aantal_gezinsleden
+                             value: 2
+                           then:
+                             operation: ADD
+                             values:
+                               - 10000
+                               - 5000
+                       default:
+                         operation: ADD
+                         values:
+                           - 10000
+                           - 5000
+                           - operation: MULTIPLY
+                             values:
+                               - 2500
+                               - operation: SUBTRACT
+                                 values:
+                                   - $aantal_gezinsleden
+                                   - 2
+                     - 4.33
+                 - 39343
+           - output: economische_waarde_verstrekkingen
+             value:
+               operation: ADD
+               values:
+                 - $economische_waarde_verstrekkingen_onder_a
+                 - $economische_waarde_verstrekkingen_onder_b
   - number: '3'
     text: |-
       De tegemoetkoming bedoeld in [artikel 17, tweede lid, van de Rva 1997][ref1], is per maand gelijk aan de in
@@ -81,15 +177,56 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0009205#Artikel17
       [ref2]: https://wetten.overheid.nl/BWBR0009876#Artikel2
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0009205
-        artikel: '17'
-      - id: ref2
-        bwb_id: BWBR0009876
-        artikel: '2'
-        afdeling: I
+      url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel3
+      references:
+        - id: ref1
+          bwb_id: BWBR0009205
+          artikel: '17'
+        - id: ref2
+          bwb_id: BWBR0009876
+          artikel: '2'
+          afdeling: I
+      machine_readable:
+        execution:
+          parameters:
+            - name: bsn
+              type: string
+              required: false
+              description: Burgerservicenummer
+            - name: peildatum
+              type: date
+              required: true
+              description: Peildatum voor berekening
+            - name: middelen
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: In aanmerking te nemen middelen van de alleenstaande of het gezin
+          input:
+            - name: economische_waarde_verstrekkingen
+              type: amount
+              type_spec:
+                unit: eurocent
+              source:
+                regulation: regeling_eigen_bijdrage_asielzoekers_met_inkomen_en_vermogen
+                output: economische_waarde_verstrekkingen
+                parameters:
+                  bsn: $bsn
+                  peildatum: $peildatum
+          output:
+            - name: tegemoetkoming
+              type: amount
+              type_spec:
+                unit: eurocent
+              description: Tegemoetkoming bedoeld in artikel 17, tweede lid, van de Rva 1997
+          actions:
+            - output: tegemoetkoming
+              value:
+                operation: MIN
+                values:
+                  - $middelen
+                  - $economische_waarde_verstrekkingen
   - number: '4'
     text: |-
       1 Tot de middelen bedoeld in [artikel 3][ref1] worden gerekend alle vermogens- en inkomensbestandsdelen waarover de
@@ -156,7 +293,65 @@ articles:
       vergelijkbare regelingen; en
 
       d. andere ten laste van de belanghebbende komende verplichtingen.
-    url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
+      url: https://wetten.overheid.nl/BWBR0009876/2002-01-01#Artikel6
+      machine_readable:
+        execution:
+          parameters:
+            - name: bsn
+              type: string
+              required: false
+              description: Burgerservicenummer
+            - name: peildatum
+              type: date
+              required: true
+              description: Peildatum voor berekening
+          input:
+            - name: bruto_middelen
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: Bruto middelen van de alleenstaande of het gezin
+            - name: belasting
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: Loonbelasting of inkomstenbelasting verschuldigd over de middelen
+            - name: premies_volksverzekeringen
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: Premies volksverzekeringen en ziekenfondspremie verschuldigd over de middelen
+            - name: premies_pensioen
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: Verplichte bijdragen pensioenregeling
+            - name: andere_verplichtingen
+              type: amount
+              type_spec:
+                unit: eurocent
+              required: true
+              description: Andere ten laste van de belanghebbende komende verplichtingen
+        output:
+          - name: netto_middelen
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Netto middelen na aftrek van belastingen, premies en andere verplichtingen
+        actions:
+          - output: netto_middelen
+            value:
+              operation: SUBTRACT
+              values:
+                - $bruto_middelen
+                - $belasting
+                - $premies_volksverzekeringen
+                - $premies_pensioen
+                - $andere_verplichtingen
   - number: '7'
     text: |-
       1 Onder inkomen wordt verstaan de op grond van [paragraaf 1][ref1] in aanmerking genomen middelen voor zover deze:
