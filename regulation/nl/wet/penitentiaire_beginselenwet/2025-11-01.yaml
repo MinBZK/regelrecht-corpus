@@ -261,6 +261,61 @@ articles:
       - id: ref1
         bwb_id: BWBR0001903
         artikel: 27a
+    machine_readable:
+      untranslatables:
+        - construct: "er geen andere omstandigheden zijn die zich tegen zijn deelname verzetten (lid 2, onderdeel c)"
+          reason: "Qualitative judgment cannot be expressed as a computation"
+          legal_text_excerpt: "c. er geen andere omstandigheden zijn die zich tegen zijn deelname verzetten."
+          accepted: false
+        - construct: "goed gedrag (lid 3a)"
+          reason: "Behavioral assessment cannot be quantified by the engine"
+          legal_text_excerpt: "a. de mate waarin en de wijze waarop is gebleken van goed gedrag;"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: vrijheidsstraf_duur_maanden
+            type: number
+            required: true
+            description: Totale duur van de onvoorwaardelijke vrijheidsstraf(fen) in maanden (lid 2a)
+          - name: resterende_duur_weken
+            type: number
+            required: true
+            description: Nog te ondergane vrijheidsstraf in weken bij aanvang deelname (lid 2b)
+        output:
+          - name: duur_voldoet_aan_eis
+            type: boolean
+            description: Duur vrijheidsstraf is ten minste 6 en ten hoogste 12 maanden (artikel 4 lid 2a)
+          - name: resterende_duur_voldoet
+            type: boolean
+            description: Resterende duur is ten minste 4 weken (artikel 4 lid 2b)
+          - name: maximale_deelname_weken
+            type: number
+            description: Maximale deelnameduur in weken (een zesde deel van resterende vrijheidsstraf)
+        actions:
+          - output: duur_voldoet_aan_eis
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $vrijheidsstraf_duur_maanden
+                  value: 6
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $vrijheidsstraf_duur_maanden
+                  value: 12
+          - output: resterende_duur_voldoet
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $resterende_duur_weken
+              value: 4
+          - output: maximale_deelname_weken
+            value:
+              operation: DIVIDE
+              values:
+                - $resterende_duur_weken
+                - 6
   - number: '5'
     text: |-
       1 De directeur stelt, in aanvulling op de bij of krachtens deze wet gegeven regels en met inachtneming van het
@@ -854,6 +909,26 @@ articles:
       - id: ref7
         bwb_id: BWBR0009709
         hoofdstuk: XIII
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: GEEN_BESLUIT
+        parameters:
+          - name: bezwaarschrift_datum
+            type: date
+            required: true
+            description: Datum waarop het bezwaarschrift is ingediend
+        output:
+          - name: beslissing_deadline
+            type: date
+            description: Uiterste datum voor beslissing op bezwaarschrift (6 weken na indiening, artikel 17 lid 4)
+        actions:
+          - output: beslissing_deadline
+            value:
+              operation: DATE_ADD
+              date: $bezwaarschrift_datum
+              weeks: 6
   - number: '18'
     text: |-
       1 De betrokkene heeft het recht bij Onze Minister een met redenen omkleed verzoekschrift in te dienen strekkende
@@ -895,6 +970,40 @@ articles:
         bwb_id: BWBR0009709
         artikel: '13'
         hoofdstuk: III
+    machine_readable:
+      execution:
+        parameters:
+          - name: afwijzing_datum
+            type: date
+            required: true
+            description: Datum van de afwijzingsbeslissing op het verzoekschrift
+          - name: in_intensief_toezicht_of_ebi
+            type: boolean
+            required: true
+            description: Is betrokkene geplaatst in afdeling intensief toezicht of extra beveiligde inrichting (artikel 13 lid 1 onder d)?
+        output:
+          - name: opnieuw_indienen_vanaf
+            type: date
+            description: Vroegste datum waarop opnieuw een verzoekschrift kan worden ingediend
+          - name: wachttermijn_maanden
+            type: number
+            description: Wachttermijn in maanden (6 normaal, 12 bij AIT/EBI, artikel 18 lid 4 en 5)
+        actions:
+          - output: wachttermijn_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $in_intensief_toezicht_of_ebi
+                    value: true
+                  then: 12
+              default: 6
+          - output: opnieuw_indienen_vanaf
+            value:
+              operation: DATE_ADD
+              date: $afwijzing_datum
+              months: $wachttermijn_maanden
   - number: 18a
     text: |-
       1 De directeur draagt zorg dat uiterlijk binnen vier weken na binnenkomst van de gedetineerde in een inrichting,
@@ -1053,6 +1162,35 @@ articles:
       kan een ambtenaar of medewerker de maatregel, bedoeld in het eerste lid, voor een periode van ten hoogste vijftien
       uren treffen.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel23
+    machine_readable:
+      definitions:
+        MAX_UITSLUITING_WEKEN:
+          value: 2
+          description: Maximale duur van uitsluiting van activiteiten (artikel 23 lid 2)
+        MAX_SPOEDMAATREGEL_UREN:
+          value: 15
+          description: Maximale duur van spoedmaatregel uitsluiting door ambtenaar (artikel 23 lid 3)
+      execution:
+        parameters:
+          - name: uitsluiting_datum
+            type: date
+            required: true
+            description: Datum van aanvang van de uitsluiting van activiteiten
+        output:
+          - name: maximale_einddatum_uitsluiting
+            type: date
+            description: Uiterste einddatum van de initiële uitsluiting (2 weken)
+          - name: max_spoedmaatregel_uren
+            type: number
+            description: Maximale duur spoedmaatregel door ambtenaar in uren (15 uur)
+        actions:
+          - output: maximale_einddatum_uitsluiting
+            value:
+              operation: DATE_ADD
+              date: $uitsluiting_datum
+              weeks: $MAX_UITSLUITING_WEKEN
+          - output: max_spoedmaatregel_uren
+            value: $MAX_SPOEDMAATREGEL_UREN
   - number: '24'
     text: |-
       1 De directeur is bevoegd een gedetineerde in afzondering te plaatsen op de gronden genoemd in
@@ -1117,6 +1255,38 @@ articles:
         artikel: '23'
         hoofdstuk: V
         paragraaf: '2'
+    machine_readable:
+      definitions:
+        MAX_AFZONDERING_WEKEN:
+          value: 2
+          description: Maximale duur van afzondering per beslissing (artikel 24 lid 1 en lid 3)
+        MAX_SPOEDAFZONDERING_UREN:
+          value: 15
+          description: Maximale duur van spoedafzondering door ambtenaar (artikel 24 lid 4)
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: afzondering_datum
+            type: date
+            required: true
+            description: Datum van aanvang van de afzondering
+        output:
+          - name: maximale_einddatum_afzondering
+            type: date
+            description: Uiterste einddatum van de initiële afzondering (2 weken)
+          - name: max_spoedafzondering_uren
+            type: number
+            description: Maximale duur spoedafzondering in uren (15 uur)
+        actions:
+          - output: maximale_einddatum_afzondering
+            value:
+              operation: DATE_ADD
+              date: $afzondering_datum
+              weeks: $MAX_AFZONDERING_WEKEN
+          - output: max_spoedafzondering_uren
+            value: $MAX_SPOEDAFZONDERING_UREN
   - number: 24a
     text: |-
       1 De directeur kan, indien dit ter bescherming van de geestelijke of lichamelijke toestand van de gedetineerde
@@ -1340,6 +1510,38 @@ articles:
 
       4 Onze Minister stelt nadere regels omtrent de bevestiging van mechanische middelen aan het lichaam.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel33
+    machine_readable:
+      definitions:
+        MAX_BEVESTIGING_UREN:
+          value: 24
+          description: Maximale duur bevestiging mechanische middelen per beslissing (artikel 33 lid 1 en lid 3)
+        MAX_SPOED_BEVESTIGING_UREN:
+          value: 4
+          description: Maximale duur spoedmaatregel bevestiging mechanische middelen door ambtenaar (artikel 33 lid 2)
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bevestiging_aanvang_datum
+            type: date
+            required: true
+            description: Datum van aanvang van de bevestiging van mechanische middelen
+        output:
+          - name: maximale_einddatum_bevestiging
+            type: date
+            description: Uiterste einddatum van de initiële bevestiging (24 uur = 1 dag na aanvang)
+          - name: max_spoed_bevestiging_uren
+            type: number
+            description: Maximale duur spoedmaatregel in uren (4 uur)
+        actions:
+          - output: maximale_einddatum_bevestiging
+            value:
+              operation: DATE_ADD
+              date: $bevestiging_aanvang_datum
+              days: 1
+          - output: max_spoed_bevestiging_uren
+            value: $MAX_SPOED_BEVESTIGING_UREN
   - number: '34'
     text: |-
       1 De directeur is bevoegd de verblijfsruimte van een gedetineerde op de aanwezigheid van voorwerpen die niet in
@@ -1413,6 +1615,30 @@ articles:
         bwb_id: BWBR0009709
         artikel: '13'
         hoofdstuk: III
+    machine_readable:
+      definitions:
+        MAX_CAMERAOBSERVATIE_WEKEN:
+          value: 2
+          description: Maximale duur cameraobservatie per beslissing (artikel 34a lid 3)
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: observatie_aanvang_datum
+            type: date
+            required: true
+            description: Datum van aanvang van de cameraobservatie
+        output:
+          - name: maximale_einddatum_observatie
+            type: date
+            description: Uiterste einddatum van de cameraobservatie (2 weken)
+        actions:
+          - output: maximale_einddatum_observatie
+            value:
+              operation: DATE_ADD
+              date: $observatie_aanvang_datum
+              weeks: $MAX_CAMERAOBSERVATIE_WEKEN
   - number: '35'
     text: |-
       1 De directeur is bevoegd jegens een gedetineerde geweld te gebruiken dan wel vrijheidsbeperkende middelen aan te
@@ -1616,6 +1842,35 @@ articles:
         bwb_id: BWBR0009709
         artikel: '13'
         hoofdstuk: III
+    machine_readable:
+      definitions:
+        MINIMUM_BEZOEK_MINUTEN_PER_WEEK:
+          value: 60
+          description: Minimale bezoekduur per week in minuten (artikel 38 lid 1)
+        MAX_BEZOEKERWEIGERING_MAANDEN:
+          value: 12
+          description: Maximale duur weigering toegang bezoeker in maanden (artikel 38 lid 3)
+      execution:
+        parameters:
+          - name: weigering_datum
+            type: date
+            required: true
+            description: Datum van de beslissing tot weigering van bezoek van een bepaalde persoon
+        output:
+          - name: minimum_bezoek_minuten_per_week
+            type: number
+            description: Minimale bezoekduur per week in minuten waarop gedetineerde recht heeft (artikel 38 lid 1)
+          - name: weigering_einddatum
+            type: date
+            description: Uiterste einddatum van de weigering van bezoek (12 maanden, artikel 38 lid 3)
+        actions:
+          - output: minimum_bezoek_minuten_per_week
+            value: $MINIMUM_BEZOEK_MINUTEN_PER_WEEK
+          - output: weigering_einddatum
+            value:
+              operation: DATE_ADD
+              date: $weigering_datum
+              months: $MAX_BEZOEKERWEIGERING_MAANDEN
   - number: '39'
     text: |-
       1 De gedetineerde heeft, behoudens de overeenkomstig het tweede tot en met het vierde lid te stellen beperkingen,
@@ -1693,6 +1948,35 @@ articles:
         bwb_id: BWBR0009709
         artikel: 40d
         hoofdstuk: VIIA
+    machine_readable:
+      definitions:
+        MINIMUM_TELEFOON_MINUTEN_PER_WEEK:
+          value: 10
+          description: Minimale telefoontijd per week in minuten (artikel 39 lid 1)
+        MAX_TELEFOONWEIGERING_MAANDEN:
+          value: 12
+          description: Maximale duur weigering telefoongesprekken in maanden (artikel 39 lid 3)
+      execution:
+        parameters:
+          - name: weigering_datum
+            type: date
+            required: true
+            description: Datum van de beslissing tot weigering van telefoongesprekken
+        output:
+          - name: minimum_telefoon_minuten_per_week
+            type: number
+            description: Minimale telefoontijd per week in minuten waarop gedetineerde recht heeft (artikel 39 lid 1)
+          - name: weigering_einddatum
+            type: date
+            description: Uiterste einddatum van de weigering (12 maanden, artikel 39 lid 3)
+        actions:
+          - output: minimum_telefoon_minuten_per_week
+            value: $MINIMUM_TELEFOON_MINUTEN_PER_WEEK
+          - output: weigering_einddatum
+            value:
+              operation: DATE_ADD
+              date: $weigering_datum
+              months: $MAX_TELEFOONWEIGERING_MAANDEN
   - number: '40'
     text: |-
       1 De directeur kan toestemming geven voor het voeren van een gesprek tussen de gedetineerde en een
@@ -1835,6 +2119,27 @@ articles:
         artikel: '18'
         hoofdstuk: IV
         paragraaf: '2'
+    machine_readable:
+      definitions:
+        EBI_BEZOEK_MINUTEN_PER_WEEK:
+          value: 60
+          description: Bezoektijd per week in EBI in minuten (artikel 40b lid 1a)
+        EBI_TELEFOON_MINUTEN_PER_WEEK:
+          value: 10
+          description: Telefoontijd per week in EBI in minuten (artikel 40b lid 1b)
+      execution:
+        output:
+          - name: bezoek_minuten_per_week
+            type: number
+            description: Toegestane bezoektijd per week voor gedetineerde in extra beveiligde inrichting (minuten)
+          - name: telefoon_minuten_per_week
+            type: number
+            description: Toegestane telefoontijd per week voor gedetineerde in extra beveiligde inrichting (minuten)
+        actions:
+          - output: bezoek_minuten_per_week
+            value: $EBI_BEZOEK_MINUTEN_PER_WEEK
+          - output: telefoon_minuten_per_week
+            value: $EBI_TELEFOON_MINUTEN_PER_WEEK
   - number: 40c
     text: |-
       1 De gedetineerde die verblijft in een afdeling voor intensief toezicht wordt in de gelegenheid gesteld om:
@@ -1869,6 +2174,27 @@ articles:
         bwb_id: BWBR0009709
         artikel: 40b
         hoofdstuk: VII
+    machine_readable:
+      definitions:
+        AIT_BEZOEK_MINUTEN_PER_WEEK:
+          value: 60
+          description: Bezoektijd per week in AIT in minuten (artikel 40c lid 1a)
+        AIT_TELEFOON_MINUTEN_PER_WEEK:
+          value: 30
+          description: Telefoontijd per week in AIT in minuten (3 gesprekken van 10 minuten, artikel 40c lid 1b)
+      execution:
+        output:
+          - name: bezoek_minuten_per_week
+            type: number
+            description: Toegestane bezoektijd per week voor gedetineerde in afdeling intensief toezicht (minuten)
+          - name: telefoon_minuten_per_week
+            type: number
+            description: Toegestane telefoontijd per week voor gedetineerde in AIT (3x 10 min = 30 min)
+        actions:
+          - output: bezoek_minuten_per_week
+            value: $AIT_BEZOEK_MINUTEN_PER_WEEK
+          - output: telefoon_minuten_per_week
+            value: $AIT_TELEFOON_MINUTEN_PER_WEEK
   - number: 40d
     text: |-
       1 Onze Minister kan bevelen dat de gedetineerde die verblijft in een afdeling voor intensief toezicht of in een
@@ -2009,6 +2335,48 @@ articles:
         bwb_id: BWBR0009709
         artikel: '74'
         hoofdstuk: XIV
+    machine_readable:
+      untranslatables:
+        - construct: "aanwijzingen dat de gedetineerde zijn contacten gebruikt voor ernstig intimiderende of levensbedreigende activiteiten (lid 1a)"
+          reason: "Qualitative factual assessment, not expressible as a computation"
+          legal_text_excerpt: "a. bij aanwijzingen dat de gedetineerde zijn contacten gebruikt voor ernstig intimiderende of levensbedreigende activiteiten in de buitenwereld"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bevel_datum
+            type: date
+            required: true
+            description: Datum waarop het bevel is gegeven
+          - name: betreft_alle_contacten
+            type: boolean
+            required: true
+            description: Beperkt het bevel alle contacten van de gedetineerde met de buitenwereld? (artikel 40d lid 5)
+        output:
+          - name: maximale_duur_maanden
+            type: number
+            description: Maximale duur van het bevel in maanden (3 bij alle contacten, 12 overig, artikel 40d lid 5)
+          - name: maximale_einddatum_bevel
+            type: date
+            description: Uiterste geldigheidsdatum van het bevel
+        actions:
+          - output: maximale_duur_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $betreft_alle_contacten
+                    value: true
+                  then: 3
+              default: 12
+          - output: maximale_einddatum_bevel
+            value:
+              operation: DATE_ADD
+              date: $bevel_datum
+              months: $maximale_duur_maanden
   - number: 40e
     text: |-
       1 Indien Onze Minister dat aanvaardbaar acht, kan hij op verzoek van de gedetineerde beperkingen die volgen uit het
@@ -2031,6 +2399,48 @@ articles:
         artikel: '18'
         hoofdstuk: IV
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: afwijzing_datum
+            type: date
+            required: true
+            description: Datum van de afwijzing of het verzoek om opheffing van de beperking
+          - name: betreft_alle_contacten
+            type: boolean
+            required: true
+            description: Betreft het bevel alle contacten van de gedetineerde met de buitenwereld?
+        output:
+          - name: opnieuw_indienen_vanaf
+            type: date
+            description: Vroegste datum voor een nieuw verzoek (4 weken bij alle contacten, 3 maanden overig, artikel 40e lid 2)
+        actions:
+          - output: wachttermijn_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $betreft_alle_contacten
+                    value: true
+                  then: 0
+              default: 3
+          - output: wachttermijn_extra_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $betreft_alle_contacten
+                    value: true
+                  then: 4
+              default: 0
+          - output: opnieuw_indienen_vanaf
+            value:
+              operation: DATE_ADD
+              date: $afwijzing_datum
+              months: $wachttermijn_maanden
+              weeks: $wachttermijn_extra_weken
   - number: '41'
     text: |-
       1 De gedetineerde heeft het recht zijn godsdienst of levensovertuiging, individueel of in gemeenschap met anderen,
@@ -2380,6 +2790,26 @@ articles:
         artikel: 46d
         hoofdstuk: VIII
         paragraaf: 1a
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: beslissing_datum
+            type: date
+            required: true
+            description: Datum van de schriftelijke beslissing tot geneeskundige behandeling (artikel 46e lid 1)
+        output:
+          - name: behandeling_einddatum
+            type: date
+            description: Uiterste einddatum van de behandeling (maximaal 3 maanden na beslissing, artikel 46e lid 4)
+        actions:
+          - output: behandeling_einddatum
+            value:
+              operation: DATE_ADD
+              date: $beslissing_datum
+              months: 3
   - number: '47'
     text: |-
       1 De gedetineerde kan in de gelegenheid worden gesteld deel te nemen aan de in de inrichting beschikbare arbeid.
@@ -2411,6 +2841,19 @@ articles:
       zover hierin niet in de inrichting wordt voorzien, kunnen zijn verbonden. Deze voorwaarden kunnen betreffen de
       aard, de duur en de kosten van deze activiteiten alsmede de vooropleiding van de gedetineerde en diens vorderingen.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel48
+    machine_readable:
+      definitions:
+        MINIMUM_SPORT_MINUTEN_PER_WEEK:
+          value: 90
+          description: Minimale sporttijd per week (2 x 45 minuten = 90 minuten, artikel 48 lid 2)
+      execution:
+        output:
+          - name: minimum_sport_minuten_per_week
+            type: number
+            description: Minimale sporttijd per week in minuten waarop gedetineerde recht heeft (voor zover gezondheid zich niet verzet)
+        actions:
+          - output: minimum_sport_minuten_per_week
+            value: $MINIMUM_SPORT_MINUTEN_PER_WEEK
   - number: '49'
     text: |-
       1 De gedetineerde heeft recht op recreatie en dagelijks verblijf in de buitenlucht, voor zover zijn gezondheid zich
@@ -2422,6 +2865,27 @@ articles:
       3 De directeur draagt zorg dat de gedetineerde in de gelegenheid wordt gesteld dagelijks ten minste een uur in de
       buitenlucht te verblijven.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel49
+    machine_readable:
+      definitions:
+        MINIMUM_RECREATIE_MINUTEN_PER_WEEK:
+          value: 360
+          description: Minimale recreatietijd per week (6 uren = 360 minuten, artikel 49 lid 2)
+        MINIMUM_BUITENLUCHT_MINUTEN_PER_DAG:
+          value: 60
+          description: Minimale verblijf in buitenlucht per dag (1 uur = 60 minuten, artikel 49 lid 3)
+      execution:
+        output:
+          - name: minimum_recreatie_minuten_per_week
+            type: number
+            description: Minimale recreatietijd per week in minuten (voor zover gezondheid zich niet verzet)
+          - name: minimum_buitenlucht_minuten_per_dag
+            type: number
+            description: Minimale verblijf in buitenlucht per dag in minuten (voor zover gezondheid zich niet verzet)
+        actions:
+          - output: minimum_recreatie_minuten_per_week
+            value: $MINIMUM_RECREATIE_MINUTEN_PER_WEEK
+          - output: minimum_buitenlucht_minuten_per_dag
+            value: $MINIMUM_BUITENLUCHT_MINUTEN_PER_DAG
   - number: '50'
     text: |-
       1 Indien een ambtenaar of medewerker constateert dat een gedetineerde betrokken is bij feiten die onverenigbaar
@@ -2488,6 +2952,73 @@ articles:
         bwb_id: BWBR0009709
         artikel: '50'
         hoofdstuk: IX
+    machine_readable:
+      definitions:
+        MAX_OPSLUITING_WEKEN:
+          value: 2
+          description: Maximale duur opsluiting in strafcel (artikel 51 lid 1a)
+        MAX_BEZOEKONTZEGGING_WEKEN:
+          value: 4
+          description: Maximale duur ontzegging van bezoek (artikel 51 lid 1b)
+        MAX_ACTIVITEITENUITSLUITING_WEKEN:
+          value: 2
+          description: Maximale duur uitsluiting van activiteiten (artikel 51 lid 1c)
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: straf_aanvang_datum
+            type: date
+            required: true
+            description: Datum van aanvang van de disciplinaire straf
+          - name: soort_straf
+            type: string
+            required: true
+            description: "Type disciplinaire straf: OPSLUITING, BEZOEKONTZEGGING, of ACTIVITEITENUITSLUITING"
+          - name: weekloon
+            type: number
+            required: false
+            description: Weekloon van de gedetineerde in eurocent (voor berekening maximale geldboete, artikel 51 lid 1e)
+        output:
+          - name: maximale_einddatum_straf
+            type: date
+            description: Uiterste einddatum van de opgelegde vrijheidsbeperkende straf
+          - name: maximale_geldboete
+            type: number
+            description: Maximale geldboete (tweemaal het weekloon, artikel 51 lid 1e)
+        actions:
+          - output: maximale_straf_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $soort_straf
+                    value: "OPSLUITING"
+                  then: $MAX_OPSLUITING_WEKEN
+                - when:
+                    operation: EQUALS
+                    subject: $soort_straf
+                    value: "BEZOEKONTZEGGING"
+                  then: $MAX_BEZOEKONTZEGGING_WEKEN
+                - when:
+                    operation: EQUALS
+                    subject: $soort_straf
+                    value: "ACTIVITEITENUITSLUITING"
+                  then: $MAX_ACTIVITEITENUITSLUITING_WEKEN
+              default: 0
+          - output: maximale_einddatum_straf
+            value:
+              operation: DATE_ADD
+              date: $straf_aanvang_datum
+              weeks: $maximale_straf_weken
+          - output: maximale_geldboete
+            value:
+              operation: MULTIPLY
+              values:
+                - 2
+                - $weekloon
   - number: 51a
     text: |-
       1 De directeur kan, indien dit ter bescherming van de geestelijke of lichamelijke toestand van de gedetineerde
@@ -2530,6 +3061,23 @@ articles:
         bwb_id: BWBR0009709
         artikel: '58'
         hoofdstuk: X
+    machine_readable:
+      execution:
+        parameters:
+          - name: straf_oplegging_datum
+            type: date
+            required: true
+            description: Datum waarop de voorwaardelijke straf is opgelegd
+        output:
+          - name: maximale_proeftijd_einddatum
+            type: date
+            description: Uiterste einddatum van de proeftijd (maximaal 3 maanden, artikel 53 lid 1)
+        actions:
+          - output: maximale_proeftijd_einddatum
+            value:
+              operation: DATE_ADD
+              date: $straf_oplegging_datum
+              months: 3
   - number: '54'
     text: |-
       1 Van elke strafoplegging dan wel wijziging daarvan houdt de directeur aantekening.
@@ -2914,6 +3462,25 @@ articles:
         bwb_id: BWBR0009709
         artikel: 59a
         hoofdstuk: Xa
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum waarop de gedetineerde kennis heeft gekregen van de beslissing (lid 5)
+        output:
+          - name: beklag_deadline
+            type: date
+            description: Uiterste datum voor indiening klaagschrift (7 dagen na kennisgeving, artikel 61 lid 5)
+        actions:
+          - output: beklag_deadline
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              days: 7
   - number: '62'
     text: |-
       1 Het klaagschrift wordt behandeld door een door de commissie van toezicht benoemde beklagcommissie, bestaande uit
@@ -3076,6 +3643,45 @@ articles:
         hoofdstuk: XII
       - id: ref4
         bwb_id: BWBR0002406
+    machine_readable:
+      untranslatables:
+        - construct: "bijzondere omstandigheden (lid 1)"
+          reason: "Qualitative judgment on special circumstances cannot be expressed as a computation"
+          legal_text_excerpt: "In bijzondere omstandigheden kan de beklagcommissie deze termijn met ten hoogste vier weken verlengen."
+          accepted: false
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: klaagschrift_ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop het klaagschrift is ontvangen (lid 1)
+          - name: termijn_verlengd
+            type: boolean
+            required: true
+            description: Of de beklagcommissie de termijn heeft verlengd wegens bijzondere omstandigheden (lid 1)
+        output:
+          - name: uitspraak_deadline
+            type: date
+            description: Uiterste datum voor uitspraak beklagcommissie (4 weken, of 8 weken bij verlenging)
+        actions:
+          - output: uitspraak_deadline
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $termijn_verlengd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $klaagschrift_ontvangst_datum
+                    weeks: 8
+              default:
+                operation: DATE_ADD
+                date: $klaagschrift_ontvangst_datum
+                weeks: 4
   - number: '68'
     text: |-
       1 De uitspraak van de beklagcommissie strekt tot gehele of gedeeltelijke:
@@ -3256,6 +3862,25 @@ articles:
         bwb_id: BWBR0009709
         artikel: '65'
         hoofdstuk: XI
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: uitspraak_ontvangst_datum
+            type: date
+            required: true
+            description: Datum van ontvangst afschrift uitspraak of mondelinge mededeling (lid 1)
+        output:
+          - name: beroep_deadline
+            type: date
+            description: Uiterste datum voor indiening beroepschrift (7 dagen na ontvangst uitspraak, artikel 69 lid 1)
+        actions:
+          - output: beroep_deadline
+            value:
+              operation: DATE_ADD
+              date: $uitspraak_ontvangst_datum
+              days: 7
   - number: '70'
     text: |-
       1 Het indienen van een beroepschrift schorst de tenuitvoerlegging van de uitspraak van de beklagcommissie niet,
@@ -3384,6 +4009,25 @@ articles:
       bedoeld in het tweede lid. Indien reeds een verslag als bedoeld in het derde lid is opgesteld, wordt dit naar de
       commissie van toezicht gezonden.
     url: https://wetten.overheid.nl/BWBR0009709/2025-11-01#Artikel71c
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: medisch_handelen_datum
+            type: date
+            required: true
+            description: Datum waarop het medisch handelen waartegen de klacht zich richt heeft plaatsgevonden (lid 1)
+        output:
+          - name: bemiddeling_verzoek_deadline
+            type: date
+            description: Uiterste datum voor schriftelijk verzoek tot bemiddeling (14 dagen na medisch handelen, artikel 71c lid 1)
+        actions:
+          - output: bemiddeling_verzoek_deadline
+            value:
+              operation: DATE_ADD
+              date: $medisch_handelen_datum
+              days: 14
   - number: 71d
     text: |-
       1 Een met redenen omkleed beroepschrift wordt ingediend bij en behandeld door een door de Raad benoemde
@@ -3407,6 +4051,25 @@ articles:
         bwb_id: BWBR0009709
         artikel: '61'
         hoofdstuk: XI
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: mededeling_ontvangst_datum
+            type: date
+            required: true
+            description: Datum van ontvangst afschrift mededeling Medisch Adviseur (lid 2)
+        output:
+          - name: beroep_deadline
+            type: date
+            description: Uiterste datum voor indiening beroepschrift (7 dagen na ontvangst mededeling, artikel 71d lid 2)
+        actions:
+          - output: beroep_deadline
+            value:
+              operation: DATE_ADD
+              date: $mededeling_ontvangst_datum
+              days: 7
   - number: 71e
     text: |-
       1 De beroepscommissie en de secretaris zijn ten behoeve van de behandeling van het beroepschrift bevoegd het
@@ -3666,6 +4329,25 @@ articles:
         bwb_id: BWBR0009709
         artikel: '65'
         hoofdstuk: XI
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum waarop de betrokkene kennis heeft gekregen van de beslissing waartegen hij beroep instelt (lid 2)
+        output:
+          - name: beroep_deadline
+            type: date
+            description: Uiterste datum voor indiening beroepschrift (7 dagen na kennisgeving, artikel 73 lid 2)
+        actions:
+          - output: beroep_deadline
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              days: 7
   - number: '74'
     text: |-
       De directeur draagt zorg voor een regelmatig overleg met gedetineerden over zaken die rechtstreeks de detentie
@@ -3744,6 +4426,41 @@ articles:
       - id: ref3
         bwb_id: BWBR0008765
         hoofdstuk: XVI
+    machine_readable:
+      execution:
+        produces:
+          legal_character: WAARDEBEPALING
+        parameters:
+          - name: beslissing_datum
+            type: date
+            required: true
+            description: Datum van de beslissing als bedoeld in artikel 6:2:8 lid 1 Sv (lid 1)
+          - name: verlengingen_aantal
+            type: number
+            required: true
+            description: Aantal keer dat de termijn met 3 maanden is verlengd (lid 2)
+        output:
+          - name: plaatsing_deadline
+            type: date
+            description: Uiterste datum voor plaatsing in TBS-instelling (6 maanden + eventuele verlengingen na beslissing)
+          - name: maximale_termijn_maanden
+            type: number
+            description: Totale maximale termijn in maanden
+        actions:
+          - output: maximale_termijn_maanden
+            value:
+              operation: ADD
+              values:
+                - 6
+                - operation: MULTIPLY
+                  values:
+                    - 3
+                    - $verlengingen_aantal
+          - output: plaatsing_deadline
+            value:
+              operation: DATE_ADD
+              date: $beslissing_datum
+              months: $maximale_termijn_maanden
   - number: '77'
     text: |-
       1 Een onveroordeelde die met toepassing van [artikel 196][ref1], [317][ref2] of
