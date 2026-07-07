@@ -11,7 +11,7 @@ Feature: Zorgtoeslag eligibility
     Given law "wet_forensische_zorg" is loaded
 
   Scenario: Meerderjarige met actieve polis heeft recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 2005-01-01 | Amsterdam | NEDERLAND |
@@ -39,7 +39,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 209692
 
   Scenario: Minderjarige heeft geen recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 2008-01-01 | Amsterdam | NEDERLAND |
@@ -66,7 +66,7 @@ Feature: Zorgtoeslag eligibility
     Then output "heeft_recht_op_zorgtoeslag" is false
 
   Scenario: Laag inkomen alleenstaande heeft recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 1998-01-01 | Amsterdam | NEDERLAND |
@@ -94,7 +94,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 210821
 
   Scenario: Student met studiefinanciering heeft recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 2004-01-01 | Amsterdam | NEDERLAND |
@@ -128,7 +128,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 210916
 
   Scenario: Partner met gecombineerd inkomen heeft recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 1990-01-01 | Amsterdam | NEDERLAND |
@@ -141,7 +141,7 @@ Feature: Zorgtoeslag eligibility
     Given the following "box1" data with key "bsn":
       | bsn | loon_uit_dienstbetrekking | uitkeringen_en_pensioenen | winst_uit_onderneming | resultaat_overige_werkzaamheden | eigen_woning | buitenlands_inkomen |
       | 999993653 | 3500000 | 0 | 0 | 0 | 0 | 0 |
-      | 999993654 | 2000000 | 0 | 0 | 0 | 0 | 0 |
+      | 999993654 | 20000034 | 0 | 0 | 0 | 0 | 0 |
     Given the following "box2" data with key "bsn":
       | bsn | reguliere_voordelen | vervreemdingsvoordelen |
       | 999993653 | 0 | 0 |
@@ -159,7 +159,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 272845
 
   Scenario: Alleenstaande met box3 vermogen heeft recht op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 1990-01-01 | Amsterdam | NEDERLAND |
@@ -187,7 +187,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 173280
 
   Scenario: Verdragsinschrijving geeft verzekeringsdekking bij inactieve polis
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 1985-01-01 | Amsterdam | NEDERLAND |
@@ -215,7 +215,7 @@ Feature: Zorgtoeslag eligibility
     Then output "hoogte_zorgtoeslag" equals 210726
 
   Scenario: Forensische zorg heeft geen invloed op zorgtoeslag
-    Given parameter "bsn" is "999993653"
+    Given parameter "bsn" is 999993653
     Given the following "personal_data" data with key "bsn":
       | bsn | geboortedatum | verblijfsadres | land_verblijf |
       | 999993653 | 1985-01-01 | Amsterdam | NEDERLAND |
