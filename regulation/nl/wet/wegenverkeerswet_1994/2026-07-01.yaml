@@ -376,6 +376,23 @@ articles:
       De voordracht voor een krachtens deze wet vast te stellen algemene maatregel van bestuur wordt niet eerder gedaan
       dan vier weken nadat het ontwerp aan beide kamers der Staten-Generaal is overgelegd.
     url: https://wetten.overheid.nl/BWBR0006622/2026-07-01#Artikel2b
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_overlegging
+            type: date
+            required: true
+            description: Datum waarop het ontwerp voor de AMvB aan beide Kamers der Staten-Generaal is overgelegd
+        output:
+          - name: vroegste_voordrachts_datum
+            type: date
+            description: Vroegste datum waarop de voordracht voor de AMvB kan worden gedaan (vier weken na overlegging)
+        actions:
+          - output: vroegste_voordrachts_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_overlegging
+              weeks: 4
   - number: '3'
     text: |-
       1 Onverminderd de [artikelen 7, eerste lid][ref1], en
@@ -5289,6 +5306,51 @@ articles:
         artikel: '114'
         hoofdstuk: VI
         afdeling: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de houder van het rijbewijs B afgegeven op basis van artikel 111a
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de status wordt beoordeeld
+          - name: datum_bekendmaking_ongeldigverklaring
+            type: date
+            description: Datum waarop het besluit tot ongeldigverklaring van de begeleiderspas aan de houder bekend is gemaakt (alleen bij lid 6)
+        output:
+          - name: is_verboden_periode_actief
+            type: boolean
+            description: Houder heeft nog niet de leeftijd van achttien jaren bereikt en valt onder de rijbeperkingen van lid 3
+          - name: begeleiderspas_vervaldag
+            type: date
+            description: De dag waarop de begeleiderspas van rechtswege zijn geldigheid verliest (de dag waarop de houder achttien jaar wordt, lid 4d)
+          - name: ongeldigverklaring_ingangsdatum
+            type: date
+            description: Datum waarop de ongeldigverklaring van de begeleiderspas van kracht wordt (zevende dag na bekendmaking, lid 6)
+        actions:
+          - output: leeftijd_houder
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: is_verboden_periode_actief
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_houder
+              value: 18
+          - output: begeleiderspas_vervaldag
+            value:
+              operation: DATE_ADD
+              date: $geboortedatum
+              years: 18
+          - output: ongeldigverklaring_ingangsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_bekendmaking_ongeldigverklaring
+              days: 7
   - number: 111b
     text: |-
       Bij algemene maatregel van bestuur worden nadere regels vastgesteld waaraan de begeleider tijdens het begeleiden
@@ -5355,6 +5417,60 @@ articles:
         afdeling: '9'
       - id: ref5
         bwb_id: BWBR0004581
+    machine_readable:
+      execution:
+        parameters:
+          - name: bevoegdheid_tot_besturen_ontzegd
+            type: boolean
+            required: true
+            description: Aan de aanvrager is de bevoegdheid tot het besturen van motorrijtuigen ontzegd (lid 1a)
+          - name: rijbewijs_ingevorderd_niet_teruggegeven
+            type: boolean
+            required: true
+            description: Het rijbewijs van de aanvrager is gevorderd of ingevorderd en niet teruggegeven (lid 1b)
+          - name: rijbewijs_geldigheid_geschorst
+            type: boolean
+            required: true
+            description: De geldigheid van het rijbewijs van de aanvrager is ingevolge artikel 131 lid 2a geschorst (lid 1c)
+          - name: inlevering_rijbewijs_gevorderd
+            type: boolean
+            required: true
+            description: De inlevering van het rijbewijs is gevorderd krachtens de Wet administratiefrechtelijke handhaving verkeersvoorschriften (lid 1d)
+          - name: heeft_buitenlands_eu_eea_ch_rijbewijs_niet_overgelegd
+            type: boolean
+            required: true
+            description: Aanvrager is houder van een EU/EEA/CH rijbewijs dat niet wordt overgelegd bij de aanvraag (lid 1e)
+          - name: buitenlands_rijbewijs_onherroepelijk_geschorst_of_beperkt
+            type: boolean
+            required: true
+            description: In EU/EEA/CH is het rijbewijs geschorst of een beperkende maatregel onherroepelijk geworden (lid 1f)
+        output:
+          - name: afgifte_rijbewijs_geweigerd
+            type: boolean
+            description: Afgifte van het rijbewijs wordt geweigerd op grond van artikel 112
+        actions:
+          - output: afgifte_rijbewijs_geweigerd
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $bevoegdheid_tot_besturen_ontzegd
+                  value: true
+                - operation: EQUALS
+                  subject: $rijbewijs_ingevorderd_niet_teruggegeven
+                  value: true
+                - operation: EQUALS
+                  subject: $rijbewijs_geldigheid_geschorst
+                  value: true
+                - operation: EQUALS
+                  subject: $inlevering_rijbewijs_gevorderd
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_buitenlands_eu_eea_ch_rijbewijs_niet_overgelegd
+                  value: true
+                - operation: EQUALS
+                  subject: $buitenlands_rijbewijs_onherroepelijk_geschorst_of_beperkt
+                  value: true
   - number: '113'
     text: |-
       1 De aanvraag van een rijbewijs dient te geschieden overeenkomstig bij algemene maatregel van bestuur vastgestelde
@@ -5900,6 +6016,98 @@ articles:
         bwb_id: BWBR0006622
         artikel: '163'
         hoofdstuk: IX
+    machine_readable:
+      execution:
+        parameters:
+          - name: veroordeeld_wegens_gekwalificeerd_feit
+            type: boolean
+            required: true
+            description: Onherroepelijk veroordeeld wegens art 6 (terwijl rijden onder invloed), art 8 lid 1 of 5, of art 163 lid 2/6/7
+          - name: veroordeeld_wegens_art8_lid2_3_4
+            type: boolean
+            required: true
+            description: Onherroepelijk veroordeeld wegens overtreding van art 8 lid 2, 3 of 4
+          - name: adem_alcohol_ug_liter
+            type: number
+            description: Alcoholgehalte in adem in microgram per liter (bij art 8 lid 2/3/4 veroordeling)
+          - name: bloed_alcohol_ug_ml
+            type: number
+            description: Alcoholgehalte in bloed in microgram per milliliter (bij art 8 lid 2/3/4 veroordeling; 1,3 mg/ml = 1300)
+          - name: datum_huidig_feit
+            type: date
+            required: true
+            description: Datum van het strafbare feit waarvoor de onherroepelijke veroordeling is uitgesproken
+          - name: heeft_eerdere_soortgelijke_veroordeling
+            type: boolean
+            required: true
+            description: Is eerder onherroepelijk veroordeeld wegens art 6 (onder art 8), art 8 lid 1-5, of art 163 lid 2/6/7
+          - name: datum_eerdere_veroordeling
+            type: date
+            description: Datum van de eerdere onherroepelijke soortgelijke veroordeling
+        output:
+          - name: art8_zware_drempel_overschreden
+            type: boolean
+            description: Bij art 8 lid 2/3/4 veroordeling is de zware grenswaarde overschreden (> 570 ug/l adem of > 1300 ug/ml bloed)
+          - name: recidive_binnen_vijf_jaar
+            type: boolean
+            description: Het huidig feit is begaan binnen vijf jaar na de eerdere soortgelijke veroordeling
+          - name: rijbewijs_verliest_geldigheid_wegens_recidive
+            type: boolean
+            description: Het rijbewijs verliest zijn geldigheid op grond van artikel 123b (recidive zwaar alcoholmisdrijf)
+        actions:
+          - output: art8_zware_drempel_overschreden
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $veroordeeld_wegens_art8_lid2_3_4
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: GREATER_THAN
+                      subject: $adem_alcohol_ug_liter
+                      value: 570
+                    - operation: GREATER_THAN
+                      subject: $bloed_alcohol_ug_ml
+                      value: 1300
+          - output: jaren_sedert_eerdere_veroordeling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_eerdere_soortgelijke_veroordeling
+                    value: true
+                  then:
+                    operation: AGE
+                    date_of_birth: $datum_eerdere_veroordeling
+                    reference_date: $datum_huidig_feit
+              default: 99
+          - output: recidive_binnen_vijf_jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_eerdere_soortgelijke_veroordeling
+                  value: true
+                - operation: LESS_THAN
+                  subject: $jaren_sedert_eerdere_veroordeling
+                  value: 5
+          - output: rijbewijs_verliest_geldigheid_wegens_recidive
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $veroordeeld_wegens_gekwalificeerd_feit
+                      value: true
+                    - operation: EQUALS
+                      subject: $art8_zware_drempel_overschreden
+                      value: true
+                - operation: EQUALS
+                  subject: $recidive_binnen_vijf_jaar
+                  value: true
   - number: '124'
     text: |-
       1 Onverminderd de [artikelen 132, tweede lid][ref1], en [134, vierde lid][ref2], wordt een rijbewijs overeenkomstig
