@@ -671,6 +671,81 @@ articles:
       - id: ref5
         bwb_id: BWBR0022428
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_juridische_entiteit_wwft_10a_lid_2
+            type: boolean
+            required: true
+            description: >-
+              Of de entiteit een vennootschap of andere juridische entiteit is als bedoeld in
+              artikel 10a, tweede lid, van de Wet ter voorkoming van witwassen en financieren
+              van terrorisme
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: >-
+              Rechtsvorm van de entiteit (voor controle uitzondering artikel 15a, eerste lid:
+              VvE en overige_privaatrechtelijke_rechtspersoon zijn uitgezonderd)
+          - name: ingeschreven_per_artikel_6_lid_3
+            type: boolean
+            required: false
+            description: >-
+              Of de entiteit is ingeschreven ingevolge artikel 6, derde lid
+              (kerkgenootschappen op grond van AMvB)
+        input:
+          - name: ingeschreven_per_artikel_5
+            type: boolean
+            source:
+              output: moet_worden_ingeschreven
+            description: Of de onderneming is ingeschreven ingevolge artikel 5
+          - name: inschrijving_verplicht_artikel_6_lid_1
+            type: boolean
+            source:
+              output: inschrijving_verplicht
+            description: Of de rechtspersoon verplicht is ingeschreven ingevolge artikel 6, eerste lid
+        output:
+          - name: ubo_registratie_verplicht
+            type: boolean
+            description: >-
+              Of de uiteindelijk belanghebbenden van deze entiteit moeten worden opgenomen
+              in het handelsregister (artikel 15a, eerste lid)
+        actions:
+          - output: is_ingeschreven_per_art_5_of_6
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $ingeschreven_per_artikel_5
+                  value: true
+                - operation: EQUALS
+                  subject: $inschrijving_verplicht_artikel_6_lid_1
+                  value: true
+                - operation: EQUALS
+                  subject: $ingeschreven_per_artikel_6_lid_3
+                  value: true
+          - output: is_niet_uitgezonderd
+            value:
+              operation: NOT
+              value:
+                operation: IN
+                subject: $rechtsvorm
+                values:
+                  - VvE
+                  - overige_privaatrechtelijke_rechtspersoon
+          - output: ubo_registratie_verplicht
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_juridische_entiteit_wwft_10a_lid_2
+                  value: true
+                - operation: EQUALS
+                  subject: $is_ingeschreven_per_art_5_of_6
+                  value: true
+                - operation: EQUALS
+                  subject: $is_niet_uitgezonderd
+                  value: true
   - number: '16'
     text: |-
       1 In het handelsregister worden gegevens opgenomen die noodzakelijk zijn voor een goede vastlegging en verstrekking
@@ -1209,6 +1284,106 @@ articles:
         artikel: 15a
         hoofdstuk: '2'
         paragraaf: '2.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_instelling_wwft_art_1_lid_1
+            type: boolean
+            required: true
+            description: >-
+              Of de verzoeker een instelling is als bedoeld in artikel 1, eerste lid,
+              van de Wet ter voorkoming van witwassen en financieren van terrorisme
+              (lid 1, onderdeel a)
+          - name: doel_is_cliëntenonderzoek_wwft_of_wtt
+            type: boolean
+            required: true
+            description: >-
+              Of het doel van het verzoek het uitvoeren van een cliëntenonderzoek is op grond
+              van de Wwft of de Wet toezicht trustkantoren 2018 (lid 1, onderdeel a)
+          - name: is_instelling_sanctiewet_art_10_lid_2_a_t_m_m
+            type: boolean
+            required: true
+            description: >-
+              Of de verzoeker een instelling is als bedoeld in artikel 10, tweede lid,
+              onderdelen a tot en met m, van de Sanctiewet 1977 (lid 1, onderdeel b)
+          - name: doel_is_naleving_sanctiewet_afdeling_5
+            type: boolean
+            required: true
+            description: >-
+              Of het doel naleving is van verplichtingen ingevolge afdeling 5 van de
+              Sanctiewet 1977 met betrekking tot het financieel verkeer (lid 1, onderdeel b)
+          - name: is_amvb_aangewezen_categorie
+            type: boolean
+            required: true
+            description: >-
+              Of de verzoeker behoort tot een bij AMvB aangewezen categorie van
+              natuurlijke personen of rechtspersonen met een legitiem belang (lid 2)
+          - name: heeft_legitiem_belang_aml_ctf
+            type: boolean
+            required: true
+            description: >-
+              Of de verzoeker een aantoonbaar legitiem belang heeft in verband met
+              voorkoming of bestrijding van witwassen, daarmee verband houdende
+              basisdelicten, of terrorismefinanciering (lid 2)
+          - name: is_tot_opgave_verplichte_persoon
+            type: boolean
+            required: true
+            description: >-
+              Of de verzoeker degene is die verplicht is tot het doen van opgave
+              ter inschrijving voor deze vennootschap of juridische entiteit (lid 6)
+        output:
+          - name: kan_ubo_gegevens_inzien
+            type: boolean
+            description: >-
+              Of de verzoeker de gegevens als bedoeld in artikel 15a, tweede lid,
+              onderdelen c en e, kan inzien
+        actions:
+          - output: toegang_lid_1_a
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_instelling_wwft_art_1_lid_1
+                  value: true
+                - operation: EQUALS
+                  subject: $doel_is_cliëntenonderzoek_wwft_of_wtt
+                  value: true
+          - output: toegang_lid_1_b
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_instelling_sanctiewet_art_10_lid_2_a_t_m_m
+                  value: true
+                - operation: EQUALS
+                  subject: $doel_is_naleving_sanctiewet_afdeling_5
+                  value: true
+          - output: toegang_lid_2
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_amvb_aangewezen_categorie
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_legitiem_belang_aml_ctf
+                  value: true
+          - output: kan_ubo_gegevens_inzien
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $toegang_lid_1_a
+                  value: true
+                - operation: EQUALS
+                  subject: $toegang_lid_1_b
+                  value: true
+                - operation: EQUALS
+                  subject: $toegang_lid_2
+                  value: true
+                - operation: EQUALS
+                  subject: $is_tot_opgave_verplichte_persoon
+                  value: true
   - number: '23'
     text: |-
       Bij algemene maatregel van bestuur kunnen ter bescherming van de persoonlijke levenssfeer van de personen die
@@ -1735,6 +1910,35 @@ articles:
         bwb_id: BWBR0021777
         artikel: '32'
         hoofdstuk: '6'
+    machine_readable:
+      open_terms:
+        - id: termijn_aantekening_onderzoek_dagen
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 34, eerste lid, Handelsregisterwet 2007
+      execution:
+        parameters:
+          - name: datum_melding
+            type: date
+            required: true
+            description: >-
+              Datum waarop de melding als bedoeld in artikel 32, eerste lid, is ontvangen
+              (en niet is doorgezonden naar de beheerder van een ander register)
+        output:
+          - name: uiterste_datum_aantekening_onderzoek
+            type: date
+            description: >-
+              Uiterste datum waarop de Kamer de aantekening 'in onderzoek' moet plaatsen,
+              tenzij de Kamer binnen deze termijn reeds heeft beslist over wijziging
+              (datum_melding + bij ministeriële regeling vastgestelde termijn)
+        actions:
+          - output: uiterste_datum_aantekening_onderzoek
+            value:
+              operation: DATE_ADD
+              date: $datum_melding
+              days: $termijn_aantekening_onderzoek_dagen
   - number: '35'
     text: |-
       De beslissing, bedoeld in [artikel 34, tweede lid][ref1], geldt als een besluit in de zin van de
@@ -1970,6 +2174,27 @@ articles:
       - id: ref1
         bwb_id: BWBR0003045
         artikel: '393'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_laatste_controle
+            type: date
+            required: true
+            description: >-
+              Datum van de meest recente controle van de uitvoering van de wet door een
+              accountant als bedoeld in artikel 393 van Boek 2 BW (artikel 41, eerste lid)
+        output:
+          - name: datum_volgende_controle_uiterlijk
+            type: date
+            description: >-
+              Uiterste datum waarop de volgende periodieke controle moet plaatsvinden
+              (drie jaar na de laatste controle; artikel 41, eerste lid)
+        actions:
+          - output: datum_volgende_controle_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $datum_laatste_controle
+              years: 3
   - number: 41a
     text: |-
       1 De Kamer stelt een protocol op, dat betrekking heeft op:
