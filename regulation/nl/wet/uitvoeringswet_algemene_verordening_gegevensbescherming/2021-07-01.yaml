@@ -145,6 +145,85 @@ articles:
       5 Dit artikel is niet van toepassing op hulp- en adviesdiensten die rechtstreeks en kosteloos aan een minderjarige
       of een onder curatele gestelde worden aangeboden.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de toestemming wordt beoordeeld
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene
+          - name: art8_verordening_van_toepassing
+            type: boolean
+            required: true
+            description: Is artikel 8 van de AVG van toepassing op de verwerkingssituatie? (lid 1)
+          - name: onder_curatele
+            type: boolean
+            required: true
+            description: Is de betrokkene onder curatele gesteld? (lid 2)
+          - name: bewind_ingesteld
+            type: boolean
+            required: true
+            description: Is er ten behoeve van de betrokkene een bewind ingesteld? (lid 2)
+          - name: mentorschap_ingesteld
+            type: boolean
+            required: true
+            description: Is er ten behoeve van de betrokkene een mentorschap ingesteld? (lid 2)
+          - name: onbekwaam_of_onbevoegd
+            type: boolean
+            required: true
+            description: Betreft het een aangelegenheid waarvoor de betrokkene onbekwaam dan wel onbevoegd is? (lid 2)
+          - name: is_kosteloze_hulp_of_adviesdienst_direct_aangeboden
+            type: boolean
+            required: true
+            description: Betreft het een hulp- of adviesdienst die rechtstreeks en kosteloos aan een minderjarige of onder curatele gestelde wordt aangeboden? (lid 5 — artikel niet van toepassing)
+        output:
+          - name: leeftijd_betrokkene
+            type: number
+            description: Leeftijd van de betrokkene in jaren op de peildatum
+          - name: vertegenwoordiger_toestemming_vereist
+            type: boolean
+            description: Toestemming van de wettelijk vertegenwoordiger is vereist in plaats van die van de betrokkene (artikel 5 lid 1 of lid 2, tenzij lid 5 van toepassing)
+        actions:
+          - output: leeftijd_betrokkene
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: vertegenwoordiger_toestemming_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_kosteloze_hulp_of_adviesdienst_direct_aangeboden
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: NOT
+                          value: $art8_verordening_van_toepassing
+                        - operation: LESS_THAN
+                          subject: $leeftijd_betrokkene
+                          value: 16
+                    - operation: AND
+                      conditions:
+                        - operation: OR
+                          conditions:
+                            - operation: EQUALS
+                              subject: $onder_curatele
+                              value: true
+                            - operation: EQUALS
+                              subject: $bewind_ingesteld
+                              value: true
+                            - operation: EQUALS
+                              subject: $mentorschap_ingesteld
+                              value: true
+                        - operation: EQUALS
+                          subject: $onbekwaam_of_onbevoegd
+                          value: true
   - number: '6'
     text: |-
       1 Er is een Autoriteit persoonsgegevens. De Autoriteit persoonsgegevens bezit rechtspersoonlijkheid.
@@ -437,6 +516,44 @@ articles:
         artikel: '31'
         hoofdstuk: '3'
         paragraaf: '3.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_onderneming
+            type: boolean
+            required: true
+            description: Is de overtreder een onderneming in de zin van dit artikel?
+          - name: jaaromzet_eurocent
+            type: number
+            required: false
+            description: Totale wereldwijde jaaromzet in het voorgaande boekjaar in eurocent (alleen relevant voor ondernemingen)
+        output:
+          - name: boete_maximum
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximum bestuurlijke boete die de AP kan opleggen (artikel 17 lid 1)
+        actions:
+          - output: boete_maximum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_onderneming
+                    value: true
+                  then:
+                    operation: MAX
+                    values:
+                      - 2000000000
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $jaaromzet_eurocent
+                              - 4
+                          - 100
+              default: 2000000000
   - number: '18'
     text: |-
       1 De Autoriteit persoonsgegevens kan in geval van overtreding van het bepaalde in artikel 83, vierde, vijfde of
@@ -637,6 +754,91 @@ articles:
       e. de verwerking noodzakelijk is voor de instelling, uitoefening of onderbouwing van een rechtsvordering, of
       wanneer gerechten handelen in het kader van hun rechtsbevoegdheid.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel22
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk is ter bescherming van de vitale belangen van de betrokkene of van een andere natuurlijke persoon"
+          reason: "Necessity ('noodzakelijk') requires contextual legal judgment, not expressible as engine operation"
+          legal_text_excerpt: "onderdeel b: de verwerking noodzakelijk is ter bescherming van de vitale belangen..."
+          accepted: false
+        - construct: "in het kader van haar gerechtvaardigde activiteiten en met passende waarborgen"
+          reason: "Lawfulness of activities and adequacy of safeguards require contextual judgment"
+          legal_text_excerpt: "onderdeel c: een stichting, een vereniging of een andere instantie... in het kader van haar gerechtvaardigde activiteiten"
+          accepted: false
+        - construct: "noodzakelijk is voor de instelling, uitoefening of onderbouwing van een rechtsvordering"
+          reason: "Necessity for legal claims requires contextual judgment"
+          legal_text_excerpt: "onderdeel e: de verwerking noodzakelijk is voor de instelling, uitoefening of onderbouwing van een rechtsvordering"
+          accepted: false
+      execution:
+        parameters:
+          - name: uitdrukkelijke_toestemming_gegeven
+            type: boolean
+            required: true
+            description: Betrokkene heeft uitdrukkelijke toestemming gegeven voor een of meer welbepaalde doeleinden (lid 2 onderdeel a)
+          - name: noodzakelijk_vitale_belangen
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk ter bescherming vitale belangen betrokkene of ander (lid 2 onderdeel b)
+          - name: betrokkene_niet_in_staat_toestemming
+            type: boolean
+            required: true
+            description: Betrokkene fysiek of juridisch niet in staat toestemming te geven (lid 2 onderdeel b)
+          - name: verwerking_door_ideele_instelling
+            type: boolean
+            required: true
+            description: Verwerking geschiedt door stichting/vereniging of instantie zonder winstoogmerk op politiek/levensbeschouwelijk/godsdienstig/vakbondsgebied (lid 2 onderdeel c)
+          - name: alleen_leden_of_regelmatig_contact
+            type: boolean
+            required: true
+            description: Verwerking betreft uitsluitend leden, voormalige leden of personen met regelmatig contact (lid 2 onderdeel c)
+          - name: geen_verstrekking_buiten_instelling_zonder_toestemming
+            type: boolean
+            required: true
+            description: Persoonsgegevens niet zonder toestemming buiten de instelling verstrekt (lid 2 onderdeel c)
+          - name: gegevens_kennelijk_openbaar_gemaakt
+            type: boolean
+            required: true
+            description: Betrokkene heeft de persoonsgegevens kennelijk openbaar gemaakt (lid 2 onderdeel d)
+          - name: noodzakelijk_rechtsvordering
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor rechtsvordering of gerechten handelend in kader van rechtsbevoegdheid (lid 2 onderdeel e)
+        output:
+          - name: verbod_bijzondere_categorie_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van bijzondere categorieën van persoonsgegevens is niet van toepassing (artikel 22 lid 2)
+        actions:
+          - output: verbod_bijzondere_categorie_niet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $uitdrukkelijke_toestemming_gegeven
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $noodzakelijk_vitale_belangen
+                      value: true
+                    - operation: EQUALS
+                      subject: $betrokkene_niet_in_staat_toestemming
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $verwerking_door_ideele_instelling
+                      value: true
+                    - operation: EQUALS
+                      subject: $alleen_leden_of_regelmatig_contact
+                      value: true
+                    - operation: EQUALS
+                      subject: $geen_verstrekking_buiten_instelling_zonder_toestemming
+                      value: true
+                - operation: EQUALS
+                  subject: $gegevens_kennelijk_openbaar_gemaakt
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_rechtsvordering
+                  value: true
   - number: '23'
     text: |-
       Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om bijzondere categorieën van
@@ -674,6 +876,59 @@ articles:
       d. bij de uitvoering is voorzien in zodanige waarborgen dat de persoonlijke levenssfeer van de betrokkene niet
       onevenredig wordt geschaad.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel24
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk is met het oog op wetenschappelijk of historisch onderzoek of statistische doeleinden overeenkomstig artikel 89, eerste lid, van de verordening"
+          reason: "Necessity ('noodzakelijk') for research requires contextual judgment, not expressible as engine operation"
+          legal_text_excerpt: "onderdeel a: de verwerking noodzakelijk is met het oog op wetenschappelijk of historisch onderzoek of statistische doeleinden"
+          accepted: false
+        - construct: "het vragen van uitdrukkelijke toestemming onmogelijk blijkt of een onevenredige inspanning kost"
+          reason: "Impossibility or disproportionality of requesting consent requires contextual judgment"
+          legal_text_excerpt: "onderdeel c: het vragen van uitdrukkelijke toestemming onmogelijk blijkt of een onevenredige inspanning kost"
+          accepted: false
+        - construct: "zodanige waarborgen dat de persoonlijke levenssfeer van de betrokkene niet onevenredig wordt geschaad"
+          reason: "Adequacy of privacy safeguards requires contextual judgment"
+          legal_text_excerpt: "onderdeel d: bij de uitvoering is voorzien in zodanige waarborgen..."
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerking_noodzakelijk_voor_onderzoek
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor wetenschappelijk/historisch onderzoek of statistiek (onderdeel a)
+          - name: onderzoek_dient_algemeen_belang
+            type: boolean
+            required: true
+            description: Het onderzoek dient een algemeen belang (onderdeel b)
+          - name: toestemming_vragen_onmogelijk_of_onevenredig
+            type: boolean
+            required: true
+            description: Het vragen van uitdrukkelijke toestemming is onmogelijk of onevenredig inspannend (onderdeel c)
+          - name: voldoende_waarborgen_aanwezig
+            type: boolean
+            required: true
+            description: Er zijn zodanige waarborgen dat de persoonlijke levenssfeer niet onevenredig wordt geschaad (onderdeel d)
+        output:
+          - name: verbod_niet_van_toepassing_onderzoek
+            type: boolean
+            description: Het verbod is niet van toepassing voor wetenschappelijk/historisch onderzoek of statistiek (artikel 24)
+        actions:
+          - output: verbod_niet_van_toepassing_onderzoek
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerking_noodzakelijk_voor_onderzoek
+                  value: true
+                - operation: EQUALS
+                  subject: $onderzoek_dient_algemeen_belang
+                  value: true
+                - operation: EQUALS
+                  subject: $toestemming_vragen_onmogelijk_of_onevenredig
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoende_waarborgen_aanwezig
+                  value: true
   - number: '25'
     text: |-
       Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om persoonsgegevens te verwerken
@@ -743,12 +998,105 @@ articles:
       3 Toestemming als bedoeld in het tweede lid, onderdeel b, is niet vereist, indien het vragen van uitdrukkelijke
       toestemming onmogelijk blijkt of een onevenredige inspanning vergt.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel28
+    machine_readable:
+      untranslatables:
+        - construct: "zwaarwegend geneeskundig belang prevaleert"
+          reason: "Weighing of medical interests requires contextual judgment, not expressible as engine operation"
+          legal_text_excerpt: "lid 2 onderdeel a: een zwaarwegend geneeskundig belang prevaleert"
+          accepted: false
+        - construct: "zodanige waarborgen dat de persoonlijke levenssfeer van de betrokkene niet onevenredig wordt geschaad"
+          reason: "Adequacy of privacy safeguards requires contextual judgment"
+          legal_text_excerpt: "lid 2 onderdeel b, 2°: bij de uitvoering is voorzien in zodanige waarborgen..."
+          accepted: false
+        - construct: "het vragen van uitdrukkelijke toestemming onmogelijk blijkt of een onevenredige inspanning vergt"
+          reason: "Impossibility or disproportionality of requesting consent requires contextual judgment"
+          legal_text_excerpt: "lid 3: Toestemming als bedoeld in het tweede lid, onderdeel b, is niet vereist, indien het vragen van uitdrukkelijke toestemming onmogelijk blijkt..."
+          accepted: false
+      execution:
+        parameters:
+          - name: gegevens_van_betrokkene_zelf
+            type: boolean
+            required: true
+            description: Betreft de verwerking genetische gegevens van de betrokkene bij wie de gegevens zijn verkregen? (lid 1)
+          - name: zwaarwegend_geneeskundig_belang
+            type: boolean
+            required: true
+            description: Een zwaarwegend geneeskundig belang prevaleert (lid 2 onderdeel a)
+          - name: onderzoek_algemeen_belang_genetisch
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor wetenschappelijk onderzoek dat een algemeen belang dient of voor statistiek (lid 2 onderdeel b)
+          - name: uitdrukkelijke_toestemming_gegeven_genetisch
+            type: boolean
+            required: true
+            description: Betrokkene heeft uitdrukkelijke toestemming gegeven (lid 2 onderdeel b, 1°)
+          - name: voldoende_waarborgen_genetisch
+            type: boolean
+            required: true
+            description: Er zijn zodanige waarborgen dat de persoonlijke levenssfeer niet onevenredig wordt geschaad (lid 2 onderdeel b, 2°)
+          - name: toestemming_vragen_onmogelijk_of_onevenredig_genetisch
+            type: boolean
+            required: true
+            description: Toestemming vragen is onmogelijk of onevenredig (lid 3 — vrijstelling van toestemmingsvereiste lid 2 onderdeel b)
+        output:
+          - name: verbod_genetische_gegevens_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van genetische gegevens is niet van toepassing
+        actions:
+          - output: verbod_genetische_gegevens_niet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $gegevens_van_betrokkene_zelf
+                  value: true
+                - operation: EQUALS
+                  subject: $zwaarwegend_geneeskundig_belang
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $onderzoek_algemeen_belang_genetisch
+                      value: true
+                    - operation: OR
+                      conditions:
+                        - operation: EQUALS
+                          subject: $uitdrukkelijke_toestemming_gegeven_genetisch
+                          value: true
+                        - operation: EQUALS
+                          subject: $toestemming_vragen_onmogelijk_of_onevenredig_genetisch
+                          value: true
+                    - operation: EQUALS
+                      subject: $voldoende_waarborgen_genetisch
+                      value: true
   - number: '29'
     text: |-
       Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om biometrische gegevens met het oog
       op de unieke identificatie van een persoon te verwerken niet van toepassing, indien de verwerking noodzakelijk is
       voor authenticatie of beveiligingsdoeleinden.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel29
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk is voor authenticatie of beveiligingsdoeleinden"
+          reason: "Necessity ('noodzakelijk') for authentication/security purposes requires contextual judgment, not expressible as engine operation"
+          legal_text_excerpt: "het verbod om biometrische gegevens met het oog op de unieke identificatie van een persoon te verwerken niet van toepassing, indien de verwerking noodzakelijk is voor authenticatie of beveiligingsdoeleinden"
+          accepted: false
+      execution:
+        parameters:
+          - name: doel_is_authenticatie_of_beveiliging
+            type: boolean
+            required: true
+            description: De verwerking vindt plaats voor authenticatie- of beveiligingsdoeleinden
+        output:
+          - name: verbod_biometrische_gegevens_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van biometrische gegevens voor unieke identificatie is niet van toepassing
+        actions:
+          - output: verbod_biometrische_gegevens_niet_van_toepassing
+            value:
+              operation: EQUALS
+              subject: $doel_is_authenticatie_of_beveiliging
+              value: true
   - number: '30'
     text: |-
       1 Gelet op artikel 9, tweede lid, onderdeel b, van de verordening, is het verbod om gegevens over gezondheid te
@@ -882,6 +1230,77 @@ articles:
         artikel: '24'
         hoofdstuk: '3'
         paragraaf: '3.1'
+    machine_readable:
+      untranslatables:
+        - construct: "noodzakelijk is ter bescherming van de vitale belangen van de betrokkene of van een andere natuurlijke persoon, indien de betrokkene fysiek of juridisch niet in staat is zijn toestemming te geven"
+          reason: "Necessity for vital interests and incapacity to consent require contextual judgment"
+          legal_text_excerpt: "onderdeel b: de verwerking noodzakelijk is ter bescherming van de vitale belangen..."
+          accepted: false
+        - construct: "noodzakelijk is voor de instelling, uitoefening of onderbouwing van een rechtsvordering, of wanneer gerechten handelen in het kader van hun rechtsbevoegdheid"
+          reason: "Necessity for legal claims requires contextual judgment"
+          legal_text_excerpt: "onderdeel d: de verwerking noodzakelijk is voor de instelling, uitoefening of onderbouwing van een rechtsvordering"
+          accepted: false
+        - construct: "noodzakelijk is om redenen van zwaarwegend algemeen belang als bedoeld in artikel 23, onderdelen a en b"
+          reason: "Overriding public interest requires contextual judgment"
+          legal_text_excerpt: "onderdeel e: de verwerking noodzakelijk is om redenen van zwaarwegend algemeen belang als bedoeld in artikel 23"
+          accepted: false
+        - construct: "noodzakelijk is met het oog op wetenschappelijk of historisch onderzoek of statistische doeleinden"
+          reason: "Necessity for research purposes requires contextual judgment"
+          legal_text_excerpt: "onderdeel f: de verwerking noodzakelijk is met het oog op wetenschappelijk of historisch onderzoek"
+          accepted: false
+      execution:
+        parameters:
+          - name: uitdrukkelijke_toestemming_gegeven_strafrechtelijk
+            type: boolean
+            required: true
+            description: Betrokkene heeft uitdrukkelijke toestemming gegeven voor verwerking voor een of meer welbepaalde doeleinden (onderdeel a)
+          - name: noodzakelijk_vitale_belangen_strafrechtelijk
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk ter bescherming vitale belangen en betrokkene niet in staat toestemming te geven (onderdeel b)
+          - name: gegevens_kennelijk_openbaar_gemaakt_strafrechtelijk
+            type: boolean
+            required: true
+            description: Betrokkene heeft de strafrechtelijke gegevens kennelijk openbaar gemaakt (onderdeel c)
+          - name: noodzakelijk_rechtsvordering_strafrechtelijk
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor rechtsvordering of rechterlijke bevoegdheid (onderdeel d)
+          - name: noodzakelijk_zwaarwegend_algemeen_belang
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk om redenen van zwaarwegend algemeen belang als bedoeld in artikel 23 onderdelen a en b (onderdeel e)
+          - name: voldaan_aan_voorwaarden_artikel24_b_tot_d
+            type: boolean
+            required: true
+            description: Verwerking voor wetenschappelijk/historisch onderzoek of statistiek en voldaan aan voorwaarden artikel 24 onderdelen b tot en met d (onderdeel f)
+        output:
+          - name: verwerking_strafrechtelijke_gegevens_toegestaan
+            type: boolean
+            description: Verwerking van persoonsgegevens van strafrechtelijke aard is toegestaan op grond van artikel 32
+        actions:
+          - output: verwerking_strafrechtelijke_gegevens_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $uitdrukkelijke_toestemming_gegeven_strafrechtelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_vitale_belangen_strafrechtelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $gegevens_kennelijk_openbaar_gemaakt_strafrechtelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_rechtsvordering_strafrechtelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_zwaarwegend_algemeen_belang
+                  value: true
+                - operation: EQUALS
+                  subject: $voldaan_aan_voorwaarden_artikel24_b_tot_d
+                  value: true
   - number: '33'
     text: |-
       1 Persoonsgegevens van strafrechtelijke aard mogen worden verwerkt, indien:
@@ -1015,6 +1434,28 @@ articles:
       - id: ref4
         bwb_id: BWBR0005537
         artikel: 8:29
+    machine_readable:
+      untranslatables:
+        - construct: "is de indiening van het verzoekschrift niet aan een termijn gebonden"
+          reason: "The absence-of-deadline case (when no response was given within the GDPR art 12 lid 3 terms) cannot be expressed as an engine operation — there is no null or unbounded date concept"
+          legal_text_excerpt: "lid 2: Indien de verwerkingsverantwoordelijke niet binnen de in artikel 12, derde lid, van de verordening genoemde termijnen heeft geantwoord, is de indiening van het verzoekschrift niet aan een termijn gebonden."
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_ontvangst_antwoord
+            type: date
+            required: true
+            description: Datum waarop het antwoord van de verwerkingsverantwoordelijke is ontvangen (lid 2 — alleen relevant als er een antwoord was)
+        output:
+          - name: verzoekschrift_uiterste_indiendatum
+            type: date
+            description: Uiterste datum voor indiening van het verzoekschrift bij de rechtbank (zes weken na ontvangst antwoord, lid 2)
+        actions:
+          - output: verzoekschrift_uiterste_indiendatum
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_antwoord
+              weeks: 6
   - number: '36'
     text: |-
       1 De belanghebbende kan zich ook binnen de termijn bepaald voor het instellen van beroep op grond van
@@ -1047,6 +1488,28 @@ articles:
       - id: ref3
         bwb_id: BWBR0005537
         artikel: 6:7
+    machine_readable:
+      untranslatables:
+        - construct: "in afwijking van artikel 6:7 van de Algemene wet bestuursrecht — nieuwe vertrektijd na bemiddeling"
+          reason: "The derogation from AWB 6:7 establishes a completely new start date for the appeal period (date mediation ends), not merely a different duration. The engine override pattern replaces an output value but cannot change the start date used by AWB's own deadline calculation. The full derogation semantics are inexpressible."
+          legal_text_excerpt: "lid 1: kan het beroep in afwijking van artikel 6:7 van de Algemene wet bestuursrecht nog worden ingesteld... doch uiterlijk zes weken na dat tijdstip"
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_bericht_beeindigd
+            type: date
+            required: true
+            description: Datum waarop de AP of de geschillenbeslechtingsinstantie heeft medegedeeld dat de behandeling van de zaak is beëindigd (lid 1)
+        output:
+          - name: beroepstermijn_einddatum
+            type: date
+            description: Uiterste datum voor het instellen van beroep of procedure artikel 35, in afwijking van AWB 6:7 (zes weken na bericht beëindiging bemiddeling/advies)
+        actions:
+          - output: beroepstermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_bericht_beeindigd
+              weeks: 6
   - number: '37'
     text: |-
       Een verwerking kan niet ten grondslag worden gelegd aan een vordering als bedoeld in
