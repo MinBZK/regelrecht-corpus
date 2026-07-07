@@ -4664,13 +4664,6 @@ articles:
       studielast voor een studiejaar gebaseerd is.
     url: https://wetten.overheid.nl/BWBR0005682/2026-01-01#Artikel7.4
     machine_readable:
-      definitions:
-        STUDIEPUNTEN_PER_STUDIEJAAR:
-          value: 60
-          description: Aantal studiepunten per studiejaar
-        UREN_PER_STUDIEJAAR:
-          value: 1680
-          description: Aantal uren studie per studiejaar (60 studiepunten)
       execution:
         output:
           - name: studiepunten_per_studiejaar
@@ -4681,9 +4674,9 @@ articles:
             description: Aantal uren studie in een studiejaar (1 studiepunt = 28 uur)
         actions:
           - output: studiepunten_per_studiejaar
-            value: $STUDIEPUNTEN_PER_STUDIEJAAR
+            value: 60
           - output: uren_per_studiejaar
-            value: $UREN_PER_STUDIEJAAR
+            value: 1680
   - number: '7.5'
     text: |-
       1 Onverminderd de [artikelen 7.5a tot en met 7.5d][ref1] bedraagt de studielast van:
@@ -4904,6 +4897,46 @@ articles:
         artikel: 7.3d
         hoofdstuk: '7'
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "bachelor WO studielast meer dan 180 tot maximaal 240 (range minister)"
+          reason: "Range determined by minister per application; no single fixed value computable"
+          legal_text_excerpt: "De studielast meer dan 180 studiepunten, maar ten hoogste 240 studiepunten bedraagt. In het besluit op de aanvraag bepaalt Onze Minister de studielast"
+          accepted: false
+        - construct: "master WO leraar VHO studielast 120-180 studiepunten (range instellingsbestuur)"
+          reason: "Variable range set by instellingsbestuur; no fixed value computable"
+          legal_text_excerpt: "waarvan de studielast ten minste 120 studiepunten en ten hoogste 180 studiepunten bedraagt. Het instellingsbestuur bepaalt binnen die bandbreedte de studielast"
+          accepted: false
+      execution:
+        parameters:
+          - name: bijzondere_opleiding_type
+            type: string
+            required: true
+            description: "Type bijzondere opleiding aangewezen door Onze Minister: master_120, master_levensbeschouwelijk_180, master_gezamenlijk_90"
+        output:
+          - name: bijzondere_studielast_studiepunten
+            type: number
+            description: Studielast van de bijzondere opleiding aangewezen door Onze Minister (lid 2, 3 en 4)
+        actions:
+          - output: bijzondere_studielast_studiepunten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bijzondere_opleiding_type
+                    value: master_120
+                  then: 120
+                - when:
+                    operation: EQUALS
+                    subject: $bijzondere_opleiding_type
+                    value: master_levensbeschouwelijk_180
+                  then: 180
+                - when:
+                    operation: EQUALS
+                    subject: $bijzondere_opleiding_type
+                    value: master_gezamenlijk_90
+                  then: 90
   - number: 7.5d
     text: |-
       Het instellingsbestuur kan bepalen dat:
@@ -5061,10 +5094,6 @@ articles:
         hoofdstuk: '7'
         paragraaf: '1'
     machine_readable:
-      definitions:
-        STUDIELAST_PROPEDEUTISCHE_FASE:
-          value: 60
-          description: Studielast van de propedeutische fase in studiepunten (lid 5)
       execution:
         output:
           - name: studielast_propedeutische_fase
@@ -5072,7 +5101,7 @@ articles:
             description: Studielast van de propedeutische fase in studiepunten
         actions:
           - output: studielast_propedeutische_fase
-            value: $STUDIELAST_PROPEDEUTISCHE_FASE
+            value: 60
   - number: 7.8a
     text: |-
       1 Onze Minister kan op aanvraag van een instellingsbestuur goedkeuren dat een deel
@@ -8117,6 +8146,44 @@ articles:
         artikel: 7.45a
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_ingeschreven_voor_ou_onderwijseenheid
+            type: boolean
+            required: true
+            description: Of de student is ingeschreven voor een onderwijseenheid bij de Open Universiteit (lid 1)
+        input:
+          - name: volledig_wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+          - name: is_wettelijk_collegegeld_plichtig
+            type: boolean
+            source:
+              output: is_wettelijk_collegegeld_plichtig
+        output:
+          - name: is_instellingscollegegeld_plichtig
+            type: boolean
+            description: Of de student instellingscollegegeld verschuldigd is (lid 1)
+          - name: minimum_instellingscollegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Minimale hoogte van het instellingscollegegeld (volledig wettelijk collegegeld, lid 3)
+        actions:
+          - output: is_instellingscollegegeld_plichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_wettelijk_collegegeld_plichtig
+                - operation: NOT
+                  value: $is_ingeschreven_voor_ou_onderwijseenheid
+          - output: minimum_instellingscollegegeld
+            value: $volledig_wettelijk_collegegeld
   - number: '7.47'
     text: |-
       1 Het collegegeld wordt door of namens de student voldaan door:
@@ -8267,6 +8334,59 @@ articles:
       - id: ref10
         bwb_id: BWBR0018472
         artikel: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van proportioneel collegegeld (rato berekening)"
+          reason: "Division may produce fractional eurocent values; rounding is not expressible in the engine"
+          legal_text_excerpt: "berekend naar rato van het aantal resterende maanden van het desbetreffende studiejaar"
+          accepted: false
+      execution:
+        parameters:
+          - name: resterend_maanden
+            type: number
+            required: true
+            description: Aantal resterende maanden van het studiejaar bij inschrijving gedurende het studiejaar (lid 3)
+          - name: resterend_maanden_na_uitschrijving
+            type: number
+            required: true
+            description: Aantal maanden dat het studiejaar duurt na beëindiging inschrijving (lid 4)
+        input:
+          - name: verschuldigd_wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+        output:
+          - name: proportioneel_collegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Pro-rata collegegeld bij inschrijving gedurende het studiejaar (lid 3)
+          - name: terugbetaling_collegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Terugbetaling collegegeld voor resterende maanden na uitschrijving (lid 4)
+        actions:
+          - output: twaalfde_deel_collegegeld
+            value:
+              operation: DIVIDE
+              values:
+                - $verschuldigd_wettelijk_collegegeld
+                - 12
+          - output: proportioneel_collegegeld
+            value:
+              operation: MULTIPLY
+              values:
+                - $twaalfde_deel_collegegeld
+                - $resterend_maanden
+          - output: terugbetaling_collegegeld
+            value:
+              operation: MULTIPLY
+              values:
+                - $twaalfde_deel_collegegeld
+                - $resterend_maanden_na_uitschrijving
   - number: '7.49'
     text: |-
       1 Het instellingsbestuur stelt in afwijking van [artikel 7.45, eerste lid][ref1], voor
@@ -8322,6 +8442,28 @@ articles:
         artikel: '7.47'
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: volledig_wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+        output:
+          - name: maximaal_experimenteel_collegegeld
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale hoogte van het collegegeld voor experimentele programma's (5x volledig wettelijk, lid 1)
+        actions:
+          - output: maximaal_experimenteel_collegegeld
+            value:
+              operation: MULTIPLY
+              values:
+                - 5
+                - $volledig_wettelijk_collegegeld
   - number: 7.49a
     text: |-
       1 Het instellingsbestuur kan voor het aanbieden van een premaster en een educatieve module een vergoeding vragen.
@@ -8460,6 +8602,44 @@ articles:
         artikel: '7.47'
         hoofdstuk: '7'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: studiepunten_premaster
+            type: number
+            required: true
+            description: Studielast van de premaster of educatieve module in studiepunten
+        input:
+          - name: volledig_wettelijk_collegegeld
+            type: amount
+            source:
+              output: volledig_wettelijk_collegegeld
+            type_spec:
+              unit: eurocent
+        output:
+          - name: maximum_vergoeding_premaster
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale vergoeding voor een premaster of educatieve module (lid 2 voor ≥60 sp, lid 4 voor <60 sp)
+        actions:
+          - output: maximum_vergoeding_premaster
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $studiepunten_premaster
+                    value: 60
+                  then: $volledig_wettelijk_collegegeld
+              default:
+                operation: MULTIPLY
+                values:
+                  - operation: DIVIDE
+                    values:
+                      - $studiepunten_premaster
+                      - 60
+                  - $volledig_wettelijk_collegegeld
   - number: '7.50'
     text: |-
       1 Bij ministeriele regeling kan worden bepaald dat het instellingsbestuur een andere bijdrage dan bedoeld in de
