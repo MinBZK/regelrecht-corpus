@@ -247,6 +247,29 @@ articles:
       - id: ref2
         bwb_id: BWBR0040632
         artikel: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "zes weken voor afloop van de justitiële titel"
+          reason: "Date subtraction is not available as an engine operation — DATE_ADD only supports positive durations, so computing 'X weeks before date Y' cannot be expressed"
+          suggestion: "Add DATE_SUBTRACT or support negative durations in DATE_ADD"
+          legal_text_excerpt: "Zes weken voor afloop van de justitiële titel treft de zorgaanbieder voorbereidingen voor aansluitende zorg"
+          accepted: false
+      execution:
+        parameters:
+          - name: verdere_zorg_nodig
+            type: boolean
+            required: true
+            description: Oordeel van de zorgverlener of behandelaar dat na afloop van de strafrechtelijke titel verdere zorg nodig is
+        output:
+          - name: voorbereiding_aansluitende_zorg_vereist
+            type: boolean
+            description: Geeft aan of de zorgaanbieder verplicht is voorbereidingen te treffen voor aansluitende zorg
+        actions:
+          - output: voorbereiding_aansluitende_zorg_vereist
+            value:
+              operation: EQUALS
+              subject: $verdere_zorg_nodig
+              value: true
   - number: '2.6'
     text: |-
       1 Ten behoeve van de indicatiestelling, de plaatsing van forensische patiënten bij zorgaanbieders, de
@@ -723,6 +746,26 @@ articles:
       4 Onze Minister kan de zorgaanbieder een bestuurlijke boete opleggen, indien de zorgaanbieder niet voldoet aan de
       verplichting tot opneming en verlening van forensische zorg bedoeld in het derde lid.
     url: https://wetten.overheid.nl/BWBR0040634/2025-02-28#Artikel6.1
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: indicatiestelling_overgelegd
+            type: boolean
+            required: true
+            description: Geeft aan of een indicatiestelling is overgelegd aan Onze Minister voorafgaand aan het plaatsingsbesluit
+        output:
+          - name: plaatsing_toegestaan
+            type: boolean
+            description: Geeft aan of het plaatsingsbesluit kan worden genomen (vereist een indicatiestelling)
+        actions:
+          - output: plaatsing_toegestaan
+            value:
+              operation: EQUALS
+              subject: $indicatiestelling_overgelegd
+              value: true
   - number: '6.2'
     text: |-
       1 Bij de plaatsing, bedoeld in [artikel 6.1, eerste lid][ref1], worden in ieder geval in de overwegingen betrokken:
@@ -779,6 +822,35 @@ articles:
         bwb_id: BWBR0040634
         artikel: '6.1'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvang_terbeschikkingstelling
+            type: date
+            required: true
+            description: Datum van aanvang van de termijn van terbeschikkingstelling
+          - name: aanvang_alternatieve_plaatsing
+            type: date
+            required: false
+            description: Datum van aanvang van tijdelijke plaatsing in een penitentiaire inrichting (lid 2)
+        output:
+          - name: plaatsing_uiterste_datum
+            type: date
+            description: Uiterste datum voor plaatsing van de ter beschikking gestelde in een instelling (4 maanden na aanvang TBS, lid 1)
+          - name: uiterste_datum_alternatieve_plaatsing
+            type: date
+            description: Uiterste datum voor de alternatieve plaatsing in een penitentiaire inrichting (maximaal 1 jaar, lid 2)
+        actions:
+          - output: plaatsing_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvang_terbeschikkingstelling
+              months: 4
+          - output: uiterste_datum_alternatieve_plaatsing
+            value:
+              operation: DATE_ADD
+              date: $aanvang_alternatieve_plaatsing
+              years: 1
   - number: '6.4'
     text: |-
       1 Opneming van ter beschikking gestelden in een rijksinstelling of een private instelling met een aanwijzing
@@ -922,6 +994,40 @@ articles:
       de instelling waarin hij was geplaatst noodzakelijk is, de termijn, bedoeld in het derde lid, met ten hoogste vier
       weken verlengen.
     url: https://wetten.overheid.nl/BWBR0040634/2025-02-28#Artikel6.5
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvang_tijdelijke_plaatsing
+            type: date
+            required: true
+            description: Datum van aanvang van de tijdelijke plaatsing in een andere instelling
+          - name: verlenging_toegekend
+            type: boolean
+            required: false
+            description: Geeft aan of Onze Minister de termijn met ten hoogste vier weken heeft verlengd (lid 4)
+        output:
+          - name: maximale_duur_weken
+            type: number
+            description: Maximale duur van de tijdelijke plaatsing in weken (7 normaal, 11 met verlenging)
+          - name: uiterste_datum_tijdelijke_plaatsing
+            type: date
+            description: Uiterste datum voor de tijdelijke plaatsing (7 of 11 weken na aanvang)
+        actions:
+          - output: maximale_duur_weken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verlenging_toegekend
+                    value: true
+                  then: 11
+              default: 7
+          - output: uiterste_datum_tijdelijke_plaatsing
+            value:
+              operation: DATE_ADD
+              date: $aanvang_tijdelijke_plaatsing
+              weeks: $maximale_duur_weken
   - number: '6.6'
     text: |-
       Forensische patiënten die hiervoor ingevolge [artikel 4, vijfde lid, van de Penitentiaire beginselenwet][ref1], in
@@ -1057,11 +1163,45 @@ articles:
         bwb_id: BWBR0040634
         artikel: '6.10'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        output:
+          - name: max_bestuurlijke_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete per niet nagekomen verplichting tot opneming en verlening van forensische zorg (artikel 6.1 lid 3)
+        actions:
+          - output: max_bestuurlijke_boete
+            value: 2500000
   - number: '8.1'
     text: |-
       Onze Minister zendt binnen drie jaar na de inwerkingtreding van deze wet, en vervolgens telkens na vijf jaar, aan
       de Staten-Generaal een verslag over de doeltreffendheid en de effecten van deze wet in de praktijk.
     url: https://wetten.overheid.nl/BWBR0040634/2025-02-28#Artikel8.1
+    machine_readable:
+      untranslatables:
+        - construct: "vervolgens telkens na vijf jaar"
+          reason: "Recurring date generation (iterating +5 years indefinitely) requires aggregation over a variable-length collection, which is not available as an engine operation"
+          suggestion: "Add support for recurring/repeating date patterns or SEQUENCE operation"
+          legal_text_excerpt: "binnen drie jaar na de inwerkingtreding van deze wet, en vervolgens telkens na vijf jaar"
+          accepted: false
+      execution:
+        parameters:
+          - name: inwerkingtreding
+            type: date
+            required: true
+            description: Datum van inwerkingtreding van de wet
+        output:
+          - name: eerste_verslagdatum
+            type: date
+            description: Uiterste datum voor het eerste verslag aan de Staten-Generaal (3 jaar na inwerkingtreding)
+        actions:
+          - output: eerste_verslagdatum
+            value:
+              operation: DATE_ADD
+              date: $inwerkingtreding
+              years: 3
   - number: '8.2'
     text: 'Deze wet wordt aangehaald als: Wet forensische zorg.'
     url: https://wetten.overheid.nl/BWBR0040634/2025-02-28#Artikel8.2
