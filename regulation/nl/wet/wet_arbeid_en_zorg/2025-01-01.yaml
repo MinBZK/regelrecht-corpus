@@ -534,6 +534,53 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vrouwelijke_werknemer
+            type: boolean
+            required: true
+            description: "Is vrouwelijke werknemer als bedoeld in artikel 3:6 eerste lid onderdeel a"
+          - name: geniet_zwangerschapsverlof
+            type: boolean
+            required: true
+            description: "Geniet zwangerschaps- of bevallingsverlof overeenkomstig artikel 3:1 tweede, derde en vijfde lid"
+          - name: is_werknemer
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 3:6 eerste lid"
+          - name: geniet_adoptieverlof
+            type: boolean
+            required: true
+            description: "Geniet verlof in verband met adoptie of pleegkind overeenkomstig artikel 3:2 tweede lid of vijfde lid"
+        output:
+          - name: heeft_recht_op_uitkering_zwangerschap
+            type: boolean
+            description: "Recht op uitkering in verband met zwangerschap en bevalling (lid 1)"
+          - name: heeft_recht_op_uitkering_adoptie
+            type: boolean
+            description: "Recht op uitkering in verband met adoptie of pleegkind (lid 2)"
+        actions:
+          - output: heeft_recht_op_uitkering_zwangerschap
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vrouwelijke_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $geniet_zwangerschapsverlof
+                  value: true
+          - output: heeft_recht_op_uitkering_adoptie
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $geniet_adoptieverlof
+                  value: true
   - number: 3:8
     text: |-
       1 De vrouwelijke gelijkgestelde heeft in verband met haar zwangerschap en bevalling recht op uitkering gedurende
@@ -940,6 +987,77 @@ articles:
       - id: ref17
         bwb_id: BWBR0015703
         artikel: 10d
+    machine_readable:
+      untranslatables:
+        - construct: "1/261 deel van het loon over een periode van één jaar"
+          reason: "Aggregation over a variable-length period is not expressible as engine operations"
+          legal_text_excerpt: "als dagloon beschouwd 1/261 deel van het loon... dat de werknemer... in de periode van één jaar, die eindigt op de laatste dag van het tweede aangiftetijdvak... verdiende"
+          accepted: false
+      execution:
+        parameters:
+          - name: dagloon
+            type: number
+            required: true
+            description: "Het dagloon als bedoeld in artikel 3:13 tweede lid (extern vastgesteld in eurocent)"
+          - name: heeft_loonkostensubsidie
+            type: boolean
+            required: true
+            description: "Werkgever ontvangt loonkostensubsidie als bedoeld in artikel 10d eerste of tweede lid Participatiewet"
+          - name: loonwaarde
+            type: number
+            required: false
+            description: "Vastgestelde loonwaarde als percentage (0-100) als bedoeld in artikel 6 eerste lid onderdeel g Participatiewet"
+          - name: loonkostensubsidie_zonder_loonwaarde
+            type: boolean
+            required: false
+            description: "Loonkostensubsidie verstrekt zonder vastgestelde loonwaarde (artikel 10d eerste lid onderdeel b Participatiewet)"
+        output:
+          - name: toepasselijke_loonwaarde_percentage
+            type: number
+            description: "De toe te passen loonwaarde als percentage (relevant bij loonkostensubsidie, leden 6-7)"
+          - name: uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Hoogte van de uitkering per dag"
+        actions:
+          - output: toepasselijke_loonwaarde_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_loonkostensubsidie
+                    value: false
+                  then: 100
+                - when:
+                    operation: EQUALS
+                    subject: $loonkostensubsidie_zonder_loonwaarde
+                    value: true
+                  then: 50
+                - when:
+                    operation: LESS_THAN
+                    subject: $loonwaarde
+                    value: 30
+                  then: 30
+              default: $loonwaarde
+          - output: uitkering_per_dag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_loonkostensubsidie
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $dagloon
+                      - operation: DIVIDE
+                        values:
+                          - $toepasselijke_loonwaarde_percentage
+                          - 100
+              default: $dagloon
   - number: 3:14
     text: |-
       1 De betaling geschiedt als regel in tijdvakken van een maand.
@@ -1469,6 +1587,68 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vrouwelijke_beroepsbeoefenaar
+            type: boolean
+            required: true
+            description: "Is vrouwelijke beroepsbeoefenaar op arbeidsovereenkomst als bedoeld in artikel 3:17 onderdeel a"
+          - name: is_vrouwelijke_zelfstandige
+            type: boolean
+            required: true
+            description: "Is vrouwelijke zelfstandige als bedoeld in artikel 3:17 onderdeel b"
+          - name: is_vreemdeling
+            type: boolean
+            required: true
+            description: "Is vreemdeling in de zin van de Vreemdelingenwet 2000"
+          - name: heeft_rechtmatig_verblijf
+            type: boolean
+            required: false
+            description: "Heeft rechtmatig verblijf als bedoeld in artikel 8 onderdelen a t/m e en l Vreemdelingenwet 2000 (lid 6)"
+          - name: geniet_zwangerschapsverlof
+            type: boolean
+            required: false
+            description: "Vrouwelijke beroepsbeoefenaar geniet verlof overeenkomstig artikel 3:1 tweede en derde lid (lid 1)"
+        output:
+          - name: geen_recht_wegens_onrechtmatig_verblijf
+            type: boolean
+            description: "Geen recht op uitkering wegens ontbrekend rechtmatig verblijf (artikel 3:18 zesde lid)"
+          - name: heeft_recht_op_uitkering
+            type: boolean
+            description: "Heeft recht op uitkering in verband met zwangerschap en bevalling"
+        actions:
+          - output: geen_recht_wegens_onrechtmatig_verblijf
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vreemdeling
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $heeft_rechtmatig_verblijf
+                    value: true
+          - output: heeft_recht_op_uitkering
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $geen_recht_wegens_onrechtmatig_verblijf
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $is_vrouwelijke_beroepsbeoefenaar
+                          value: true
+                        - operation: EQUALS
+                          subject: $geniet_zwangerschapsverlof
+                          value: true
+                    - operation: EQUALS
+                      subject: $is_vrouwelijke_zelfstandige
+                      value: true
   - number: 3:21
     text: |-
       1 De vrouwelijke zelfstandige of vrouwelijke beroepsbeoefenaar op arbeidsovereenkomst kan een recht op uitkering op
@@ -1658,6 +1838,40 @@ articles:
       - id: ref8
         bwb_id: BWBR0002638
         artikel: '15'
+    machine_readable:
+      definitions:
+        VAKANTIE_UITKERING_PERCENTAGE:
+          value: 8
+          description: "Percentage vakantie-uitkering over de uitkering (artikel 3:23 tweede lid)"
+      execution:
+        parameters:
+          - name: grondslag
+            type: number
+            required: true
+            description: "De grondslag als bedoeld in artikel 8 Wet arbeidsongeschiktheidsverzekering zelfstandigen (in eurocent)"
+        output:
+          - name: uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Uitkering per dag (100% van de grondslag, artikel 3:23 tweede lid)"
+          - name: vakantie_uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Vakantie-uitkering per dag (8% over de daguitkering, artikel 3:23 tweede lid)"
+        actions:
+          - output: uitkering_per_dag
+            value: $grondslag
+          - output: vakantie_uitkering_per_dag
+            value:
+              operation: MULTIPLY
+              values:
+                - $grondslag
+                - operation: DIVIDE
+                  values:
+                    - $VAKANTIE_UITKERING_PERCENTAGE
+                    - 100
   - number: 3:24
     text: |-
       De uitkering ter zake van vervanging bedraagt de grondslag, bedoeld in [artikel 3:23][ref1], eerste
@@ -2307,6 +2521,34 @@ articles:
       de werknemer, op diens verzoek, een verklaring uit te reiken waaruit blijkt op hoeveel geboorteverlof de werknemer
       aanspraak heeft.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel42
+    machine_readable:
+      execution:
+        parameters:
+          - name: bevalling_datum
+            type: date
+            required: true
+            description: "Datum van de bevalling"
+        output:
+          - name: recht_op_geboorteverlof
+            type: boolean
+            description: "Werknemer heeft recht op geboorteverlof met behoud van loon"
+          - name: geboorteverlof_duur_weken
+            type: number
+            description: "Duur van het geboorteverlof in weken (eenmaal de arbeidsduur per week)"
+          - name: geboorteverlof_tijdvak_einde
+            type: date
+            description: "Uiterste datum waarop het geboorteverlof kan worden opgenomen (vier weken na bevalling)"
+        actions:
+          - output: recht_op_geboorteverlof
+            value: true
+          - output: geboorteverlof_duur_weken
+            value: 1
+          - output: geboorteverlof_tijdvak_einde
+            value:
+              operation: DATE_ADD
+              date: $bevalling_datum
+              weeks: 4
+              days: 1
   - number: 4:2a
     text: |-
       1 Nadat de werknemer het geboorteverlof, bedoeld in [artikel 4:2][ref1], heeft opgenomen, heeft hij gedurende een
@@ -2332,6 +2574,41 @@ articles:
         artikel: 4:2
         hoofdstuk: '4'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bevalling_datum
+            type: date
+            required: true
+            description: "Datum van de bevalling"
+          - name: heeft_geboorteverlof_opgenomen
+            type: boolean
+            required: true
+            description: "Of het geboorteverlof bedoeld in artikel 4:2 al volledig is opgenomen"
+        output:
+          - name: recht_op_aanvullend_geboorteverlof
+            type: boolean
+            description: "Werknemer heeft recht op aanvullend geboorteverlof (na opname geboorteverlof)"
+          - name: max_duur_aanvullend_geboorteverlof_weken
+            type: number
+            description: "Maximale duur aanvullend geboorteverlof in weken (lid 2)"
+          - name: aanvullend_geboorteverlof_tijdvak_einde
+            type: date
+            description: "Uiterste datum voor het opnemen van aanvullend geboorteverlof (zes maanden na bevalling)"
+        actions:
+          - output: recht_op_aanvullend_geboorteverlof
+            value:
+              operation: EQUALS
+              subject: $heeft_geboorteverlof_opgenomen
+              value: true
+          - output: max_duur_aanvullend_geboorteverlof_weken
+            value: 5
+          - output: aanvullend_geboorteverlof_tijdvak_einde
+            value:
+              operation: DATE_ADD
+              date: $bevalling_datum
+              months: 6
+              days: 1
   - number: 4:2b
     text: |-
       1 Op aanvraag van een werknemer als bedoeld in [artikel 3:6, eerste lid, aanhef en onderdeel a][ref1], verstrekt
@@ -2408,6 +2685,52 @@ articles:
       - id: ref8
         bwb_id: BWBR0002638
         artikel: '8'
+    machine_readable:
+      untranslatables:
+        - construct: "1/261 deel van het loon over een periode van één jaar"
+          reason: "Aggregation over a variable-length period is not expressible as engine operations"
+          legal_text_excerpt: "berekend aan de hand van 1/261 deel van het loon... dat de werknemer in de periode van een jaar... verdiende"
+          accepted: false
+      execution:
+        parameters:
+          - name: dagloon
+            type: number
+            required: true
+            description: "Het dagloon als bedoeld in artikel 4:2b vierde lid (extern vastgesteld, in eurocent)"
+          - name: maximumdagloon
+            type: number
+            required: true
+            description: "Het maximumdagloon als bedoeld in artikel 17 eerste lid Wet financiering sociale verzekeringen (in eurocent)"
+        output:
+          - name: uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Hoogte uitkering per dag aanvullend geboorteverlof (70% van dagloon, max 70% van maximumdagloon)"
+          - name: uitkering_max_weken
+            type: number
+            description: "Maximale duur van de uitkering in weken (lid 2)"
+        actions:
+          - output: uitkering_per_dag
+            value:
+              operation: MIN
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $dagloon
+                    - operation: DIVIDE
+                      values:
+                        - 70
+                        - 100
+                - operation: MULTIPLY
+                  values:
+                    - $maximumdagloon
+                    - operation: DIVIDE
+                      values:
+                        - 70
+                        - 100
+          - output: uitkering_max_weken
+            value: 5
   - number: 4:2c
     text: |-
       1 De werknemer, bedoeld in [artikel 4:2b, eerste lid][ref1], die in aanmerking wenst te komen voor de in dat
@@ -2772,11 +3095,62 @@ articles:
       - id: ref1
         bwb_id: BWBR0034925
         artikel: '1.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_werknemer
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 1:1 onderdeel b"
+          - name: persoon_is_ziek
+            type: boolean
+            required: true
+            description: "De te verzorgen persoon is ziek"
+          - name: persoon_behoort_tot_kring
+            type: boolean
+            required: true
+            description: "De te verzorgen persoon behoort tot de kring van personen als bedoeld in artikel 5:1 tweede lid"
+        output:
+          - name: heeft_recht_op_kortdurend_zorgverlof
+            type: boolean
+            description: "Werknemer heeft recht op kortdurend zorgverlof voor noodzakelijke verzorging"
+        actions:
+          - output: heeft_recht_op_kortdurend_zorgverlof
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $persoon_is_ziek
+                  value: true
+                - operation: EQUALS
+                  subject: $persoon_behoort_tot_kring
+                  value: true
   - number: 5:2
     text: |-
       Het verlof bedraagt in elke periode van 12 achtereenvolgende maanden ten hoogste twee maal de arbeidsduur per week.
       De periode van 12 maanden gaat in op de eerste dag waarop het verlof wordt genoten.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel52
+    machine_readable:
+      execution:
+        parameters:
+          - name: arbeidsduur_per_week
+            type: number
+            required: true
+            description: "De overeengekomen arbeidsduur per week in uren"
+        output:
+          - name: maximale_duur_kortdurend_zorgverlof_uren
+            type: number
+            description: "Maximale duur van kortdurend zorgverlof per periode van 12 aaneengesloten maanden in uren"
+        actions:
+          - output: maximale_duur_kortdurend_zorgverlof_uren
+            value:
+              operation: MULTIPLY
+              values:
+                - 2
+                - $arbeidsduur_per_week
   - number: 5:3
     text: |-
       De werknemer meldt vooraf aan de werkgever dat hij het verlof, bedoeld in artikel 5:1 opneemt onder opgave van
@@ -2826,6 +3200,39 @@ articles:
         hoofdstuk: '5'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "voorzover het loon niet meer bedraagt dan het maximumdagloon"
+          reason: "Conditional ceiling against externally determined maximum daily wage from Wet financiering sociale verzekeringen is not expressible without external source binding"
+          legal_text_excerpt: "Voorzover het loon niet meer bedraagt dan het bedrag, bedoeld in artikel 17, eerste lid, van de Wet financiering sociale verzekeringen... behoudt de werknemer... recht op 70% van het loon"
+          accepted: false
+      execution:
+        parameters:
+          - name: loon_per_dag
+            type: number
+            required: true
+            description: "Het dagloon van de werknemer in eurocent"
+        output:
+          - name: uitkering_percentage
+            type: number
+            description: "Het percentage van het loon waarop recht bestaat tijdens kortdurend zorgverlof"
+          - name: uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Het bedrag per dag tijdens kortdurend zorgverlof (70% van loon)"
+        actions:
+          - output: uitkering_percentage
+            value: 70
+          - output: uitkering_per_dag
+            value:
+              operation: MULTIPLY
+              values:
+                - $loon_per_dag
+                - operation: DIVIDE
+                  values:
+                    - 70
+                    - 100
   - number: 5:7
     text: |-
       1 Indien de werknemer op grond van enige wettelijk voorgeschreven verzekering of krachtens enige verzekering
@@ -2867,11 +3274,71 @@ articles:
         hoofdstuk: '5'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_werknemer
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 1:1 onderdeel b"
+          - name: persoon_levensbedreigend_ziek
+            type: boolean
+            required: false
+            description: "De te verzorgen persoon is levensbedreigend ziek als bedoeld in artikel 1:3 derde lid (onderdeel a)"
+          - name: persoon_ziek_of_hulpbehoevend
+            type: boolean
+            required: false
+            description: "De te verzorgen persoon is ziek of hulpbehoevend als bedoeld in artikel 1:3 vierde lid (onderdeel b)"
+          - name: persoon_behoort_tot_kring
+            type: boolean
+            required: true
+            description: "De te verzorgen persoon behoort tot de kring als bedoeld in artikel 5:1 tweede lid"
+        output:
+          - name: heeft_recht_op_langdurend_zorgverlof
+            type: boolean
+            description: "Werknemer heeft recht op langdurend zorgverlof"
+        actions:
+          - output: heeft_recht_op_langdurend_zorgverlof
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $persoon_behoort_tot_kring
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $persoon_levensbedreigend_ziek
+                      value: true
+                    - operation: EQUALS
+                      subject: $persoon_ziek_of_hulpbehoevend
+                      value: true
   - number: 5:10
     text: |-
       Het verlof bedraagt in elke periode van twaalf achtereenvolgende maanden ten hoogste zesmaal de arbeidsduur per
       week. De periode van twaalf maanden gaat in op de eerste dag waarop het verlof wordt genoten.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel510
+    machine_readable:
+      execution:
+        parameters:
+          - name: arbeidsduur_per_week
+            type: number
+            required: true
+            description: "De overeengekomen arbeidsduur per week in uren"
+        output:
+          - name: maximale_duur_langdurend_zorgverlof_uren
+            type: number
+            description: "Maximale duur van langdurend zorgverlof per periode van 12 aaneengesloten maanden in uren"
+        actions:
+          - output: maximale_duur_langdurend_zorgverlof_uren
+            value:
+              operation: MULTIPLY
+              values:
+                - 6
+                - $arbeidsduur_per_week
   - number: 5:11
     text: |-
       1 De werknemer dient het verzoek om verlof ten minste twee weken voor het beoogde tijdstip van ingang van
@@ -3040,6 +3507,32 @@ articles:
       In alle andere gevallen waarin de in de eerste volzin gestelde voorwaarden voor meer dan één kind met ingang van
       hetzelfde tijdstip worden vervuld, bestaat er slechts recht op één keer verlof.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel61
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_ouder_in_familierechtelijke_betrekking
+            type: boolean
+            required: true
+            description: "Werknemer staat als ouder in familierechtelijke betrekking tot een kind (lid 1)"
+          - name: verzorgt_kind_als_eigen_kind
+            type: boolean
+            required: false
+            description: "Werknemer woont op zelfde adres en heeft duurzaam verzorging/opvoeding van kind op zich genomen (lid 2)"
+        output:
+          - name: heeft_recht_op_ouderschapsverlof
+            type: boolean
+            description: "Werknemer heeft recht op ouderschapsverlof zonder behoud van loon"
+        actions:
+          - output: heeft_recht_op_ouderschapsverlof
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ouder_in_familierechtelijke_betrekking
+                  value: true
+                - operation: EQUALS
+                  subject: $verzorgt_kind_als_eigen_kind
+                  value: true
   - number: 6:1a
     text: |-
       De werkgever mag de werknemer niet benadelen wegens de omstandigheid dat de werknemer in of buiten rechte het recht
@@ -3064,6 +3557,24 @@ articles:
       het verlof met inachtneming van dit hoofdstuk. De werkgever is in dat geval verplicht aan de werknemer, op diens
       verzoek, een verklaring uit te reiken waaruit blijkt op hoeveel verlof de werknemer nog aanspraak heeft.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel62
+    machine_readable:
+      execution:
+        parameters:
+          - name: arbeidsduur_per_week
+            type: number
+            required: true
+            description: "De overeengekomen arbeidsduur per week in uren"
+        output:
+          - name: maximale_duur_ouderschapsverlof_uren
+            type: number
+            description: "Maximale duur van ouderschapsverlof in uren (zesentwintig maal de arbeidsduur per week)"
+        actions:
+          - output: maximale_duur_ouderschapsverlof_uren
+            value:
+              operation: MULTIPLY
+              values:
+                - 26
+                - $arbeidsduur_per_week
   - number: 6:3
     text: |-
       1 Een werknemer als bedoeld in [artikel 3:6, eerste lid, aanhef en onderdeel a][ref1], heeft gedurende de periode
@@ -3161,6 +3672,93 @@ articles:
       - id: ref10
         bwb_id: BWBR0013008
         hoofdstuk: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "1/261 deel van het loon over een periode van één jaar"
+          reason: "Aggregation over a variable-length period is not expressible as engine operations"
+          legal_text_excerpt: "berekend aan de hand van 1/261 deel van het loon... dat de werknemer in de periode van een jaar... verdiende"
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum_kind
+            type: date
+            required: true
+            description: "Geboortedatum van het kind waarvoor ouderschapsverlof wordt genoten"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Datum waarvoor het recht op uitkering wordt beoordeeld"
+          - name: dagloon
+            type: number
+            required: true
+            description: "Het dagloon als bedoeld in artikel 6:3 vierde lid (extern vastgesteld, in eurocent)"
+          - name: maximumdagloon
+            type: number
+            required: true
+            description: "Het maximumdagloon als bedoeld in artikel 17 eerste lid Wet financiering sociale verzekeringen (in eurocent)"
+          - name: is_werknemer_artikel_36
+            type: boolean
+            required: true
+            description: "Is werknemer als bedoeld in artikel 3:6 eerste lid aanhef en onderdeel a"
+        output:
+          - name: leeftijd_kind
+            type: number
+            description: "Leeftijd van het kind in volledige jaren op de peildatum"
+          - name: kind_onder_een_jaar
+            type: boolean
+            description: "Het kind heeft de leeftijd van één jaar nog niet bereikt op de peildatum"
+          - name: heeft_recht_op_uitkering
+            type: boolean
+            description: "Werknemer heeft recht op uitkering ouderschapsverlof (kind onder één jaar, lid 1)"
+          - name: uitkering_per_dag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Hoogte van de uitkering per dag (70% van dagloon, max 70% van maximumdagloon, lid 3)"
+          - name: max_uitkering_weken
+            type: number
+            description: "Maximale duur uitkering in weken (negen maal de arbeidsduur per week, lid 1)"
+        actions:
+          - output: leeftijd_kind
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_kind
+              reference_date: $peildatum
+          - output: kind_onder_een_jaar
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_kind
+              value: 1
+          - output: heeft_recht_op_uitkering
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_werknemer_artikel_36
+                  value: true
+                - operation: EQUALS
+                  subject: $kind_onder_een_jaar
+                  value: true
+          - output: uitkering_per_dag
+            value:
+              operation: MIN
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $dagloon
+                    - operation: DIVIDE
+                      values:
+                        - 70
+                        - 100
+                - operation: MULTIPLY
+                  values:
+                    - $maximumdagloon
+                    - operation: DIVIDE
+                      values:
+                        - 70
+                        - 100
+          - output: max_uitkering_weken
+            value: 9
   - number: 6:3a
     text: |-
       1 De werknemer, bedoeld in [artikel 6:3, derde lid][ref1], die in aanmerking wenst te komen voor een uitkering
@@ -3265,6 +3863,35 @@ articles:
       Geen recht op verlof als bedoeld in artikel 6:1 bestaat na de datum waarop het kind de leeftijd van acht jaren
       heeft bereikt.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel64
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum_kind
+            type: date
+            required: true
+            description: "Geboortedatum van het kind"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Datum waarop het recht op verlof wordt beoordeeld"
+        output:
+          - name: leeftijd_kind
+            type: number
+            description: "Leeftijd van het kind in volledige jaren op de peildatum"
+          - name: recht_op_verlof_niet_vervallen
+            type: boolean
+            description: "Het recht op ouderschapsverlof is nog niet vervallen (kind heeft leeftijd van acht jaren nog niet bereikt)"
+        actions:
+          - output: leeftijd_kind
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum_kind
+              reference_date: $peildatum
+          - output: recht_op_verlof_niet_vervallen
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd_kind
+              value: 8
   - number: 6:5
     text: |-
       1 De werknemer meldt het voornemen om verlof op te nemen ten minste twee maanden voor het tijdstip van ingang van
