@@ -1,0 +1,193 @@
+---
+law: huisvestingswet
+bwb_id: BWBR0005674
+valid_from: '2012-10-01'
+enriched_at: '2026-07-07'
+
+pipeline:
+  - phase: mvt_research
+    status: skipped
+    reason: WebFetch/WebSearch tools not available; no MvT documents retrieved
+  - phase: generate
+    status: done
+    articles_enriched: 20
+  - phase: reverse_validate
+    status: done
+    issues_found: 1
+    issues_fixed: 1
+
+machine_readable_summary:
+  articles_with_machine_readable: [8, 9, 13c, 19, 21, 25, 26, 31, 37, 41, 44, 54, 55, 60b, 68, 72, 73, 74, 81, 85a]
+  articles_skipped_reason_no_computable_logic:
+    - number: '1'
+      reason: Definitions only; no executable logic
+    - number: '2'
+      reason: Discretionary legislative authority (gemeenteraad); no computable conditions
+    - number: '3'
+      reason: Procedural consultation obligations; no computable logic
+    - number: '4'
+      reason: Contract obligations; delegated to private agreement
+    - number: '5'
+      reason: Discretionary designation authority (gemeenteraad)
+    - number: '6'
+      reason: Price thresholds reference external data without fixed values
+    - number: '7'
+      reason: Prohibition rule; enforcement-only, no decision logic
+    - number: '10'
+      reason: Discretionary classification (gemeenteraad); open criteria
+    - number: '11'
+      reason: Urgency criteria delegated to gemeenteraad
+    - number: '12'
+      reason: Nomination criteria delegated to gemeenteraad
+    - number: '13'
+      reason: Delegation to AMvB; no own computable logic
+    - number: 13a
+      reason: Discretionary binding criteria (gemeenteraad)
+    - number: 13b
+      reason: Discretionary binding criteria (gemeenteraad)
+    - number: '14'
+      reason: Register administration rules; procedural
+    - number: '15'
+      reason: Cross-reference to art. 11/12; no own logic
+    - number: '17'
+      reason: Central registration; procedural
+    - number: '18'
+      reason: Notification duty; no computable output beyond obligation
+    - number: '20'
+      reason: Exception to nomination; involves urgency comparison (non-computable)
+    - number: '22'
+      reason: Procedural rules delegated to gemeenteraad
+    - number: '23'
+      reason: Procedural application rules
+    - number: '24'
+      reason: Content requirements for permit; informational
+    - number: '27'
+      reason: Discretionary exception ("bijzondere gevallen")
+    - number: '28'
+      reason: Discretionary revocation; "wist of redelijkerwijs moest vermoeden" is untranslatable
+    - number: '29'
+      reason: Mandate provision; no decision logic
+    - number: '30'
+      reason: Prohibition rule; enforcement-only
+    - number: '32'
+      reason: Condition framework delegated to gemeenteraad
+    - number: '33'
+      reason: Prohibition rule; enforcement-only
+    - number: '34'
+      reason: Grounds for refusal delegated to gemeenteraad
+    - number: '35'
+      reason: Procedural application rules
+    - number: '36'
+      reason: Procedural notification; no output
+    - number: '38'
+      reason: Discretionary revocation
+    - number: '39'
+      reason: Registration condition; notarial verification not computable
+    - number: '40'
+      reason: Discretionary requisition power; interest-balancing not computable
+    - number: '42'
+      reason: Publication obligation; no decision output
+    - number: '43'
+      reason: Content requirements for order; informational
+    - number: '45'
+      reason: Obligation to comply; enforcement-only
+    - number: '46'
+      reason: Discretionary improvement power; no computable decision
+    - number: '47'
+      reason: Fee calculation requires "economisch verkeer" comparison (non-computable)
+    - number: '48'
+      reason: Discretionary fee adjustment; non-computable
+    - number: '49'
+      reason: Complex cross-references; no own primary logic
+    - number: '50'
+      reason: Discretionary assignment ("met name te noemen")
+    - number: '51'
+      reason: Fee determination requires external pricing data
+    - number: '52'
+      reason: Discretionary fee adjustment; non-computable
+    - number: '53'
+      reason: Obligation to act as good tenant; non-computable
+    - number: '56'
+      reason: Discretionary end-date determination
+    - number: '58'
+      reason: End by operation of law cross-referencing art. 41; termination date handled by art. 41
+    - number: '59'
+      reason: Evacuation duty; enforcement-only
+    - number: '60'
+      reason: Cost recovery; discretionary assessment
+    - number: 60a
+      reason: Definitions only
+    - number: 60c
+      reason: Discretionary adjustment by gedeputeerde staten; non-computable
+    - number: 60g
+      reason: Competence allocation; no decision logic
+    - number: '61'
+      reason: Beleidsregel by provinciale staten; discretionary
+    - number: '62'
+      reason: Procedural consultation
+    - number: '63'
+      reason: Notification obligation
+    - number: '69'
+      reason: Procedural consultation
+    - number: '75'
+      reason: Supervisory appointment; administrative
+    - number: '77'
+      reason: Entry power; no decision output
+    - number: '79'
+      reason: Reporting obligation; discretionary
+    - number: '80'
+      reason: Reporting obligation; fixed schedule
+    - number: '83'
+      reason: Prohibition rule; enforcement-only
+    - number: '84'
+      reason: Criminal sanctions; not executable as civil decision
+    - number: '85'
+      reason: Enforcement authority designation; administrative
+    - number: '88'
+      reason: Prohibition rule
+    - number: '89'
+      reason: Transitional/repeal provisions
+    - number: '91'
+      reason: Transitional provisions
+
+open_terms:
+  - id: meldplicht_termijn_maanden
+    artikel: '8'
+    delegated_to: gemeenteraad
+    delegation_type: GEMEENTELIJKE_VERORDENING
+    constraint: ten minste twee maanden (artikel 8)
+  - id: aanbiedingstermijn_weken
+    artikel: '26'
+    delegated_to: gemeenteraad
+    delegation_type: GEMEENTELIJKE_VERORDENING
+    constraint: ten hoogste dertien weken (artikel 26 lid 1)
+
+untranslatables:
+  - artikel: 13c
+    construct: redelijkerwijs niet of niet meer verwacht kan worden — verrichten van arbeid
+    reason: Subjective judgment; not computable
+  - artikel: 13c
+    construct: dringend woonruimte behoeven (lid 1 onder d en e)
+    reason: Administrative urgency judgment; not computable
+  - artikel: 31
+    construct: belang van behoud woonruimtevoorraad groter dan onttrekkingsbelang
+    reason: Interest-balancing test; not computable
+  - artikel: 31
+    construct: belang niet door voorwaarden voldoende gediend
+    reason: Assessment of whether conditions suffice; not computable
+  - artikel: 60b
+    construct: naar boven afgerond op een geheel getal (lid 5)
+    reason: CEIL operation not available in engine
+    suggestion: Add CEIL operation to engine
+
+reverse_validation:
+  performed_at: '2026-07-07'
+  result: PASSED
+  issues_found:
+    - artikel: '25'
+      issue: Parameters is_nederlander and verblijfsrecht_type were listed but not
+        referenced in any action (voldoet_aan_nationaliteitseis is imported via input
+        from artikel 9 execution)
+      fix: Removed the two orphan parameters
+  all_elements_traceable: true
+  hallucinations_detected: 0

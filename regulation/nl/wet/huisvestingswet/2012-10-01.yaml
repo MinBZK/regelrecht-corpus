@@ -339,6 +339,30 @@ articles:
       gevallen door de eigenaar aan burgemeester en wethouders dient te worden gemeld, zodra die leegstand langer duurt
       dan een daarbij aangegeven termijn van ten minste twee maanden.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel8
+    machine_readable:
+      open_terms:
+        - id: meldplicht_termijn_maanden
+          type: number
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 8 Huisvestingswet
+      execution:
+        parameters:
+          - name: leegstand_duur_maanden
+            type: number
+            required: true
+            description: Aantal maanden dat de woonruimte leeg staat
+        output:
+          - name: meldplicht_van_toepassing
+            type: boolean
+            description: Of de eigenaar de leegstand dient te melden
+        actions:
+          - output: meldplicht_van_toepassing
+            value:
+              operation: GREATER_THAN
+              subject: $leegstand_duur_maanden
+              value: $meldplicht_termijn_maanden
   - number: '9'
     text: |-
       1 De gemeenteraad wijst in de huisvestingsverordening de categorieën van woningzoekenden aan die met het oog op een
@@ -357,6 +381,38 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005674#Artikel5
       [ref2]: https://wetten.overheid.nl/BWBR0011823#Artikel8
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: >-
+              Persoon bezit de Nederlandse nationaliteit of wordt als Nederlander
+              behandeld (artikel 9 lid 2 onder a)
+          - name: verblijfsrecht_type
+            type: string
+            required: false
+            description: >-
+              Type rechtmatig verblijf vreemdeling (a, b, c, d, e of l van
+              artikel 8 Vreemdelingenwet 2000); leeg indien niet van toepassing
+        output:
+          - name: voldoet_aan_nationaliteitseis
+            type: boolean
+            description: >-
+              Of de aanvrager voldoet aan de nationaliteits- of verblijfsrechteis
+              van artikel 9 lid 2
+        actions:
+          - output: voldoet_aan_nationaliteitseis
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_nederlander
+                  value: true
+                - operation: IN
+                  subject: $verblijfsrecht_type
+                  values: ["a", "b", "c", "d", "e", "l"]
     references:
       - id: ref1
         bwb_id: BWBR0005674
@@ -479,6 +535,56 @@ articles:
       gemeente behorende kern.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel13b
   - number: 13c
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            redelijkerwijs niet of niet meer verwacht kan worden dat zij door het
+            duurzaam verrichten van arbeid in hun bestaan voorzien
+          reason: >-
+            Subjective judgment about whether someone can reasonably be expected
+            to provide for themselves through work; not computable from parameters
+          legal_text_excerpt: artikel 13c lid 1 onder a
+          accepted: false
+        - construct: dringend woonruimte behoeven (lid 1 onder d en e)
+          reason: >-
+            'Dringend' (urgently) requires administrative judgment about the
+            urgency of housing need; not mechanically determinable
+          legal_text_excerpt: artikel 13c lid 1 onder d en e
+          accepted: false
+      execution:
+        parameters:
+          - name: is_remigrant
+            type: boolean
+            required: true
+            description: >-
+              Persoon wenst als remigrant terug te keren naar Nederland of is
+              teruggekeerd maar beschikt nog niet over passende huisvesting
+              (artikel 13c lid 1 onder b)
+          - name: heeft_asiel_verblijfsvergunning_a_tot_d
+            type: boolean
+            required: true
+            description: >-
+              Aan de vreemdeling is op grond van asielverzoek een verblijfs-
+              vergunning verleend als bedoeld in artikel 8 onder a t/m d
+              Vreemdelingenwet 2000 én zoekt voor de eerste maal woonruimte
+              na die verlening (artikel 13c lid 1 onder c)
+        output:
+          - name: binding_onderscheid_niet_toegestaan
+            type: boolean
+            description: >-
+              Of voor deze woningzoekende geen onderscheid naar economische of
+              maatschappelijke binding mag worden gemaakt (artikel 13c lid 1)
+        actions:
+          - output: binding_onderscheid_niet_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_remigrant
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_asiel_verblijfsvergunning_a_tot_d
+                  value: true
     text: |-
       1 Behoudens het bepaalde in het tweede lid, wordt geen onderscheid naar economische of maatschappelijke binding
       gemaakt ten aanzien van woningzoekenden:
@@ -664,6 +770,23 @@ articles:
         artikel: '12'
         hoofdstuk: II
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: melding_datum
+            type: date
+            required: true
+            description: Datum waarop het ter beschikking komen van de woonruimte is gemeld
+        output:
+          - name: uiterste_voordrachts_datum
+            type: date
+            description: Uiterste datum voor het doen van een voordracht (2 weken na melding)
+        actions:
+          - output: uiterste_voordrachts_datum
+            value:
+              operation: DATE_ADD
+              date: $melding_datum
+              weeks: 2
   - number: '20'
     text: |-
       In afwijking van [artikel 19, eerste lid][ref1], doen burgemeester en wethouders geen voordracht, indien aan
@@ -719,6 +842,27 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0005674#Artikel20
       [ref4]: https://wetten.overheid.nl/BWBR0005674#Artikel18
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel21
+    machine_readable:
+      execution:
+        parameters:
+          - name: melding_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop het ter beschikking komen van de woonruimte is gemeld
+              (ingevolge artikel 18 lid 1)
+        output:
+          - name: uiterste_hervoordrachts_datum
+            type: date
+            description: >-
+              Uiterste datum waarna geen nieuwe voordracht meer kan worden gedaan
+              (10 weken na de melding, artikel 21 lid 3)
+        actions:
+          - output: uiterste_hervoordrachts_datum
+            value:
+              operation: DATE_ADD
+              date: $melding_datum
+              weeks: 10
     references:
       - id: ref1
         bwb_id: BWBR0005674
@@ -797,6 +941,39 @@ articles:
       waarbinnen van de vergunning gebruik kan worden gemaakt.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel24
   - number: '25'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: behoort_tot_aangewezen_categorie
+            type: boolean
+            required: true
+            description: >-
+              Aanvrager behoort tot een door de gemeenteraad ingevolge artikel 9
+              lid 1 aangewezen categorie van woningzoekenden
+        input:
+          - name: voldoet_aan_nationaliteitseis
+            type: boolean
+            source:
+              output: voldoet_aan_nationaliteitseis
+            description: Uitkomst van de nationaliteitseis-toets (artikel 9 lid 2)
+        output:
+          - name: huisvestingsvergunning_verlenen
+            type: boolean
+            description: Of de huisvestingsvergunning verleend dient te worden (artikel 25 lid 1)
+        actions:
+          - output: huisvestingsvergunning_verlenen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $behoort_tot_aangewezen_categorie
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_nationaliteitseis
+                  value: true
     text: |-
       1 Een huisvestingsvergunning wordt verleend, indien de aanvrager behoort tot een van de ingevolge
       [artikel 9, eerste lid][ref1], aangewezen categorieën van woningzoekenden, voor zover wordt voldaan aan
@@ -871,6 +1048,57 @@ articles:
         hoofdstuk: II
         paragraaf: '5'
   - number: '26'
+    machine_readable:
+      open_terms:
+        - id: aanbiedingstermijn_weken
+          type: number
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 26 lid 1 Huisvestingswet
+      definitions:
+        MAX_AANBIEDINGSTERMIJN_WEKEN:
+          value: 13
+          description: Maximale aanbiedingstermijn (artikel 26 lid 1)
+      execution:
+        parameters:
+          - name: is_vruchteloos_aangeboden
+            type: boolean
+            required: true
+            description: >-
+              Woonruimte is gedurende de aanbiedingstermijn vruchteloos aangeboden
+              aan in aanmerking komende woningzoekenden
+          - name: voldoet_aan_nationaliteitseis
+            type: boolean
+            required: true
+            description: Aanvrager voldoet aan artikel 9 lid 2
+        output:
+          - name: alternatieve_vergunning_verlenen
+            type: boolean
+            description: >-
+              Of de vergunning op grond van artikel 26 lid 1 aan iedere aanvrager
+              verleend moet worden (vruchteloze aanbieding)
+          - name: termijn_geldig
+            type: boolean
+            description: >-
+              Of de door de gemeenteraad bepaalde aanbiedingstermijn de wettelijke
+              maximum van 13 weken niet overschrijdt
+        actions:
+          - output: termijn_geldig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $aanbiedingstermijn_weken
+              value: $MAX_AANBIEDINGSTERMIJN_WEKEN
+          - output: alternatieve_vergunning_verlenen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vruchteloos_aangeboden
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_nationaliteitseis
+                  value: true
     text: |-
       1 Onverminderd [artikel 9, tweede lid][ref1], wordt een huisvestingsvergunning voorts aan iedere aanvrager
       verleend, indien de woonruimte door de eigenaar gedurende een door de gemeenteraad in de huisvestingsverordening
@@ -1019,6 +1247,60 @@ articles:
         hoofdstuk: II
         paragraaf: '1'
   - number: '31'
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            het belang van het behoud of de samenstelling van de
+            woonruimtevoorraad groter is dan het met het onttrekken gediende belang
+          reason: >-
+            Interest-balancing test requires administrative judgment; cannot be
+            mechanically determined from parameters
+          legal_text_excerpt: artikel 31 Huisvestingswet
+          accepted: false
+        - construct: >-
+            het belang niet door het stellen van voorwaarden en voorschriften
+            voldoende kan worden gediend
+          reason: >-
+            Assessment of whether conditions can sufficiently serve the interest
+            requires administrative judgment
+          legal_text_excerpt: artikel 31 Huisvestingswet
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: belang_woonruimtevoorraad_groter
+            type: boolean
+            required: true
+            description: >-
+              Het belang van behoud of samenstelling van de woonruimtevoorraad is
+              groter dan het belang gediend met het onttrekken
+          - name: voorwaarden_voldoende
+            type: boolean
+            required: true
+            description: >-
+              Het belang van de woonruimtevoorraad kan door het stellen van
+              voorwaarden en voorschriften voldoende worden gediend
+        output:
+          - name: vergunning_verlenen
+            type: boolean
+            description: >-
+              Of de vergunning ingevolge artikel 30 lid 1 verleend wordt
+              (wordt verleend tenzij beide weigeringsgronden gelden)
+        actions:
+          - output: vergunning_verlenen
+            value:
+              operation: NOT
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $belang_woonruimtevoorraad_groter
+                    value: true
+                  - operation: EQUALS
+                    subject: $voorwaarden_voldoende
+                    value: false
     text: |-
       Een vergunning als bedoeld in [artikel 30, eerste lid][ref1], wordt verleend, tenzij het belang van het behoud
       of de samenstelling van de woonruimtevoorraad groter is dan het met het onttrekken aan de bestemming tot bewoning
@@ -1163,6 +1445,26 @@ articles:
         artikel: '36'
         hoofdstuk: III
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: mededeling_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de mededeling overeenkomstig artikel 36 lid 1 is gedaan
+        output:
+          - name: zienswijze_termijn_einde
+            type: date
+            description: >-
+              Laatste dag waarop de zienswijze kenbaar kan worden gemaakt
+              (4 weken na mededeling, artikel 37 lid 1)
+        actions:
+          - output: zienswijze_termijn_einde
+            value:
+              operation: DATE_ADD
+              date: $mededeling_datum
+              weeks: 4
   - number: '38'
     text: |-
       Burgemeester en wethouders kunnen een vergunning intrekken, indien:
@@ -1247,6 +1549,32 @@ articles:
         artikel: '40'
         hoofdstuk: IV
         paragraaf: '1'
+    machine_readable:
+      definitions:
+        MAX_VORDERINGSDUUR_JAREN:
+          value: 10
+          description: Maximale tijdsduur van een vordering in jaren (artikel 41)
+      execution:
+        parameters:
+          - name: gewenste_tijdsduur_jaren
+            type: number
+            required: true
+            description: Door B&W bepaalde tijdsduur van de vordering in jaren
+        output:
+          - name: tijdsduur_geldig
+            type: boolean
+            description: Of de gewenste tijdsduur de wettelijke maximum van 10 jaar niet overschrijdt
+          - name: maximale_tijdsduur_jaren
+            type: number
+            description: Maximale toegestane tijdsduur (ten hoogste tien jaar)
+        actions:
+          - output: tijdsduur_geldig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gewenste_tijdsduur_jaren
+              value: $MAX_VORDERINGSDUUR_JAREN
+          - output: maximale_tijdsduur_jaren
+            value: $MAX_VORDERINGSDUUR_JAREN
   - number: '42'
     text: |-
       Tegelijkertijd met de bekendmaking van een last tot vordering wordt daarvan mededeling gedaan door aanplakking van
@@ -1300,6 +1628,42 @@ articles:
       - id: ref4
         bwb_id: BWBR0005537
         afdeling: 8.2.3
+    machine_readable:
+      execution:
+        parameters:
+          - name: beroepschrift_ontvangst_datum
+            type: date
+            required: true
+            description: Dag waarop het beroepschrift is ontvangen (artikel 44 lid 4)
+          - name: gewone_behandeling
+            type: boolean
+            required: true
+            description: >-
+              Of de Afdeling heeft bepaald dat de zaak een gewone behandeling vordert
+              (artikel 44 lid 4 tweede zin)
+        output:
+          - name: uitspraak_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum voor de uitspraak (8 weken normaal, 13 weken bij
+              gewone behandeling, artikel 44 lid 4)
+        actions:
+          - output: uitspraak_uiterste_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $gewone_behandeling
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $beroepschrift_ontvangst_datum
+                    weeks: 13
+              default:
+                operation: DATE_ADD
+                date: $beroepschrift_ontvangst_datum
+                weeks: 8
   - number: '45'
     text: |-
       1 De eigenaar van een woonruimte, een gebouw of een gedeelte van een gebouw, met betrekking waartoe toepassing is
@@ -1602,6 +1966,25 @@ articles:
         artikel: '53'
         hoofdstuk: IV
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van het besluit tot beëindiging van de toewijzing
+        output:
+          - name: ontruimings_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum voor ontruiming (1 maand na bekendmaking besluit
+              tot beëindiging toewijzing, artikel 54 lid 2)
+        actions:
+          - output: ontruimings_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_datum
+              months: 1
   - number: '55'
     text: |-
       1 Burgemeester en wethouders beëindigen de vordering:
@@ -1620,6 +2003,27 @@ articles:
       de gebruiker van hun voornemen daartoe op de hoogte hebben gesteld. Zij stellen de gebruiker in de gelegenheid zijn
       zienswijze op het voornemen kenbaar te maken.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel55
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de gebruiker op de hoogte is gesteld van het voornemen
+              tot beëindiging (artikel 55 lid 3)
+        output:
+          - name: beeindiging_vroegste_datum
+            type: date
+            description: >-
+              Vroegste datum waarop toepassing kan worden gegeven aan lid 1 of 2
+              (4 weken na kennisgeving aan gebruiker, artikel 55 lid 3)
+        actions:
+          - output: beeindiging_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              weeks: 4
   - number: '56'
     text: |-
       1 Burgemeester en wethouders stellen in hun besluit tot beëindiging van de vordering het tijdstip vast waarop de
@@ -1749,6 +2153,55 @@ articles:
         bwb_id: BWBR0011823
         artikel: '8'
   - number: 60b
+    machine_readable:
+      untranslatables:
+        - construct: naar boven afgerond op een geheel getal (artikel 60b lid 5)
+          reason: >-
+            CEIL/round-up operation is not available as an engine operation;
+            the formula result must be rounded up to a whole number
+          suggestion: Add CEIL operation to engine
+          legal_text_excerpt: >-
+            De met toepassing van de formule verkregen uitkomst wordt naar boven
+            afgerond op een geheel getal.
+          accepted: false
+      execution:
+        parameters:
+          - name: inwoners_gemeente
+            type: number
+            required: true
+            description: >-
+              Aantal inwoners van de gemeente (a in de formule) per 1 januari van
+              het jaar voorafgaand aan het kalenderhalfjaar
+          - name: inwoners_nederland
+            type: number
+            required: true
+            description: >-
+              Aantal inwoners van Nederland (b in de formule) per 1 januari van
+              het jaar voorafgaand aan het kalenderhalfjaar
+          - name: totaal_te_huisvesten_verblijfsgerechtigden
+            type: number
+            required: true
+            description: >-
+              Totaal aantal verblijfsgerechtigden dat in het kalenderhalfjaar
+              gehuisvest dient te worden (c in de formule), bekendgemaakt door
+              de Minister voor Immigratie en Asiel
+        output:
+          - name: taakstelling_onafgerond
+            type: number
+            description: >-
+              Uitkomst van de formule (a/b)*c vóór afronding (artikel 60b lid 2);
+              voor de werkelijke taakstelling dient dit naar boven te worden
+              afgerond (lid 5) — zie untranslatables
+        actions:
+          - output: taakstelling_onafgerond
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - $inwoners_gemeente
+                    - $inwoners_nederland
+                - $totaal_te_huisvesten_verblijfsgerechtigden
     text: |-
       1 Burgemeester en wethouders dragen zorg voor de voorziening in de huisvesting van verblijfsgerechtigden in de
       gemeente overeenkomstig de voor de gemeente geldende taakstelling.
@@ -1897,6 +2350,29 @@ articles:
       aard daartoe naar zijn oordeel aanleiding geven. De regeling geldt voor een daarbij aangegeven periode van ten
       hoogste twee jaar.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel68
+    machine_readable:
+      definitions:
+        MAX_REGELINGSDUUR_JAREN:
+          value: 2
+          description: Maximale geldigheidsduur van een regeling als bedoeld in artikel 68 lid 3
+      execution:
+        parameters:
+          - name: gewenste_duur_jaren
+            type: number
+            required: true
+            description: Door de Minister voor de regeling aangegeven geldigheidsduur in jaren
+        output:
+          - name: duur_geldig
+            type: boolean
+            description: >-
+              Of de gewenste duur de wettelijke maximum van twee jaar niet overschrijdt
+              (artikel 68 lid 3)
+        actions:
+          - output: duur_geldig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gewenste_duur_jaren
+              value: $MAX_REGELINGSDUUR_JAREN
   - number: '69'
     text: |-
       Alvorens toepassing te geven aan [artikel 68, tweede lid][ref1], pleegt Onze Minister overleg met het college
@@ -1926,6 +2402,27 @@ articles:
         hoofdstuk: V
         paragraaf: '2'
   - number: '72'
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_verzending_datum
+            type: date
+            required: true
+            description: >-
+              Datum van verzending van het besluit tot vaststelling of wijziging
+              van de gebruiksvergoeding (artikel 72 lid 1)
+        output:
+          - name: verzoek_huurcommissie_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum voor het vragen van een uitspraak aan de huurcommissie
+              (6 weken na verzending besluit, artikel 72 lid 1)
+        actions:
+          - output: verzoek_huurcommissie_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $besluit_verzending_datum
+              weeks: 6
     text: |-
       1 Binnen zes weken na verzending van een besluit tot vaststelling van een gebruiksvergoeding als bedoeld in
       [artikel 51, eerste lid][ref1], of tot wijziging van de gebruiksvergoeding, bedoeld in [artikel 52][ref2], kan
@@ -1972,6 +2469,27 @@ articles:
         artikel: '74'
         hoofdstuk: VI
   - number: '73'
+    machine_readable:
+      execution:
+        parameters:
+          - name: afschrift_verzending_datum
+            type: date
+            required: true
+            description: >-
+              Datum van verzending van het afschrift van de uitspraak van de
+              huurcommissie (artikel 72 lid 5 / artikel 73 lid 1)
+        output:
+          - name: verzoek_kantonrechter_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum waarop een verzoek aan de kantonrechter kan worden
+              gericht (2 maanden na verzending afschrift, artikel 73 lid 1)
+        actions:
+          - output: verzoek_kantonrechter_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $afschrift_verzending_datum
+              months: 2
     text: |-
       1 Indien noch de gebruiker, noch het college van burgemeester en wethouders binnen twee maanden na verzending van
       het in [artikel 72, vijfde lid][ref1], bedoelde afschrift een verzoek richt tot de kantonrechter, overeenkomstig
@@ -1997,6 +2515,27 @@ articles:
         artikel: '74'
         hoofdstuk: VI
   - number: '74'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitspraak_verzending_datum
+            type: date
+            required: true
+            description: >-
+              Datum van verzending van de uitspraak van de huurcommissie als
+              bedoeld in artikel 72 lid 1
+        output:
+          - name: verzoek_kantonrechter_uiterste_datum
+            type: date
+            description: >-
+              Uiterste datum voor het indienen van een verzoek aan de kantonrechter
+              (2 maanden na verzending uitspraak, artikel 74 lid 1)
+        actions:
+          - output: verzoek_kantonrechter_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $uitspraak_verzending_datum
+              months: 2
     text: |-
       1 Gedurende twee maanden na verzending van een uitspraak van de huurcommissie als bedoeld in
       [artikel 72, eerste lid][ref1], kunnen de gebruiker en burgemeester en wethouders de kantonrechter van de
@@ -2091,6 +2630,25 @@ articles:
       maanden na de datum van uitgifte van het *Staatsblad*, waarin hij is geplaatst. Van de plaatsing wordt onverwijld
       mededeling gedaan aan beide kamers der Staten-Generaal.
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel81
+    machine_readable:
+      execution:
+        parameters:
+          - name: staatsblad_uitgifte_datum
+            type: date
+            required: true
+            description: Datum van uitgifte van het Staatsblad waarin de AMvB is geplaatst
+        output:
+          - name: inwerkingtreding_vroegste_datum
+            type: date
+            description: >-
+              Vroegste datum van inwerkingtreding van de AMvB (2 maanden na
+              uitgifte Staatsblad, artikel 81)
+        actions:
+          - output: inwerkingtreding_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $staatsblad_uitgifte_datum
+              months: 2
   - number: '83'
     text: |-
       1 Een gedraging in strijd met een voorschrift, verbonden aan een vergunning als bedoeld in
@@ -2284,6 +2842,51 @@ articles:
       - id: ref10
         bwb_id: BWBR0003740
         artikel: '104'
+    machine_readable:
+      definitions:
+        MAX_BOETE_ARTIKEL_7_LID_1:
+          value: 34000
+          description: Maximale bestuurlijke boete voor overtreding artikel 7 lid 1 (€340)
+        MAX_BOETE_ARTIKEL_8_EN_18:
+          value: 750000
+          description: Maximale bestuurlijke boete voor overtreding artikelen 8 en 18 lid 1 (€7.500)
+        MAX_BOETE_ARTIKEL_7_LID_2_EN_30:
+          value: 1850000
+          description: Maximale bestuurlijke boete voor overtreding artikelen 7 lid 2 en 30 lid 1 (€18.500)
+      execution:
+        parameters:
+          - name: overtreding_type
+            type: string
+            required: true
+            description: >-
+              Type overtreding: "artikel_7_lid_1" (in gebruik nemen zonder
+              vergunning), "artikel_8_of_18_lid_1" (melding leegstand of
+              voordrachtsplicht), of "artikel_7_lid_2_of_30_lid_1" (in gebruik
+              geven zonder vergunning of onttrekken/samenvoegen/omzetten)
+        output:
+          - name: maximale_bestuurlijke_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Maximale bestuurlijke boete voor het betreffende type overtreding
+              (artikel 85a lid 2)
+        actions:
+          - output: maximale_bestuurlijke_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $overtreding_type
+                    value: "artikel_7_lid_1"
+                  then: $MAX_BOETE_ARTIKEL_7_LID_1
+                - when:
+                    operation: EQUALS
+                    subject: $overtreding_type
+                    value: "artikel_8_of_18_lid_1"
+                  then: $MAX_BOETE_ARTIKEL_8_EN_18
+              default: $MAX_BOETE_ARTIKEL_7_LID_2_EN_30
   - number: '88'
     text: |-
       De gemeenteraad stelt geen regels die leiden tot een algeheel verbod van het in gebruik nemen of geven van een
