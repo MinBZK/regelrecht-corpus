@@ -319,6 +319,44 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "duur van het resterende bevallingsverlof berekend overeenkomstig artikel 3:1, derde en vijfde lid"
+          reason: "Date subtraction (calculating remaining days of leave based on dates) is not available as an engine operation"
+          legal_text_excerpt: "De duur van het resterende bevallingsverlof wordt berekend overeenkomstig artikel 3:1, derde en vijfde lid"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_partner_werknemer
+            type: boolean
+            required: true
+            description: "Partner is werknemer als bedoeld in artikel 3:6 (lid 1)"
+          - name: moeder_overleden_tijdens_verlof
+            type: boolean
+            required: true
+            description: "Moeder is overleden op de dag van de bevalling of tijdens het bevallingsverlof (lid 1)"
+          - name: geboorteakte_opgemaakt
+            type: boolean
+            required: true
+            description: "Een akte van geboorte van haar kind is opgemaakt (lid 1)"
+        output:
+          - name: heeft_recht_op_resterende_bevallingsverlof
+            type: boolean
+            description: "Partner heeft recht op het resterende bevallingsverlof met behoud van loon (lid 1)"
+        actions:
+          - output: heeft_recht_op_resterende_bevallingsverlof
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_partner_werknemer
+                  value: true
+                - operation: EQUALS
+                  subject: $moeder_overleden_tijdens_verlof
+                  value: true
+                - operation: EQUALS
+                  subject: $geboorteakte_opgemaakt
+                  value: true
   - number: 3:2
     text: |-
       1 De werknemer heeft in verband met de adoptie van een kind recht op verlof zonder behoud van loon.
@@ -869,6 +907,73 @@ articles:
         hoofdstuk: '3'
         paragraaf: '1'
         afdeling: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verlaten_datum
+            type: date
+            required: true
+            description: "Datum waarop de persoon niet langer werknemer of gelijkgestelde was als bedoeld in artikel 3:6 eerste lid"
+          - name: vermoedelijke_bevalling_datum
+            type: date
+            required: false
+            description: "Vermoedelijke of feitelijke datum van bevalling (lid 1)"
+          - name: adoptie_opname_datum
+            type: date
+            required: false
+            description: "Eerste dag dat het kind feitelijk ter adoptie of als pleegkind is opgenomen (lid 2 en 3)"
+          - name: is_gelijkgestelde_type_b2
+            type: boolean
+            required: false
+            description: "Gelijkgestelde als bedoeld in artikel 3:6 eerste lid onderdeel b onder 2° (lid 4 — sluit recht uit)"
+        output:
+          - name: termijn_bevalling_einddatum
+            type: date
+            description: "Uiterste datum waarbinnen de bevalling moet plaatsvinden voor behoud van recht (verlaten_datum + 10 weken, lid 1)"
+          - name: heeft_recht_op_uitkering_zwangerschap
+            type: boolean
+            description: "Heeft recht op uitkering in verband met zwangerschap en bevalling na beëindiging werknemersstatus (lid 1)"
+          - name: termijn_adoptie_einddatum
+            type: date
+            description: "Uiterste datum waarbinnen de adoptie of pleegzorg moet plaatsvinden voor behoud van recht (verlaten_datum + 10 weken, lid 2)"
+          - name: heeft_recht_op_uitkering_adoptie
+            type: boolean
+            description: "Heeft recht op uitkering in verband met adoptie of pleegzorg na beëindiging werknemersstatus (lid 2 en 3)"
+        actions:
+          - output: termijn_bevalling_einddatum
+            value:
+              operation: DATE_ADD
+              date: $verlaten_datum
+              weeks: 10
+          - output: heeft_recht_op_uitkering_zwangerschap
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_gelijkgestelde_type_b2
+                    value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $vermoedelijke_bevalling_datum
+                  value: $termijn_bevalling_einddatum
+          - output: termijn_adoptie_einddatum
+            value:
+              operation: DATE_ADD
+              date: $verlaten_datum
+              weeks: 10
+          - output: heeft_recht_op_uitkering_adoptie
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_gelijkgestelde_type_b2
+                    value: true
+                - operation: LESS_THAN
+                  subject: $adoptie_opname_datum
+                  value: $termijn_adoptie_einddatum
   - number: 3:11
     text: |-
       1 De vrouwelijke werknemer of gelijkgestelde, die in aanmerking wenst te komen voor toekenning van een
@@ -1734,6 +1839,15 @@ articles:
         paragraaf: '1'
         afdeling: '1'
     machine_readable:
+      untranslatables:
+        - construct: "begin- en einddatum recht op uitkering (aftrekken van weken van vermoedelijke datum)"
+          reason: "Date subtraction is not available as an engine operation"
+          legal_text_excerpt: "Het recht op uitkering in verband met zwangerschap vangt aan zes weken voor de dag na de vermoedelijke datum van bevalling"
+          accepted: false
+        - construct: "duur uitkering bevalling: tien weken vermeerderd met het aantal dagen dat de uitkering zwangerschap korter dan zes weken duurde"
+          reason: "Aggregation of calendar days (date difference) is not available as an engine operation"
+          legal_text_excerpt: "Het recht op uitkering in verband met bevalling vangt aan op de dag na de bevalling en bedraagt tien aaneengesloten weken vermeerderd met het aantal dagen dat de uitkering in verband met zwangerschap... minder dan zes weken heeft bedragen"
+          accepted: false
       execution:
         parameters:
           - name: is_vrouwelijke_beroepsbeoefenaar
@@ -2079,6 +2193,27 @@ articles:
       - id: ref2
         bwb_id: BWBR0018450
         artikel: '42'
+    machine_readable:
+      untranslatables:
+        - construct: "bedrag aan premies en inkomensafhankelijke bijdrage als bedoeld in artikel 42 Zorgverzekeringswet"
+          reason: "The premium amount from Zorgverzekeringswet depends on external insurance rate calculations not expressible as engine operations"
+          legal_text_excerpt: "vermeerderd met het bedrag aan premies en aan inkomensafhankelijke bijdrage als bedoeld in artikel 42 van de Zorgverzekeringswet, dat het Uitvoeringsinstituut werknemersverzekeringen bij uitbetaling als uitkering in verband met zwangerschap en bevalling daarover verschuldigd zou zijn"
+          accepted: false
+      execution:
+        parameters:
+          - name: grondslag
+            type: number
+            required: true
+            description: "De grondslag als bedoeld in artikel 3:23 eerste lid (in eurocent)"
+        output:
+          - name: uitkering_vervanging_basis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "De basis van de uitkering ter zake van vervanging (gelijk aan de grondslag als bedoeld in artikel 3:23 eerste lid; het premiedeel is untranslatable)"
+        actions:
+          - output: uitkering_vervanging_basis
+            value: $grondslag
   - number: 3:25
     text: |-
       1 De betaling geschiedt als regel in tijdvakken van een maand.
@@ -2763,21 +2898,25 @@ articles:
             type: date
             required: true
             description: "Datum van de bevalling"
+          - name: arbeidsduur_per_week
+            type: number
+            required: true
+            description: "De overeengekomen arbeidsduur per week in uren"
         output:
           - name: recht_op_geboorteverlof
             type: boolean
             description: "Werknemer heeft recht op geboorteverlof met behoud van loon"
-          - name: geboorteverlof_duur_weken
+          - name: geboorteverlof_duur_uren
             type: number
-            description: "Duur van het geboorteverlof in weken (eenmaal de arbeidsduur per week)"
+            description: "Duur van het geboorteverlof in uren (eenmaal de arbeidsduur per week, lid 1)"
           - name: geboorteverlof_tijdvak_einde
             type: date
             description: "Uiterste datum waarop het geboorteverlof kan worden opgenomen (vier weken na bevalling)"
         actions:
           - output: recht_op_geboorteverlof
             value: true
-          - output: geboorteverlof_duur_weken
-            value: 1
+          - output: geboorteverlof_duur_uren
+            value: $arbeidsduur_per_week
           - output: geboorteverlof_tijdvak_einde
             value:
               operation: DATE_ADD
@@ -3229,6 +3368,37 @@ articles:
       2 Het loon wordt verminderd met het bedrag van de door de werkgever vergoede onkosten die de werknemer door het
       niet verrichten van zijn arbeid heeft bespaard.
     url: https://wetten.overheid.nl/BWBR0013008/2025-01-01#Artikel45
+    machine_readable:
+      execution:
+        parameters:
+          - name: loon
+            type: number
+            required: true
+            description: "Het loon van de werknemer per dag in eurocent"
+          - name: uitkering_verzekering
+            type: number
+            required: false
+            description: "Geldelijke uitkering op grond van wettelijk voorgeschreven of overeengekomen verzekering of fonds per dag in eurocent (lid 1); 0 indien niet van toepassing"
+          - name: bespaard_onkosten
+            type: number
+            required: false
+            description: "Door werkgever vergoede onkosten die werknemer heeft bespaard door niet werken per dag in eurocent (lid 2); 0 indien niet van toepassing"
+        output:
+          - name: verminderd_loon
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Het loon na aftrek van ontvangen uitkering en bespaarde onkosten (leden 1 en 2)"
+        actions:
+          - output: verminderd_loon
+            value:
+              operation: SUBTRACT
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $loon
+                    - $uitkering_verzekering
+                - $bespaard_onkosten
   - number: 4:6
     text: |-
       1 Dagen of gedeelten van dagen waarop de werknemer zijn arbeid niet verricht wegens het verlof, bedoeld in
@@ -3665,6 +3835,23 @@ articles:
         hoofdstuk: '5'
         paragraaf: '2'
         afdeling: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: "Datum waarop het verzoek om langdurend zorgverlof is ingediend als bedoeld in artikel 5:11"
+        output:
+          - name: vroegste_ingangsdatum_verlof
+            type: date
+            description: "Vroegste datum waarop het langdurend zorgverlof kan ingaan (ten minste twee weken na de aanvraag, lid 1)"
+        actions:
+          - output: vroegste_ingangsdatum_verlof
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              weeks: 2
   - number: 5:13
     text: |-
       1 Het verlof eindigt met het verstrijken van de duur waarvoor het verlof is verleend.
@@ -3961,6 +4148,10 @@ articles:
             type: boolean
             required: true
             description: "Is werknemer als bedoeld in artikel 3:6 eerste lid aanhef en onderdeel a"
+          - name: arbeidsduur_per_week
+            type: number
+            required: true
+            description: "De overeengekomen arbeidsduur per week in uren"
         output:
           - name: leeftijd_kind
             type: number
@@ -3976,9 +4167,9 @@ articles:
             type_spec:
               unit: eurocent
             description: "Hoogte van de uitkering per dag (70% van dagloon, max 70% van maximumdagloon, lid 3)"
-          - name: max_uitkering_weken
+          - name: max_uitkering_uren
             type: number
-            description: "Maximale duur uitkering in weken (negen maal de arbeidsduur per week, lid 1)"
+            description: "Maximale duur uitkering in uren (negen maal de arbeidsduur per week, lid 1)"
         actions:
           - output: leeftijd_kind
             value:
@@ -4018,8 +4209,12 @@ articles:
                       values:
                         - 70
                         - 100
-          - output: max_uitkering_weken
-            value: 9
+          - output: max_uitkering_uren
+            value:
+              operation: MULTIPLY
+              values:
+                - 9
+                - $arbeidsduur_per_week
   - number: 6:3a
     text: |-
       1 De werknemer, bedoeld in [artikel 6:3, derde lid][ref1], die in aanmerking wenst te komen voor een uitkering
