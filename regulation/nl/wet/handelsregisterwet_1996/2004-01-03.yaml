@@ -71,6 +71,70 @@ articles:
       3 Bij algemene maatregel van bestuur kunnen bedrijven waarmee niet wordt beoogd winst te maken, voor de toepassing
       van het eerste lid met een onderneming worden gelijkgesteld.
     url: https://wetten.overheid.nl/BWBR0007893/2004-01-03#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: gevestigd_in_nederland
+            type: boolean
+            required: true
+            description: Is de onderneming gevestigd in Nederland?
+          - name: nevenvestiging_in_nederland
+            type: boolean
+            required: true
+            description: Heeft de onderneming een nevenvestiging in Nederland?
+          - name: gevolmachtigde_handelsagent_in_nederland
+            type: boolean
+            required: true
+            description: Wordt de onderneming in Nederland vertegenwoordigd door een gevolmachtigde handelsagent?
+          - name: toebehorend_aan_publiekrechtelijk_rechtspersoon
+            type: boolean
+            required: true
+            description: Behoort de onderneming toe aan een krachtens publiekrecht ingestelde rechtspersoon?
+          - name: uitsluitend_landbouw_of_visserij
+            type: boolean
+            required: true
+            description: Wordt in de onderneming uitsluitend landbouw of visserij uitgeoefend?
+          - name: toebehorend_aan_rechtspersoon_of_vennootschap
+            type: boolean
+            required: true
+            description: Behoort de onderneming toe aan een rechtspersoon of vennootschap?
+          - name: uitsluitend_straathandel_venten
+            type: boolean
+            required: true
+            description: Wordt in de onderneming uitsluitend straathandel in de vorm van venten uitgeoefend door de ondernemer of leden van zijn gezin?
+        output:
+          - name: inschrijving_verplicht
+            type: boolean
+            description: Is inschrijving van de onderneming in het handelsregister verplicht ingevolge artikel 3?
+        actions:
+          - output: valt_onder_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $gevestigd_in_nederland
+                - $nevenvestiging_in_nederland
+                - $gevolmachtigde_handelsagent_in_nederland
+          - output: uitzondering_landbouw_visserij
+            value:
+              operation: AND
+              conditions:
+                - $uitsluitend_landbouw_of_visserij
+                - operation: NOT
+                  value: $toebehorend_aan_rechtspersoon_of_vennootschap
+          - output: uitzondering_lid_2
+            value:
+              operation: OR
+              conditions:
+                - $toebehorend_aan_publiekrechtelijk_rechtspersoon
+                - $uitzondering_landbouw_visserij
+                - $uitsluitend_straathandel_venten
+          - output: inschrijving_verplicht
+            value:
+              operation: AND
+              conditions:
+                - $valt_onder_lid_1
+                - operation: NOT
+                  value: $uitzondering_lid_2
   - number: '4'
     text: |-
       1 In het handelsregister worden ingeschreven de naamloze vennootschappen, besloten vennootschappen met beperkte
@@ -92,6 +156,48 @@ articles:
         bwb_id: BWBR0007893
         artikel: '3'
         hoofdstuk: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: Rechtsvorm van de rechtspersoon (NV, BV, COOPERATIE, ONDERLINGE_WAARBORGMAATSCHAPPIJ, STICHTING, VERENIGING_VOLLEDIG, EESV, VERENIGING_BEPERKT)
+          - name: zetel_in_nederland
+            type: boolean
+            required: true
+            description: Heeft de rechtspersoon volgens zijn statuten zijn zetel in Nederland?
+        output:
+          - name: inschrijving_verplicht
+            type: boolean
+            description: Is inschrijving van de rechtspersoon in het handelsregister verplicht ingevolge artikel 4 lid 1?
+          - name: inschrijving_vrijwillig_mogelijk
+            type: boolean
+            description: Kan de rechtspersoon vrijwillig worden ingeschreven ingevolge artikel 4 lid 2?
+        actions:
+          - output: rechtsvorm_valt_onder_lid_1
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - NV
+                - BV
+                - COOPERATIE
+                - ONDERLINGE_WAARBORGMAATSCHAPPIJ
+                - STICHTING
+                - VERENIGING_VOLLEDIG
+                - EESV
+          - output: inschrijving_verplicht
+            value:
+              operation: AND
+              conditions:
+                - $rechtsvorm_valt_onder_lid_1
+                - $zetel_in_nederland
+          - output: inschrijving_vrijwillig_mogelijk
+            value:
+              operation: EQUALS
+              subject: $rechtsvorm
+              value: VERENIGING_BEPERKT
   - number: '5'
     text: |-
       1 Tot het doen van opgave ter inschrijving in het handelsregister bij de ter zake bevoegde Kamer is verplicht
@@ -180,6 +286,39 @@ articles:
         bwb_id: BWBR0007893
         artikel: '11'
         hoofdstuk: '2'
+    machine_readable:
+      untranslatables:
+        - construct: vroegste datum eerste inschrijving (een week vóór aanvang bedrijfsuitoefening)
+          reason: DATE_ADD adds duration forward only; expressing one week before requires negative offset which is not in the operation set
+          suggestion: Add DATE_SUBTRACT operation or allow negative values in DATE_ADD
+          legal_text_excerpt: binnen een periode van twee weken, die begint een week vóór en eindigt een week ná de aanvang van de bedrijfsuitoefening
+          accepted: false
+      execution:
+        parameters:
+          - name: aanvang_bedrijfsuitoefening
+            type: date
+            description: Datum van aanvang van de bedrijfsuitoefening (voor eerste inschrijving, artikel 9 lid 1)
+          - name: datum_feit
+            type: date
+            description: Datum waarop het feit plaatsvond dat de verplichting tot opgave deed ontstaan (artikel 9 lid 2)
+        output:
+          - name: uiterste_datum_eerste_inschrijving
+            type: date
+            description: Uiterste datum waarop de opgave voor eerste inschrijving moet worden gedaan (één week na aanvang bedrijfsuitoefening)
+          - name: uiterste_datum_overige_opgave
+            type: date
+            description: Uiterste datum voor overige voorgeschreven opgaven (één week na het feit)
+        actions:
+          - output: uiterste_datum_eerste_inschrijving
+            value:
+              operation: DATE_ADD
+              date: $aanvang_bedrijfsuitoefening
+              weeks: 1
+          - output: uiterste_datum_overige_opgave
+            value:
+              operation: DATE_ADD
+              date: $datum_feit
+              weeks: 1
   - number: '10'
     text: |-
       1 Een Kamer is ambtshalve bevoegd tot het inschrijven van een wijziging van een gegeven betreffende een onderneming
@@ -345,6 +484,36 @@ articles:
         bwb_id: BWBR0007893
         artikel: '23'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: Rechtsvorm van de rechtspersoon of vennootschap (NV, BV, EESV, of andere bij AMvB aangewezen rechtspersoon)
+          - name: bij_amvb_aangewezen_voor_publicatie
+            type: boolean
+            required: true
+            description: Is de rechtspersoon of vennootschap bij algemene maatregel van bestuur aangewezen voor de publicatieplicht van artikel 17?
+        output:
+          - name: publicatieplicht
+            type: boolean
+            description: Moet de Kamer zorgdragen voor publicatie van de inschrijving in het aangewezen publikatieblad?
+        actions:
+          - output: rechtsvorm_valt_onder_lid_1
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - NV
+                - BV
+                - EESV
+          - output: publicatieplicht
+            value:
+              operation: OR
+              conditions:
+                - $rechtsvorm_valt_onder_lid_1
+                - $bij_amvb_aangewezen_voor_publicatie
   - number: '18'
     text: |-
       1 Op een feit dat door inschrijving of deponering moet worden bekendgemaakt, kan tegenover derden die daarvan
@@ -444,6 +613,41 @@ articles:
         bwb_id: BWBR0007893
         artikel: '5'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtsvorm
+            type: string
+            required: true
+            description: Rechtsvorm van de onderneming of rechtspersoon (STICHTING, VERENIGING_VOLLEDIG, VERENIGING_BEPERKT, NV, BV, etc.)
+          - name: heeft_onderneming
+            type: boolean
+            required: true
+            description: Behoort aan de stichting of vereniging een onderneming toe?
+        output:
+          - name: vermeldingsplicht_registratienummer
+            type: boolean
+            description: Bestaat er een verplichting het handelsregisternummer te vermelden op alle uitgaande brieven, orders, facturen en offertes?
+        actions:
+          - output: is_stichting_of_vereniging
+            value:
+              operation: IN
+              subject: $rechtsvorm
+              values:
+                - STICHTING
+                - VERENIGING_VOLLEDIG
+                - VERENIGING_BEPERKT
+          - output: uitzondering_lid_2
+            value:
+              operation: AND
+              conditions:
+                - $is_stichting_of_vereniging
+                - operation: NOT
+                  value: $heeft_onderneming
+          - output: vermeldingsplicht_registratienummer
+            value:
+              operation: NOT
+              value: $uitzondering_lid_2
   - number: '26'
     text: |-
       1 Bij regeling van Onze Minister kunnen regels worden gesteld ter bevordering van de uniforme toepassing van deze
