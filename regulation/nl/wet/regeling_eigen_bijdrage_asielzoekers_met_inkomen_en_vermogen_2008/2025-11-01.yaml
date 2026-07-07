@@ -56,14 +56,14 @@ articles:
       De economische waarde per maand, bedoeld in [artikel 20, tweede lid, van de Rva 2005][ref1], bedraagt:
 
       a. van de verstrekkingen bedoeld in [artikel 2, onderdeel a][ref2]: de toelage bedoeld in
-      [artikel 14, tweede lid, van de Rva 2005][ref3], die aan of ten behoeve van de asielzoeker of vergunninghouder
+      [artikel 14, tweede lid, van de Rva 2005][ref3], die aan of ten behove van de asielzoeker of vergunninghouder
       wordt of zou worden verstrekt voor het volledig zelf verzorgen van maaltijden, vermenigvuldigd met de factor 4,33;
 
-      b. van de verstrekkingen bedoeld in [artikel 2, onderdeel b][ref4]: € 50,00 voor een alleenstaande asielzoeker
-      of vergunninghouder of eerste gezinslid, € 25,00, voor het tweede gezinslid en € 12,50 per volgend gezinslid,
-      vermenigvuldigd met de factor 4,33, tot een maximum van € 433,00;
+      b. van de verstrekkingen bedoeld in [artikel 2, onderdeel b][ref4]: € 50,00 voor een alleenstaande asielzoeker
+      of vergunninghouder of eerste gezinslid, € 25,00 voor het tweede gezinslid en € 12,50 per volgend gezinslid,
+      vermenigvuldigd met de factor 4,33, tot een maximum van € 433,00;
 
-      c. van de verstrekkingen bedoeld in [artikel 2, onderdeel c][ref5]: een geldbedrag gelijk aan de gemiddelde
+      c. van de verstrekkingen bedoeld in [artikel 2, onderdelen c][ref5]: een geldbedrag gelijk aan de gemiddelde
       basis zorgpremie als bedoeld in [artikel 2b van het Besluit minimumloon en minimumvakantiebijslag][ref6] minus de
       maximale zorgtoeslag.
 
@@ -82,24 +82,118 @@ articles:
       - id: ref2
         bwb_id: BWBR0024733
         artikel: '2'
-        hoofdstuk: '1'
-        paragraaf: '2'
       - id: ref3
         bwb_id: BWBR0017959
         artikel: '14'
       - id: ref4
         bwb_id: BWBR0024733
         artikel: '2'
-        hoofdstuk: '1'
-        paragraaf: '2'
       - id: ref5
         bwb_id: BWBR0024733
         artikel: '2'
-        hoofdstuk: '1'
-        paragraaf: '2'
       - id: ref6
         bwb_id: BWBR0008222
         artikel: 2b
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+          - name: aantal_gezinsleden
+            type: number
+            required: true
+            description: Aantal gezinsleden (inclusief asielzoeker/vergunninghouder)
+        input:
+          - name: toelage
+            type: amount
+            source:
+              regulation: regeling_verstrekkingen_asielzoekers_en_andere_categorie_vreemdelingen_2005
+              output: toelage
+              parameters:
+                bsn: $bsn
+            type_spec:
+              unit: eurocent
+          - name: gemiddelde_basis_zorgpremie
+            type: amount
+            source:
+              regulation: besluit_minimumloon_en_minimumvakantiebijslag
+              output: gemiddelde_basis_zorgpremie
+            type_spec:
+              unit: eurocent
+          - name: maximale_zorgtoeslag
+            type: amount
+            source:
+              regulation: wet_op_de_zorgtoeslag
+              output: maximale_zorgtoeslag
+              parameters:
+                bsn: $bsn
+            type_spec:
+              unit: eurocent
+        output:
+          - name: economische_waarde_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Economische waarde van de verstrekkingen per maand
+        actions:
+          - output: waarde_onderdeel_a
+            value:
+              operation: MULTIPLY
+              values:
+                - $toelage
+                - 4.33
+          - output: waarde_onderdeel_b
+            value:
+              operation: MIN
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - operation: ADD
+                      values:
+                        - 5000
+                        - operation: IF
+                          cases:
+                            - when:
+                                operation: GREATER_THAN
+                                subject: $aantal_gezinsleden
+                                value: 1
+                              then:
+                                operation: ADD
+                                values:
+                                  - 2500
+                                  - operation: IF
+                                    cases:
+                                      - when:
+                                          operation: GREATER_THAN
+                                          subject: $aantal_gezinsleden
+                                          value: 2
+                                        then:
+                                          operation: MULTIPLY
+                                          values:
+                                            - 1250
+                                            - operation: SUBTRACT
+                                              values:
+                                                - $aantal_gezinsleden
+                                                - 2
+                                    default: 0
+                          default: 0
+                    - 4.33
+                - 43300
+          - output: waarde_onderdeel_c
+            value:
+              operation: SUBTRACT
+              values:
+                - $gemiddelde_basis_zorgpremie
+                - $maximale_zorgtoeslag
+          - output: economische_waarde_per_maand
+            value:
+              operation: ADD
+              values:
+                - $waarde_onderdeel_a
+                - $waarde_onderdeel_b
+                - $waarde_onderdeel_c
   - number: '4'
     text: |-
       De vergoeding, bedoeld in [artikel 20, tweede lid, van de Rva 2005][ref1], per maand is gelijk aan de in aanmerking
@@ -119,6 +213,41 @@ articles:
         artikel: '3'
         hoofdstuk: '1'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer
+        input:
+          - name: economische_waarde
+            type: amount
+            source:
+              regulation: regeling_eigen_bijdrage_asielzoekers_met_inkomen_en_vermogen_2008
+              output: economische_waarde_per_maand
+            type_spec:
+              unit: eurocent
+          - name: middelen
+            type: amount
+            source:
+              regulation: regeling_eigen_bijdrage_asielzoekers_met_inkomen_en_vermogen_2008
+              output: middelen
+            type_spec:
+              unit: eurocent
+        output:
+          - name: vergoeding_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vergoeding per maand, gelijk aan de middelen tot een maximum van de economische waarde
+        actions:
+          - output: vergoeding_per_maand
+            value:
+              operation: MIN
+              values:
+                - $middelen
+                - $economische_waarde
   - number: '5'
     text: |-
       1 Tot de middelen bedoeld in [artikel 4][ref1] worden alle vermogens- en inkomensbestanddelen gerekend waarover de
@@ -144,7 +273,7 @@ articles:
       een oogpunt van het verlenen van verstrekkingen als bedoeld in [artikel 9 van de Rva 2005][ref5], verantwoord zijn.
 
       3 Onverminderd het bepaalde in het tweede lid worden niet tot de middelen van een asielzoeker, niet
-      zijnde een vergunninghouder, gerekend inkomsten uit arbeid gedurende ten hoogste 24 weken binnen een
+      zijnde een vergunninghouder,erekend inkomsten uit arbeid gedurende ten hoogste 24 weken binnen een
       periode van 52 weken tot 25 procent van deze inkomsten, met een maximum van het bedrag, genoemd in
       [artikel 31, tweede lid, onderdeel n, van de Participatiewet][ref6], per maand.
 
@@ -174,30 +303,229 @@ articles:
       [ref7]: https://wetten.overheid.nl/BWBR0015703#Artikel31
     url: https://wetten.overheid.nl/BWBR0024733/2025-11-01#Artikel5
     references:
-      - id: ref1
-        bwb_id: BWBR0024733
-        artikel: '4'
-        hoofdstuk: '2'
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0016555
-      - id: ref3
-        bwb_id: BWBR0024733
-        artikel: '7'
-        hoofdstuk: '2'
-        paragraaf: '4'
-      - id: ref4
-        bwb_id: BWBR0017959
-        artikel: '9'
-      - id: ref5
-        bwb_id: BWBR0017959
-        artikel: '9'
-      - id: ref6
-        bwb_id: BWBR0015703
-        artikel: '31'
-      - id: ref7
-        bwb_id: BWBR0015703
-        artikel: '31'
+       - id: ref1
+         bwb_id: BWBR0024733
+         artikel: '4'
+         hoofdstuk: '2'
+         paragraaf: '1'
+       - id: ref2
+         bwb_id: BWBR0016555
+       - id: ref3
+         bwb_id: BWBR0024733
+         artikel: '7'
+         hoofdstuk: '2'
+         paragraaf: '4'
+       - id: ref4
+         bwb_id: BWBR0017959
+         artikel: '9'
+       - id: ref5
+         bwb_id: BWBR0017959
+         artikel: '9'
+       - id: ref6
+         bwb_id: BWBR0015703
+         artikel: '31'
+       - id: ref7
+         bwb_id: BWBR0015703
+         artikel: '31'
+    machine_readable:
+       execution:
+         parameters:
+           - name: bsn
+             type: string
+             required: true
+             description: Burgerservicenummer
+           - name: is_vergunninghouder
+             type: boolean
+             required: true
+             description: Of de asielzoeker een vergunninghouder is
+           - name: inkomen_uit_arbeid
+             type: amount
+             required: false
+             description: Inkomen uit arbeid (optioneel, voor 25% regel)
+             type_spec:
+               unit: eurocent
+           - name: week_nummer
+             type: number
+             required: false
+             description: Huidige weeknummer (1-52, voor 24-weken regel)
+           - name: kinderbijslag
+             type: amount
+             required: false
+             description: Ontvangen kinderbijslag (wordt uitgesloten)
+             type_spec:
+               unit: eurocent
+           - name: vergoedingen_en_tegemoetkomingen
+             type: amount
+             required: false
+             description: Vergoedingen en tegemoetkomingen (worden uitgesloten)
+             type_spec:
+               unit: eurocent
+           - name: rente_over_uitgesloten_vermogen
+             type: amount
+             required: false
+             description: Rente over uitgesloten vermogen (wordt uitgesloten)
+             type_spec:
+               unit: eurocent
+           - name: uitkering_immateriele_schade
+             type: amount
+             required: false
+             description: Uitkering immateriële schade (wordt uitgesloten als redelijk)
+             type_spec:
+               unit: eurocent
+           - name: giften
+             type: amount
+             required: false
+             description: giften (worden uitgesloten als redelijk)
+             type_spec:
+               unit: eurocent
+           - name: loonbelasting
+             type: amount
+             required: false
+             description: Verschuldigde loonbelasting (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: inkomstenbelasting
+             type: amount
+             required: false
+             description: Verschuldigde inkomstenbelasting (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: premies_volksverzekeringen
+             type: amount
+             required: false
+             description: Verschuldigde premies volksverzekeringen (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: premies_werknemersverzekeringen
+             type: amount
+             required: false
+             description: Verschuldigde premies werknemersverzekeringen (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: verplichte_pensioenbijdragen
+             type: amount
+             required: false
+             description: Verplichte bijdragen pensioenregeling (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: andere_verplichtingen
+             type: amount
+             required: false
+             description: Andere verplichte verplichtingen (wordt afgetrokken)
+             type_spec:
+               unit: eurocent
+           - name: is_uitkering_immateriele_schade_redelijk
+             type: boolean
+             required: false
+             description: Of de uitkering immateriële schade redelijk is (volgens Rva 2005 Art. 9)
+           - name: is_giften_redelijk
+             type: boolean
+             required: false
+             description: Of de giften redelijk zijn (volgens Rva 2005 Art. 9)
+         input:
+           - name: participatiewet_artikel_31_lid_2_onderel_n
+             type: amount
+             source:
+               regulation: participatiewet
+               output: bedrag_artikel_31_lid_2_onderel_n
+             type_spec:
+               unit: eurocent
+         output:
+           - name: middelen
+             type: amount
+             type_spec:
+               unit: eurocent
+             description: Totale middelen van de asielzoeker en zijn gezinsleden na exclusies en aftrek
+         actions:
+           - output: inkomen_na_25_procent_exclusie
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: AND
+                     cases:
+                       - operation: EQUAL
+                         subject: $is_vergunninghouder
+                         value: false
+                       - operation: LESS_THAN_EQUAL
+                         subject: $week_nummer
+                         value: 24
+                   then:
+                     operation: SUBTRACT
+                     values:
+                       - $inkomen_uit_arbeid
+                       - operation: MIN
+                         values:
+                           - operation: MULTIPLY
+                             values:
+                               - $inkomen_uit_arbeid
+                               - 0.25
+                           - $participatiewet_artikel_31_lid_2_onderel_n
+                 - when:
+                     operation: EQUAL
+                     subject: $is_vergunninghouder
+                     value: true
+                   then:
+                     operation: SUBTRACT
+                     values:
+                       - $inkomen_uit_arbeid
+                       - operation: MULTIPLY
+                         values:
+                           - $inkomen_uit_arbeid
+                           - 0.25
+               default: $inkomen_uit_arbeid
+           - output: exclusies
+             value:
+               operation: ADD
+               values:
+                 - $kinderbijslag
+                 - $vergoedingen_en_tegemoetkomingen
+                 - $rente_over_uitgesloten_vermogen
+                 - operation: IF
+                   cases:
+                     - when:
+                         operation: AND
+                         cases:
+                           - operation: EQUAL
+                             subject: $is_uitkering_immateriele_schade_redelijk
+                             value: true
+                           - operation: GREATER_THAN
+                             subject: $uitkering_immateriele_schade
+                             value: 0
+                       then: $uitkering_immateriele_schade
+                   default: 0
+                 - operation: IF
+                   cases:
+                     - when:
+                         operation: AND
+                         cases:
+                           - operation: EQUAL
+                             subject: $is_giften_redelijk
+                             value: true
+                           - operation: GREATER_THAN
+                             subject: $giften
+                             value: 0
+                       then: $giften
+                   default: 0
+           - output: aftrekposten
+             value:
+               operation: ADD
+               values:
+                 - $loonbelasting
+                 - $inkomstenbelasting
+                 - $premies_volksverzekeringen
+                 - $premies_werknemersverzekeringen
+                 - $verplichte_pensioenbijdragen
+                 - $andere_verplichtingen
+           - output: middelen
+             value:
+               operation: SUBTRACT
+               values:
+                 - operation: SUBTRACT
+                   values:
+                     - $inkomen_na_25_procent_exclusie
+                     - $exclusies
+                 - $aftrekposten
   - number: '6'
     text: |-
       1 Onder inkomen wordt verstaan de middelen voor zover deze:
