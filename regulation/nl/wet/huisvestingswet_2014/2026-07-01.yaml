@@ -360,6 +360,23 @@ articles:
         artikel: '12'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: "Datum van ontvangst van het verzoek om advies door gedeputeerde staten (art 6 lid 3)"
+        output:
+          - name: advies_termijn_uiterste_datum
+            type: date
+            description: "Uiterste datum waarop gedeputeerde staten hun advies moeten geven (6 weken na ontvangst verzoek, art 6 lid 3)"
+        actions:
+          - output: advies_termijn_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 6
   - number: '7'
     text: |-
       1 In de huisvestingsverordening kan de gemeenteraad categorieën woonruimte aanwijzen die niet voor bewoning in
@@ -740,6 +757,53 @@ articles:
       - id: ref10
         bwb_id: BWBR0040634
         artikel: '1.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: "Geboortedatum van de woningzoekende"
+          - name: peildatum
+            type: date
+            required: true
+            description: "Peildatum voor de leeftijdsberekening"
+          - name: verlaat_accommodatie_jeugdwet
+            type: boolean
+            required: true
+            description: "Woningzoekende verlaat een accommodatie of gesloten accommodatie als bedoeld in artikel 1.1 van de Jeugdwet (art 12 lid 3 g)"
+        output:
+          - name: leeftijd
+            type: number
+            description: "Leeftijd van de woningzoekende op de peildatum in jaren"
+          - name: voldoet_aan_leeftijdseis_art12g
+            type: boolean
+            description: "Woningzoekende heeft leeftijd van 18 maar niet 23 jaar bereikt (art 12 lid 3 g)"
+          - name: kwalificeert_als_urgentie_art12g
+            type: boolean
+            description: "Woningzoekende kwalificeert voor urgentiecategorie art 12 lid 3 g (jongere die Jeugdwet-accommodatie verlaat)"
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_leeftijdseis_art12g
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 23
+          - output: kwalificeert_als_urgentie_art12g
+            value:
+              operation: AND
+              conditions:
+                - $voldoet_aan_leeftijdseis_art12g
+                - $verlaat_accommodatie_jeugdwet
   - number: '13'
     text: |-
       1 Burgemeester en wethouders beslissen over de indeling van woningzoekenden in de urgentiecategorieën, bedoeld in
@@ -852,6 +916,39 @@ articles:
         artikel: '12'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      untranslatables:
+        - construct: "redelijk belang heeft zich te vestigen (artikel 14 lid 4 a)"
+          reason: "Subjective assessment — 'redelijk belang' cannot be computed algorithmically"
+          suggestion: "Requires human assessment by competent authority"
+          legal_text_excerpt: "hij met het oog op de voorziening in het bestaan een redelijk belang heeft zich in die woningmarktregio, die gemeente of dat deel van de gemeente te vestigen"
+          accepted: false
+        - construct: "redelijk, met de plaatselijke samenleving verband houdend belang (artikel 14 lid 4 b 1°)"
+          reason: "Subjective assessment — 'redelijk belang' cannot be computed algorithmically"
+          suggestion: "Requires human assessment by competent authority"
+          legal_text_excerpt: "een redelijk, met de plaatselijke samenleving verband houdend belang heeft zich in die woningmarktregio, die gemeente of dat deel van de gemeente te vestigen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_aaneengesloten_zes_jaar_ingezetene
+            type: boolean
+            required: true
+            description: "Woningzoekende is ten minste zes jaar onafgebroken ingezetene van de woningmarktregio/gemeente/kern (art 14 lid 4 b 2°)"
+          - name: is_zes_jaar_ingezetene_in_voorafgaande_tien_jaar
+            type: boolean
+            required: true
+            description: "Woningzoekende was gedurende de voorafgaande tien jaar ten minste zes jaar onafgebroken ingezetene geweest (art 14 lid 4 b 2°)"
+        output:
+          - name: heeft_maatschappelijke_binding_via_ingezeteneschap
+            type: boolean
+            description: "Woningzoekende heeft maatschappelijke binding via het objectieve ingezetenecriterium van art 14 lid 4 b 2°"
+        actions:
+          - output: heeft_maatschappelijke_binding_via_ingezeteneschap
+            value:
+              operation: OR
+              conditions:
+                - $is_aaneengesloten_zes_jaar_ingezetene
+                - $is_zes_jaar_ingezetene_in_voorafgaande_tien_jaar
   - number: '15'
     text: |-
       1 Een huisvestingsvergunning wordt verleend indien de aanvrager behoort tot een krachtens
@@ -985,6 +1082,48 @@ articles:
       - id: ref17
         bwb_id: BWBR0013798
         artikel: '9'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: behoort_tot_aangewezen_categorie
+            type: boolean
+            required: true
+            description: "Aanvrager behoort tot een krachtens artikel 10 lid 1 in de huisvestingsverordening aangewezen categorie woningzoekenden (art 15 lid 1)"
+          - name: is_middeldure_huurwoonruimte
+            type: boolean
+            required: true
+            description: "De woonruimte is middeldure huurwoonruimte waarvoor de gemeenteraad toepassing heeft gegeven aan artikel 10 lid 3"
+        input:
+          - name: voldoet_aan_nationaliteits_eis
+            type: boolean
+            source:
+              output: voldoet_aan_nationaliteits_eis
+            description: "Aanvrager voldoet aan de nationaliteits- en verblijfseisen van artikel 10 lid 2"
+          - name: is_middeninkomen
+            type: boolean
+            source:
+              output: is_middeninkomen
+            description: "Aanvrager heeft een middeninkomen als bedoeld in artikel 10 lid 4 (relevant als middeldure huurwoonruimte)"
+        output:
+          - name: recht_op_huisvestingsvergunning
+            type: boolean
+            description: "Aanvrager heeft recht op een huisvestingsvergunning (art 15 lid 1)"
+        actions:
+          - output: recht_op_huisvestingsvergunning
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_aangewezen_categorie
+                - $voldoet_aan_nationaliteits_eis
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_middeldure_huurwoonruimte
+                      value: false
+                    - $is_middeninkomen
   - number: '16'
     text: |-
       [Artikel 15, tweede lid][ref1], is met betrekking tot een op grond van
@@ -1116,6 +1255,35 @@ articles:
       - id: ref7
         bwb_id: BWBR0014315
         artikel: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanbiedingsdatum
+            type: date
+            required: true
+            description: "Datum van aanvang van de aanbiedingsprocedure als bedoeld in artikel 17 lid 1 of lid 2"
+          - name: gestelde_termijn_weken
+            type: number
+            required: true
+            description: "De door de gemeenteraad in de huisvestingsverordening gestelde aanbiedingstermijn in weken (art 17 lid 3, ten hoogste 13 weken)"
+        output:
+          - name: termijn_binnen_wettelijk_maximum
+            type: boolean
+            description: "True als de gestelde termijn niet meer is dan 13 weken (art 17 lid 3)"
+          - name: uiterste_aanbiedingsdatum
+            type: date
+            description: "Uiterste datum van de aanbiedingsprocedure op basis van de gestelde termijn"
+        actions:
+          - output: termijn_binnen_wettelijk_maximum
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gestelde_termijn_weken
+              value: 13
+          - output: uiterste_aanbiedingsdatum
+            value:
+              operation: DATE_ADD
+              date: $aanbiedingsdatum
+              weeks: $gestelde_termijn_weken
   - number: '18'
     text: |-
       1 Burgemeester en wethouders kunnen een huisvestingsvergunning intrekken indien:
