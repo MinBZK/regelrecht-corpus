@@ -1128,6 +1128,61 @@ articles:
         artikel: 6:3
       - id: ref25
         bwb_id: BWBR0004045
+    machine_readable:
+      execution:
+        parameters:
+          - name: loon_en_vakantiebijslag
+            type: number
+            required: true
+            description: >-
+              Som van loon en vakantiebijslag voldaan over het tijdvak (artikel 17 WML),
+              uitgedrukt in eurocent
+          - name: minimumloon_recht
+            type: number
+            required: true
+            description: >-
+              Bedrag waarop de werknemer over het tijdvak als minimumloon recht heeft
+              verworven (artikel 7 en 8 WML), uitgedrukt in eurocent
+        output:
+          - name: recht_op_aanvullende_vakantiebijslag
+            type: boolean
+            description: >-
+              Werknemer heeft recht op aanvullende vakantiebijslag ingevolge artikel 16
+              lid 2 WML indien de som van loon en vakantiebijslag minder bedraagt dan
+              108% van het minimumloon
+          - name: aanvullende_vakantiebijslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              Aanvullend bedrag aan vakantiebijslag ter grootte van het bedrag waarmee
+              108% van het minimumloon de betaalde som overschrijdt (artikel 16 lid 2 WML)
+        actions:
+          - output: drempelsom_108
+            value:
+              operation: MULTIPLY
+              values:
+                - 1.08
+                - $minimumloon_recht
+          - output: recht_op_aanvullende_vakantiebijslag
+            value:
+              operation: LESS_THAN
+              subject: $loon_en_vakantiebijslag
+              value: $drempelsom_108
+          - output: aanvullende_vakantiebijslag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $loon_en_vakantiebijslag
+                    value: $drempelsom_108
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $drempelsom_108
+                      - $loon_en_vakantiebijslag
+              default: 0
   - number: '17'
     text: |-
       1 De vakantiebijslag, waarop de werknemer over het loon en de uitkeringen krachtens de [Ziektewet][ref1],
@@ -1446,6 +1501,27 @@ articles:
       Indien een bestuurlijke boete ten onrechte is opgelegd, wordt deze binnen zes weken nadat is vastgesteld dat de
       bestuurlijke boete ten onrechte is opgelegd, aan de rechthebbende terugbetaald.
     url: https://wetten.overheid.nl/BWBR0002638/2026-07-01#Artikel18h
+    machine_readable:
+      execution:
+        parameters:
+          - name: vaststelling_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop is vastgesteld dat de bestuurlijke boete ten onrechte
+              is opgelegd
+        output:
+          - name: terugbetaling_uiterlijk
+            type: date
+            description: >-
+              Uiterste datum voor terugbetaling van de ten onrechte opgelegde
+              bestuurlijke boete (binnen zes weken na vaststelling — artikel 18h WML)
+        actions:
+          - output: terugbetaling_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $vaststelling_datum
+              weeks: 6
   - number: 18i
     text: |-
       1 Een daartoe door Onze Minister aangewezen, onder hem ressorterende ambtenaar kan, nadat een overtreding van een
@@ -1530,6 +1606,38 @@ articles:
       Indien een dwangsom ten onrechte is ingevorderd, wordt de betaalde geldsom, vermeerderd met de wettelijke rente,
       binnen 6 weken nadat is vastgesteld dat de dwangsom ten onrechte is ingevorderd, aan de rechthebbende terugbetaald.
     url: https://wetten.overheid.nl/BWBR0002638/2026-07-01#Artikel18o
+    machine_readable:
+      untranslatables:
+        - construct: "wettelijke rente"
+          reason: >-
+            The legal interest rate (wettelijke rente) changes over time and is
+            not available as a static engine operation; computing the interest
+            amount requires an external rate lookup
+          legal_text_excerpt: >-
+            wordt de betaalde geldsom, vermeerderd met de wettelijke rente,
+            binnen 6 weken nadat is vastgesteld dat de dwangsom ten onrechte
+            is ingevorderd, aan de rechthebbende terugbetaald
+          accepted: false
+      execution:
+        parameters:
+          - name: vaststelling_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop is vastgesteld dat de dwangsom ten onrechte is
+              ingevorderd
+        output:
+          - name: terugbetaling_uiterlijk
+            type: date
+            description: >-
+              Uiterste datum voor terugbetaling van de ten onrechte ingevorderde
+              dwangsom (binnen 6 weken na vaststelling — artikel 18o WML)
+        actions:
+          - output: terugbetaling_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $vaststelling_datum
+              weeks: 6
   - number: 18p
     text: |-
       1 Bestuursorganen zijn bevoegd uit eigen beweging en verplicht desgevraagd aan Onze Minister en de ambtenaren,
