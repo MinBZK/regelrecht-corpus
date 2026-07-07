@@ -725,6 +725,32 @@ articles:
       - id: ref6
         bwb_id: BWBR0020368
         artikel: 3:17
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaaromzet_eurocent_wft
+            type: number
+            required: true
+            description: Totale wereldwijde jaaromzet in het voorgaande boekjaar in eurocent; stel 0 in als de overtreder geen jaaromzet heeft (lid 4)
+        output:
+          - name: boete_maximum_wft
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximum bestuurlijke boete voor overtreding krachtens artikel 3:17 lid 7 Wft (artikel 21a lid 4 — ten hoogste 20.000.000 euro of, indien dit meer is, ten hoogste 4% van de totale wereldwijde jaaromzet)
+        actions:
+          - output: boete_maximum_wft
+            value:
+              operation: MAX
+              values:
+                - 2000000000
+                - operation: DIVIDE
+                  values:
+                    - operation: MULTIPLY
+                      values:
+                        - $jaaromzet_eurocent_wft
+                        - 4
+                    - 100
   - number: '22'
     text: |-
       1 Overeenkomstig artikel 9, eerste lid, van de verordening zijn verwerking van persoonsgegevens waaruit ras of
@@ -861,6 +887,61 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 9:17
+    machine_readable:
+      untranslatables:
+        - construct: "de verwerking noodzakelijk is ter voldoening aan een volkenrechtelijke verplichting"
+          reason: "Compliance with a specific international law obligation requires legal/contextual judgment"
+          legal_text_excerpt: "onderdeel a: de verwerking noodzakelijk is ter voldoening aan een volkenrechtelijke verplichting"
+          accepted: false
+        - construct: "voor zover de verwerking noodzakelijk is voor de uitvoering van de hun wettelijk opgedragen taken, onder voorwaarde dat bij die uitvoering is voorzien in zodanige waarborgen dat de persoonlijke levenssfeer van de betrokkene niet onevenredig wordt geschaad"
+          reason: "Necessity for statutory tasks and proportionality of privacy safeguards require contextual judgment"
+          legal_text_excerpt: "onderdeel b: voor zover de verwerking noodzakelijk is voor de uitvoering van de hun wettelijk opgedragen taken"
+          accepted: false
+        - construct: "noodzakelijk is in aanvulling op de verwerking van persoonsgegevens van strafrechtelijke aard voor de doeleinden waarvoor deze gegevens worden verwerkt"
+          reason: "Necessity as supplement to criminal data processing requires contextual judgment"
+          legal_text_excerpt: "onderdeel c: de verwerking noodzakelijk is in aanvulling op de verwerking van persoonsgegevens van strafrechtelijke aard"
+          accepted: false
+      execution:
+        parameters:
+          - name: volkenrechtelijke_verplichting
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk ter voldoening aan een volkenrechtelijke verplichting (onderdeel a)
+          - name: verwerker_is_ap_of_ombudsman
+            type: boolean
+            required: true
+            description: Verwerking geschiedt door de Autoriteit persoonsgegevens of een ombudsman als bedoeld in AWB artikel 9:17 (onderdeel b)
+          - name: noodzakelijk_voor_wettelijke_taak_ap
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor uitvoering wettelijk opgedragen taak met passende waarborgen (onderdeel b)
+          - name: noodzakelijk_aanvulling_strafrechtelijke_aard
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk als aanvulling op verwerking van strafrechtelijke gegevens voor dezelfde doeleinden (onderdeel c)
+        output:
+          - name: verbod_bijzondere_categorie_niet_van_toepassing_publiek_belang
+            type: boolean
+            description: Het verbod op verwerking van bijzondere categorieën van persoonsgegevens is niet van toepassing op grond van artikel 23
+        actions:
+          - output: verbod_bijzondere_categorie_niet_van_toepassing_publiek_belang
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $volkenrechtelijke_verplichting
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $verwerker_is_ap_of_ombudsman
+                      value: true
+                    - operation: EQUALS
+                      subject: $noodzakelijk_voor_wettelijke_taak_ap
+                      value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_aanvulling_strafrechtelijke_aard
+                  value: true
   - number: '24'
     text: |-
       Gelet op artikel 9, tweede lid, onderdeel j, van de verordening, is het verbod om bijzondere categorieën van
@@ -949,6 +1030,64 @@ articles:
 
       3°. de betrokkene tegen de verwerking geen schriftelijk bezwaar heeft gemaakt.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel25
+    machine_readable:
+      untranslatables:
+        - construct: "slechts voor zover de verwerking voor dat doel onvermijdelijk is"
+          reason: "Unavoidability of processing for identification requires contextual judgment"
+          legal_text_excerpt: "onderdeel a: met het oog op de identificatie van de betrokkene, en slechts voor zover de verwerking voor dat doel onvermijdelijk is"
+          accepted: false
+        - construct: "de verwerking voor dat doel noodzakelijk is (onderdeel b, 1°)"
+          reason: "Necessity of processing for positive discrimination purpose requires contextual judgment"
+          legal_text_excerpt: "onderdeel b, 1°: de verwerking voor dat doel noodzakelijk is"
+          accepted: false
+      execution:
+        parameters:
+          - name: doel_identificatie_onvermijdelijk
+            type: boolean
+            required: true
+            description: Verwerking geschiedt met het oog op identificatie van de betrokkene en is daarvoor onvermijdelijk (onderdeel a)
+          - name: doel_bevoorrechte_positie_minderheidsgroep
+            type: boolean
+            required: true
+            description: Doel is het toekennen van een bevoorrechte positie aan een etnische of culturele minderheidsgroep ter opheffing van nadeel (onderdeel b)
+          - name: verwerking_noodzakelijk_voor_bevoorrechting
+            type: boolean
+            required: true
+            description: De verwerking is noodzakelijk voor het doeleinde bevoorrechting (onderdeel b, 1°)
+          - name: gegevens_betreffen_geboorteland_of_wettelijke_criteria
+            type: boolean
+            required: true
+            description: Gegevens betreffen geboorteland betrokkene/ouders/grootouders of andere bij wet vastgestelde criteria voor objectieve vaststelling minderheidsgroep (onderdeel b, 2°)
+          - name: geen_schriftelijk_bezwaar_ras
+            type: boolean
+            required: true
+            description: Betrokkene heeft geen schriftelijk bezwaar gemaakt tegen de verwerking (onderdeel b, 3°)
+        output:
+          - name: verbod_ras_etniciteit_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van persoonsgegevens waaruit ras of etnische afkomst blijkt, is niet van toepassing (artikel 25)
+        actions:
+          - output: verbod_ras_etniciteit_niet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $doel_identificatie_onvermijdelijk
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $doel_bevoorrechte_positie_minderheidsgroep
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerking_noodzakelijk_voor_bevoorrechting
+                      value: true
+                    - operation: EQUALS
+                      subject: $gegevens_betreffen_geboorteland_of_wettelijke_criteria
+                      value: true
+                    - operation: EQUALS
+                      subject: $geen_schriftelijk_bezwaar_ras
+                      value: true
   - number: '26'
     text: |-
       Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om persoonsgegevens te verwerken
@@ -956,6 +1095,28 @@ articles:
       die met betrekking tot politieke opvattingen in redelijkheid kunnen worden gesteld in verband met de vervulling van
       functies in bestuursorganen en adviescolleges.
     url: https://wetten.overheid.nl/BWBR0040940/2021-07-01#Artikel26
+    machine_readable:
+      untranslatables:
+        - construct: "eisen die met betrekking tot politieke opvattingen in redelijkheid kunnen worden gesteld in verband met de vervulling van functies in bestuursorganen en adviescolleges"
+          reason: "Reasonableness of political opinion requirements in relation to specific functions requires contextual legal judgment"
+          legal_text_excerpt: "de verwerking geschiedt met het oog op de eisen die met betrekking tot politieke opvattingen in redelijkheid kunnen worden gesteld in verband met de vervulling van functies in bestuursorganen en adviescolleges"
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerking_voor_politieke_functie_vereisten
+            type: boolean
+            required: true
+            description: Verwerking geschiedt met het oog op eisen voor politieke opvattingen in verband met functies in bestuursorganen en adviescolleges
+        output:
+          - name: verbod_politieke_opvattingen_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van persoonsgegevens waaruit politieke opvattingen blijken, is niet van toepassing (artikel 26)
+        actions:
+          - output: verbod_politieke_opvattingen_niet_van_toepassing
+            value:
+              operation: EQUALS
+              subject: $verwerking_voor_politieke_functie_vereisten
+              value: true
   - number: '27'
     text: |-
       1 Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om persoonsgegevens te verwerken
@@ -976,6 +1137,44 @@ articles:
         artikel: '22'
         hoofdstuk: '3'
         paragraaf: '3.1'
+    machine_readable:
+      untranslatables:
+        - construct: "voor zover de verwerking noodzakelijk is met het oog op de geestelijke verzorging van de betrokkene"
+          reason: "Necessity for spiritual care requires contextual judgment and cannot be expressed as an engine operation"
+          legal_text_excerpt: "lid 1: voor zover de verwerking noodzakelijk is met het oog op de geestelijke verzorging van de betrokkene"
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerker_is_andere_instelling_dan_art22c
+            type: boolean
+            required: true
+            description: Verwerking geschiedt door andere instellingen dan bedoeld in artikel 22, tweede lid, onderdeel c (lid 1)
+          - name: noodzakelijk_geestelijke_verzorging
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk voor geestelijke verzorging van de betrokkene (lid 1)
+          - name: geen_schriftelijk_bezwaar_religie
+            type: boolean
+            required: true
+            description: Betrokkene heeft geen schriftelijk bezwaar gemaakt (lid 1)
+        output:
+          - name: verbod_religieuze_gegevens_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van persoonsgegevens waaruit religieuze of levensbeschouwelijke overtuigingen blijken, is niet van toepassing (artikel 27 lid 1)
+        actions:
+          - output: verbod_religieuze_gegevens_niet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerker_is_andere_instelling_dan_art22c
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_geestelijke_verzorging
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_schriftelijk_bezwaar_religie
+                  value: true
   - number: '28'
     text: |-
       1 Gelet op artikel 9, tweede lid, onderdeel g, van de verordening, is het verbod om genetische gegevens te
@@ -1173,6 +1372,116 @@ articles:
       - id: ref4
         bwb_id: BWBR0020368
         artikel: 1:1
+    machine_readable:
+      untranslatables:
+        - construct: "voor zover de verwerking noodzakelijk is voor een goede uitvoering van wettelijke voorschriften, pensioenregelingen of collectieve arbeidsovereenkomsten"
+          reason: "Necessity assessment for specific legal provisions/pension rules requires contextual judgment"
+          legal_text_excerpt: "lid 1 onderdeel a: voor zover de verwerking noodzakelijk is voor een goede uitvoering van wettelijke voorschriften, pensioenregelingen of collectieve arbeidsovereenkomsten die voorzien in aanspraken die afhankelijk zijn van de gezondheidstoestand van de betrokkene"
+          accepted: false
+        - construct: "voor zover de verwerking noodzakelijk is voor de re-integratie of begeleiding van werknemers of uitkeringsgerechtigden in verband met ziekte of arbeidsongeschiktheid"
+          reason: "Necessity for re-integration requires contextual judgment"
+          legal_text_excerpt: "lid 1 onderdeel b"
+          accepted: false
+        - construct: "voor zover de verwerking met het oog op de speciale begeleiding van leerlingen of het treffen van bijzondere voorzieningen in verband met hun gezondheidstoestand noodzakelijk is"
+          reason: "Necessity for special pupil support requires contextual judgment"
+          legal_text_excerpt: "lid 2 onderdeel a"
+          accepted: false
+        - construct: "voor zover de verwerking noodzakelijk is voor de uitvoering van de aan hen opgedragen wettelijke taken"
+          reason: "Necessity for statutory tasks of reclassering/kinderbescherming requires contextual judgment"
+          legal_text_excerpt: "lid 2 onderdeel b"
+          accepted: false
+        - construct: "voor zover de verwerking in verband met de tenuitvoerlegging van vrijheidsbenemende maatregelen noodzakelijk is"
+          reason: "Necessity for execution of liberty-depriving measures requires contextual judgment"
+          legal_text_excerpt: "lid 2 onderdeel c"
+          accepted: false
+        - construct: "voor zover de verwerking noodzakelijk is met het oog op een goede behandeling of verzorging van de betrokkene dan wel het beheer van de betreffende instelling of beroepspraktijk"
+          reason: "Necessity for good care or institutional management requires contextual judgment"
+          legal_text_excerpt: "lid 3 onderdeel a"
+          accepted: false
+        - construct: "ter beoordeling van het door de verzekeraar te verzekeren risico en de betrokkene geen bezwaar heeft gemaakt"
+          reason: "Risk assessment by insurer and absence of objection cannot be fully expressed as engine operations"
+          legal_text_excerpt: "lid 3 onderdeel b, 1°"
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerker_is_bestuursorgaan_pensioenfonds_werkgever
+            type: boolean
+            required: true
+            description: Verwerking geschiedt door bestuursorgaan, pensioenfonds, werkgever of instelling die voor hen werkzaam is (lid 1)
+          - name: noodzakelijk_lid1_onderdeel_a
+            type: boolean
+            required: true
+            description: Noodzakelijk voor uitvoering van wettelijke voorschriften/pensioenregelingen/CAO voor gezondheidsgerelateerde aanspraken (lid 1 onderdeel a)
+          - name: noodzakelijk_lid1_onderdeel_b
+            type: boolean
+            required: true
+            description: Noodzakelijk voor re-integratie of begeleiding van werknemers/uitkeringsgerechtigden wegens ziekte/arbeidsongeschiktheid (lid 1 onderdeel b)
+          - name: verwerker_is_school_noodzakelijk
+            type: boolean
+            required: true
+            description: Verwerking door school, noodzakelijk voor speciale begeleiding leerlingen wegens gezondheid (lid 2 onderdeel a)
+          - name: verwerker_is_reclassering_etc_noodzakelijk
+            type: boolean
+            required: true
+            description: Verwerking door reclasseringsinstelling, raad kinderbescherming, gecertificeerde instelling e.d., noodzakelijk voor wettelijke taken (lid 2 onderdeel b)
+          - name: verwerker_is_minister_detentie
+            type: boolean
+            required: true
+            description: Verwerking door Onze Minister of Onze Minister van JV noodzakelijk voor tenuitvoerlegging vrijheidsbenemende maatregelen (lid 2 onderdeel c)
+          - name: verwerker_is_hulpverlener_instelling_noodzakelijk
+            type: boolean
+            required: true
+            description: Verwerking door hulpverlener, zorginstelling of maatschappelijke dienstverlening, noodzakelijk voor goede behandeling/verzorging of beheer instelling (lid 3 onderdeel a)
+          - name: verwerker_is_verzekeraar_uitvoering_verzekering
+            type: boolean
+            required: true
+            description: Verwerking door verzekeraar of financieel dienstverlener voor uitvoering van de verzekeringsovereenkomst of assistentie bij beheer (lid 3 onderdeel b, 2°)
+          - name: geheimhoudingsplicht_aanwezig
+            type: boolean
+            required: true
+            description: Gegevens worden uitsluitend verwerkt door personen met geheimhoudingsplicht uit hoofde van ambt, beroep, wettelijk voorschrift of overeenkomst (lid 4)
+        output:
+          - name: verbod_gezondheidsgegevens_niet_van_toepassing
+            type: boolean
+            description: Het verbod op verwerking van gezondheidsgegevens is niet van toepassing (artikel 30)
+        actions:
+          - output: verbod_gezondheidsgegevens_niet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $geheimhoudingsplicht_aanwezig
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $verwerker_is_bestuursorgaan_pensioenfonds_werkgever
+                          value: true
+                        - operation: OR
+                          conditions:
+                            - operation: EQUALS
+                              subject: $noodzakelijk_lid1_onderdeel_a
+                              value: true
+                            - operation: EQUALS
+                              subject: $noodzakelijk_lid1_onderdeel_b
+                              value: true
+                    - operation: EQUALS
+                      subject: $verwerker_is_school_noodzakelijk
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerker_is_reclassering_etc_noodzakelijk
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerker_is_minister_detentie
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerker_is_hulpverlener_instelling_noodzakelijk
+                      value: true
+                    - operation: EQUALS
+                      subject: $verwerker_is_verzekeraar_uitvoering_verzekering
+                      value: true
   - number: '31'
     text: |-
       Onverminderd artikel 10 van de verordening mogen persoonsgegevens van strafrechtelijke aard alleen worden verwerkt
@@ -1376,6 +1685,102 @@ articles:
       - id: ref6
         bwb_id: BWBR0003045
         artikel: 24b
+    machine_readable:
+      untranslatables:
+        - construct: "de verwerking noodzakelijk is voor de uitvoering van de taak van deze verwerkingsverantwoordelijken (lid 1 onderdeel b, 1°)"
+          reason: "Necessity assessment for task execution of cooperation structures requires contextual judgment"
+          legal_text_excerpt: "lid 1 onderdeel b, 1°: de verwerking noodzakelijk is voor de uitvoering van de taak van deze verwerkingsverantwoordelijken of groepen van verwerkingsverantwoordelijken"
+          accepted: false
+        - construct: "bij de uitvoering is voorzien in zodanige waarborgen dat de persoonlijke levenssfeer van de betrokkene niet onevenredig wordt geschaad (lid 1 onderdeel b, 2°)"
+          reason: "Adequacy of privacy safeguards requires contextual judgment"
+          legal_text_excerpt: "lid 1 onderdeel b, 2°"
+          accepted: false
+        - construct: "noodzakelijk is in aanvulling op de verwerking van gegevens over gezondheid voor goede behandeling of verzorging (lid 1 onderdeel c)"
+          reason: "Necessity as supplement to health data for care requires contextual judgment"
+          legal_text_excerpt: "lid 1 onderdeel c: de verwerking noodzakelijk is in aanvulling op de verwerking van gegevens over gezondheid"
+          accepted: false
+        - construct: "ter beoordeling van een verzoek van betrokkene om een beslissing over hem te nemen of aan hem een prestatie te leveren (lid 2 onderdeel a)"
+          reason: "Assessment of a specific request from the betrokkene involves procedural context not reducible to a single engine operation"
+          legal_text_excerpt: "lid 2 onderdeel a"
+          accepted: false
+        - construct: "noodzakelijk is met het oog op een zwaarwegend belang van derden (lid 5)"
+          reason: "Weighing the interests of third parties requires contextual legal judgment"
+          legal_text_excerpt: "lid 5: indien de verwerking noodzakelijk is met het oog op een zwaarwegend belang van derden"
+          accepted: false
+      execution:
+        parameters:
+          - name: verwerker_belast_met_strafrecht_of_politiegegevens
+            type: boolean
+            required: true
+            description: Verwerking door orgaan belast met toepassing strafrecht, of verwerker die gegevens heeft verkregen krachtens Wet politiegegevens of Wet justitiële en strafvorderlijke gegevens (lid 1 onderdeel a)
+          - name: publiekrechtelijk_samenwerkingsverband_noodzakelijk_met_waarborgen
+            type: boolean
+            required: true
+            description: Verwerking door publiekrechtelijk samenwerkingsverband van verwerkingsverantwoordelijken, noodzakelijk voor taak en met adequate waarborgen voor persoonlijke levenssfeer (lid 1 onderdeel b)
+          - name: aanvulling_gezondheidsgegevens_art30_lid3a
+            type: boolean
+            required: true
+            description: Verwerking noodzakelijk als aanvulling op gezondheidsgegevens van artikel 30 lid 3 onderdeel a voor goede behandeling of verzorging (lid 1 onderdeel c)
+          - name: eigen_gebruik_beoordeling_verzoek
+            type: boolean
+            required: true
+            description: Verwerking door verwerkingsverantwoordelijke voor eigen gebruik ter beoordeling van verzoek betrokkene voor een beslissing of prestatie (lid 2 onderdeel a)
+          - name: eigen_gebruik_bescherming_belangen
+            type: boolean
+            required: true
+            description: Verwerking voor bescherming belangen van verwerkingsverantwoordelijke tegen strafbare feiten die zijn of naar verwachting zullen worden gepleegd jegens hem of zijn personeel (lid 2 onderdeel b)
+          - name: personeelsgegevens_conform_or_procedure
+            type: boolean
+            required: true
+            description: Verwerking van strafrechtelijke gegevens van eigen personeel geschiedt conform de procedure van de Wet op de ondernemingsraden (lid 3)
+          - name: is_particuliere_beveiligingsorganisatie
+            type: boolean
+            required: true
+            description: Verwerking voor derden door een verwerkingsverantwoordelijke met vergunning op grond van de Wet particuliere beveiligingsorganisaties en recherchebureaus (lid 4 onderdeel a)
+          - name: derde_is_groepsmaatschappij
+            type: boolean
+            required: true
+            description: De derde ten behoeve van wie verwerkt wordt, is een rechtspersoon verbonden in dezelfde groep als bedoeld in BW2 artikel 24b (lid 4 onderdeel b)
+          - name: ap_vergunning_verleend
+            type: boolean
+            required: true
+            description: De Autoriteit persoonsgegevens heeft een vergunning verleend voor de verwerking ten behoeve van derden (lid 4 onderdeel c)
+        output:
+          - name: verwerking_strafrechtelijke_gegevens_toegestaan_artikel33
+            type: boolean
+            description: Verwerking van persoonsgegevens van strafrechtelijke aard is toegestaan op grond van artikel 33
+        actions:
+          - output: verwerking_strafrechtelijke_gegevens_toegestaan_artikel33
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerker_belast_met_strafrecht_of_politiegegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $publiekrechtelijk_samenwerkingsverband_noodzakelijk_met_waarborgen
+                  value: true
+                - operation: EQUALS
+                  subject: $aanvulling_gezondheidsgegevens_art30_lid3a
+                  value: true
+                - operation: EQUALS
+                  subject: $eigen_gebruik_beoordeling_verzoek
+                  value: true
+                - operation: EQUALS
+                  subject: $eigen_gebruik_bescherming_belangen
+                  value: true
+                - operation: EQUALS
+                  subject: $personeelsgegevens_conform_or_procedure
+                  value: true
+                - operation: EQUALS
+                  subject: $is_particuliere_beveiligingsorganisatie
+                  value: true
+                - operation: EQUALS
+                  subject: $derde_is_groepsmaatschappij
+                  value: true
+                - operation: EQUALS
+                  subject: $ap_vergunning_verleend
+                  value: true
   - number: '34'
     text: |-
       Een schriftelijke beslissing op een verzoek als bedoeld in de artikelen 15 tot en met 22 van de verordening wordt
