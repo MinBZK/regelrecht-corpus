@@ -2279,6 +2279,44 @@ articles:
         bwb_id: BWBR0022463
         artikel: '28'
         paragraaf: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de betrokkene
+          - name: datum_verzoek
+            type: date
+            required: true
+            description: De datum van het verzoek
+          - name: onder_curatele
+            type: boolean
+            required: true
+            description: Of de betrokkene onder curatele is gesteld (lid 2)
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de betrokkene op datum van het verzoek in jaren
+          - name: vertegenwoordiger_vereist
+            type: boolean
+            description: Of het verzoek door de wettelijk vertegenwoordiger dient te worden gedaan (lid 2)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $datum_verzoek
+          - output: vertegenwoordiger_vereist
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 16
+                - operation: EQUALS
+                  subject: $onder_curatele
+                  value: true
   - number: '27'
     text: |-
       1 Een verzoek als bedoeld in de [artikelen 25, eerste lid][ref1], en [28, eerste en tweede lid][ref2], wordt
@@ -2473,6 +2511,23 @@ articles:
       - id: ref13
         bwb_id: BWBR0005537
         artikel: 8:29
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_bericht_afsluiting
+            type: date
+            required: true
+            description: De datum waarop de Autoriteit persoonsgegevens bericht heeft verstuurd dat de behandeling van de zaak is beëindigd (lid 2)
+        output:
+          - name: uiterste_beroepsdatum_na_AP
+            type: date
+            description: Uiterste datum voor het instellen van beroep na ontvangst van het bericht van de Autoriteit persoonsgegevens (zes weken na dat tijdstip, lid 2)
+        actions:
+          - output: uiterste_beroepsdatum_na_AP
+            value:
+              operation: DATE_ADD
+              date: $datum_bericht_afsluiting
+              weeks: 6
   - number: 31a
     text: |-
       1 Onverminderd bestaande rechtsmiddelen heeft iedere betrokkene het recht een klacht in te dienen bij de Autoriteit
@@ -2507,6 +2562,23 @@ articles:
         paragraaf: '5'
       - id: ref2
         bwb_id: BWBR0005537
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_klacht
+            type: date
+            required: true
+            description: De datum van indiening van de klacht bij de Autoriteit persoonsgegevens (lid 1)
+        output:
+          - name: uiterste_beslissingsdatum
+            type: date
+            description: Uiterste datum voor een beslissing op de klacht (drie maanden na datum klacht, lid 5)
+        actions:
+          - output: uiterste_beslissingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_klacht
+              months: 3
   - number: 31b
     text: |-
       Een vordering tegen de Autoriteit persoonsgegevens wordt ingesteld bij een gerecht, bedoeld in
@@ -3207,6 +3279,23 @@ articles:
         bwb_id: BWBR0022463
         artikel: '35'
         paragraaf: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ontvangst_verzoek
+            type: date
+            required: true
+            description: De datum van ontvangst van het verzoek om informatie of wederzijdse bijstand door de Autoriteit persoonsgegevens (lid 2)
+        output:
+          - name: uiterste_antwoorddatum
+            type: date
+            description: Uiterste datum voor beantwoording van het verzoek (één maand na ontvangst, lid 2)
+        actions:
+          - output: uiterste_antwoorddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_verzoek
+              months: 1
   - number: '36'
     text: |-
       1 De verwerkingsverantwoordelijke benoemt een functionaris voor gegevensbescherming. Voor verschillende
