@@ -1751,6 +1751,46 @@ articles:
         bwb_id: BWBR0022463
         artikel: '1'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: commissie_adequaatheidsbesluit
+            type: boolean
+            required: true
+            description: Of de Commissie van de EU een adequaatheidsbesluit heeft genomen voor het derde land of internationale organisatie (lid 1)
+          - name: passende_waarborgen_juridisch_instrument
+            type: boolean
+            required: true
+            description: Of in een juridisch bindend instrument passende waarborgen voor gegevensbescherming zijn geboden (lid 2a)
+          - name: verwerkingsverantwoordelijke_concludeert_adequate_bescherming
+            type: boolean
+            required: true
+            description: Of de verwerkingsverantwoordelijke na beoordeling heeft geconcludeerd dat het derde land of de internationale organisatie passende waarborgen biedt (lid 2b)
+          - name: derogatie_van_toepassing
+            type: boolean
+            required: true
+            description: Of een van de in lid 3 genoemde derogatiegevallen van toepassing is (vitaal belang, gevaar openbare veiligheid, uitvoering politietaak of rechtsvorderingen)
+        output:
+          - name: doorgifte_derde_land_toegestaan
+            type: boolean
+            description: Of het doorgeven van politiegegevens aan een derde land of internationale organisatie is toegestaan op grond van lid 1, 2 of 3
+        actions:
+          - output: doorgifte_derde_land_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $commissie_adequaatheidsbesluit
+                  value: true
+                - operation: EQUALS
+                  subject: $passende_waarborgen_juridisch_instrument
+                  value: true
+                - operation: EQUALS
+                  subject: $verwerkingsverantwoordelijke_concludeert_adequate_bescherming
+                  value: true
+                - operation: EQUALS
+                  subject: $derogatie_van_toepassing
+                  value: true
   - number: '18'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kunnen personen en instanties worden aangewezen aan wie of
@@ -1913,6 +1953,23 @@ articles:
         bwb_id: BWBR0022463
         artikel: '1'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: resultaten_bevatten_geen_persoonsgegevens
+            type: boolean
+            required: true
+            description: Of de resultaten van de verwerking voor beleidsinformatie, wetenschappelijk onderzoek of statistiek geen persoonsgegevens bevatten (lid 1)
+        output:
+          - name: verwerking_beleid_onderzoek_toegestaan
+            type: boolean
+            description: Of de verwerking van politiegegevens ten behoeve van beleidsinformatie, wetenschappelijk onderzoek of statistiek is toegestaan (lid 1)
+        actions:
+          - output: verwerking_beleid_onderzoek_toegestaan
+            value:
+              operation: EQUALS
+              subject: $resultaten_bevatten_geen_persoonsgegevens
+              value: true
   - number: '23'
     text: |-
       1 Verstrekking van politiegegevens aan de leden van het openbaar ministerie als bedoeld in
@@ -2374,6 +2431,75 @@ articles:
         bwb_id: BWBR0022463
         artikel: '12'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: betreft_informantgegevens_artikel_12
+            type: boolean
+            required: true
+            description: Of het verzoek gegevens betreft die worden verwerkt bij of krachtens artikel 12 (lid 3)
+          - name: weigeringsgrond_belemmering_gerechtelijk_onderzoek
+            type: boolean
+            required: true
+            description: Of afwijzing noodzakelijk en evenredig is ter vermijding van belemmering van gerechtelijke onderzoeken of procedures (lid 1a)
+          - name: weigeringsgrond_opsporing
+            type: boolean
+            required: true
+            description: Of afwijzing noodzakelijk en evenredig is ter vermijding van nadelige gevolgen voor opsporing of vervolging (lid 1b)
+          - name: weigeringsgrond_openbare_veiligheid
+            type: boolean
+            required: true
+            description: Of afwijzing noodzakelijk en evenredig is ter bescherming van de openbare veiligheid (lid 1c)
+          - name: weigeringsgrond_rechten_vrijheden_derden
+            type: boolean
+            required: true
+            description: Of afwijzing noodzakelijk en evenredig is ter bescherming van de rechten en vrijheden van derden (lid 1d)
+          - name: weigeringsgrond_nationale_veiligheid
+            type: boolean
+            required: true
+            description: Of afwijzing noodzakelijk en evenredig is ter bescherming van de nationale veiligheid (lid 1e)
+          - name: kennelijk_ongegrond_of_buitensporig
+            type: boolean
+            required: true
+            description: Of het verzoek kennelijk ongegrond of buitensporig is als bedoeld in artikel 24a, vierde lid (lid 1f)
+        output:
+          - name: verzoek_verplicht_afgewezen
+            type: boolean
+            description: Of het verzoek verplicht moet worden afgewezen omdat het informantgegevens betreft die worden verwerkt krachtens artikel 12 (lid 3)
+          - name: verzoek_kan_worden_afgewezen
+            type: boolean
+            description: Of het verzoek afgewezen kan worden op grond van een of meer weigeringsgronden (lid 1 of lid 3)
+        actions:
+          - output: verzoek_verplicht_afgewezen
+            value:
+              operation: EQUALS
+              subject: $betreft_informantgegevens_artikel_12
+              value: true
+          - output: verzoek_kan_worden_afgewezen
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $betreft_informantgegevens_artikel_12
+                  value: true
+                - operation: EQUALS
+                  subject: $weigeringsgrond_belemmering_gerechtelijk_onderzoek
+                  value: true
+                - operation: EQUALS
+                  subject: $weigeringsgrond_opsporing
+                  value: true
+                - operation: EQUALS
+                  subject: $weigeringsgrond_openbare_veiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $weigeringsgrond_rechten_vrijheden_derden
+                  value: true
+                - operation: EQUALS
+                  subject: $weigeringsgrond_nationale_veiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $kennelijk_ongegrond_of_buitensporig
+                  value: true
   - number: '28'
     text: |-
       1 De betrokkene heeft het recht op diens schriftelijke verzoek van de verwerkingsverantwoordelijke rectificatie van
@@ -2769,6 +2895,35 @@ articles:
       5 Bij of krachtens algemene maatregel van bestuur worden nadere regels gesteld betreffende de inhoud en wijze van
       uitvoering van de controles, bedoeld in het eerste en derde lid.
     url: https://wetten.overheid.nl/BWBR0022463/2025-07-01#Artikel33
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_auditrapport
+            type: date
+            required: true
+            description: De datum van het auditrapport waaruit blijkt dat niet wordt voldaan aan het bij of krachtens deze wet bepaalde (lid 3)
+          - name: niet_voldaan_aan_wet
+            type: boolean
+            required: true
+            description: Of uit de controleresultaten blijkt dat niet wordt voldaan aan het bij of krachtens deze wet bepaalde (lid 3)
+        output:
+          - name: hercontrole_vereist
+            type: boolean
+            description: Of een hercontrole verplicht is (lid 3)
+          - name: uiterste_hercontrole_datum
+            type: date
+            description: Uiterste datum voor de hercontrole (één jaar na datum auditrapport, lid 3)
+        actions:
+          - output: hercontrole_vereist
+            value:
+              operation: EQUALS
+              subject: $niet_voldaan_aan_wet
+              value: true
+          - output: uiterste_hercontrole_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_auditrapport
+              years: 1
   - number: 33a
     text: |-
       1 De verwerkingsverantwoordelijke meldt een inbreuk op de beveiliging onverwijld en uiterlijk binnen 72 uur nadat
