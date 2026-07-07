@@ -24,25 +24,16 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
+      Verordening:
+        [Verordening (EEG) nr. 1381/87](31987R1381) van de Commissie van de Europese Gemeenschap van 20 mei 1987,
+        inzake uitvoeringsbepalingen met betrekking tot kentekens voor vissersvaartuigen en met betrekking tot documenten
+        aan boord van die vaartuigen (Pb. EG L 132/9):
 
+      Vissersvaartuig:
+        vaartuig dat gebruikt wordt voor de bedrijfsmatige uitoefening van de visserij:
 
-            Verordening:
-
-              [Verordening (EEG) nr. 1381/87](31987R1381) van de Commissie van de Europese Gemeenschap van 20 mei 1987,
-      inzake uitvoeringsbepalingen met betrekking tot kentekens voor vissersvaartuigen en met betrekking tot documenten
-      aan boord van die vaartuigen (Pb. EG L 132/9):
-
-
-
-            Vissersvaartuig:
-
-              vaartuig dat gebruikt wordt voor de bedrijfsmatige uitoefening van de visserij:
-
-
-
-             Divisie Scheepvaart:
-
-              divisie Scheepvaart van de Inspectie Verkeer en Waterstaat.
+      Divisie Scheepvaart:
+        divisie Scheepvaart van de Inspectie Verkeer en Waterstaat.
     url: https://wetten.overheid.nl/BWBR0005006/2004-12-23#Artikel1
   - number: '2'
     text: |-
@@ -57,6 +48,47 @@ articles:
       - id: ref1
         bwb_id: BWBR0002416
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vessel_length
+            type: number
+            required: true
+            description: Lengte van het vissersvaartuig in meters
+          - name: water_type
+            type: string
+            required: true
+            description: Type water waar gevist wordt
+          - name: has_document
+            type: boolean
+            required: true
+            description: Is het document als bedoeld in Verordening (EEG) nr. 1381/87 Artikel 3, tweede lid aan boord?
+        input:
+          - name: is_applicable_water
+            type: boolean
+            value:
+              operation: IN
+              subject: $water_type
+              values:
+                - "Nationale wateren"
+                - "Territorial wateren"
+                - "EEZ"
+        output:
+          - name: verbod_toepasselijk
+            type: boolean
+            description: Is het verbod van artikel 2 toepasselijk?
+        actions:
+          - output: verbod_toepasselijk
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $vessel_length
+                  value: 17
+                - operation: NOT
+                  value: $is_applicable_water
+                - operation: NOT
+                  value: $has_document
   - number: '3'
     text: |-
       De bevoegde instantie tot waarmerking van de documenten als bedoeld in artikel 3, tweede lid, van de verordening is
