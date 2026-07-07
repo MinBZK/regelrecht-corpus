@@ -36,6 +36,22 @@ articles:
       - id: ref1
         bwb_id: BWBR0008754
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: subsidie_krachtens_andere_wet
+            type: boolean
+            required: true
+            description: Is de subsidie verstrekt krachtens een andere wet dan de Kaderwet SZW-subsidies?
+        output:
+          - name: wet_van_toepassing
+            type: boolean
+            description: Geeft aan of de Kaderwet SZW-subsidies van toepassing is op de subsidieverstrekking
+        actions:
+          - output: wet_van_toepassing
+            value:
+              operation: NOT
+              value: $subsidie_krachtens_andere_wet
   - number: '2'
     text: |-
       Onze Minister kan subsidies verstrekken voor activiteiten welke passen in:
@@ -121,12 +137,61 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 4:23
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_amvb_of_ministeriele_grondslag
+            type: boolean
+            required: true
+            description: Is er een AMvB of ministeriële regeling als bedoeld in artikel 3 die de subsidieverstrekking grondt?
+          - name: betreft_awb_4_23_derde_lid
+            type: boolean
+            required: true
+            description: Betreft het een subsidie als bedoeld in artikel 4:23 derde lid van de Algemene wet bestuursrecht?
+          - name: vooraf_medegedeeld_aan_kamers
+            type: boolean
+            required: true
+            description: Is de voorgenomen verstrekking tevoren medegedeeld aan de beide Kamers der Staten-Generaal?
+        output:
+          - name: subsidie_rechtmatig_verstrekt
+            type: boolean
+            description: Kan de subsidie door de Minister rechtmatig worden verstrekt?
+        actions:
+          - output: subsidie_rechtmatig_verstrekt
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_amvb_of_ministeriele_grondslag
+                  value: true
+                - operation: EQUALS
+                  subject: $betreft_awb_4_23_derde_lid
+                  value: true
+                - operation: EQUALS
+                  subject: $vooraf_medegedeeld_aan_kamers
+                  value: true
   - number: '5'
     text: |-
       Onze Minister stelt een subsidieplafond vast voor de verschillende activiteiten waarvoor op grond van deze wet
       subsidie kan worden verstrekt en bepaalt daarbij hoe het beschikbare bedrag wordt verdeeld, tenzij Onze Minister
       van Financiën heeft ingestemd met het achterwege laten daarvan.
     url: https://wetten.overheid.nl/BWBR0008754/2016-01-01#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: financien_ingestemd_met_achterwege_laten
+            type: boolean
+            required: true
+            description: Heeft de Minister van Financiën ingestemd met het achterwege laten van het subsidieplafond?
+        output:
+          - name: subsidieplafond_vereist
+            type: boolean
+            description: Is het vaststellen van een subsidieplafond verplicht voor deze activiteiten?
+        actions:
+          - output: subsidieplafond_vereist
+            value:
+              operation: NOT
+              value: $financien_ingestemd_met_achterwege_laten
   - number: '6'
     text: |-
       Een subsidie ten laste van een begroting die nog niet is vastgesteld wordt verleend onder de voorwaarde, bedoeld in
@@ -139,6 +204,20 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 4:34
+    machine_readable:
+      execution:
+        parameters:
+          - name: begroting_nog_niet_vastgesteld
+            type: boolean
+            required: true
+            description: Is de begroting ten laste waarvan de subsidie wordt verleend nog niet vastgesteld?
+        output:
+          - name: subsidie_onder_begrotingsvoorbehoud
+            type: boolean
+            description: Wordt de subsidie verleend onder het voorbehoud van begrotingsvaststelling als bedoeld in artikel 4:34 AWB?
+        actions:
+          - output: subsidie_onder_begrotingsvoorbehoud
+            value: $begroting_nog_niet_vastgesteld
   - number: '7'
     text: |-
       1 Een aanvraag kan worden afgewezen en een beschikking tot subsidieverstrekking op grond van deze wet kan worden
@@ -165,6 +244,31 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 4:57
+    machine_readable:
+      execution:
+        parameters:
+          - name: in_strijd_met_verdragsverplichtingen
+            type: boolean
+            required: true
+            description: Is subsidieverstrekking in strijd met voor de staat geldende verplichtingen ingevolge een verdrag?
+          - name: anders_bepaald_bij_intrekking
+            type: boolean
+            required: false
+            description: Is bij de intrekking of wijziging anders bepaald ten aanzien van de terugwerkende kracht?
+        output:
+          - name: afwijzing_of_intrekking_mogelijk
+            type: boolean
+            description: Kan de aanvraag worden afgewezen of de beschikking worden ingetrokken of gewijzigd wegens verdragsstrijd?
+          - name: intrekking_werkt_terug
+            type: boolean
+            description: Werkt de intrekking of wijziging terug tot het tijdstip waarop de subsidie is verstrekt?
+        actions:
+          - output: afwijzing_of_intrekking_mogelijk
+            value: $in_strijd_met_verdragsverplichtingen
+          - output: intrekking_werkt_terug
+            value:
+              operation: NOT
+              value: $anders_bepaald_bij_intrekking
   - number: '8'
     text: |-
       1 Met het toezicht op de naleving van de bij of krachtens deze wet aan de subsidieontvanger opgelegde
