@@ -217,6 +217,37 @@ articles:
 
       b. ten behoeve van de interne bedrijfsvoering.
     url: https://wetten.overheid.nl/BWBR0022463/2025-07-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: politiegegevens_in_bestand
+            type: boolean
+            required: true
+            description: Of de politiegegevens in een bestand zijn opgenomen of daarin bestemd zijn (lid 1)
+          - name: doel_uitsluitend_persoonlijk
+            type: boolean
+            required: true
+            description: Of de verwerking uitsluitend voor persoonlijke doeleinden is (lid 2a)
+          - name: doel_interne_bedrijfsvoering
+            type: boolean
+            required: true
+            description: Of de verwerking ten behoeve van de interne bedrijfsvoering is (lid 2b)
+        output:
+          - name: wet_van_toepassing
+            type: boolean
+            description: Of de Wet politiegegevens van toepassing is op de verwerking
+        actions:
+          - output: wet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $politiegegevens_in_bestand
+                  value: true
+                - operation: NOT
+                  value: $doel_uitsluitend_persoonlijk
+                - operation: NOT
+                  value: $doel_interne_bedrijfsvoering
   - number: '3'
     text: |-
       1 Politiegegevens worden slechts verwerkt voor zover dit noodzakelijk is voor de bij of krachtens deze wet
@@ -380,6 +411,39 @@ articles:
       het doel van de verwerking, in aanvulling op de verwerking van andere politiegegevens betreffende de persoon en de
       gegevens afdoende zijn beveiligd.
     url: https://wetten.overheid.nl/BWBR0022463/2025-07-01#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: verwerking_onvermijdelijk
+            type: boolean
+            required: true
+            description: Of de verwerking van bijzondere categorieën onvermijdelijk is voor het doel van de verwerking
+          - name: in_aanvulling_op_andere_politiegegevens
+            type: boolean
+            required: true
+            description: Of de verwerking plaatsvindt in aanvulling op de verwerking van andere politiegegevens betreffende de persoon
+          - name: gegevens_afdoende_beveiligd
+            type: boolean
+            required: true
+            description: Of de bijzondere politiegegevens afdoende zijn beveiligd
+        output:
+          - name: verwerking_bijzondere_categorie_toegestaan
+            type: boolean
+            description: Of de verwerking van bijzondere categorieën politiegegevens is toegestaan
+        actions:
+          - output: verwerking_bijzondere_categorie_toegestaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verwerking_onvermijdelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $in_aanvulling_op_andere_politiegegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $gegevens_afdoende_beveiligd
+                  value: true
   - number: '6'
     text: |-
       1 De verwerkingsverantwoordelijke onderhoudt een systeem van autorisaties dat voldoet aan de vereisten van
@@ -592,6 +656,50 @@ articles:
         bwb_id: BWBR0022463
         artikel: '5'
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_uitsluitend_geautomatiseerd
+            type: boolean
+            required: true
+            description: Of het besluit uitsluitend op geautomatiseerde verwerking is gebaseerd, met inbegrip van profilering
+          - name: nadelige_rechtsgevolgen
+            type: boolean
+            required: true
+            description: Of het besluit voor de betrokkene nadelige rechtsgevolgen heeft of hem in aanmerkelijke mate treft
+          - name: menselijke_tussenkomst_aanwezig
+            type: boolean
+            required: true
+            description: Of er voorafgaande menselijke tussenkomst is door of namens de verwerkingsverantwoordelijke
+          - name: specifieke_voorlichting_verstrekt
+            type: boolean
+            required: true
+            description: Of specifieke voorlichting aan de betrokkene is verstrekt
+        output:
+          - name: geautomatiseerd_besluit_verboden
+            type: boolean
+            description: Of het geautomatiseerde besluit verboden is op grond van lid 1
+        actions:
+          - output: geautomatiseerd_besluit_verboden
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $besluit_uitsluitend_geautomatiseerd
+                  value: true
+                - operation: EQUALS
+                  subject: $nadelige_rechtsgevolgen
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $menselijke_tussenkomst_aanwezig
+                        value: true
+                      - operation: EQUALS
+                        subject: $specifieke_voorlichting_verstrekt
+                        value: true
   - number: '8'
     text: |-
       1 Politiegegevens kunnen worden verwerkt met het oog op de uitvoering van de dagelijkse politietaak gedurende een
@@ -636,6 +744,46 @@ articles:
         bwb_id: BWBR0022463
         artikel: '12'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_eerste_verwerking
+            type: date
+            required: true
+            description: De datum van de eerste verwerking van de politiegegevens op grond van lid 1
+          - name: peildatum
+            type: date
+            required: true
+            description: De datum waarop de toetsing plaatsvindt
+        output:
+          - name: verwerkingstermijn_dagelijkse_taak_verstreken
+            type: boolean
+            description: Of de termijn van één jaar voor verwerking in het kader van de dagelijkse politietaak is verstreken (lid 1)
+          - name: uiterste_verwijderingsdatum
+            type: date
+            description: Uiterste datum voor verwijdering van politiegegevens (vijf jaar na eerste verwerking, lid 6)
+          - name: verwijdering_verplicht
+            type: boolean
+            description: Of de maximale bewaartermijn van vijf jaar is verstreken en verwijdering verplicht is (lid 6)
+        actions:
+          - output: verwerkingstermijn_dagelijkse_taak_verstreken
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value:
+                operation: DATE_ADD
+                date: $datum_eerste_verwerking
+                years: 1
+          - output: uiterste_verwijderingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_eerste_verwerking
+              years: 5
+          - output: verwijdering_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $uiterste_verwijderingsdatum
   - number: '9'
     text: |-
       1 Politiegegevens kunnen gericht worden verwerkt ten behoeve van een onderzoek met het oog op de handhaving van de
@@ -677,6 +825,35 @@ articles:
         bwb_id: BWBR0022463
         artikel: '10'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_aanvang_verwerking
+            type: date
+            required: true
+            description: De datum waarop begonnen is met de verwerking bedoeld in lid 1
+          - name: datum_einde_onderzoek
+            type: date
+            required: true
+            description: De datum waarop het onderzoek is beëindigd en de gegevens niet langer noodzakelijk zijn voor het doel
+        output:
+          - name: uiterste_vastleggingsdatum_doel
+            type: date
+            description: Uiterste datum voor schriftelijke vastlegging van het onderzoeksdoel (binnen één week na aanvang verwerking, lid 2)
+          - name: uiterste_bewaardatum_na_onderzoek
+            type: date
+            description: Uiterste datum voor bewaring en verwijdering van gegevens na afsluiting onderzoek (maximaal zes maanden, lid 4)
+        actions:
+          - output: uiterste_vastleggingsdatum_doel
+            value:
+              operation: DATE_ADD
+              date: $datum_aanvang_verwerking
+              weeks: 1
+          - output: uiterste_bewaardatum_na_onderzoek
+            value:
+              operation: DATE_ADD
+              date: $datum_einde_onderzoek
+              months: 6
   - number: '10'
     text: |-
       1 Politiegegevens kunnen gericht worden verwerkt met het oog op het verkrijgen van inzicht in de betrokkenheid van
@@ -780,6 +957,35 @@ articles:
         bwb_id: BWBR0022463
         artikel: '8'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_laatste_verwerking
+            type: date
+            required: true
+            description: De datum van de laatste verwerking die blijk geeft van de noodzaak tot verwerking op grond van het doel omschreven in lid 1
+          - name: peildatum
+            type: date
+            required: true
+            description: De datum waarop de toetsing plaatsvindt
+        output:
+          - name: uiterste_verwijderingsdatum
+            type: date
+            description: Uiterste datum voor verwijdering van politiegegevens (vijf jaar na datum laatste verwerking, lid 6)
+          - name: verwijdering_verplicht
+            type: boolean
+            description: Of de maximale bewaartermijn van vijf jaar is verstreken en verwijdering verplicht is (lid 6)
+        actions:
+          - output: uiterste_verwijderingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_laatste_verwerking
+              years: 5
+          - output: verwijdering_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $uiterste_verwijderingsdatum
   - number: '11'
     text: |-
       1 Voor zover dat noodzakelijk is voor een onderzoek als bedoeld in [artikel 9, eerste lid][ref1], kunnen
@@ -1002,6 +1208,55 @@ articles:
         bwb_id: BWBR0022463
         artikel: '10'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_eerste_verwerking
+            type: date
+            required: true
+            description: De datum van eerste verwerking van informantgegevens op grond van lid 1
+          - name: datum_laatste_verwerking
+            type: date
+            required: true
+            description: De datum van de laatste verwerking die de noodzaak aantoont voor verdere verwerking van betrokkene op grond van lid 1 en 5
+          - name: peildatum
+            type: date
+            required: true
+            description: De datum waarop de toetsing plaatsvindt
+        output:
+          - name: uiterste_terbeschikkingstelling_datum
+            type: date
+            description: Uiterste datum voor terbeschikkingstelling voor verdere verwerking (vier maanden na eerste verwerking, lid 2)
+          - name: terbeschikkingstelling_termijn_verstreken
+            type: boolean
+            description: Of de terbeschikkingstelling-termijn van vier maanden is verstreken (lid 2)
+          - name: uiterste_vernietigingsdatum
+            type: date
+            description: Uiterste datum voor vernietiging (tien jaar na datum laatste verwerking, lid 6)
+          - name: vernietiging_verplicht
+            type: boolean
+            description: Of de maximale bewaartermijn van tien jaar is verstreken en vernietiging verplicht is (lid 6)
+        actions:
+          - output: uiterste_terbeschikkingstelling_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_eerste_verwerking
+              months: 4
+          - output: terbeschikkingstelling_termijn_verstreken
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $uiterste_terbeschikkingstelling_datum
+          - output: uiterste_vernietigingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_laatste_verwerking
+              years: 10
+          - output: vernietiging_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $uiterste_vernietigingsdatum
   - number: '13'
     text: |-
       1 Ten behoeve van de ondersteuning van de taak, bedoeld in [artikel 1, onderdeel a][ref1], kunnen de
@@ -1218,6 +1473,35 @@ articles:
       - id: ref14
         bwb_id: BWBR0007376
         artikel: '15'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verwijdering
+            type: date
+            required: true
+            description: De datum waarop de politiegegevens zijn verwijderd op grond van artikel 8 lid 6, 9 lid 4 of 10 lid 6
+          - name: peildatum
+            type: date
+            required: true
+            description: De datum waarop de toetsing plaatsvindt
+        output:
+          - name: uiterste_vernietigingsdatum_archief
+            type: date
+            description: Uiterste datum voor vernietiging van de gearchiveerde gegevens (vijf jaar na verwijdering, lid 1)
+          - name: archief_vernietiging_verplicht
+            type: boolean
+            description: Of de archiefbewaartermijn van vijf jaar is verstreken en vernietiging verplicht is (lid 1)
+        actions:
+          - output: uiterste_vernietigingsdatum_archief
+            value:
+              operation: DATE_ADD
+              date: $datum_verwijdering
+              years: 5
+          - output: archief_vernietiging_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $peildatum
+              value: $uiterste_vernietigingsdatum_archief
   - number: '15'
     text: |-
       1 De verwerkingsverantwoordelijke stelt politiegegevens ter beschikking aan personen die door hemzelf dan wel door
@@ -1926,6 +2210,46 @@ articles:
       hoogste zes weken indien blijkt dat bij verschillende regionale eenheden of bij een landelijke eenheid van de
       politie politiegegevens over de verzoeker worden verwerkt. Van de verdaging wordt schriftelijk mededeling gedaan.
     url: https://wetten.overheid.nl/BWBR0022463/2025-07-01#Artikel25
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoek
+            type: date
+            required: true
+            description: De datum van het schriftelijke verzoek om inzage op grond van lid 1
+          - name: meerdere_eenheden_betrokken
+            type: boolean
+            required: true
+            description: Of bij verschillende regionale eenheden of bij een landelijke eenheid politiegegevens over de verzoeker worden verwerkt (lid 2)
+        output:
+          - name: uiterste_antwoorddatum
+            type: date
+            description: Uiterste datum voor uitsluitsel zonder verdaging (zes weken na datum verzoek, lid 1)
+          - name: uiterste_antwoorddatum_verdaagd
+            type: date
+            description: Uiterste datum voor uitsluitsel bij verdaging (vier extra weken bij één eenheid, zes extra weken bij meerdere eenheden, lid 2)
+        actions:
+          - output: uiterste_antwoorddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoek
+              weeks: 6
+          - output: uiterste_antwoorddatum_verdaagd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $meerdere_eenheden_betrokken
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_verzoek
+                    weeks: 12
+              default:
+                operation: DATE_ADD
+                date: $datum_verzoek
+                weeks: 10
   - number: '26'
     text: |-
       1 Bij de behandeling van verzoeken als bedoeld in de [artikelen 25][ref1] en [28][ref2] draagt de
@@ -2039,6 +2363,23 @@ articles:
       5 Indien de verwerkingsverantwoordelijke politiegegevens heeft gerectificeerd, vernietigd of afgeschermd, stelt hij
       de ontvangers daarvan in kennis.
     url: https://wetten.overheid.nl/BWBR0022463/2025-07-01#Artikel28
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoek
+            type: date
+            required: true
+            description: De datum van het schriftelijke verzoek om rectificatie of vernietiging op grond van lid 1 of 2
+        output:
+          - name: uiterste_kennisgevingsdatum
+            type: date
+            description: Uiterste datum voor schriftelijke kennisgeving over de opvolging van het verzoek (vier weken na datum verzoek, lid 3)
+        actions:
+          - output: uiterste_kennisgevingsdatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoek
+              weeks: 4
   - number: '29'
     text: |-
       1 Een beslissing op een verzoek als bedoeld in [artikel 25][ref1] of [28][ref2] geldt als een besluit in de zin van
@@ -2412,6 +2753,38 @@ articles:
         bwb_id: BWBR0022463
         artikel: '27'
         paragraaf: '4'
+    machine_readable:
+      untranslatables:
+        - construct: "72 uur"
+          reason: "Engine DATE_ADD does not support hours; 72 uur is approximated as 3 calendar days"
+          legal_text_excerpt: "uiterlijk binnen 72 uur nadat hij ervan heeft kennis genomen"
+          suggestion: "Add hours support to DATE_ADD operation"
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_kennisneming
+            type: date
+            required: true
+            description: De datum waarop de verwerkingsverantwoordelijke kennis heeft genomen van de inbreuk op de beveiliging
+          - name: risico_voor_rechten_vrijheden
+            type: boolean
+            required: true
+            description: Of het waarschijnlijk is dat de inbreuk een risico voor de rechten en vrijheden van personen met zich meebrengt (lid 1)
+        output:
+          - name: melding_verplicht
+            type: boolean
+            description: Of de inbreuk gemeld moet worden aan de Autoriteit persoonsgegevens (lid 1)
+          - name: uiterste_melddatum
+            type: date
+            description: Uiterste datum voor melding aan Autoriteit persoonsgegevens (72 uur na kennisneming, benaderd als 3 kalenderdagen)
+        actions:
+          - output: melding_verplicht
+            value: $risico_voor_rechten_vrijheden
+          - output: uiterste_melddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_kennisneming
+              days: 3
   - number: 33b
     text: |-
       1 De Autoriteit persoonsgegevens wordt door de verwerkingsverantwoordelijke of de verwerker geraadpleegd over de
@@ -2455,6 +2828,47 @@ articles:
         bwb_id: BWBR0022463
         artikel: 4c
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ontvangst_verzoek
+            type: date
+            required: true
+            description: De datum van ontvangst van het raadplegingsverzoek door de Autoriteit persoonsgegevens
+          - name: termijn_verlengd
+            type: boolean
+            required: true
+            description: Of de adviestermijn met een maand is verlengd vanwege de complexiteit van de verwerking (lid 5)
+        output:
+          - name: uiterste_adviesdatum
+            type: date
+            description: Uiterste datum voor schriftelijk advies (zes weken na ontvangst, of zes weken plus een maand bij verlenging, lid 4 en 5)
+          - name: uiterste_kennisgeving_verlenging
+            type: date
+            description: Uiterste datum voor kennisgeving van de verlenging aan de verwerkingsverantwoordelijke (één maand na ontvangst, lid 5)
+        actions:
+          - output: uiterste_adviesdatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $termijn_verlengd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_ontvangst_verzoek
+                    weeks: 6
+                    months: 1
+              default:
+                operation: DATE_ADD
+                date: $datum_ontvangst_verzoek
+                weeks: 6
+          - output: uiterste_kennisgeving_verlenging
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_verzoek
+              months: 1
   - number: '34'
     text: |-
       1 De verwerkingsverantwoordelijke benoemt een of meer privacyfunctionarissen. De privacyfunctionaris dient de
