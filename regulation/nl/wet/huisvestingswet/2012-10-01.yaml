@@ -734,6 +734,39 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005674#Artikel12
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel18
+    machine_readable:
+      execution:
+        parameters:
+          - name: zal_worden_bewoond_door_bw_eigenaar
+            type: boolean
+            required: true
+            description: >-
+              De woonruimte zal worden bewoond door de eigenaar ervan in de zin
+              van het Burgerlijk Wetboek (artikel 18 lid 3)
+          - name: bewoond_door_bw_eigenaar_laatste_zes_maanden
+            type: boolean
+            required: true
+            description: >-
+              De woonruimte werd gedurende ten minste de zes maanden waarin zij
+              laatstelijk bewoond is geweest bewoond door de eigenaar in de zin
+              van het Burgerlijk Wetboek (artikel 18 lid 3)
+        output:
+          - name: meldplicht_niet_van_toepassing
+            type: boolean
+            description: >-
+              Of de meldplicht van artikel 18 lid 1 niet van toepassing is
+              vanwege de uitzondering in artikel 18 lid 3 (eigenaar-bewoner)
+        actions:
+          - output: meldplicht_niet_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $zal_worden_bewoond_door_bw_eigenaar
+                  value: true
+                - operation: EQUALS
+                  subject: $bewoond_door_bw_eigenaar_laatste_zes_maanden
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0005674
@@ -1480,6 +1513,37 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005288#Artikel109
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel38
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            de vergunninghouder wist of redelijkerwijs moest vermoeden dat de
+            verstrekte gegevens onjuist of onvolledig waren (artikel 38 onder b)
+          reason: >-
+            Subjective knowledge test ("wist of redelijkerwijs moest vermoeden")
+            requires judgment about the mental state of the permit holder; not
+            mechanically determinable from parameters
+          legal_text_excerpt: artikel 38 onder b Huisvestingswet
+          accepted: false
+      execution:
+        parameters:
+          - name: beschikking_onherroepelijk_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de beschikking onherroepelijk is geworden (artikel 38
+              onder a)
+        output:
+          - name: intrekking_mogelijkheid_verval_datum
+            type: date
+            description: >-
+              Datum waarop de intrekkingsbevoegdheid op grond van artikel 38 onder a
+              verloopt (1 jaar na onherroepelijk worden van de beschikking)
+        actions:
+          - output: intrekking_mogelijkheid_verval_datum
+            value:
+              operation: DATE_ADD
+              date: $beschikking_onherroepelijk_datum
+              years: 1
     references:
       - id: ref1
         bwb_id: BWBR0005288
@@ -1529,6 +1593,85 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005674#Artikel30
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel40
+    machine_readable:
+      untranslatables:
+        - construct: >-
+            tenzij er gewichtige redenen zijn om niettemin tot vordering over te
+            gaan (artikel 40 lid 2 en lid 3)
+          reason: >-
+            "Gewichtige redenen" (weighty reasons) requires administrative
+            judgment; not mechanically determinable from parameters
+          legal_text_excerpt: >-
+            tenzij er gewichtige redenen zijn om niettemin tot vordering over te
+            gaan (artikel 40 lid 2 en lid 3)
+          accepted: false
+      execution:
+        parameters:
+          - name: eigenaar_min_een_jaar_onafgebroken_bewoond
+            type: boolean
+            required: false
+            description: >-
+              De leegstaande woonruimte is LAATSTELIJK door de eigenaar (in de zin
+              van het BW) gedurende TEN MINSTE EEN JAAR ONAFGEBROKEN als eigenaar
+              bewoond geweest (vereiste voor bescherming lid 2)
+          - name: bewoning_eigenaar_einde_datum
+            type: date
+            required: false
+            description: >-
+              Tijdstip waarop de bewoning door de eigenaar (in de zin van het BW)
+              een einde heeft genomen (lid 2)
+          - name: nimmer_bewoond
+            type: boolean
+            required: false
+            description: >-
+              De leegstaande woonruimte is nimmer bewoond geweest (vereiste voor
+              bescherming lid 3)
+          - name: gereedkoming_datum
+            type: date
+            required: false
+            description: >-
+              Tijdstip waarop de nimmer bewoonde woonruimte voor bewoning
+              gereed is gekomen (lid 3)
+        output:
+          - name: beschermingsperiode_eigenaar_einde
+            type: date
+            description: >-
+              Einde van de 1-jarige beschermingsperiode na bewoning door eigenaar
+              (indien eigenaar_min_een_jaar_onafgebroken_bewoond = true);
+              gedurende die termijn geen vordering behoudens gewichtige redenen
+              (artikel 40 lid 2) — zie untranslatables
+          - name: beschermingsperiode_nieuwbouw_einde
+            type: date
+            description: >-
+              Einde van de 1-jarige beschermingsperiode na gereedkoming nimmer
+              bewoonde woonruimte (indien nimmer_bewoond = true); gedurende die
+              termijn geen vordering behoudens gewichtige redenen (artikel 40 lid 3)
+              — zie untranslatables
+        actions:
+          - output: beschermingsperiode_eigenaar_einde
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $eigenaar_min_een_jaar_onafgebroken_bewoond
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $bewoning_eigenaar_einde_datum
+                    years: 1
+          - output: beschermingsperiode_nieuwbouw_einde
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $nimmer_bewoond
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $gereedkoming_datum
+                    years: 1
     references:
       - id: ref1
         bwb_id: BWBR0005674
@@ -2048,6 +2191,28 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005674#Artikel41
       [ref2]: https://wetten.overheid.nl/BWBR0005674#Artikel41
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel58
+    machine_readable:
+      execution:
+        parameters:
+          - name: schriftelijke_mededeling_datum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de eigenaar het tijdstip van einde vordering schriftelijk
+              aan de gebruiker heeft medegedeeld (artikel 58 lid 3)
+        output:
+          - name: alternatief_einde_vroegste_datum
+            type: date
+            description: >-
+              Vroegste datum van einde vordering indien de schriftelijke mededeling
+              als bedoeld in lid 2 niet (tijdig) is gedaan: niet eerder dan drie
+              maanden na schriftelijke mededeling aan de gebruiker (artikel 58 lid 3)
+        actions:
+          - output: alternatief_einde_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $schriftelijke_mededeling_datum
+              months: 3
     references:
       - id: ref1
         bwb_id: BWBR0005674
@@ -2727,6 +2892,48 @@ articles:
         artikel: '83'
         hoofdstuk: VIII
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overtreden_artikel
+            type: string
+            required: true
+            description: >-
+              Het overtreden artikel: "artikel_45", "artikel_49_lid_4",
+              "artikel_59" (lid 1), of "artikel_17", "artikel_33", "artikel_83"
+              (lid 2)
+        output:
+          - name: maximale_hechtenis_maanden
+            type: number
+            description: >-
+              Maximale hechtenisstraf in maanden voor de betreffende overtreding
+              (artikel 84 lid 1: 6 maanden; lid 2: 4 maanden)
+          - name: geldboete_categorie
+            type: number
+            description: >-
+              Categorie van de geldboete (artikel 84 lid 1: categorie 4;
+              lid 2: categorie 3)
+        actions:
+          - output: maximale_hechtenis_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $overtreden_artikel
+                    values: ["artikel_45", "artikel_49_lid_4", "artikel_59"]
+                  then: 6
+              default: 4
+          - output: geldboete_categorie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $overtreden_artikel
+                    values: ["artikel_45", "artikel_49_lid_4", "artikel_59"]
+                  then: 4
+              default: 3
   - number: '85'
     text: |-
       Met de opsporing van de bij deze wet strafbaar gestelde feiten zijn, onverminderd

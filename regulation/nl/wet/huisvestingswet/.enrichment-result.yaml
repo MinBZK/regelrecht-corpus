@@ -10,14 +10,44 @@ pipeline:
     reason: WebFetch/WebSearch tools not available; no MvT documents retrieved
   - phase: generate
     status: done
-    articles_enriched: 20
+    articles_enriched: 25
+    notes: >-
+      5 additional articles enriched in this session: 18, 38, 40, 58, 84.
+      Previously enriched: 8, 9, 13c, 19, 21, 25, 26, 31, 37, 41, 44, 54, 55,
+      60b, 68, 72, 73, 74, 81, 85a.
   - phase: reverse_validate
     status: done
-    issues_found: 1
-    issues_fixed: 1
+    issues_found: 3
+    issues_fixed: 3
 
 machine_readable_summary:
-  articles_with_machine_readable: [8, 9, 13c, 19, 21, 25, 26, 31, 37, 41, 44, 54, 55, 60b, 68, 72, 73, 74, 81, 85a]
+  articles_with_machine_readable:
+    - 8
+    - 9
+    - 13c
+    - 18
+    - 19
+    - 21
+    - 25
+    - 26
+    - 31
+    - 37
+    - 38
+    - 40
+    - 41
+    - 44
+    - 54
+    - 55
+    - 58
+    - 60b
+    - 68
+    - 72
+    - 73
+    - 74
+    - 81
+    - 84
+    - 85a
+
   articles_skipped_reason_no_computable_logic:
     - number: '1'
       reason: Definitions only; no executable logic
@@ -51,8 +81,6 @@ machine_readable_summary:
       reason: Cross-reference to art. 11/12; no own logic
     - number: '17'
       reason: Central registration; procedural
-    - number: '18'
-      reason: Notification duty; no computable output beyond obligation
     - number: '20'
       reason: Exception to nomination; involves urgency comparison (non-computable)
     - number: '22'
@@ -64,7 +92,7 @@ machine_readable_summary:
     - number: '27'
       reason: Discretionary exception ("bijzondere gevallen")
     - number: '28'
-      reason: Discretionary revocation; "wist of redelijkerwijs moest vermoeden" is untranslatable
+      reason: Discretionary revocation; covered by art. 38 for art. 30/33 permits
     - number: '29'
       reason: Mandate provision; no decision logic
     - number: '30'
@@ -79,12 +107,8 @@ machine_readable_summary:
       reason: Procedural application rules
     - number: '36'
       reason: Procedural notification; no output
-    - number: '38'
-      reason: Discretionary revocation
     - number: '39'
       reason: Registration condition; notarial verification not computable
-    - number: '40'
-      reason: Discretionary requisition power; interest-balancing not computable
     - number: '42'
       reason: Publication obligation; no decision output
     - number: '43'
@@ -109,8 +133,6 @@ machine_readable_summary:
       reason: Obligation to act as good tenant; non-computable
     - number: '56'
       reason: Discretionary end-date determination
-    - number: '58'
-      reason: End by operation of law cross-referencing art. 41; termination date handled by art. 41
     - number: '59'
       reason: Evacuation duty; enforcement-only
     - number: '60'
@@ -139,8 +161,6 @@ machine_readable_summary:
       reason: Reporting obligation; fixed schedule
     - number: '83'
       reason: Prohibition rule; enforcement-only
-    - number: '84'
-      reason: Criminal sanctions; not executable as civil decision
     - number: '85'
       reason: Enforcement authority designation; administrative
     - number: '88'
@@ -149,6 +169,8 @@ machine_readable_summary:
       reason: Transitional/repeal provisions
     - number: '91'
       reason: Transitional provisions
+    - number: '92'
+      reason: Citation article; no logic
 
 open_terms:
   - id: meldplicht_termijn_maanden
@@ -175,6 +197,12 @@ untranslatables:
   - artikel: 31
     construct: belang niet door voorwaarden voldoende gediend
     reason: Assessment of whether conditions suffice; not computable
+  - artikel: 38
+    construct: wist of redelijkerwijs moest vermoeden dat gegevens onjuist of onvolledig waren
+    reason: Subjective knowledge test; not computable
+  - artikel: 40
+    construct: tenzij er gewichtige redenen zijn om niettemin tot vordering over te gaan
+    reason: Administrative judgment about weighty reasons; not computable
   - artikel: 60b
     construct: naar boven afgerond op een geheel getal (lid 5)
     reason: CEIL operation not available in engine
@@ -185,9 +213,68 @@ reverse_validation:
   result: PASSED
   issues_found:
     - artikel: '25'
-      issue: Parameters is_nederlander and verblijfsrecht_type were listed but not
-        referenced in any action (voldoet_aan_nationaliteitseis is imported via input
-        from artikel 9 execution)
-      fix: Removed the two orphan parameters
+      issue: >-
+        Parameters is_nederlander and verblijfsrecht_type were listed but not
+        referenced in any action (voldoet_aan_nationaliteitseis is imported via
+        input from artikel 9 execution)
+      fix: Removed the two orphan parameters (performed in prior session)
+    - artikel: '38'
+      issue: >-
+        Condition b ("wist of redelijkerwijs moest vermoeden") was not flagged
+        as untranslatable; the model only covers condition a
+      fix: Added untranslatable entry for condition b
+    - artikel: '40'
+      issue: >-
+        Protection period prerequisites not checked: lid 2 requires min 1 jaar
+        onafgebroken bewoning by eigenaar; the "gewichtige redenen" exception
+        was not flagged as untranslatable
+      fix: >-
+        Added prerequisite boolean parameters; wrapped date computation in IF
+        condition; added untranslatable for "gewichtige redenen" exception
   all_elements_traceable: true
   hallucinations_detected: 0
+
+related_legislation:
+  - name: Vreemdelingenwet 2000
+    relation: source_regulation
+    bwb_id: BWBR0011823
+    slug: vreemdelingenwet_2000
+  - name: Wet individuele huursubsidie / Huursubsidiewet / Wet op de huurtoeslag
+    relation: source_regulation
+    bwb_id: BWBR0008659
+  - name: Burgerlijk Wetboek Boek 5
+    relation: source_regulation
+    bwb_id: BWBR0005288
+  - name: Burgerlijk Wetboek Boek 7
+    relation: source_regulation
+    bwb_id: BWBR0005290
+  - name: Woningwet
+    relation: source_regulation
+    bwb_id: BWBR0005181
+  - name: Uitvoeringswet huurprijzen woonruimte
+    relation: source_regulation
+    bwb_id: BWBR0014315
+  - name: Wet gemeenschappelijke regelingen
+    relation: source_regulation
+    bwb_id: BWBR0003740
+  - name: Algemene wet bestuursrecht
+    relation: source_regulation
+    bwb_id: BWBR0005537
+  - name: Wet algemene bepalingen omgevingsrecht
+    relation: source_regulation
+    bwb_id: BWBR0024779
+  - name: Wetboek van Burgerlijke Rechtsvordering
+    relation: source_regulation
+    bwb_id: BWBR0001827
+  - name: Wetboek van Strafvordering
+    relation: source_regulation
+    bwb_id: BWBR0001903
+  - name: Wetboek van Strafrecht
+    relation: source_regulation
+    bwb_id: BWBR0001854
+  - name: Gemeentelijke verordening huisvestingsverordening (meldplicht leegstand termijn)
+    relation: delegated_regeling
+    open_term: meldplicht_termijn_maanden
+  - name: Gemeentelijke verordening huisvestingsverordening (aanbiedingstermijn)
+    relation: delegated_regeling
+    open_term: aanbiedingstermijn_weken
