@@ -137,6 +137,50 @@ articles:
       - id: ref2
         bwb_id: BWBR0011823
         artikel: '21'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+          decision_type: GEEN_BESLUIT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de vreemdeling
+          - name: verblijf_rechtmatig_onderdeel_a_of_c
+            type: boolean
+            required: true
+            description: >-
+              De vreemdeling verkrijgt rechtmatig verblijf in de zin van artikel 8,
+              onderdelen a en c, van de Vreemdelingenwet 2000
+          - name: verblijft_niet_voor_tijdelijk_doel
+            type: boolean
+            required: true
+            description: De vreemdeling verblijft anders dan voor een tijdelijk doel in Nederland (art. 3 lid 1a)
+          - name: is_geestelijke_bedienaar
+            type: boolean
+            required: true
+            description: De vreemdeling is geestelijke bedienaar als bedoeld in artikel 1 lid 1e (art. 3 lid 1b)
+        output:
+          - name: is_inburgeringsplichtig
+            type: boolean
+            description: De vreemdeling is inburgeringsplichtig op grond van artikel 3 lid 1
+        actions:
+          - output: is_inburgeringsplichtig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verblijf_rechtmatig_onderdeel_a_of_c
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $verblijft_niet_voor_tijdelijk_doel
+                      value: true
+                    - operation: EQUALS
+                      subject: $is_geestelijke_bedienaar
+                      value: true
   - number: '5'
     text: |-
       1 In afwijking van [artikel 3][ref1] is niet inburgeringsplichtig degene die:
@@ -204,6 +248,122 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      untranslatables:
+        - construct: "ten minste acht jaren tijdens de leerplichtige leeftijd in Nederland heeft verbleven"
+          reason: >-
+            Aggregation over historical periods of school-age residence requires date-range
+            summation, which is not available as an engine operation
+          legal_text_excerpt: "ten minste acht jaren tijdens de leerplichtige leeftijd in Nederland heeft verbleven"
+          accepted: false
+        - construct: "anderszins op grond van bepalingen van verdragen of besluiten van volkenrechtelijke organisaties"
+          reason: >-
+            Open-ended treaty membership check requiring dynamic treaty lookup; not expressible
+            as a fixed condition
+          legal_text_excerpt: "de persoon die anderszins op grond van bepalingen van verdragen of besluiten van volkenrechtelijke organisaties geen inburgeringsplicht kan worden opgelegd"
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: heeft_aangewezen_diploma_certificaat
+            type: boolean
+            required: true
+            description: >-
+              De persoon beschikt over een bij of krachtens AMvB aangewezen diploma,
+              certificaat of ander document (art. 5 lid 1c); aanwijzing bij AMvB
+          - name: leeftijd
+            type: number
+            required: true
+            description: Leeftijd van de persoon in jaren op de peildatum
+          - name: pensioengerechtigde_leeftijd
+            type: number
+            required: true
+            description: Pensioengerechtigde leeftijd als bedoeld in artikel 7a, eerste lid, van de Algemene Ouderdomswet
+          - name: is_leerplichtig_of_kwalificatieplichtig
+            type: boolean
+            required: true
+            description: De persoon is leerplichtig of kwalificatieplichtig (art. 5 lid 1d)
+          - name: volgt_kwalificerende_opleiding
+            type: boolean
+            required: true
+            description: De persoon volgt aansluitend op de leerplicht een kwalificerende opleiding (art. 5 lid 1e)
+          - name: is_eu_eea_swiss_burger
+            type: boolean
+            required: true
+            description: Onderdaan van EU-lidstaat, EER-staat of Zwitserland (art. 5 lid 2a)
+          - name: is_familielid_eu_burger_met_verblijfsrecht
+            type: boolean
+            required: true
+            description: >-
+              Familielid van EU-burger uit derde land met recht op toegang en verblijf
+              op grond van richtlijn 2004/38/EG of EER-Overeenkomst of EU-Zwitserland-Verdrag (art. 5 lid 2b)
+          - name: voldaan_aan_eu_inburgering_langdurig_ingezetene
+            type: boolean
+            required: true
+            description: >-
+              Vreemdeling die ingevolge EU-lidstaatwetgeving heeft voldaan aan inburgering
+              voor status langdurig ingezetene in de zin van richtlijn 2003/109/EG (art. 5 lid 2c)
+        output:
+          - name: is_niet_inburgeringsplichtig
+            type: boolean
+            description: De persoon is in afwijking van artikel 3 niet inburgeringsplichtig
+        actions:
+          - output: vrijgesteld_lid1a
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN
+                  subject: $leeftijd
+                  value: 16
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: $pensioengerechtigde_leeftijd
+          - output: vrijgesteld_lid1c
+            value:
+              operation: EQUALS
+              subject: $heeft_aangewezen_diploma_certificaat
+              value: true
+          - output: vrijgesteld_lid1de
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_leerplichtig_of_kwalificatieplichtig
+                  value: true
+                - operation: EQUALS
+                  subject: $volgt_kwalificerende_opleiding
+                  value: true
+          - output: vrijgesteld_lid2
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_eu_eea_swiss_burger
+                  value: true
+                - operation: EQUALS
+                  subject: $is_familielid_eu_burger_met_verblijfsrecht
+                  value: true
+                - operation: EQUALS
+                  subject: $voldaan_aan_eu_inburgering_langdurig_ingezetene
+                  value: true
+          - output: is_niet_inburgeringsplichtig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $vrijgesteld_lid1a
+                  value: true
+                - operation: EQUALS
+                  subject: $vrijgesteld_lid1c
+                  value: true
+                - operation: EQUALS
+                  subject: $vrijgesteld_lid1de
+                  value: true
+                - operation: EQUALS
+                  subject: $vrijgesteld_lid2
+                  value: true
   - number: '6'
     text: |-
       1 Onze Minister ontheft de inburgeringsplichtige van de inburgeringsplicht, indien de inburgeringsplichtige heeft
@@ -310,6 +470,26 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: pvt_termijn_startdatum
+            type: date
+            required: true
+            description: >-
+              Datum waarop de vreemdeling inburgeringsplichtig is en ingeschreven is in de
+              basisregistratie personen; voor asielstatushouders de datum van inschrijving
+              in de huisvestingsgemeente (art. 7a lid 2)
+        output:
+          - name: pvt_termijn_einddatum
+            type: date
+            description: Uiterste datum voor het afronden van het participatieverklaringstraject (art. 7a lid 1)
+        actions:
+          - output: pvt_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $pvt_termijn_startdatum
+              years: 1
   - number: 7b
     text: |-
       1 De inburgeringsplichtige behaalt binnen drie jaar de onderdelen van het inburgeringsexamen, bedoeld in
@@ -334,6 +514,48 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: inburgeringsplichtig_datum
+            type: date
+            required: true
+            description: Datum waarop de vreemdeling inburgeringsplichtig wordt (art. 7b lid 2)
+          - name: heeft_alfabetiseringscursus_gevolgd
+            type: boolean
+            required: true
+            description: >-
+              Aantoonbaar een alfabetiseringscursus gevolgd voor het verstrijken van de
+              driejarige termijn (art. 7b lid 3b); geeft recht op eenmalige verlenging
+              met ten hoogste twee jaren
+        output:
+          - name: examen_termijn_einddatum
+            type: date
+            description: Uiterste datum voor het behalen van de examenonderdelen (art. 7b lid 1), drie jaar na aanvang
+          - name: examen_termijn_einddatum_met_alfabetisering
+            type: date
+            description: >-
+              Uiterste datum inclusief eenmalige verlenging van twee jaar wegens alfabetiseringscursus
+              (art. 7b lid 3b); maximale termijn is vijf jaar na aanvang
+        actions:
+          - output: examen_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $inburgeringsplichtig_datum
+              years: 3
+          - output: examen_termijn_einddatum_met_alfabetisering
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_alfabetiseringscursus_gevolgd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $inburgeringsplichtig_datum
+                    years: 5
+              default: $examen_termijn_einddatum
   - number: '8'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur worden regels gesteld omtrent:
@@ -556,6 +778,99 @@ articles:
         bwb_id: BWBR0020611
         artikel: '8'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarvoor de aanspraak op lening wordt beoordeeld
+          - name: voldoet_aan_amvb_leenvoorwaarden
+            type: boolean
+            required: true
+            description: >-
+              Voldaan aan bij of krachtens AMvB te stellen regels over voorwaarden
+              voor de lening en het volgen van een cursus (art. 16 lid 1); nader geregeld bij AMvB
+          - name: participatieverklaring_ondertekend
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft de participatieverklaring ondertekend
+          - name: pvt_termijn_verstreken
+            type: boolean
+            required: true
+            description: De termijn van artikel 7a lid 1 (of verlengde termijn) is verstreken
+          - name: inburgeringsplicht_voldaan
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft voldaan aan de inburgeringsplicht
+          - name: is_nog_inburgeringsplichtig
+            type: boolean
+            required: true
+            description: De persoon is nog steeds inburgeringsplichtig
+        input:
+          - name: examen_termijn_einddatum
+            type: date
+            source:
+              output: examen_termijn_einddatum
+        output:
+          - name: heeft_aanspraak_op_lening
+            type: boolean
+            description: >-
+              De inburgeringsplichtige heeft aanspraak op een lening (art. 16 lid 1), tenzij
+              een van de weigeringsgronden van lid 2 van toepassing is
+        actions:
+          - output: verlies_aanspraak_pvt
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $pvt_termijn_verstreken
+                  value: true
+                - operation: NOT
+                  value: $participatieverklaring_ondertekend
+          - output: zes_jaar_grens_examen
+            value:
+              operation: DATE_ADD
+              date: $examen_termijn_einddatum
+              years: 6
+          - output: verlies_aanspraak_zes_jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $peildatum
+                  value: $zes_jaar_grens_examen
+                - operation: NOT
+                  value: $inburgeringsplicht_voldaan
+          - output: verlies_aanspraak_niet_meer_plichtig
+            value:
+              operation: NOT
+              value: $is_nog_inburgeringsplichtig
+          - output: verlies_aanspraak
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verlies_aanspraak_pvt
+                  value: true
+                - operation: EQUALS
+                  subject: $verlies_aanspraak_zes_jaar
+                  value: true
+                - operation: EQUALS
+                  subject: $verlies_aanspraak_niet_meer_plichtig
+                  value: true
+          - output: heeft_aanspraak_op_lening
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_amvb_leenvoorwaarden
+                  value: true
+                - operation: NOT
+                  value: $verlies_aanspraak
   - number: '17'
     text: |-
       1 De terugbetalingsperiode vangt aan zes maanden na:
@@ -577,6 +892,44 @@ articles:
         bwb_id: BWBR0020611
         artikel: '16'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: inburgeringsplicht_voldaan
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft voldaan aan de inburgeringsplicht (art. 17 lid 1a)
+          - name: datum_voldaan_inburgeringsplicht
+            type: date
+            required: false
+            description: Datum waarop voldaan is aan de inburgeringsplicht (art. 17 lid 1a)
+          - name: datum_verlies_aanspraak_lening
+            type: date
+            required: false
+            description: Datum waarop de aanspraak op lening is vervallen op grond van artikel 16 lid 2 (art. 17 lid 1b)
+        output:
+          - name: terugbetalingsperiode_startdatum
+            type: date
+            description: >-
+              Datum waarop de terugbetalingsperiode aanvangt: zes maanden na voldoen aan
+              de inburgeringsplicht of na vervallen van de aanspraak op lening (art. 17 lid 1)
+        actions:
+          - output: terugbetalingsperiode_startdatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $inburgeringsplicht_voldaan
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_voldaan_inburgeringsplicht
+                    months: 6
+              default:
+                operation: DATE_ADD
+                date: $datum_verlies_aanspraak_lening
+                months: 6
   - number: '18'
     text: |-
       1 Het college voorziet in de maatschappelijke begeleiding van de inburgeringsplichtige die rechtmatig verblijf
@@ -618,6 +971,48 @@ articles:
       - id: ref3
         bwb_id: BWBR0035303
         artikel: '28'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: heeft_verblijfsvergunning_asiel_bepaalde_tijd
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft een verblijfsvergunning asiel voor bepaalde tijd (art. 18 lid 1a)
+          - name: heeft_reguliere_vvn_als_gezinsmigrant_bij_asielhouder
+            type: boolean
+            required: true
+            description: >-
+              Verblijfsvergunning regulier voor bepaalde tijd wegens verblijf als familie-
+              of gezinslid bij houder van verblijfsvergunning asiel bepaalde of onbepaalde tijd
+              (art. 18 lid 1b onder 1° en 2°)
+          - name: heeft_reguliere_vvn_als_gezinsmigrant_bij_eu_langdurig_ingezetene
+            type: boolean
+            required: true
+            description: >-
+              Verblijfsvergunning regulier voor bepaalde tijd wegens verblijf als familie-
+              of gezinslid bij houder van EU-verblijfsvergunning langdurig ingezetene met
+              internationale bescherming (art. 18 lid 1b onder 3°)
+        output:
+          - name: heeft_recht_op_maatschappelijke_begeleiding
+            type: boolean
+            description: Het college voorziet in maatschappelijke begeleiding (art. 18 lid 1)
+        actions:
+          - output: heeft_recht_op_maatschappelijke_begeleiding
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_asiel_bepaalde_tijd
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_reguliere_vvn_als_gezinsmigrant_bij_asielhouder
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_reguliere_vvn_als_gezinsmigrant_bij_eu_langdurig_ingezetene
+                  value: true
   - number: '28'
     text: |-
       Onze Minister legt een bestuurlijke boete op aan de inburgeringsplichtige die het participatieverklaringstraject,
@@ -643,6 +1038,32 @@ articles:
         bwb_id: BWBR0020611
         artikel: '8'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AANSLAG
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: pvt_tijdig_afgerond
+            type: boolean
+            required: true
+            description: >-
+              Het participatieverklaringstraject is tijdig afgerond binnen de termijn van
+              artikel 7a lid 1 of de verlengde termijn (art. 28)
+        output:
+          - name: bestuurlijke_boete_pvt_opleggen
+            type: boolean
+            description: >-
+              Onze Minister legt een bestuurlijke boete op omdat het participatieverklaringstraject
+              niet tijdig is afgerond (art. 28)
+        actions:
+          - output: bestuurlijke_boete_pvt_opleggen
+            value:
+              operation: NOT
+              value: $pvt_tijdig_afgerond
   - number: '29'
     text: |-
       1 Onze Minister stelt in de boetebeschikking, bedoeld in [artikel 28][ref1], een nieuwe termijn van ten
@@ -667,6 +1088,25 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: boetebeschikking_pvt_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de boetebeschikking als bedoeld in artikel 28 (art. 29 lid 1)
+        output:
+          - name: nieuwe_pvt_termijn_max_datum
+            type: date
+            description: >-
+              Uiterste datum van de door de Minister gestelde nieuwe termijn voor het afronden
+              van het participatieverklaringstraject; ten hoogste één jaar na de boetebeschikking (art. 29 lid 1)
+        actions:
+          - output: nieuwe_pvt_termijn_max_datum
+            value:
+              operation: DATE_ADD
+              date: $boetebeschikking_pvt_datum
+              years: 1
   - number: '30'
     text: |-
       1 Onze Minister legt de inburgeringsplichtige die niet binnen de krachtens [artikel 29][ref1] vastgestelde
@@ -695,6 +1135,32 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AANSLAG
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: pvt_afgerond_binnen_nieuwe_termijn
+            type: boolean
+            required: true
+            description: >-
+              Het participatieverklaringstraject is afgerond binnen de krachtens artikel 29
+              vastgestelde termijn (art. 30 lid 1)
+        output:
+          - name: herhaalde_boete_pvt_opleggen
+            type: boolean
+            description: >-
+              Onze Minister legt opnieuw een bestuurlijke boete op omdat het participatieverklaringstraject
+              niet binnen de nieuwe termijn is afgerond (art. 30 lid 1)
+        actions:
+          - output: herhaalde_boete_pvt_opleggen
+            value:
+              operation: NOT
+              value: $pvt_afgerond_binnen_nieuwe_termijn
   - number: '31'
     text: |-
       1 Onze Minister legt een bestuurlijke boete op aan de inburgeringsplichtige die de onderdelen van het
@@ -733,6 +1199,58 @@ articles:
       - id: ref5
         bwb_id: BWBR0011823
         artikel: '19'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AANSLAG
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: examen_tijdig_behaald
+            type: boolean
+            required: true
+            description: >-
+              De examenonderdelen zijn tijdig behaald binnen de termijn van artikel 7b lid 1
+              of de verlengde termijn (art. 31 lid 1)
+          - name: verblijfsvergunning_verlenging_afgewezen
+            type: boolean
+            required: true
+            description: >-
+              De aanvraag tot het verlengen van de geldigheidsduur van de verblijfsvergunning
+              voor bepaalde tijd is afgewezen krachtens artikel 18 Vreemdelingenwet 2000 (art. 31 lid 2)
+          - name: verblijfsvergunning_ingetrokken
+            type: boolean
+            required: true
+            description: >-
+              De verblijfsvergunning voor bepaalde tijd is ingetrokken krachtens artikel 19
+              Vreemdelingenwet 2000 (art. 31 lid 2)
+        output:
+          - name: bestuurlijke_boete_examen_opleggen
+            type: boolean
+            description: >-
+              Onze Minister legt een bestuurlijke boete op omdat de examenonderdelen niet tijdig
+              zijn behaald, tenzij de verblijfsvergunning is afgewezen of ingetrokken (art. 31)
+        actions:
+          - output: uitzondering_verblijfsvergunning
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verblijfsvergunning_verlenging_afgewezen
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijfsvergunning_ingetrokken
+                  value: true
+          - output: bestuurlijke_boete_examen_opleggen
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $examen_tijdig_behaald
+                - operation: NOT
+                  value: $uitzondering_verblijfsvergunning
   - number: '32'
     text: |-
       1 Onze Minister stelt in de boetebeschikking, bedoeld in [artikel 31, eerste lid][ref1], een nieuwe termijn van
@@ -763,6 +1281,25 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: boetebeschikking_examen_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de boetebeschikking als bedoeld in artikel 31 lid 1 (art. 32 lid 1)
+        output:
+          - name: nieuwe_examen_termijn_max_datum
+            type: date
+            description: >-
+              Uiterste datum van de nieuwe termijn voor het behalen van de examenonderdelen;
+              ten hoogste twee jaren na de boetebeschikking (art. 32 lid 1)
+        actions:
+          - output: nieuwe_examen_termijn_max_datum
+            value:
+              operation: DATE_ADD
+              date: $boetebeschikking_examen_datum
+              years: 2
   - number: '33'
     text: |-
       1 Onze Minister legt de inburgeringsplichtige die niet binnen de krachtens [artikel 32][ref1] vastgestelde
@@ -796,6 +1333,31 @@ articles:
         bwb_id: BWBR0020611
         artikel: '7'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AANSLAG
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: examen_behaald_binnen_nieuwe_termijn
+            type: boolean
+            required: true
+            description: >-
+              De examenonderdelen zijn behaald binnen de krachtens artikel 32 vastgestelde termijn (art. 33 lid 1)
+        output:
+          - name: herhaalde_boete_examen_opleggen
+            type: boolean
+            description: >-
+              Onze Minister legt opnieuw een bestuurlijke boete op omdat de examenonderdelen
+              niet binnen de nieuwe termijn zijn behaald (art. 33 lid 1)
+        actions:
+          - output: herhaalde_boete_examen_opleggen
+            value:
+              operation: NOT
+              value: $examen_behaald_binnen_nieuwe_termijn
   - number: '34'
     text: |-
       De bestuurlijke boete kan niet hoger zijn dan:
@@ -855,6 +1417,51 @@ articles:
         bwb_id: BWBR0020611
         artikel: '33'
         hoofdstuk: '6'
+    machine_readable:
+      definitions:
+        MAXIMUM_BOETE_PVT:
+          value: 34000
+          description: Maximum bestuurlijke boete voor overtreding art. 7a of art. 29/30; €340 in eurocent
+        MAXIMUM_BOETE_EXAMEN:
+          value: 125000
+          description: Maximum bestuurlijke boete voor overtreding art. 7b of art. 32/33; €1.250 in eurocent
+      execution:
+        parameters:
+          - name: overtreding_onderdeel
+            type: string
+            required: true
+            description: >-
+              Het onderdeel van artikel 34 waaronder de overtreding valt:
+              "a" = niet naleven art. 7a lid 1;
+              "b" = niet afronden PVT binnen art. 29/30 termijnen;
+              "c" = niet naleven art. 7b lid 1;
+              "d" = niet behalen examen binnen art. 32/33 termijnen
+        output:
+          - name: maximum_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het maximumbedrag van de bestuurlijke boete op grond van artikel 34
+        actions:
+          - output: maximum_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $overtreding_onderdeel
+                    values:
+                      - "a"
+                      - "b"
+                  then: $MAXIMUM_BOETE_PVT
+                - when:
+                    operation: IN
+                    subject: $overtreding_onderdeel
+                    values:
+                      - "c"
+                      - "d"
+                  then: $MAXIMUM_BOETE_EXAMEN
+              default: $MAXIMUM_BOETE_PVT
   - number: '47'
     text: |-
       1 Er is een Informatiesysteem Inburgering, beheerd door Onze Minister. Dit systeem bevat een systematisch geordende
