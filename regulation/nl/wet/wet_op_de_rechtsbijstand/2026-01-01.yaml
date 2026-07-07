@@ -2417,6 +2417,52 @@ articles:
       [ref30]: https://wetten.overheid.nl/BWBR0006368#Artikel34d
       [ref31]: https://wetten.overheid.nl/BWBR0005537#Artikel4112
       [ref32]: https://wetten.overheid.nl/BWBR0005537#Artikel4114
+    machine_readable:
+      untranslatables:
+        - construct: "bijstand in lid 1 en lid 2 is kosteloos (art. 43 lid 1)"
+          reason: "Kosteloosheid volgt van rechtswege uit de aanwijzing; er is geen berekening vereist"
+          legal_text_excerpt: "is deze bijstand kosteloos, onverminderd het derde lid"
+          accepted: false
+      execution:
+        parameters:
+          - name: raadsman_aangewezen_krachtens_art39_41_sv
+            type: boolean
+            required: true
+            description: "Raadsman is aangewezen krachtens artikel 39, 40 of 41 van het Wetboek van Strafvordering (lid 3)"
+          - name: uitspraak_onherroepelijk
+            type: boolean
+            required: true
+            description: "De uitspraak tegen de veroordeelde is onherroepelijk geworden (lid 3)"
+        input:
+          - name: voldoet_aan_draagkrachteis
+            type: boolean
+            source:
+              output: voldoet_aan_draagkrachteis
+        output:
+          - name: draagkracht_overschrijdt_grens_art34
+            type: boolean
+            description: "De financiële draagkracht van de veroordeelde overschrijdt de in artikel 34 genoemde bedragen (lid 3)"
+          - name: kan_vergoeding_vorderen
+            type: boolean
+            description: "Het bestuur kan het bedrag ter hoogte van de vergoeding (art. 37) vorderen van de veroordeelde (art. 43 lid 3)"
+        actions:
+          - output: draagkracht_overschrijdt_grens_art34
+            value:
+              operation: NOT
+              value: $voldoet_aan_draagkrachteis
+          - output: kan_vergoeding_vorderen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $raadsman_aangewezen_krachtens_art39_41_sv
+                  value: true
+                - operation: EQUALS
+                  subject: $uitspraak_onherroepelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $draagkracht_overschrijdt_grens_art34
+                  value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel43
     references:
       - id: ref1
@@ -2661,6 +2707,57 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001903#Artikel530
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_bijgestaan_door_toegevoegde_raadsman
+            type: boolean
+            required: true
+            description: "Verdachte is bijgestaan door een raadsman die op het moment van de verlening van rechtsbijstand was toegevoegd (lid 1)"
+          - name: toevoeging_ingetrokken_anders_dan_op_aanvraag
+            type: boolean
+            required: true
+            description: "De toevoeging is ingetrokken of beëindigd anders dan na een daartoe ingediende aanvraag van de verdachte (uitzondering lid 1)"
+          - name: is_toegevoegd_op_rechterslast
+            type: boolean
+            required: true
+            description: "De raadsman is op last van de rechter toegevoegd (lid 2)"
+          - name: ingetrokken_na_uitspraak_op_verdachte_verzoek_bij_orderingsrechter
+            type: boolean
+            required: false
+            description: "Toevoeging op rechterslast is ingetrokken of beëindigd op of na de uitspraak, na een verzoek van de verdachte bij de rechterlijke instantie die de last heeft verstrekt (lid 2)"
+        output:
+          - name: lid2_uitzondering_van_toepassing
+            type: boolean
+            description: "Lid 2-situatie: rechterslast toevoeging is ingetrokken na uitspraak op verdachte verzoek; geen kostenvergoeding overeenkomstig lid 1 (lid 2)"
+          - name: geen_kostenvergoeding_raadsman
+            type: boolean
+            description: "Geen kostenvergoeding van een raadsman als bedoeld in artikel 530 lid 2 Sv wordt toegekend (art. 44a lid 1 jo. lid 2)"
+        actions:
+          - output: lid2_uitzondering_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_toegevoegd_op_rechterslast
+                  value: true
+                - operation: EQUALS
+                  subject: $ingetrokken_na_uitspraak_op_verdachte_verzoek_bij_orderingsrechter
+                  value: true
+          - output: geen_kostenvergoeding_raadsman
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_bijgestaan_door_toegevoegde_raadsman
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: NOT
+                      value: $toevoeging_ingetrokken_anders_dan_op_aanvraag
+                    - operation: EQUALS
+                      subject: $lid2_uitzondering_van_toepassing
+                      value: true
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel44a
     references:
       - id: ref1
