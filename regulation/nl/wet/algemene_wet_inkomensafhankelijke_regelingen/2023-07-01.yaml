@@ -1223,6 +1223,30 @@ articles:
       - id: ref3
         bwb_id: BWBR0002320
         artikel: '13'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: ontvangstdatum_aanvraag
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag bij de Belastingdienst/Toeslagen
+        output:
+          - name: voorschot_deadline
+            type: date
+            description: Uiterste datum voor het verlenen van het voorschot (13 weken na ontvangst aanvraag, art. 16 lid 1 AWIR)
+        actions:
+          - output: voorschot_deadline
+            value:
+              operation: DATE_ADD
+              date: $ontvangstdatum_aanvraag
+              weeks: 13
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '16'
   - number: '17'
     text: |-
       1 Indien een voorschot op de tegemoetkoming is verleend en er een relevante wijziging optreedt in de omstandigheden
@@ -1678,6 +1702,30 @@ articles:
         artikel: '27'
         hoofdstuk: '2'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: dagtekening_beschikking
+            type: date
+            required: true
+            description: Dagtekening van de beschikking tot terugvordering of boetebeschikking
+        output:
+          - name: betalingstermijn_einde
+            type: date
+            description: Uiterste betalingsdatum (6 weken na dagtekening beschikking, art. 28 lid 1 AWIR)
+        actions:
+          - output: betalingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_beschikking
+              weeks: 6
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '28'
   - number: '29'
     text: |-
       Bij overschrijding van de in [artikel 28][ref1] bedoelde betalingstermijn is rente verschuldigd met overeenkomstige
@@ -2081,6 +2129,45 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 6:8
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:8'
+          output: bezwaartermijn_start
+      execution:
+        parameters:
+          - name: dagtekening_beschikking
+            type: date
+            required: true
+            description: Dagtekening van de beschikking
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de beschikking (art. 3:41 AWB)
+        output:
+          - name: bezwaartermijn_start
+            type: date
+            description: Eerste dag van de bezwaartermijn (art. 35 AWIR, in afwijking van AWB art. 6:8)
+        actions:
+          - output: bezwaartermijn_start
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $dagtekening_beschikking
+                    value: $bekendmaking_datum
+                  then:
+                    operation: DATE_ADD
+                    date: $dagtekening_beschikking
+                    days: 1
+              default:
+                operation: DATE_ADD
+                date: $bekendmaking_datum
+                days: 1
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '35'
   - number: '36'
     text: |-
       In afwijking van [artikel 6:8 van de Algemene wet bestuursrecht][ref1] vangt de termijn voor het instellen van
@@ -2094,6 +2181,45 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 6:8
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:8'
+          output: beroeptermijn_start
+      execution:
+        parameters:
+          - name: dagtekening_uitspraak
+            type: date
+            required: true
+            description: Dagtekening van de uitspraak op bezwaar
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de uitspraak op bezwaar
+        output:
+          - name: beroeptermijn_start
+            type: date
+            description: Eerste dag van de beroeptermijn (art. 36 AWIR, in afwijking van AWB art. 6:8)
+        actions:
+          - output: beroeptermijn_start
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $dagtekening_uitspraak
+                    value: $bekendmaking_datum
+                  then:
+                    operation: DATE_ADD
+                    date: $dagtekening_uitspraak
+                    days: 1
+              default:
+                operation: DATE_ADD
+                date: $bekendmaking_datum
+                days: 1
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '36'
   - number: '37'
     text: |-
       1 Een bezwaar tegen de toekenning of herziening van een tegemoetkoming wordt, tenzij uit het bezwaarschrift het
@@ -2605,6 +2731,38 @@ articles:
       - id: ref7
         bwb_id: BWBR0005537
         artikel: 5:45
+    machine_readable:
+      untranslatables:
+        - construct: "verhoogde boete van 150% bij recidive (art. 41 lid 2)"
+          reason: "Recidivist check requires date-difference calculation (5-year window) which is not available as an engine operation"
+          suggestion: "Add DATE_DIFF operation to engine to support temporal recidivism check"
+          legal_text_excerpt: "de bestuurlijke boete... bedraagt ten hoogste 150 percent... indien... de bestuurlijke boete of strafrechtelijke sanctie wegens de eerdere overtreding onherroepelijk is geworden binnen een periode van vijf jaren voorafgaand aan de dag van constatering"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de overtreder
+          - name: terugvorderingsbedrag
+            type: number
+            required: true
+            description: Bedrag dat van de belanghebbende is of zou zijn teruggevorderd in verband met het vergrijp (art. 41 lid 1 AWIR)
+        output:
+          - name: maximale_vergrijpboete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete bij vergrijp (100% van terugvorderingsbedrag conform art. 41 lid 1 AWIR; verhoogd tarief 150% bij recidive is untranslatable)
+        actions:
+          - output: maximale_vergrijpboete
+            value: $terugvorderingsbedrag
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '41'
   - number: 41bis
     text: |-
       1 In afwijking van [artikel 5:1 van de Algemene wet bestuursrecht][ref1] wordt onder overtreder mede verstaan:
@@ -2704,6 +2862,38 @@ articles:
       - id: ref4
         bwb_id: BWBR0011353
         artikel: '5.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: is_tijdige_inkeer
+            type: boolean
+            required: true
+            description: Persoon heeft alsnog juiste en volledige gegevens verstrekt voordat Belastingdienst/Toeslagen de onjuistheid kende of redelijkerwijs zou kennen (art. 42 lid 1 AWIR)
+          - name: betreft_aanmerkelijk_belang_of_sparen_beleggen
+            type: boolean
+            required: true
+            description: Gegevens hebben betrekking op inkomen uit aanmerkelijk belang (IB2001 art. 4.12) of inkomen uit sparen en beleggen (IB2001 art. 5.1) — uitzonderingsgrond art. 42 lid 2 AWIR
+        output:
+          - name: boete_niet_oplegbaar_bij_inkeer
+            type: boolean
+            description: Bestuurlijke boete wordt niet opgelegd wegens tijdige vrijwillige verbetering (art. 42 lid 1 AWIR), tenzij betreffende gegevens vallen onder uitzondering lid 2
+        actions:
+          - output: boete_niet_oplegbaar_bij_inkeer
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_tijdige_inkeer
+                  value: true
+                - operation: NOT
+                  value: $betreft_aanmerkelijk_belang_of_sparen_beleggen
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '42'
   - number: 42a
     text: |-
       1 De Belastingdienst/Toeslagen maakt openbaar het besluit tot oplegging van een bestuurlijke boete die is opgelegd
