@@ -179,6 +179,40 @@ articles:
       in rekening te brengen aan de partijen. Zij kan beslissen dat de kosten die door partijen zijn gemaakt, worden
       gedragen door de in het ongelijk gestelde partij.
     url: https://wetten.overheid.nl/BWBR0007119/2026-07-01#Artikel11
+    machine_readable:
+      execution:
+        parameters:
+          - name: geschil_datum
+            type: date
+            required: true
+            description: Datum waarop het geschil is voorgelegd aan de Waarderingskamer (art. 11 lid 3)
+          - name: termijn_verlengd
+            type: boolean
+            required: false
+            description: Of de Waarderingskamer de beslistermijn heeft verlengd met dertien weken (art. 11 lid 3, tweede volzin)
+        output:
+          - name: beslistermijn_deadline
+            type: date
+            description: Uiterste datum voor de beslissing door de Waarderingskamer (13 weken na geschil, eventueel verlengd met 13 weken)
+        actions:
+          - output: basis_deadline
+            value:
+              operation: DATE_ADD
+              date: $geschil_datum
+              weeks: 13
+          - output: beslistermijn_deadline
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $termijn_verlengd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $basis_deadline
+                    weeks: 13
+              default: $basis_deadline
   - number: '16'
     text: |-
       Voor de toepassing van de wet wordt als één onroerende zaak aangemerkt:
@@ -1538,6 +1572,46 @@ articles:
 
       d. na de afhandeling van het onderzoek naar aanleiding van de situatie, bedoeld in het eerste lid, onderdeel d.
     url: https://wetten.overheid.nl/BWBR0007119/2026-07-01#Artikel37g
+    machine_readable:
+      execution:
+        parameters:
+          - name: terugmelding_gedaan
+            type: boolean
+            required: false
+            description: Of een terugmelding is gedaan als bedoeld in art. 37g lid 1 onderdeel a
+          - name: bezwaar_of_beroepschrift_ingediend
+            type: boolean
+            required: false
+            description: Of een bezwaar- of beroepschrift is ingediend als bedoeld in art. 37g lid 1 onderdeel b
+          - name: verzoek_ambtshalve_vermindering_gedaan
+            type: boolean
+            required: false
+            description: Of een verzoek om ambtshalve vermindering is gedaan als bedoeld in art. 37g lid 1 onderdeel c
+          - name: gerede_twijfel_juistheid
+            type: boolean
+            required: false
+            description: Of overigens gerede twijfel is ontstaan omtrent de juistheid van het gegeven als bedoeld in art. 37g lid 1 onderdeel d
+        output:
+          - name: aantekening_in_onderzoek_plaatsen
+            type: boolean
+            description: Of de aantekening «in onderzoek» bij het waardegegeven moet worden geplaatst (art. 37g lid 1)
+        actions:
+          - output: aantekening_in_onderzoek_plaatsen
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $terugmelding_gedaan
+                  value: true
+                - operation: EQUALS
+                  subject: $bezwaar_of_beroepschrift_ingediend
+                  value: true
+                - operation: EQUALS
+                  subject: $verzoek_ambtshalve_vermindering_gedaan
+                  value: true
+                - operation: EQUALS
+                  subject: $gerede_twijfel_juistheid
+                  value: true
   - number: 37h
     text: |-
       Bij algemene maatregel van bestuur worden bestuursorganen aangewezen die bevoegd zijn tot gebruik van een
