@@ -1,0 +1,123 @@
+enrichment:
+  regulation: wet_milieubeheer
+  bwb_id: BWBR0003245
+  valid_from: "2026-06-20"
+  completed_at: "2026-07-08"
+  model: claude-sonnet-4-6
+
+  steps:
+    mvt_research:
+      status: skipped
+      reason: >-
+        WebFetch/WebSearch tools not authorized in this session. No MvT documents
+        retrieved; no Gherkin feature file generated.
+
+    generate:
+      status: completed
+      articles_total: 300+
+      articles_with_machine_readable: 8
+      articles_skipped_reason: >-
+        The vast majority of Wet milieubeheer articles are framework provisions,
+        delegation clauses, definitional articles, or procedural rules that contain
+        no computable logic expressible in the Regelrecht schema.
+
+    validate:
+      status: skipped
+      reason: >-
+        `just validate` requires user approval in this session. Schema compliance
+        was checked manually; YAML syntax is well-formed.
+
+    reverse_validate:
+      status: completed
+      articles_checked: 8
+      fully_grounded: 7
+      contains_untranslatables: 1
+      elements_removed: 0
+      scope_violations: 0
+
+  articles:
+    - number: "8.49"
+      lid: 3
+      topic: Nazorgplan stortplaats — beslistermijn en instemming van rechtswege
+      outputs:
+        - beslistermijn_einddatum
+        - instemming_van_rechtswege
+      notes: >-
+        13 weken na indiening nazorgplan; instemming van rechtswege indien bevoegd
+        gezag niet tijdig heeft beslist.
+
+    - number: "15.20"
+      lid: 5
+      topic: Schadevergoeding — beslistermijn vier of zeven maanden
+      outputs:
+        - beslistermijn_einddatum
+      notes: >-
+        4 maanden standaard; 7 maanden indien deskundigenadvies is ingewonnen (lid 4).
+
+    - number: "16.7"
+      lid: 1
+      topic: Emissieautoriteit — beslistermijn vergunning vier maanden
+      outputs:
+        - beslistermijn_einddatum
+      notes: >-
+        Eenvoudige DATE_ADD: vier maanden na aanvraagdatum.
+
+    - number: "16.37"
+      lid: 1
+      topic: Inleverplicht broeikasgasemissierechten — deadline en nalevingscheck
+      outputs:
+        - inleverdeadline
+        - voldoet_aan_inleverplicht
+      notes: >-
+        Deadline is 1 oktober van het volgende kalenderjaar. Nalevingscheck:
+        ingeleverde rechten >= veroorzaakte emissies.
+
+    - number: "16.39"
+      lid: 1
+      topic: Automatische verhoging inleverplicht bij tekort (installaties)
+      outputs:
+        - te_leveren_rechten
+      notes: >-
+        Van rechtswege verhoogd: emissies huidig jaar + tekort vorig jaar.
+
+    - number: "16.39a"
+      lid: 5
+      topic: Dekkingspercentage maritieme emissies (50% of 100%)
+      outputs:
+        - dekkingspercentage
+        - toepasselijke_emissies
+      notes: >-
+        50% voor reizen van/naar buiten-EU havens; 100% voor EU-interne reizen
+        en verblijf in Nederlandse haven.
+
+    - number: "16.39w"
+      lid: 1
+      topic: Automatische verhoging inleverplicht bij tekort (luchtvaart/scheepvaart)
+      outputs:
+        - te_leveren_rechten
+      notes: >-
+        Identiek patroon als 16.39 maar voor vliegtuigexploitanten en
+        scheepvaartmaatschappijen.
+
+    - number: "18.16e"
+      lid: 1
+      topic: Maximale bestuurlijke boete — drempelomzet € 4.500.000 / 10%
+      outputs:
+        - maximale_bestuurlijke_boete
+      untranslatables:
+        - construct: "boetebedrag per ton CO2-equivalent (lid 2)"
+          reason: EU-richtlijn bedrag niet uitdrukbaar zonder extern datapunt
+        - construct: "jaarlijkse CPI-verhoging (lid 3)"
+          reason: Tijdreeksindexering niet beschikbaar als engine-operatie
+      notes: >-
+        Lid 1: IF omzet > € 4.500.000 (= 450.000.000 eurocent) THEN 10% van omzet
+        ELSE € 450.000 (= 45.000.000 eurocent). Lids 2 en 3 zijn untranslatables.
+
+  reverse_validation_report:
+    fully_grounded: 7
+    assumptions: 0
+    elements_removed: 0
+    untranslatable_workarounds: 0
+    new_untranslatables_flagged: 2
+    operation_correctness: passed
+    scope_violations: 0
