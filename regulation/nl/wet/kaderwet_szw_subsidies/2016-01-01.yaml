@@ -117,6 +117,32 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 4:21
+    machine_readable:
+      execution:
+        parameters:
+          - name: subsidie_op_grond_van_amvb_of_regeling
+            type: boolean
+            required: true
+            description: Wordt de subsidie verstrekt op grond van een AMvB of ministeriële regeling als bedoeld in artikel 3 lid 1?
+          - name: regeling_uitsluitend_voor_publiekrechtelijke_rechtspersonen
+            type: boolean
+            required: true
+            description: Voorziet de AMvB of ministeriële regeling uitsluitend in verstrekking aan rechtspersonen die krachtens publiekrecht zijn ingesteld?
+        output:
+          - name: titel_4_2_awb_van_toepassing
+            type: boolean
+            description: Is titel 4.2 van de AWB van toepassing op de subsidie, in afwijking van artikel 4:21 derde lid AWB?
+        actions:
+          - output: titel_4_2_awb_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $subsidie_op_grond_van_amvb_of_regeling
+                  value: true
+                - operation: EQUALS
+                  subject: $regeling_uitsluitend_voor_publiekrechtelijke_rechtspersonen
+                  value: true
   - number: '4'
     text: |-
       Onze Minister verstrekt slechts subsidie op grond van een algemene maatregel van bestuur of een ministeriële
@@ -291,6 +317,38 @@ articles:
       - id: ref1
         bwb_id: BWBR0008754
         artikel: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanspraak_is_spoedeisend
+            type: boolean
+            required: true
+            description: Is de verstrekking van de aanspraak op financiële middelen spoedeisend?
+          - name: aanspraak_is_tijdelijk
+            type: boolean
+            required: true
+            description: Is de verstrekking van de aanspraak op financiële middelen tijdelijk?
+          - name: aanspraak_krachtens_andere_wet
+            type: boolean
+            required: true
+            description: Wordt de aanspraak op financiële middelen verstrekt krachtens een andere wet?
+        output:
+          - name: kaderwet_van_overeenkomstige_toepassing
+            type: boolean
+            description: Is de Kaderwet SZW-subsidies (met uitzondering van artikel 3 lid 2) van overeenkomstige toepassing op de verstrekking van de aanspraak op financiële middelen?
+        actions:
+          - output: kaderwet_van_overeenkomstige_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $aanspraak_is_spoedeisend
+                  value: true
+                - operation: EQUALS
+                  subject: $aanspraak_is_tijdelijk
+                  value: true
+                - operation: NOT
+                  value: $aanspraak_krachtens_andere_wet
   - number: '10'
     text: Deze wet treedt in werking op een bij koninklijk besluit te bepalen tijdstip.
     url: https://wetten.overheid.nl/BWBR0008754/2016-01-01#Artikel10
