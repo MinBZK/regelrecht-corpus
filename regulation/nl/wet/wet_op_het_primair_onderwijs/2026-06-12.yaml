@@ -1086,6 +1086,34 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: gemiddelde_uren_pe_per_schoolweek
+            type: number
+            required: true
+            description: Gemiddeld aantal uren per schoolweek besteed aan zintuiglijke en lichamelijke oefening (artikel 9, lid 2a)
+          - name: percentage_onderwijs_in_nederlands
+            type: number
+            description: Percentage van het totale aantal uren dat in het Nederlands wordt gegeven; relevant voor afdelingen als bedoeld in artikel 85a (artikel 9, veertiende lid)
+        output:
+          - name: voldoet_pe_urennorm
+            type: boolean
+            description: Of de school voldoet aan de minimale PE-urennorm van gemiddeld 1,5 uur per schoolweek (artikel 9, lid 2a)
+          - name: voldoet_taalnorm_internationale_afdeling
+            type: boolean
+            description: Of een internationale afdeling voldoet aan de eis dat ten minste 10% van het onderwijs in het Nederlands wordt gegeven (artikel 9, veertiende lid)
+        actions:
+          - output: voldoet_pe_urennorm
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $gemiddelde_uren_pe_per_schoolweek
+              value: 1.5
+          - output: voldoet_taalnorm_internationale_afdeling
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $percentage_onderwijs_in_nederlands
+              value: 10
   - number: 9a
     text: |-
       1 Bij het geven van onderwijs aan een leerling die is opgenomen in een ziekenhuis of die in verband met ziekte
@@ -4898,6 +4926,44 @@ articles:
         hoofdstuk: I
         paragraaf: '1'
         afdeling: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_ouderverklaringen
+            type: number
+            required: true
+            description: Aantal schriftelijke verklaringen van verschillende ouders van kinderen tot en met 12 jaar over de behoefte aan openbaar onderwijs (artikel 77, eerste lid)
+          - name: afstand_dichtstbijzijnde_openbare_school_km
+            type: number
+            required: true
+            description: Afstand in km (over de weg gemeten) tot de dichtstbijzijnde school waarbinnen openbaar onderwijs wordt gegeven (artikel 77, derde en vierde lid)
+          - name: behoefte_aan_openbaar_onderwijs
+            type: boolean
+            required: true
+            description: Of er behoefte bestaat aan het volgen van openbaar onderwijs (artikel 77, derde lid)
+        output:
+          - name: onderzoeksplicht_gemeente
+            type: boolean
+            description: Of de gemeente verplicht is de behoefte aan openbaar onderwijs te onderzoeken via een belangstellingsmeting (artikel 77, eerste lid)
+          - name: aanvraagplicht_gemeente_openbare_school
+            type: boolean
+            description: Of de gemeente verplicht is een aanvraag om bekostiging in te dienen voor een openbare school vanwege ontbreken openbaar onderwijs binnen 10 km (artikel 77, derde lid)
+        actions:
+          - output: onderzoeksplicht_gemeente
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_ouderverklaringen
+              value: 50
+          - output: aanvraagplicht_gemeente_openbare_school
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $afstand_dichtstbijzijnde_openbare_school_km
+                  value: 10
+                - operation: EQUALS
+                  subject: $behoefte_aan_openbaar_onderwijs
+                  value: true
   - number: '84'
     text: |-
       1 Onze Minister kan onder door hem te stellen voorwaarden voor bekostiging in aanmerking brengen een school die
@@ -5120,6 +5186,23 @@ articles:
       4 Bij ministeriële regeling kan een model worden vastgesteld voor de berekening van de prognose, bedoeld in het
       tweede lid, en de wijze van indiening ervan.
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel85a
+    machine_readable:
+      execution:
+        parameters:
+          - name: te_verwachten_leerlingen_binnen_5_schooljaren
+            type: number
+            required: true
+            description: Te verwachten aantal leerlingen op de internationale afdeling binnen 5 schooljaren, op basis van statistische gegevens (artikel 85a, tweede lid)
+        output:
+          - name: voldoet_prognose_internationale_afdeling
+            type: boolean
+            description: Of de prognose aantoont dat de internationale afdeling binnen 5 schooljaren ten minste 80 leerlingen zal hebben (artikel 85a, tweede lid)
+        actions:
+          - output: voldoet_prognose_internationale_afdeling
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $te_verwachten_leerlingen_binnen_5_schooljaren
+              value: 80
   - number: 85b
     text: |-
       1 De afdelingen voor internationaal georiënteerd basisonderwijs die op 31 juli 2014 door Onze Minister werden
@@ -6491,6 +6574,40 @@ articles:
       4 De hoogte van de bekostiging, bedoeld in het derde lid, kan verschillend worden vastgesteld, afhankelijk van de
       oppervlakte van de ruimte en of de ruimte mede wordt bekostigd door het Rijk.
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel126
+    machine_readable:
+      execution:
+        parameters:
+          - name: school_type
+            type: string
+            required: true
+            description: "Type school: 'basisschool' of 'speciale_school_voor_basisonderwijs' (artikel 126, tweede lid)"
+          - name: uren_gymles_per_week_per_groep
+            type: number
+            required: true
+            description: Vastgesteld aantal uren per week ter beschikking per groep leerlingen voor het onderwijs in lichamelijke oefening (artikel 126, eerste en tweede lid)
+        output:
+          - name: minimaal_vereiste_uren_per_week
+            type: number
+            description: Minimaal vereist aantal uren per week voor gymles per groep leerlingen (1,5 uur voor basisscholen, 2,25 uur voor speciale scholen voor basisonderwijs; artikel 126, tweede lid)
+          - name: voldoet_aan_minimumuren_gym
+            type: boolean
+            description: Of het vastgestelde aantal uren per week voldoet aan het wettelijk minimum voor de betrokken schoolsoort (artikel 126, tweede lid)
+        actions:
+          - output: minimaal_vereiste_uren_per_week
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $school_type
+                    value: "speciale_school_voor_basisonderwijs"
+                  then: 2.25
+              default: 1.5
+          - output: voldoet_aan_minimumuren_gym
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $uren_gymles_per_week_per_groep
+              value: $minimaal_vereiste_uren_per_week
   - number: '127'
     text: |-
       1 De gemeente verstrekt jaarlijks aan het bevoegd gezag van een niet door de gemeente in stand gehouden school dat
@@ -6797,6 +6914,30 @@ articles:
       [ref14]: https://wetten.overheid.nl/BWBR0003420#Artikel128
       [ref15]: https://wetten.overheid.nl/BWBR0003420#Artikel129
     url: https://wetten.overheid.nl/BWBR0003420/2026-06-12#Artikel132
+    machine_readable:
+      untranslatables:
+        - construct: "Percentage afronden op twee decimalen (artikel 132, negende lid)"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "Het percentage wordt afgerond tot twee decimalen. Afronding naar beneden vindt plaats indien de derde decimaal kleiner is dan 5, en naar boven indien deze decimaal ten minste 5 bedraagt."
+          accepted: false
+      execution:
+        parameters:
+          - name: bekostiging_per_school
+            type: number
+            required: true
+            description: Bekostiging per school vastgesteld door Onze Minister op grond van artikel 116
+        output:
+          - name: genormeerde_administratiekosten
+            type: number
+            description: Normatief vastgestelde ontvangsten voor administratie, beheer en bestuur (0,65% van de bekostiging, bedoeld in artikel 116; artikel 132, vierde lid)
+        actions:
+          - output: genormeerde_administratiekosten
+            value:
+              operation: MULTIPLY
+              values:
+                - $bekostiging_per_school
+                - 0.0065
     references:
       - id: ref1
         bwb_id: BWBR0003420
@@ -7128,6 +7269,97 @@ articles:
         artikel: '164'
         hoofdstuk: I
         afdeling: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: leerlingen_jaar1
+            type: number
+            required: true
+            description: Aantal leerlingen (excl. nevenvestiging) in het eerste van de drie achtereenvolgende schooljaren (artikel 139, eerste lid)
+          - name: leerlingen_jaar2
+            type: number
+            required: true
+            description: Aantal leerlingen (excl. nevenvestiging) in het tweede schooljaar van de drie achtereenvolgende schooljaren
+          - name: leerlingen_jaar3
+            type: number
+            required: true
+            description: Aantal leerlingen (excl. nevenvestiging) in het derde schooljaar van de drie achtereenvolgende schooljaren
+          - name: is_laatste_school_richting_binnen_5km
+            type: boolean
+            required: true
+            description: Of de school (excl. nevenvestiging) de laatste school van de richting is binnen een straal van 5 km (artikel 139, vierde lid)
+          - name: is_laatste_openbare_school_binnen_10km
+            type: boolean
+            required: true
+            description: Of er geen andere school waarbinnen openbaar onderwijs wordt gegeven aanwezig is binnen 10 km (artikel 139, vijfde lid)
+          - name: behoefte_openbaar_onderwijs
+            type: boolean
+            required: true
+            description: Of er behoefte bestaat aan het volgen van openbaar onderwijs (artikel 139, vijfde lid)
+        input:
+          - name: opheffingsnorm
+            type: number
+            source:
+              output: opheffingsnorm
+            description: Opheffingsnorm voor de gemeente, berekend overeenkomstig artikel 140
+        output:
+          - name: leerlingenaantal_onder_norm_3_jaar
+            type: boolean
+            description: Of het leerlingenaantal gedurende 3 achtereenvolgende schooljaren telkens minder was dan de opheffingsnorm (artikel 139, eerste lid)
+          - name: uitzondering_laatste_school_5km
+            type: boolean
+            description: Of de uitzondering van lid 4 van toepassing is (ten minste 50 leerlingen in jaar 3 en laatste school in richting binnen 5 km)
+          - name: uitzondering_laatste_openbare_school
+            type: boolean
+            description: Of de uitzondering van lid 5 van toepassing is (geen andere openbare school binnen 10 km en behoefte)
+          - name: moet_worden_opgeheven
+            type: boolean
+            description: Of de bekostiging beëindigd / school opgeheven moet worden op grond van artikel 139, eerste lid, rekening houdend met uitzonderingen lid 4 en 5
+        actions:
+          - output: leerlingenaantal_onder_norm_3_jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN
+                  subject: $leerlingen_jaar1
+                  value: $opheffingsnorm
+                - operation: LESS_THAN
+                  subject: $leerlingen_jaar2
+                  value: $opheffingsnorm
+                - operation: LESS_THAN
+                  subject: $leerlingen_jaar3
+                  value: $opheffingsnorm
+          - output: uitzondering_laatste_school_5km
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leerlingen_jaar3
+                  value: 50
+                - operation: EQUALS
+                  subject: $is_laatste_school_richting_binnen_5km
+                  value: true
+          - output: uitzondering_laatste_openbare_school
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_laatste_openbare_school_binnen_10km
+                  value: true
+                - operation: EQUALS
+                  subject: $behoefte_openbaar_onderwijs
+                  value: true
+          - output: moet_worden_opgeheven
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $leerlingenaantal_onder_norm_3_jaar
+                  value: true
+                - operation: NOT
+                  value: $uitzondering_laatste_school_5km
+                - operation: NOT
+                  value: $uitzondering_laatste_openbare_school
   - number: '140'
     text: |-
       Voor iedere gemeente wordt, op basis van de leerlingdichtheid in die gemeente, een opheffingsnorm vastgesteld aan

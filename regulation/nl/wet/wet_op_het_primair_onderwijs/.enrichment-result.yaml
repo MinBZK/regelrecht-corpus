@@ -1,4 +1,8 @@
 law_id: wet_op_het_primair_onderwijs
+bwb_id: BWBR0003420
+valid_from: "2026-06-12"
+enriched_at: "2026-07-08"
+
 related_legislation:
   - name: Regeling opheffingsnormen basisonderwijs
     relation: delegated_regeling
@@ -32,3 +36,153 @@ related_legislation:
   - name: Algemene wet bestuursrecht
     relation: source_regulation
     bwb_id: BWBR0005537
+  - name: Wet medezeggenschap op scholen
+    relation: source_regulation
+    bwb_id: BWBR0020685
+  - name: Wet referentieniveaus Nederlandse taal en rekenen
+    relation: source_regulation
+    bwb_id: BWBR0027679
+  - name: Jeugdwet
+    relation: source_regulation
+    bwb_id: BWBR0034925
+  - name: Wet publieke gezondheid
+    relation: source_regulation
+    bwb_id: BWBR0024705
+
+machine_readable_sections:
+  - article: "8"
+    status: generated
+    outputs: [voldoet_urennorm]
+    notes: "Urennormen art. 8 lid 7 onderdeel b: 7520 totaal, 3520 eerste 4 jaar, 3760 laatste 4 jaar"
+
+  - article: "9"
+    status: generated
+    outputs: [voldoet_pe_urennorm, voldoet_taalnorm_internationale_afdeling]
+    notes: "PE-urennorm ≥ 1,5 uur/week (lid 2a); Nederlandse-taalnorm ≥ 10% voor internationale afdelingen (lid 14)"
+
+  - article: "17d"
+    status: generated
+    outputs: [drempelwaarde, voldoet_aan_continuiteitseis]
+    untranslatables: [afronden_continuiteitseis]
+    source_bindings:
+      - input: opheffingsnorm
+        from_article: "140"
+        endpoint: opheffingsnorm
+    notes: "Continuiteitseis samenwerkingsschool; drempelwaarde = MIN(200, opheffingsnorm + 67,797 − 0,339 × opheffingsnorm)"
+
+  - article: "39"
+    status: generated
+    outputs: [leeftijd_volledig_jaren, mag_worden_toegelaten, moet_school_verlaten]
+    untranslatables: [leeftijdsgrens_3jaar_10maanden]
+    notes: "Toelating ≥ 4 jaar (lid 1); school verlaten bij ≥ 14 jaar (lid 4). Pré-toelating 3j10m niet uitdrukbaar met AGE."
+
+  - article: "40"
+    status: generated
+    outputs: [leeftijd_kind, aanmelding_toegestaan_leeftijd, beslissing_uiterlijk_datum, auto_plaatsing_datum]
+    notes: "Aanmelding vanaf 3 jaar (lid 2); beslissingstermijn 6 weken (lid 6); automatische plaatsing na 10 weken (lid 7)"
+
+  - article: "64a"
+    status: generated
+    outputs: [goedkeuring_minister_vereist]
+    notes: "Fusiegoedkeuring vereist tenzij: institutioneel < 500 leerlingen, bestuursoverdracht < 10 scholen, of samenwerkingsschool-fusie"
+
+  - article: "64d"
+    status: generated
+    outputs: [beslistermijn_datum, maximale_verlengde_datum]
+    notes: "Beslistermijn 13 weken (lid 1); maximaal verlengd tot 26 weken (lid 2)"
+
+  - article: "74a"
+    status: generated
+    outputs: [verwacht_leerlingenaantal]
+    open_terms: [correctiefactor_z]
+    notes: "Prognoseformule q = (y/x) × w × z; z is ministeriele regeling (open_term)"
+
+  - article: "76"
+    status: generated
+    endpoint: stichtingsnorm
+    outputs: [stichtingsnorm]
+    untranslatables: [afronden_stichtingsnorm]
+    source_bindings:
+      - input: opheffingsnorm
+        from_article: "140"
+        endpoint: opheffingsnorm
+    notes: "Stichtingsnorm = MAX(200, 10/6 × opheffingsnorm) vóór afronden"
+
+  - article: "77"
+    status: generated
+    outputs: [onderzoeksplicht_gemeente, aanvraagplicht_gemeente_openbare_school]
+    notes: "Onderzoeksplicht bij ≥ 50 ouderverklaringen (lid 1); aanvraagplicht bij geen openbare school binnen 10 km (lid 3)"
+
+  - article: "84"
+    status: generated
+    outputs: [bekostiging_gehandhaafd]
+    notes: "Bekostiging gehandhaafd bij verplaatsing ≤ 3 km van vestigingsadres (lid 2)"
+
+  - article: "85a"
+    status: generated
+    outputs: [voldoet_prognose_internationale_afdeling]
+    notes: "Prognose internationale afdeling: ≥ 80 leerlingen binnen 5 schooljaren (lid 2)"
+
+  - article: "126"
+    status: generated
+    outputs: [minimaal_vereiste_uren_per_week, voldoet_aan_minimumuren_gym]
+    notes: "Gymuren: 1,5 uur/week basisschool; 2,25 uur/week speciale school voor basisonderwijs (lid 2)"
+
+  - article: "132"
+    status: generated
+    outputs: [genormeerde_administratiekosten]
+    untranslatables: [percentage_afronden_twee_decimalen]
+    notes: "Normatieve administratiekosten = 0,65% × bekostiging art. 116 (lid 4). Afrondingsregel lid 9 niet uitdrukbaar."
+
+  - article: "138"
+    status: generated
+    outputs: [leerlingaantal_gecorrigeerd]
+    untranslatables: [naar_beneden_afronden_geheel_getal]
+    notes: "Gecorrigeerd leerlingaantal = leerlingen_1_oktober × 1,03 (vóór FLOOR-afronding)"
+
+  - article: "139"
+    status: generated
+    outputs: [leerlingenaantal_onder_norm_3_jaar, uitzondering_laatste_school_5km, uitzondering_laatste_openbare_school, moet_worden_opgeheven]
+    source_bindings:
+      - input: opheffingsnorm
+        from_article: "140"
+        endpoint: opheffingsnorm
+    notes: "Opheffing na 3 jaar onder norm (lid 1). Uitzonderingen: ≥ 50 leerlingen + laatste school richting binnen 5 km (lid 4); geen openbare school binnen 10 km + behoefte (lid 5)."
+
+  - article: "140"
+    status: generated
+    endpoint: opheffingsnorm
+    outputs: [leerlingdichtheid, opheffingsnorm]
+    untranslatables: [afronden_opheffingsnorm]
+    notes: "Opheffingsnorm = MAX(23, MIN(200, 0,6 × leerlingdichtheid / (0,15 + 0,0027 × leerlingdichtheid))). Leerlingdichtheid = MIN(500, inwoners_4_11 / MAX(km2, 10))."
+
+engine_gaps:
+  - operation: ROUND
+    articles: ["17d", "76", "132", "140"]
+    description: Standard rounding (halverwegen naar boven) not available as engine operation
+    accepted: false
+
+  - operation: FLOOR
+    articles: ["138"]
+    description: Floor (naar beneden afronden op geheel getal) not available as engine operation
+    accepted: false
+
+  - operation: MONTHS_OF_AGE
+    articles: ["39"]
+    description: Sub-year age precision (3 jaar 10 maanden) not expressible with AGE operation (returns full years only)
+    accepted: false
+
+mvt_research:
+  status: skipped
+  reason: Network access unavailable during enrichment session
+  feature_file: null
+
+reverse_validation:
+  performed: true
+  findings:
+    - article: "9"
+      type: description_correction
+      detail: "Corrected 'tweede lid letter a' to 'lid 2a' for PE hours norm parameter and output descriptions"
+    - article: all
+      type: logic_verified
+      detail: "All machine_readable action logic traces to specific legal text passages; no hallucinated conditions or values found"
