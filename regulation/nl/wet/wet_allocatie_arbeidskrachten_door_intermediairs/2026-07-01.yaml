@@ -316,6 +316,34 @@ articles:
       - id: ref3
         bwb_id: BWBR0002471
         artikel: '28'
+    machine_readable:
+      execution:
+        parameters:
+          - name: opname_datum_afschrift
+            type: date
+            required: true
+            description: Datum waarop het afschrift van het identiteitsdocument in de administratie is opgenomen (lid 4)
+          - name: heeft_loonbelasting_bewaarplicht
+            type: boolean
+            required: true
+            description: Heeft degene die arbeidskrachten ter beschikking stelt de verplichting bedoeld in artikel 28 eerste lid onderdeel f van de Wet op de loonbelasting 1964, waardoor de vernietigingsplicht niet geldt (lid 4)?
+        output:
+          - name: vernietiging_verplicht
+            type: boolean
+            description: Is er een verplichting tot vernietiging van het afschrift (lid 4, niet van toepassing indien loonbelasting bewaarplicht geldt)?
+          - name: vernietiging_uiterste_datum
+            type: date
+            description: Uiterste datum waarop het afschrift vernietigd moet worden (uiterlijk vier weken na opname in administratie, lid 4)
+        actions:
+          - output: vernietiging_verplicht
+            value:
+              operation: NOT
+              value: $heeft_loonbelasting_bewaarplicht
+          - output: vernietiging_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $opname_datum_afschrift
+              weeks: 4
   - number: '8'
     text: |-
       1 De arbeidskracht, die niet in het kader van payrolling ter beschikking is gesteld, heeft recht op ten minste
@@ -1304,6 +1332,72 @@ articles:
         artikel: 12t
         hoofdstuk: 3a
         paragraaf: '5'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: staat_ingeschreven_in_handelsregister
+            type: boolean
+            required: true
+            description: Is de toegelaten uitlener nog ingeschreven in het handelsregister (lid 1 onderdeel a)?
+          - name: voldoet_aan_vog_bij_wisseling_bestuurders
+            type: boolean
+            required: true
+            description: Voldoet de toegelaten uitlener aan artikel 12o derde lid (VOG bij wisseling bestuurders) (lid 1 onderdeel b)?
+          - name: voldoet_aan_normenkader
+            type: boolean
+            required: true
+            description: Voldoet de toegelaten uitlener aan het normenkader als bedoeld in artikel 12q eerste lid (lid 1 onderdeel c)?
+          - name: heeft_tijdig_rapport_verstrekt
+            type: boolean
+            required: true
+            description: Heeft de toegelaten uitlener tijdig een rapport als bedoeld in artikel 12r eerste lid doen verstrekken (lid 2)?
+          - name: type_toelating
+            type: string
+            required: true
+            description: "Type toelating: TOELATING of VOORLOPIGE_TOELATING"
+        output:
+          - name: verplichte_schorsing_lid1
+            type: boolean
+            description: Is schorsing verplicht op grond van artikel 12l lid 1 (van toepassing op zowel toelating als voorlopige toelating)?
+          - name: verplichte_schorsing_lid2
+            type: boolean
+            description: Is schorsing verplicht op grond van artikel 12l lid 2 (alleen van toepassing op reguliere toelating)?
+          - name: verplichte_schorsing
+            type: boolean
+            description: Is schorsing van de toelating of voorlopige toelating verplicht (op grond van lid 1 of lid 2)?
+        actions:
+          - output: verplichte_schorsing_lid1
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $staat_ingeschreven_in_handelsregister
+                - operation: NOT
+                  value: $voldoet_aan_vog_bij_wisseling_bestuurders
+                - operation: NOT
+                  value: $voldoet_aan_normenkader
+          - output: verplichte_schorsing_lid2
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $type_toelating
+                  value: TOELATING
+                - operation: NOT
+                  value: $heeft_tijdig_rapport_verstrekt
+          - output: verplichte_schorsing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $verplichte_schorsing_lid1
+                  value: true
+                - operation: EQUALS
+                  subject: $verplichte_schorsing_lid2
+                  value: true
   - number: 12m
     text: |-
       1 Onze Minister trekt een toelating of een voorlopige toelating in:
@@ -2459,6 +2553,46 @@ articles:
         artikel: I
       - id: ref5
         bwb_id: BWBR0018450
+    machine_readable:
+      execution:
+        parameters:
+          - name: vier_jaar_onafgebroken_ingeschreven
+            type: boolean
+            required: true
+            description: Was de onderneming of rechtspersoon reeds vier jaar onafgebroken ingeschreven in het handelsregister onmiddellijk voorafgaand aan de inwerkingtreding van onderdeel I van artikel I van de Wet toelating terbeschikkingstelling van arbeidskrachten (onderdeel a)?
+          - name: geregistreerd_als_tbs_onderneming
+            type: boolean
+            required: true
+            description: Was de onderneming of rechtspersoon in die periode geregistreerd als onderneming die de activiteit van het ter beschikking stellen van arbeidskrachten uitoefent overeenkomstig artikel 7a eerste lid (onderdeel b)?
+          - name: heeft_aantoonbaar_arbeidskrachten_ter_beschikking_gesteld
+            type: boolean
+            required: true
+            description: Heeft de onderneming of rechtspersoon in die periode aantoonbaar arbeidskrachten ter beschikking gesteld (onderdeel c)?
+          - name: heeft_geldige_belastingdienst_verklaring
+            type: boolean
+            required: true
+            description: Verstrekt de onderneming of rechtspersoon een niet ouder dan drie maanden zijnde verklaring van de Belastingdienst dat de verschuldigde belastingen en premies zijn voldaan of afgedragen (onderdeel d)?
+        output:
+          - name: vrijgesteld_van_financiele_zekerheidsplicht
+            type: boolean
+            description: Is artikel 12p buiten toepassing op grond van artikel 23c (alle vier voorwaarden zijn vervuld)?
+        actions:
+          - output: vrijgesteld_van_financiele_zekerheidsplicht
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $vier_jaar_onafgebroken_ingeschreven
+                  value: true
+                - operation: EQUALS
+                  subject: $geregistreerd_als_tbs_onderneming
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_aantoonbaar_arbeidskrachten_ter_beschikking_gesteld
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_geldige_belastingdienst_verklaring
+                  value: true
   - number: 23d
     text: |-
       Onze Minister van Sociale Zaken en Werkgelegenheid zendt binnen drie jaar na de inwerkingtreding van
