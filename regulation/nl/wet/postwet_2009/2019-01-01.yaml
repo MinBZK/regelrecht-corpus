@@ -221,6 +221,30 @@ articles:
       - id: ref1
         bwb_id: BWBR0033043
         artikel: 6a
+    machine_readable:
+      open_terms:
+        - id: minimumpercentage_arbeidsovereenkomsten
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 8, eerste lid Postwet 2009
+      execution:
+        parameters:
+          - name: percentage_arbeidsovereenkomsten
+            type: number
+            required: true
+            description: Percentage van postbezorgers dat een arbeidsovereenkomst heeft met het postvervoerbedrijf
+        output:
+          - name: voldoet_aan_minimumpercentage
+            type: boolean
+            description: Of het postvervoerbedrijf voldoet aan het bij AMvB bepaalde minimumpercentage arbeidsovereenkomsten
+        actions:
+          - output: voldoet_aan_minimumpercentage
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $percentage_arbeidsovereenkomsten
+              value: $minimumpercentage_arbeidsovereenkomsten
   - number: '10'
     text: |-
       1 Een ieder die een postcodesysteem beheert of exploiteert is verplicht binnen redelijke termijn en tegen
@@ -327,6 +351,23 @@ articles:
         bwb_id: BWBR0025572
         artikel: 13e
         hoofdstuk: 3a
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_datum
+            type: date
+            required: true
+            description: Datum waarop het besluit als bedoeld in artikel 13b, eerste lid, in werking is getreden of in stand is gehouden
+        output:
+          - name: uiterste_reviewdatum
+            type: date
+            description: Uiterste datum waarop ACM op basis van een marktanalyse besluit of de verplichting in stand blijft, gewijzigd of ingetrokken wordt (uiterlijk 3 jaar na besluit)
+        actions:
+          - output: uiterste_reviewdatum
+            value:
+              operation: DATE_ADD
+              date: $besluit_datum
+              years: 3
   - number: 13d
     text: |-
       1 Op de voorbereiding van een besluit als bedoeld in [artikel 13b, eerste li][ref1]d, of [13c][ref2] is de
@@ -385,6 +426,23 @@ articles:
         bwb_id: BWBR0025572
         artikel: 13c
         hoofdstuk: 3a
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_datum
+            type: date
+            required: true
+            description: Datum waarop het spoedmaatregel-besluit als bedoeld in artikel 13d, tweede lid, onderdeel b, is genomen
+        output:
+          - name: maximale_geldigheidsdatum
+            type: date
+            description: Uiterste datum waarop het spoedbesluit geldig is (maximaal 26 weken na besluitdatum)
+        actions:
+          - output: maximale_geldigheidsdatum
+            value:
+              operation: DATE_ADD
+              date: $besluit_datum
+              weeks: 26
   - number: 13e
     text: |-
       1 De Autoriteit Consument en Markt kan de verplichting opleggen om te voldoen aan redelijke verzoeken tot door haar
@@ -552,6 +610,36 @@ articles:
         bwb_id: BWBR0025572
         artikel: 13j
         hoofdstuk: 3a
+    machine_readable:
+      untranslatables:
+        - construct: "Conditionele deadlines bij negatief oordeel (lids 5-6)"
+          reason: "Deadlines in lid 6 zijn alleen van toepassing als ACM een negatieve mededeling heeft gedaan (lid 5); conditionele berekening vereist optionele datumparameters die het engine-model niet ondersteunt"
+          legal_text_excerpt: "Het postvervoerbedrijf deelt de Autoriteit Consument en Markt binnen vier weken na de datum van de mededeling, bedoeld in het vijfde lid, schriftelijk mede in hoeverre het nieuwe of gewijzigde tarief wordt aangepast"
+          accepted: false
+      execution:
+        parameters:
+          - name: ontvangst_verzoek_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van het verzoek tot goedkeuring als bedoeld in artikel 13k, tweede lid
+        output:
+          - name: beoordelingstermijn_einde
+            type: date
+            description: Uiterste datum voor ACM-beoordeling van het tarief (3 weken na ontvangst verzoek, lid 2)
+          - name: verlengde_beoordelingstermijn_einde
+            type: date
+            description: Uiterste datum voor ACM-beoordeling na eenmalige verlenging met 3 weken (6 weken na ontvangst, lid 3)
+        actions:
+          - output: beoordelingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_verzoek_datum
+              weeks: 3
+          - output: verlengde_beoordelingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_verzoek_datum
+              weeks: 6
   - number: '14'
     text: |-
       Dit hoofdstuk is van toepassing op de verlener van de universele postdienst voor zover deze postvervoerdiensten
@@ -642,6 +730,111 @@ articles:
       8 De voordracht voor een krachtens het zesde of zevende lid vast te stellen algemene maatregel van bestuur wordt
       niet eerder gedaan dan vier weken nadat het ontwerp aan beide kamers der Staten-Generaal is overgelegd.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel16
+    machine_readable:
+      execution:
+        parameters:
+          - name: soort_poststuk
+            type: string
+            required: true
+            description: "Type poststuk: 'brief', 'pakket', 'blindentekens', of 'boek' (boek alleen internationaal)"
+          - name: gewicht_gram
+            type: number
+            required: true
+            description: Gewicht van het poststuk in gram
+          - name: is_binnenlands
+            type: boolean
+            required: true
+            description: Of het postvervoer binnen Nederland plaatsvindt (lid 1, true) dan wel van of naar gebieden buiten Nederland (lid 2, false)
+        output:
+          - name: valt_onder_ups_gewichtslimiet
+            type: boolean
+            description: Of het poststuk valt binnen de gewichtslimieten van de universele postdienst (lids 1 en 2)
+        actions:
+          - output: maximum_gewicht_gram
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: true
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "brief"
+                  then: 2000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: true
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "pakket"
+                  then: 10000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: true
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "blindentekens"
+                  then: 7000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: false
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "brief"
+                  then: 2000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: false
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "boek"
+                  then: 5000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: false
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "pakket"
+                  then: 20000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnenlands
+                        value: false
+                      - operation: EQUALS
+                        subject: $soort_poststuk
+                        value: "blindentekens"
+                  then: 7000
+              default: 0
+          - output: valt_onder_ups_gewichtslimiet
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $maximum_gewicht_gram
+                  value: 0
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $gewicht_gram
+                  value: $maximum_gewicht_gram
   - number: '17'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur worden nadere regels gesteld over de universele postdienst. Deze
@@ -708,6 +901,44 @@ articles:
       2 Een verlener van de universele postdienst kan de uitvoering van de universele postdienst weigeren indien dit
       strijdig is met de eisen die met het oog op een doelmatig postvervoer in zijn algemene voorwaarden zijn gesteld.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel19
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_strijdig_met_wet
+            type: boolean
+            required: true
+            description: Of de uitvoering van de universele postdienst strijdig is met de wet (lid 1)
+          - name: gevaar_voor_personen_of_zaken
+            type: boolean
+            required: true
+            description: Of de uitvoering van de universele postdienst gevaar oplevert voor personen of zaken (lid 1)
+          - name: is_strijdig_met_algemene_voorwaarden
+            type: boolean
+            required: true
+            description: Of de uitvoering strijdig is met de eisen die met het oog op doelmatig postvervoer in de algemene voorwaarden zijn gesteld (lid 2)
+        output:
+          - name: moet_weigeren
+            type: boolean
+            description: Of de verlener van de universele postdienst verplicht is de uitvoering te weigeren (lid 1 — dwingend)
+          - name: mag_weigeren
+            type: boolean
+            description: Of de verlener van de universele postdienst bevoegd is de uitvoering te weigeren (lid 2 — facultatief)
+        actions:
+          - output: moet_weigeren
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_strijdig_met_wet
+                  value: true
+                - operation: EQUALS
+                  subject: $gevaar_voor_personen_of_zaken
+                  value: true
+          - output: mag_weigeren
+            value:
+              operation: EQUALS
+              subject: $is_strijdig_met_algemene_voorwaarden
+              value: true
   - number: '20'
     text: |-
       1 Bij ministeriële regeling worden regels omtrent plaats, afmetingen en andere hoedanigheden van de voor aflevering
@@ -874,6 +1105,32 @@ articles:
         artikel: '25'
         hoofdstuk: '4'
         paragraaf: '4.5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: soort_poststuk
+            type: string
+            required: true
+            description: "Type poststuk: gebruik 'blindentekens' voor poststukken die in hoofdzaak tekst bevatten in voor blinden bestemde tekens"
+          - name: gewicht_gram
+            type: number
+            required: true
+            description: Gewicht van het afzonderlijke poststuk in gram
+        output:
+          - name: kosten_voor_rekening_verlener_ups
+            type: boolean
+            description: Of de vervoerskosten van dit poststuk voor rekening van de verlener van de universele postdienst komen (in afwijking van artikelen 24 en 25)
+        actions:
+          - output: kosten_voor_rekening_verlener_ups
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $soort_poststuk
+                  value: "blindentekens"
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $gewicht_gram
+                  value: 7000
   - number: '27'
     text: |-
       1 De tarieven, bedoeld in [artikel 24][ref1], en de wijzigingen hiervan worden niet eerder vastgesteld dan
@@ -1015,6 +1272,23 @@ articles:
       ten onrechte de indruk kunnen wekken, dat de bescheiden of voorwerpen, waarop zij voorkomen, door een verlener van
       de universele postdienst behandeld of van een verlener van de universele postdienst afkomstig zijn.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel36
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_verlener_ups
+            type: boolean
+            required: true
+            description: Of het postvervoerbedrijf een verlener van de universele postdienst is als bedoeld in artikel 15, eerste lid
+        output:
+          - name: mag_postzegel_nederland_vervaardigen_of_verspreiden
+            type: boolean
+            description: Of het postvervoerbedrijf postzegels of postzegelafdrukken met de vermelding 'Nederland' mag vervaardigen, verspreiden of ter verspreiding in voorraad hebben (lid 1)
+        actions:
+          - output: mag_postzegel_nederland_vervaardigen_of_verspreiden
+            value:
+              operation: EQUALS
+              subject: $is_verlener_ups
+              value: true
   - number: '37'
     text: |-
       De Autoriteit Consument en Markt is belast met het toezicht op de naleving van het bepaalde bij of krachtens deze
@@ -1175,6 +1449,42 @@ articles:
         artikel: '42'
         hoofdstuk: '7'
         paragraaf: '7.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: mededeling_heeft_betrekking_op_bedrijf
+            type: boolean
+            required: true
+            description: Of de mededeling daadwerkelijk betrekking heeft op het postvervoerbedrijf (lid 1, onderdeel a)
+          - name: gegevens_volledig_en_juist
+            type: boolean
+            required: true
+            description: Of de op grond van artikelen 41 en 42, eerste lid, te overleggen gegevens volledig en juist zijn verstrekt (lid 1, onderdeel b)
+          - name: grond_voor_registratie_vervallen
+            type: boolean
+            required: true
+            description: Of de grond voor registratie is vervallen (lid 2)
+        output:
+          - name: registratie_geweigerd
+            type: boolean
+            description: Of de ACM niet overgaat tot registratie als bedoeld in artikel 42, derde lid (lid 1)
+          - name: registratie_beeindigd
+            type: boolean
+            description: Of de ACM de registratie beëindigt (lid 2)
+        actions:
+          - output: registratie_geweigerd
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $mededeling_heeft_betrekking_op_bedrijf
+                - operation: NOT
+                  value: $gegevens_volledig_en_juist
+          - output: registratie_beeindigd
+            value:
+              operation: EQUALS
+              subject: $grond_voor_registratie_vervallen
+              value: true
   - number: '44'
     text: |-
       1 In het belang van de goede uitvoering van deze wet wordt door de Autoriteit Consument en Markt een register van
@@ -1228,6 +1538,23 @@ articles:
         artikel: '41'
         hoofdstuk: '7'
         paragraaf: '7.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_verzoek_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van het schriftelijk verzoek van het postvervoerbedrijf om een verklaring als bedoeld in artikel 45, tweede lid
+        output:
+          - name: uiterste_afgifte_datum
+            type: date
+            description: Uiterste datum voor afgifte van de verklaring door ACM (binnen een week na ontvangst verzoek)
+        actions:
+          - output: uiterste_afgifte_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_verzoek_datum
+              weeks: 1
   - number: '46'
     text: |-
       De Autoriteit Consument en Markt is verwerkingsverantwoordelijke voor de gegevensverzameling, bedoeld in
@@ -1431,6 +1758,57 @@ articles:
       - id: ref22
         bwb_id: BWBR0005537
         artikel: 5:48
+    machine_readable:
+      untranslatables:
+        - construct: "Bepaling recidive: eerdere boete onherroepelijk geworden binnen 5 jaar"
+          reason: "Vereist raadpleging van historische besluiten om te bepalen of een eerdere boete voor een gelijksoortige overtreding binnen 5 jaar voor de dagtekening van het rapport onherroepelijk is geworden"
+          legal_text_excerpt: "indien binnen een tijdvak van vijf jaar voorafgaand aan de dagtekening van het van de overtreding opgemaakte rapport een aan die overtreder voor een eerdere overtreding van eenzelfde of een soortgelijk wettelijk voorschrift opgelegde bestuurlijke boete onherroepelijk is geworden"
+          accepted: false
+      execution:
+        parameters:
+          - name: omzet_eurocent
+            type: number
+            required: true
+            description: Jaaromzet van de onderneming in Nederland in eurocent (voor lid 2 de omzet in Nederland)
+          - name: is_recidive
+            type: boolean
+            required: true
+            description: Of binnen 5 jaar voor de dagtekening van het rapport een eerdere boete voor gelijksoortige overtreding onherroepelijk is geworden (lid 3)
+        output:
+          - name: maximale_boete_basis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete op basis van lid 1 of 2 (EUR 900.000 of 10% van de omzet, het hoogste bedrag)
+          - name: maximale_boete_definitief
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Definitieve maximale bestuurlijke boete, verhoogd met 100% bij recidive binnen 5 jaar (lid 3)
+        actions:
+          - output: maximale_boete_basis
+            value:
+              operation: MAX
+              values:
+                - 90000000
+                - operation: DIVIDE
+                  values:
+                    - $omzet_eurocent
+                    - 10
+          - output: maximale_boete_definitief
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_recidive
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $maximale_boete_basis
+                      - 2
+              default: $maximale_boete_basis
   - number: '55'
     text: |-
       1 Een beschikking waarbij een bestuurlijke boete als bedoeld in [artikel 49, tweede lid][ref1], wordt opgelegd of
@@ -1529,6 +1907,31 @@ articles:
       - id: ref2
         bwb_id: BWBR0005537
         artikel: 4:15
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_aanvraag_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag tot geschilbeslechting als bedoeld in artikel 58, eerste lid
+        output:
+          - name: beslistermijn_einde
+            type: date
+            description: Uiterste datum voor ACM-beslissing op de aanvraag tot geschilbeslechting (4 maanden na ontvangst, lid 1)
+          - name: verlengde_beslistermijn_einde
+            type: date
+            description: Uiterste datum na verlenging met maximaal 2 maanden in uitzonderlijke gevallen (6 maanden na ontvangst, lid 2)
+        actions:
+          - output: beslistermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_aanvraag_datum
+              months: 4
+          - output: verlengde_beslistermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_aanvraag_datum
+              months: 6
   - number: '61'
     text: |-
       Een postvervoerbedrijf volgt het door de Autoriteit Consument en Markt op grond van [artikel 60][ref1] genomen
