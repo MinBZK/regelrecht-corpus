@@ -710,6 +710,69 @@ articles:
       - id: ref6
         bwb_id: BWBR0020449
         artikel: '3.35'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vermogen_mw
+            type: number
+            required: true
+            description: Geïnstalleerd vermogen van de productie-installatie in MW
+          - name: energie_type
+            type: string
+            required: true
+            description: "Type energie: WIND_DUURZAAM, ANDERE_DUURZAAM, of NIET_DUURZAAM"
+          - name: is_uitbreiding
+            type: boolean
+            required: false
+            description: Betreft het een uitbreiding van een bestaande niet-duurzame installatie?
+          - name: vermogen_na_uitbreiding_mw
+            type: number
+            required: false
+            description: Totale capaciteit na uitbreiding in MW (alleen relevant bij uitbreiding)
+        output:
+          - name: wro_procedure_van_toepassing
+            type: boolean
+            description: Of de WRO artikel 3.35 procedure van toepassing is op de aanleg of uitbreiding
+        actions:
+          - output: wro_procedure_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $energie_type
+                      value: WIND_DUURZAAM
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vermogen_mw
+                      value: 100
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $energie_type
+                      value: ANDERE_DUURZAAM
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vermogen_mw
+                      value: 50
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $energie_type
+                      value: NIET_DUURZAAM
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vermogen_mw
+                      value: 500
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_uitbreiding
+                      value: true
+                    - operation: EQUALS
+                      subject: $energie_type
+                      value: NIET_DUURZAAM
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vermogen_na_uitbreiding_mw
+                      value: 500
   - number: 9c
     text: |-
       1 Onze Minister is de aangewezen minister, bedoeld in
@@ -847,6 +910,28 @@ articles:
       - id: ref4
         bwb_id: BWBR0024779
         artikel: '2.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vermogen_mw
+            type: number
+            required: true
+            description: Geïnstalleerd vermogen van het windpark voor duurzame elektriciteit via wind in MW
+        output:
+          - name: provincie_bevoegd_inpassingsplan
+            type: boolean
+            description: Of provinciale staten bevoegd zijn een inpassingsplan vast te stellen voor dit windpark
+        actions:
+          - output: provincie_bevoegd_inpassingsplan
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $vermogen_mw
+                  value: 5
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $vermogen_mw
+                  value: 100
   - number: 9f
     text: |-
       1 Gedeputeerde staten coördineren de voorbereiding en bekendmaking van de besluiten, aangewezen op grond van
@@ -937,6 +1022,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0001936
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vermogen_mw
+            type: number
+            required: true
+            description: Geïnstalleerd vermogen van het windpark in MW
+        output:
+          - name: is_openbaar_werk_algemeen_nut
+            type: boolean
+            description: Of het windpark voor de Belemmeringenwet Privaatrecht wordt aangemerkt als openbaar werk van algemeen nut
+        actions:
+          - output: is_openbaar_werk_algemeen_nut
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $vermogen_mw
+              value: 5
   - number: 9h
     text: |-
       1 Een producent die elektriciteit levert met een directe lijn aan verbruikers van elektriciteit meldt zo spoedig
@@ -5778,6 +5880,23 @@ articles:
       1 maart aan Onze Minister op welke wijze hij in de twee jaar voorafgaande aan het jaar, waarin de melding wordt
       verricht, uitvoering heeft gegeven aan zijn taak, bedoeld in het eerste lid.
     url: https://wetten.overheid.nl/BWBR0009755/2018-05-25#Artikel68
+    machine_readable:
+      execution:
+        parameters:
+          - name: gemiddeld_geleverd_gwh_per_jaar
+            type: number
+            required: true
+            description: Gemiddeld per jaar geleverde hoeveelheid elektriciteit in GWh
+        output:
+          - name: tweejaarlijkse_meldingsplicht
+            type: boolean
+            description: Of de producent of leverancier verplicht is eenmaal per twee jaar vóór 1 maart te melden aan de minister
+        actions:
+          - output: tweejaarlijkse_meldingsplicht
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $gemiddeld_geleverd_gwh_per_jaar
+              value: 10
   - number: '73'
     text: |-
       1 Onze Minister is belast met het uitgeven en innemen via een elektronisch systeem van:
@@ -6758,6 +6877,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0008691
         artikel: '26'
+    machine_readable:
+      execution:
+        parameters:
+          - name: nominaal_vermogen_mw
+            type: number
+            required: true
+            description: Nominaal elektrisch vermogen van de productie-installatie of de onderneming die haar beheert in MW
+        output:
+          - name: meldingsplicht_zeggenschap
+            type: boolean
+            description: Of wijzigingen in zeggenschap verplicht gemeld moeten worden aan de minister
+        actions:
+          - output: meldingsplicht_zeggenschap
+            value:
+              operation: GREATER_THAN
+              subject: $nominaal_vermogen_mw
+              value: 250
   - number: 86g
     text: |-
       1 Iedere producent en verbruiker van elektriciteit heeft daadwerkelijke keuzevrijheid van leverancier.
@@ -6861,6 +6997,69 @@ articles:
         artikel: 95n
         hoofdstuk: '8'
         paragraaf: 1c
+    machine_readable:
+      untranslatables:
+        - construct: "anders dan bedrijfsmatig leveren overeenkomstig bij ministeriële regeling te stellen regels (lid 2d)"
+          reason: "Delegation to ministerial regulation — uitzondering kan niet worden bepaald zonder uitvoeringsregeling"
+          legal_text_excerpt: "indien de elektriciteit anders dan bedrijfsmatig wordt geleverd overeenkomstig bij ministeriële regeling te stellen regels"
+          accepted: false
+      execution:
+        parameters:
+          - name: doorlaatwaarde_ampere
+            type: number
+            required: true
+            description: Totale maximale doorlaatwaarde van de aansluiting van de afnemer in Ampere (3*80A = 240A)
+          - name: eigen_installatie_eigen_verbruik
+            type: boolean
+            required: false
+            description: Elektriciteit opgewekt door eigen installatie voor eigen verbruik (uitzondering lid 2a)
+          - name: buitenlands_leverancier_grensgebied
+            type: boolean
+            required: false
+            description: Buitenlandse leverancier aan maximaal 500 afnemers in grensgebied (uitzondering lid 2b)
+          - name: zelfde_rechtspersoon
+            type: boolean
+            required: false
+            description: Afnemer behoort aan dezelfde rechtspersoon als de producent (uitzondering lid 2c)
+          - name: modelcontract_95n
+            type: boolean
+            required: false
+            description: Levering in het kader van een overeenkomst als bedoeld in artikel 95n (uitzondering lid 2e)
+        output:
+          - name: vergunning_vereist
+            type: boolean
+            description: Of een vergunning vereist is voor de levering van elektriciteit aan deze afnemer
+        actions:
+          - output: kleinverbruiker_aansluiting
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $doorlaatwaarde_ampere
+              value: 240
+          - output: uitzondering_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $eigen_installatie_eigen_verbruik
+                  value: true
+                - operation: EQUALS
+                  subject: $buitenlands_leverancier_grensgebied
+                  value: true
+                - operation: EQUALS
+                  subject: $zelfde_rechtspersoon
+                  value: true
+                - operation: EQUALS
+                  subject: $modelcontract_95n
+                  value: true
+          - output: vergunning_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $kleinverbruiker_aansluiting
+                  value: true
+                - operation: NOT
+                  value: $uitzondering_van_toepassing
   - number: 95b
     text: |-
       1 Een houder van een vergunning heeft de plicht op een betrouwbare wijze en tegen redelijke tarieven en voorwaarden
