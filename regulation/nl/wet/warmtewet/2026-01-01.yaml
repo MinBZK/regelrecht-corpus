@@ -549,6 +549,32 @@ articles:
       3 Een leverancier reageert schriftelijk op een opzegging als bedoeld in het eerste lid, en motiveert daarin in
       voorkomend geval waarom de beëindiging niet kan plaatsvinden.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel3c
+    machine_readable:
+      execution:
+        parameters:
+          - name: technisch_onmogelijk_levering_te_beeindigen
+            type: boolean
+            required: true
+            description: Het is technisch niet mogelijk de levering van warmte aan de verbruiker geheel te beëindigen (lid 2, onderdeel a)
+          - name: beeindiging_leidt_tot_aanzienlijk_nadeel_andere_verbruiker
+            type: boolean
+            required: true
+            description: Beëindiging van de levering leidt tot aanzienlijk blijvend nadeel voor een andere verbruiker (lid 2, onderdeel b)
+        output:
+          - name: gevolg_geven_aan_opzegging_niet_verplicht
+            type: boolean
+            description: Geeft aan of de leverancier geen gevolg hoeft te geven aan de opzegging (lid 2)
+        actions:
+          - output: gevolg_geven_aan_opzegging_niet_verplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $technisch_onmogelijk_levering_te_beeindigen
+                  value: true
+                - operation: EQUALS
+                  subject: $beeindiging_leidt_tot_aanzienlijk_nadeel_andere_verbruiker
+                  value: true
   - number: 3d
     text: |-
       1 Een gebouweigenaar die eigenaar is van een inpandig leidingstelsel dat wordt gebruikt voor het leveren van warmte
@@ -1198,6 +1224,53 @@ articles:
         artikel: 12b
         hoofdstuk: '2'
         paragraaf: '2.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: houder_verzoekt_intrekking
+            type: boolean
+            required: true
+            description: De houder van de vergunning verzoekt zelf om intrekking (lid 2, onderdeel a)
+          - name: voorschriften_niet_nageleefd
+            type: boolean
+            required: true
+            description: De vergunninghouder komt de aan de vergunning verbonden voorschriften of beperkingen niet na (lid 2, onderdeel b)
+          - name: voorzieningen_artikel_12b_niet_getroffen
+            type: boolean
+            required: true
+            description: De vergunninghouder treft de opgedragen voorzieningen als bedoeld in artikel 12b, tweede lid, niet (lid 2, onderdeel c)
+          - name: onjuiste_gegevens_bij_aanvraag
+            type: boolean
+            required: true
+            description: De vergunninghouder heeft bij de aanvraag onjuiste of onvolledige gegevens verstrekt die tot een andere beschikking hadden geleid (lid 2, onderdeel d)
+          - name: niet_langer_in_staat_vergunning_na_te_komen
+            type: boolean
+            required: true
+            description: De vergunninghouder is naar het oordeel van Onze Minister om andere redenen niet langer in staat de vergunde activiteit of voorschriften na te komen (lid 2, onderdeel e)
+        output:
+          - name: grond_voor_intrekking_aanwezig
+            type: boolean
+            description: Geeft aan of er een wettelijke grond aanwezig is voor intrekking van de vergunning (lid 2)
+        actions:
+          - output: grond_voor_intrekking_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $houder_verzoekt_intrekking
+                  value: true
+                - operation: EQUALS
+                  subject: $voorschriften_niet_nageleefd
+                  value: true
+                - operation: EQUALS
+                  subject: $voorzieningen_artikel_12b_niet_getroffen
+                  value: true
+                - operation: EQUALS
+                  subject: $onjuiste_gegevens_bij_aanvraag
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_langer_in_staat_vergunning_na_te_komen
+                  value: true
   - number: '12'
     text: |-
       1 Een vergunninghouder biedt verbruikers een ruime keuze uit betalingswijzen.
