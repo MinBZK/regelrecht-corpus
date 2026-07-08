@@ -614,7 +614,7 @@ articles:
       d. poststukken die in hoofdzaak tekst bevatten in voor blinden bestemde tekens en die elk afzonderlijk ten hoogste
       zeven kilogram wegen.
 
-      3 De universele postdienst omvat binnen Nederland ten minste de volgende postvervoerdiensten:
+      3 De universele postdienst omvat binnen Nederland ten minste de volgende postvervoer actividades:
 
       a. vervoer van aangetekende poststukken;
 
@@ -642,6 +642,141 @@ articles:
       8 De voordracht voor een krachtens het zesde of zevende lid vast te stellen algemene maatregel van bestuur wordt
       niet eerder gedaan dan vier weken nadat het ontwerp aan beide kamers der Staten-Generaal is overgelegd.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel16
+    machine_readable:
+      execution:
+        parameters:
+          - name: poststuk_type
+            type: string
+            required: true
+            description: Type poststuk (brief, pakket, boek, blindentekst)
+          - name: gewicht
+            type: number
+            required: true
+            description: Gewicht van het poststuk in kilogram
+            type_spec:
+              unit: kg
+          - name: is_binnen_nederland
+            type: boolean
+            required: true
+            description: Indiceert of het postvervoer binnen Nederland plaatsvindt
+          - name: is_rouw_medisch
+            type: boolean
+            required: true
+            description: Indiceert of het poststuk een rouwbrief of medische brief is
+        output:
+          - name: is_valide_voor_universele_dienst
+            type: boolean
+            description: Geeft aan of het poststuk voldoet aan de gewichtslimieten voor de universele postdienst
+          - name: minimale_ophaaldagen
+            type: number
+            description: Minimale aantal dagen per week voor ophalen van poststukken
+          - name: minimale_besteldagen
+            type: number
+            description: Minimale aantal dagen per week voor uitvoeren van bestellingen
+        actions:
+          - output: is_valide_voor_universele_dienst
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnen_nederland
+                        value: true
+                      - operation: OR
+                        conditions:
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: brief
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 2
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: pakket
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 10
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: blindentekst
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 7
+                  then: true
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_binnen_nederland
+                        value: false
+                      - operation: OR
+                        conditions:
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: brief
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 2
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: boek
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 5
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: pakket
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 20
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $poststuk_type
+                                value: blindentekst
+                              - operation: LESS_THAN_OR_EQUAL
+                                subject: $gewicht
+                                value: 7
+                  then: true
+              default: false
+          - output: minimale_ophaaldagen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_rouw_medisch
+                    value: true
+                  then: 6
+              default: 5
+          - output: minimale_besteldagen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_rouw_medisch
+                    value: true
+                  then: 6
+              default: 5
+        untranslatables:
+          - term: goede kwaliteit
+            reason: subjectieve beoordeling van kwaliteit, niet computabel
+            source: lid 6
   - number: '17'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur worden nadere regels gesteld over de universele postdienst. Deze
