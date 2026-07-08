@@ -917,6 +917,79 @@ articles:
         artikel: '2'
         hoofdstuk: '1'
         paragraaf: '1.2'
+    machine_readable:
+      untranslatables:
+        - construct: "geïntegreerd bedrijfs- of productieproces om specifieke technische of veiligheidsredenen (onderdeel a)"
+          reason: "Qualitative criterion requiring expert judgment, not mechanically computable"
+          legal_text_excerpt: "het bedrijfs- of productieproces van de gebruikers van een gastransportnet om specifieke technische of veiligheidsredenen geïntegreerd is"
+          accepted: false
+        - construct: "geografisch afgebakende industriële, commerciële locatie of locatie met gedeelde diensten (onderdeel c)"
+          reason: "Spatial qualification requiring case-by-case geographic assessment"
+          legal_text_excerpt: "het gastransportnet binnen een geografisch afgebakende industriële locatie, commerciële locatie of locatie met gedeelde diensten ligt"
+          accepted: false
+        - construct: "incidenteel gebruik door klein aantal huishoudelijke eindafnemers (onderdeel e)"
+          reason: "Qualitative threshold 'incidental use by a small number' not mechanically determinable"
+          legal_text_excerpt: "tenzij er sprake is van incidenteel gebruik door een klein aantal huishoudelijke eindafnemers"
+          accepted: false
+        - construct: "voldoende gewaarborgde veiligheid en betrouwbaarheid (onderdeel f)"
+          reason: "Qualitative safety assessment not mechanically computable"
+          legal_text_excerpt: "de veiligheid en betrouwbaarheid van het gastransportnet voldoende is gewaarborgd"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: datum_ontvangst_aanvraag
+            type: date
+            required: true
+            description: Datum waarop ACM de aanvraag voor ontheffing heeft ontvangen
+          - name: aantal_afnemers
+            type: number
+            required: true
+            description: Aantal afnemers aangesloten op het gastransportnet (toets onderdeel d)
+          - name: is_geen_netbeheerder_en_geen_groepsmaatschappij
+            type: boolean
+            required: true
+            description: Aanvrager is geen netbeheerder en niet verbonden in een groepsmaatschappij met een netbeheerder (onderdeel b)
+          - name: voorziet_geen_huishoudelijke_eindafnemers
+            type: boolean
+            required: true
+            description: Net voorziet geen huishoudelijke eindafnemers (onderdeel e, mechanisch toetsbaar deel)
+        output:
+          - name: voldoet_aan_toetsbare_criteria
+            type: boolean
+            description: Aanvrager voldoet aan de mechanisch toetsbare criteria (onderdelen b, d en e)
+          - name: beslistermijn_einde
+            type: date
+            description: Uiterste datum voor ACM-beslissing (zes maanden na ontvangst aanvraag, lid 2)
+          - name: beslistermijn_verlengd_einde
+            type: date
+            description: Uiterste datum bij eenmalige verlenging met ten hoogste zes maanden (lid 2)
+        actions:
+          - output: voldoet_aan_toetsbare_criteria
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_geen_netbeheerder_en_geen_groepsmaatschappij
+                  value: true
+                - operation: LESS_THAN
+                  subject: $aantal_afnemers
+                  value: 500
+                - operation: EQUALS
+                  subject: $voorziet_geen_huishoudelijke_eindafnemers
+                  value: true
+          - output: beslistermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_aanvraag
+              months: 6
+          - output: beslistermijn_verlengd_einde
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_aanvraag
+              months: 12
   - number: 2b
     text: |-
       1 [Artikel 2, eerste, tweede, derde en zevende lid][ref1], is van overeenkomstige toepassing voor de aanwijzing
@@ -4990,6 +5063,67 @@ articles:
         artikel: 52c
         hoofdstuk: '5'
         paragraaf: 5.3a
+    machine_readable:
+      untranslatables:
+        - construct: "anders dan bedrijfsmatig leveren overeenkomstig ministeriële regeling (lid 2, onderdeel b)"
+          reason: "Onderscheid bedrijfsmatig/niet-bedrijfsmatig is kwalitatief en nadere regels zijn gedelegeerd aan ministeriële regeling"
+          legal_text_excerpt: "indien het gas anders dan bedrijfsmatig wordt geleverd overeenkomstig bij ministeriële regeling te stellen regels"
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: capaciteit_aansluiting_m3n_per_uur
+            type: number
+            required: true
+            description: Totale maximale doorlaatwaarde van de aansluiting in m3(n) per uur (lid 1)
+          - name: leverancier_buiten_nederland_gevestigd
+            type: boolean
+            required: false
+            description: Is de leverancier buiten Nederland gevestigd (uitzondering lid 2, onderdeel a)
+          - name: aantal_afnemers_in_grensgebied
+            type: number
+            required: false
+            description: Aantal afnemers in grensgebieden bij buitenlandse leverancier (uitzondering lid 2, onderdeel a)
+          - name: levering_ingevolge_artikel_52c
+            type: boolean
+            required: false
+            description: Gas wordt geleverd in kader van een overeenkomst als bedoeld in artikel 52c (uitzondering lid 2, onderdeel c)
+        output:
+          - name: uitzondering_a_van_toepassing
+            type: boolean
+            description: Uitzondering voor buitenlandse leverancier aan ten hoogste 500 grensafnemers (lid 2, onderdeel a)
+          - name: vergunning_vereist
+            type: boolean
+            description: Is een leveringsvergunning vereist op grond van artikel 43, eerste lid
+        actions:
+          - output: uitzondering_a_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $leverancier_buiten_nederland_gevestigd
+                  value: true
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $aantal_afnemers_in_grensgebied
+                  value: 500
+          - output: vergunning_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $capaciteit_aansluiting_m3n_per_uur
+                  value: 40
+                - operation: NOT
+                  value:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $uitzondering_a_van_toepassing
+                        value: true
+                      - operation: EQUALS
+                        subject: $levering_ingevolge_artikel_52c
+                        value: true
   - number: '44'
     text: |-
       1 Een houder van een vergunning heeft de plicht op een betrouwbare wijze en tegen redelijke tarieven en voorwaarden
@@ -5184,6 +5318,37 @@ articles:
         artikel: '43'
         hoofdstuk: '5'
         paragraaf: '5.3'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: INFORMATIEF
+        parameters:
+          - name: datum_opeisbaar
+            type: date
+            required: true
+            description: Datum waarop de vordering tot betaling opeisbaar is geworden (lid 4)
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop getoetst wordt of het recht op betaling is vervallen
+        output:
+          - name: vervaldatum_vorderingsrecht
+            type: date
+            description: Datum waarop het recht om betaling te vorderen vervalt (twee jaar na opeisbaardatum, lid 4)
+          - name: vorderingsrecht_vervallen
+            type: boolean
+            description: Is het recht op betaling vervallen (peildatum is op of na vervaldatum, lid 4)
+        actions:
+          - output: vervaldatum_vorderingsrecht
+            value:
+              operation: DATE_ADD
+              date: $datum_opeisbaar
+              years: 2
+          - output: vorderingsrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_vorderingsrecht
   - number: '45'
     text: |-
       1 Onze Minister verleent op aanvraag een vergunning indien de aanvrager genoegzaam aantoont dat hij:
@@ -5414,6 +5579,29 @@ articles:
         artikel: '43'
         hoofdstuk: '5'
         paragraaf: '5.3'
+    machine_readable:
+      definitions:
+        OPZEGTERMIJN_DAGEN:
+          value: 30
+          description: Termijn voor opzegging van leveringsovereenkomst in dagen (lid 7)
+      execution:
+        produces:
+          legal_character: INFORMATIEF
+        parameters:
+          - name: opzegdatum
+            type: date
+            required: true
+            description: Datum waarop de afnemer de overeenkomst opzegt (lid 7)
+        output:
+          - name: vroegste_einddatum_contract
+            type: date
+            description: Vroegste datum per wanneer de overeenkomst eindigt na opzegging (opzegdatum plus dertig dagen, lid 7)
+        actions:
+          - output: vroegste_einddatum_contract
+            value:
+              operation: DATE_ADD
+              date: $opzegdatum
+              days: 30
   - number: 52c
     text: |-
       1 Van de [artikelen 17b, vierde lid][ref1], [44][ref2] en
@@ -6102,6 +6290,78 @@ articles:
       - id: ref84
         bwb_id: BWBR0005537
         artikel: 5:48
+    machine_readable:
+      competent_authority:
+        name: Autoriteit Consument en Markt
+        type: INSTANCE
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: AANSLAG
+        parameters:
+          - name: omzet_eurocent
+            type: number
+            required: true
+            description: Jaaromzet van de overtreder in eurocent (lid 1)
+          - name: categorie_overtreding
+            type: string
+            required: true
+            description: "Categorie van de overtreding: 'a' (lid 1, onderdeel a) of 'b' (lid 1, onderdeel b)"
+          - name: recidive_binnen_vijf_jaar
+            type: boolean
+            required: true
+            description: Is er sprake van recidive (eerdere boete voor zelfde of soortgelijk voorschrift onherroepelijk binnen vijf jaar, lid 2)
+        output:
+          - name: maximale_basisboete_eurocent
+            type: number
+            description: Maximale boete per overtreding vóór recidiveverhoging (lid 1)
+          - name: maximale_boete_eurocent
+            type: number
+            description: Maximale bestuurlijke boete per overtreding inclusief eventuele verhoging met 100 procent wegens recidive (lid 1 en 2)
+        actions:
+          - output: maximale_basisboete_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_overtreding
+                    value: "a"
+                  then:
+                    operation: MAX
+                    values:
+                      - 90000000
+                      - operation: MULTIPLY
+                        values:
+                          - 0.01
+                          - $omzet_eurocent
+                - when:
+                    operation: EQUALS
+                    subject: $categorie_overtreding
+                    value: "b"
+                  then:
+                    operation: MAX
+                    values:
+                      - 90000000
+                      - operation: MULTIPLY
+                        values:
+                          - 0.10
+                          - $omzet_eurocent
+              default: 0
+          - output: maximale_boete_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $recidive_binnen_vijf_jaar
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - 2
+                      - $maximale_basisboete_eurocent
+              default: $maximale_basisboete_eurocent
   - number: '61'
     text: |-
       Een representatieve organisatie van netgebruikers op de gasmarkt wordt geacht belanghebbende te zijn bij een
@@ -7246,6 +7506,38 @@ articles:
       - id: ref2
         bwb_id: BWBR0003045
         artikel: 24b
+    machine_readable:
+      untranslatables:
+        - construct: "overwegende zeggenschap over de netbeheerder blijft bij de staat (lid 1, onderdeel a)"
+          reason: "Zeggenschap is een kwalitatieve juridische beoordeling die meer omvat dan aandelenbezit alleen"
+          legal_text_excerpt: "de overwegende zeggenschap over de netbeheerder direct of indirect bij de staat blijft"
+          accepted: false
+        - construct: "samenwerking met buitenlandse instelling wordt bevorderd (lid 1, onderdeel b)"
+          reason: "Kwalitatieve beoordeling niet mechanisch toetsbaar"
+          legal_text_excerpt: "de samenwerking tussen de netbeheerder en een buitenlandse instelling wordt bevorderd"
+          accepted: false
+        - construct: "aandelenruil ten goede komt aan betrouwbaarheid, betaalbaarheid of duurzaamheid (lid 1, onderdeel c)"
+          reason: "Kwalitatieve beoordeling van voordelen voor het gastransportnet niet mechanisch toetsbaar"
+          legal_text_excerpt: "er sprake is van een aandelenruil die de betrouwbaarheid, betaalbaarheid of duurzaamheid van het gastransportnet ten goede komt"
+          accepted: false
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: staatsaandelen_percentage
+            type: number
+            required: true
+            description: Percentage van de aandelen van de netbeheerder dat direct of indirect bij de staat berust (lid 1, onderdeel a)
+        output:
+          - name: voldoet_aan_75_procent_staatsaandelen_eis
+            type: boolean
+            description: Voldoet het staatsaandelenbezit aan de minimumeis van 75 procent (lid 1, onderdeel a)
+        actions:
+          - output: voldoet_aan_75_procent_staatsaandelen_eis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $staatsaandelen_percentage
+              value: 75
   - number: '88'
     text: |-
       1 De artikelen van deze wet treden in werking op een bij koninklijk besluit te bepalen tijdstip dat voor de
