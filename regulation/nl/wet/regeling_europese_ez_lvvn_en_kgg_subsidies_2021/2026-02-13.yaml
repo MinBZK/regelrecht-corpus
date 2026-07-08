@@ -149,6 +149,21 @@ articles:
   - number: 1.3a.1.a
     text: door het aantal aan het project bestede uren te vermenigvuldigen met een vast uurtarief van € 60;
     url: https://wetten.overheid.nl/BWBR0045685/2026-02-13#Artikel1.3a
+    machine_readable:
+      description: Berekent loonkosten op basis van een vast uurtarief van €60 per uur.
+      formula:
+        result: hours * hourly_rate
+        hourly_rate:
+          value: 6000
+          type: amount
+          type_spec: { unit: eurocent }
+        hours:
+          type: number
+      output:
+        type: amount
+        type_spec: { unit: eurocent }
+      parameters:
+        - hours
   - number: 1.3a.1.b
     text: |-
       als een vast percentage van een maandtarief van € 8.600 per werknemer bij een voltijd dienstverband van 1.720 uur
