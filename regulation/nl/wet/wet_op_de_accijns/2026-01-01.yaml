@@ -845,6 +845,72 @@ articles:
 
       6 Bij ministeriële regeling worden regels gesteld met betrekking tot het bepalen van het alcoholgehalte en de
       toepassing van het tweede en derde lid.
+    machine_readable:
+      untranslatables:
+        - construct: "rekenkundig afronden op twee decimalen van een gedeelte van een hectoliter"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "waarbij een gedeelte van een hectoliter rekenkundig wordt afgerond op twee decimalen"
+          accepted: false
+        - construct: "naar beneden afronden op één decimaal van een volumeprocent alcohol"
+          reason: "Floor/rounding is not available as an engine operation"
+          suggestion: "Add FLOOR operation to engine"
+          legal_text_excerpt: "van een volumeprocent alcohol naar beneden wordt afgerond op één decimaal"
+          accepted: false
+      execution:
+        parameters:
+          - name: hoeveelheid_hl
+            type: number
+            required: true
+            description: Hoeveelheid bier in hectoliter bij 20°C
+          - name: alcoholgehalte
+            type: number
+            required: true
+            description: Alcoholgehalte in volumeprocenten bij 20°C (naar beneden afgerond op 1 decimaal)
+          - name: is_kleine_brouwerij
+            type: boolean
+            required: true
+            description: >
+              Bier geproduceerd in een accijnsgoederenplaats met ≤200.000 hl productie vorig jaar, die
+              juridisch/economisch onafhankelijk is, fysiek onafhankelijke installaties gebruikt en niet
+              onder licentie produceert (artikel 7, leden 2-4)
+        output:
+          - name: accijns_bier
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor bier
+        actions:
+          - output: tarief_per_hl_per_pct
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_kleine_brouwerij
+                    value: true
+                  then: 751
+              default: 812
+          - output: accijns_per_hl_basis
+            value:
+              operation: MULTIPLY
+              values:
+                - $alcoholgehalte
+                - $tarief_per_hl_per_pct
+          - output: minimum_per_hl
+            value: 2613
+          - output: accijns_per_hl
+            value:
+              operation: MAX
+              values:
+                - $accijns_per_hl_basis
+                - $minimum_per_hl
+          - output: accijns_bier
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_hl
+                - $accijns_per_hl
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel7
   - number: '8'
     text: Wijn wordt onderscheiden in niet-mousserende wijn en mousserende wijn.
@@ -920,6 +986,46 @@ articles:
       a. niet meer dan 8,5% vol € 47,95;
 
       b. meer dan 8,5% vol € 95,69.
+    machine_readable:
+      untranslatables:
+        - construct: "rekenkundig afronden op twee decimalen van een gedeelte van een hectoliter"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "waarbij een gedeelte van een hectoliter rekenkundig wordt afgerond op twee decimalen"
+          accepted: false
+      execution:
+        parameters:
+          - name: hoeveelheid_hl
+            type: number
+            required: true
+            description: Hoeveelheid wijn in hectoliter
+          - name: alcoholgehalte
+            type: number
+            required: true
+            description: Alcoholgehalte in volumeprocenten bij 20°C
+        output:
+          - name: accijns_wijn
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor wijn (niet-mousserend en mousserend)
+        actions:
+          - output: tarief_per_hl
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $alcoholgehalte
+                    value: 8.5
+                  then: 4795
+              default: 9569
+          - output: accijns_wijn
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_hl
+                - $tarief_per_hl
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel10
   - number: 11a
     text: Tussenproducten worden onderscheiden in niet-mousserende tussenproducten en mousserende tussenproducten.
@@ -954,6 +1060,46 @@ articles:
       a. niet meer dan 15% vol € 114,85;
 
       b. meer dan 15% vol € 161,80.
+    machine_readable:
+      untranslatables:
+        - construct: "rekenkundig afronden op twee decimalen van een gedeelte van een hectoliter"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "waarbij een gedeelte van een hectoliter rekenkundig wordt afgerond op twee decimalen"
+          accepted: false
+      execution:
+        parameters:
+          - name: hoeveelheid_hl
+            type: number
+            required: true
+            description: Hoeveelheid tussenproducten in hectoliter
+          - name: alcoholgehalte
+            type: number
+            required: true
+            description: Alcoholgehalte in volumeprocenten bij 20°C
+        output:
+          - name: accijns_tussenproducten
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor tussenproducten (niet-mousserend en mousserend)
+        actions:
+          - output: tarief_per_hl
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $alcoholgehalte
+                    value: 15
+                  then: 11485
+              default: 16180
+          - output: accijns_tussenproducten
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_hl
+                - $tarief_per_hl
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel11d
   - number: '12'
     text: |-
@@ -972,6 +1118,42 @@ articles:
       De accijns bedraagt voor overige alcoholhoudende producten per hectoliter bij een temperatuur van 20°C per
       volumeprocent alcohol € 18,27, waarbij een gedeelte van een hectoliter rekenkundig wordt afgerond op drie decimalen
       en van een volumeprocent alcohol naar beneden wordt afgerond op één decimaal.
+    machine_readable:
+      untranslatables:
+        - construct: "rekenkundig afronden op drie decimalen van een gedeelte van een hectoliter"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND operation to engine"
+          legal_text_excerpt: "waarbij een gedeelte van een hectoliter rekenkundig wordt afgerond op drie decimalen"
+          accepted: false
+        - construct: "naar beneden afronden op één decimaal van een volumeprocent alcohol"
+          reason: "Floor/rounding is not available as an engine operation"
+          suggestion: "Add FLOOR operation to engine"
+          legal_text_excerpt: "van een volumeprocent alcohol naar beneden wordt afgerond op één decimaal"
+          accepted: false
+      execution:
+        parameters:
+          - name: hoeveelheid_hl
+            type: number
+            required: true
+            description: Hoeveelheid overige alcoholhoudende producten in hectoliter bij 20°C
+          - name: alcoholgehalte
+            type: number
+            required: true
+            description: Alcoholgehalte in volumeprocenten bij 20°C (naar beneden afgerond op 1 decimaal)
+        output:
+          - name: accijns_overig_alcohol
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor overige alcoholhoudende producten
+        actions:
+          - output: accijns_overig_alcohol
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_hl
+                - $alcoholgehalte
+                - 1827
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel13
   - number: '14'
     text: |-
@@ -1071,6 +1253,74 @@ articles:
       2 Voor de toepassing van het tarief als bedoeld in het eerste lid, onderdelen a en b, worden bij ministeriële
       regeling regels gesteld met betrekking tot de herleiding van de actuele hoeveelheden minerale oliën naar
       hoeveelheden bij een temperatuur van 15°C.
+    machine_readable:
+      execution:
+        parameters:
+          - name: soort_minerale_olie
+            type: string
+            required: true
+            description: >
+              Soort minerale olie: GELODE_LICHTE_OLIE, ONGELODE_LICHTE_OLIE, HALFZWARE_OLIE,
+              GASOLIE, ZWARE_STOOKOLIE, VLOEIBAAR_GEMAAKT_PETROLEUMGAS, of METHAAN
+          - name: hoeveelheid
+            type: number
+            required: true
+            description: >
+              Hoeveelheid minerale olie in de toepasselijke eenheid: per 1000 L bij 15°C
+              voor lichte olie, halfzware olie en gasolie; per 1000 kg voor zware stookolie
+              en vloeibaar gemaakt petroleumgas; per 1000 kg voor methaan
+        output:
+          - name: accijns_minerale_olie
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor minerale oliën
+        actions:
+          - output: tarief_per_eenheid
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "GELODE_LICHTE_OLIE"
+                  then: 111594
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "ONGELODE_LICHTE_OLIE"
+                  then: 84469
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "HALFZWARE_OLIE"
+                  then: 65433
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "GASOLIE"
+                  then: 55229
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "ZWARE_STOOKOLIE"
+                  then: 68159
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "VLOEIBAAR_GEMAAKT_PETROLEUMGAS"
+                  then: 36902
+                - when:
+                    operation: EQUALS
+                    subject: $soort_minerale_olie
+                    value: "METHAAN"
+                  then: 0
+          - output: accijns_minerale_olie
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid
+                - $tarief_per_eenheid
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel27
   - number: 27a
     text: |-
@@ -1221,6 +1471,97 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005251#Artikel31
+    machine_readable:
+      execution:
+        parameters:
+          - name: soort_tabaksproduct
+            type: string
+            required: true
+            description: "Soort tabaksproduct: SIGAAR, SIGARET, of ROOKTABAK"
+          - name: kleinhandelsprijs_totaal
+            type: number
+            required: false
+            description: >
+              Totale kleinhandelsprijs van de partij in eurocent, inclusief alle belastingen en
+              verpakkingskosten (kleinhandelsprijs als bedoeld in lid 2); voor sigaren en sigaretten
+          - name: hoeveelheid_1000_stuks
+            type: number
+            required: false
+            description: >
+              Hoeveelheid sigaretten in eenheden van 1000 stuks (voor sigaretten;
+              tabaksrolletjes worden aangemerkt als meerdere sigaretten conform lid 4)
+          - name: hoeveelheid_kg
+            type: number
+            required: false
+            description: Hoeveelheid rooktabak in kilogram
+        output:
+          - name: accijns_tabaksproduct
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde accijns voor het tabaksproduct
+        actions:
+          - output: accijns_sigaren
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.11
+                - $kleinhandelsprijs_totaal
+          - output: accijns_sigaretten_ad_valorem
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.05
+                - $kleinhandelsprijs_totaal
+          - output: accijns_sigaretten_specifiek
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_1000_stuks
+                - 36212
+          - output: accijns_sigaretten_basis
+            value:
+              operation: ADD
+              values:
+                - $accijns_sigaretten_ad_valorem
+                - $accijns_sigaretten_specifiek
+          - output: accijns_sigaretten_minimum
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_1000_stuks
+                - 39042
+          - output: accijns_sigaretten
+            value:
+              operation: MAX
+              values:
+                - $accijns_sigaretten_basis
+                - $accijns_sigaretten_minimum
+          - output: accijns_rooktabak
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_kg
+                - 34698
+          - output: accijns_tabaksproduct
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $soort_tabaksproduct
+                    value: "SIGAAR"
+                  then: $accijns_sigaren
+                - when:
+                    operation: EQUALS
+                    subject: $soort_tabaksproduct
+                    value: "SIGARET"
+                  then: $accijns_sigaretten
+                - when:
+                    operation: EQUALS
+                    subject: $soort_tabaksproduct
+                    value: "ROOKTABAK"
+                  then: $accijns_rooktabak
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel35
     references:
       - id: ref1
