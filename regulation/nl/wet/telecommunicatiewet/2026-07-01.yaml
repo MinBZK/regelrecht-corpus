@@ -2387,6 +2387,95 @@ articles:
         bwb_id: BWBR0009950
         artikel: '4.4'
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: nummerplan_wijziging_noodzaakt
+            type: boolean
+            required: true
+            description: >-
+              Of een wijziging van het desbetreffende nummerplan noodzaakt tot
+              wijziging of intrekking (lid 1 onder a)
+          - name: doelmatig_gebruik_vordert_wijziging
+            type: boolean
+            required: true
+            description: >-
+              Of het doelmatig gebruik van nummers in het algemeen maatschappelijk
+              en economisch belang wijziging of intrekking vordert (lid 1 onder b)
+          - name: feitelijke_onjuistheid_weg_te_nemen
+            type: boolean
+            required: true
+            description: >-
+              Of wijziging noodzakelijk is om feitelijke onjuistheden van eenvoudige
+              aard weg te nemen (lid 2)
+          - name: aanwijzing_veiligheid_staat
+            type: boolean
+            required: true
+            description: >-
+              Of de Minister een aanwijzing heeft gegeven in het belang van de
+              veiligheid van de staat (lid 3)
+          - name: houder_of_gebruiker_voldoet_niet_aan_wet
+            type: boolean
+            required: true
+            description: >-
+              Of de nummerhouder of nummergebruiker de bij of krachtens de wet
+              gestelde regels of voorschriften niet nakomt (lid 4 onder a)
+          - name: aanvraag_was_frauduleus
+            type: boolean
+            required: true
+            description: >-
+              Of na toekenning is gebleken dat de aanvraag is gedaan met de kennelijke
+              bedoeling de nummers te verhandelen (lid 4 onder b)
+          - name: houder_voldoet_niet_meer_aan_voorwaarden
+            type: boolean
+            required: true
+            description: >-
+              Of de nummerhouder niet meer voldoet aan de voorwaarden om in aanmerking
+              te komen voor toekenning (lid 4 onder c)
+        output:
+          - name: toekenning_verplicht_gewijzigd_of_ingetrokken
+            type: boolean
+            description: >-
+              Of de toekenning verplicht wordt gewijzigd of ingetrokken op grond
+              van lid 1, 2 of 3
+          - name: toekenning_kan_worden_opgeschort_of_ingetrokken
+            type: boolean
+            description: >-
+              Of de toekenning optioneel kan worden opgeschort of ingetrokken
+              op grond van lid 4
+        actions:
+          - output: toekenning_verplicht_gewijzigd_of_ingetrokken
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $nummerplan_wijziging_noodzaakt
+                  value: true
+                - operation: EQUALS
+                  subject: $doelmatig_gebruik_vordert_wijziging
+                  value: true
+                - operation: EQUALS
+                  subject: $feitelijke_onjuistheid_weg_te_nemen
+                  value: true
+                - operation: EQUALS
+                  subject: $aanwijzing_veiligheid_staat
+                  value: true
+          - output: toekenning_kan_worden_opgeschort_of_ingetrokken
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $houder_of_gebruiker_voldoet_niet_aan_wet
+                  value: true
+                - operation: EQUALS
+                  subject: $aanvraag_was_frauduleus
+                  value: true
+                - operation: EQUALS
+                  subject: $houder_voldoet_niet_meer_aan_voorwaarden
+                  value: true
   - number: '4.8'
     text: |-
       1 In het belang van de goede uitvoering van de bij of krachtens de wet aan de Autoriteit Consument en Markt
@@ -2686,6 +2775,37 @@ articles:
         artikel: '12.5'
         hoofdstuk: '12'
         paragraaf: '12.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_kennisgeving
+            type: date
+            required: true
+            description: >-
+              Datum van verzending van de schriftelijke kennisgeving aan de
+              rechthebbende of beheerder (lid 1 en lid 2)
+        output:
+          - name: uiterste_datum_overeenstemming
+            type: date
+            description: >-
+              Uiterste datum waarbinnen overeenstemming bereikt moet zijn voordat
+              partijen de ACM mogen verzoeken (2 maanden na kennisgeving, lid 2)
+          - name: uiterste_datum_verzoek_acm
+            type: date
+            description: >-
+              Uiterste datum voor het indienen van een verzoek bij de ACM (2
+              weken na afloop van de 2-maandsperiode, lid 2)
+        actions:
+          - output: uiterste_datum_overeenstemming
+            value:
+              operation: DATE_ADD
+              date: $datum_kennisgeving
+              months: 2
+          - output: uiterste_datum_verzoek_acm
+            value:
+              operation: DATE_ADD
+              date: $uiterste_datum_overeenstemming
+              weeks: 2
   - number: '5.4'
     text: |-
       1 De aanbieder van een openbaar elektronisch communicatienetwerk die het voornemen heeft werkzaamheden uit te
@@ -2751,6 +2871,58 @@ articles:
         artikel: '5.3'
         hoofdstuk: '5'
         paragraaf: '5.1'
+    machine_readable:
+      untranslatables:
+        - construct: "maximaal acht weken verlenging"
+          reason: >-
+            The extension period is 'at most eight weeks' (ten hoogste acht weken),
+            but the exact duration is at B&W's discretion. The engine has no operation
+            to express a variable upper bound. The machine_readable models the maximum
+            possible deadline when the extension is granted.
+          legal_text_excerpt: >-
+            De termijn van acht weken kan worden verlengd met ten hoogste acht weken.
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: GOEDKEURING
+        parameters:
+          - name: datum_ontvangst_melding
+            type: date
+            required: true
+            description: >-
+              Datum van ontvangst van de schriftelijke melding door burgemeester
+              en wethouders (lid 2)
+          - name: termijn_verlengd
+            type: boolean
+            required: true
+            description: >-
+              Of de termijn van acht weken is verlengd (lid 2); bij true wordt
+              de maximale totale termijn van 16 weken berekend
+        output:
+          - name: uiterste_datum_instemmingsbesluit
+            type: date
+            description: >-
+              Uiterste datum voor het nemen van het instemmingsbesluit door
+              burgemeester en wethouders; bij verlenging is dit de maximale
+              deadline van 16 weken (lid 2)
+        actions:
+          - output: uiterste_datum_instemmingsbesluit
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $termijn_verlengd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_ontvangst_melding
+                    weeks: 16
+              default:
+                operation: DATE_ADD
+                date: $datum_ontvangst_melding
+                weeks: 8
   - number: '5.5'
     text: |-
       1 Indien voor de aanleg, instandhouding of opruiming van kabels ten dienste van een openbaar elektronisch
@@ -6921,6 +7093,91 @@ articles:
       - id: ref2
         bwb_id: BWBR0005289
         artikel: '258'
+    machine_readable:
+      execution:
+        parameters:
+          - name: grond_verzoek_abonnee
+            type: boolean
+            required: true
+            description: Of de beëindiging of opschorting plaatsvindt op verzoek van de abonnee (lid 1 onder a)
+          - name: grond_betalingstekortkoming_of_faillissement
+            type: boolean
+            required: true
+            description: >-
+              Of sprake is van tekortkoming in de betalingsverplichting of
+              faillissement van de abonnee (lid 1 onder b)
+          - name: grond_bedrog
+            type: boolean
+            required: true
+            description: >-
+              Of sprake is van bedrog in de zin van artikel 3:44 BW door de
+              abonnee (lid 1 onder c)
+          - name: grond_afloop_contract
+            type: boolean
+            required: true
+            description: >-
+              Of de looptijd van de overeenkomst voor bepaalde duur afloopt en
+              de overeenkomst niet verlengd wordt (lid 1 onder d)
+          - name: grond_wettelijk_voorschrift_of_rechterlijk_bevel
+            type: boolean
+            required: true
+            description: >-
+              Of de beëindiging of opschorting ter uitvoering van een wettelijk
+              voorschrift of rechterlijk bevel plaatsvindt (lid 1 onder e)
+          - name: grond_overmacht
+            type: boolean
+            required: true
+            description: >-
+              Of sprake is van overmacht of onvoorziene omstandigheden als bedoeld
+              in artikel 6:258 BW (lid 1 onder f)
+          - name: grond_netwerk_of_dienstveiligheid
+            type: boolean
+            required: true
+            description: >-
+              Of de maatregel noodzakelijk is ter bescherming van de integriteit
+              en veiligheid van het netwerk, de dienst of het randapparaat
+              (lid 1 onder g)
+          - name: grond_persoonsveiligheid
+            type: boolean
+            required: true
+            description: >-
+              Of de maatregel noodzakelijk is ter bescherming van de veiligheid
+              van een persoon werkzaam voor de aanbieder (lid 1 onder h)
+        output:
+          - name: beeindiging_of_opschorting_toegestaan
+            type: boolean
+            description: >-
+              Of de aanbieder de internettoegangsdienst geheel of gedeeltelijk
+              mag beëindigen of opschorten (lid 1)
+        actions:
+          - output: beeindiging_of_opschorting_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $grond_verzoek_abonnee
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_betalingstekortkoming_of_faillissement
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_bedrog
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_afloop_contract
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_wettelijk_voorschrift_of_rechterlijk_bevel
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_overmacht
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_netwerk_of_dienstveiligheid
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_persoonsveiligheid
+                  value: true
   - number: '7.7'
     text: |-
       1 Aanbieders van openbare elektronische communicatienetwerken die worden gebruikt om uitgaande gesprekken naar een
@@ -7052,6 +7309,42 @@ articles:
         bwb_id: BWBR0009950
         artikel: 7a.5
         hoofdstuk: 7a
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werknemers
+            type: number
+            required: true
+            description: >-
+              Het aantal werknemers van de dienstverlener (lid 3); bij minder
+              dan 10 werknemers en omzet/balanstotaal ≤ €2.000.000 zijn de
+              plichten niet van toepassing
+          - name: jaaromzet_of_balanstotaal_eurocent
+            type: number
+            required: true
+            description: >-
+              De jaaromzet of het jaarlijks balanstotaal van de dienstverlener
+              in eurocent (lid 3; €2.000.000 = 200000000 eurocent)
+        output:
+          - name: toegankelijkheidsplicht_van_toepassing
+            type: boolean
+            description: >-
+              Of de toegankelijkheidsplichten van lid 1 en 2 van toepassing
+              zijn (false als de dienstverlener de uitzondering van lid 3
+              kwalificeert)
+        actions:
+          - output: toegankelijkheidsplicht_van_toepassing
+            value:
+              operation: NOT
+              value:
+                operation: AND
+                conditions:
+                  - operation: LESS_THAN
+                    subject: $aantal_werknemers
+                    value: 10
+                  - operation: LESS_THAN_OR_EQUAL
+                    subject: $jaaromzet_of_balanstotaal_eurocent
+                    value: 200000000
   - number: 7a.3
     text: |-
       1 De bevoegde nationale autoriteit, bedoeld in artikel 13, vierde en vijfde lid, van [richtlijn (EU) 2019/882]
@@ -7293,6 +7586,27 @@ articles:
         bwb_id: BWBR0009950
         artikel: '9.1'
         hoofdstuk: '9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_bekendmaking
+            type: date
+            required: true
+            description: >-
+              Datum van bekendmaking van het voornemen tot aanwijzing in de
+              Staatscourant (lid 3 en lid 5)
+        output:
+          - name: uiterste_datum_indiening_bod
+            type: date
+            description: >-
+              Uiterste datum voor het uitbrengen van een bod op de aanwijzing
+              (binnen acht weken na bekendmaking, lid 5)
+        actions:
+          - output: uiterste_datum_indiening_bod
+            value:
+              operation: DATE_ADD
+              date: $datum_bekendmaking
+              weeks: 8
   - number: '9.4'
     text: |-
       1 Indien het bod op de in [artikel 9.3, zesde lid, onderdeel a][ref1], bedoelde wijze is uitgebracht, bestaat
@@ -7346,6 +7660,61 @@ articles:
         bwb_id: BWBR0009950
         artikel: '9.3'
         hoofdstuk: '9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bod_methode
+            type: string
+            required: true
+            description: >-
+              De methode waarop het bod is uitgebracht: "A" voor een vast bedrag
+              per jaar (lid 1, artikel 9.3 lid 6 onder a) of "B" voor een
+              bedrag per eenheid (lid 2, artikel 9.3 lid 6 onder b)
+          - name: bod_bedrag_eurocent
+            type: number
+            required: true
+            description: >-
+              Het bod in eurocent, uitgebracht door de aangewezen
+              universeledienstverlener
+          - name: daadwerkelijk_gebruikte_eenheden
+            type: number
+            required: true
+            description: >-
+              Het aantal daadwerkelijk in het betreffende kalenderjaar gebruikte
+              eenheden; bij methode A invullen als 0 (lid 2 en lid 5)
+          - name: van_gebruik_onafhankelijk_bedrag_eurocent
+            type: number
+            required: true
+            description: >-
+              Eventueel van het gebruik onafhankelijk bedrag in eurocent uit de
+              ministeriële regeling; bij methode A of als niet van toepassing
+              invullen als 0 (lid 2)
+        output:
+          - name: vergoeding_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: >-
+              De vergoeding die de universeledienstverlener ontvangt voor het
+              betreffende kalenderjaar (lid 1 of lid 2)
+        actions:
+          - output: vergoeding_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bod_methode
+                    value: "A"
+                  then: $bod_bedrag_eurocent
+              default:
+                operation: ADD
+                values:
+                  - operation: MULTIPLY
+                    values:
+                      - $bod_bedrag_eurocent
+                      - $daadwerkelijk_gebruikte_eenheden
+                  - $van_gebruik_onafhankelijk_bedrag_eurocent
   - number: '9.5'
     text: |-
       1 Indien ingevolge [artikel 9.4][ref1] aan degene die is aangewezen als universeledienstverlener, een
