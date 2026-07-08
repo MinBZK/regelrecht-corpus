@@ -400,6 +400,46 @@ articles:
       - id: ref2
         bwb_id: BWBR0032031
         artikel: X
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de inburgeringsplichtige
+          - name: bewezen_blijvende_belemmering_voor_inburgeringsexamen
+            type: boolean
+            required: true
+            description: >-
+              De inburgeringsplichtige heeft aangetoond door een psychische of lichamelijke
+              belemmering, dan wel een verstandelijke handicap, blijvend niet in staat te zijn
+              het inburgeringsexamen te behalen (art. 6 lid 1)
+          - name: bewezen_inspanningen_niet_aan_onderdelen_bc
+            type: boolean
+            required: true
+            description: >-
+              Op grond van door de inburgeringsplichtige aangetoonde geleverde inspanningen
+              blijkt dat hij redelijkerwijs niet kan voldoen aan onderdelen b en c van het
+              inburgeringsexamen (art. 6 lid 2)
+        output:
+          - name: ontheven_van_inburgeringsplicht
+            type: boolean
+            description: >-
+              De Minister ontheft de inburgeringsplichtige van de inburgeringsplicht op grond
+              van artikel 6, eerste lid
+          - name: ontheven_van_examen_onderdelen_b_c
+            type: boolean
+            description: >-
+              De Minister ontheft de inburgeringsplichtige van de onderdelen b en c van het
+              inburgeringsexamen op grond van artikel 6, tweede lid
+        actions:
+          - output: ontheven_van_inburgeringsplicht
+            value: $bewezen_blijvende_belemmering_voor_inburgeringsexamen
+          - output: ontheven_van_examen_onderdelen_b_c
+            value: $bewezen_inspanningen_niet_aan_onderdelen_bc
   - number: '7'
     text: |-
       1 De inburgeringsplichtige behaalt:
