@@ -320,6 +320,36 @@ articles:
       - id: ref8
         bwb_id: BWBR0005537
         afdeling: '3.4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_eigenaar_drinkwaterbedrijf
+            type: boolean
+            required: true
+            description: "Is de persoon of entiteit eigenaar van een drinkwaterbedrijf als bedoeld in artikel 1?"
+          - name: valt_onder_uitzondering_lid2_3_of_4
+            type: boolean
+            required: true
+            description: "Valt de activiteit onder één van de uitzonderingen van lid 2 (eigenaar van collectieve watervoorziening of collectief leidingnet bij aangewezen milieubelastende activiteit krachtens Omgevingswet), lid 3 (eigenaar van watervoorziening op mijnbouwinstallatie) of lid 4 (eigenaar van collectief leidingnet in gebouw, recreatieterrein, bungalowpark, volkstuincomplex, bedrijfsterrein of met openbare tappunten)?"
+          - name: heeft_ontheffing_minister
+            type: boolean
+            required: true
+            description: "Is door Onze Minister een ontheffing verleend als bedoeld in lid 5?"
+        output:
+          - name: productie_of_distributie_verboden
+            type: boolean
+            description: "Is productie of distributie van drinkwater verboden op grond van artikel 4, lid 1, rekening houdend met de uitzonderingen van lid 2, 3 en 4 en een eventuele ontheffing van lid 5?"
+        actions:
+          - output: productie_of_distributie_verboden
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_eigenaar_drinkwaterbedrijf
+                - operation: NOT
+                  value: $valt_onder_uitzondering_lid2_3_of_4
+                - operation: NOT
+                  value: $heeft_ontheffing_minister
   - number: '5'
     text: |-
       1 Onze Minister stelt voor elk drinkwaterbedrijf een distributiegebied vast, waarbinnen de eigenaar van het
@@ -537,6 +567,24 @@ articles:
       van de openbare drinkwatervoorziening en onder met het oog daarop te stellen voorwaarden. Tegen de vaststelling is
       geen bezwaar of beroep mogelijk.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel10
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar_besluit
+            type: number
+            required: true
+            description: "Het jaar waarvoor de driejaarlijkse vaststelling uiterlijk op 1 november moet worden gedaan (lid 2 en 3)"
+        output:
+          - name: besluit_uiterlijk
+            type: date
+            description: "Uiterste datum voor driejaarlijkse vaststelling van het maximale aandeel eigen vermogen (lid 2) en de gewogen gemiddelde vermogenskostenvoet (lid 3) — 1 november van het besluitjaar"
+        actions:
+          - output: besluit_uiterlijk
+            value:
+              operation: DATE
+              year: $jaar_besluit
+              month: 11
+              day: 1
   - number: '11'
     text: |-
       1 De eigenaar van een drinkwaterbedrijf hanteert tarieven die kostendekkend, transparant en niet discriminerend
@@ -989,6 +1037,31 @@ articles:
         artikel: '29'
         hoofdstuk: III
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_inwerkingtreding_noodregeling
+            type: date
+            required: true
+            description: "Datum waarop de noodregeling als bedoeld in dit artikel in werking is getreden"
+        output:
+          - name: vervaldatum_standaard
+            type: date
+            description: "Standaard vervaldatum van de noodregeling: één jaar na inwerkingtreding, tenzij eerder vervangen door een AMvB"
+          - name: maximale_vervaldatum_met_verlenging
+            type: date
+            description: "Maximale vervaldatum indien de geldigheidsduur bij ministeriële regeling eenmaal met ten hoogste een jaar is verlengd"
+        actions:
+          - output: vervaldatum_standaard
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding_noodregeling
+              years: 1
+          - output: maximale_vervaldatum_met_verlenging
+            value:
+              operation: DATE_ADD
+              date: $datum_inwerkingtreding_noodregeling
+              years: 2
   - number: '24'
     text: |-
       1 De eigenaar van een drinkwaterbedrijf controleert de middellijk of onmiddellijk op het leidingnet van zijn
