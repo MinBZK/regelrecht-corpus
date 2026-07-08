@@ -419,6 +419,36 @@ articles:
       andere aangelegenheden dan die waarvoor de ingevolge het eerste lid niet geopende vergadering was belegd alleen
       beraadslagen of besluiten, indien blijkens de presentielijst meer dan de helft van het aantal zitting hebbende
       leden tegenwoordig is.
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_zittinghebbende_leden
+            type: number
+            required: true
+            description: Aantal leden dat zitting heeft in de raad op het moment van de vergadering
+          - name: aantal_aanwezige_leden
+            type: number
+            required: true
+            description: Aantal leden dat blijkens de presentielijst tegenwoordig is
+        output:
+          - name: helft_zittinghebbende_leden
+            type: number
+            description: De helft van het aantal zitting hebbende leden (drempel voor quorum, lid 1)
+          - name: quorum_aanwezig
+            type: boolean
+            description: Meer dan de helft van het aantal zitting hebbende leden is tegenwoordig (lid 1)
+        actions:
+          - output: helft_zittinghebbende_leden
+            value:
+              operation: DIVIDE
+              values:
+                - $aantal_zittinghebbende_leden
+                - 2
+          - output: quorum_aanwezig
+            value:
+              operation: GREATER_THAN
+              subject: $aantal_aanwezige_leden
+              value: $helft_zittinghebbende_leden
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel20
   - number: '21'
     text: |-
@@ -872,6 +902,23 @@ articles:
       De benoemde wethouder deelt de raad uiterlijk op de tiende dag na de kennisgeving van zijn benoeming mee of hij
       de benoeming aanneemt. Indien deze termijn verstrijkt zonder mededeling, wordt de benoemde wethouder geacht de
       benoeming niet aan te nemen.
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum van de kennisgeving van de benoeming aan de benoemde wethouder
+        output:
+          - name: mededeling_deadline
+            type: date
+            description: Uiterste dag waarop de benoemde wethouder de raad moet meedelen of hij de benoeming aanneemt (tiende dag na kennisgeving)
+        actions:
+          - output: mededeling_deadline
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              days: 10
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel40
   - number: '41'
     text: Wanneer de benoeming niet is aangenomen, geschiedt zo spoedig mogelijk een nieuwe benoeming.
@@ -992,6 +1039,23 @@ articles:
       2 Behoudens het geval dat de wethouder onmiddellijk ontslag neemt, gaat het ontslag in met ingang van de dag,
       gelegen een maand na de dag waarop hij zijn ontslag heeft genomen of zoveel eerder als zijn opvolger de benoeming
       heeft aangenomen.
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontslag_mededeling_datum
+            type: date
+            required: true
+            description: Datum waarop de wethouder zijn ontslag heeft genomen (schriftelijke mededeling aan de raad, lid 1)
+        output:
+          - name: ontslag_ingangsdatum
+            type: date
+            description: Datum waarop het ontslag ingaat (één maand na ontslag mededeling, lid 2)
+        actions:
+          - output: ontslag_ingangsdatum
+            value:
+              operation: DATE_ADD
+              date: $ontslag_mededeling_datum
+              months: 1
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel43
   - number: '44'
     text: |-
@@ -1642,6 +1706,23 @@ articles:
 
       3 Een besluit als bedoeld in het tweede lid vervalt, indien niet binnen een maand een besluit omtrent de schorsing
       is genomen.
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_niet_uitoefenen_datum
+            type: date
+            required: true
+            description: Datum van het besluit van Onze Minister dat de burgemeester zijn functie niet uitoefent (lid 2)
+        output:
+          - name: vervaldatum_besluit_niet_uitoefenen
+            type: date
+            description: Datum waarop het besluit van lid 2 vervalt als er geen schorsing is genomen (één maand na het besluit, lid 3)
+        actions:
+          - output: vervaldatum_besluit_niet_uitoefenen
+            value:
+              operation: DATE_ADD
+              date: $besluit_niet_uitoefenen_datum
+              months: 1
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel62
   - number: '63'
     text: Voor de benoembaarheid tot burgemeester is het Nederlanderschap vereist.
@@ -1883,6 +1964,35 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002448
+    machine_readable:
+      execution:
+        parameters:
+          - name: vertrekdatum
+            type: date
+            required: true
+            description: Geplande datum van vertrek van de burgemeester uit de gemeente
+          - name: terugkeerdatum
+            type: date
+            required: true
+            description: Geplande datum van terugkeer van de burgemeester in de gemeente
+        output:
+          - name: drempel_toestemming_datum
+            type: date
+            description: Datum na zes weken verblijf buiten de gemeente (drempel waarna toestemming vereist is, lid 1)
+          - name: toestemming_commissaris_vereist
+            type: boolean
+            description: De burgemeester verblijft langer dan zes weken buiten de gemeente en heeft toestemming van de commissaris nodig (lid 1)
+        actions:
+          - output: drempel_toestemming_datum
+            value:
+              operation: DATE_ADD
+              date: $vertrekdatum
+              weeks: 6
+          - output: toestemming_commissaris_vereist
+            value:
+              operation: GREATER_THAN
+              subject: $terugkeerdatum
+              value: $drempel_toestemming_datum
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel72
     references:
       - id: ref1
@@ -7131,6 +7241,31 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel229
       [ref2]: https://wetten.overheid.nl/BWBR0013817
+    machine_readable:
+      execution:
+        parameters:
+          - name: geraamde_baten_rechten
+            type: number
+            required: true
+            description: Geraamde baten (opbrengsten) van de rechten bedoeld in artikel 229 lid 1 sub a en b in eurocent
+          - name: geraamde_lasten
+            type: number
+            required: true
+            description: >-
+              Geraamde lasten ter zake, inclusief bijdragen aan bestemmingsreserves en voorzieningen (lid 2a)
+              en BTW-compensatie (lid 2b), in eurocent
+        output:
+          - name: tarieven_conform_kostendekkendheidseis
+            type: boolean
+            description: >-
+              De geraamde baten van de rechten gaan niet uit boven de geraamde lasten ter zake (lid 1);
+              tarieven voldoen aan de wettelijke kostendekkendheidseis
+        actions:
+          - output: tarieven_conform_kostendekkendheidseis
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $geraamde_baten_rechten
+              value: $geraamde_lasten
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel229b
     references:
       - id: ref1
@@ -7550,6 +7685,51 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0005416#Artikel231
       [ref11]: https://wetten.overheid.nl/BWBR0005416#Artikel231
       [ref12]: https://wetten.overheid.nl/BWBR0005416#Artikel231
+    machine_readable:
+      execution:
+        parameters:
+          - name: inbewaringsstelling_datum
+            type: date
+            required: true
+            description: Datum waarop het voertuig in bewaring is gesteld (lid 5)
+          - name: verkoop_datum
+            type: date
+            required: false
+            description: >-
+              Datum van de daadwerkelijke verkoop van het voertuig (lid 12); alleen vereist voor
+              berekening van de vervaldatum van het terugvorderingsrecht van de eigenaar
+        output:
+          - name: kennisgeving_termijn_datum
+            type: date
+            description: >-
+              Datum na 48 uren (2 dagen) na inbewaringsstelling; als het voertuig dan niet is afgehaald
+              moet de gemeenteambtenaar zo mogelijk binnen zeven dagen kennis geven aan de eigenaar (lid 9)
+          - name: bevoegdheid_verkoop_uiterste_datum
+            type: date
+            description: >-
+              Datum na drie maanden na inbewaringsstelling; na afloop van deze termijn is de gemeenteambtenaar
+              bevoegd het voertuig te verkopen, om niet over te dragen of te vernietigen (lid 11)
+          - name: verkooprecht_vervaldatum
+            type: date
+            description: >-
+              Datum drie jaren na het tijdstip van de verkoop (lid 12); na afloop vervalt het eventuele
+              batige saldo aan de gemeente
+        actions:
+          - output: kennisgeving_termijn_datum
+            value:
+              operation: DATE_ADD
+              date: $inbewaringsstelling_datum
+              days: 2
+          - output: bevoegdheid_verkoop_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $inbewaringsstelling_datum
+              months: 3
+          - output: verkooprecht_vervaldatum
+            value:
+              operation: DATE_ADD
+              date: $verkoop_datum
+              years: 3
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel235
     references:
       - id: ref1
