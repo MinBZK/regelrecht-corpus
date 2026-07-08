@@ -460,6 +460,49 @@ articles:
         bwb_id: BWBR0002359
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: prijs_in_geld
+            type: number
+            required: true
+            description: Het gedeelte van de prijs dat in geld bestaat, in eurocent
+        input:
+          - name: belasting
+            type: amount
+            source:
+              output: belasting
+            type_spec:
+              unit: eurocent
+        output:
+          - name: belasting_overtreft_prijs_in_geld
+            type: boolean
+            description: Of de belasting het geld-gedeelte van de prijs overtreft (art. 6 lid 4)
+          - name: ontbrekend_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het bedrag waarmee de belasting de prijs in geld overtreft, verhaalbaar op de belastingplichtige (art. 6 lid 4)
+        actions:
+          - output: belasting_overtreft_prijs_in_geld
+            value:
+              operation: GREATER_THAN
+              subject: $belasting
+              value: $prijs_in_geld
+          - output: ontbrekend_bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $belasting_overtreft_prijs_in_geld
+                    value: true
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $belasting
+                      - $prijs_in_geld
+              default: 0
   - number: '8'
     text: |-
       1 In de gevallen waarin [artikel 1, onderdeel h][ref1], van toepassing is, moet de belasting op aangifte worden
