@@ -251,6 +251,62 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0005416#Artikel220d
       [ref6]: https://wetten.overheid.nl/BWBR0007119#Artikel16
     url: https://wetten.overheid.nl/BWBR0007119/2026-07-01#Artikel17
+    machine_readable:
+      untranslatables:
+        - construct: "vooronderstelde verplichting om het gedurende een tijdvak van 25 jaren als zodanig in stand te houden"
+          reason: "Maintenance obligation valuation discount for landgoed properties is not expressible as an engine operation"
+          legal_text_excerpt: "wordt de waarde van een gebouwd eigendom dat tot woning dient en deel uitmaakt van een op de voet van de Natuurschoonwet 1928 aangewezen landgoed bepaald met inachtneming van een vooronderstelde verplichting om het gedurende een tijdvak van 25 jaren als zodanig in stand te houden"
+          accepted: false
+      execution:
+        parameters:
+          - name: dient_tot_woning
+            type: boolean
+            required: true
+            description: Of de onroerende zaak tot woning dient (art. 17 lid 3)
+          - name: is_rijksmonument
+            type: boolean
+            required: true
+            description: Of de onroerende zaak is ingeschreven in het rijksmonumentenregister als bedoeld in art. 3.3 Erfgoedwet (art. 17 lid 3)
+          - name: marktwaarde
+            type: number
+            required: false
+            description: Waarde op basis van vrije overdracht in volle eigendom zoals bedoeld in lid 2
+          - name: vervangingswaarde
+            type: number
+            required: false
+            description: Vervangingswaarde als bedoeld in lid 3, rekening houdend met technische en functionele veroudering
+          - name: is_gebouw_in_aanbouw
+            type: boolean
+            required: false
+            description: Of de onroerende zaak een gebouwd eigendom in aanbouw is als bedoeld in lid 4
+        output:
+          - name: te_gebruiken_methode
+            type: string
+            description: De te gebruiken waarderingsmethode (MARKTWAARDE of VERVANGINGSWAARDE)
+        actions:
+          - output: te_gebruiken_methode
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_gebouw_in_aanbouw
+                    value: true
+                  then: VERVANGINGSWAARDE
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $dient_tot_woning
+                        value: false
+                      - operation: EQUALS
+                        subject: $is_rijksmonument
+                        value: false
+                      - operation: GREATER_THAN
+                        subject: $vervangingswaarde
+                        value: $marktwaarde
+                  then: VERVANGINGSWAARDE
+              default: MARKTWAARDE
     references:
       - id: ref1
         bwb_id: BWBR0037521
@@ -498,6 +554,23 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0007119#Artikel23
       [ref11]: https://wetten.overheid.nl/BWBR0007119#Artikel24
     url: https://wetten.overheid.nl/BWBR0007119/2026-07-01#Artikel26
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum van het verzoek door de nieuwe genothebbende als bedoeld in art. 26 lid 1 aanhef
+        output:
+          - name: beschikking_deadline
+            type: date
+            description: Uiterste datum voor het nemen van de beschikking (8 weken na het verzoek, art. 26 lid 1 onderdeel a)
+        actions:
+          - output: beschikking_deadline
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 8
     references:
       - id: ref1
         bwb_id: BWBR0007119
@@ -658,6 +731,23 @@ articles:
       [ref13]: https://wetten.overheid.nl/BWBR0007119#Artikel27
       [ref14]: https://wetten.overheid.nl/BWBR0007119#Artikel23
     url: https://wetten.overheid.nl/BWBR0007119/2026-07-01#Artikel28
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum van het verzoek door de derde-belanghebbende als bedoeld in art. 28 lid 1
+        output:
+          - name: beschikking_deadline
+            type: date
+            description: Uiterste datum voor het nemen van de beschikking voor de derde-belanghebbende (8 weken na het verzoek, art. 28 lid 1)
+        actions:
+          - output: beschikking_deadline
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 8
     references:
       - id: ref1
         bwb_id: BWBR0007119
