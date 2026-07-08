@@ -757,6 +757,33 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0004627
+    machine_readable:
+      untranslatables:
+        - construct: "goede vervulling van functie niet in redelijkheid verzekerd (lid 1)"
+          reason: "Subjectieve norm — 'niet in redelijkheid zou zijn verzekerd' is een open rechtsbegrip dat niet algorithmisch uitdrukbaar is"
+          legal_text_excerpt: "indien door de uitoefening van deze rechten de goede vervulling van zijn functie of de goede functionering van de openbare dienst, voor zover deze in verband staat met zijn functievervulling, niet in redelijkheid zou zijn verzekerd"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_lid_politieke_groepering_kieswet
+            type: boolean
+            required: false
+            description: Persoon is lid van een politieke groepering waarvan de aanduiding is ingeschreven overeenkomstig de Kieswet (lid 2a)
+          - name: is_lid_vakvereniging
+            type: boolean
+            required: false
+            description: Persoon is lid van een vakvereniging (lid 2b)
+        output:
+          - name: recht_van_vereniging_buiten_beperking_lid_1
+            type: boolean
+            description: Of het recht van vereniging buiten de beperking van lid 1 valt op grond van het lidmaatschap (lid 2)
+        actions:
+          - output: recht_van_vereniging_buiten_beperking_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $is_lid_politieke_groepering_kieswet
+                - $is_lid_vakvereniging
   - number: '11'
     text: |-
       De ambtenaar is verplicht tijdens het verblijf op zijn werk zich te onderwerpen aan een in het belang van de
@@ -798,10 +825,17 @@ articles:
             type: boolean
             required: false
             description: Het dienstbelang vordert bepaaldelijk dat een niet-Nederlander in aanmerking komt (lid 1)
+          - name: moet_worden_ontheven_vertrouwensfunctie
+            type: boolean
+            required: false
+            description: Persoon moet worden ontheven uit vertrouwensfunctie op grond van artikel 5 lid 3 of artikel 10 lid 2 van de Wet veiligheidsonderzoeken (lid 2)
         output:
           - name: in_aanmerking_voor_vertrouwensfunctie
             type: boolean
             description: Of de persoon in aanmerking kan komen voor een vertrouwensfunctie (lid 1)
+          - name: arbeidsovereenkomst_kan_worden_opgezegd
+            type: boolean
+            description: Of de arbeidsovereenkomst kan worden opgezegd vanwege verplichte ontneming vertrouwensfunctie op grond van de Wet veiligheidsonderzoeken (lid 2)
         actions:
           - output: in_aanmerking_voor_vertrouwensfunctie
             value:
@@ -809,6 +843,8 @@ articles:
               conditions:
                 - $is_nederlander
                 - $dienstbelang_vereist_uitzondering
+          - output: arbeidsovereenkomst_kan_worden_opgezegd
+            value: $moet_worden_ontheven_vertrouwensfunctie
   - number: '13'
     text: |-
       1 Bij algemene maatregel van bestuur kunnen voor categorieën van ambtenaren met wie de staat een
