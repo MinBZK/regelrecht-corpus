@@ -383,6 +383,31 @@ articles:
         bwb_id: BWBR0007118
         artikel: '99'
         hoofdstuk: '8'
+    machine_readable:
+      execution:
+        parameters:
+          - name: prioriteitsdatum
+            type: date
+            required: true
+            description: Datum van indiening van de aanvrage waarop het recht van voorrang berust (lid 6)
+        output:
+          - name: voorrang_claimen_uiterste_datum
+            type: date
+            description: Uiterste datum om beroep op voorrang te doen (16 maanden na prioriteitsdatum, lid 6)
+          - name: documentatie_uiterste_datum
+            type: date
+            description: Uiterste datum voor het verstrekken van nummer en afschrift (16 maanden na prioriteitsdatum, lid 8)
+        actions:
+          - output: voorrang_claimen_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $prioriteitsdatum
+              months: 16
+          - output: documentatie_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $prioriteitsdatum
+              months: 16
   - number: '10'
     text: |-
       1 Indien voor een uit hoofde van deze rijkswet verleend octrooi de voorrang is ingeroepen van een eerder uit hoofde
@@ -458,6 +483,23 @@ articles:
         bwb_id: BWBR0007118
         artikel: '4'
         hoofdstuk: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: octrooi_verleningsdatum
+            type: date
+            required: true
+            description: Datum waarop het octrooi is verleend (lid 6)
+        output:
+          - name: vorderingsrecht_vervaldatum
+            type: date
+            description: Uiterste datum voor vordering billijke vergoeding door uitvinder (3 jaar na octrooi­verlening, lid 6)
+        actions:
+          - output: vorderingsrecht_vervaldatum
+            value:
+              operation: DATE_ADD
+              date: $octrooi_verleningsdatum
+              years: 3
   - number: '13'
     text: |-
       Indien een uitvinding is gedaan door verscheidene personen, die volgens een afspraak tezamen hebben gewerkt, hebben
@@ -657,6 +699,94 @@ articles:
       7 Bij of krachtens algemene maatregel van rijksbestuur worden nadere regels gesteld ter uitvoering van het bepaalde
       bij of krachtens het Verdrag inzake octrooirecht inzake vertegenwoordiging.
     url: https://wetten.overheid.nl/BWBR0007118/2023-06-01#Artikel23a
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_examen_afgelegd
+            type: boolean
+            required: true
+            description: Of de aanvrager met goed gevolg een examen heeft afgelegd (lid 2)
+          - name: heeft_proeve_afgelegd
+            type: boolean
+            required: true
+            description: Of van de aanvrager met goed gevolg een proeve van bekwaamheid is afgenomen (lid 2)
+          - name: werkervaring_jaren
+            type: number
+            required: true
+            description: Aantal jaren dat de aanvrager octrooiaanvragen heeft behandeld onder verantwoordelijkheid van een octrooigemachtigde (lid 2)
+          - name: examen_of_proeve_datum
+            type: date
+            required: true
+            description: Datum waarop het examen of de proeve van bekwaamheid is afgelegd (lid 2)
+          - name: aanvraagdatum
+            type: date
+            required: true
+            description: Datum van indiening van de aanvraag tot inschrijving (lid 2)
+        output:
+          - name: werkervaring_voldoende
+            type: boolean
+            description: Of de werkervaring van ten minste drie jaar is voldaan (lid 2)
+          - name: examen_route_geldig
+            type: boolean
+            description: Of de aanvrager via de examenroute voldoet (examen + werkervaring, lid 2)
+          - name: basisvereiste_voldaan
+            type: boolean
+            description: Of de aanvrager via examenroute of proeve voldoet (lid 2)
+          - name: jaren_since_examen_of_proeve
+            type: number
+            description: Aantal jaren verstreken sinds aflegging examen of proeve (lid 2)
+          - name: tijdigheid_voldaan
+            type: boolean
+            description: Of het examen of de proeve niet langer dan tien jaar geleden is afgelegd (lid 2)
+          - name: inschrijfbaar
+            type: boolean
+            description: Of de aanvrager voldoet aan alle vereisten voor inschrijving in het register (lid 2)
+        actions:
+          - output: werkervaring_voldoende
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $werkervaring_jaren
+              value: 3
+          - output: examen_route_geldig
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_examen_afgelegd
+                  value: true
+                - operation: EQUALS
+                  subject: $werkervaring_voldoende
+                  value: true
+          - output: basisvereiste_voldaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $examen_route_geldig
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_proeve_afgelegd
+                  value: true
+          - output: jaren_since_examen_of_proeve
+            value:
+              operation: AGE
+              date_of_birth: $examen_of_proeve_datum
+              reference_date: $aanvraagdatum
+          - output: tijdigheid_voldaan
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $jaren_since_examen_of_proeve
+              value: 10
+          - output: inschrijfbaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $basisvereiste_voldaan
+                  value: true
+                - operation: EQUALS
+                  subject: $tijdigheid_voldaan
+                  value: true
   - number: 23b
     text: |-
       1 Voor het bureau kunnen als gemachtigde slechts optreden personen die als octrooigemachtigde zijn ingeschreven
@@ -997,6 +1127,35 @@ articles:
       - id: ref2
         bwb_id: BWBR0002093
         artikel: '22'
+    machine_readable:
+      execution:
+        parameters:
+          - name: klacht_indiendatum
+            type: date
+            required: true
+            description: Datum van indiening van de klacht (lid 4)
+          - name: voorval_datum
+            type: date
+            required: true
+            description: Datum waarop het voorval waarop de klacht betrekking heeft plaatsvond (lid 4)
+        output:
+          - name: jaren_verschil
+            type: number
+            description: Aantal jaren tussen het voorval en de klachtindiening (lid 4)
+          - name: niet_ontvankelijk
+            type: boolean
+            description: Of de klacht niet in behandeling wordt genomen wegens overschrijding van de vijfjaarstermijn (lid 4)
+        actions:
+          - output: jaren_verschil
+            value:
+              operation: AGE
+              date_of_birth: $voorval_datum
+              reference_date: $klacht_indiendatum
+          - output: niet_ontvankelijk
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $jaren_verschil
+              value: 5
   - number: 23p
     text: |-
       1 De secretaris van de raad van toezicht stelt de octrooigemachtigde tegen wie een klacht is ingediend onverwijld
@@ -1040,6 +1199,23 @@ articles:
 
       6 Indien de raad van oordeel is dat het verzet gegrond is, wordt de zaak in verdere behandeling genomen.
     url: https://wetten.overheid.nl/BWBR0007118/2023-06-01#Artikel23q
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzending_datum
+            type: date
+            required: true
+            description: Datum van verzending van het afschrift van de afwijzingsbeslissing (lid 1)
+        output:
+          - name: verzet_uiterste_datum
+            type: date
+            description: Uiterste datum voor het instellen van schriftelijk verzet (14 dagen na verzending, lid 1)
+        actions:
+          - output: verzet_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $verzending_datum
+              days: 14
   - number: 23r
     text: |-
       1 Indien een bedenking een lid of plaatsvervangend lid van de raad van toezicht betreft, schorst de raad dit lid of
@@ -1199,6 +1375,23 @@ articles:
         artikel: 23u
         hoofdstuk: '2'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: sluiting_onderzoek_datum
+            type: date
+            required: true
+            description: Datum waarop het onderzoek ter openbare zitting is gesloten (lid 1)
+        output:
+          - name: beslissing_uiterste_datum
+            type: date
+            description: Uiterste datum voor de beslissing van de raad van toezicht (6 weken na sluiting onderzoek, lid 1)
+        actions:
+          - output: beslissing_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $sluiting_onderzoek_datum
+              weeks: 6
   - number: 23w
     text: |-
       1 Tegen een beslissing van de raad van toezicht als bedoeld in [artikel 23u][ref1] kan een belanghebbende binnen
@@ -1262,6 +1455,23 @@ articles:
         artikel: 23v
         hoofdstuk: '2'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzending_datum
+            type: date
+            required: true
+            description: Datum van verzending van de brief met de beslissing van de raad van toezicht (lid 1, verwijst naar artikel 23v lid 4)
+        output:
+          - name: beroep_uiterste_datum
+            type: date
+            description: Uiterste datum voor het instellen van beroep bij het gerechtshof Den Haag (30 dagen na verzending, lid 1)
+        actions:
+          - output: beroep_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $verzending_datum
+              days: 30
   - number: 23x
     text: |-
       1 Van een beslissing van de raad van toezicht als bedoeld in [artikel 23u][ref1] en van een beslissing van het
@@ -1649,6 +1859,39 @@ articles:
         artikel: '28'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (artikel 29 lid 1)
+          - name: heeft_voorrang
+            type: boolean
+            required: true
+            description: Of voor de aanvrage een beroep is gedaan op een of meer rechten van voorrang (lid 1 sub b)
+          - name: eerste_voorrangsdatum
+            type: date
+            required: false
+            description: Eerste datum van voorrang (lid 1 sub b; alleen vereist indien heeft_voorrang = true)
+        output:
+          - name: inschrijving_niet_voor_datum
+            type: date
+            description: Datum waarna de inschrijving in het octrooiregister plaatsvindt (18 maanden na indiening of eerste voorrangsdatum, lid 1)
+        actions:
+          - output: inschrijving_niet_voor_datum
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_voorrang
+                  then:
+                    operation: DATE_ADD
+                    date: $eerste_voorrangsdatum
+                    months: 18
+              default:
+                operation: DATE_ADD
+                date: $indiening_datum
+                months: 18
   - number: '32'
     text: |-
       1 De aanvrager verzoekt het bureau binnen uiterlijk dertien maanden na:
@@ -1687,6 +1930,39 @@ articles:
         artikel: '28'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (artikel 29 lid 1)
+          - name: heeft_voorrang
+            type: boolean
+            required: true
+            description: Of voor de aanvrage een beroep is gedaan op een of meer rechten van voorrang (lid 1 sub b)
+          - name: eerste_voorrangsdatum
+            type: date
+            required: false
+            description: Eerste datum van voorrang (lid 1 sub b; alleen vereist indien heeft_voorrang = true)
+        output:
+          - name: onderzoek_verzoek_uiterste_datum
+            type: date
+            description: Uiterste datum voor het verzoek om onderzoek naar de stand van de techniek (13 maanden na indiening of eerste voorrangsdatum, lid 1)
+        actions:
+          - output: onderzoek_verzoek_uiterste_datum
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_voorrang
+                  then:
+                    operation: DATE_ADD
+                    date: $eerste_voorrangsdatum
+                    months: 13
+              default:
+                operation: DATE_ADD
+                date: $indiening_datum
+                months: 13
   - number: '34'
     text: |-
       1 Een onderzoek naar de stand van de techniek als bedoeld in [artikel 32, eerste lid][ref1], wordt verricht door
@@ -1820,6 +2096,23 @@ articles:
         artikel: '29'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (artikel 29 lid 1)
+        output:
+          - name: octrooi_vervaldatum
+            type: date
+            description: Datum waarop het octrooi van rechtswege vervalt (20 jaar na datum van indiening, lid 6)
+        actions:
+          - output: octrooi_vervaldatum
+            value:
+              operation: DATE_ADD
+              date: $indiening_datum
+              years: 20
   - number: '38'
     text: |-
       1 Een ieder kan het bureau schriftelijk mededeling doen van gegevens betreffende een octrooiaanvrage of het daarop
@@ -1906,6 +2199,23 @@ articles:
         artikel: '40'
         hoofdstuk: '2'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum waarop het besluit tot geheimhouding bekend is gemaakt aan het bureau (lid 1-2)
+        output:
+          - name: opschorting_einddatum
+            type: date
+            description: Datum waarop de initiële opschorting van de inschrijving eindigt (3 jaar na bekendmaking, lid 2)
+        actions:
+          - output: opschorting_einddatum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_datum
+              years: 3
   - number: '42'
     text: |-
       1 De Staat verleent degene, ten aanzien van wiens octrooiaanvrage de [artikelen 40][ref1], [41][ref2] of [46][ref3]
@@ -2224,6 +2534,23 @@ articles:
         bwb_id: BWBR0007118
         artikel: '77'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ep_indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de Europese octrooiaanvrage ingevolge artikel 80 EOV (lid 2)
+        output:
+          - name: ep_octrooi_vervaldatum
+            type: date
+            description: Datum waarop het Europees octrooi van rechtswege vervalt (20 jaar na EP indiening­sdatum, lid 2)
+        actions:
+          - output: ep_octrooi_vervaldatum
+            value:
+              operation: DATE_ADD
+              date: $ep_indiening_datum
+              years: 20
   - number: '50'
     text: |-
       1 Een Europees octrooi wordt geacht van de aanvang af geheel of gedeeltelijk niet de in de [artikelen 53][ref1],
@@ -2944,6 +3271,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0002541
         artikel: '42'
+    machine_readable:
+      execution:
+        parameters:
+          - name: octrooi_dagtekening
+            type: date
+            required: true
+            description: Dagtekening van het octrooi (lid 2)
+        output:
+          - name: licentieplicht_ingangsdatum
+            type: date
+            description: Datum vanaf wanneer de verplichting tot het verlenen van een licentie kan ontstaan (3 jaar na dagtekening octrooi, lid 2)
+        actions:
+          - output: licentieplicht_ingangsdatum
+            value:
+              operation: DATE_ADD
+              date: $octrooi_dagtekening
+              years: 3
   - number: 57a
     text: |-
       In afwijking van [artikel 57][ref1] kan een gedwongen licentie onder een octrooi op het gebied van de
@@ -3201,6 +3545,32 @@ articles:
         artikel: '28'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (artikel 29 lid 1)
+        output:
+          - name: eerste_jaarvergoeding_jaar
+            type: date
+            description: Datum van aanvang van het vierde jaar na indiening (eerste jaarvergoeding is vóór die datum verschuldigd, lid 1)
+        untranslatables:
+          - id: vervaldag_berekening
+            description: >
+              De vervaldag is de laatste dag van de maand waarin de octrooiaanvrage is ingediend
+              (lid 1). De berekening van "laatste dag van de maand" is niet uitdrukbaar met de
+              beschikbare operaties (geen LAST_DAY_OF_MONTH operatie beschikbaar).
+            legal_text: >
+              op de laatste dag van de maand waarin de aanvrage die tot octrooi heeft geleid is
+              ingediend, of ingevolge artikel 28, eerste lid, wordt aangemerkt te zijn ingediend
+        actions:
+          - output: eerste_jaarvergoeding_jaar
+            value:
+              operation: DATE_ADD
+              date: $indiening_datum
+              years: 3
   - number: '62'
     text: |-
       Een octrooi vervalt van rechtswege, wanneer de in [artikel 61][ref1] genoemde bedragen niet binnen zes
@@ -3216,6 +3586,23 @@ articles:
         artikel: '61'
         hoofdstuk: '4'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vervaldag
+            type: date
+            required: true
+            description: De vervaldag zoals bedoeld in artikel 61 (laatste dag van de maand van indiening)
+        output:
+          - name: laatste_betaaldatum
+            type: date
+            description: Uiterste datum voor betaling van de jaarvergoeding vóór verval van rechtswege (6 kalendermaanden na de vervaldag, art. 62)
+        actions:
+          - output: laatste_betaaldatum
+            value:
+              operation: DATE_ADD
+              date: $vervaldag
+              months: 6
   - number: '63'
     text: |-
       1 Een octrooihouder kan geheel of gedeeltelijk afstand doen van zijn octrooi. De afstand heeft terugwerkende kracht
