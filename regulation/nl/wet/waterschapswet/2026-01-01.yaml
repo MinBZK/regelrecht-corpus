@@ -323,6 +323,28 @@ articles:
         artikel: '12'
         hoofdstuk: IV
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_leden
+            type: number
+            required: true
+            description: Bij reglement vastgesteld totaal aantal leden van het algemeen bestuur
+        output:
+          - name: voldoet_aan_omvangseis
+            type: boolean
+            description: Of het aantal leden voldoet aan de wettelijke omvangseis (ten minste 18, ten hoogste 30)
+        actions:
+          - output: voldoet_aan_omvangseis
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $aantal_leden
+                  value: 18
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $aantal_leden
+                  value: 30
   - number: '14'
     text: |-
       1 De vertegenwoordigers van de categorieën van belanghebbenden, bedoeld in
@@ -392,6 +414,15 @@ articles:
         artikel: '12'
         hoofdstuk: IV
         paragraaf: '1'
+    machine_readable:
+      execution:
+        output:
+          - name: zittingstermijn_jaren
+            type: number
+            description: Zittingstermijn van vertegenwoordigers van categorieën b en c in jaren
+        actions:
+          - output: zittingstermijn_jaren
+            value: 4
   - number: '17'
     text: |-
       De organisatie geeft de benoemde schriftelijk kennis van zijn benoeming. De organisatie geeft tegelijkertijd
@@ -825,6 +856,50 @@ articles:
       - id: ref6
         bwb_id: BWBR0004627
         artikel: X_4a
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de kandidaat
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor de leeftijdsbepaling
+          - name: is_ingezetene
+            type: boolean
+            required: true
+            description: Of de kandidaat ingezetene is van het waterschap (vereiste uit art 31 lid 1)
+          - name: is_uitgesloten_van_kiesrecht
+            type: boolean
+            required: true
+            description: Of de kandidaat krachtens art B5 lid 1 Kieswet is uitgesloten van het kiesrecht
+        output:
+          - name: leeftijd
+            type: number
+            description: Leeftijd van de kandidaat in jaren op de peildatum
+          - name: voldoet_lidmaatschapsvereisten
+            type: boolean
+            description: Of de kandidaat voldoet aan de basisvereisten voor lidmaatschap van het algemeen bestuur (art 31 lid 1)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_lidmaatschapsvereisten
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: EQUALS
+                  subject: $is_ingezetene
+                  value: true
+                - operation: NOT
+                  value: $is_uitgesloten_van_kiesrecht
   - number: 31a
     text: |-
       Leden van het dagelijks bestuur die na de stemming, bedoeld in [artikel J 6a van de Kieswet][ref1], niet zijn
@@ -3653,6 +3728,72 @@ articles:
         bwb_id: BWBR0005108
         artikel: '117'
         hoofdstuk: XVII
+    machine_readable:
+      untranslatables:
+        - construct: "0,0029317*(A^0,7414854)"
+          reason: "Machtsverheffing (power function) is niet beschikbaar als engine-operatie"
+          suggestion: "Voeg POWER-operatie toe aan de engine"
+          legal_text_excerpt: "Het kostendeel voor de categorie, bedoeld in artikel 117, eerste lid, onderdeel b, wordt vastgesteld in procenten volgens de formule: 0,0029317*(A0,7414854)"
+          accepted: false
+        - construct: "0,0000224*(B^1,1938609)"
+          reason: "Machtsverheffing (power function) is niet beschikbaar als engine-operatie"
+          suggestion: "Voeg POWER-operatie toe aan de engine"
+          legal_text_excerpt: "Het kostendeel voor de categorie, bedoeld in artikel 117, eerste lid, onderdeel c, wordt vastgesteld in procenten volgens de formule: 0,0000224*(B1,1938609)"
+          accepted: false
+      execution:
+        parameters:
+          - name: inwoners_per_km2
+            type: number
+            required: true
+            description: Gemiddelde inwonerdichtheid per vierkante kilometer in het gebied van het waterschap
+        output:
+          - name: minimum_kostenaandeel_ingezetenen_pct
+            type: number
+            description: Minimum kostenaandeel voor ingezetenen (art 120 lid 2) als percentage
+          - name: maximum_kostenaandeel_ingezetenen_pct
+            type: number
+            description: Maximum kostenaandeel voor ingezetenen (art 120 lid 2) als percentage
+        actions:
+          - output: minimum_kostenaandeel_ingezetenen_pct
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $inwoners_per_km2
+                    value: 500
+                  then: 20
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN
+                        subject: $inwoners_per_km2
+                        value: 500
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $inwoners_per_km2
+                        value: 1000
+                  then: 31
+              default: 41
+          - output: maximum_kostenaandeel_ingezetenen_pct
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $inwoners_per_km2
+                    value: 500
+                  then: 30
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN
+                        subject: $inwoners_per_km2
+                        value: 500
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $inwoners_per_km2
+                        value: 1000
+                  then: 40
+              default: 50
   - number: '121'
     text: |-
       1 Voor de heffing geldt als heffingsmaatstaf:
@@ -4062,6 +4203,59 @@ articles:
 
       4°. zij niet of niet geheel worden onderworpen aan de heffing als de stof in een bepaalde concentratie aanwezig is.
     url: https://wetten.overheid.nl/BWBR0005108/2026-01-01#Artikel122f
+    machine_readable:
+      definitions:
+        VE_ZUURSTOF_KG:
+          value: 54.8
+          description: Kilogram zuurstof per vervuilingseenheid (art 122f lid 2a)
+        VE_GROEP_ZWAAR_METALEN_KG:
+          value: 1.0
+          description: Kilogram per VE voor chroom, koper, lood, nikkel, zilver en zink (art 122f lid 2b)
+        VE_GROEP_GIFTIGE_METALEN_KG:
+          value: 0.1
+          description: Kilogram per VE voor arseen, kwik en cadmium (art 122f lid 2c)
+        VE_CHLORIDE_KG:
+          value: 650
+          description: Kilogram chloride per vervuilingseenheid (art 122f lid 2d)
+        VE_SULFAAT_KG:
+          value: 650
+          description: Kilogram sulfaat per vervuilingseenheid (art 122f lid 2e)
+        VE_FOSFOR_KG:
+          value: 20.0
+          description: Kilogram fosfor per vervuilingseenheid (art 122f lid 2f)
+      execution:
+        output:
+          - name: ve_zuurstof_kg
+            type: number
+            description: Kilogram zuurstof dat één vervuilingseenheid vertegenwoordigt
+          - name: ve_groep_zwaar_metalen_kg
+            type: number
+            description: Kilogram per VE voor groep chroom/koper/lood/nikkel/zilver/zink
+          - name: ve_groep_giftige_metalen_kg
+            type: number
+            description: Kilogram per VE voor groep arseen/kwik/cadmium
+          - name: ve_chloride_kg
+            type: number
+            description: Kilogram chloride per vervuilingseenheid
+          - name: ve_sulfaat_kg
+            type: number
+            description: Kilogram sulfaat per vervuilingseenheid
+          - name: ve_fosfor_kg
+            type: number
+            description: Kilogram fosfor per vervuilingseenheid
+        actions:
+          - output: ve_zuurstof_kg
+            value: $VE_ZUURSTOF_KG
+          - output: ve_groep_zwaar_metalen_kg
+            value: $VE_GROEP_ZWAAR_METALEN_KG
+          - output: ve_groep_giftige_metalen_kg
+            value: $VE_GROEP_GIFTIGE_METALEN_KG
+          - output: ve_chloride_kg
+            value: $VE_CHLORIDE_KG
+          - output: ve_sulfaat_kg
+            value: $VE_SULFAAT_KG
+          - output: ve_fosfor_kg
+            value: $VE_FOSFOR_KG
   - number: 122g
     text: |-
       1 Het aantal vervuilingseenheden wordt berekend met behulp van gegevens verkregen door middel van door de
@@ -4140,6 +4334,28 @@ articles:
         bwb_id: BWBR0005108
         artikel: 122g
         hoofdstuk: XVIIb
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_eenpersoonshuishouden
+            type: boolean
+            required: true
+            description: Of de woonruimte wordt gebruikt door slechts één persoon (art 122h lid 1, tweede volzin)
+        output:
+          - name: vervuilingseenheden_woonruimte
+            type: number
+            description: Vervuilingswaarde van woonruimte uitgedrukt in vervuilingseenheden (art 122h lid 1)
+        actions:
+          - output: vervuilingseenheden_woonruimte
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_eenpersoonshuishouden
+                    value: true
+                  then: 1
+              default: 3
   - number: 122i
     text: |-
       1 In afwijking van [artikel 122g][ref1] wordt de vervuilingswaarde van de stoffen, die vanuit een bedrijfsruimte
@@ -4174,6 +4390,40 @@ articles:
         bwb_id: BWBR0005108
         artikel: 122g
         hoofdstuk: XVIIb
+    machine_readable:
+      execution:
+        parameters:
+          - name: aannemelijke_vervuilingseenheden
+            type: number
+            required: true
+            description: Het door de heffingplichtige aannemelijk gemaakte aantal vervuilingseenheden voor de bedrijfsruimte
+        output:
+          - name: vervuilingseenheden_bedrijfsruimte_vereenvoudigd
+            type: number
+            description: Vereenvoudigde vervuilingswaarde voor bedrijfsruimte in vervuilingseenheden (art 122i lid 1)
+          - name: vereenvoudigde_maatstaf_van_toepassing
+            type: boolean
+            description: Of de vereenvoudigde maatstaf van art 122i lid 1 van toepassing is (< 5 VE aannemelijk gemaakt)
+        actions:
+          - output: vereenvoudigde_maatstaf_van_toepassing
+            value:
+              operation: LESS_THAN
+              subject: $aannemelijke_vervuilingseenheden
+              value: 5
+          - output: vervuilingseenheden_bedrijfsruimte_vereenvoudigd
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $aannemelijke_vervuilingseenheden
+                    value: 1
+                  then: 1
+                - when:
+                    operation: LESS_THAN
+                    subject: $aannemelijke_vervuilingseenheden
+                    value: 5
+                  then: 3
   - number: 122j
     text: |-
       Het aantal vervuilingseenheden in een kalenderjaar kan geheel of gedeeltelijk door middel van schatting worden
@@ -4515,6 +4765,13 @@ articles:
         bwb_id: BWBR0005108
         artikel: 122g
         hoofdstuk: XVIIb
+    machine_readable:
+      untranslatables:
+        - construct: "tabel met 15 klassen en afvalwatercoëfficiënten (art 122k lid 3)"
+          reason: "Tabelopzoekingen met meer dan 8 gevallen zijn niet uitdrukbaar als IF-operatie; de tabel bevat 15 klassen"
+          suggestion: "Voeg TABLE_LOOKUP-operatie toe aan de engine, of ondersteun YAML-tabellen als data-input"
+          legal_text_excerpt: "De onderstaande tabel bevat klassen met bijbehorende klassegrenzen en afvalwatercoëfficiënten"
+          accepted: false
   - number: 122l
     text: |-
       Nadere regels met betrekking tot de zuiveringsheffing kunnen worden gesteld bij verordening van het algemeen
