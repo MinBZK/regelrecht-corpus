@@ -103,6 +103,13 @@ articles:
 
       2 Vermeerdering of vermindering van het aantal leden van de raad, voortvloeiende uit wijziging van het aantal
       inwoners van de gemeente, treedt eerst in bij de eerstvolgende periodieke verkiezing van de raad.
+    machine_readable:
+      untranslatables:
+        - construct: "staffel raadsomvang naar inwonertal (17 klassen)"
+          reason: "Table lookup with 17 population brackets exceeds the >8-case threshold; cannot be expressed as IF operation"
+          suggestion: "Add TABLE_LOOKUP or RANGE_LOOKUP operation to the engine"
+          legal_text_excerpt: "9 leden in een gemeente beneden de 3 001 inwoners; ... 45 leden in een gemeente boven de 200 000 inwoners."
+          accepted: false
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel8
   - number: '9'
     text: De burgemeester is voorzitter van de raad.
@@ -583,6 +590,55 @@ articles:
 
       5 Bij de berekening van het maximale aantal wethouders, bedoeld in het eerste en het derde lid, wordt afgerond tot
       het dichtstbijgelegen gehele getal.
+    machine_readable:
+      untranslatables:
+        - construct: "afronden tot het dichtstbijgelegen gehele getal"
+          reason: "Rounding to nearest integer is not available as an engine operation"
+          suggestion: "Add ROUND operation to the engine"
+          legal_text_excerpt: "Bij de berekening van het maximale aantal wethouders, bedoeld in het eerste en het derde lid, wordt afgerond tot het dichtstbijgelegen gehele getal."
+          accepted: false
+      execution:
+        parameters:
+          - name: aantal_raadsleden
+            type: number
+            required: true
+            description: Aantal leden van de raad vastgesteld op grond van artikel 8
+          - name: deeltijd_wethouderschap
+            type: boolean
+            required: true
+            description: Raad heeft besloten dat het wethouderschap in deeltijd wordt uitgeoefend (lid 2)
+        output:
+          - name: maximum_percentage_wethouders
+            type: number
+            description: Maximum percentage raadsleden dat wethouder kan zijn (0.20 normaal of 0.25 bij deeltijd, lid 1 en 3)
+          - name: minimum_aantal_wethouders
+            type: number
+            description: Minimum aantal wethouders (altijd 2, lid 1)
+          - name: maximum_aantal_wethouders_onafgerond
+            type: number
+            description: Maximum aantal wethouders vóór afronden (zie untranslatable voor afrondingsregel lid 5)
+        actions:
+          - output: minimum_aantal_wethouders
+            value: 2
+          - output: maximum_percentage_wethouders
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $deeltijd_wethouderschap
+                    value: true
+                  then: 0.25
+              default: 0.20
+          - output: maximum_aantal_wethouders_onafgerond
+            value:
+              operation: MAX
+              values:
+                - $minimum_aantal_wethouders
+                - operation: MULTIPLY
+                  values:
+                    - $maximum_percentage_wethouders
+                    - $aantal_raadsleden
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel36
   - number: 36a
     text: |-
@@ -1394,6 +1450,23 @@ articles:
     text: |-
       Dezelfde persoon kan in meer dan een gemeente tot burgemeester worden benoemd, mits op het tijdstip van benoeming
       het gezamenlijk aantal inwoners het getal van 10 000 niet te boven gaat.
+    machine_readable:
+      execution:
+        parameters:
+          - name: gezamenlijk_aantal_inwoners
+            type: number
+            required: true
+            description: Gezamenlijk aantal inwoners van alle gemeenten waar de persoon als burgemeester wordt benoemd of is
+        output:
+          - name: benoembaar_in_meerdere_gemeenten
+            type: boolean
+            description: Dezelfde persoon kan in meer dan één gemeente tot burgemeester worden benoemd (gezamenlijk inwonertal ≤ 10.000)
+        actions:
+          - output: benoembaar_in_meerdere_gemeenten
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gezamenlijk_aantal_inwoners
+              value: 10000
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel64
   - number: '65'
     text: |-
@@ -6152,6 +6225,26 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007119#HoofdstukIV
       [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel220
+    machine_readable:
+      execution:
+        parameters:
+          - name: woz_waarde
+            type: number
+            required: true
+            description: WOZ-waarde van de onroerende zaak vastgesteld op grond van hoofdstuk IV Wet waardering onroerende zaken (in eurocent)
+          - name: kalenderjaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarvoor de heffing plaatsvindt (artikel 220)
+        output:
+          - name: heffingsmaatstaf_ozb
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Heffingsmaatstaf voor de onroerende-zaakbelastingen (gelijk aan de WOZ-waarde)
+        actions:
+          - output: heffingsmaatstaf_ozb
+            value: $woz_waarde
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel220c
     references:
       - id: ref1
@@ -6303,6 +6396,80 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel220
       [ref3]: https://wetten.overheid.nl/BWBR0005416#Artikel220
       [ref4]: https://wetten.overheid.nl/BWBR0002320#Artikel2
+    machine_readable:
+      open_terms:
+        - id: ozb_tarief_gebruiker_niet_woning
+          type: number
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 220f lid 1 onderdeel a Gemeentewet
+        - id: ozb_tarief_eigenaar_woning
+          type: number
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 220f lid 1 onderdeel b Gemeentewet
+        - id: ozb_tarief_eigenaar_niet_woning
+          type: number
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 220f lid 1 onderdeel c Gemeentewet
+      execution:
+        parameters:
+          - name: heffingsmaatstaf
+            type: number
+            required: true
+            description: OZB-heffingsmaatstaf (WOZ-waarde) in eurocent, vastgesteld op grond van artikel 220c
+          - name: belasting_soort
+            type: string
+            required: true
+            description: >-
+              Type OZB-belasting; een van "gebruiker_niet_woning" (art. 220 sub a),
+              "eigenaar_woning" (art. 220 sub b, woning), "eigenaar_niet_woning" (art. 220 sub b, niet-woning),
+              of "eigenaar_sport_dorpshuis_anbi" (art. 220 sub b, niet-woning maar bij verordening woning-tarief toegestaan, lid 2)
+        output:
+          - name: van_toepassing_zijnd_tarief
+            type: number
+            description: Het voor dit geval geldende OZB-tarief als fractie (bijv. 0.00318 = 0,318%)
+          - name: ozb_belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Berekende OZB-belasting (heffingsmaatstaf × tarief)
+        actions:
+          - output: van_toepassing_zijnd_tarief
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $belasting_soort
+                    value: gebruiker_niet_woning
+                  then: $ozb_tarief_gebruiker_niet_woning
+                - when:
+                    operation: EQUALS
+                    subject: $belasting_soort
+                    value: eigenaar_woning
+                  then: $ozb_tarief_eigenaar_woning
+                - when:
+                    operation: EQUALS
+                    subject: $belasting_soort
+                    value: eigenaar_niet_woning
+                  then: $ozb_tarief_eigenaar_niet_woning
+                - when:
+                    operation: EQUALS
+                    subject: $belasting_soort
+                    value: eigenaar_sport_dorpshuis_anbi
+                  then: $ozb_tarief_eigenaar_woning
+              default: $ozb_tarief_eigenaar_woning
+          - output: ozb_belasting
+            value:
+              operation: MULTIPLY
+              values:
+                - $van_toepassing_zijnd_tarief
+                - $heffingsmaatstaf
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel220f
     references:
       - id: ref1
@@ -6332,6 +6499,55 @@ articles:
       zal plaatsvinden. Voor de toepassing van de vorige volzin kan in de belastingverordening worden bepaald dat
       het totaal van op één aanslagbiljet of kennisgeving verenigde verschuldigde bedragen wordt aangemerkt als één
       belastingbedrag.
+    machine_readable:
+      definitions:
+        WETTELIJK_MAXIMUM_DREMPEL_HEFFINGSMAATSTAF:
+          value: 1200000
+          description: Maximale drempel voor OZB-vrijstelling op basis van heffingsmaatstaf (€12.000 in eurocent, lid 1)
+        WETTELIJK_MAXIMUM_DREMPEL_INVORDERING:
+          value: 1000
+          description: Maximale OZB-drempel waarvoor geen invordering plaatsvindt (€10 in eurocent, lid 2)
+      open_terms:
+        - id: ozb_drempel_heffingsmaatstaf
+          type: amount
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 220h lid 1 Gemeentewet
+        - id: ozb_minimum_invorderingsbedrag
+          type: amount
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
+          legal_basis: artikel 220h lid 2 Gemeentewet
+      execution:
+        parameters:
+          - name: heffingsmaatstaf
+            type: number
+            required: true
+            description: OZB-heffingsmaatstaf (WOZ-waarde) in eurocent
+          - name: ozb_belasting
+            type: number
+            required: true
+            description: Berekend OZB-belastingbedrag in eurocent
+        output:
+          - name: heffing_vrijgesteld
+            type: boolean
+            description: Geen OZB verschuldigd omdat heffingsmaatstaf onder de in de belastingverordening bepaalde drempel blijft (lid 1)
+          - name: invordering_achterwege
+            type: boolean
+            description: Geen invordering omdat belastingbedrag de in de belastingverordening bepaalde drempel niet overschrijdt (lid 2)
+        actions:
+          - output: heffing_vrijgesteld
+            value:
+              operation: LESS_THAN
+              subject: $heffingsmaatstaf
+              value: $ozb_drempel_heffingsmaatstaf
+          - output: invordering_achterwege
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $ozb_belasting
+              value: $ozb_minimum_invorderingsbedrag
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel220h
   - number: '221'
     text: |-
@@ -6447,6 +6663,73 @@ articles:
       overheid, buiten de gemeente van zijn hoofdverblijf vertoeft, is op die grond niet belastingplichtig.
 
       3 Of iemand in de gemeente hoofdverblijf heeft, wordt naar de omstandigheden beoordeeld.
+    machine_readable:
+      definitions:
+        DREMPEL_NACHTVERBLIJF:
+          value: 90
+          description: Drempel aantal malen nachtverblijf per belastingjaar (lid 1)
+        DREMPEL_BESCHIKBAAR_HOUDEN:
+          value: 90
+          description: Drempel aantal dagen woning beschikbaar houden per belastingjaar (lid 1)
+      execution:
+        parameters:
+          - name: heeft_hoofdverblijf_in_gemeente
+            type: boolean
+            required: true
+            description: Heeft de persoon zijn werkelijke woonplaats in de gemeente (artikel 2 Gemeentewet)
+          - name: aantal_nachtverblijven
+            type: number
+            required: true
+            description: Aantal malen nachtverblijf in de gemeente gedurende het belastingjaar
+          - name: verblijf_in_inrichting
+            type: boolean
+            required: true
+            description: Verblijft de persoon als verpleegde of verzorgde in een inrichting (lid 1)
+          - name: aantal_dagen_woning_beschikbaar
+            type: number
+            required: true
+            description: Aantal dagen dat een gemeubileerde woning voor zichzelf of gezin beschikbaar wordt gehouden
+          - name: tijdelijke_openbare_functie
+            type: boolean
+            required: true
+            description: Verblijft de persoon tijdelijk buiten zijn hoofdverblijfgemeente wegens openbare betrekking, parlementair lidmaatschap of overheidsorder (lid 2)
+        output:
+          - name: nachtverblijf_drempel_overschreden
+            type: boolean
+            description: Meer dan 90 malen nachtverblijf gehouden, niet als verpleegde/verzorgde in inrichting
+          - name: woning_drempel_overschreden
+            type: boolean
+            description: Op meer dan 90 dagen een gemeubileerde woning beschikbaar gehouden
+          - name: belastingplichtig_forensenbelasting
+            type: boolean
+            description: Is de persoon belastingplichtig voor de forensenbelasting (lid 1 en 2)
+        actions:
+          - output: nachtverblijf_drempel_overschreden
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $verblijf_in_inrichting
+                - operation: GREATER_THAN
+                  subject: $aantal_nachtverblijven
+                  value: 90
+          - output: woning_drempel_overschreden
+            value:
+              operation: GREATER_THAN
+              subject: $aantal_dagen_woning_beschikbaar
+              value: 90
+          - output: belastingplichtig_forensenbelasting
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $heeft_hoofdverblijf_in_gemeente
+                - operation: NOT
+                  value: $tijdelijke_openbare_functie
+                - operation: OR
+                  conditions:
+                    - $nachtverblijf_drempel_overschreden
+                    - $woning_drempel_overschreden
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel223
   - number: '224'
     text: |-
