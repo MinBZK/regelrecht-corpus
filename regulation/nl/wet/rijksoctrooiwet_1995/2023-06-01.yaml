@@ -1341,6 +1341,35 @@ articles:
         artikel: 23q
         hoofdstuk: '2'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: klacht_datum
+            type: date
+            required: true
+            description: Datum waarop de klacht ter kennis van de raad is gebracht (art 23p lid 4) of de raad de klacht in verdere behandeling heeft genomen (art 23q lid 6)
+          - name: oproeping_datum
+            type: date
+            required: true
+            description: Datum van verzending van de oproeping bij aangetekende brief (lid 1)
+        output:
+          - name: oproeping_uiterste_datum
+            type: date
+            description: Uiterste datum voor het verzenden van de oproeping (ten hoogste 8 weken na klacht_datum, lid 1)
+          - name: verhoor_vroegste_datum
+            type: date
+            description: Vroegste datum voor het verhoor (ten minste 2 weken na oproeping_datum, lid 1)
+        actions:
+          - output: oproeping_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $klacht_datum
+              weeks: 8
+          - output: verhoor_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $oproeping_datum
+              weeks: 2
   - number: 23t
     text: |-
       1 De raad van toezicht kan getuigen en deskundigen horen. Zij worden daartoe bij aangetekende brief opgeroepen en
