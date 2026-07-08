@@ -2,7 +2,7 @@
 law: huisvestingswet
 bwb_id: BWBR0005674
 valid_from: '2012-10-01'
-enriched_at: '2026-07-07'
+enriched_at: '2026-07-08'
 
 pipeline:
   - phase: mvt_research
@@ -10,15 +10,17 @@ pipeline:
     reason: WebFetch/WebSearch tools not available; no MvT documents retrieved
   - phase: generate
     status: done
-    articles_enriched: 25
+    articles_enriched: 26
     notes: >-
-      5 additional articles enriched in this session: 18, 38, 40, 58, 84.
-      Previously enriched: 8, 9, 13c, 19, 21, 25, 26, 31, 37, 41, 44, 54, 55,
-      60b, 68, 72, 73, 74, 81, 85a.
+      26 articles enriched total. Article 20 added in 2026-07-08 session
+      (geen_voordracht_vereist — exception to nomination under art. 19).
+      Previously enriched (2026-07-07): 8, 9, 13c, 18, 19, 21, 25, 26, 31,
+      37, 38, 40, 41, 44, 54, 55, 58, 60b, 68, 72, 73, 74, 81, 84, 85a.
   - phase: reverse_validate
     status: done
     issues_found: 3
     issues_fixed: 3
+    notes: Previous session. Article 20 addition is self-contained; no scope issues.
 
 machine_readable_summary:
   articles_with_machine_readable:
@@ -27,6 +29,7 @@ machine_readable_summary:
     - 13c
     - 18
     - 19
+    - 20
     - 21
     - 25
     - 26
@@ -81,8 +84,6 @@ machine_readable_summary:
       reason: Cross-reference to art. 11/12; no own logic
     - number: '17'
       reason: Central registration; procedural
-    - number: '20'
-      reason: Exception to nomination; involves urgency comparison (non-computable)
     - number: '22'
       reason: Procedural rules delegated to gemeenteraad
     - number: '23'
@@ -209,7 +210,7 @@ untranslatables:
     suggestion: Add CEIL operation to engine
 
 reverse_validation:
-  performed_at: '2026-07-07'
+  performed_at: '2026-07-08'
   result: PASSED
   issues_found:
     - artikel: '25'
@@ -231,6 +232,14 @@ reverse_validation:
       fix: >-
         Added prerequisite boolean parameters; wrapped date computation in IF
         condition; added untranslatable for "gewichtige redenen" exception
+    - artikel: '20'
+      issue: >-
+        Article 20 was previously skipped; urgency comparison is a boolean
+        determined by the calling system — the two conditions ARE computable
+        as caller-supplied boolean parameters
+      fix: >-
+        Added machine_readable with eigenaar_kandidaat_voldoet_aan_vergunningseisen
+        and geen_urgentere_woningzoekenden_ingeschreven → geen_voordracht_vereist
   all_elements_traceable: true
   hallucinations_detected: 0
 

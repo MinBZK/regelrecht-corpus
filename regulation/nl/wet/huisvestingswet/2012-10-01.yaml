@@ -834,6 +834,40 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0005674#Artikel10
       [ref4]: https://wetten.overheid.nl/BWBR0005674#Artikel11
     url: https://wetten.overheid.nl/BWBR0005674/2012-10-01#Artikel20
+    machine_readable:
+      execution:
+        parameters:
+          - name: eigenaar_kandidaat_voldoet_aan_vergunningseisen
+            type: boolean
+            required: true
+            description: >-
+              Aan de door de eigenaar voorgedragen woningzoekende kan op grond
+              van de ingevolge de artikelen 9, 10 en 11 geldende eisen een
+              huisvestingsvergunning worden verleend (artikel 20)
+          - name: geen_urgentere_woningzoekenden_ingeschreven
+            type: boolean
+            required: true
+            description: >-
+              Er zijn geen in aanmerking komende woningzoekenden ingeschreven
+              wier behoefte aan woonruimte urgenter is dan die van de door de
+              eigenaar voorgedragen woningzoekende (artikel 20)
+        output:
+          - name: geen_voordracht_vereist
+            type: boolean
+            description: >-
+              Of burgemeester en wethouders in afwijking van artikel 19 lid 1
+              geen voordracht hoeven te doen (artikel 20)
+        actions:
+          - output: geen_voordracht_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $eigenaar_kandidaat_voldoet_aan_vergunningseisen
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_urgentere_woningzoekenden_ingeschreven
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0005674
