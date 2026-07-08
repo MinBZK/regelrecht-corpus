@@ -696,6 +696,29 @@ articles:
       5 De gegevens, bedoeld in het derde lid, worden bewaard tot ten minste zeven jaar na het einde van het kalenderjaar
       waarin de terbeschikkingstelling van de arbeidskracht is beëindigd.
     url: https://wetten.overheid.nl/BWBR0009616/2026-07-01#Artikel12c
+    machine_readable:
+      untranslatables:
+        - construct: "einde van het kalenderjaar"
+          reason: "Extracting the year component from a date and constructing December 31 of that year is not supported; no YEAR() or date-component extraction operation exists in the engine"
+          suggestion: "Add YEAR, MONTH, DAY date-component extraction operations to enable computing end-of-calendar-year from a given placement-end date"
+          legal_text_excerpt: "zeven jaar na het einde van het kalenderjaar waarin de terbeschikkingstelling van de arbeidskracht is beëindigd"
+          accepted: false
+      execution:
+        parameters:
+          - name: einde_kalenderjaar_terbeschikkingstelling
+            type: date
+            required: true
+            description: "Einde van het kalenderjaar (31 december) van het jaar waarin de terbeschikkingstelling is beëindigd; de berekening van dit eindejaarsdatum vanuit de beëindigingsdatum is niet uitdrukbaar (zie untranslatables)"
+        output:
+          - name: bewaarplicht_uiterste_datum
+            type: date
+            description: "Uiterste datum tot wanneer de gegevens bewaard moeten worden: ten minste zeven jaar na het einde van het kalenderjaar van beëindiging (artikel 12c lid 5)"
+        actions:
+          - output: bewaarplicht_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $einde_kalenderjaar_terbeschikkingstelling
+              years: 7
   - number: 12d
     text: |-
       1
@@ -725,6 +748,29 @@ articles:
         artikel: 12c
         hoofdstuk: 3a
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "einde van het kalenderjaar"
+          reason: "Extracting the year component from a date and constructing December 31 of that year is not supported; no YEAR() or date-component extraction operation exists in the engine"
+          suggestion: "Add YEAR, MONTH, DAY date-component extraction operations to enable computing end-of-calendar-year from a given placement-end date"
+          legal_text_excerpt: "zeven jaar na het einde van het kalenderjaar waarin de terbeschikkingstelling van de arbeidskracht is beëindigd"
+          accepted: false
+      execution:
+        parameters:
+          - name: einde_kalenderjaar_terbeschikkingstelling
+            type: date
+            required: true
+            description: "Einde van het kalenderjaar (31 december) van het jaar waarin de terbeschikkingstelling is beëindigd; de berekening van dit eindejaarsdatum vanuit de beëindigingsdatum is niet uitdrukbaar (zie untranslatables)"
+        output:
+          - name: bewaarplicht_uiterste_datum
+            type: date
+            description: "Uiterste datum tot wanneer de inlenergegevens bewaard moeten worden: ten minste zeven jaar na het einde van het kalenderjaar van beëindiging (artikel 12d lid 3)"
+        actions:
+          - output: bewaarplicht_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $einde_kalenderjaar_terbeschikkingstelling
+              years: 7
   - number: 12e
     text: |-
       1 Onze Minister verleent op aanvraag een ontheffing van [artikel 12c, eerste lid][ref1], indien:
@@ -1521,6 +1567,23 @@ articles:
       - id: ref2
         bwb_id: BWBR0014194
         artikel: '35'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_wisseling_bestuurders
+            type: date
+            required: true
+            description: "Datum van de wisseling van een bestuurder, vennoot, maat of beheerder als bedoeld in artikel 35 tweede lid van de Wet justitiële en strafvorderlijke gegevens (lid 3)"
+        output:
+          - name: uiterste_datum_vog_na_wisseling
+            type: date
+            description: "Uiterste datum voor het overleggen van een verklaring omtrent het gedrag na een wisseling van bestuurders: uiterlijk drie maanden na de wisseling (artikel 12o lid 3)"
+        actions:
+          - output: uiterste_datum_vog_na_wisseling
+            value:
+              operation: DATE_ADD
+              date: $datum_wisseling_bestuurders
+              months: 3
   - number: 12p
     text: |-
       1 Bij een aanvraag tot toelating en een voorlopige toelating legt de aanvrager bewijs van financiële zekerheid
@@ -2164,6 +2227,32 @@ articles:
         bwb_id: BWBR0009616
         artikel: 7b
         hoofdstuk: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: niet_naleven_artikel_7a
+            type: boolean
+            required: true
+            description: "Is artikel 7a eerste of tweede lid niet nageleefd (lid 1)?"
+          - name: niet_naleven_artikel_7b_aangewezen_als_overtreding
+            type: boolean
+            required: true
+            description: "Is artikel 7b niet nageleefd voor zover dat bij of krachtens AMvB als overtreding is aangemerkt (lid 2)?"
+        output:
+          - name: is_overtreding
+            type: boolean
+            description: "Is er sprake van een overtreding als bedoeld in artikel 16?"
+        actions:
+          - output: is_overtreding
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $niet_naleven_artikel_7a
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_naleven_artikel_7b_aangewezen_als_overtreding
+                  value: true
   - number: '17'
     text: |-
       1 Onverminderd [artikel 5:48, tweede lid, van de Algemene wet bestuursrecht][ref1] vermeldt het rapport in ieder
