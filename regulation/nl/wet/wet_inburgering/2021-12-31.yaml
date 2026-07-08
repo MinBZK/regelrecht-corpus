@@ -469,6 +469,68 @@ articles:
         bwb_id: BWBR0020611
         artikel: '5'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_pvt_afgerond
+            type: boolean
+            required: true
+            description: >-
+              De inburgeringsplichtige heeft het participatieverklaringstraject, bedoeld in
+              het tweede lid, onderdeel a, afgerond (art. 7 lid 2a)
+          - name: heeft_taalexamen_behaald
+            type: boolean
+            required: true
+            description: >-
+              De inburgeringsplichtige heeft de examinering van mondelinge en schriftelijke
+              vaardigheden in de Nederlandse taal op ten minste niveau A2 behaald (art. 7 lid 2b)
+          - name: heeft_samenlevingsexamen_behaald
+            type: boolean
+            required: true
+            description: >-
+              De inburgeringsplichtige heeft de examinering van de kennis van de Nederlandse
+              samenleving behaald (art. 7 lid 2c)
+          - name: heeft_aangewezen_diploma_art5c
+            type: boolean
+            required: true
+            description: >-
+              De inburgeringsplichtige beschikt over een diploma, certificaat of ander document
+              bedoeld in artikel 5, eerste lid, onderdeel c (art. 7 lid 1b)
+        output:
+          - name: heeft_voldaan_aan_inburgeringsexamen
+            type: boolean
+            description: >-
+              De inburgeringsplichtige heeft het inburgeringsexamen behaald: PVT afgerond en
+              taal- en samenlevingsexamen behaald (art. 7 lid 2a, b en c)
+          - name: heeft_voldaan_aan_inburgeringsplicht
+            type: boolean
+            description: >-
+              De inburgeringsplichtige heeft voldaan aan de inburgeringsplicht: het
+              inburgeringsexamen behaald of een vrijstellend diploma behaald (art. 7 lid 1a of 1b)
+        actions:
+          - output: heeft_voldaan_aan_inburgeringsexamen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_pvt_afgerond
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_taalexamen_behaald
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_samenlevingsexamen_behaald
+                  value: true
+          - output: heeft_voldaan_aan_inburgeringsplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_voldaan_aan_inburgeringsexamen
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_aangewezen_diploma_art5c
+                  value: true
   - number: 7a
     text: |-
       1 De inburgeringsplichtige rondt binnen één jaar het participatieverklaringstraject, bedoeld in
