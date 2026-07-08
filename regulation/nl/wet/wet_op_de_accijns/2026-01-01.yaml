@@ -3142,6 +3142,26 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007168#Artikel69
       [ref2]: https://wetten.overheid.nl/BWBR0007168#Artikel69
+    machine_readable:
+      execution:
+        parameters:
+          - name: hoeveelheid_1000kg
+            type: number
+            required: true
+            description: Hoeveelheid vloeibaar gemaakt petroleumgas in eenheden van 1000 kilogram
+        output:
+          - name: teruggaaf_lpg
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Teruggaaf accijns voor vloeibaar gemaakt petroleumgas (€108,16 per 1000 kg)
+        actions:
+          - output: teruggaaf_lpg
+            value:
+              operation: MULTIPLY
+              values:
+                - $hoeveelheid_1000kg
+                - 10816
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel71g
     references:
       - id: ref1
@@ -3191,6 +3211,97 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel9.7.1.1
       [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel9.7.4.4
+    machine_readable:
+      untranslatables:
+        - construct: "energie-inhoud lookup uit bijlage III van de Richtlijn hernieuwbare energie"
+          reason: "Table lookup from external directive annex is not available as an engine operation; energie-inhoud values must be supplied as parameters"
+          suggestion: "Add TABLE_LOOKUP operation to engine, or resolve energie-inhoud from the directive annex before calling this article"
+          legal_text_excerpt: "Voor de vaststelling van de energie-inhoud per volume van de biobrandstof of hernieuwbare brandstof en die van de gelijkwaardige motorbrandstof wordt voor zover mogelijk uitgegaan van hetgeen hiertoe is opgenomen in bijlage III van de Richtlijn hernieuwbare energie."
+          accepted: false
+      execution:
+        parameters:
+          - name: hoeveelheid_biobrandstof
+            type: number
+            required: true
+            description: Hoeveelheid biobrandstof of hernieuwbare brandstof in de motorbrandstof in liters
+          - name: energie_inhoud_bio
+            type: number
+            required: true
+            description: Energie-inhoud van de biobrandstof/hernieuwbare brandstof in MJ/L (conform bijlage III Richtlijn hernieuwbare energie)
+          - name: energie_inhoud_equiv
+            type: number
+            required: true
+            description: Energie-inhoud van de gelijkwaardige motorbrandstof in MJ/L (conform bijlage III Richtlijn hernieuwbare energie)
+          - name: accijnstarief_equiv_per_liter
+            type: number
+            required: true
+            description: Accijnstarief van de gelijkwaardige motorbrandstof in eurocent per liter (conform artikel 27)
+          - name: percentage_bio_energie
+            type: number
+            required: true
+            description: Percentage van de energie in de motorbrandstof afkomstig van de biobrandstof of hernieuwbare brandstof
+        output:
+          - name: heeft_recht_op_teruggaaf
+            type: boolean
+            description: Voldoet aan voorwaarden lid 2 (lagere energie-inhoud en ≥10% bio-energie)
+          - name: teruggaaf_biobrandstof
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Teruggaaf accijns voor biobrandstof of hernieuwbare brandstof
+        actions:
+          - output: lagere_energie_inhoud
+            value:
+              operation: LESS_THAN
+              subject: $energie_inhoud_bio
+              value: $energie_inhoud_equiv
+          - output: voldoende_bio_energie
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $percentage_bio_energie
+              value: 10
+          - output: heeft_recht_op_teruggaaf
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $lagere_energie_inhoud
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoende_bio_energie
+                  value: true
+          - output: energie_verschil
+            value:
+              operation: SUBTRACT
+              values:
+                - $energie_inhoud_equiv
+                - $energie_inhoud_bio
+          - output: teruggaaf_percentage
+            value:
+              operation: DIVIDE
+              values:
+                - $energie_verschil
+                - $energie_inhoud_equiv
+          - output: teruggaaf_per_liter
+            value:
+              operation: MULTIPLY
+              values:
+                - $teruggaaf_percentage
+                - $accijnstarief_equiv_per_liter
+          - output: teruggaaf_biobrandstof
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_recht_op_teruggaaf
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $teruggaaf_per_liter
+                      - $hoeveelheid_biobrandstof
+              default: 0
     url: https://wetten.overheid.nl/BWBR0005251/2026-01-01#Artikel71h
     references:
       - id: ref1
