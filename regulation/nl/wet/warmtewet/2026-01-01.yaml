@@ -187,6 +187,50 @@ articles:
         artikel: 8b
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: leverancier_is_verhuurder_voor_verbruiker
+            type: boolean
+            required: true
+            description: Leverancier treedt tevens op als verhuurder voor de betreffende verbruiker (lid 1, onderdeel a)
+          - name: leverancier_is_vve_en_verbruiker_is_lid
+            type: boolean
+            required: true
+            description: Leverancier is tevens de VvE waarbij de verbruiker als lid is aangesloten (lid 1, onderdeel b.i)
+          - name: leverancier_is_vve_en_verhuurder_is_lid
+            type: boolean
+            required: true
+            description: Leverancier is tevens de VvE waarbij een verhuurder als bedoeld in onderdeel a als lid is aangesloten (lid 1, onderdeel b.ii)
+          - name: leverancier_is_koepel_vve
+            type: boolean
+            required: true
+            description: Leverancier is tevens een VvE waarbij meerdere VvEs als bedoeld in onderdeel b zijn aangesloten (lid 1, onderdeel c)
+        output:
+          - name: wet_van_toepassing
+            type: boolean
+            description: Geeft aan of de Warmtewet van toepassing is op de leverancier-verbruiker relatie (lid 1)
+        actions:
+          - output: uitzondering_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $leverancier_is_verhuurder_voor_verbruiker
+                  value: true
+                - operation: EQUALS
+                  subject: $leverancier_is_vve_en_verbruiker_is_lid
+                  value: true
+                - operation: EQUALS
+                  subject: $leverancier_is_vve_en_verhuurder_is_lid
+                  value: true
+                - operation: EQUALS
+                  subject: $leverancier_is_koepel_vve
+                  value: true
+          - output: wet_van_toepassing
+            value:
+              operation: NOT
+              value: $uitzondering_van_toepassing
   - number: 1b
     text: |-
       1 Onze Minister kan, met inachtneming van bindende besluiten van de Raad van de Europese Unie, van het Europees
@@ -387,6 +431,103 @@ articles:
       d. het bestaan van een extreme situatie die niet aan de leverancier of verbruiker kan worden toegerekend als
       bedoeld in het tweede lid, onderdeel a.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel3a
+    machine_readable:
+      open_terms:
+        - id: compensatie_hoogte_per_storing
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 3a, derde lid, onderdeel b Warmtewet
+      execution:
+        parameters:
+          - name: storing_is_ernstig
+            type: boolean
+            required: true
+            description: Is er sprake van een ernstige storing (conform ministeriële regeling art. 3a lid 3a)
+          - name: oorzaak_in_warmtenet
+            type: boolean
+            required: true
+            description: Oorzaak storing gelegen in het warmtenet van leverancier of netbeheerder (lid 1, onderdeel a)
+          - name: oorzaak_in_afleverset_eigendom_leverancier
+            type: boolean
+            required: true
+            description: Oorzaak in afleverset voor warmte die eigendom is van leverancier (lid 1, onderdeel b)
+          - name: oorzaak_in_aansluiting
+            type: boolean
+            required: true
+            description: Oorzaak in de aansluiting (lid 1, onderdeel c)
+          - name: oorzaak_in_inpandig_leidingstelsel
+            type: boolean
+            required: true
+            description: Oorzaak in het inpandig leidingstelsel van de gebouweigenaar (lid 1, onderdeel d)
+          - name: extreme_situatie_niet_toerekenbaar
+            type: boolean
+            required: true
+            description: Storing is gevolg van extreme situatie die niet aan leverancier of netbeheerder kan worden toegerekend (lid 2, onderdeel a)
+          - name: storing_duur_minder_dan_24_uur
+            type: boolean
+            required: true
+            description: De storing duurt minder dan 24 uur (lid 2, onderdeel b)
+          - name: geen_eerdere_storingen_in_12_maanden
+            type: boolean
+            required: true
+            description: In periode van 12 maanden voor de storing zijn er geen storingen geweest in hetzelfde systeem (lid 2, onderdeel b)
+        output:
+          - name: compensatie_verschuldigd
+            type: boolean
+            description: Geeft aan of leverancier compensatie verschuldigd is bij ernstige storing in de warmtelevering
+          - name: compensatie_hoogte
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Hoogte van de compensatie bij ernstige storing (vastgesteld bij ministeriële regeling)
+        actions:
+          - output: oorzaak_in_scope
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $oorzaak_in_warmtenet
+                  value: true
+                - operation: EQUALS
+                  subject: $oorzaak_in_afleverset_eigendom_leverancier
+                  value: true
+                - operation: EQUALS
+                  subject: $oorzaak_in_aansluiting
+                  value: true
+                - operation: EQUALS
+                  subject: $oorzaak_in_inpandig_leidingstelsel
+                  value: true
+          - output: uitzondering_lid2
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $extreme_situatie_niet_toerekenbaar
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $storing_duur_minder_dan_24_uur
+                      value: true
+                    - operation: EQUALS
+                      subject: $geen_eerdere_storingen_in_12_maanden
+                      value: true
+          - output: compensatie_verschuldigd
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $storing_is_ernstig
+                  value: true
+                - operation: EQUALS
+                  subject: $oorzaak_in_scope
+                  value: true
+                - operation: NOT
+                  value: $uitzondering_lid2
+          - output: compensatie_hoogte
+            value: $compensatie_hoogte_per_storing
   - number: 3b
     text: |-
       1 Verbruikers kunnen geschillen die voortvloeien uit een overeenkomst tot levering van warmte, onverminderd de
@@ -506,6 +647,24 @@ articles:
         artikel: '5'
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      open_terms:
+        - id: tarief_afsluiting
+          type: amount
+          required: true
+          delegated_to: autoriteit_consument_en_markt
+          delegation_type: BESLUIT_ACM
+          legal_basis: artikel 4a, eerste lid Warmtewet
+      execution:
+        output:
+          - name: maximum_tarief_afsluiting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het maximumtarief voor afsluiting van een aansluiting, vastgesteld door de ACM (lid 1)
+        actions:
+          - output: maximum_tarief_afsluiting
+            value: $tarief_afsluiting
   - number: '5'
     text: |-
       1 De Autoriteit Consument en Markt stelt de maximumprijs vast die een leverancier ten hoogste zal berekenen
@@ -545,6 +704,37 @@ articles:
       8 De voordracht voor de algemene maatregel van bestuur, bedoeld in het zevende lid, wordt niet eerder gedaan dan
       vier weken nadat het ontwerp aan beide kamers der Staten-Generaal is overgelegd.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel5
+    machine_readable:
+      open_terms:
+        - id: maximumprijs_gebruiksafhankelijk_eurocent_per_gj
+          type: amount
+          required: true
+          delegated_to: autoriteit_consument_en_markt
+          delegation_type: BESLUIT_ACM
+          legal_basis: artikel 5, eerste en tweede lid onderdeel b Warmtewet
+        - id: maximumprijs_gebruiksonafhankelijk_eurocent
+          type: amount
+          required: true
+          delegated_to: autoriteit_consument_en_markt
+          delegation_type: BESLUIT_ACM
+          legal_basis: artikel 5, eerste en tweede lid onderdeel b Warmtewet
+      execution:
+        output:
+          - name: maximumprijs_gebruiksafhankelijk_eurocent_per_gj
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Gebruiksafhankelijk deel van de maximumprijs (eurocent per gigajoule), vastgesteld door ACM (lid 1, lid 2b)
+          - name: maximumprijs_gebruiksonafhankelijk_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Gebruiksonafhankelijk deel van de maximumprijs (eurocent), vastgesteld door ACM (lid 1, lid 2b)
+        actions:
+          - output: maximumprijs_gebruiksafhankelijk_eurocent_per_gj
+            value: $maximumprijs_gebruiksafhankelijk_eurocent_per_gj
+          - output: maximumprijs_gebruiksonafhankelijk_eurocent
+            value: $maximumprijs_gebruiksonafhankelijk_eurocent
   - number: 5a
     text: |-
       1 In afwijking van [artikel 2, derde lid, onderdeel a, onder 1°][ref1], kunnen een leverancier en een verbruiker
@@ -586,6 +776,24 @@ articles:
 
       b. de berekening van de hoogte van het bedrag, bedoeld in het eerste lid, per categorie.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel6
+    machine_readable:
+      open_terms:
+        - id: maximum_aansluitbijdrage
+          type: amount
+          required: true
+          delegated_to: autoriteit_consument_en_markt
+          delegation_type: BESLUIT_ACM
+          legal_basis: artikel 6, eerste lid Warmtewet
+      execution:
+        output:
+          - name: maximum_aansluitbijdrage
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximumbedrag voor de eenmalige aansluitbijdrage op een warmtenet, vastgesteld door ACM (lid 1)
+        actions:
+          - output: maximum_aansluitbijdrage
+            value: $maximum_aansluitbijdrage
   - number: '7'
     text: |-
       1 De Autoriteit Consument en Markt verzamelt, analyseert en bewerkt inlichtingen en gegevens met betrekking tot
@@ -817,6 +1025,43 @@ articles:
 
       c. de verhuurder of de eigenaar is van het gebouw, ten behoeve waarvan de warmte wordt geleverd.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_verbruikers_tegelijk
+            type: number
+            required: true
+            description: Het maximum aantal verbruikers waaraan de leverancier tegelijk warmte levert (lid 2, onderdeel a)
+          - name: jaarlijkse_levering_gigajoules
+            type: number
+            required: true
+            description: De hoeveelheid warmte geleverd per jaar in gigajoules (lid 2, onderdeel b)
+          - name: leverancier_is_verhuurder_of_eigenaar_gebouw
+            type: boolean
+            required: true
+            description: De leverancier is de verhuurder of eigenaar van het gebouw waarvoor de warmte wordt geleverd (lid 2, onderdeel c)
+        output:
+          - name: vergunningplicht_van_toepassing
+            type: boolean
+            description: Geeft aan of de leverancier een vergunning nodig heeft voor levering van warmte aan verbruikers (lid 1 jo. lid 2)
+        actions:
+          - output: uitzondering_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $aantal_verbruikers_tegelijk
+                  value: 10
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $jaarlijkse_levering_gigajoules
+                  value: 10000
+                - operation: EQUALS
+                  subject: $leverancier_is_verhuurder_of_eigenaar_gebouw
+                  value: true
+          - output: vergunningplicht_van_toepassing
+            value:
+              operation: NOT
+              value: $uitzondering_van_toepassing
   - number: '10'
     text: |-
       1 Onze Minister verleent op aanvraag een vergunning indien de aanvrager genoegzaam aantoont dat hij:
@@ -1146,6 +1391,62 @@ articles:
       - id: ref11
         bwb_id: BWBR0005537
         artikel: 5:48
+    machine_readable:
+      definitions:
+        MAXIMUM_BOETE_EUROCENT:
+          value: 90000000
+          description: "€ 900.000 in eurocent (art. 18 lid 2)"
+        PERCENTAGE_OMZET:
+          value: 0.01
+          description: "1% van de omzet van de overtreder (art. 18 lid 2)"
+      execution:
+        parameters:
+          - name: omzet_overtreder
+            type: number
+            required: true
+            description: De omzet van de overtreder in eurocent (lid 2)
+          - name: recidive_binnen_vijf_jaar
+            type: boolean
+            required: true
+            description: Eerdere onherroepelijke boete voor zelfde of soortgelijk voorschrift binnen 5 jaar (lid 3)
+        output:
+          - name: maximale_boete_basis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale basis bestuurlijke boete (€900.000 of 1% omzet, hoogste prevaleert) (lid 2)
+          - name: maximale_bestuurlijke_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete inclusief eventuele verhoging bij recidive (lid 2 jo. lid 3)
+        actions:
+          - output: boete_percentage_omzet
+            value:
+              operation: MULTIPLY
+              values:
+                - $omzet_overtreder
+                - $PERCENTAGE_OMZET
+          - output: maximale_boete_basis
+            value:
+              operation: MAX
+              values:
+                - $MAXIMUM_BOETE_EUROCENT
+                - $boete_percentage_omzet
+          - output: maximale_bestuurlijke_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $recidive_binnen_vijf_jaar
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $maximale_boete_basis
+                      - 2
+              default: $maximale_boete_basis
   - number: '20'
     text: |-
       1 Overeenkomstig bij of krachtens algemene maatregel van bestuur te stellen regels is een vergoeding verschuldigd
@@ -1309,6 +1610,23 @@ articles:
       van oorsprong voor thermische energie uit hernieuwbare bronnen van een Nederlandse rekening voor garanties van
       oorsprong wordt afgeboekt.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel28a
+    machine_readable:
+      execution:
+        parameters:
+          - name: levering_datum
+            type: date
+            required: true
+            description: De datum waarop thermische energie uit hernieuwbare bronnen is geleverd aan de verbruiker in Nederland
+        output:
+          - name: deadline_afboeking_garanties
+            type: date
+            description: Uiterste datum waarop garanties van oorsprong moeten zijn afgeboekt van de Nederlandse rekening (binnen één maand na levering)
+        actions:
+          - output: deadline_afboeking_garanties
+            value:
+              operation: DATE_ADD
+              date: $levering_datum
+              months: 1
   - number: 28b
     text: |-
       1 Garanties van oorsprong voor thermische energie uit hernieuwbare bronnen uitgegeven door een onafhankelijke
