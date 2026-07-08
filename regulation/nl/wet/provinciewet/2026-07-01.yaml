@@ -364,6 +364,36 @@ articles:
       2 Voorts vergaderen zij indien de commissaris van de Koning het nodig oordeelt of indien ten minste een vijfde van
       het aantal leden waaruit provinciale staten bestaan schriftelijk, met opgave van redenen, daarom verzoekt.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel17
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_verzoekende_leden
+            type: number
+            required: true
+            description: Aantal leden van provinciale staten dat schriftelijk verzoekt om een vergadering
+          - name: totaal_leden_provinciale_staten
+            type: number
+            required: true
+            description: Totaal aantal leden waaruit provinciale staten bestaan (zie artikel 8)
+        output:
+          - name: vijfvoud_verzoekende_leden
+            type: number
+            description: Vijfvoud van het aantal verzoekende leden (tussenresultaat)
+          - name: voldoet_aan_quorum_vergaderverzoek
+            type: boolean
+            description: Voldoet het aantal verzoekende leden aan de eis van ten minste een vijfde van het totaal?
+        actions:
+          - output: vijfvoud_verzoekende_leden
+            value:
+              operation: MULTIPLY
+              values:
+                - $aantal_verzoekende_leden
+                - 5
+          - output: voldoet_aan_quorum_vergaderverzoek
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $vijfvoud_verzoekende_leden
+              value: $totaal_leden_provinciale_staten
   - number: '18'
     text: |-
       Provinciale staten vergaderen na de periodieke verkiezing van hun leden voor de eerste maal in nieuwe samenstelling
@@ -392,6 +422,36 @@ articles:
       belegd alleen beraadslagen of besluiten, indien blijkens de presentielijst meer dan de helft van het aantal zitting
       hebbende leden tegenwoordig is.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel20
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_aanwezige_leden
+            type: number
+            required: true
+            description: Aantal leden dat aanwezig is blijkens de presentielijst
+          - name: aantal_zitting_hebbende_leden
+            type: number
+            required: true
+            description: Totaal aantal leden dat zitting heeft in provinciale staten
+        output:
+          - name: dubbel_aanwezige_leden
+            type: number
+            description: Tweevoud van het aantal aanwezige leden (tussenresultaat)
+          - name: quorum_vergadering_gehaald
+            type: boolean
+            description: Zijn meer dan de helft van de zitting hebbende leden aanwezig (quorum voor opening vergadering)?
+        actions:
+          - output: dubbel_aanwezige_leden
+            value:
+              operation: MULTIPLY
+              values:
+                - $aantal_aanwezige_leden
+                - 2
+          - output: quorum_vergadering_gehaald
+            value:
+              operation: GREATER_THAN
+              subject: $dubbel_aanwezige_leden
+              value: $aantal_zitting_hebbende_leden
   - number: '21'
     text: |-
       1 De commissaris van de Koning heeft het recht in de vergadering aan de beraadslaging deel te nemen.
@@ -505,6 +565,36 @@ articles:
       b. in een vergadering als bedoeld in artikel 20, tweede lid, voor zover het betreft onderwerpen die in de daaraan
       voorafgaande, ingevolge artikel 20, eerste lid, niet geopende vergadering aan de orde waren gesteld.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel29
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_deelgenomen_aan_stemming
+            type: number
+            required: true
+            description: Aantal leden dat aan de stemming heeft deelgenomen
+          - name: aantal_stemgerechtigde_leden
+            type: number
+            required: true
+            description: Aantal leden dat zitting heeft en zich niet van deelneming aan de stemming moet onthouden
+        output:
+          - name: dubbel_deelgenomen
+            type: number
+            description: Tweevoud van het aantal deelgenomen leden (tussenresultaat)
+          - name: stemming_geldig
+            type: boolean
+            description: Is de stemming geldig (meer dan de helft van de stemgerechtigde leden heeft deelgenomen)?
+        actions:
+          - output: dubbel_deelgenomen
+            value:
+              operation: MULTIPLY
+              values:
+                - $aantal_deelgenomen_aan_stemming
+                - 2
+          - output: stemming_geldig
+            value:
+              operation: GREATER_THAN
+              subject: $dubbel_deelgenomen
+              value: $aantal_stemgerechtigde_leden
   - number: '30'
     text: |-
       1 Voor het tot stand komen van een beslissing bij stemming wordt de volstrekte meerderheid vereist van hen die een
@@ -513,6 +603,36 @@ articles:
       2 Bij een schriftelijke stemming wordt onder het uitbrengen van een stem verstaan het inleveren van een behoorlijk
       ingevuld stembriefje.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel30
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_voor_stemmen
+            type: number
+            required: true
+            description: Aantal stemmen voor het voorstel
+          - name: aantal_uitgebrachte_stemmen
+            type: number
+            required: true
+            description: Totaal aantal uitgebrachte stemmen (behoorlijk ingevuld stembriefje bij schriftelijke stemming)
+        output:
+          - name: dubbel_voor_stemmen
+            type: number
+            description: Tweevoud van het aantal voorstemmen (tussenresultaat)
+          - name: beslissing_aangenomen
+            type: boolean
+            description: Is het voorstel aangenomen (volstrekte meerderheid van uitgebrachte stemmen)?
+        actions:
+          - output: dubbel_voor_stemmen
+            value:
+              operation: MULTIPLY
+              values:
+                - $aantal_voor_stemmen
+                - 2
+          - output: beslissing_aangenomen
+            value:
+              operation: GREATER_THAN
+              subject: $dubbel_voor_stemmen
+              value: $aantal_uitgebrachte_stemmen
   - number: '31'
     text: |-
       1 De stemming over personen voor het doen van benoemingen, voordrachten of aanbevelingen is geheim.
@@ -1511,6 +1631,23 @@ articles:
       3 Een besluit als bedoeld in het tweede lid vervalt, indien niet binnen een maand een besluit omtrent de schorsing
       is genomen.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel62
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ministersbesluit_geen_uitoefening
+            type: date
+            required: true
+            description: Datum waarop de Minister heeft bepaald dat de commissaris zijn functie niet uitoefent (lid 2)
+        output:
+          - name: uiterste_datum_schorsingsbesluit
+            type: date
+            description: Uiterste datum waarop een besluit omtrent schorsing moet zijn genomen voordat het ministersbesluit vervalt (1 maand na het ministersbesluit)
+        actions:
+          - output: uiterste_datum_schorsingsbesluit
+            value:
+              operation: DATE_ADD
+              date: $datum_ministersbesluit_geen_uitoefening
+              months: 1
   - number: '63'
     text: Voor de benoembaarheid tot commissaris is het Nederlanderschap vereist.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel63
@@ -4753,6 +4890,29 @@ articles:
       eerste lid, bedoelde stukken binnen twee weken na de vaststelling, doch in ieder geval vóór 15 november van het
       jaar voorafgaande aan dat waarvoor de begroting dient, aan Onze Minister.
     url: https://wetten.overheid.nl/BWBR0005645/2026-07-01#Artikel195
+    machine_readable:
+      untranslatables:
+        - construct: "doch in ieder geval vóór 15 november van het jaar voorafgaande aan dat waarvoor de begroting dient"
+          reason: "Fixed calendar date (15 november) as upper bound requires MIN over two dates, which is not supported as an engine operation"
+          legal_text_excerpt: "binnen twee weken na de vaststelling, doch in ieder geval vóór 15 november van het jaar voorafgaande aan dat waarvoor de begroting dient"
+          suggestion: "Add MIN_DATE operation or allow DATE construction with fixed month/day combined with LESS_THAN constraint"
+          accepted: false
+      execution:
+        parameters:
+          - name: vaststellingsdatum_begroting
+            type: date
+            required: true
+            description: Datum waarop provinciale staten de begroting hebben vastgesteld
+        output:
+          - name: uiterste_inzending_datum_begroting
+            type: date
+            description: Uiterste inzendingsdatum op basis van de twee-weken-termijn na vaststelling (de 15-november-grens is niet uitdrukbaar)
+        actions:
+          - output: uiterste_inzending_datum_begroting
+            value:
+              operation: DATE_ADD
+              date: $vaststellingsdatum_begroting
+              weeks: 2
   - number: '196'
     text: |-
       1 Besluiten tot wijziging van de begroting kunnen tot uiterlijk het eind van het desbetreffende begrotingsjaar
