@@ -36,6 +36,57 @@ articles:
       - id: ref1
         bwb_id: BWBR0005290
         artikel: '610'
+    machine_readable:
+      endpoint: is_ambtenaar
+      execution:
+        parameters:
+          - name: heeft_arbeidsovereenkomst_nl
+            type: boolean
+            required: true
+            description: Persoon heeft arbeidsovereenkomst naar Nederlands recht met een overheidswerkgever (lid 1)
+          - name: werkgever_is_overheidswerkgever
+            type: boolean
+            required: true
+            description: De werkgever is een overheidswerkgever in de zin van artikel 2
+          - name: heeft_overeenkomst_zonder_loon
+            type: boolean
+            required: false
+            description: Persoon heeft overeenkomst zonder aanspraak op loon als bedoeld in artikel 610 BW (lid 2)
+          - name: functie_aangewezen_bij_amvb
+            type: boolean
+            required: false
+            description: De functie is aangewezen bij AMvB op voordracht van de Minister van BZK (lid 2)
+        output:
+          - name: is_ambtenaar
+            type: boolean
+            description: Of de persoon ambtenaar is in de zin van de Ambtenarenwet 2017
+        actions:
+          - output: is_ambtenaar_lid_1
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_arbeidsovereenkomst_nl
+                  value: true
+                - operation: EQUALS
+                  subject: $werkgever_is_overheidswerkgever
+                  value: true
+          - output: is_ambtenaar_lid_2
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_overeenkomst_zonder_loon
+                  value: true
+                - operation: EQUALS
+                  subject: $functie_aangewezen_bij_amvb
+                  value: true
+          - output: is_ambtenaar
+            value:
+              operation: OR
+              conditions:
+                - $is_ambtenaar_lid_1
+                - $is_ambtenaar_lid_2
   - number: '2'
     text: |-
       1 Overheidswerkgever in de zin van deze wet zijn:
@@ -129,6 +180,97 @@ articles:
       - id: ref11
         bwb_id: BWBR0003906
         artikel: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: organisatie_type
+            type: string
+            required: true
+            description: "Type organisatie: staat|provincie|gemeente|waterschap|openbaar_lichaam_beroep_bedrijf|ander_openbaar_lichaam_met_verordenende_bevoegdheid|egts|krachtens_publiekrecht_ingesteld|privaatrecht_openbaar_gezag"
+          - name: kernactiviteit_openbaar_gezag
+            type: boolean
+            required: false
+            description: De uitoefening van openbaar gezag is de kernactiviteit van de rechtspersoon (lid 1i)
+          - name: betreft_instandhouding_openbare_school_gemeente
+            type: boolean
+            required: false
+            description: Gemeente voor zover het de instandhouding van openbare scholen betreft (lid 2a)
+          - name: is_openbare_rechtspersoon_onderwijs
+            type: boolean
+            required: false
+            description: Openbare rechtspersoon ex WPO art. 47, WEC art. 50 of WVO 2020 art. 3.4 (lid 2b)
+          - name: is_openbare_instelling_bve
+            type: boolean
+            required: false
+            description: Openbare instelling als bedoeld in WEB artikel 1.1.1 (lid 2c)
+          - name: is_openbare_instelling_hoger_onderwijs
+            type: boolean
+            required: false
+            description: Openbare instelling bedoeld in de bijlage bij WHW (onderdelen a, h en j) (lid 2d)
+          - name: is_instelling_wetenschappelijk_onderzoek_whw
+            type: boolean
+            required: false
+            description: Instelling voor wetenschappelijk onderzoek als bedoeld in WHW artikel 1.5 (lid 2e)
+          - name: is_nwo
+            type: boolean
+            required: false
+            description: Nederlandse Organisatie voor Wetenschappelijk Onderzoek (NWO) (lid 2f)
+          - name: is_tno
+            type: boolean
+            required: false
+            description: TNO als bedoeld in TNO-wet artikel 3 lid 1 (lid 2g)
+        output:
+          - name: is_overheidswerkgever
+            type: boolean
+            description: Of de organisatie overheidswerkgever is in de zin van artikel 2
+        actions:
+          - output: is_basis_type_lid_1
+            value:
+              operation: IN
+              subject: $organisatie_type
+              values:
+                - staat
+                - provincie
+                - gemeente
+                - waterschap
+                - openbaar_lichaam_beroep_bedrijf
+                - ander_openbaar_lichaam_met_verordenende_bevoegdheid
+                - egts
+                - krachtens_publiekrecht_ingesteld
+          - output: is_privaatrecht_met_openbaar_gezag
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $organisatie_type
+                  value: privaatrecht_openbaar_gezag
+                - operation: EQUALS
+                  subject: $kernactiviteit_openbaar_gezag
+                  value: true
+          - output: in_positieve_lijst_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $is_basis_type_lid_1
+                - $is_privaatrecht_met_openbaar_gezag
+          - output: valt_onder_uitzondering_lid_2
+            value:
+              operation: OR
+              conditions:
+                - $betreft_instandhouding_openbare_school_gemeente
+                - $is_openbare_rechtspersoon_onderwijs
+                - $is_openbare_instelling_bve
+                - $is_openbare_instelling_hoger_onderwijs
+                - $is_instelling_wetenschappelijk_onderzoek_whw
+                - $is_nwo
+                - $is_tno
+          - output: is_overheidswerkgever
+            value:
+              operation: AND
+              conditions:
+                - $in_positieve_lijst_lid_1
+                - operation: NOT
+                  value: $valt_onder_uitzondering_lid_2
   - number: '3'
     text: |-
       Een overheidswerkgever sluit geen arbeidsovereenkomst met:
@@ -350,6 +492,52 @@ articles:
       - id: ref37
         bwb_id: BWBR0031788
         artikel: '76'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_benoemd_eenhoofdig_bestuursorgaan
+            type: boolean
+            required: false
+            description: Persoon is benoemd in ambt van eenhoofdig bestuursorgaan of lid van orgaan/college, en niet werkzaam onder verantwoordelijkheid van ander bestuursorgaan (cat. a)
+          - name: is_rechterlijk_ambtenaar_of_gelijkgesteld
+            type: boolean
+            required: false
+            description: Persoon is rechterlijk ambtenaar of daarmee gelijkgesteld lid/voorzitter als bedoeld in cat. b (1° t/m 15°)
+          - name: is_militair_of_burgerlijk_defensieambtenaar
+            type: boolean
+            required: false
+            description: Persoon is militair of burgerlijk ambtenaar defensie (cat. c)
+          - name: is_dienstplichtige
+            type: boolean
+            required: false
+            description: Persoon is dienstplichtige als bedoeld in Kaderwet dienstplicht artikel 1 lid 1 onderdeel b (cat. d)
+          - name: is_notaris_of_gerechtsdeurwaarder
+            type: boolean
+            required: false
+            description: Persoon is notaris, waarnemend notaris, gerechtsdeurwaarder of waarnemend gerechtsdeurwaarder (cat. e)
+          - name: is_politieambtenaar
+            type: boolean
+            required: false
+            description: Persoon is politieambtenaar of plaatsvervangend directeur Politieacademie (cat. f)
+        output:
+          - name: arbeidsovereenkomst_toegestaan
+            type: boolean
+            description: Of de overheidswerkgever een arbeidsovereenkomst met deze persoon mag sluiten
+        actions:
+          - output: valt_onder_uitsluitingsgrond
+            value:
+              operation: OR
+              conditions:
+                - $is_benoemd_eenhoofdig_bestuursorgaan
+                - $is_rechterlijk_ambtenaar_of_gelijkgesteld
+                - $is_militair_of_burgerlijk_defensieambtenaar
+                - $is_dienstplichtige
+                - $is_notaris_of_gerechtsdeurwaarder
+                - $is_politieambtenaar
+          - output: arbeidsovereenkomst_toegestaan
+            value:
+              operation: NOT
+              value: $valt_onder_uitsluitingsgrond
   - number: 3a
     text: |-
       1 Overheidswerkgevers kunnen een onderzoek naar de geschiktheid en de bekwaamheid voor een functie
@@ -479,6 +667,72 @@ articles:
         bwb_id: BWBR0001947
         artikel: '5'
         paragraaf: '2'
+    machine_readable:
+      untranslatables:
+        - construct: "niet in redelijkheid zou zijn verzekerd (lid 1a en lid 1c)"
+          reason: "Subjectieve norm — 'niet in redelijkheid zou zijn verzekerd' is een open rechtsbegrip dat niet algorithmisch uitdrukbaar is"
+          legal_text_excerpt: "nevenwerkzaamheden te verrichten waardoor de goede vervulling van de functie of de goede functionering van de openbare dienst... niet in redelijkheid zou zijn verzekerd"
+          accepted: false
+      execution:
+        parameters:
+          - name: neemt_deel_aan_aannemingen_of_leveringen
+            type: boolean
+            required: false
+            description: Persoon neemt middellijk of onmiddellijk deel aan aannemingen/leveringen voor openbare diensten (lid 1b)
+          - name: heeft_toestemming_deelname_aannemingen
+            type: boolean
+            required: false
+            description: Werkgever heeft toestemming verleend voor deelname aan aannemingen/leveringen (lid 1b)
+          - name: heeft_aangewezen_financieel_belang
+            type: boolean
+            required: false
+            description: Persoon bezit of verwerft financieel belang aangewezen door werkgever ex artikel 5 lid 1 onderdeel d (lid 1d)
+          - name: neemt_giften_aan
+            type: boolean
+            required: false
+            description: Persoon neemt giften, vergoedingen, beloningen of beloften van een derde aan of vraagt hierom (lid 1e)
+          - name: heeft_toestemming_giften
+            type: boolean
+            required: false
+            description: Werkgever heeft toestemming verleend voor het aannemen van giften (lid 1e)
+          - name: onderhoudt_betrekkingen_als_ambtenaar_met_derde
+            type: boolean
+            required: false
+            description: Ambtenaar onderhoudt als ambtenaar betrekkingen met de betreffende derde (lid 1e)
+        output:
+          - name: overtreding_lid_1b
+            type: boolean
+            description: Verbod op deelname aannemingen/leveringen overtreden (lid 1b)
+          - name: overtreding_lid_1d
+            type: boolean
+            description: Verbod op bezit aangewezen financiële belangen overtreden (lid 1d)
+          - name: overtreding_lid_1e
+            type: boolean
+            description: Verbod op giften aannemen zonder toestemming overtreden (lid 1e)
+        actions:
+          - output: overtreding_lid_1b
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $neemt_deel_aan_aannemingen_of_leveringen
+                  value: true
+                - operation: NOT
+                  value: $heeft_toestemming_deelname_aannemingen
+          - output: overtreding_lid_1d
+            value: $heeft_aangewezen_financieel_belang
+          - output: overtreding_lid_1e
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $neemt_giften_aan
+                  value: true
+                - operation: EQUALS
+                  subject: $onderhoudt_betrekkingen_als_ambtenaar_met_derde
+                  value: true
+                - operation: NOT
+                  value: $heeft_toestemming_giften
   - number: '9'
     text: |-
       De ambtenaar en de gewezen ambtenaar zijn verplicht tot geheimhouding van hetgeen hen in verband met hun functie
@@ -533,6 +787,28 @@ articles:
       - id: ref2
         bwb_id: BWBR0008277
         artikel: '10'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_nederlander
+            type: boolean
+            required: true
+            description: Persoon heeft de Nederlandse nationaliteit (lid 1)
+          - name: dienstbelang_vereist_uitzondering
+            type: boolean
+            required: false
+            description: Het dienstbelang vordert bepaaldelijk dat een niet-Nederlander in aanmerking komt (lid 1)
+        output:
+          - name: in_aanmerking_voor_vertrouwensfunctie
+            type: boolean
+            description: Of de persoon in aanmerking kan komen voor een vertrouwensfunctie (lid 1)
+        actions:
+          - output: in_aanmerking_voor_vertrouwensfunctie
+            value:
+              operation: OR
+              conditions:
+                - $is_nederlander
+                - $dienstbelang_vereist_uitzondering
   - number: '13'
     text: |-
       1 Bij algemene maatregel van bestuur kunnen voor categorieën van ambtenaren met wie de staat een
