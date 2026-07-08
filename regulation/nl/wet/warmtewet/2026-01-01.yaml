@@ -592,6 +592,31 @@ articles:
         artikel: 3a
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: storing_in_inpandig_leidingstelsel
+            type: boolean
+            required: true
+            description: Er is sprake van een storing in het inpandig leidingstelsel van de gebouweigenaar als bedoeld in artikel 3a, eerste lid, onderdeel d (lid 2)
+          - name: afspraken_leverancier_verantwoordelijk_voor_onderhoud
+            type: boolean
+            required: true
+            description: Leverancier en gebouweigenaar hebben afspraken gemaakt (lid 1, onderdeel a) waarbij de leverancier verantwoordelijk is voor het onderhoud van het inpandig leidingstelsel en de individuele aansluiting (lid 2, onderdeel b)
+        output:
+          - name: gebouweigenaar_vergoedt_leverancier
+            type: boolean
+            description: Geeft aan of de gebouweigenaar de leverancier de kosten van de aan de verbruiker betaalde compensatie vergoedt (lid 2, onderdeel b)
+        actions:
+          - output: gebouweigenaar_vergoedt_leverancier
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $storing_in_inpandig_leidingstelsel
+                  value: true
+                - operation: NOT
+                  value: $afspraken_leverancier_verantwoordelijk_voor_onderhoud
   - number: '4'
     text: |-
       1 De leverancier stelt al hetgeen redelijkerwijs in zijn vermogen ligt in het werk om afsluiting dan wel
@@ -761,6 +786,23 @@ articles:
         artikel: '5'
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: leverancier_heeft_aanbod_gedaan_met_maximumprijs_optie
+            type: boolean
+            required: true
+            description: De leverancier heeft de verbruiker aantoonbaar een aanbod gedaan dat ten minste de mogelijkheid bevat warmte te ontvangen tegen ten hoogste de maximumprijs als bedoeld in artikel 5, eerste lid (lid 1)
+        output:
+          - name: afwijkende_prijs_toegestaan
+            type: boolean
+            description: Geeft aan of een van de maximumprijs afwijkende prijs voor warmtelevering is toegestaan (in afwijking van artikel 2, derde lid, onderdeel a)
+        actions:
+          - output: afwijkende_prijs_toegestaan
+            value:
+              operation: EQUALS
+              subject: $leverancier_heeft_aanbod_gedaan_met_maximumprijs_optie
+              value: true
   - number: '6'
     text: |-
       1 Indien door een leverancier bij een verbruiker een eenmalige aansluitbijdrage in rekening wordt gebracht voor een
@@ -889,6 +931,45 @@ articles:
       andere situaties de installatie van een individuele meter om het warmteverbruik te meten technisch haalbaar of
       kostenefficiënt is, onderscheidenlijk installatie van individuele kostenverdelers kostenefficiënt is.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel8
+    machine_readable:
+      untranslatables:
+        - construct: "gewogen gemiddelde van meettarieven G6 aansluitingen netbeheerders gastransportnetten"
+          reason: "Aggregation over a variable-length collection of gas grid operators is not available as an engine operation"
+          suggestion: "Add SUM/AVG aggregation operation to engine"
+          legal_text_excerpt: "Het tarief voor de meting van het warmteverbruik door middel van een individuele meter wordt vastgesteld op basis van het gewogen gemiddelde van de meettarieven voor G6 aansluitingen van de gasmeter van de netbeheerders van de gastransportnetten niet zijnde de netbeheerder van het landelijk gastransportnet, voor het jaar t."
+          accepted: false
+      execution:
+        parameters:
+          - name: bestaande_meter_wordt_vervangen
+            type: boolean
+            required: true
+            description: Een bestaande meter wordt vervangen (lid 14, onderdeel a)
+          - name: nieuwe_aansluiting_in_nieuw_gebouw
+            type: boolean
+            required: true
+            description: Een nieuwe aansluiting wordt gemaakt in een nieuw gebouw (lid 14, onderdeel b)
+          - name: gebouw_ingrijpend_gerenoveerd
+            type: boolean
+            required: true
+            description: Een gebouw ingrijpend wordt gerenoveerd (lid 14, onderdeel c)
+        output:
+          - name: installatie_individuele_meter_technisch_haalbaar_en_kostenefficient
+            type: boolean
+            description: De installatie van een individuele meter is in elk geval technisch haalbaar en kostenefficiënt (lid 14)
+        actions:
+          - output: installatie_individuele_meter_technisch_haalbaar_en_kostenefficient
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $bestaande_meter_wordt_vervangen
+                  value: true
+                - operation: EQUALS
+                  subject: $nieuwe_aansluiting_in_nieuw_gebouw
+                  value: true
+                - operation: EQUALS
+                  subject: $gebouw_ingrijpend_gerenoveerd
+                  value: true
   - number: 8a
     text: |-
       1 Indien de leverancier de aan de verbruiker in rekening te brengen kosten voor de levering van warmte niet baseert
@@ -1638,6 +1719,50 @@ articles:
       oorsprong, worden niet erkend, behalve indien de Europese Unie daarvoor een overeenkomst heeft afgesloten met het
       derde land en de energie rechtstreeks uit dat land wordt ingevoerd of uitgevoerd.
     url: https://wetten.overheid.nl/BWBR0033729/2026-01-01#Artikel28b
+    machine_readable:
+      execution:
+        parameters:
+          - name: garantie_van_eu_lidstaat
+            type: boolean
+            required: true
+            description: De garantie van oorsprong is uitgegeven door een onafhankelijke instantie in een andere lidstaat van de Europese Unie (lid 1)
+          - name: garantie_naar_aard_en_strekking_gelijkwaardig
+            type: boolean
+            required: true
+            description: De garantie van oorsprong komt naar aard en strekking overeen met in Nederland uitgegeven garanties van oorsprong voor thermische energie uit hernieuwbare bronnen (lid 1 en lid 2)
+          - name: eu_overeenkomst_met_derde_land
+            type: boolean
+            required: true
+            description: De Europese Unie heeft een overeenkomst afgesloten met het derde land inzake garanties van oorsprong (lid 2)
+          - name: energie_rechtstreeks_ingevoerd_of_uitgevoerd
+            type: boolean
+            required: true
+            description: De energie wordt rechtstreeks uit het derde land ingevoerd of uitgevoerd (lid 2)
+        output:
+          - name: garantie_erkend
+            type: boolean
+            description: Geeft aan of de garantie van oorsprong voor thermische energie uit hernieuwbare bronnen wordt erkend (lid 1 en lid 2)
+        actions:
+          - output: garantie_erkend
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $garantie_naar_aard_en_strekking_gelijkwaardig
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $garantie_van_eu_lidstaat
+                      value: true
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $eu_overeenkomst_met_derde_land
+                          value: true
+                        - operation: EQUALS
+                          subject: $energie_rechtstreeks_ingevoerd_of_uitgevoerd
+                          value: true
   - number: '29'
     text: |-
       1 Onze Minister stelt bij ministeriële regeling de tarieven vast voor kosten die gepaard gaan met handelingen met
