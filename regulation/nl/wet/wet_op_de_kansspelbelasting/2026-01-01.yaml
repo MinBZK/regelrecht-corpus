@@ -173,6 +173,80 @@ articles:
         bwb_id: BWBR0002359
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: categorie
+            type: string
+            required: true
+            description: "Categorie belastingplichtige: A_F (art. 1a t/m f), G (art. 1g), H (art. 1h), of I (art. 1i)"
+          - name: ontvangen_inzetten
+            type: number
+            required: false
+            description: Ontvangen inzetten in het tijdvak in eurocent (voor categorie A_F)
+          - name: beschikbaar_gestelde_prijzen
+            type: number
+            required: false
+            description: Ter beschikking gestelde prijzen in het tijdvak in eurocent (voor categorie A_F)
+          - name: overige_opbrengsten
+            type: number
+            required: false
+            description: Anders dan als inzet ontvangen voor deelneming in eurocent (voor categorie A_F)
+          - name: prijs
+            type: number
+            required: false
+            description: De prijs in eurocent (voor categorie G of H)
+          - name: gewonnen_prijzen_maand
+            type: number
+            required: false
+            description: Gewonnen prijzen in de kalendermaand in eurocent (voor categorie I)
+          - name: gedane_inzetten_maand
+            type: number
+            required: false
+            description: Gedane inzetten in de kalendermaand in eurocent (voor categorie I)
+        output:
+          - name: grondslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Grondslag voor de kansspelbelasting
+        actions:
+          - output: grondslag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "A_F"
+                  then:
+                    operation: ADD
+                    values:
+                      - operation: SUBTRACT
+                        values:
+                          - $ontvangen_inzetten
+                          - $beschikbaar_gestelde_prijzen
+                      - $overige_opbrengsten
+                - when:
+                    operation: IN
+                    subject: $categorie
+                    values:
+                      - "G"
+                      - "H"
+                  then: $prijs
+                - when:
+                    operation: EQUALS
+                    subject: $categorie
+                    value: "I"
+                  then:
+                    operation: MAX
+                    values:
+                      - 0
+                      - operation: SUBTRACT
+                        values:
+                          - $gewonnen_prijzen_maand
+                          - $gedane_inzetten_maand
+              default: 0
   - number: '4'
     text: |-
       1 Indien [artikel 1, onderdeel g of h][ref1], van toepassing is, is van de belasting vrijgesteld:
@@ -194,6 +268,64 @@ articles:
         bwb_id: BWBR0002359
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      untranslatables:
+        - construct: "aggregatie van prijzen uit dezelfde toevallige gebeurtenis als één prijs"
+          reason: "Aggregation over collections is not available as an engine operation"
+          suggestion: "Add SUM/AGGREGATE operation to engine"
+          legal_text_excerpt: "Alle prijzen uit loterijen en prijsvragen welke verschuldigd zijn door dezelfde schuldenaar en vallen op loten of onderdelen van loten op grond van dezelfde toevallige gebeurtenis, worden voor de toepassing van het eerste lid tezamen als één prijs beschouwd."
+          accepted: false
+      execution:
+        parameters:
+          - name: categorie
+            type: string
+            required: true
+            description: "Categorie belastingplichtige (G of H)"
+          - name: prijs
+            type: number
+            required: true
+            description: De prijs in eurocent
+          - name: prestatie
+            type: number
+            required: false
+            description: De prestatie welke staat tegenover de deelneming in eurocent
+        output:
+          - name: is_vrijgesteld
+            type: boolean
+            description: Of de prijs vrijgesteld is van kansspelbelasting
+        actions:
+          - output: is_categorie_g_of_h
+            value:
+              operation: IN
+              subject: $categorie
+              values:
+                - "G"
+                - "H"
+          - output: prijs_onder_grens
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $prijs
+              value: 44900
+          - output: prijs_niet_boven_prestatie
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $prijs
+              value: $prestatie
+          - output: is_vrijgesteld
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_categorie_g_of_h
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $prijs_onder_grens
+                      value: true
+                    - operation: EQUALS
+                      subject: $prijs_niet_boven_prestatie
+                      value: true
   - number: '5'
     text: |-
       1 De belasting bedraagt 37,8 percent.
@@ -210,6 +342,75 @@ articles:
         bwb_id: BWBR0002359
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van de berekende belasting"
+          reason: "Rounding is not available as an engine operation"
+          suggestion: "Add ROUND/CEIL/FLOOR operation to engine"
+          legal_text_excerpt: "De belasting bedraagt 37,8 percent"
+          accepted: false
+      execution:
+        parameters:
+          - name: categorie
+            type: string
+            required: true
+            description: "Categorie belastingplichtige (A_F, G, H, of I)"
+          - name: belasting_voor_rekening_schuldenaar
+            type: boolean
+            required: false
+            description: "Of de schuldenaar de belasting voor zijn rekening neemt (art. 5 lid 2, alleen voor categorie G)"
+        input:
+          - name: grondslag
+            type: amount
+            source:
+              output: grondslag
+            type_spec:
+              unit: eurocent
+        output:
+          - name: belasting_percentage
+            type: number
+            description: Het belastingpercentage (37,8)
+          - name: gecorrigeerde_grondslag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Gecorrigeerde grondslag voor art. 1g waarbij schuldenaar belasting draagt (art. 5 lid 2)
+          - name: belasting
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigde kansspelbelasting (zonder afronden)
+        actions:
+          - output: belasting_percentage
+            value: 37.8
+          - output: gecorrigeerde_grondslag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $categorie
+                        value: "G"
+                      - operation: EQUALS
+                        subject: $belasting_voor_rekening_schuldenaar
+                        value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $grondslag
+                      - operation: DIVIDE
+                        values:
+                          - 100
+                          - 62.2
+              default: $grondslag
+          - output: belasting
+            value:
+              operation: MULTIPLY
+              values:
+                - $gecorrigeerde_grondslag
+                - 0.378
   - number: 5a
     text: |-
       1 In de gevallen waarin [artikel 1, onderdeel a, b, c, d, e of f][ref1], van toepassing is, moet de in een tijdvak
