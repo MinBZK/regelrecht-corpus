@@ -357,6 +357,55 @@ articles:
         bwb_id: BWBR0044770
         artikel: '7'
         hoofdstuk: '3'
+    machine_readable:
+      untranslatables:
+        - construct: "ten minste acht jaar leerplichtig of kwalificatieplichtig is geweest op grond van de Leerplichtwet 1969"
+          reason: "Aggregation over historical periods (years of leerplichtigheid) is not expressible as an engine operation"
+          suggestion: "Add date-range aggregation operation to engine, or pre-compute as a boolean input"
+          legal_text_excerpt: "ten minste acht jaar leerplichtig of kwalificatieplichtig is geweest op grond van de Leerplichtwet 1969"
+          accepted: false
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: heeft_aangewezen_diploma_b
+            type: boolean
+            required: true
+            description: Beschikt over een bij ministeriële regeling aangewezen diploma, certificaat of ander document waaruit blijkt over de vaardigheden en kennis, bedoeld in artikel 7, eerste lid (lid 1, onderdeel b)
+          - name: is_leerplichtig_of_kwalificatieplichtig_c
+            type: boolean
+            required: true
+            description: Leerplichtig of kwalificatieplichtig op grond van de Leerplichtwet 1969 (lid 1, onderdeel c)
+          - name: volgt_kwalificerende_opleiding_d
+            type: boolean
+            required: true
+            description: Volgt een opleiding waarvan de afronding leidt tot uitreiking van een bij ministeriële regeling aangewezen diploma, certificaat of ander document waaruit blijkt over de vaardigheden en kennis, bedoeld in artikel 7, eerste lid (lid 1, onderdeel d)
+          - name: heeft_aangetoond_voldoende_ingeburgerd_e
+            type: boolean
+            required: true
+            description: Heeft aangetoond al voldoende te zijn ingeburgerd (lid 1, onderdeel e)
+        output:
+          - name: vrijstelling_verleend
+            type: boolean
+            description: Of de vrijstelling van de inburgeringsplicht wordt verleend op grond van lid 1, onderdelen b tot en met e (onderdeel a is niet machinaal uitdrukbaar)
+        actions:
+          - output: vrijstelling_verleend
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_aangewezen_diploma_b
+                  value: true
+                - operation: EQUALS
+                  subject: $is_leerplichtig_of_kwalificatieplichtig_c
+                  value: true
+                - operation: EQUALS
+                  subject: $volgt_kwalificerende_opleiding_d
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_aangetoond_voldoende_ingeburgerd_e
+                  value: true
   - number: '5'
     text: |-
       1 Onze Minister ontheft de inburgeringsplichtige geheel of gedeeltelijk van de inburgeringsplicht als diegene heeft
@@ -472,6 +521,32 @@ articles:
       - id: ref2
         bwb_id: BWBR0007625
         artikel: 1.4a.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: volgt_taalschakeltraject
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige volgt het taalschakeltraject (lid 3)
+          - name: heeft_taalschakeltraject_afgerond
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft het taalschakeltraject afgerond (lid 3)
+        output:
+          - name: vrijgesteld_van_module_arbeidsmarkt_participatie
+            type: boolean
+            description: Of de verplichting om de module Arbeidsmarkt en Participatie af te ronden niet van toepassing is op grond van lid 3
+        actions:
+          - output: vrijgesteld_van_module_arbeidsmarkt_participatie
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $volgt_taalschakeltraject
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_taalschakeltraject_afgerond
+                  value: true
   - number: '9'
     text: |-
       1 De inburgeringsplichtige die naar het oordeel van het college redelijkerwijs niet in staat
@@ -628,6 +703,41 @@ articles:
       - id: ref3
         bwb_id: BWBR0035303
         artikel: '28'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_vbt_asiel
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft een verblijfsvergunning asiel voor bepaalde tijd (lid 1, onderdeel a)
+          - name: heeft_vbt_regulier_gezinslid_bij_asielhouder
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft een verblijfsvergunning regulier voor bepaalde tijd, verleend onder beperking als familie- of gezinslid bij houder van een verblijfsvergunning asiel voor bepaalde tijd, asiel voor onbepaalde tijd (artikel 33 Vreemdelingenwet 2000), of EU-verblijfsvergunning voor langdurig ingezetene met aantekening internationale bescherming (artikel 45c Vreemdelingenwet 2000) (lid 1, onderdeel b)
+          - name: datum_brp_inschrijving
+            type: date
+            required: true
+            description: Datum waarop de inburgeringsplichtige in de basisregistratie personen is ingeschreven; voor houders van een verblijfsvergunning asiel voor bepaalde tijd is dit de datum van inschrijving in de gemeente waar hij op grond van artikel 28 van de Huisvestingswet 2014 is gehuisvest (lid 3)
+        output:
+          - name: heeft_recht_op_maatschappelijke_begeleiding
+            type: boolean
+            description: Of het college voorziet in de maatschappelijke begeleiding van de inburgeringsplichtige op grond van lid 1
+          - name: aanvang_maatschappelijke_begeleiding
+            type: date
+            description: Datum waarop de maatschappelijke begeleiding aanvangt op grond van lid 3
+        actions:
+          - output: heeft_recht_op_maatschappelijke_begeleiding
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_vbt_asiel
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_vbt_regulier_gezinslid_bij_asielhouder
+                  value: true
+          - output: aanvang_maatschappelijke_begeleiding
+            value: $datum_brp_inschrijving
   - number: '14'
     text: |-
       1 Het college roept de inburgeringsplichtige op voor de afname van de brede intake en stelt daarbij een termijn.
@@ -1060,6 +1170,23 @@ articles:
         bwb_id: BWBR0044770
         artikel: '14'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_boetebeschikking_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de boetebeschikking (lid 2)
+        output:
+          - name: maximum_nieuwe_termijn_datum
+            type: date
+            description: Uiterste datum van de nieuwe termijn waarbinnen de inburgeringsplichtige na bekendmaking van de boetebeschikking alsnog dient te verschijnen of mee te werken (lid 2 — ten hoogste twee maanden na bekendmaking)
+        actions:
+          - output: maximum_nieuwe_termijn_datum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_boetebeschikking_datum
+              months: 2
   - number: '23'
     text: |-
       1 Het college legt een boete op aan de inburgeringsplichtige als die niet of onvoldoende meewerkt aan de geboden
