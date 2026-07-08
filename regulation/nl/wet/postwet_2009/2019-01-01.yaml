@@ -876,6 +876,55 @@ articles:
       voorafgaand aan de datum waarop de voorgenomen wijziging wordt gerealiseerd. In de reactie geeft de verlener van de
       universele postdienst aan of het advies al dan niet wordt overgenomen en wat daarvan de redenen zijn.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel18a
+    machine_readable:
+      execution:
+        parameters:
+          - name: adviesaanvraag_datum
+            type: date
+            required: true
+            description: Datum waarop de verlener van de universele postdienst advies heeft gevraagd als bedoeld in artikel 18a, eerste lid
+          - name: wijziging_datum
+            type: date
+            required: true
+            description: Datum waarop de voorgenomen wijziging wordt gerealiseerd
+          - name: ontvangst_advies_datum
+            type: date
+            required: true
+            description: Datum van ontvangst van het advies van de consumentenorganisatie als bedoeld in artikel 18a, derde lid
+        output:
+          - name: vroegste_datum_wijziging
+            type: date
+            description: Vroegste datum waarop de voorgenomen wijziging kan worden gerealiseerd (ten minste vier maanden na adviesaanvraag, lid 2)
+          - name: adviesaanvraag_tijdig
+            type: boolean
+            description: Of de adviesaanvraag ten minste vier maanden voor de geplande wijziging is gedaan (lid 2)
+          - name: minimale_adviestermijn_einde
+            type: date
+            description: Vroegste datum waarop de adviesperiode eindigt (minimale termijn van acht weken na adviesaanvraag, lid 2)
+          - name: uiterste_reactie_datum
+            type: date
+            description: Uiterste datum voor de schriftelijke reactie van de verlener op het advies (binnen zes weken na ontvangst advies, lid 3)
+        actions:
+          - output: vroegste_datum_wijziging
+            value:
+              operation: DATE_ADD
+              date: $adviesaanvraag_datum
+              months: 4
+          - output: adviesaanvraag_tijdig
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $vroegste_datum_wijziging
+              value: $wijziging_datum
+          - output: minimale_adviestermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $adviesaanvraag_datum
+              weeks: 8
+          - output: uiterste_reactie_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_advies_datum
+              weeks: 6
   - number: '18'
     text: |-
       1 Een verlener van de universele postdienst verzorgt binnen Nederland en van of naar gebieden buiten Nederland de
@@ -1174,6 +1223,23 @@ articles:
         artikel: '25'
         hoofdstuk: '4'
         paragraaf: '4.5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: toezending_datum
+            type: date
+            required: true
+            description: Datum waarop de tarieven aan de Autoriteit Consument en Markt zijn toegezonden ter toetsing als bedoeld in artikel 27, eerste lid
+        output:
+          - name: vroegste_vaststelling_datum
+            type: date
+            description: Vroegste datum waarop de tarieven of wijzigingen hiervan mogen worden vastgesteld (een maand na toezending aan ACM, lid 1)
+        actions:
+          - output: vroegste_vaststelling_datum
+            value:
+              operation: DATE_ADD
+              date: $toezending_datum
+              months: 1
   - number: '28'
     text: |-
       1 Een verlener van de universele postdienst kan, met het oog op de doelmatige wijze van uitvoeren van de universele
@@ -1223,6 +1289,102 @@ articles:
 
       7 Nietig is ieder beding, waarbij van dit artikel wordt afgeweken.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel29
+    machine_readable:
+      open_terms:
+        - id: maximale_aansprakelijkheid
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 29, vierde lid Postwet 2009
+      execution:
+        parameters:
+          - name: gebruik_gemaakt_van_geregistreerd_vervoer
+            type: boolean
+            required: true
+            description: Of de afzender gebruik heeft gemaakt van een wijze van vervoer waarbij het poststuk geregistreerd is als bedoeld in de algemene voorwaarden (lid 1)
+          - name: schade_door_aard_of_gebrek_poststuk
+            type: boolean
+            required: true
+            description: Of de schade uitsluitend het gevolg is van de aard of een gebrek van het vervoerde zelf (lid 2, onderdeel a)
+          - name: schade_door_onvoldoende_verpakking
+            type: boolean
+            required: true
+            description: Of de schade uitsluitend het gevolg is van onvoldoende verpakking door een ander dan de verlener of diens ondergeschikten (lid 2, onderdeel b)
+          - name: schade_aan_afzender_toerekenbaar
+            type: boolean
+            required: true
+            description: Of de schade uitsluitend het gevolg is van een oorzaak die aan de afzender kan worden toegerekend (lid 2, onderdeel c)
+          - name: schade_door_oorlogshandeling
+            type: boolean
+            required: true
+            description: Of de schade uitsluitend het gevolg is van een oorlogshandeling of gewapend conflict (lid 2, onderdeel d)
+          - name: schade_door_aanhouding_bevoegd_gezag
+            type: boolean
+            required: true
+            description: Of de schade uitsluitend het gevolg is van aanhouding op last van daartoe bevoegd gezag (lid 2, onderdeel e)
+          - name: schade_door_opzet_of_roekeloos_handelen
+            type: boolean
+            required: true
+            description: Of de schade is ontstaan uit eigen handelen of nalaten van de verlener, geschied met opzet of roekeloos met wetenschap van waarschijnlijke schade (lid 5)
+        output:
+          - name: lid2_uitsluitingsgrond_aanwezig
+            type: boolean
+            description: Of een van de uitsluitingsgronden van lid 2 van toepassing is
+          - name: uitsluitingsgrond_kan_worden_ingeroepen
+            type: boolean
+            description: Of de verlener de uitsluitings- of beperkingsgrond mag inroepen (niet van toepassing als schade door opzet of roekeloos handelen, lid 5)
+          - name: is_aansprakelijk
+            type: boolean
+            description: Of de verlener van de universele postdienst aansprakelijk is voor schade (combinatie van lids 1, 2 en 5)
+          - name: maximale_aansprakelijkheid
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale aansprakelijkheid zoals vastgesteld bij algemene maatregel van bestuur (lid 4)
+        actions:
+          - output: lid2_uitsluitingsgrond_aanwezig
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $schade_door_aard_of_gebrek_poststuk
+                  value: true
+                - operation: EQUALS
+                  subject: $schade_door_onvoldoende_verpakking
+                  value: true
+                - operation: EQUALS
+                  subject: $schade_aan_afzender_toerekenbaar
+                  value: true
+                - operation: EQUALS
+                  subject: $schade_door_oorlogshandeling
+                  value: true
+                - operation: EQUALS
+                  subject: $schade_door_aanhouding_bevoegd_gezag
+                  value: true
+          - output: uitsluitingsgrond_kan_worden_ingeroepen
+            value:
+              operation: NOT
+              value: $schade_door_opzet_of_roekeloos_handelen
+          - output: is_aansprakelijk
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $gebruik_gemaakt_van_geregistreerd_vervoer
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $lid2_uitsluitingsgrond_aanwezig
+                        value: true
+                      - operation: EQUALS
+                        subject: $uitsluitingsgrond_kan_worden_ingeroepen
+                        value: true
+          - output: maximale_aansprakelijkheid
+            value: $maximale_aansprakelijkheid
   - number: '32'
     text: |-
       1 Een verlener van de universele postdienst is gehouden bij de uitvoering van de op hem rustende verplichtingen
@@ -1259,6 +1421,34 @@ articles:
       b. postvervoerbedrijven, niet zijnde een verlener van de universele postdienst, hun diensten niet onder voor deze
       bedrijven vergelijkbare voorwaarden kunnen aanbieden.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel34
+    machine_readable:
+      execution:
+        parameters:
+          - name: regels_belemmeren_ups_uitvoering
+            type: boolean
+            required: true
+            description: Of het stellen van regels de verlener van de universele postdienst belet de universele postdienst te verrichten (tenzij onderdeel a)
+          - name: regels_belemmeren_andere_bedrijven
+            type: boolean
+            required: true
+            description: Of het stellen van regels andere postvervoerbedrijven belet hun diensten onder vergelijkbare voorwaarden aan te bieden (tenzij onderdeel b)
+        output:
+          - name: gemeenteraad_bevoegd_tot_regelstelling
+            type: boolean
+            description: Of de gemeenteraad bevoegd is regels te stellen voor de plaatsing van brievenbussen aan de openbare weg (bevoegdheid vervalt indien aan tenzij-gronden wordt voldaan)
+        actions:
+          - output: gemeenteraad_bevoegd_tot_regelstelling
+            value:
+              operation: NOT
+              value:
+                operation: OR
+                conditions:
+                  - operation: EQUALS
+                    subject: $regels_belemmeren_ups_uitvoering
+                    value: true
+                  - operation: EQUALS
+                    subject: $regels_belemmeren_andere_bedrijven
+                    value: true
   - number: '35'
     text: De afbeelding van de Koning op een postzegel of postzegelafdruk behoeft Diens goedkeuring.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel35
