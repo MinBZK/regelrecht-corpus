@@ -25,6 +25,41 @@ articles:
       diens rechtverkrijgenden, om dit openbaar te maken en te verveelvoudigen, behoudens de beperkingen, bij de wet
       gesteld.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel1
+    machine_readable:
+      execution:
+        actions:
+          - IF:
+              - AND:
+                  - EQUALS:
+                      - var: work_type
+                        value: ["letterkunde", "wetenschap", "kunst"]
+                  - EQUALS:
+                      - var: action
+                        value: ["openbaar_maken", "verveelvoudigen"]
+            THEN:
+              - GRANT_RIGHT:
+                  to: maker
+                  right: auteursrecht
+                  scope: exclusief
+              - GRANT_RIGHT:
+                  to: rechtverkrijgenden
+                  right: auteursrecht
+                  scope: exclusief
+          - IF:
+              - AND:
+                  - EQUALS:
+                      - var: work_type
+                        value: ["letterkunde", "wetenschap", "kunst"]
+                  - EQUALS:
+                      - var: action
+                        value: ["openbaar_maken", "verveelvoudigen"]
+                  - EQUALS:
+                      - var: subject
+                        value: "not_maker_and_not_rechtverkrijgenden"
+            THEN:
+              - DENY_RIGHT:
+                  right: auteursrecht
+                  scope: exclusief
   - number: '2'
     text: |-
       1 Het auteursrecht gaat over bij erfopvolging en is vatbaar voor gehele of gedeeltelijke overdracht.
@@ -169,6 +204,20 @@ articles:
       Er bestaat geen auteursrecht op wetten, besluiten en verordeningen, door de openbare macht uitgevaardigd, noch op
       rechterlijke uitspraken en administratieve beslissingen.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel11
+    machine_readable:
+       execution:
+         actions:
+           - IF:
+               - AND:
+                 - EQUALS:
+                     - var: work_type
+                       value: ["wetten", "besluiten", "verordeningen", "rechterlijke_uitspraken", "administratieve_beslissingen"]
+                 - EQUALS:
+                     - var: issued_by
+                       value: openbare_macht
+             THEN:
+               - DENY_RIGHT:
+                   right: auteursrecht
   - number: '12'
     text: |-
       1 Onder de openbaarmaking van een werk van letterkunde, wetenschap of kunst wordt mede verstaan:
