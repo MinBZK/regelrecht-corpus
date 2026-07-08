@@ -411,6 +411,50 @@ articles:
         artikel: '3'
         hoofdstuk: '1'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overlegging_datum
+            type: date
+            required: true
+            description: Datum waarop het energierapport aan de beide kamers der Staten-Generaal is overgelegd (artikel 3 lid 1)
+          - name: beraadslagingen_gevraagd
+            type: boolean
+            required: false
+            description: Of door of namens een kamer binnen 8 weken na overlegging te kennen is gegeven dat zij in het openbaar wil beraadslagen
+          - name: beraadslagingen_einddatum
+            type: date
+            required: false
+            description: Datum waarop de beraadslagingen zijn beëindigd (alleen relevant als beraadslagingen_gevraagd = true)
+        output:
+          - name: minimale_datum_besluit
+            type: date
+            description: Datum waarop het besluit op zijn vroegst kan worden genomen conform artikel 4 lid 2 of lid 3
+        actions:
+          - output: wachttermijn_8_weken
+            value:
+              operation: DATE_ADD
+              date: $overlegging_datum
+              weeks: 8
+          - output: wachttermijn_6_maanden
+            value:
+              operation: DATE_ADD
+              date: $overlegging_datum
+              months: 6
+          - output: minimale_datum_besluit
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $beraadslagingen_gevraagd
+                    value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - $wachttermijn_6_maanden
+                      - $beraadslagingen_einddatum
+              default: $wachttermijn_8_weken
   - number: 4a
     text: |-
       1 Onze Minister verzamelt, analyseert en bewerkt systematisch inlichtingen en gegevens met betrekking tot de
@@ -3438,6 +3482,49 @@ articles:
         artikel: '28'
         hoofdstuk: '3'
         paragraaf: '5'
+    machine_readable:
+      untranslatables:
+        - construct: "tenzij de netbeheerder niet in redelijkheid kan worden verweten dat hij de aansluiting niet binnen de genoemde termijn heeft gerealiseerd (lid 3 onderdeel b)"
+          reason: "De uitzondering 'niet in redelijkheid kan worden verweten' vereist een oordeel over verwijtbaarheid dat niet algoritmisch kan worden bepaald"
+          legal_text_excerpt: "tenzij de netbeheerder niet in redelijkerwijs kan worden verweten dat hij de aansluiting niet binnen de genoemde termijn heeft gerealiseerd"
+          accepted: false
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek om een aansluiting bij de netbeheerder is ingediend
+          - name: aansluitvermogen_mva
+            type: number
+            required: false
+            description: Gevraagd aansluitvermogen in MVA (artikel 23 lid 3 onderdeel a)
+          - name: is_duurzame_of_wkk_installatie
+            type: boolean
+            required: false
+            description: Of het verzoek een productie-installatie voor duurzame elektriciteit of hoogrenderende WKK betreft (artikel 23 lid 3 onderdeel b)
+        output:
+          - name: uiterste_aansluitingsdatum
+            type: date
+            description: Uiterste datum waarop de aansluiting gerealiseerd moet zijn (18 weken na verzoekdatum)
+          - name: termijn_18_weken_van_toepassing
+            type: boolean
+            description: Of de 18-wekentermijn van artikel 23 lid 3 van toepassing is op dit aansluitverzoek
+        actions:
+          - output: termijn_18_weken_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN
+                  subject: $aansluitvermogen_mva
+                  value: 10
+                - operation: EQUALS
+                  subject: $is_duurzame_of_wkk_installatie
+                  value: true
+          - output: uiterste_aansluitingsdatum
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 18
   - number: '24'
     text: |-
       1 De netbeheerder is verplicht aan degene die daarom verzoekt een aanbod te doen om met gebruikmaking van het door
@@ -4155,6 +4242,100 @@ articles:
 
       11 Bij ministeriële regeling worden nadere regels gesteld ter uitvoering van het zevende tot en met het tiende lid.
     url: https://wetten.overheid.nl/BWBR0009755/2018-05-25#Artikel29
+    machine_readable:
+      execution:
+        parameters:
+          - name: verbruik_totaal_gwh
+            type: number
+            required: true
+            description: Totaal verbruik op jaarbasis in GWh gedurende de referentieperiode (artikel 29 lid 7)
+          - name: verbruik_daluren_kwh
+            type: number
+            required: true
+            description: In daluren aan het net onttrokken elektriciteit geëxtrapoleerd naar de gehele referentieperiode in kWh (artikel 29 lid 8)
+          - name: kWmax
+            type: number
+            required: true
+            description: Maximaal aan het net onttrokken vermogen gedurende de referentieperiode in kW (artikel 29 lid 8)
+          - name: totaal_uren_periode
+            type: number
+            required: true
+            description: Totaal aantal uren in de referentieperiode (artikel 29 lid 8)
+        output:
+          - name: bedrijfstijd_percentage
+            type: number
+            description: Bedrijfstijd als percentage (maximaal 85%), berekend conform artikel 29 lid 8
+          - name: recht_op_volumecorrectie
+            type: boolean
+            description: Of de afnemer recht heeft op volumecorrectie (bedrijfstijd >= 65% en verbruik >= 50 GWh, artikel 29 lid 7)
+          - name: volumecorrectie_percentage
+            type: number
+            description: Volumecorrectie in procenten (ten hoogste 90%), conform de formule in artikel 29 lid 7
+        actions:
+          - output: bedrijfstijd_berekend
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - operation: DIVIDE
+                      values:
+                        - $verbruik_daluren_kwh
+                        - $kWmax
+                    - $totaal_uren_periode
+                - 100
+          - output: bedrijfstijd_percentage
+            value:
+              operation: MIN
+              values:
+                - $bedrijfstijd_berekend
+                - 85
+          - output: recht_op_volumecorrectie
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $bedrijfstijd_percentage
+                  value: 65
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $verbruik_totaal_gwh
+                  value: 50
+          - output: volumecorrectie_factor_bedrijfstijd
+            value:
+              operation: DIVIDE
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $bedrijfstijd_percentage
+                    - 65
+                - 20
+          - output: volumecorrectie_factor_verbruik
+            value:
+              operation: DIVIDE
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $verbruik_totaal_gwh
+                    - 50
+                - 200
+          - output: volumecorrectie_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $recht_op_volumecorrectie
+                    value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - 90
+                      - operation: MULTIPLY
+                        values:
+                          - $volumecorrectie_factor_bedrijfstijd
+                          - $volumecorrectie_factor_verbruik
+                          - 100
+              default: 0
   - number: 30a
     text: |-
       Het tarief voor de meting van elektriciteit bij afnemers als bedoeld in [artikel 95a, eerste lid][ref1], heeft
@@ -7658,6 +7839,23 @@ articles:
         artikel: 95a
         hoofdstuk: '8'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: klacht_datum
+            type: date
+            required: true
+            description: Datum waarop de klacht door de leverancier is ontvangen
+        output:
+          - name: uiterste_afdoeningsdatum
+            type: date
+            description: Uiterste datum waarop de klacht afgehandeld moet zijn (8 weken na ontvangst, artikel 95o lid 2 onderdeel c)
+        actions:
+          - output: uiterste_afdoeningsdatum
+            value:
+              operation: DATE_ADD
+              date: $klacht_datum
+              weeks: 8
   - number: '96'
     text: |-
       Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld over de laadinfrastructuur voor
