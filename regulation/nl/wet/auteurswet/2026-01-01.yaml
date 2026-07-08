@@ -356,6 +356,46 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel25
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15
+    machine_readable:
+      execution:
+        parameters:
+          - name: overnemen_door_gelijkwaardig_medium
+            type: boolean
+            required: true
+            description: "True indien het overnemen geschiedt door een dag-, nieuws- of weekblad, tijdschrift, radio- of televisieprogramma of ander medium met dezelfde functie"
+          - name: artikel_25_in_acht_genomen
+            type: boolean
+            required: true
+            description: "True indien de persoonlijkheidsrechten (artikel 25 Auteurswet) in acht zijn genomen"
+          - name: bron_duidelijk_vermeld
+            type: boolean
+            required: true
+            description: "True indien de bron, waaronder de naam van de maker, op duidelijke wijze is vermeld"
+          - name: auteursrecht_niet_voorbehouden
+            type: boolean
+            required: true
+            description: "True indien het auteursrecht niet uitdrukkelijk is voorbehouden"
+        output:
+          - name: geen_inbreuk_art15
+            type: boolean
+            description: "True indien het overnemen op grond van artikel 15 Auteurswet geen inbreuk op het auteursrecht vormt"
+        actions:
+          - output: geen_inbreuk_art15
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $overnemen_door_gelijkwaardig_medium
+                  value: true
+                - operation: EQUALS
+                  subject: $artikel_25_in_acht_genomen
+                  value: true
+                - operation: EQUALS
+                  subject: $bron_duidelijk_vermeld
+                  value: true
+                - operation: EQUALS
+                  subject: $auteursrecht_niet_voorbehouden
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -385,6 +425,44 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel25
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15a
+    machine_readable:
+      untranslatables:
+        - construct: "in overeenstemming met hetgeen naar de regels van het maatschappelijk verkeer redelijkerwijs geoorloofd is en aantal en omvang der geciteerde gedeelten door het te bereiken doel zijn gerechtvaardigd"
+          reason: "The reasonableness standard ('redelijkerwijs geoorloofd') and proportionality assessment are context-dependent normative judgements not expressible as a computable condition"
+          legal_text_excerpt: "het citeren in overeenstemming is met hetgeen naar de regels van het maatschappelijk verkeer redelijkerwijs geoorloofd is en aantal en omvang der geciteerde gedeelten door het te bereiken doel zijn gerechtvaardigd"
+          accepted: false
+      execution:
+        parameters:
+          - name: werk_rechtmatig_openbaar_gemaakt
+            type: boolean
+            required: true
+            description: "True indien het werk waaruit geciteerd wordt rechtmatig openbaar gemaakt is (lid 1, 1°)"
+          - name: artikel_25_in_acht_genomen
+            type: boolean
+            required: true
+            description: "True indien de persoonlijkheidsrechten (artikel 25 Auteurswet) in acht zijn genomen (lid 1, 3°)"
+          - name: bron_voor_zover_mogelijk_vermeld
+            type: boolean
+            required: true
+            description: "True indien voor zover redelijkerwijs mogelijk de bron, waaronder de naam van de maker, op duidelijke wijze is vermeld (lid 1, 4°)"
+        output:
+          - name: geen_inbreuk_citaat
+            type: boolean
+            description: "True indien het citeren op grond van artikel 15a Auteurswet geen inbreuk op het auteursrecht vormt (uitsluitend de objectieve voorwaarden; redelijkheidstoets vereist menselijke beoordeling)"
+        actions:
+          - output: geen_inbreuk_citaat
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $werk_rechtmatig_openbaar_gemaakt
+                  value: true
+                - operation: EQUALS
+                  subject: $artikel_25_in_acht_genomen
+                  value: true
+                - operation: EQUALS
+                  subject: $bron_voor_zover_mogelijk_vermeld
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -434,6 +512,39 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0001886#Artikel15d
       [ref7]: https://wetten.overheid.nl/BWBR0001886#Artikel15f
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15c
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_onderwijsinstelling_of_onderzoeksinstelling
+            type: boolean
+            required: true
+            description: "True indien de betalingsplichtige een instelling van onderwijs of onderzoek is, of een aan die instelling verbonden bibliotheek, dan wel de Koninklijke Bibliotheek in haar hoedanigheid van onderzoeksinstelling (lid 2)"
+          - name: maker_heeft_afstand_gedaan
+            type: boolean
+            required: true
+            description: "True indien de maker of diens rechtverkrijgende schriftelijk afstand heeft gedaan van het recht op een billijke vergoeding (lid 4)"
+        output:
+          - name: vergoeding_verschuldigd
+            type: boolean
+            description: "True indien een billijke vergoeding voor het uitlenen verschuldigd is"
+          - name: vrijgesteld_van_vergoeding
+            type: boolean
+            description: "True indien de instelling vrijgesteld is van betaling van de vergoeding op grond van lid 2 of lid 4"
+        actions:
+          - output: vrijgesteld_van_vergoeding
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_onderwijsinstelling_of_onderzoeksinstelling
+                  value: true
+                - operation: EQUALS
+                  subject: $maker_heeft_afstand_gedaan
+                  value: true
+          - output: vergoeding_verschuldigd
+            value:
+              operation: NOT
+              value: $vrijgesteld_van_vergoeding
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -592,6 +703,46 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel15j
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15i
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitsluitend_bestemd_voor_mensen_met_handicap
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging of openbaarmaking uitsluitend bestemd is voor mensen met een handicap"
+          - name: direct_verband_met_handicap
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging of openbaarmaking direct met de handicap verband houdt"
+          - name: niet_commercieel
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging of openbaarmaking van niet commerciële aard is"
+          - name: noodzakelijk_wegens_handicap
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging of openbaarmaking wegens de handicap noodzakelijk is"
+        output:
+          - name: geen_inbreuk_handicap_art15i
+            type: boolean
+            description: "True indien de verveelvoudiging of openbaarmaking op grond van artikel 15i Auteurswet geen inbreuk vormt (onverminderd artikel 15j)"
+        actions:
+          - output: geen_inbreuk_handicap_art15i
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $uitsluitend_bestemd_voor_mensen_met_handicap
+                  value: true
+                - operation: EQUALS
+                  subject: $direct_verband_met_handicap
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_commercieel
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_wegens_handicap
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -625,6 +776,39 @@ articles:
       rechtverkrijgenden een billijke vergoeding is verschuldigd. Daarbij kunnen nadere regels worden gegeven en
       voorwaarden worden gesteld.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15j
+    machine_readable:
+      execution:
+        parameters:
+          - name: grond_1_omzetting_door_of_voor_leesgehandicapte
+            type: boolean
+            required: false
+            description: "True indien de handeling bestaat in omzetting van een gepubliceerd geschrift voor een leesgehandicapte door de leesgehandicapte zelf of een namens hem optredend persoon, met rechtmatige toegang, uitsluitend voor eigen gebruik en met eerbiediging van de integriteit (lid 1, 1°)"
+          - name: grond_2_omzetting_door_toegelaten_entiteit
+            type: boolean
+            required: false
+            description: "True indien de handeling bestaat in omzetting door een toegelaten entiteit met rechtmatige toegang, uitsluitend voor gebruik door leesgehandicapten en met eerbiediging van de integriteit (lid 1, 2°)"
+          - name: grond_3_openbaarmaking_grensoverschrijdend
+            type: boolean
+            required: false
+            description: "True indien de handeling bestaat in openbaarmaking van een omgezet werk door een toegelaten entiteit aan een leesgehandicapte of andere toegelaten entiteit in een EU-lidstaat of Leesgehandicaptenverdrag-staat, uitsluitend voor gebruik door leesgehandicapten en zonder winstoogmerk (lid 1, 3°)"
+        output:
+          - name: geen_inbreuk_leesgehandicapte
+            type: boolean
+            description: "True indien de handeling op grond van artikel 15j Auteurswet geen inbreuk op het auteursrecht vormt"
+        actions:
+          - output: geen_inbreuk_leesgehandicapte
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $grond_1_omzetting_door_of_voor_leesgehandicapte
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_2_omzetting_door_toegelaten_entiteit
+                  value: true
+                - operation: EQUALS
+                  subject: $grond_3_openbaarmaking_grensoverschrijdend
+                  value: true
   - number: 15k
     text: |-
       Als inbreuk op het auteursrecht op een werk van letterkunde, wetenschap of kunst wordt niet beschouwd de invoer
@@ -748,6 +932,39 @@ articles:
 
       4 Van de bepalingen in dit artikel kan niet bij overeenkomst worden afgeweken.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15n
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_onderzoeksorganisatie_of_erfgoedinstelling
+            type: boolean
+            required: true
+            description: "True indien de reproductie geschiedt door een onderzoeksorganisatie of cultureel erfgoedinstelling als bedoeld in artikel 25a Auteurswet"
+          - name: rechtmatige_toegang_tot_werk
+            type: boolean
+            required: true
+            description: "True indien de organisatie rechtmatig toegang heeft tot het werk"
+          - name: doel_wetenschappelijk_onderzoek
+            type: boolean
+            required: true
+            description: "True indien het doel tekst- en datamining met het oog op wetenschappelijk onderzoek is"
+        output:
+          - name: geen_inbreuk_text_datamining_onderzoek
+            type: boolean
+            description: "True indien de reproductie op grond van artikel 15n Auteurswet geen inbreuk vormt"
+        actions:
+          - output: geen_inbreuk_text_datamining_onderzoek
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_onderzoeksorganisatie_of_erfgoedinstelling
+                  value: true
+                - operation: EQUALS
+                  subject: $rechtmatige_toegang_tot_werk
+                  value: true
+                - operation: EQUALS
+                  subject: $doel_wetenschappelijk_onderzoek
+                  value: true
   - number: 15o
     text: |-
       1 Onverminderd het bepaalde in [artikel 15n][ref1] wordt een reproductie in het kader van tekst- en datamining
@@ -762,6 +979,32 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel15n
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel15o
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtmatige_toegang_tot_werk
+            type: boolean
+            required: true
+            description: "True indien degene die de tekst- en datamining verricht rechtmatig toegang heeft tot het werk (lid 1)"
+          - name: auteursrecht_niet_uitdrukkelijk_voorbehouden
+            type: boolean
+            required: true
+            description: "True indien het auteursrecht door de maker of zijn rechtverkrijgenden niet uitdrukkelijk op passende wijze is voorbehouden (lid 1)"
+        output:
+          - name: geen_inbreuk_text_datamining
+            type: boolean
+            description: "True indien de reproductie voor tekst- en datamining op grond van artikel 15o Auteurswet geen inbreuk vormt"
+        actions:
+          - output: geen_inbreuk_text_datamining
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $rechtmatige_toegang_tot_werk
+                  value: true
+                - operation: EQUALS
+                  subject: $auteursrecht_niet_uitdrukkelijk_voorbehouden
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -870,6 +1113,39 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel10
       [ref2]: https://wetten.overheid.nl/BWBR0001886#Artikel16c
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel16b
+    machine_readable:
+      execution:
+        parameters:
+          - name: beperkt_tot_enkele_exemplaren
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging beperkt blijft tot enkele exemplaren (lid 1)"
+          - name: uitsluitend_eigen_gebruik
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging uitsluitend dient tot eigen oefening, studie of gebruik van de natuurlijke persoon die de verveelvoudiging vervaardigt (lid 1)"
+          - name: geen_direct_indirect_commercieel_oogmerk
+            type: boolean
+            required: true
+            description: "True indien de verveelvoudiging geschiedt zonder direct of indirect commercieel oogmerk (lid 1)"
+        output:
+          - name: geen_inbreuk_prive_gebruik
+            type: boolean
+            description: "True indien de verveelvoudiging op grond van artikel 16b lid 1 Auteurswet geen inbreuk vormt (de nadere beperkingen van lid 2 voor dag-/nieuwsbladen en muziekpartituren vereisen aanvullende beoordeling)"
+        actions:
+          - output: geen_inbreuk_prive_gebruik
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $beperkt_tot_enkele_exemplaren
+                  value: true
+                - operation: EQUALS
+                  subject: $uitsluitend_eigen_gebruik
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_direct_indirect_commercieel_oogmerk
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -1155,6 +1431,44 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel16h
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel16k
+    machine_readable:
+      execution:
+        parameters:
+          - name: verveelvoudiging_datum
+            type: date
+            required: true
+            description: "Het tijdstip waarop de verveelvoudiging is vervaardigd"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop wordt beoordeeld of de verplichting is vervallen"
+          - name: maker_heeft_afstand_gedaan
+            type: boolean
+            required: true
+            description: "True indien de maker of diens rechtverkrijgende aantoonbaar afstand heeft gedaan van het recht op de vergoeding"
+        output:
+          - name: verplichting_vervallen
+            type: boolean
+            description: "True indien de verplichting tot betaling van de vergoeding is vervallen door verloop van drie jaar of doordat de maker afstand heeft gedaan"
+          - name: vervaldatum_verplichting
+            type: date
+            description: "Datum waarop de verjaringstermijn van drie jaar verstrijkt"
+        actions:
+          - output: vervaldatum_verplichting
+            value:
+              operation: DATE_ADD
+              date: $verveelvoudiging_datum
+              years: 3
+          - output: verplichting_vervallen
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $peildatum
+                  value: $vervaldatum_verplichting
+                - operation: EQUALS
+                  subject: $maker_heeft_afstand_gedaan
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -1231,6 +1545,46 @@ articles:
 
       2 Van het in het eerste lid bepaalde kan niet bij overeenkomst worden afgeweken.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel16n
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_culturele_erfgoedinstelling
+            type: boolean
+            required: true
+            description: "True indien de reproductie geschiedt door een cultureel erfgoedinstelling"
+          - name: doel_is_behoud
+            type: boolean
+            required: true
+            description: "True indien de reproductie geschiedt met als doel het behoud van het werk"
+          - name: noodzakelijk_voor_behoud
+            type: boolean
+            required: true
+            description: "True indien de reproductie noodzakelijk is voor het behoud van het werk"
+          - name: werk_permanent_in_collectie
+            type: boolean
+            required: true
+            description: "True indien het werk permanent deel uitmaakt van de collectie van de cultureel erfgoedinstelling"
+        output:
+          - name: geen_inbreuk_behoud
+            type: boolean
+            description: "True indien de reproductie op grond van artikel 16n Auteurswet geen inbreuk vormt"
+        actions:
+          - output: geen_inbreuk_behoud
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_culturele_erfgoedinstelling
+                  value: true
+                - operation: EQUALS
+                  subject: $doel_is_behoud
+                  value: true
+                - operation: EQUALS
+                  subject: $noodzakelijk_voor_behoud
+                  value: true
+                - operation: EQUALS
+                  subject: $werk_permanent_in_collectie
+                  value: true
   - number: 16o
     text: |-
       1 Als inbreuk op het auteursrecht op een werk van letterkunde, wetenschap of kunst als bedoeld in
@@ -1528,12 +1882,60 @@ articles:
       Als inbreuk op het auteursrecht op een werk van letterkunde, wetenschap of kunst wordt niet beschouwd de
       incidentele verwerking ervan als onderdeel van ondergeschikte betekenis in een ander werk.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel18a
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_incidenteel
+            type: boolean
+            required: true
+            description: "True indien de verwerking van incidentele aard is"
+          - name: is_onderdeel_ondergeschikte_betekenis
+            type: boolean
+            required: true
+            description: "True indien het werk verwerkt is als onderdeel van ondergeschikte betekenis in een ander werk"
+        output:
+          - name: geen_inbreuk_incidenteel
+            type: boolean
+            description: "True indien de verwerking op grond van artikel 18a Auteurswet geen inbreuk op het auteursrecht vormt"
+        actions:
+          - output: geen_inbreuk_incidenteel
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_incidenteel
+                  value: true
+                - operation: EQUALS
+                  subject: $is_onderdeel_ondergeschikte_betekenis
+                  value: true
   - number: 18b
     text: |-
       Als inbreuk op het auteursrecht op een werk van letterkunde, wetenschap of kunst wordt niet beschouwd de
       openbaarmaking of verveelvoudiging ervan in het kader van een karikatuur, parodie of pastiche mits het gebruik in
       overeenstemming is met hetgeen naar de regels van het maatschappelijk verkeer redelijkerwijs geoorloofd is.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel18b
+    machine_readable:
+      untranslatables:
+        - construct: "mits het gebruik in overeenstemming is met hetgeen naar de regels van het maatschappelijk verkeer redelijkerwijs geoorloofd is"
+          reason: "The reasonableness standard ('redelijkerwijs geoorloofd') is a normative judgement dependent on context and social norms, not expressible as a computable condition"
+          legal_text_excerpt: "mits het gebruik in overeenstemming is met hetgeen naar de regels van het maatschappelijk verkeer redelijkerwijs geoorloofd is"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_karikatuur_parodie_of_pastiche
+            type: boolean
+            required: true
+            description: "True indien de openbaarmaking of verveelvoudiging geschiedt in het kader van een karikatuur, parodie of pastiche"
+        output:
+          - name: geen_inbreuk_parodie
+            type: boolean
+            description: "True indien de openbaarmaking of verveelvoudiging op grond van artikel 18b Auteurswet geen inbreuk vormt (de redelijkheidstoets vereist menselijke beoordeling)"
+        actions:
+          - output: geen_inbreuk_parodie
+            value:
+              operation: EQUALS
+              subject: $is_karikatuur_parodie_of_pastiche
+              value: true
   - number: 18c
     text: |-
       1 Als inbreuk op een werk van letterkunde, wetenschap of kunst wordt niet beschouwd het voor niet-commerciële
@@ -1944,6 +2346,36 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0014779#Artikel1
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel26a
+    machine_readable:
+      execution:
+        parameters:
+          - name: doorgifte_datum
+            type: date
+            required: true
+            description: "De datum waarop de doorgifte via de kabel of langs andere weg heeft plaatsgevonden (voor berekening van de driejarige vervaltermijn van lid 3)"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop wordt beoordeeld of de vordering is vervallen"
+        output:
+          - name: vordering_vervallen_art26a
+            type: boolean
+            description: "True indien de vordering jegens de collectieve beheersorganisatie terzake van de geïnde gelden is vervallen door verloop van drie jaar na de dag volgend op de doorgifte (lid 3)"
+          - name: vervaldatum_vordering
+            type: date
+            description: "Datum waarop de driejarige vervaltermijn verstrijkt (dag volgend op doorgifte_datum + 3 jaar)"
+        actions:
+          - output: vervaldatum_vordering
+            value:
+              operation: DATE_ADD
+              date: $doorgifte_datum
+              years: 3
+              days: 1
+          - output: vordering_vervallen_art26a
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_vordering
     references:
       - id: ref1
         bwb_id: BWBR0014779
@@ -3011,6 +3443,40 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel43a
       [ref2]: https://wetten.overheid.nl/BWBR0001886#Artikel43a
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel43c
+    machine_readable:
+      untranslatables:
+        - construct: "aanvang van de verjaringstermijn op dag dat rechthebbende met opeisbaarheid én schuldenaar bekend is geworden"
+          reason: "The subjective starting moment of the 5-year term (dag van wetenschap: when the rightsholder became aware of both the claim and the debtor) cannot be determined by computation; it requires factual assessment"
+          legal_text_excerpt: "verjaart door verloop van vijf jaren na de aanvang van de dag, volgende op die waarop de rechthebbende zowel met de opeisbaarheid van de vergoeding als met de tot de betaling van de vergoeding verplichte persoon bekend is geworden"
+          accepted: false
+      execution:
+        parameters:
+          - name: opeisbaarheid_datum
+            type: date
+            required: true
+            description: "Het tijdstip waarop de vergoeding opeisbaar is geworden (lid 2)"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop wordt beoordeeld of de rechtsvordering is verjaard"
+        output:
+          - name: rechtsvordering_verjaard_absoluut
+            type: boolean
+            description: "True indien de rechtsvordering is verjaard door verloop van twintig jaar na het tijdstip waarop de vergoeding opeisbaar is geworden (absolute verjaringstermijn lid 2)"
+          - name: absolute_vervaldatum
+            type: date
+            description: "De absolute vervaldatum van de rechtsvordering (opeisbaarheid_datum + 20 jaar)"
+        actions:
+          - output: absolute_vervaldatum
+            value:
+              operation: DATE_ADD
+              date: $opeisbaarheid_datum
+              years: 20
+          - output: rechtsvordering_verjaard_absoluut
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $absolute_vervaldatum
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -3029,6 +3495,35 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel43a
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel43d
+    machine_readable:
+      execution:
+        parameters:
+          - name: opeisbaarheid_datum
+            type: date
+            required: true
+            description: "Het tijdstip waarop de vergoeding bedoeld in artikel 43a lid 1 opeisbaar is geworden"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop wordt beoordeeld of het informatierecht nog geldig is"
+        output:
+          - name: informatierecht_vervallen
+            type: boolean
+            description: "True indien het recht op inlichtingen is vervallen door verloop van drie jaar na de opeisbaarheid"
+          - name: vervaldatum_informatierecht
+            type: date
+            description: "De datum waarop het informatierecht vervalt (opeisbaarheid_datum + 3 jaar)"
+        actions:
+          - output: vervaldatum_informatierecht
+            value:
+              operation: DATE_ADD
+              date: $opeisbaarheid_datum
+              years: 3
+          - output: informatierecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_informatierecht
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -3048,6 +3543,23 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel43a
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel43e
+    machine_readable:
+      execution:
+        parameters:
+          - name: auteursrecht_vervallen
+            type: boolean
+            required: true
+            description: "True indien het auteursrecht op het werk is vervallen (conform de artikelen 37-40a Auteurswet)"
+        output:
+          - name: volgrecht_vervallen
+            type: boolean
+            description: "True indien het volgrecht is vervallen, omdat het auteursrecht is vervallen (lid 1)"
+        actions:
+          - output: volgrecht_vervallen
+            value:
+              operation: EQUALS
+              subject: $auteursrecht_vervallen
+              value: true
     references:
       - id: ref1
         bwb_id: BWBR0001886
