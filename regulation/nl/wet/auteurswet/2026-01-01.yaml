@@ -169,6 +169,28 @@ articles:
       Er bestaat geen auteursrecht op wetten, besluiten en verordeningen, door de openbare macht uitgevaardigd, noch op
       rechterlijke uitspraken en administratieve beslissingen.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel11
+    machine_readable:
+      execution:
+        parameters:
+          - name: werk_categorie
+            type: string
+            required: true
+            description: "Categorie van het werk: WET, BESLUIT, VERORDENING, RECHTERLIJKE_UITSPRAAK, ADMINISTRATIEVE_BESLISSING, of OVERIG"
+        output:
+          - name: geen_auteursrecht
+            type: boolean
+            description: "True indien geen auteursrecht bestaat op grond van artikel 11 Auteurswet"
+        actions:
+          - output: geen_auteursrecht
+            value:
+              operation: IN
+              subject: $werk_categorie
+              values:
+                - WET
+                - BESLUIT
+                - VERORDENING
+                - RECHTERLIJKE_UITSPRAAK
+                - ADMINISTRATIEVE_BESLISSING
   - number: '12'
     text: |-
       1 Onder de openbaarmaking van een werk van letterkunde, wetenschap of kunst wordt mede verstaan:
@@ -2328,6 +2350,54 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel29c
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel29d
+    machine_readable:
+      untranslatables:
+        - construct: "best efforts aansprakelijkheidsuitzondering (lid 1 en 2)"
+          reason: "The liability exemption requires demonstrating 'best efforts' (naar beste vermogen ingespannen) — a subjective standard not expressible as a computable condition; only the objective threshold conditions are modelled"
+          legal_text_excerpt: "indien hij aantoont dat hij zich naar beste vermogen heeft ingespannen om toestemming te verkrijgen"
+          accepted: false
+      execution:
+        parameters:
+          - name: dienst_aangeboden_jaren
+            type: number
+            required: true
+            description: "Aantal jaren dat de onlinedienst voor het delen van inhoud aangeboden wordt in de EU of EER"
+          - name: jaaromzet_eurocent
+            type: number
+            required: true
+            description: "Jaaromzet van de aanbieder in eurocent (€10 mln = 1000000000 eurocent)"
+          - name: gemiddeld_maandelijks_unieke_bezoekers
+            type: number
+            required: true
+            description: "Gemiddeld aantal maandelijkse unieke bezoekers berekend op basis van het voorafgaande kalenderjaar"
+        output:
+          - name: valt_onder_artikel_29d_lid_1
+            type: boolean
+            description: "True indien de aanbieder voldoet aan de criteria van lid 1 (dienst < 3 jaar EN omzet < 10 mln euro)"
+          - name: strengere_verplichtingen_lid_2
+            type: boolean
+            description: "True indien lid 1 van toepassing is EN meer dan 5 miljoen maandelijkse bezoekers"
+        actions:
+          - output: valt_onder_artikel_29d_lid_1
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN
+                  subject: $dienst_aangeboden_jaren
+                  value: 3
+                - operation: LESS_THAN
+                  subject: $jaaromzet_eurocent
+                  value: 1000000000
+          - output: strengere_verplichtingen_lid_2
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $valt_onder_artikel_29d_lid_1
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $gemiddeld_maandelijks_unieke_bezoekers
+                  value: 5000000
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -2643,6 +2713,45 @@ articles:
       makers daarvan toekomende, wordt berekend van de 1e januari van het jaar, volgende op het sterfjaar van de
       langstlevende hunner.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel37
+    machine_readable:
+      untranslatables:
+        - construct: "langstlevende van twee of meer gezamenlijke makers (lid 2)"
+          reason: "Selecting the latest death year from a variable-length collection requires MAX aggregation over a collection, which is not available as an engine operation"
+          legal_text_excerpt: "wordt berekend van de 1e januari van het jaar, volgende op het sterfjaar van de langstlevende hunner"
+          accepted: false
+      execution:
+        parameters:
+          - name: sterfjaar_maker
+            type: number
+            required: true
+            description: "Het jaar waarin de maker is overleden (bij gemeenschappelijk auteursrecht: de langstlevende maker)"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop de beschermingsduur wordt beoordeeld"
+        output:
+          - name: vervaldatum_auteursrecht
+            type: date
+            description: "Datum waarop het auteursrecht vervalt (1 januari van het 71e jaar na sterfjaar)"
+          - name: auteursrecht_vervallen
+            type: boolean
+            description: "True indien de beschermingsduur van 70 jaar is verstreken op de peildatum"
+        actions:
+          - output: vervaldatum_auteursrecht
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $sterfjaar_maker
+                  - 71
+              month: 1
+              day: 1
+          - output: auteursrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_auteursrecht
   - number: '38'
     text: |-
       1 Het auteursrecht op een werk, ten aanzien waarvan de maker niet is aangeduid of niet op zodanige wijze dat zijn
@@ -2659,6 +2768,40 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel37
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel38
+    machine_readable:
+      execution:
+        parameters:
+          - name: eerste_openbaarmaking_jaar
+            type: number
+            required: true
+            description: "Het jaar van de eerste rechtmatige openbaarmaking van het anonieme, pseudonieme of institutionele werk"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop de beschermingsduur wordt beoordeeld"
+        output:
+          - name: vervaldatum_auteursrecht
+            type: date
+            description: "Datum waarop het auteursrecht vervalt (1 januari van het 71e jaar na eerste openbaarmaking)"
+          - name: auteursrecht_vervallen
+            type: boolean
+            description: "True indien de beschermingsduur van 70 jaar na eerste openbaarmaking is verstreken"
+        actions:
+          - output: vervaldatum_auteursrecht
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $eerste_openbaarmaking_jaar
+                  - 71
+              month: 1
+              day: 1
+          - output: auteursrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_auteursrecht
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -2673,6 +2816,27 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel37
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel39
+    machine_readable:
+      untranslatables:
+        - construct: "berekening of openbaarmaking plaatsvond binnen 70 jaar na totstandkoming"
+          reason: "Comparing an optional openbaarmaking_jaar against totstandkoming_jaar + 70 requires handling an absent value when the work was never published; the caller is expected to resolve this and supply a boolean"
+          legal_text_excerpt: "die niet binnen 70 jaren na hun totstandkoming op rechtmatige wijze zijn openbaar gemaakt"
+          accepted: false
+      execution:
+        parameters:
+          - name: openbaar_gemaakt_binnen_70_jaar
+            type: boolean
+            required: true
+            description: "True indien het werk binnen 70 jaar na zijn totstandkoming rechtmatig openbaar gemaakt is"
+        output:
+          - name: auteursrecht_vervallen
+            type: boolean
+            description: "True indien het werk niet binnen 70 jaar na totstandkoming openbaar is gemaakt en het auteursrecht aldus is vervallen"
+        actions:
+          - output: auteursrecht_vervallen
+            value:
+              operation: NOT
+              value: $openbaar_gemaakt_binnen_70_jaar
     references:
       - id: ref1
         bwb_id: BWBR0001886
@@ -2684,12 +2848,90 @@ articles:
       volgende op het sterfjaar van de langstlevende van de volgende personen: de hoofdregisseur, de scenarioschrijver,
       de schrijver van de dialogen en degene die ten behoeve van het filmwerk de muziek heeft gemaakt.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel40
+    machine_readable:
+      untranslatables:
+        - construct: "langstlevende van: hoofdregisseur, scenarioschrijver, schrijver van de dialogen, componist"
+          reason: "Selecting the latest death year from a named collection of persons requires MAX aggregation over a collection, which is not available as an engine operation; caller must supply the computed sterfjaar of the langstlevende"
+          legal_text_excerpt: "volgende op het sterfjaar van de langstlevende van de volgende personen: de hoofdregisseur, de scenarioschrijver, de schrijver van de dialogen en degene die ten behoeve van het filmwerk de muziek heeft gemaakt"
+          accepted: false
+      execution:
+        parameters:
+          - name: sterfjaar_langstlevende_filmmakers
+            type: number
+            required: true
+            description: "Sterfjaar van de langstlevende van: hoofdregisseur, scenarioschrijver, schrijver dialogen en componist"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop de beschermingsduur wordt beoordeeld"
+        output:
+          - name: vervaldatum_auteursrecht_filmwerk
+            type: date
+            description: "Datum waarop het auteursrecht op het filmwerk vervalt"
+          - name: auteursrecht_vervallen
+            type: boolean
+            description: "True indien het auteursrecht op het filmwerk is vervallen op de peildatum"
+        actions:
+          - output: vervaldatum_auteursrecht_filmwerk
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $sterfjaar_langstlevende_filmmakers
+                  - 71
+              month: 1
+              day: 1
+          - output: auteursrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_auteursrecht_filmwerk
   - number: 40a
     text: |-
       Indien in het geval van een muziekwerk met woorden het auteursrecht op de muziek en het auteursrecht op de woorden
       berusten bij verschillende personen, vervalt het auteursrecht door verloop van 70 jaren, te rekenen van de 1e
       januari van het jaar volgende op het sterfjaar van de langstlevende van hen.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel40a
+    machine_readable:
+      untranslatables:
+        - construct: "langstlevende van componist en schrijver van de woorden"
+          reason: "Determining the later of two death years requires MAX over a collection; caller must supply the sterfjaar of the langstlevende"
+          legal_text_excerpt: "te rekenen van de 1e januari van het jaar volgende op het sterfjaar van de langstlevende van hen"
+          accepted: false
+      execution:
+        parameters:
+          - name: sterfjaar_langstlevende
+            type: number
+            required: true
+            description: "Sterfjaar van de langstlevende van de componist en de schrijver van de woorden"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop de beschermingsduur wordt beoordeeld"
+        output:
+          - name: vervaldatum_auteursrecht
+            type: date
+            description: "Datum waarop het auteursrecht op het muziekwerk met woorden vervalt"
+          - name: auteursrecht_vervallen
+            type: boolean
+            description: "True indien het auteursrecht is vervallen op de peildatum"
+        actions:
+          - output: vervaldatum_auteursrecht
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $sterfjaar_langstlevende
+                  - 71
+              month: 1
+              day: 1
+          - output: auteursrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_auteursrecht
   - number: '41'
     text: |-
       Ten aanzien van werken, in verschillende banden, delen, nummers of afleveringen verschenen, wordt voor de
@@ -3407,6 +3649,40 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel1
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel45o
+    machine_readable:
+      execution:
+        parameters:
+          - name: eerste_openbaarmaking_jaar
+            type: number
+            required: true
+            description: "Het jaar van de eerste rechtmatige openbaarmaking van het niet eerder uitgegeven werk na het verstrijken van de duur van het auteursrecht"
+          - name: peildatum
+            type: date
+            required: true
+            description: "De datum waarop de beschermingsduur wordt beoordeeld"
+        output:
+          - name: vervaldatum_uitgeversrecht
+            type: date
+            description: "Datum waarop het uitgeversrecht vervalt (1 januari 25 jaar na eerste openbaarmaking)"
+          - name: uitgeversrecht_vervallen
+            type: boolean
+            description: "True indien het uitgeversrecht van 25 jaar is vervallen op de peildatum"
+        actions:
+          - output: vervaldatum_uitgeversrecht
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $eerste_openbaarmaking_jaar
+                  - 26
+              month: 1
+              day: 1
+          - output: uitgeversrecht_vervallen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $vervaldatum_uitgeversrecht
     references:
       - id: ref1
         bwb_id: BWBR0001886
