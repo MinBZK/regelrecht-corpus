@@ -1001,6 +1001,31 @@ articles:
         bwb_id: BWBR0044770
         artikel: '13'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_verblijfsvergunning_regulier_voor_bepaalde_tijd
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige heeft verblijf op grond van een verblijfsvergunning regulier voor bepaalde tijd
+          - name: is_inburgeringsplichtige_artikel13_lid1_b
+            type: boolean
+            required: true
+            description: De inburgeringsplichtige is een inburgeringsplichtige als bedoeld in artikel 13, eerste lid, onderdeel b (gezinslid bij asielhouder met reguliere verblijfsvergunning voor bepaalde tijd)
+        output:
+          - name: hoofdstuk_6_van_toepassing
+            type: boolean
+            description: Of hoofdstuk 6 (leningen) van toepassing is op deze inburgeringsplichtige
+        actions:
+          - output: hoofdstuk_6_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_verblijfsvergunning_regulier_voor_bepaalde_tijd
+                  value: true
+                - operation: NOT
+                  value: $is_inburgeringsplichtige_artikel13_lid1_b
   - number: '20'
     text: |-
       1 Onze Minister verstrekt op aanvraag aan de inburgeringsplichtige die voldoet aan de bij of krachtens algemene
@@ -1250,6 +1275,23 @@ articles:
         bwb_id: BWBR0044770
         artikel: '12'
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_boetebeschikking_datum
+            type: date
+            required: true
+            description: Datum van bekendmaking van de boetebeschikking (lid 2)
+        output:
+          - name: maximum_nieuwe_termijn_datum
+            type: date
+            description: Uiterste datum voor het afronden van het participatieverklaringstraject of de module Arbeidsmarkt en Participatie na bekendmaking van de boetebeschikking (lid 2 — ten hoogste twee jaar na bekendmaking)
+        actions:
+          - output: maximum_nieuwe_termijn_datum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_boetebeschikking_datum
+              years: 2
   - number: '25'
     text: |-
       1 Onze Minister legt een bestuurlijke boete op aan de inburgeringsplichtige die de op grond van [artikel 15][ref1]
