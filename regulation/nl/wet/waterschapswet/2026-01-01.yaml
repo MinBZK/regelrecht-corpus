@@ -576,6 +576,35 @@ articles:
       4 Aan een lid van het algemeen bestuur wordt ten hoogste drie maal per zittingsperiode tijdelijk ontslag als
       bedoeld in het eerste of het tweede lid verleend.
     url: https://wetten.overheid.nl/BWBR0005108/2026-01-01#Artikel21
+    machine_readable:
+      execution:
+        output:
+          - name: max_tijdelijk_ontslag_per_zittingsperiode
+            type: number
+            description: Maximum aantal malen tijdelijk ontslag per zittingsperiode (art 21 lid 4)
+          - name: herleving_na_weken
+            type: number
+            description: Aantal weken waarna het lidmaatschap van rechtswege herleeft (art 21 lid 3)
+          - name: verlof_zwangerschap_min_weken_voor_bevalling
+            type: number
+            description: Minimum aantal weken voor de bevalling waarop tijdelijk ontslag ingaat (art 21 lid 1)
+          - name: verlof_zwangerschap_max_weken_voor_bevalling
+            type: number
+            description: Maximum aantal weken voor de bevalling waarop tijdelijk ontslag ingaat (art 21 lid 1)
+          - name: ziekte_niet_hervatten_binnen_weken
+            type: number
+            description: Aantal weken waarbinnen aannemelijk moet zijn dat lidmaatschap niet kan worden hervat (art 21 lid 2)
+        actions:
+          - output: max_tijdelijk_ontslag_per_zittingsperiode
+            value: 3
+          - output: herleving_na_weken
+            value: 16
+          - output: verlof_zwangerschap_min_weken_voor_bevalling
+            value: 4
+          - output: verlof_zwangerschap_max_weken_voor_bevalling
+            value: 6
+          - output: ziekte_niet_hervatten_binnen_weken
+            value: 8
   - number: '22'
     text: |-
       1 De voorzitter van het algemeen bestuur beslist op een verzoek tot tijdelijk ontslag als bedoeld in
@@ -605,6 +634,23 @@ articles:
         artikel: '21'
         hoofdstuk: IV
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek tot tijdelijk ontslag is ingediend (art 22 lid 1)
+        output:
+          - name: uiterste_beslissingstermijn_datum
+            type: date
+            description: Uiterste datum waarop de voorzitter moet beslissen op het verzoek (art 22 lid 1)
+        actions:
+          - output: uiterste_beslissingstermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              days: 14
   - number: '23'
     text: |-
       1 De organisatie benoemt een vervanger voor de plaats die is opengevallen als gevolg van een tijdelijk ontslag
@@ -1222,6 +1268,35 @@ articles:
 
       5 Aan een lid van het dagelijks bestuur wordt gedurende de zittingsperiode ten hoogste drie maal verlof verleend.
     url: https://wetten.overheid.nl/BWBR0005108/2026-01-01#Artikel41a
+    machine_readable:
+      execution:
+        output:
+          - name: max_verlof_per_zittingsperiode
+            type: number
+            description: Maximum aantal malen verlof per zittingsperiode voor DB-leden (art 41a lid 5)
+          - name: verlof_duur_weken
+            type: number
+            description: Duur van het verlof in weken (art 41a lid 4)
+          - name: verlof_zwangerschap_min_weken_voor_bevalling
+            type: number
+            description: Minimum aantal weken voor de bevalling waarop verlof ingaat (art 41a lid 1)
+          - name: verlof_zwangerschap_max_weken_voor_bevalling
+            type: number
+            description: Maximum aantal weken voor de bevalling waarop verlof ingaat (art 41a lid 1)
+          - name: ziekte_niet_hervatten_binnen_weken
+            type: number
+            description: Aantal weken waarbinnen aannemelijk moet zijn dat lid niet kan hervatten (art 41a lid 2)
+        actions:
+          - output: max_verlof_per_zittingsperiode
+            value: 3
+          - output: verlof_duur_weken
+            value: 16
+          - output: verlof_zwangerschap_min_weken_voor_bevalling
+            value: 4
+          - output: verlof_zwangerschap_max_weken_voor_bevalling
+            value: 6
+          - output: ziekte_niet_hervatten_binnen_weken
+            value: 8
   - number: 41b
     text: |-
       1 Het dagelijks bestuur beslist zo spoedig mogelijk op een verzoek tot verlof, doch uiterlijk op de veertiende dag
@@ -1230,6 +1305,23 @@ articles:
       2 De beslissing geschiedt in overeenstemming met de verklaring van de arts of verloskundige en bevat de dag waarop
       het verlof ingaat.
     url: https://wetten.overheid.nl/BWBR0005108/2026-01-01#Artikel41b
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum waarop het verzoek tot verlof is ingediend (art 41b lid 1)
+        output:
+          - name: uiterste_beslissingstermijn_datum
+            type: date
+            description: Uiterste datum waarop het dagelijks bestuur moet beslissen op het verzoek (art 41b lid 1)
+        actions:
+          - output: uiterste_beslissingstermijn_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              days: 14
   - number: 41c
     text: |-
       1 Het algemeen bestuur kan een vervanger benoemen voor het lid van het dagelijks bestuur dat met verlof is gegaan.
@@ -1535,6 +1627,15 @@ articles:
       - id: ref2
         bwb_id: BWBR0002320
         artikel: '76'
+    machine_readable:
+      execution:
+        output:
+          - name: benoemingstermijn_jaren
+            type: number
+            description: Benoemingstermijn van de voorzitter in jaren (art 46 lid 2)
+        actions:
+          - output: benoemingstermijn_jaren
+            value: 6
   - number: '47'
     text: |-
       1 De voorzitter is niet tevens:
@@ -3540,6 +3641,41 @@ articles:
       - id: ref1
         bwb_id: BWBR0025458
         artikel: '7.24'
+    machine_readable:
+      execution:
+        parameters:
+          - name: primair_energiegebruik_watersystemen
+            type: number
+            required: true
+            description: Primair energiegebruik benodigd voor het beheer van watersystemen (art 117 lid 3)
+          - name: op_te_wekken_hernieuwbare_energie
+            type: number
+            required: true
+            description: Hoeveelheid op te wekken hernieuwbare energie ter compensatie van broeikasgassen (art 117 lid 3)
+        output:
+          - name: max_hernieuwbare_energie_factor
+            type: number
+            description: Maximale vermenigvuldigingsfactor van primair energiegebruik voor hernieuwbare energie (art 117 lid 3)
+          - name: max_hernieuwbare_energie
+            type: number
+            description: Maximaal toe te stane hoeveelheid op te wekken hernieuwbare energie (2× primair energiegebruik) (art 117 lid 3)
+          - name: voldoet_aan_energieplafond
+            type: boolean
+            description: Of de op te wekken hernieuwbare energie niet hoger is dan tweemaal het primaire energiegebruik (art 117 lid 3)
+        actions:
+          - output: max_hernieuwbare_energie_factor
+            value: 2
+          - output: max_hernieuwbare_energie
+            value:
+              operation: MULTIPLY
+              values:
+                - $max_hernieuwbare_energie_factor
+                - $primair_energiegebruik_watersystemen
+          - output: voldoet_aan_energieplafond
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $op_te_wekken_hernieuwbare_energie
+              value: $max_hernieuwbare_energie
   - number: '118'
     text: |-
       1 Als één gebouwde onroerende zaak als bedoeld in [artikel 117, eerste lid, onderdeel d][ref1], wordt aangemerkt:
@@ -3965,6 +4101,72 @@ articles:
       - id: ref8
         bwb_id: BWBR0005416
         artikel: 220d
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_stemgerechtigden
+            type: number
+            required: false
+            description: Totaal aantal potentiële heffingplichtigen dat zich kan uitspreken (art 122 lid 5b)
+          - name: aantal_uitgesproken
+            type: number
+            required: false
+            description: Aantal potentiële heffingplichtigen dat zich heeft uitgesproken (art 122 lid 5c)
+          - name: aantal_voorstemmen
+            type: number
+            required: false
+            description: Aantal uitgesproken heffingplichtigen dat vóór het wateraanvoerproject heeft gestemd (art 122 lid 5d)
+        output:
+          - name: max_verlaging_pct_buitendijks_waterberging
+            type: number
+            description: Maximum verlaging tarief voor buitendijkse en waterbergingsgronden als percentage (art 122 lid 1)
+          - name: max_verhoging_pct_bemalen_gebieden
+            type: number
+            description: Maximum verhoging tarief voor bemalen gebieden als percentage (art 122 lid 2)
+          - name: max_verhoging_pct_glasopstanden
+            type: number
+            description: Maximum verhoging tarief voor onroerende zaken met glasopstanden als percentage (art 122 lid 3a)
+          - name: max_verhoging_pct_verharde_wegen
+            type: number
+            description: Maximum verhoging tarief voor verharde openbare wegen als percentage (art 122 lid 3b)
+          - name: max_verhoging_pct_wateraanvoerproject
+            type: number
+            description: Maximum verhoging tarief voor ongebouwde onroerende zaken in wateraanvoerproject als percentage (art 122 lid 3c)
+          - name: voldoet_deelname_drempel_wateraanvoer
+            type: boolean
+            description: Of ten minste de helft van de potentiële heffingplichtigen zich heeft uitgesproken (art 122 lid 5c)
+          - name: voldoet_voorstemmen_drempel_wateraanvoer
+            type: boolean
+            description: Of ten minste twee derde van de uitgesproken heffingplichtigen vóór het project heeft gestemd (art 122 lid 5d)
+        actions:
+          - output: max_verlaging_pct_buitendijks_waterberging
+            value: 75
+          - output: max_verhoging_pct_bemalen_gebieden
+            value: 100
+          - output: max_verhoging_pct_glasopstanden
+            value: 100
+          - output: max_verhoging_pct_verharde_wegen
+            value: 100
+          - output: max_verhoging_pct_wateraanvoerproject
+            value: 100
+          - output: voldoet_deelname_drempel_wateraanvoer
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_uitgesproken
+              value:
+                operation: DIVIDE
+                values:
+                  - $aantal_stemgerechtigden
+                  - 2
+          - output: voldoet_voorstemmen_drempel_wateraanvoer
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_voorstemmen
+              value:
+                operation: DIVIDE
+                values:
+                  - $aantal_uitgesproken
+                  - 1.5
   - number: 122a
     text: |-
       1 Ter bestrijding van kosten die zijn verbonden aan de behartiging van de taak ter zake van het wegenbeheer kan,
@@ -4162,6 +4364,41 @@ articles:
         bwb_id: BWBR0005108
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: primair_energiegebruik_zuivering
+            type: number
+            required: true
+            description: Primair energiegebruik benodigd voor de zuivering van afvalwater (art 122d lid 5d)
+          - name: op_te_wekken_hernieuwbare_energie_zuivering
+            type: number
+            required: true
+            description: Hoeveelheid op te wekken hernieuwbare energie ter compensatie van broeikasgassen (art 122d lid 5d)
+        output:
+          - name: max_hernieuwbare_energie_factor_zuivering
+            type: number
+            description: Maximale vermenigvuldigingsfactor van primair energiegebruik voor hernieuwbare energie bij zuivering (art 122d lid 5d)
+          - name: max_hernieuwbare_energie_zuivering
+            type: number
+            description: Maximaal toe te stane hoeveelheid op te wekken hernieuwbare energie (3× primair energiegebruik) (art 122d lid 5d)
+          - name: voldoet_aan_energieplafond_zuivering
+            type: boolean
+            description: Of de op te wekken hernieuwbare energie niet hoger is dan driemaal het primaire energiegebruik (art 122d lid 5d)
+        actions:
+          - output: max_hernieuwbare_energie_factor_zuivering
+            value: 3
+          - output: max_hernieuwbare_energie_zuivering
+            value:
+              operation: MULTIPLY
+              values:
+                - $max_hernieuwbare_energie_factor_zuivering
+                - $primair_energiegebruik_zuivering
+          - output: voldoet_aan_energieplafond_zuivering
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $op_te_wekken_hernieuwbare_energie_zuivering
+              value: $max_hernieuwbare_energie_zuivering
   - number: 122e
     text: |-
       Voor de heffing geldt als grondslag de hoeveelheid en de hoedanigheid van de stoffen die in een kalenderjaar worden
@@ -5413,6 +5650,23 @@ articles:
         bwb_id: BWBR0005108
         artikel: '123'
         hoofdstuk: XVIII
+    machine_readable:
+      execution:
+        parameters:
+          - name: omstandigheid_datum
+            type: date
+            required: true
+            description: Datum waarop de omstandigheid die aanspraak op vrijstelling/vermindering/ontheffing/teruggaaf deed ontstaan zich heeft voorgedaan (art 132 lid 1)
+        output:
+          - name: uiterste_aanvraag_datum
+            type: date
+            description: Uiterste datum voor het indienen van de aanvraag tot vrijstelling, vermindering, ontheffing of teruggaaf (art 132 lid 1)
+        actions:
+          - output: uiterste_aanvraag_datum
+            value:
+              operation: DATE_ADD
+              date: $omstandigheid_datum
+              weeks: 6
   - number: '133'
     text: |-
       In de gevallen waarin het volkenrecht dan wel, naar het oordeel van Onze Minister van Infrastructuur en

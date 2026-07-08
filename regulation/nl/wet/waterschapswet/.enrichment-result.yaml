@@ -1,5 +1,32 @@
 # .enrichment-result.yaml — result envelope, NOT part of the law schema
 law_id: waterschapswet
+enriched_at: '2026-07-08'
+
+machine_readable_sections:
+  added: 9
+  preexisting: 8
+  total: 17
+  articles: ['13', '16', '21', '22', '31', '41a', '41b', '46', '117', '120', '122', '122d', '122f', '122h', '122i', '122k', '132']
+
+untranslatables:
+  - article: '120'
+    constructs: ["0,0029317*(A^0,7414854)", "0,0000224*(B^1,1938609)"]
+    reason: Machtsverheffing niet beschikbaar als engine-operatie
+  - article: '122k'
+    construct: Tabel met 15 klassen afvalwatercoëfficiënten
+    reason: Meer dan 8 gevallen niet uitdrukbaar als IF-operatie
+
+reverse_validation:
+  status: passed
+  articles_checked: 17
+  fully_grounded: 17
+  assumptions: 0
+  elements_removed: 0
+  scope_violations: 0
+
+mvt_research:
+  status: skipped
+  reason: WebFetch/WebSearch niet beschikbaar in deze omgeving
 related_legislation:
   - name: Kieswet
     relation: source_regulation
