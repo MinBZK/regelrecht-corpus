@@ -268,6 +268,52 @@ articles:
         bwb_id: BWBR0007118
         artikel: '4'
         hoofdstuk: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (lid 1)
+          - name: openbaarmaking_datum
+            type: date
+            required: true
+            description: Datum waarop de uitvinding openbaar is gemaakt (lid 1)
+          - name: is_misbruik_of_tentoonstelling
+            type: boolean
+            required: true
+            description: Of de openbaarmaking het gevolg is van misbruik (lid 1a) of een erkende tentoonstelling (lid 1b)
+        output:
+          - name: grensperiode_datum
+            type: date
+            description: Datum 6 maanden na openbaarmaking; indien >= indiening_datum valt de openbaarmaking binnen het beschermde venster (lid 1)
+          - name: binnen_zes_maanden
+            type: boolean
+            description: Of de openbaarmaking niet eerder is geschied dan zes maanden voor de dag van indiening (lid 1)
+          - name: buiten_beschouwing
+            type: boolean
+            description: Of de openbaarmaking buiten beschouwing blijft bij toepassing van artikel 4 (lid 1)
+        actions:
+          - output: grensperiode_datum
+            value:
+              operation: DATE_ADD
+              date: $openbaarmaking_datum
+              months: 6
+          - output: binnen_zes_maanden
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $grensperiode_datum
+              value: $indiening_datum
+          - output: buiten_beschouwing
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_misbruik_of_tentoonstelling
+                  value: true
+                - operation: EQUALS
+                  subject: $binnen_zes_maanden
+                  value: true
   - number: '6'
     text: |-
       Een uitvinding wordt als het resultaat van uitvinderswerkzaamheid aangemerkt, indien zij voor een deskundige niet
@@ -670,6 +716,35 @@ articles:
         artikel: '55'
         hoofdstuk: '4'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: obstakel_verwijdering_datum
+            type: date
+            required: true
+            description: Datum waarop de oorzaak van het niet in acht nemen van de termijn is weggenomen (lid 3)
+          - name: gemiste_termijn_vervaldatum
+            type: date
+            required: true
+            description: Datum waarop de niet in acht genomen termijn is verstreken (lid 3)
+        output:
+          - name: verzoek_uiterste_datum_obstakel
+            type: date
+            description: Uiterste datum voor herstelverzoek gerekend vanaf wegneming obstakel (2 maanden, lid 3)
+          - name: verzoek_absolute_uiterste_datum
+            type: date
+            description: Absolute uiterste datum voor herstelverzoek (1 jaar na verstrijken gemiste termijn, lid 3)
+        actions:
+          - output: verzoek_uiterste_datum_obstakel
+            value:
+              operation: DATE_ADD
+              date: $obstakel_verwijdering_datum
+              months: 2
+          - output: verzoek_absolute_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $gemiste_termijn_vervaldatum
+              years: 1
   - number: 23a
     text: |-
       1 Het bureau is verantwoordelijk voor een register van octrooigemachtigden waaruit kan worden afgeleid wie voldoet
@@ -1770,6 +1845,38 @@ articles:
         artikel: '34'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: mededeling_datum
+            type: date
+            required: true
+            description: Datum van verzending van de mededeling bedoeld in artikel 34 lid 4 (lid 4)
+          - name: verlenging_gevraagd
+            type: boolean
+            required: true
+            description: Of de aanvrager verlenging van de termijn heeft gevraagd (lid 4, tweede volzin)
+        output:
+          - name: splitsing_wijziging_uiterste_datum
+            type: date
+            description: Uiterste datum voor splitsing of wijziging van de aanvrage (2 of 4 maanden na mededeling, lid 4)
+        actions:
+          - output: splitsing_wijziging_uiterste_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verlenging_gevraagd
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $mededeling_datum
+                    months: 4
+              default:
+                operation: DATE_ADD
+                date: $mededeling_datum
+                months: 2
   - number: '29'
     text: |-
       1 Als datum van indiening van de aanvrage geldt die, waarop zijn overgelegd:
@@ -1829,6 +1936,23 @@ articles:
         artikel: '29'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum van verzending van de kennisgeving over gebreken aan artikel 24 (lid 1)
+        output:
+          - name: herstel_uiterste_datum
+            type: date
+            description: Uiterste datum voor herstel van gebreken (3 maanden na kennisgeving, lid 2)
+        actions:
+          - output: herstel_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              months: 3
   - number: '31'
     text: |-
       1 Het bureau schrijft een octrooiaanvrage in het octrooiregister in zo spoedig mogelijk na verloop van achttien
@@ -2021,6 +2145,23 @@ articles:
       hersteld of indien de aanvrager voordien heeft meegedeeld niet tot herstel te willen overgaan, besluit het bureau
       de aanvrage niet te behandelen. Het bureau maakt zijn beschikking zo spoedig mogelijk aan de aanvrager bekend.
     url: https://wetten.overheid.nl/BWBR0007118/2023-06-01#Artikel35
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum van verzending van de kennisgeving over onduidelijkheid van de aanvrage (lid 1)
+        output:
+          - name: herstel_uiterste_datum
+            type: date
+            description: Uiterste datum voor herstel van onduidelijkheidsgebreken (2 maanden na kennisgeving, lid 2)
+        actions:
+          - output: herstel_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              months: 2
   - number: '36'
     text: |-
       1 Het bureau verleent het octrooi zodra de octrooiaanvrage in het octrooiregister is ingeschreven, doch niet eerder
@@ -2159,6 +2300,23 @@ articles:
 
       3 Ingeval het eerste lid toepassing vindt, wordt de inschrijving in het octrooiregister van de aanvrage opgeschort.
     url: https://wetten.overheid.nl/BWBR0007118/2023-06-01#Artikel40
+    machine_readable:
+      execution:
+        parameters:
+          - name: indiening_datum
+            type: date
+            required: true
+            description: Datum van indiening van de octrooiaanvrage (lid 1)
+        output:
+          - name: geheimhouding_melding_uiterste_datum
+            type: date
+            description: Uiterste datum waarop het bureau de aanvrager bekendmaakt dat geheimhouding in het belang kan zijn (3 maanden na indiening, lid 1)
+        actions:
+          - output: geheimhouding_melding_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $indiening_datum
+              months: 3
   - number: '41'
     text: |-
       1 Binnen acht maanden na indiening van een octrooiaanvrage als bedoeld in [artikel 40][ref1] besluit Onze Minister
@@ -2491,6 +2649,23 @@ articles:
         artikel: '31'
         hoofdstuk: '2'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: binnenkomst_datum
+            type: date
+            required: true
+            description: Datum van binnenkomst van de omgezette Europese octrooiaanvrage bij het bureau (lid 1)
+        output:
+          - name: betaling_vertaling_uiterste_datum
+            type: date
+            description: Uiterste datum voor overlegging bewijs van betaling en vertaling in het Nederlands (3 maanden na binnenkomst, lid 2)
+        actions:
+          - output: betaling_vertaling_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $binnenkomst_datum
+              months: 3
   - number: '49'
     text: |-
       1 Met inachtneming van het in deze rijkswet bepaalde hebben Europese octrooien vanaf de dag, waarop overeenkomstig
@@ -3961,6 +4136,23 @@ articles:
         artikel: '55'
         hoofdstuk: '4'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: deurwaardersexploit_datum
+            type: date
+            required: true
+            description: Datum van het deurwaardersexploit waarbij de betrokkene op het recht van de octrooihouder is gewezen (lid 3)
+        output:
+          - name: vergoeding_aanvang_datum
+            type: date
+            description: Datum vanaf wanneer handelingen vergoedingsplichtig zijn (30 dagen na deurwaardersexploit, lid 3)
+        actions:
+          - output: vergoeding_aanvang_datum
+            value:
+              operation: DATE_ADD
+              date: $deurwaardersexploit_datum
+              days: 30
   - number: '72'
     text: |-
       1 De houder van een Europees octrooi of een Europees octrooi met eenheidswerking kan, behoudens het bepaalde
@@ -4025,6 +4217,23 @@ articles:
         artikel: '55'
         hoofdstuk: '4'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: deurwaardersexploit_datum
+            type: date
+            required: true
+            description: Datum van het deurwaardersexploit waarbij de betrokkene op het recht van de Europees octrooihouder is gewezen (lid 3)
+        output:
+          - name: vergoeding_aanvang_datum
+            type: date
+            description: Datum vanaf wanneer handelingen vergoedingsplichtig zijn (30 dagen na deurwaardersexploit, lid 3)
+        actions:
+          - output: vergoeding_aanvang_datum
+            value:
+              operation: DATE_ADD
+              date: $deurwaardersexploit_datum
+              days: 30
   - number: '73'
     text: |-
       1 De octrooihouder kan de vorderingen die hem ten dienste staan bij de handhaving van zijn octrooi instellen tegen
@@ -4421,6 +4630,23 @@ articles:
         artikel: '56'
         hoofdstuk: '4'
         paragraaf: 1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: octrooiverlening_datum
+            type: date
+            required: true
+            description: Datum van verlening van het octrooi, of datum van publicatie van vermelding verlening Europees octrooi (lid 7)
+        output:
+          - name: verjaring_datum
+            type: date
+            description: Datum waarop de vordering tot opeising van het octrooi verjaart (5 jaar na verlening, lid 7)
+        actions:
+          - output: verjaring_datum
+            value:
+              operation: DATE_ADD
+              date: $octrooiverlening_datum
+              years: 5
   - number: '79'
     text: |-
       1 Hij die opzettelijk inbreuk maakt op het recht van de octrooihouder door het verrichten van een der in
@@ -4728,6 +4954,23 @@ articles:
         bwb_id: BWBR0007118
         artikel: '84'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: standpunten_ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop het bureau kennis heeft genomen van het standpunt van verzoeker en octrooihouder, of datum waarop de gestelde termijn is verstreken (lid 3)
+        output:
+          - name: advies_uiterste_datum
+            type: date
+            description: Uiterste datum voor uitbrengen advies artikel 84 (2 maanden na ontvangst standpunten of verstrijken termijn, lid 3)
+        actions:
+          - output: advies_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $standpunten_ontvangst_datum
+              months: 2
   - number: '86'
     text: |-
       Het in [artikel 84][ref1] bedoelde advies bestaat uit een gemotiveerde beoordeling van de in
@@ -4857,6 +5100,23 @@ articles:
         bwb_id: BWBR0007118
         artikel: '93'
         hoofdstuk: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvraag_datum
+            type: date
+            required: true
+            description: Datum van indiening van de aanvraag om een certificaat of om verlenging van de duur van een certificaat
+        output:
+          - name: kennisgeving_uiterste_datum
+            type: date
+            description: Uiterste datum voor schriftelijke kennisgeving over gebreken (2 maanden na aanvraagdatum)
+        actions:
+          - output: kennisgeving_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $aanvraag_datum
+              months: 2
   - number: '95'
     text: |-
       Voor de instandhouding van een aanvullend beschermingscertificaat moet elk jaar, voor het eerst vanaf het jaar
