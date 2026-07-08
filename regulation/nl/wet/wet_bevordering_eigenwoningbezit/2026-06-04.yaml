@@ -365,13 +365,16 @@ articles:
               Eventuele niet-inschrijving in BRP kan niet aan de betrokkene
               worden toegerekend (artikel 7, tweede lid); geef false als de
               uitzondering niet van toepassing is
+        input:
           - name: artikel_13_van_toepassing
             type: boolean
-            required: true
             description: >-
               Uitzondering van artikel 13 is van toepassing (bewoning/inschrijving
-              uitgesteld door geldige reden); geef false als de uitzondering niet
-              van toepassing is
+              uitgesteld door geldige reden); bindt aan output artikel_13_van_toepassing
+              van artikel 13 (artikel 7, eerste lid: 'behoudens in gevallen als
+              bedoeld in artikel 13')
+            source:
+              output: artikel_13_van_toepassing
         output:
           - name: voldoet_bewoningseis
             type: boolean
@@ -816,6 +819,65 @@ articles:
         bwb_id: BWBR0011919
         artikel: '50'
         hoofdstuk: '8'
+    machine_readable:
+      execution:
+        parameters:
+          - name: eigendom_verlies_zonder_nieuwe_woning
+            type: boolean
+            required: true
+            description: >-
+              Eigenaar-bewoner verliest eigendom van de woning zonder dat
+              daarvoor de eigendom van een andere woning in de plaats komt
+              (artikel 25, tweede lid)
+          - name: erfgenaam_minstens_half_eigenaar
+            type: boolean
+            required: true
+            description: >-
+              De erfgenaam/partner blijft of wordt ten minste voor de helft
+              eigenaar van de woning, dan wel verkrijgt een beperkt recht op
+              die woning (artikel 25, eerste lid, onderdeel a)
+          - name: erfgenaam_bewoonde_woning_op_tijdstip
+            type: boolean
+            required: true
+            description: >-
+              De erfgenaam/partner bewoonde de woning op het tijdstip van
+              het verlies van de eigendom (artikel 25, eerste lid, onderdeel b)
+          - name: erfgenaam_blijft_woning_bewonen
+            type: boolean
+            required: true
+            description: >-
+              De erfgenaam/partner blijft de woning bewonen
+              (artikel 25, eerste lid, onderdeel c)
+        output:
+          - name: overdracht_bijdrage_mogelijk
+            type: boolean
+            description: >-
+              De eigenwoningbijdrage kan op naam worden gesteld van de
+              erfgenaam/partner (artikel 25, eerste lid: alle drie condities
+              zijn vervuld)
+          - name: herziening_van_toepassing
+            type: boolean
+            description: >-
+              Artikel 50, eerste lid is van toepassing: eigendomsverlies
+              zonder vervangende woning en niet voldaan aan onderdeel a, b of
+              c (artikel 25, tweede lid)
+        actions:
+          - output: voorwaarden_overdracht_vervuld
+            value:
+              operation: AND
+              conditions:
+                - $erfgenaam_minstens_half_eigenaar
+                - $erfgenaam_bewoonde_woning_op_tijdstip
+                - $erfgenaam_blijft_woning_bewonen
+          - output: overdracht_bijdrage_mogelijk
+            value: $voorwaarden_overdracht_vervuld
+          - output: herziening_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - $eigendom_verlies_zonder_nieuwe_woning
+                - operation: NOT
+                  value: $voorwaarden_overdracht_vervuld
   - number: '26'
     text: |-
       1 Het percentage van de toetsrente wordt bij ministeriële regeling vastgesteld, met inachtneming van het
