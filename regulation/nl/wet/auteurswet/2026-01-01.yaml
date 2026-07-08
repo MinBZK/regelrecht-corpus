@@ -148,7 +148,7 @@ articles:
     text: |-
       Indien eene openbare instelling, eene vereeniging, stichting of vennootschap, een werk als van haar afkomstig
       openbaar maakt, zonder daarbij eenig natuurlijk persoon als maker er van te vermelden, wordt zij, tenzij bewezen
-      wordt, dat de openbaarmaking onder de bedoelde omstandigheden onrechtmatig was, als de maker van dat werk
+      worden, dat de openbaarmaking onder de bedoelde omstandigheden onrechtmatig was, als de maker van dat werk
       aangemerkt.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel8
   - number: '9'
@@ -185,39 +185,67 @@ articles:
 
       11°. werken van toegepaste kunst en tekeningen en modellen van nijverheid;
 
-      12°. computerprogramma’s en het voorbereidend materiaal;
+      12°. computerprogramma's en het voorbereidend materiaal;
 
       en in het algemeen ieder voortbrengsel op het gebied van letterkunde, wetenschap of kunst, op welke wijze of in
       welken vorm het ook tot uitdrukking zij gebracht.
 
-      2 Verveelvoudigingen in gewijzigde vorm van een werk van letterkunde, wetenschap of kunst, zoals vertalingen,
+      2 Verveelvuldigen in gewijzigde vorm van een werk van letterkunde, wetenschap of kunst, zoals vertalingen,
       muziekschikkingen, verfilmingen en andere bewerkingen, zomede verzamelingen van verschillende werken, worden,
       onverminderd het auteursrecht op het oorspronkelijke werk, als zelfstandige werken beschermd.
 
       3 Verzamelingen van werken, gegevens of andere zelfstandige elementen, systematisch of methodisch geordend, en
-      afzonderlijk met elektronische middelen of anderszins toegankelijk, worden, onverminderd andere rechten op de
+      afzonderlijk met elektronische middelen of anderszins toegankelijk, werden, onverminderd andere rechten op de
       verzameling en onverminderd het auteursrecht of andere rechten op de in de verzameling opgenomen werken, gegevens
       of andere elementen, als zelfstandige werken beschermd.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel10
+    machine_readable:
+      definitions:
+        work_types:
+          description: Types of works protected under copyright law
+          value:
+            - boeken
+            - brochures
+            - nieuwsbladen
+            - tijdschriften
+            - andere_geschriften
+            - tooneelwerken
+            - dramatisch_muzikale_werken
+            - mondelinge_voordrachten
+            - choreografische_werken
+            - pantomimes
+            - muziekwerken
+            - teeken_schilder_bouw_beeldhouwwerken
+            - lithografieen
+            - graveer_plaatwerken
+            - andere_plaatwerken
+            - aardrijkskundige_kaarten
+            - ontwerpen_schetsen_plastische_werken
+            - fotografische_werken
+            - filmwerken
+            - werken_van_toegepaste_kunst
+            - tekeningen_modellen_nijverheid
+            - computerprogrammas
+            - voorbereidend_materiaal
   - number: '11'
     text: |-
       Er bestaat geen auteursrecht op wetten, besluiten en verordeningen, door de openbare macht uitgevaardigd, noch op
       rechterlijke uitspraken en administratieve beslissingen.
     url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel11
     machine_readable:
-       execution:
-         actions:
-           - IF:
-               - AND:
-                 - EQUALS:
-                     - var: work_type
-                       value: ["wetten", "besluiten", "verordeningen", "rechterlijke_uitspraken", "administratieve_beslissingen"]
-                 - EQUALS:
-                     - var: issued_by
-                       value: openbare_macht
-             THEN:
-               - DENY_RIGHT:
-                   right: auteursrecht
+      execution:
+        actions:
+          - IF:
+              - AND:
+                - EQUALS:
+                    - var: work_type
+                      value: ["wetten", "besluiten", "verordeningen", "rechterlijke_uitspraken", "administratieve_beslissingen"]
+                - EQUALS:
+                    - var: issued_by
+                      value: openbare_macht
+            THEN:
+              - DENY_RIGHT:
+                  right: auteursrecht
   - number: '12'
     text: |-
       1 Onder de openbaarmaking van een werk van letterkunde, wetenschap of kunst wordt mede verstaan:
@@ -299,30 +327,92 @@ articles:
       van de doorgifte van een werk langs andere weg als het een beveiligde doorgifte betreft die geschiedt aan daartoe
       geautoriseerde gebruikers.
 
-
+      
       [ref1]: https://wetten.overheid.nl/BWBR0025028#Artikel1.1
-    url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel12
-    references:
-      - id: ref1
-        bwb_id: BWBR0025028
-        artikel: '1.1'
+      url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel12
+       references:
+         - id: ref1
+           bwb_id: BWBR0025028
+           artikel: 1.1
+      machine_readable:
+        definitions:
+          verhuren:
+            description: Het voor een beperkte tijd en tegen een direct of indirect economisch of commercieel voordeel voor gebruik ter beschikking stellen.
+            type: string
+          uitlenen:
+            description: Het voor een beperkte tijd en zonder direct of indirect economisch of commercieel voordeel voor gebruik ter beschikking stellen door voor het publiek toegankelijke instellingen.
+            type: string
+          voordracht_opvoering_voorstelling:
+            description: Voordracht, op- of uitvoering of voorstelling in het openbaar, inclusief besloten kring tenzij beperkt tot familie-, vrienden- of daaraan gelijk te stellen kring en zonder betaling.
+            type: string
+          uitzending_via_satelliet:
+            description: Het uitzenden van een in een radio- of televisieprogramma opgenomen werk door middel van een satelliet of een andere zender of een omroepnetwerk.
+            type: string
+          doorgifte_via_kabel:
+            description: De gelijktijdige, ongewijzigde en integrale doorgifte, door middel van een kabel- of microgolfsysteem, aan het publiek, van een oorspronkelijke uitzending bestemd voor ontvangst door het publiek.
+            type: string
+          doorgifte_lang_andere_weg:
+            description: De gelijktijdige, ongewijzigde en integrale doorgifte, anders dan via kabel, van een oorspronkelijke uitzending per draad of via de ether, met inbegrip van satellietuitzending, met uitzondering van online uitzending.
+            type: string
+          digitaal_beschikbaar_stellen:
+            description: Het beschikbaar stellen voor het publiek van het werk, per draad of draadloos, op zodanige wijze dat de leden van het publiek op een door hen gekozen individuele plaats en tijd toegang hebben tot het werk.
+            type: string
+          openbaarmaking:
+            description: Alle handelingen die het werk voor het publiek toegankelijk maken, inclusief Verbreiding, Verhuren, Uitlenen, Voordracht/Opvoering/Voorstelling, Uitzending via satelliet, Doorgifte via kabel, Doorgifte langs andere weg, en Digitaal beschikbaar stellen.
+            type: string
+            enum:
+              - verbreiding
+              - verhuren
+              - uitlenen
+              - voordracht_opvoering_voorstelling
+              - uitzending_via_satelliet
+              - doorgifte_via_kabel
+              - doorgifte_lang_andere_weg
+              - digitaal_beschikbaar_stellen
+        input:
+          - source:
+              regulation: nl/wet/mediawet/2008
+              article: 1.1
   - number: 12a
     text: |-
       1 Indien de maker het verhuurrecht, bedoeld in [artikel 12, eerste lid, onder 3°][ref1], met betrekking tot een op
       een fonogram vastgelegd werk van letterkunde, wetenschap of kunst aan de producent daarvan heeft overgedragen, is
       de producent de maker een billijke vergoeding verschuldigd voor de verhuur.
 
-      2 Van het in het eerste lid bedoelde recht op een billijke vergoeding kan geen afstand worden gedaan.
+       2 Van het in het eerste lid bedoelde recht op een billijke vergoeding kan geen afstand worden gedaan.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001886#Artikel12
-    url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel12a
-    references:
-      - id: ref1
-        bwb_id: BWBR0001886
-        artikel: '12'
-        hoofdstuk: I
-        paragraaf: '4'
+      url: https://wetten.overheid.nl/BWBR0001886/2026-01-01#Artikel12a
+      references:
+        - id: ref1
+          bwb_id: BWBR0001886
+          artikel: '12'
+          hoofdstuk: I
+          paragraaf: '4'
+      machine_readable:
+        execution:
+          actions:
+            - IF:
+                - AND:
+                  - EQUALS:
+                      - var: action
+                        value: verhuur
+                  - EQUALS:
+                      - var: work_medium
+                        value: fonogram
+                  - EQUALS:
+                      - var: right_transferred
+                        value: true
+                THEN:
+                  - GRANT_RIGHT:
+                      to: maker
+                      right: billijke_vergoeding
+                      open_terms:
+                        - billijke_vergoeding
+            - DENY:
+                - action: afstand_doen
+                  right: billijke_vergoeding
   - number: 12b
     text: |-
       Indien een exemplaar van een werk van letterkunde, wetenschap of kunst door of met toestemming van de maker of zijn
