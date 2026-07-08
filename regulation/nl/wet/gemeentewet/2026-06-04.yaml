@@ -139,6 +139,61 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel8
       [ref2]: https://wetten.overheid.nl/BWBR0028571#Artikel3
       [ref3]: https://wetten.overheid.nl/BWBR0028571#Artikel6
+    machine_readable:
+      untranslatables:
+        - construct: "onafgebroken periode van ten minste vijf jaren ingezetene zijn (lid 2)"
+          reason: "Aggregation over a continuous time period is not expressible with available operations"
+          suggestion: "Add DATE_DIFF or CONTINUOUS_DURATION operation to the engine"
+          legal_text_excerpt: "zij onmiddellijk voorafgaand aan de dag waarop de gemeenteraad beslist over de toelating als lid tot de gemeenteraad gedurende een onafgebroken periode van ten minste vijf jaren ingezetene van Nederland waren"
+          accepted: false
+        - construct: "diplomatieke vertegenwoordigers en gezinsleden uitsluiting (lid 3)"
+          reason: "Complex diplomatic status determination based on international law cannot be modelled with available operations"
+          suggestion: "Would require an external registry for diplomatic status verification"
+          legal_text_excerpt: "Geen lid van de raad kunnen zijn zij die geen Nederlander zijn, en als door andere staten uitgezonden leden van diplomatieke of consulaire vertegenwoordigingen, in Nederland werkzaam zijn"
+          accepted: false
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de kandidaat-raadslid
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsberekening (doorgaans datum besluit toelating gemeenteraad)
+          - name: is_ingezetene
+            type: boolean
+            required: true
+            description: Heeft de persoon zijn werkelijke woonplaats in de gemeente (artikel 2 en 3)
+          - name: is_uitgesloten_van_kiesrecht
+            type: boolean
+            required: true
+            description: Is de persoon uitgesloten van het kiesrecht
+        output:
+          - name: leeftijd
+            type: number
+            description: Berekende leeftijd in volledige jaren op peildatum
+          - name: voldoet_aan_basisvereisten_raadslid
+            type: boolean
+            description: Voldoet aan de basisvereisten van lid 1 (ingezetene, 18+, niet uitgesloten van kiesrecht)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_basisvereisten_raadslid
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingezetene
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 18
+                - operation: NOT
+                  value: $is_uitgesloten_van_kiesrecht
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel10
     references:
       - id: ref1
@@ -658,6 +713,35 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel10
       [ref2]: https://wetten.overheid.nl/BWBR0005416#Artikel10
       [ref3]: https://wetten.overheid.nl/BWBR0014194#Artikel28
+    machine_readable:
+      execution:
+        parameters:
+          - name: vog_afgiftedatum
+            type: date
+            required: true
+            description: Datum waarop de verklaring omtrent het gedrag is afgegeven
+          - name: benoemingsdatum
+            type: date
+            required: true
+            description: Datum van benoeming tot wethouder
+        output:
+          - name: vog_verloopdatum
+            type: date
+            description: Datum tot wanneer de VOG geldig is (afgiftedatum + 3 maanden, lid 2)
+          - name: vog_geldig_bij_benoeming
+            type: boolean
+            description: De VOG is niet ouder dan drie maanden op de datum van benoeming (lid 2)
+        actions:
+          - output: vog_verloopdatum
+            value:
+              operation: DATE_ADD
+              date: $vog_afgiftedatum
+              months: 3
+          - output: vog_geldig_bij_benoeming
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $vog_verloopdatum
+              value: $benoemingsdatum
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel36a
     references:
       - id: ref1
@@ -1088,6 +1172,88 @@ articles:
       4 Het verlof eindigt op de dag waarop zestien weken zijn verstreken sinds de dag waarop het verlof is ingegaan.
 
       5 Aan een wethouder wordt gedurende de zittingsperiode van de raad ten hoogste drie maal verlof verleend.
+    machine_readable:
+      untranslatables:
+        - construct: "ten hoogste drie maal verlof gedurende zittingsperiode (lid 5)"
+          reason: "Aggregation/counting over multiple instances is not expressible with available operations"
+          suggestion: "Add COUNT or AGGREGATE operation to engine"
+          legal_text_excerpt: "Aan een wethouder wordt gedurende de zittingsperiode van de raad ten hoogste drie maal verlof verleend."
+          accepted: false
+      execution:
+        parameters:
+          - name: verlof_ingangsdatum
+            type: date
+            required: true
+            description: Datum waarop het verlof ingaat (lid 1 en 2)
+          - name: bevalling_datum
+            type: date
+            required: false
+            description: Vermoedelijke datum van de bevalling (alleen bij zwangerschapsverlof, lid 1)
+          - name: verlof_soort
+            type: string
+            required: true
+            description: Type verlof - "zwangerschap_bevalling" (lid 1) of "ziekte" (lid 2)
+          - name: arts_verklaart_niet_herstel_8_weken
+            type: boolean
+            required: false
+            description: Arts verklaart dat herstel binnen 8 weken niet aannemelijk is (lid 2, ziekteverlof)
+        output:
+          - name: verlof_einddatum
+            type: date
+            description: Datum waarop het verlof eindigt (16 weken na ingangsdatum, lid 4)
+          - name: bevalling_4_weken_grens
+            type: date
+            description: Vroegst toegestane bevallingsdatum bij opgegeven verlofingangsdatum (verlofingangsdatum + 4 weken, lid 1)
+          - name: bevalling_6_weken_grens
+            type: date
+            description: Uiterste bevallingsdatum bij opgegeven verlofingangsdatum (verlofingangsdatum + 6 weken, lid 1)
+          - name: verlof_datum_geldig_zwangerschap
+            type: boolean
+            description: Bevallingsdatum valt in het venster van 4 tot 6 weken na verlofingangsdatum (lid 1)
+          - name: verlof_te_verlenen
+            type: boolean
+            description: Het verlof dient te worden verleend op grond van artikel 45
+        actions:
+          - output: verlof_einddatum
+            value:
+              operation: DATE_ADD
+              date: $verlof_ingangsdatum
+              weeks: 16
+          - output: bevalling_4_weken_grens
+            value:
+              operation: DATE_ADD
+              date: $verlof_ingangsdatum
+              weeks: 4
+          - output: bevalling_6_weken_grens
+            value:
+              operation: DATE_ADD
+              date: $verlof_ingangsdatum
+              weeks: 6
+          - output: verlof_datum_geldig_zwangerschap
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $bevalling_datum
+                  value: $bevalling_4_weken_grens
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $bevalling_datum
+                  value: $bevalling_6_weken_grens
+          - output: verlof_te_verlenen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $verlof_soort
+                    value: zwangerschap_bevalling
+                  then: $verlof_datum_geldig_zwangerschap
+                - when:
+                    operation: EQUALS
+                    subject: $verlof_soort
+                    value: ziekte
+                  then: $arts_verklaart_niet_herstel_8_weken
+              default: false
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel45
   - number: 45a
     text: |-
@@ -1096,6 +1262,23 @@ articles:
 
       2 De beslissing geschiedt in overeenstemming met de verklaring van de arts of verloskundige en bevat de dag waarop
       het verlof ingaat.
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum van indiening van het verlofverzoek
+        output:
+          - name: beslissing_deadline
+            type: date
+            description: Uiterste datum waarop het college op het verlofverzoek moet beslissen (14 dagen na indiening, lid 1)
+        actions:
+          - output: beslissing_deadline
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              days: 14
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel45a
   - number: 45b
     text: |-
@@ -1110,6 +1293,23 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005416#Artikel36
+    machine_readable:
+      execution:
+        parameters:
+          - name: verlof_ingangsdatum
+            type: date
+            required: true
+            description: Datum waarop het verlof van de wethouder is ingegaan (artikel 45)
+        output:
+          - name: vervanger_ontslagdatum
+            type: date
+            description: Datum waarop de vervanger van rechtswege ontslagen is (16 weken na verlofingangsdatum, lid 2)
+        actions:
+          - output: vervanger_ontslagdatum
+            value:
+              operation: DATE_ADD
+              date: $verlof_ingangsdatum
+              weeks: 16
     url: https://wetten.overheid.nl/BWBR0005416/2026-06-04#Artikel45b
     references:
       - id: ref1
