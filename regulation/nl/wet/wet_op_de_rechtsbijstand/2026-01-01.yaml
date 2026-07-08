@@ -755,6 +755,47 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0011018#Artikel25
       [ref2]: https://wetten.overheid.nl/BWBR0028899
+    machine_readable:
+      untranslatables:
+        - construct: "tolkenkosten voorzover geregistreerd in kwaliteitsregister (lid 1 onder a)"
+          reason: "Verificatie of een tolk is geregistreerd in het kwaliteitsregister te 's-Hertogenbosch vereist raadpleging van een extern register"
+          legal_text_excerpt: "de kosten van tolken, voorzover deze zijn geregistreerd in het kwaliteitsregister te 's-Hertogenbosch"
+          accepted: false
+        - construct: "vertaalkosten door beëdigde vertaler (lid 1 onder b)"
+          reason: "Beoordeling of vertaling vereist is door rechter of bestuur en door beëdigde vertaler is uitgevoerd vereist feitelijke beoordeling"
+          legal_text_excerpt: "de kosten voor de vertaling door een beëdigde vertaler van de voor de afdoening van de zaak benodigde stukken die door de rechter of het bestuur worden verlangd"
+          accepted: false
+        - construct: "reiskosten voorzover aanwezigheid ter zitting verplicht en niet anders mogelijk (lid 1 onder c)"
+          reason: "Beoordeling of aanwezigheid ter zitting verplicht is en betrokkenen niet anderszins kunnen worden gehoord vereist rechterlijk oordeel"
+          legal_text_excerpt: "de reiskosten, voorzover bij het voorleggen van de zaak van de aanvrager de aanwezigheid van betrokkenen ter zitting bij de wet of door de rechter geboden is en de rechter oordeelt dat de betrokkenen niet anderszins ten genoegen van de rechter kunnen worden gehoord"
+          accepted: false
+        - construct: "hoogte vergoeding reiskosten berekend per artikel 25 BVR 2000 (lid 3)"
+          reason: "Berekening verwijst naar artikel 25 van het Besluit vergoedingen rechtsbijstand 2000 dat afzonderlijk geïmplementeerd moet worden"
+          legal_text_excerpt: "De hoogte van de vergoeding van de reiskosten, bedoeld in het eerste lid, onder c, wordt berekend overeenkomstig artikel 25 van het Besluit vergoedingen rechtsbijstand 2000"
+          accepted: false
+        - construct: "hoogte vergoeding honorarium berekend per Wet griffierechten burgerlijke zaken (lid 4)"
+          reason: "Berekening verwijst naar de Wet griffierechten burgerlijke zaken die afzonderlijk geïmplementeerd moet worden"
+          legal_text_excerpt: "De hoogte van de vergoeding van het honorarium van de personen, bedoeld in het eerste lid, onder a, b en d, wordt berekend overeenkomstig de Wet griffierechten burgerlijke zaken"
+          accepted: false
+      execution:
+        parameters:
+          - name: honorarium_personen_rechteropdrachtgevers
+            type: number
+            required: true
+            description: "Het honorarium van personen die in opdracht van de rechter in de procedure optreden (art. 23e lid 1 onder d), in eurocent"
+        output:
+          - name: vergoeding_honorarium_rechteropdrachtgevers
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Vijftig procent van het honorarium van personen in opdracht van de rechter (art. 23e lid 1 onder d)"
+        actions:
+          - output: vergoeding_honorarium_rechteropdrachtgevers
+            value:
+              operation: MULTIPLY
+              values:
+                - $honorarium_personen_rechteropdrachtgevers
+                - 0.5
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel23e
     references:
       - id: ref1
@@ -1812,6 +1853,51 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0006368#Artikel34d
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel4112
       [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel4114
+    machine_readable:
+      untranslatables:
+        - construct: "zwaarwegende omstandigheden die zich verzetten tegen vordering (lid 2)"
+          reason: "Afweging van zwaarwegende omstandigheden vereist juridisch oordeel"
+          legal_text_excerpt: "tenzij zwaarwegende omstandigheden zich daartegen verzetten"
+          accepted: false
+        - construct: "draagkracht in aanmerking nemen bij vaststelling betalingstermijn (lid 3)"
+          reason: "Discretionaire vaststelling van betalingstermijn op basis van draagkracht vereist bestuurlijk oordeel"
+          legal_text_excerpt: "houdt het bestuur rekening met de draagkracht van de rechtzoekende"
+          accepted: false
+      execution:
+        parameters:
+          - name: bedrag_betaald_door_bestuur
+            type: number
+            required: true
+            description: "Het bedrag dat door het bestuur is betaald aan de rechtsbijstandverlener (art. 34f lid 1), in eurocent"
+          - name: geen_recht_op_rechtsbijstand_na_art34d
+            type: boolean
+            required: true
+            description: "De rechtzoekende heeft op grond van het besluit bedoeld in artikel 34d lid 1 geen recht op verlening van rechtsbijstand"
+        output:
+          - name: heeft_terugvorderingsplicht
+            type: boolean
+            description: "Er bestaat een terugvorderingsplicht overeenkomstig art. 34f lid 1"
+          - name: terugvorderbaar_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Het door de rechtzoekende aan het bestuur verschuldigde bedrag overeenkomstig art. 34f lid 1"
+        actions:
+          - output: heeft_terugvorderingsplicht
+            value:
+              operation: EQUALS
+              subject: $geen_recht_op_rechtsbijstand_na_art34d
+              value: true
+          - output: terugvorderbaar_bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_terugvorderingsplicht
+                    value: true
+                  then: $bedrag_betaald_door_bestuur
+              default: 0
     url: https://wetten.overheid.nl/BWBR0006368/2026-01-01#Artikel34f
     references:
       - id: ref1
