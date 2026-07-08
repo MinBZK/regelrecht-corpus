@@ -254,6 +254,23 @@ articles:
       2 Een ieder die een postcodesysteem exploiteert of beheert, is verplicht een jaar voor de beëindiging van dit
       systeem, deze beëindiging aan te kondigen.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel10
+    machine_readable:
+      execution:
+        parameters:
+          - name: aankondigings_datum
+            type: date
+            required: true
+            description: Datum waarop de beëindiging van het postcodesysteem is aangekondigd als bedoeld in artikel 10, tweede lid
+        output:
+          - name: vroegste_beeindiging_datum
+            type: date
+            description: Vroegste datum waarop het postcodesysteem mag worden beëindigd (één jaar na de aankondiging, lid 2)
+        actions:
+          - output: vroegste_beeindiging_datum
+            value:
+              operation: DATE_ADD
+              date: $aankondigings_datum
+              years: 1
   - number: '11'
     text: |-
       Een ieder die een systeem met adresgegevens, betreffende de verhuisgegevens van een geadresseerde of de gegevens
@@ -484,6 +501,23 @@ articles:
       6 De Autoriteit Consument en Markt of een door haar aan te wijzen onafhankelijke deskundige onderzoekt jaarlijks of
       het postvervoerbedrijf in overeenstemming met de opgelegde verplichting heeft gehandeld.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel13f
+    machine_readable:
+      execution:
+        parameters:
+          - name: laatste_onderzoek_datum
+            type: date
+            required: true
+            description: Datum van het meest recente jaarlijkse onderzoek als bedoeld in artikel 13f, zesde lid
+        output:
+          - name: uiterste_volgende_onderzoek_datum
+            type: date
+            description: Uiterste datum voor het volgende jaarlijkse onderzoek (één jaar na het laatste onderzoek, lid 6)
+        actions:
+          - output: uiterste_volgende_onderzoek_datum
+            value:
+              operation: DATE_ADD
+              date: $laatste_onderzoek_datum
+              years: 1
   - number: 13g
     text: |-
       1 De Autoriteit Consument en Markt kan de verplichting opleggen om door haar nader te bepalen informatie bekend te
@@ -860,6 +894,23 @@ articles:
       gemotiveerd verzoek heeft ingediend, de universele postdienst en de eisen die gesteld worden aan een verlener van
       de universele postdienst.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel17a
+    machine_readable:
+      execution:
+        parameters:
+          - name: laatste_onderzoek_datum
+            type: date
+            required: true
+            description: Datum van het meest recente driejaarlijkse onderzoek door de Minister als bedoeld in artikel 17a
+        output:
+          - name: uiterste_volgende_onderzoek_datum
+            type: date
+            description: Uiterste datum voor het volgende driejaarlijkse onderzoek (drie jaar na het laatste onderzoek, artikel 17a)
+        actions:
+          - output: uiterste_volgende_onderzoek_datum
+            value:
+              operation: DATE_ADD
+              date: $laatste_onderzoek_datum
+              years: 3
   - number: 18a
     text: |-
       1 De verlener van de universele postdienst vraagt advies aan consumentenorganisaties die de belangen behartigen
@@ -997,6 +1048,31 @@ articles:
       voor aflevering in een brievenbus, als onbestelbaar aanmerken indien het opgegeven adres niet beschikt over een
       brievenbus die voldoet aan de regels, bedoeld in het eerste lid.
     url: https://wetten.overheid.nl/BWBR0025572/2019-01-01#Artikel20
+    machine_readable:
+      execution:
+        parameters:
+          - name: poststuk_geschikt_voor_brievenbus
+            type: boolean
+            required: true
+            description: Of het poststuk naar zijn aard en omvang in aanmerking komt voor aflevering in een brievenbus (lid 2)
+          - name: adres_heeft_conforme_brievenbus
+            type: boolean
+            required: true
+            description: Of het opgegeven adres beschikt over een brievenbus die voldoet aan de regels als bedoeld in artikel 20, eerste lid
+        output:
+          - name: mag_als_onbestelbaar_aanmerken
+            type: boolean
+            description: Of de verlener van de universele postdienst het poststuk als onbestelbaar mag aanmerken (lid 2 — facultatief)
+        actions:
+          - output: mag_als_onbestelbaar_aanmerken
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $poststuk_geschikt_voor_brievenbus
+                  value: true
+                - operation: NOT
+                  value: $adres_heeft_conforme_brievenbus
   - number: '21'
     text: |-
       1 Een verlener van de universele postdienst kan gedeelten van de universele postdienst door anderen onder zijn
@@ -1133,6 +1209,23 @@ articles:
         artikel: '25'
         hoofdstuk: '4'
         paragraaf: '4.5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overlegging_datum
+            type: date
+            required: true
+            description: Datum waarop het ontwerp van de ministeriële regeling aan beide kamers der Staten-Generaal is overgelegd als bedoeld in artikel 25a, tweede lid
+        output:
+          - name: vroegste_vaststellingsdatum
+            type: date
+            description: Vroegste datum waarop de ministeriële regeling mag worden vastgesteld (vier weken na overlegging van het ontwerp, lid 2)
+        actions:
+          - output: vroegste_vaststellingsdatum
+            value:
+              operation: DATE_ADD
+              date: $overlegging_datum
+              weeks: 4
   - number: '26'
     text: |-
       In afwijking van de [artikelen 24][ref1] en [25][ref2] worden de kosten van het vervoer van poststukken die in
