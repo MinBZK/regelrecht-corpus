@@ -368,6 +368,23 @@ articles:
         artikel: '14'
         hoofdstuk: II
         paragraaf: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_voornemen
+            type: date
+            required: true
+            description: "Datum waarop het voornemen is voorgelegd aan de betrokken eigenaars (lid 5) of het verzoek ter beoordeling is voorgelegd (lid 7)"
+        output:
+          - name: zienswijze_termijn_tot
+            type: date
+            description: "Uiterste datum voor het kenbaar maken van een zienswijze (6 weken na datum voornemen, lid 5 en 7)"
+        actions:
+          - output: zienswijze_termijn_tot
+            value:
+              operation: DATE_ADD
+              date: $datum_voornemen
+              weeks: 6
   - number: '6'
     text: |-
       1 Onze Minister stelt ten minste eenmaal in de zes jaar een beleidsnota inzake de openbare drinkwatervoorziening
@@ -392,6 +409,23 @@ articles:
 
       5 De beleidsnota kan tussentijds worden gewijzigd. Het derde en vierde lid zijn van overeenkomstige toepassing.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel6
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_vorige_beleidsnota
+            type: date
+            required: true
+            description: "Datum waarop de vorige beleidsnota is vastgesteld"
+        output:
+          - name: beleidsnota_uiterlijk
+            type: date
+            description: "Uiterste datum voor vaststelling van de volgende beleidsnota (ten minste eenmaal in de 6 jaar, lid 1)"
+        actions:
+          - output: beleidsnota_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $datum_vorige_beleidsnota
+              years: 6
   - number: '7'
     text: |-
       1 De eigenaar van een drinkwaterbedrijf heeft tot taak:
@@ -552,6 +586,24 @@ articles:
         artikel: '11'
         hoofdstuk: II
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: "Het kalenderjaar waarover het verslag gaat; het verslag moet uiterlijk 1 oktober van dat jaar worden uitgebracht"
+        output:
+          - name: verslag_uiterlijk
+            type: date
+            description: "Uiterste datum voor het jaarlijkse verslag aan de Minister (1 oktober, lid 2)"
+        actions:
+          - output: verslag_uiterlijk
+            value:
+              operation: DATE
+              year: $jaar
+              month: 10
+              day: 1
   - number: '13'
     text: |-
       1 In het belang van de openbare drinkwatervoorziening worden bij of krachtens algemene maatregel van bestuur nadere
@@ -645,6 +697,20 @@ articles:
       verkregen over een drinkwaterbedrijf of een deel daarvan, dan wel over de bedrijfsvoering van een drinkwaterbedrijf
       of een deel van die bedrijfsvoering.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel15
+    machine_readable:
+      execution:
+        parameters:
+          - name: rechtshandeling_geeft_zeggenschap_niet_gekwalificeerd
+            type: boolean
+            required: true
+            description: "Heeft de rechtshandeling als gevolg dat een niet-gekwalificeerde rechtspersoon (middellijk of onmiddellijk, alleen of tezamen met derden) geheel of gedeeltelijk zeggenschap verkrijgt over een drinkwaterbedrijf of zijn bedrijfsvoering?"
+        output:
+          - name: rechtshandeling_verboden
+            type: boolean
+            description: "Is de rechtshandeling verboden op grond van artikel 15?"
+        actions:
+          - output: rechtshandeling_verboden
+            value: $rechtshandeling_geeft_zeggenschap_niet_gekwalificeerd
   - number: '16'
     text: |-
       Tot de rechtshandelingen, bedoeld in [artikel 15][ref1], behoren in elk geval:
@@ -1064,6 +1130,23 @@ articles:
         artikel: '27'
         hoofdstuk: III
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_meting
+            type: date
+            required: true
+            description: "Datum waarop de meting is verricht"
+        output:
+          - name: bewaarplicht_tot
+            type: date
+            description: "Datum tot wanneer de meetresultaten ter beschikking van de toezichthouder moeten worden gehouden (5 jaar na de meting, lid 2)"
+        actions:
+          - output: bewaarplicht_tot
+            value:
+              operation: DATE_ADD
+              date: $datum_meting
+              years: 5
   - number: '29'
     text: |-
       1 De eigenaar van een collectief leidingnet draagt er zorg voor dat het ontwerp en de staat van dat collectieve
@@ -1174,6 +1257,32 @@ articles:
       het oordeel van de inspecteur geen onaanvaardbare risico’s voor de volksgezondheid optreden, tevens de levering
       van noodwater.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel35
+    machine_readable:
+      execution:
+        parameters:
+          - name: verwachte_duur_uur
+            type: number
+            required: true
+            description: "De verwachte of daadwerkelijke duur van de onderbreking in uren"
+          - name: gevaar_voor_volksgezondheid
+            type: boolean
+            required: true
+            description: "Is er als gevolg van de verstoring een gevaar voor de volksgezondheid?"
+        output:
+          - name: overleg_inspecteur_vereist
+            type: boolean
+            description: "Is onmiddellijk overleg met de inspecteur vereist op grond van artikel 35, lid 2?"
+        actions:
+          - output: overleg_inspecteur_vereist
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $verwachte_duur_uur
+                  value: 24
+                - operation: EQUALS
+                  subject: $gevaar_voor_volksgezondheid
+                  value: true
   - number: '36'
     text: |-
       1 Zo spoedig mogelijk, doch uiterlijk binnen zes maanden na beëindiging van de levering van het nooddrinkwater of
@@ -1183,6 +1292,28 @@ articles:
       2 Op verzoek van de inspecteur en binnen een door de inspecteur te stellen termijn stelt de eigenaar van het
       drinkwaterbedrijf na een verstoring een evaluatierapport op en zendt hij dit aan de inspecteur.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel36
+    machine_readable:
+      untranslatables:
+        - construct: "zo spoedig mogelijk"
+          reason: "Ambiguous temporal obligation — cannot express 'as soon as possible' as a specific date computation"
+          legal_text_excerpt: "Zo spoedig mogelijk, doch uiterlijk binnen zes maanden na beëindiging..."
+          accepted: false
+      execution:
+        parameters:
+          - name: einddatum_noodlevering
+            type: date
+            required: true
+            description: "Datum waarop de levering van nooddrinkwater of noodwater is beëindigd"
+        output:
+          - name: rapportage_uiterlijk
+            type: date
+            description: "Uiterste datum voor schriftelijke rapportage aan de inspecteur (uiterlijk 6 maanden na beëindiging, lid 1)"
+        actions:
+          - output: rapportage_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $einddatum_noodlevering
+              months: 6
   - number: '37'
     text: |-
       1 De eigenaar van een drinkwaterbedrijf stelt een leveringsplan op, waarin wordt aangegeven op welke wijze aan de
@@ -1301,6 +1432,24 @@ articles:
         artikel: '39'
         hoofdstuk: V
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vergelijkingsjaar
+            type: number
+            required: true
+            description: "Het jaar waarin de prestatievergelijking wordt uitgevoerd"
+        output:
+          - name: protocol_uiterlijk
+            type: date
+            description: "Uiterste datum voor vaststelling van het protocol (1 maart van het vergelijkingsjaar, lid 1)"
+        actions:
+          - output: protocol_uiterlijk
+            value:
+              operation: DATE
+              year: $vergelijkingsjaar
+              month: 3
+              day: 1
   - number: '41'
     text: |-
       1 De uitvoering van een prestatievergelijking geschiedt overeenkomstig het daartoe vastgestelde en krachtens
@@ -1365,6 +1514,24 @@ articles:
       4 Bij of krachtens algemene maatregel van bestuur worden nadere eisen gesteld ten aanzien van de opzet en inhoud
       van het in het eerste lid bedoelde verslag.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel43
+    machine_readable:
+      execution:
+        parameters:
+          - name: vergelijkingsjaar
+            type: number
+            required: true
+            description: "Het jaar waarin de prestatievergelijking is uitgevoerd"
+        output:
+          - name: verslag_prestatievergelijking_uiterlijk
+            type: date
+            description: "Uiterste datum voor het verslag van de prestatievergelijking (31 december van het vergelijkingsjaar, lid 1)"
+        actions:
+          - output: verslag_prestatievergelijking_uiterlijk
+            value:
+              operation: DATE
+              year: $vergelijkingsjaar
+              month: 12
+              day: 31
   - number: '44'
     text: |-
       1 De eigenaar van een drinkwaterbedrijf maakt binnen zes maanden na het uitbrengen van een verslag als bedoeld in
@@ -1382,6 +1549,23 @@ articles:
         artikel: '43'
         hoofdstuk: V
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verslag_prestatievergelijking
+            type: date
+            required: true
+            description: "Datum waarop het verslag als bedoeld in artikel 43, eerste lid is uitgebracht"
+        output:
+          - name: verbeteringsvoornemens_uiterlijk
+            type: date
+            description: "Uiterste datum voor het schriftelijk kenbaar maken van verbeteringsvoornemens aan de Minister (6 maanden na het verslag, lid 1)"
+        actions:
+          - output: verbeteringsvoornemens_uiterlijk
+            value:
+              operation: DATE_ADD
+              date: $datum_verslag_prestatievergelijking
+              months: 6
   - number: '45'
     text: |-
       1 Onze Minister stelt uiterlijk op 31 december van elk kalenderjaar een verslag op met betrekking tot de kwaliteit
@@ -1390,6 +1574,24 @@ articles:
       2 Onze Minister zendt het verslag, bedoeld in het eerste lid, aan beide Kamers der Staten-Generaal en doet van het
       verslag mededeling in de Staatscourant.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel45
+    machine_readable:
+      execution:
+        parameters:
+          - name: rapportagejaar
+            type: number
+            required: true
+            description: "Het jaar waarvoor de rapportage uiterlijk op 31 december gereed moet zijn (het verslag betreft het voorafgaande kalenderjaar)"
+        output:
+          - name: kwaliteitsverslag_uiterlijk
+            type: date
+            description: "Uiterste datum voor het verslag over de drinkwaterkwaliteit (31 december van het rapportagejaar, lid 1)"
+        actions:
+          - output: kwaliteitsverslag_uiterlijk
+            value:
+              operation: DATE
+              year: $rapportagejaar
+              month: 12
+              day: 31
   - number: '46'
     text: |-
       Het verslag, bedoeld in [artikel 45][ref1], bevat ten minste gegevens over de kwaliteit van het drinkwater
@@ -1404,6 +1606,32 @@ articles:
         bwb_id: BWBR0026338
         artikel: '45'
         hoofdstuk: VI
+    machine_readable:
+      execution:
+        parameters:
+          - name: gemiddeld_m3_per_dag
+            type: number
+            required: true
+            description: "Gemiddeld geleverd volume drinkwater per dag in m³"
+          - name: gemiddeld_personen_per_dag
+            type: number
+            required: true
+            description: "Gemiddeld aantal personen dat per dag gebruik maakt van de drinkwatervoorziening, gemeten over een jaar"
+        output:
+          - name: verplicht_in_kwaliteitsverslag
+            type: boolean
+            description: "Moet de voorziening worden opgenomen in het verslag als bedoeld in artikel 45 (meer dan 1000 m³/dag of meer dan 5000 personen/dag)?"
+        actions:
+          - output: verplicht_in_kwaliteitsverslag
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN
+                  subject: $gemiddeld_m3_per_dag
+                  value: 1000
+                - operation: GREATER_THAN
+                  subject: $gemiddeld_personen_per_dag
+                  value: 5000
   - number: '47'
     text: |-
       Ten behoeve van het verslag, bedoeld in [artikel 45][ref1], verstrekken de eigenaren van drinkwaterbedrijven,
