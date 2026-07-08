@@ -31,7 +31,8 @@ articles:
         bwb_id: BWBR0006622
         artikel: 66a
       - id: ref2
-        bwb_id: BWBR0006622
+        bwb_id: BWBR0021777
+        artikel: '2'
   - number: '3'
     text: |-
       1 De aanvrager of de onderneming van de aanvrager van een erkenning is ingeschreven in het handelsregister, bedoeld
@@ -49,6 +50,56 @@ articles:
       - id: ref1
         bwb_id: BWBR0021777
         artikel: '2'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van de aanvrager
+        input:
+          - name: is_ingeschreven_handelsregister
+            type: boolean
+            source:
+              regulation: handelsregisterwet_2007
+              output: is_ingeschreven
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: levert_exportdiensten_voertuigen
+            type: boolean
+            source:
+              regulation: handelsregisterwet_2007
+              output: levert_exportdiensten_voertuigen
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: heeft_veilige_opslag
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: heeft_veilige_opslag
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_3
+            type: boolean
+            description: Indicatie of de aanvrager voldoet aan de eisen van artikel 3
+        actions:
+          - output: voldoet_aan_artikel_3
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ingeschreven_handelsregister
+                  value: true
+                - operation: EQUALS
+                  subject: $levert_exportdiensten_voertuigen
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_veilige_opslag
+                  value: true
   - number: '4'
     text: |-
       In de erkenning worden de vestigingen vermeld waarop de erkenning betrekking heeft. De uitoefening van de erkenning
@@ -62,7 +113,7 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0021777
-        artikel: '22'
+        hoofdstuk: '22'
   - number: '5'
     text: |-
       1 Het erkende bedrijf neemt het bij en krachtens de [wet][ref1] bepaalde omtrent de erkenning in acht.
@@ -104,6 +155,40 @@ articles:
         bwb_id: BWBR0032425
         artikel: '3'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: voldoet_aan_artikel_3
+            type: boolean
+            source:
+              output: voldoet_aan_artikel_3
+          - name: heeft_goedgekeurde_apparatuur
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: heeft_goedgekeurde_apparatuur
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_voortdurende_verplichtingen
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de voortdurende verplichtingen van artikel 5
+        actions:
+          - output: voldoet_aan_voortdurende_verplichtingen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_artikel_3
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_goedgekeurde_apparatuur
+                  value: true
   - number: '6'
     text: |-
       1 De Dienst Wegverkeer verstrekt in het kader van de erkenning codes aan het erkende bedrijf. Het erkende bedrijf
@@ -111,8 +196,46 @@ articles:
 
       2 Het erkende bedrijf ziet er op toe dat de kentekenbewijzen deel II niet door anderen dan het bevoegde personeel
       van het erkende bedrijf worden gebruikt en neemt ook overigens de noodzakelijke zorgvuldigheid ten aanzien van het
-      beheer van documenten en codes in acht.
+       beheer van documenten en codes in acht.
     url: https://wetten.overheid.nl/BWBR0032425/2016-01-01#Artikel6
+    references: []
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: heeft_beveiligde_codes
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: heeft_beveiligde_codes
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: beheert_documenten_correct
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: beheert_documenten_correct
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_6
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de verplichtingen van artikel 6
+        actions:
+          - output: voldoet_aan_artikel_6
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_beveiligde_codes
+                  value: true
+                - operation: EQUALS
+                  subject: $beheert_documenten_correct
+                  value: true
   - number: 6a
     text: |-
       Aan een op grond van [artikel 23k van het Besluit voertuigen][ref1] bestaande verplichting wordt gevolg gegeven
@@ -131,13 +254,50 @@ articles:
         bwb_id: BWBR0032425
         artikel: '5'
         hoofdstuk: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: heeft_datacommunicatie_apparatuur
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: heeft_goedgekeurde_apparatuur
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: verstrekt_tellerstand
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: verstrekt_tellerstand
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_6a
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de verplichtingen van artikel 6a
+        actions:
+          - output: voldoet_aan_artikel_6a
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_datacommunicatie_apparatuur
+                  value: true
+                - operation: EQUALS
+                  subject: $verstrekt_tellerstand
+                  value: true
   - number: '7'
     text: |-
       1 Het toezicht op het erkende bedrijf bestaat uit het uitvoeren van periodieke controles door de daartoe bevoegde
       ambtenaren. Deze controles kunnen frequenter plaatsvinden indien het vermoeden bestaat dat het erkende bedrijf de
       in het kader van de erkenning geldende eisen en voorschriften niet nakomt.
 
-      2 De in het eerste lid bedoelde ambtenaren worden desgevraagd behoorlijk in de gelegenheid gesteld te onderzoeken
+      2 De in het eerste lid bedoelde ambtenaren worden desgevraagd behulpzaam in de gelegenheid gesteld te onderzoeken
       of het erkende bedrijf voldoet aan de gestelde eisen en voorschriften. Het erkende bedrijf geeft inzage in
       de met betrekking tot de erkenning te voeren administratie. Tevens toont het erkende bedrijf op verzoek van
       bedoelde ambtenaren de kopieën van processen-verbaal van gestolen kentekenplaten alsmede de overeenkomstig
@@ -154,11 +314,48 @@ articles:
         bwb_id: BWBR0032425
         artikel: '9'
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: voldoet_aan_eisen_en_voorschriften
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: voldoet_aan_eisen_en_voorschriften
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: verstrekt_inzage_administratie
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: verstrekt_inzage_administratie
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_7
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de toezichtsverplichtingen van artikel 7
+        actions:
+          - output: voldoet_aan_artikel_7
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_eisen_en_voorschriften
+                  value: true
+                - operation: EQUALS
+                  subject: $verstrekt_inzage_administratie
+                  value: true
   - number: '8'
     text: |-
       1 Onverminderd [hoofdstuk 3][ref1] zijn op de erkenning het tweede tot en met zevende lid van toepassing.
 
-      2 De melding dat een voertuig voorgoed buiten Nederland wordt gebracht kan door het erkende bedrijf alleen worden
+      2 De melding dat een voertuig voorgoed buiten Nederland wordt gebracht kan door het Erkende bedrijf alleen worden
       gedaan namens een derde die het voertuig exporteert.
 
       3 Ten behoeve van het versneld melden dat voertuigen voorgoed buiten Nederland worden gebracht, verstrekt de Dienst
@@ -184,7 +381,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0032425#Hoofdstuk3
       [ref2]: https://wetten.overheid.nl/BWBR0002415
-      [ref3]: https://wetten.overheid.nl/BWBR0032425#Artikel3
+      [ref3]: https://wetten.overheid.nl/BWBR0032425/2016-01-01#Artikel3
     url: https://wetten.overheid.nl/BWBR0032425/2016-01-01#Artikel8
     references:
       - id: ref1
@@ -196,6 +393,53 @@ articles:
         bwb_id: BWBR0032425
         artikel: '3'
         hoofdstuk: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: doet_melding_namens_exporteur
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: doet_melding_namens_exporteur
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: verstrekt_kentekenbewijs_deel_II
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: verstrekt_kentekenbewijs_deel_II
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: bewaart_proces_verbaal_diefstal
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: bewaart_proces_verbaal_diefstal
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_8
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de verplichtingen van artikel 8
+        actions:
+          - output: voldoet_aan_artikel_8
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $doet_melding_namens_exporteur
+                  value: true
+                - operation: EQUALS
+                  subject: $verstrekt_kentekenbewijs_deel_II
+                  value: true
+                - operation: EQUALS
+                  subject: $bewaart_proces_verbaal_diefstal
+                  value: true
   - number: '9'
     text: |-
       1 Bij de melding, bedoeld in [artikel 8, tweede lid][ref1], geeft het erkende bedrijf de lamineercodes van de
@@ -226,6 +470,53 @@ articles:
         bwb_id: BWBR0032425
         artikel: '8'
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+        input:
+          - name: verstrekt_lamineercodes
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: verstrekt_lamineercodes
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: neemt_kentekenplaten_in
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: neemt_kentekenplaten_in
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: bewaart_helften_kentekenplaten
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: bewaart_helften_kentekenplaten
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_9
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de verplichtingen van artikel 9
+        actions:
+          - output: voldoet_aan_artikel_9
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $verstrekt_lamineercodes
+                  value: true
+                - operation: EQUALS
+                  subject: $neemt_kentekenplaten_in
+                  value: true
+                - operation: EQUALS
+                  subject: $bewaart_helften_kentekenplaten
+                  value: true
   - number: 9a
     text: |-
       1 Indien de kentekenplaten als gevolg van vermissing of diefstal niet aanwezig zijn bij het voertuig:
@@ -260,6 +551,55 @@ articles:
         bwb_id: BWBR0032425
         artikel: '9'
         hoofdstuk: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: kvk_nummer
+            type: string
+            required: true
+            description: KvK-nummer van het erkende bedrijf
+          - name: kentekenplaten_ontbreken
+            type: boolean
+            required: true
+            description: Indicatie of kentekenplaten ontbreken door vermissing of diefstal
+        input:
+          - name: heeft_afschrift_proces_verbaal
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: heeft_afschrift_proces_verbaal
+              parameters:
+                kvk_nummer: $kvk_nummer
+          - name: bewaart_afschrift_gedurende_termijn
+            type: boolean
+            source:
+              regulation: dienst_wegverkeer
+              output: bewaart_afschrift_gedurende_termijn
+              parameters:
+                kvk_nummer: $kvk_nummer
+        output:
+          - name: voldoet_aan_artikel_9a
+            type: boolean
+            description: Indicatie of het erkende bedrijf voldoet aan de verplichtingen van artikel 9a
+        actions:
+          - output: voldoet_aan_artikel_9a
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $kentekenplaten_ontbreken
+                    value: true
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $heeft_afschrift_proces_verbaal
+                        value: true
+                      - operation: EQUALS
+                        subject: $bewaart_afschrift_gedurende_termijn
+                        value: true
+              default: true
   - number: '10'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop
