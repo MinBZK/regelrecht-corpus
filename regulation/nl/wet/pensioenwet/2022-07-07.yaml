@@ -1067,6 +1067,23 @@ articles:
       4 Bij of krachtens algemene maatregel van bestuur worden nadere regels gesteld met betrekking tot dit artikel over
       onder meer de te verstrekken informatie.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel21
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_start_opbouw
+            type: date
+            required: true
+            description: Datum waarop de werknemer begint met het verwerven van pensioenaanspraken
+        output:
+          - name: uiterste_informatiedatum_werknemer
+            type: date
+            description: Uiterste datum waarop de pensioenuitvoerder de werknemer moet informeren over de kenmerken van de pensioenregeling (lid 1, binnen drie maanden na start opbouw)
+        actions:
+          - output: uiterste_informatiedatum_werknemer
+            value:
+              operation: DATE_ADD
+              date: $datum_start_opbouw
+              months: 3
   - number: '22'
     text: |-
       1 De werkgever stelt een vereniging van pensioengerechtigden in de gelegenheid haar oordeel uit te spreken over een
@@ -2468,6 +2485,23 @@ articles:
       maximum van 18 maanden door de deelnemer tijdens de deelneming niet van invloed op de dekking uit hoofde van het
       partnerpensioen.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel56
+    machine_readable:
+      execution:
+        parameters:
+          - name: duur_onbetaald_verlof_maanden
+            type: number
+            required: true
+            description: Duur van het opgenomen onbetaald verlof in maanden
+        output:
+          - name: verlof_binnen_grens_partnerpensioen
+            type: boolean
+            description: True als het onbetaald verlof niet meer bedraagt dan 18 maanden en de dekking van het partnerpensioen daarmee intact blijft
+        actions:
+          - output: verlof_binnen_grens_partnerpensioen
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $duur_onbetaald_verlof_maanden
+              value: 18
   - number: '57'
     text: |-
       1 Indien de partnerrelatie van een deelnemer eindigt door scheiding verkrijgt de gewezen partner van de deelnemer
@@ -3392,6 +3426,58 @@ articles:
       - id: ref3
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      execution:
+        parameters:
+          - name: waarde_aanspraken_ouderdomspensioen
+            type: amount
+            required: true
+            description: Totale waarde van de aanspraken op ouderdomspensioen (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: gewenste_afkoopbedrag
+            type: amount
+            required: true
+            description: Gewenst afkoopbedrag door de deelnemer (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: resterende_uitkering_ouderdomspensioen_jaarbasis
+            type: amount
+            required: true
+            description: Hoogte van het resterende ouderdomspensioen op jaarbasis na afkoop (in eurocent)
+            type_spec:
+              unit: eurocent
+        input:
+          - name: afkoopdrempel
+            type: amount
+            source:
+              output: afkoopdrempel
+            type_spec:
+              unit: eurocent
+        output:
+          - name: afkoop_binnen_maximum
+            type: boolean
+            description: True als het gewenste afkoopbedrag niet meer bedraagt dan 10% van de waarde van de aanspraken op ouderdomspensioen (lid 1 onderdeel a)
+          - name: resterende_pensioen_boven_drempel
+            type: boolean
+            description: True als het resterende ouderdomspensioen na afkoop op jaarbasis ten minste gelijk is aan de afkoopdrempel van artikel 66 (lid 1 onderdeel d)
+        actions:
+          - output: maximaal_afkoopbedrag
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.10
+                - $waarde_aanspraken_ouderdomspensioen
+          - output: afkoop_binnen_maximum
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gewenste_afkoopbedrag
+              value: $maximaal_afkoopbedrag
+          - output: resterende_pensioen_boven_drempel
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $resterende_uitkering_ouderdomspensioen_jaarbasis
+              value: $afkoopdrempel
   - number: '70'
     text: |-
       1 Voor de toepassing van de [artikelen 70a tot en met 92a][ref1] wordt onder ontvangende pensioenuitvoerder mede
