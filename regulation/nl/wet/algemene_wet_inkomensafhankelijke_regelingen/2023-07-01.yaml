@@ -337,6 +337,39 @@ articles:
       - id: ref5
         bwb_id: BWBR0035362
         artikel: 2.3.5
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: op_verzoek_niet_als_partner
+            type: boolean
+            required: true
+            description: Belanghebbende heeft verzocht de persoon niet als partner aan te merken (art. 3a AWIR)
+          - name: verblijft_in_huiselijk_geweld_opvang
+            type: boolean
+            required: true
+            description: Belanghebbende verblijft in een instelling die opvang verleent bij risico voor veiligheid als gevolg van huiselijk geweld (art. 1.1.1, 2.3.3, 2.3.5 WMO 2015)
+        output:
+          - name: is_geen_partner_wegens_huiselijk_geweld
+            type: boolean
+            description: De persoon wordt op verzoek niet als partner aangemerkt gedurende het verblijf in huiselijk geweld opvang (art. 3a AWIR)
+        actions:
+          - output: is_geen_partner_wegens_huiselijk_geweld
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $op_verzoek_niet_als_partner
+                  value: true
+                - operation: EQUALS
+                  subject: $verblijft_in_huiselijk_geweld_opvang
+                  value: true
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 3a
   - number: 3b
     text: |-
       In afwijking van [artikel 2, eerste lid, onderdeel e][ref1], en [artikel 3, tweede lid, onderdeel e][ref2],
@@ -369,6 +402,44 @@ articles:
       - id: ref3
         bwb_id: BWBR0011823
         artikel: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "uitzondering op uitsluiting bij partnerschap op andere grond dan art. 3 lid 2 onderdeel e (tweede volzin)"
+          reason: "Determining whether partnership arises specifically from art. 3 lid 2 onderdeel e versus another provision requires tracking the legal ground of partnership, which is not available as an engine operation"
+          suggestion: "Add a reden_partnerschap field or enum type to track which sub-provision established the partnership"
+          legal_text_excerpt: "In afwijking van de eerste zin wordt wel als partner van de belanghebbende aangemerkt de vreemdeling die deze tijdelijke bescherming geniet, die op grond van een andere bepaling dan artikel 3, tweede lid, onderdeel e, partner van de belanghebbende is."
+          accepted: false
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: vreemdeling_geniet_tijdelijke_bescherming_eu_2022_382
+            type: boolean
+            required: true
+            description: De vreemdeling geniet tijdelijke bescherming als bedoeld in Uitvoeringsbesluit (EU) 2022/382 (Oekraïne)
+          - name: belanghebbende_geniet_tijdelijke_bescherming_eu_2022_382
+            type: boolean
+            required: true
+            description: De belanghebbende zelf geniet ook tijdelijke bescherming als bedoeld in Uitvoeringsbesluit (EU) 2022/382 (Oekraïne)
+        output:
+          - name: vreemdeling_uitgesloten_als_partner_of_medebewoner
+            type: boolean
+            description: De vreemdeling wordt niet als partner of medebewoner aangemerkt wegens tijdelijke bescherming (art. 3b eerste volzin AWIR), tenzij de belanghebbende zelf ook deze bescherming geniet. De tweede volzin (uitzondering bij ander partnergrond) is untranslatable.
+        actions:
+          - output: vreemdeling_uitgesloten_als_partner_of_medebewoner
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $vreemdeling_geniet_tijdelijke_bescherming_eu_2022_382
+                  value: true
+                - operation: NOT
+                  value: $belanghebbende_geniet_tijdelijke_bescherming_eu_2022_382
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 3b
   - number: '4'
     text: |-
       1 Kind is de bloedverwant of aanverwant in de neergaande lijn van de belanghebbende of zijn partner, die in
@@ -1470,6 +1541,26 @@ articles:
 
       3 De in het tweede lid bedoelde verrekening kan leiden tot een terug te vorderen bedrag.
     url: https://wetten.overheid.nl/BWBR0018472/2023-07-01#Artikel24
+    machine_readable:
+      execution:
+        parameters:
+          - name: dagtekening_beschikking
+            type: date
+            required: true
+            description: Dagtekening van de beschikking tot toekenning van de tegemoetkoming
+        output:
+          - name: uitbetaling_uiterste_datum
+            type: date
+            description: Uiterste datum voor uitbetaling van de tegemoetkoming (4 weken na dagtekening beschikking, art. 24 lid 1 AWIR)
+        actions:
+          - output: uitbetaling_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_beschikking
+              weeks: 4
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '24'
   - number: 24a
     text: |-
       De Belastingdienst/Toeslagen kan afzien van het uitbetalen van een tegemoetkoming:
@@ -1863,6 +1954,18 @@ articles:
         artikel: '29'
         hoofdstuk: '2'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        output:
+          - name: kwijtschelding_toegestaan
+            type: boolean
+            description: De Belastingdienst/Toeslagen kan terugvorderingen en boetes niet kwijtschelden (art. 31bis AWIR)
+        actions:
+          - output: kwijtschelding_toegestaan
+            value: false
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 31bis
   - number: 31a
     text: |-
       In afwijking van [artikel 28][ref1] heeft de belanghebbende de verplichting om het bedrag van een terugvordering,
@@ -2081,6 +2184,29 @@ articles:
       - id: ref9
         bwb_id: BWBR0005537
         artikel: 4:100
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: ANDERE_HANDELING
+        parameters:
+          - name: dagtekening_aansprakelijkheidsbeschikking
+            type: date
+            required: true
+            description: Dagtekening van de beschikking tot aansprakelijkstelling (art. 33 lid 4 AWIR)
+        output:
+          - name: aansprakelijkheid_invorderbaar_vanaf
+            type: date
+            description: Datum waarop het bedrag waarvoor aansprakelijkheid bestaat invorderbaar wordt (6 weken na dagtekening, art. 33 lid 4 AWIR)
+        actions:
+          - output: aansprakelijkheid_invorderbaar_vanaf
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_aansprakelijkheidsbeschikking
+              weeks: 6
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '33'
   - number: '34'
     text: |-
       1 Tot het verrichten van de bij of krachtens een wet aan een deurwaarder opgedragen werkzaamheden is, voor zover
@@ -2799,6 +2925,55 @@ articles:
         artikel: '41'
         hoofdstuk: '2'
         paragraaf: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de medeplichtige
+          - name: is_medeplichtige
+            type: boolean
+            required: true
+            description: De boete wordt opgelegd aan een medeplichtige als bedoeld in art. 41bis lid 1 onderdeel c AWIR
+        input:
+          - name: maximale_vergrijpboete
+            type: amount
+            source:
+              output: maximale_vergrijpboete
+            description: Maximale vergrijpboete conform art. 41 lid 1 AWIR (100% van terugvorderingsbedrag)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: maximale_medeplichtige_boete
+            type: amount
+            description: Maximale vergrijpboete voor medeplichtige (maximale boete verminderd met een derde, art. 41bis lid 3 AWIR)
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: derde_deel
+            value:
+              operation: DIVIDE
+              values:
+                - $maximale_vergrijpboete
+                - 3
+          - output: maximale_medeplichtige_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_medeplichtige
+                    value: true
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $maximale_vergrijpboete
+                      - $derde_deel
+              default: $maximale_vergrijpboete
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: 41bis
   - number: 41a
     text: |-
       1 Het in [artikel 40][ref1] genoemde bedrag wordt elke vijf jaar, met ingang van 1 januari van een jaar,
