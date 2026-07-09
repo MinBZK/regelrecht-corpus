@@ -565,6 +565,15 @@ articles:
       - id: ref3
         bwb_id: BWBR0006251
         artikel: '34'
+    machine_readable:
+      execution:
+        output:
+          - name: wet_van_toepassing_op_medisch_deel
+            type: boolean
+            description: Geeft aan of de wet van toepassing is op het medisch deel van de werkzaamheden (artikel 1.5a — altijd false voor dit gedeelte)
+        actions:
+          - output: wet_van_toepassing_op_medisch_deel
+            value: false
   - number: '1.6'
     text: |-
       1 Voor zover partijen een hogere bezoldiging overeenkomen dan bij of krachtens deze wet is toegestaan, bedraagt de
@@ -599,6 +608,55 @@ articles:
       - id: ref2
         bwb_id: BWBR0005289
         artikel: '119'
+    machine_readable:
+      untranslatables:
+        - construct: enkelvoudige renteberekening over tijdvak in dagen
+          reason: Engine has no DATE_DIFF operation to calculate the number of days between two dates; simple interest calculation requires dividing the number of days by 365
+          suggestion: Add DATE_DIFF or DURATION_BETWEEN operation to engine
+          legal_text_excerpt: Deze rente wordt enkelvoudig berekend over het tijdvak dat aanvangt op 1 januari van het jaar nadat de onverschuldigde betaling heeft plaatsgevonden en eindigt op de dag voorafgaand aan die van ongedaanmaking
+          accepted: false
+      open_terms:
+        - id: wettelijke_rente_percentage
+          type: number
+          required: false
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: artikel 120 eerste lid van Boek 6 van het Burgerlijk Wetboek, waarnaar artikel 1.6 lid 3 verwijst
+      definitions:
+        MINIMUM_RENTE_PERCENTAGE:
+          value: 0.04
+          description: Minimale rentevoet van ten minste vier procent (artikel 1.6 lid 3)
+      execution:
+        parameters:
+          - name: is_ongedaan_gemaakt_voor_1_juli
+            type: boolean
+            required: true
+            description: Is de onverschuldigde betaling ongedaan gemaakt vóór 1 juli van het jaar volgend op het jaar van de onverschuldigde betaling (artikel 1.6 lid 3)
+        output:
+          - name: rente_in_rekening
+            type: boolean
+            description: Geeft aan of rente in rekening moet worden gebracht (artikel 1.6 lid 3)
+          - name: toepasselijke_rentevoet
+            type: number
+            description: De toepasselijke rentevoet (wettelijke rente conform art. 120 BW6, minimaal 4%)
+        actions:
+          - output: rente_in_rekening
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $is_ongedaan_gemaakt_voor_1_juli
+                value: true
+          - output: toepasselijke_rentevoet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $wettelijke_rente_percentage
+                    value: $MINIMUM_RENTE_PERCENTAGE
+                  then: $MINIMUM_RENTE_PERCENTAGE
+              default: $wettelijke_rente_percentage
   - number: 1.6a
     text: |-
       1 Indien een topfunctionaris met verschillende rechtspersonen of instellingen waarop [paragraaf 2][ref1]
@@ -632,6 +690,31 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.3'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: som_bezoldigingen
+            type: number
+            required: true
+            description: Som van de bezoldigingen van de topfunctionaris bij alle relevante dienstverbanden (in eurocent, artikel 1.6a lid 1)
+        input:
+          - name: bezoldigingsmaximum
+            type: amount
+            source:
+              output: bezoldigingsmaximum
+            type_spec:
+              unit: eurocent
+            description: De maximale bezoldiging als bedoeld in artikel 2.3 (of het hogere toepasselijke maximum bij dienstverbanden als bedoeld in artikel 1.6a lid 1)
+        output:
+          - name: som_bezoldiging_toegestaan
+            type: boolean
+            description: Is de som van de bezoldigingen bij meerdere dienstverbanden toegestaan (artikel 1.6a lid 1)
+        actions:
+          - output: som_bezoldiging_toegestaan
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $som_bezoldigingen
+              value: $bezoldigingsmaximum
   - number: '1.7'
     text: |-
       Voor zover zulks niet reeds uit een ander wettelijk voorschrift voortvloeit, worden de bij of krachtens deze wet
@@ -773,6 +856,99 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.3'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uren_dienstverband
+            type: number
+            required: false
+            description: Aantal uren waarop het dienstverband betrekking heeft (voor deeltijdberekening lid 2)
+          - name: uren_voltijds
+            type: number
+            required: false
+            description: Aantal uren van een voltijds dienstverband bij de verantwoordelijke
+          - name: dagen_dienstverband
+            type: number
+            required: false
+            description: Aantal dagen waarop het dienstverband betrekking heeft (voor kortere-dan-jaar berekening lid 3)
+          - name: is_deeltijd
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kleinere omvang dan het voltijdse dienstverband (artikel 2.1 lid 2)
+          - name: is_korter_dan_jaar
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kortere duur dan een kalenderjaar (artikel 2.1 lid 3)
+        input:
+          - name: bezoldigingsmaximum
+            type: amount
+            source:
+              output: bezoldigingsmaximum
+            type_spec:
+              unit: eurocent
+            description: Maximale bezoldiging als bedoeld in artikel 2.3
+        output:
+          - name: maximaal_toegestane_bezoldiging
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het maximale bedrag dat partijen mogen overeenkomen als bezoldiging conform artikel 2.1
+        actions:
+          - output: maximaal_toegestane_bezoldiging
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_deeltijd
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_korter_dan_jaar
+                        value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $bezoldigingsmaximum
+                              - $uren_dienstverband
+                          - $uren_voltijds
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $bezoldigingsmaximum
+                              - $dagen_dienstverband
+                          - 365
+                - when:
+                    operation: EQUALS
+                    subject: $is_deeltijd
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $bezoldigingsmaximum
+                          - $uren_dienstverband
+                      - $uren_voltijds
+                - when:
+                    operation: EQUALS
+                    subject: $is_korter_dan_jaar
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $bezoldigingsmaximum
+                          - $dagen_dienstverband
+                      - 365
+              default: $bezoldigingsmaximum
   - number: '2.2'
     text: |-
       1 In afwijking van [artikel 2.1, eerste lid,][ref1] komen partijen met betrekking tot de leden, onderscheidenlijk
@@ -848,6 +1024,76 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.8'
         paragraaf: '2'
+    machine_readable:
+      definitions:
+        PERCENTAGE_LID:
+          value: 0.10
+          description: Maximaal percentage voor leden van toezichthoudende organen (10%, artikel 2.2 lid 1)
+        PERCENTAGE_VOORZITTER:
+          value: 0.15
+          description: Maximaal percentage voor voorzitters van toezichthoudende organen (15%, artikel 2.2 lid 1)
+      execution:
+        parameters:
+          - name: is_voorzitter
+            type: boolean
+            required: true
+            description: Is de functionaris voorzitter van het hoogste toezichthoudende orgaan (voorzitter = 15%, lid = 10%)
+          - name: dagen_dienstverband
+            type: number
+            required: false
+            description: Aantal dagen waarop het dienstverband betrekking heeft (voor pro-rata berekening ex artikel 2.1 lid 3 jo. artikel 2.2 lid 2)
+          - name: is_korter_dan_jaar
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kortere duur dan een kalenderjaar (artikel 2.2 lid 2 jo. artikel 2.1 lid 3)
+        input:
+          - name: bezoldigingsmaximum
+            type: amount
+            source:
+              output: bezoldigingsmaximum
+            type_spec:
+              unit: eurocent
+            description: De voor de rechtspersoon geldende maximale bezoldiging (art. 2.3 of 2.5/2.6/2.7)
+        output:
+          - name: maximaal_toegestane_bezoldiging_toezichthouder
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bezoldiging voor lid of voorzitter van het hoogste toezichthoudende orgaan (artikel 2.2)
+        actions:
+          - output: percentage_max
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_voorzitter
+                    value: true
+                  then: $PERCENTAGE_VOORZITTER
+              default: $PERCENTAGE_LID
+          - output: maximaal_base
+            value:
+              operation: MULTIPLY
+              values:
+                - $bezoldigingsmaximum
+                - $percentage_max
+          - output: maximaal_toegestane_bezoldiging_toezichthouder
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_korter_dan_jaar
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $maximaal_base
+                          - $dagen_dienstverband
+                      - 365
+              default: $maximaal_base
   - number: '2.3'
     text: |-
       1 De bezoldiging van een topfunctionaris bedraagt per kalenderjaar ten hoogste € 262.000.
@@ -863,6 +1109,34 @@ articles:
       4 De ministeriële regeling, bedoeld in het tweede lid, wordt bekend gemaakt vóór 1 november voorafgaand aan het
       jaar waarop de wijziging betrekking heeft.
     url: https://wetten.overheid.nl/BWBR0032249/2026-01-01#Artikel2.3
+    machine_readable:
+      untranslatables:
+        - construct: jaarlijkse aanpassing aan CBS-loonkostenindex en afronding op duizendvoud
+          reason: Requires external CBS statistical data which cannot be referenced as a regulation output; rounding to multiples of €1.000 also requires a ROUND operation not available in engine
+          suggestion: Implement annual update via implementing ministerial regulation (Uitvoeringsregeling WNT) using the open_term mechanism
+          legal_text_excerpt: wordt telkens per 1 januari van elk jaar bij ministeriële regeling gewijzigd aan de ontwikkeling van de contractuele loonkosten voor de overheid zoals deze in het jaar van vaststellen van de ministeriële regeling voor het daaraan voorafgaande jaar door het Centraal Bureau voor de Statistiek is vastgesteld, en wordt naar boven afgerond op een duizendvoud in euro's
+          accepted: false
+      open_terms:
+        - id: bezoldigingsmaximum
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 2.3, tweede lid, Wet normering topinkomens
+      definitions:
+        BEZOLDIGINGSMAXIMUM_BASIS:
+          value: 26200000
+          description: Wettelijk vastgesteld basisbedrag artikel 2.3 lid 1 (€ 262.000 in eurocent); geldig tot aanpassing bij ministeriële regeling
+      execution:
+        output:
+          - name: bezoldigingsmaximum
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bezoldiging per kalenderjaar (artikel 2.3 lid 1); voor 2026 = € 262.000
+        actions:
+          - output: bezoldigingsmaximum
+            value: $BEZOLDIGINGSMAXIMUM_BASIS
   - number: '2.4'
     text: |-
       1 Onze Minister wie het aangaat en Onze Minister kunnen in overeenstemming met het gevoelen van de ministerraad
@@ -901,6 +1175,28 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.3'
         paragraaf: '2'
+    machine_readable:
+      definitions:
+        BEZOLDIGINGSMAXIMUM_BASIS:
+          value: 26200000
+          description: Wettelijk basisbedrag artikel 2.3 eerste lid (€ 262.000 in eurocent); artikel 2.5 verwijst expliciet naar lid 1
+        PERCENTAGE_ARBEIDSMARKT_MAX:
+          value: 1.30
+          description: Maximale verhouding voor arbeidsmarktuitzondering (130% van artikel 2.3 lid 1)
+      execution:
+        output:
+          - name: bezoldigingsmaximum_arbeidsmarkt
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximaal toegestane bezoldiging bij arbeidsmarktuitzondering ex artikel 2.5 (130% van artikel 2.3 lid 1)
+        actions:
+          - output: bezoldigingsmaximum_arbeidsmarkt
+            value:
+              operation: MULTIPLY
+              values:
+                - $BEZOLDIGINGSMAXIMUM_BASIS
+                - $PERCENTAGE_ARBEIDSMARKT_MAX
   - number: '2.6'
     text: |-
       1 Onze Minister wie het aangaat kan, in overeenstemming met Onze Minister, bij ministeriële regeling
@@ -1117,6 +1413,60 @@ articles:
         bwb_id: BWBR0032249
         artikel: '1.3'
         paragraaf: '1'
+    machine_readable:
+      definitions:
+        UITKERING_MAXIMUM_VOLTIJDS:
+          value: 7500000
+          description: Wettelijk maximum uitkering beëindiging dienstverband voltijds (€ 75.000 in eurocent, artikel 2.10 lid 1)
+      execution:
+        parameters:
+          - name: som_beloning_12_maanden
+            type: number
+            required: true
+            description: Som van beloning en beloningen betaalbaar op termijn over de 12 maanden voorafgaand aan beëindiging dienstverband (in eurocent)
+          - name: uren_dienstverband
+            type: number
+            required: false
+            description: Aantal uren waarop het deeltijddienstverband betrekking heeft
+          - name: uren_voltijds
+            type: number
+            required: false
+            description: Aantal uren van een voltijds dienstverband bij de verantwoordelijke
+          - name: is_deeltijd
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kleinere omvang dan voltijds (artikel 2.10 lid 1 tweede volzin)
+        output:
+          - name: maximale_uitkering_beeindiging
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 2.10
+        actions:
+          - output: maximale_uitkering_beeindiging
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_deeltijd
+                    value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - $som_beloning_12_maanden
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $UITKERING_MAXIMUM_VOLTIJDS
+                              - $uren_dienstverband
+                          - $uren_voltijds
+              default:
+                operation: MIN
+                values:
+                  - $som_beloning_12_maanden
+                  - $UITKERING_MAXIMUM_VOLTIJDS
   - number: '3.1'
     text: |-
       1 Partijen komen geen bezoldiging overeen die per kalenderjaar meer bedraagt dan het door Onze Minister wie het
@@ -1215,6 +1565,105 @@ articles:
         bwb_id: BWBR0032249
         artikel: '3.1'
         paragraaf: '3'
+    machine_readable:
+      open_terms:
+        - id: bezoldigingsmaximum_paragraaf3
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 3.3 Wet normering topinkomens
+      execution:
+        parameters:
+          - name: uren_dienstverband
+            type: number
+            required: false
+            description: Aantal uren waarop het dienstverband betrekking heeft (voor deeltijdberekening lid 3)
+          - name: uren_voltijds
+            type: number
+            required: false
+            description: Aantal uren van een voltijds dienstverband bij de verantwoordelijke
+          - name: dagen_dienstverband
+            type: number
+            required: false
+            description: Aantal dagen waarop het dienstverband betrekking heeft (voor kortere-dan-jaar berekening lid 4)
+          - name: is_deeltijd
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kleinere omvang dan het voltijdse dienstverband (artikel 3.1 lid 3)
+          - name: is_korter_dan_jaar
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kortere duur dan een kalenderjaar (artikel 3.1 lid 4)
+        output:
+          - name: maximaal_toegestane_bezoldiging_paragraaf3
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het maximale bedrag dat partijen mogen overeenkomen als bezoldiging conform artikel 3.1
+          - name: bezoldigingsmaximum_paragraaf3_basis
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het door de minister voor de categorie vastgestelde bedrag (ongewijzigd, t.b.v. verwijzing door artikel 3.2)
+        actions:
+          - output: bezoldigingsmaximum_paragraaf3_basis
+            value: $bezoldigingsmaximum_paragraaf3
+          - output: maximaal_toegestane_bezoldiging_paragraaf3
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_deeltijd
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_korter_dan_jaar
+                        value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $bezoldigingsmaximum_paragraaf3
+                              - $uren_dienstverband
+                          - $uren_voltijds
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $bezoldigingsmaximum_paragraaf3
+                              - $dagen_dienstverband
+                          - 365
+                - when:
+                    operation: EQUALS
+                    subject: $is_deeltijd
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $bezoldigingsmaximum_paragraaf3
+                          - $uren_dienstverband
+                      - $uren_voltijds
+                - when:
+                    operation: EQUALS
+                    subject: $is_korter_dan_jaar
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $bezoldigingsmaximum_paragraaf3
+                          - $dagen_dienstverband
+                      - 365
+              default: $bezoldigingsmaximum_paragraaf3
   - number: '3.2'
     text: |-
       1 In afwijking van [artikel 3.1, eerste lid][ref1], komen partijen met betrekking tot de leden, onderscheidenlijk
@@ -1258,6 +1707,76 @@ articles:
         bwb_id: BWBR0032249
         artikel: '3.1'
         paragraaf: '3'
+    machine_readable:
+      definitions:
+        PERCENTAGE_LID:
+          value: 0.10
+          description: Maximaal percentage voor leden van toezichthoudende organen (10%, artikel 3.2 lid 1)
+        PERCENTAGE_VOORZITTER:
+          value: 0.15
+          description: Maximaal percentage voor voorzitters van toezichthoudende organen (15%, artikel 3.2 lid 1)
+      execution:
+        parameters:
+          - name: is_voorzitter
+            type: boolean
+            required: true
+            description: Is de functionaris voorzitter van het hoogste toezichthoudende orgaan (voorzitter = 15%, lid = 10%)
+          - name: dagen_dienstverband
+            type: number
+            required: false
+            description: Aantal dagen waarop het dienstverband betrekking heeft (voor pro-rata berekening ex artikel 3.1 lid 4 jo. artikel 3.2 lid 2)
+          - name: is_korter_dan_jaar
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kortere duur dan een kalenderjaar
+        input:
+          - name: bezoldigingsmaximum_paragraaf3_basis
+            type: amount
+            source:
+              output: bezoldigingsmaximum_paragraaf3_basis
+            type_spec:
+              unit: eurocent
+            description: Het voor de rechtspersoon geldende maximale bezoldigingsbedrag (art. 3.1 lid 1 of art. 3.4)
+        output:
+          - name: maximaal_toegestane_bezoldiging_toezichthouder_paragraaf3
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bezoldiging voor lid of voorzitter van het hoogste toezichthoudende orgaan bij bijlage 3 entiteit (artikel 3.2)
+        actions:
+          - output: percentage_max
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_voorzitter
+                    value: true
+                  then: $PERCENTAGE_VOORZITTER
+              default: $PERCENTAGE_LID
+          - output: maximaal_base
+            value:
+              operation: MULTIPLY
+              values:
+                - $bezoldigingsmaximum_paragraaf3_basis
+                - $percentage_max
+          - output: maximaal_toegestane_bezoldiging_toezichthouder_paragraaf3
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_korter_dan_jaar
+                    value: true
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $maximaal_base
+                          - $dagen_dienstverband
+                      - 365
+              default: $maximaal_base
   - number: '3.3'
     text: |-
       Onze Minister wie het aangaat stelt, in overeenstemming met Onze Minister, een bedrag als bedoeld in
@@ -1437,6 +1956,60 @@ articles:
         bwb_id: BWBR0032249
         artikel: '1.3'
         paragraaf: '1'
+    machine_readable:
+      definitions:
+        UITKERING_MAXIMUM_VOLTIJDS:
+          value: 7500000
+          description: Wettelijk maximum uitkering beëindiging dienstverband voltijds (€ 75.000 in eurocent, artikel 3.7 lid 1)
+      execution:
+        parameters:
+          - name: som_beloning_12_maanden
+            type: number
+            required: true
+            description: Som van beloning en beloningen betaalbaar op termijn over de 12 maanden voorafgaand aan beëindiging dienstverband (in eurocent)
+          - name: uren_dienstverband
+            type: number
+            required: false
+            description: Aantal uren waarop het deeltijddienstverband betrekking heeft
+          - name: uren_voltijds
+            type: number
+            required: false
+            description: Aantal uren van een voltijds dienstverband bij de verantwoordelijke
+          - name: is_deeltijd
+            type: boolean
+            required: false
+            description: Heeft het dienstverband een kleinere omvang dan voltijds (artikel 3.7 lid 1 tweede volzin)
+        output:
+          - name: maximale_uitkering_beeindiging_paragraaf3
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 3.7
+        actions:
+          - output: maximale_uitkering_beeindiging_paragraaf3
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_deeltijd
+                    value: true
+                  then:
+                    operation: MIN
+                    values:
+                      - $som_beloning_12_maanden
+                      - operation: DIVIDE
+                        values:
+                          - operation: MULTIPLY
+                            values:
+                              - $UITKERING_MAXIMUM_VOLTIJDS
+                              - $uren_dienstverband
+                          - $uren_voltijds
+              default:
+                operation: MIN
+                values:
+                  - $som_beloning_12_maanden
+                  - $UITKERING_MAXIMUM_VOLTIJDS
   - number: '4.1'
     text: |-
       1 In het financieel verslaggevingsdocument worden van iedere topfunctionaris de bij regeling van Onze Minister vast
@@ -2080,6 +2653,23 @@ articles:
         bwb_id: BWBR0032249
         artikel: '3.4'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ontvangst_verzoek
+            type: date
+            required: true
+            description: Datum waarop het verzoek als bedoeld in artikel 2.4, 2.6 lid 2, 2.7 lid 3 of 4, dan wel 3.4 lid 3 of 4 is ontvangen
+        output:
+          - name: uiterste_beslistermijn
+            type: date
+            description: Uiterste datum waarop het besluit genomen moet worden (16 weken na ontvangst van het verzoek, artikel 7.5)
+        actions:
+          - output: uiterste_beslistermijn
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_verzoek
+              weeks: 16
   - number: '7.9'
     text: |-
       Deze wet treedt in werking op een bij koninklijk besluit te bepalen tijdstip, met uitzondering van
