@@ -24,9 +24,9 @@ articles:
       [6, eerste lid, van het Besluit administratieve verplichtingen Meststoffenwet][ref3].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006285
-      [ref2]: https://wetten.overheid.nl/BWBR0009000#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0009000#Artikel6
+       [ref1]: https://wetten.overheid.nl/BWBR0006285
+       [ref2]: https://wetten.overheid.nl/BWBR0009000#Artikel2
+       [ref3]: https://wetten.overheid.nl/BWBR0009000#Artikel6
     url: https://wetten.overheid.nl/BWBR0006344/2005-01-01#Artikel1
     references:
       - id: ref1
@@ -56,11 +56,37 @@ articles:
       afwijking van het eerste lid, de melding binnen die termijn.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009000
+       [ref1]: https://wetten.overheid.nl/BWBR0009000
     url: https://wetten.overheid.nl/BWBR0006344/2005-01-01#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0009000
+    machine_readable:
+      execution:
+        parameters:
+          - name: toegestane_wijzigingen_termijn_dagen
+            type: number
+            source:
+              regulation: BWBR0009000
+              output: melding_termijn_dagen
+        input:
+          - name: standaard_melding_termijn_dagen
+            type: number
+            value: 0
+            source:
+              regulation: BWBR0006344
+            description: Standaardtermijn voor melding zoals bedoeld in artikel 3, eerste lid
+        output:
+          - name: melding_termijn_dagen
+            type: number
+            description: Termijn in dagen waarbinnen melding van wijzigingen moet geschieden
+        actions:
+          - output: melding_termijn_dagen
+            value:
+              operation: MIN
+              values:
+                - $standaard_melding_termijn_dagen
+                - $toegestane_wijzigingen_termijn_dagen
   - number: '4'
     text: |-
       1 Naast de op grond van de wet en de daarop berustende bepalingen te verstrekken gegevens, verstrekken de
@@ -76,12 +102,31 @@ articles:
       bedrijf waarheen wordt verplaatst, een administratie bij overeenkomstig artikel 13 van de Regeling administratieve
       verplichtingen Meststoffenwet.
     url: https://wetten.overheid.nl/BWBR0006344/2005-01-01#Artikel4
+    references: []
+    machine_readable:
+      execution:
+        parameters:
+          - name: gegevens_verstrekt_datum
+            type: date
+            required: true
+            description: Datum waarop de gegevens zijn verstrekt
+        output:
+          - name: bewaar_termijn_einddatum
+            type: date
+            description: Einddatum van de bewaarplicht voor de gegevens
+        actions:
+          - output: bewaar_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $gegevens_verstrekt_datum
+              years: 6
+              days: -1
   - number: '6'
     text: Deze regeling treedt in werking met ingang van de datum van inwerkingtreding van de wet.
     url: https://wetten.overheid.nl/BWBR0006344/2005-01-01#Artikel6
   - number: '7'
     text: |-
-      Deze regeling wordt aangehaald als:
+      Deze regeling wordt angehaald als:
 
       Regeling gegevensverstrekking Wet verplaatsing mestproductie.
 
