@@ -4747,6 +4747,35 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0012438#Hoofdstuk4
       [ref2]: https://wetten.overheid.nl/BWBR0002399#Artikel28a
       [ref3]: https://wetten.overheid.nl/BWBR0012438#Hoofdstuk4
+    machine_readable:
+      execution:
+        parameters:
+          - name: weken_afwezig
+            type: number
+            required: true
+            description: Aantal aaneengesloten weken dat de leerling afwezig is zonder geldige reden (lid 1)
+          - name: ontvangst_gegevens_datum
+            type: date
+            required: false
+            description: Datum waarop de leerling de kopie van de gegevens heeft ontvangen (lid 8)
+        output:
+          - name: melding_bij_minister_vereist
+            type: boolean
+            description: Leerling is ten minste 5 weken aaneengesloten afwezig zonder geldige reden; melding aan minister vereist (lid 1, 5)
+          - name: uiterste_bezwaardatum_leerling
+            type: date
+            description: Uiterste datum voor leerling om schriftelijke bedenkingen te uiten bij bevoegd gezag (lid 8, 6 weken na ontvangst gegevens)
+        actions:
+          - output: melding_bij_minister_vereist
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $weken_afwezig
+              value: 5
+          - output: uiterste_bezwaardatum_leerling
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_gegevens_datum
+              weeks: 6
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel27a1
     references:
       - id: ref1
@@ -4795,6 +4824,47 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002399#Artikel27
+    machine_readable:
+      execution:
+        parameters:
+          - name: besluit_toelating_datum
+            type: date
+            required: false
+            description: Datum van het besluit tot toelating waarbij geen BSN kon worden overlegd (lid 3)
+          - name: ontvangst_melding_datum
+            type: date
+            required: false
+            description: Datum waarop Onze Minister de melding zonder BSN ontving (lid 4)
+          - name: ontvangst_bsn_datum
+            type: date
+            required: false
+            description: Datum waarop het bevoegd gezag het burgerservicenummer van de leerling ontving (lid 6)
+        output:
+          - name: uiterste_melding_geen_bsn_datum
+            type: date
+            description: Uiterste datum voor melding aan Onze Minister bij ontbreken BSN (lid 3, 2 weken na toelatingsbesluit)
+          - name: uiterste_verstrekking_bsn_datum
+            type: date
+            description: Uiterste datum voor Onze Minister om BSN of onderwijsnummer te verstrekken (lid 4, 8 weken na ontvangst melding)
+          - name: uiterste_melding_bsn_wijziging_datum
+            type: date
+            description: Uiterste datum voor melding van BSN-wijziging aan Onze Minister (lid 6, 2 weken na ontvangst BSN)
+        actions:
+          - output: uiterste_melding_geen_bsn_datum
+            value:
+              operation: DATE_ADD
+              date: $besluit_toelating_datum
+              weeks: 2
+          - output: uiterste_verstrekking_bsn_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_melding_datum
+              weeks: 8
+          - output: uiterste_melding_bsn_wijziging_datum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_bsn_datum
+              weeks: 2
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel27b
     references:
       - id: ref1
@@ -5569,6 +5639,49 @@ articles:
       [ref33]: https://wetten.overheid.nl/BWBR0002399#Artikel118k
       [ref34]: https://wetten.overheid.nl/BWBR0005682
       [ref35]: https://wetten.overheid.nl/BWBR0002399#Artikel36
+    machine_readable:
+      execution:
+        parameters:
+          - name: studiepunten_behaald
+            type: number
+            required: false
+            description: Aantal door de ho-student behaalde studiepunten (lid 9)
+          - name: heeft_hogeschool_verklaring
+            type: boolean
+            required: false
+            description: Hogeschool heeft verklaard dat ho-student met 166-179 studiepunten beschikt over gelijkwaardige kennis en vaardigheden (lid 9)
+          - name: klokuren_per_week_onbevoegde_lesgevende_taak
+            type: number
+            required: false
+            description: Gemiddeld aantal klokuren per week voor de lesgevende taak van een persoon bedoeld in lid 15
+        output:
+          - name: ho_student_bevoegd_voor_tijdelijk_dienstverband
+            type: boolean
+            description: Ho-student heeft ten minste 180 studiepunten, of ten minste 166 met verklaring van de hogeschool (lid 9)
+          - name: klokuren_grens_niet_overschreden
+            type: boolean
+            description: Gemiddeld aantal klokuren per week voor lesgevende taak overschrijdt het maximum van 6 klokuren niet (lid 15)
+        actions:
+          - output: ho_student_bevoegd_voor_tijdelijk_dienstverband
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $studiepunten_behaald
+                  value: 180
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $studiepunten_behaald
+                      value: 166
+                    - operation: EQUALS
+                      subject: $heeft_hogeschool_verklaring
+                      value: true
+          - output: klokuren_grens_niet_overschreden
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $klokuren_per_week_onbevoegde_lesgevende_taak
+              value: 6
     url: https://wetten.overheid.nl/BWBR0002399/2022-07-14#Artikel33
     references:
       - id: ref1
@@ -12719,6 +12832,12 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0002399#Artikel10b
       [ref11]: https://wetten.overheid.nl/BWBR0002399#Artikel10d
     machine_readable:
+      untranslatables:
+        - construct: "drie kwart van stichtingsnorm (art. 64) voor VWO, HAVO, HAVO-afdeling"
+          reason: "Cross-law lookup of art. 64 stichtingsnormen combined with fractional multiplication and integer rounding; engine does not support table lookups from other articles or floor() rounding"
+          suggestion: "Supply pre-computed drie-kwart values as open_terms or extend engine with FLOOR and cross-article IF-table lookup"
+          legal_text_excerpt: "voor de overige scholen: drie kwart van het aantal leerlingen dat voor de desbetreffende schoolsoort is genoemd in artikel 64, eerste lid"
+          accepted: true
       execution:
         parameters:
           - name: schoolsoort
