@@ -220,6 +220,32 @@ articles:
       - id: ref1
         bwb_id: BWBR0020495
         artikel: '12'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de voorzitter, plaatsvervangend voorzitter of zittingsvoorzitter
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop de leeftijdsgrens wordt getoetst
+        output:
+          - name: leeftijdsgrens_bereikt
+            type: boolean
+            description: Geeft aan of de betrokkene de leeftijd van zeventig jaren heeft bereikt
+        actions:
+          - output: leeftijd_in_jaren
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: leeftijdsgrens_bereikt
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_in_jaren
+              value: 70
   - number: 3f
     text: |-
       1 Het bestuur stelt een bestuursreglement vast, gehoord de zittingsvoorzitters. Het reglement behoeft de
@@ -727,6 +753,35 @@ articles:
       - id: ref7
         bwb_id: BWBR0037885
         artikel: '4.20'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzending_oproep
+            type: date
+            required: true
+            description: Datum van verzending van het schriftelijk bericht ter betaling van het voorschot (lid 4)
+          - name: datum_verzending_rapport
+            type: date
+            required: true
+            description: Datum van verzending van het rapport van het voorbereidend onderzoek (lid 6, onderdeel b)
+        output:
+          - name: betaaltermijn_einddatum
+            type: date
+            description: Uiterste datum voor betaling van het voorschot (vier weken na datum verzending oproep)
+          - name: intrekkingstermijn_einddatum
+            type: date
+            description: Uiterste datum voor gedeeltelijke terugbetaling bij intrekking geschil (drie weken na verzending rapport)
+        actions:
+          - output: betaaltermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzending_oproep
+              weeks: 4
+          - output: intrekkingstermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzending_rapport
+              weeks: 3
   - number: 7a
     text: |-
       1 Voor het door de huurcommissie doen van een uitspraak als bedoeld in [artikel 4a][ref1], is door de verzoeker een
@@ -818,6 +873,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0005181
         artikel: '19'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_toegelaten_instelling
+            type: boolean
+            required: true
+            description: Of de rechtspersoon een toegelaten instelling is als bedoeld in artikel 19 van de Woningwet
+        output:
+          - name: is_bijdrageplichtig
+            type: boolean
+            description: Of de instelling bijdrageplichtig is voor de verhuurderbijdrage
+        actions:
+          - output: is_bijdrageplichtig
+            value:
+              operation: EQUALS
+              subject: $is_toegelaten_instelling
+              value: true
   - number: 8e
     text: |-
       1 De totale opbrengst van de verhuurderbijdrage komt overeen met het geraamde bedrag op de begroting van
@@ -835,9 +907,58 @@ articles:
       - id: ref1
         bwb_id: BWBR0005181
         artikel: 36a
+    machine_readable:
+      execution:
+        parameters:
+          - name: geraamd_bedrag_begroting
+            type: number
+            required: true
+            description: Het geraamde bedrag op de begroting van Binnenlandse Zaken en Koninkrijksrelaties over het bijdragejaar (in eurocent)
+          - name: aantal_woongelegenheden_instelling
+            type: number
+            required: true
+            description: Het totale aantal woongelegenheden van de instelling op 31 december van het jaar voorafgaande aan het bijdragejaar
+          - name: totaal_woongelegenheden_alle_instellingen
+            type: number
+            required: true
+            description: Het totale aantal woongelegenheden van alle toegelaten instellingen samen op 31 december van het jaar voorafgaande aan het bijdragejaar
+        output:
+          - name: verhuurderbijdrage
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De aan de toegelaten instelling opgelegde verhuurderbijdrage
+        actions:
+          - output: verhuurderbijdrage
+            value:
+              operation: MULTIPLY
+              values:
+                - $geraamd_bedrag_begroting
+                - operation: DIVIDE
+                  values:
+                    - $aantal_woongelegenheden_instelling
+                    - $totaal_woongelegenheden_alle_instellingen
   - number: 8f
     text: De verhuurderbijdrage wordt verschuldigd op uiterlijk 31 december van het bijdragejaar.
     url: https://wetten.overheid.nl/BWBR0014315/2026-06-04#Artikel8f
+    machine_readable:
+      execution:
+        parameters:
+          - name: bijdragejaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarover de verhuurderbijdrage verschuldigd is
+        output:
+          - name: uiterste_betaaldatum
+            type: date
+            description: Uiterste datum voor betaling van de verhuurderbijdrage (31 december van het bijdragejaar)
+        actions:
+          - output: uiterste_betaaldatum
+            value:
+              operation: DATE
+              year: $bijdragejaar
+              month: 12
+              day: 31
   - number: 8g
     text: De huurcommissie kan de verhuurderbijdrage invorderen bij dwangbevel.
     url: https://wetten.overheid.nl/BWBR0014315/2026-06-04#Artikel8g
@@ -905,6 +1026,35 @@ articles:
         artikel: '10'
         hoofdstuk: III
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bedrag_geschil_7260
+            type: number
+            required: true
+            description: Bedrag van het voorwerp van geschil in eurocent (voor verzoeken als bedoeld in artikel 7:260 BW, lid 3)
+          - name: bedrag_geschil_per_maand
+            type: number
+            required: true
+            description: Bedrag van het voorwerp van geschil per maand in eurocent (voor verzoeken als bedoeld in artikel 7:255 e.a. BW, lid 4)
+        output:
+          - name: ontvankelijk_geschil_7260
+            type: boolean
+            description: Of het verzoek als bedoeld in artikel 7:260 BW ontvankelijk is (bedrag >= €36)
+          - name: ontvankelijk_geschil_7255_ea
+            type: boolean
+            description: Of het verzoek als bedoeld in artikel 7:255 e.a. BW ontvankelijk is (bedrag >= €3 per maand)
+        actions:
+          - output: ontvankelijk_geschil_7260
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $bedrag_geschil_7260
+              value: 3600
+          - output: ontvankelijk_geschil_7255_ea
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $bedrag_geschil_per_maand
+              value: 300
   - number: 9a
     text: |-
       1 Indien binnen een wooncomplex als bedoeld in [artikel 1 van de Wet op het overleg huurders verhuurder][ref1]
@@ -1044,6 +1194,115 @@ articles:
       - id: ref7
         bwb_id: BWBR0035303
         artikel: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "gemiddelde van prijsindexcijfers over 12 maanden (lid 3 en lid 4)"
+          reason: "Aggregation over a variable-length collection of monthly index values is not expressible as a single operation"
+          suggestion: "Add AVERAGE or SUM_OVER_PERIOD operation to engine"
+          legal_text_excerpt: "het gemiddelde van de prijsindexcijfers van de maanden december t-2 tot en met november t-1"
+          accepted: false
+        - construct: "MIN van twee indexformules (lid 3)"
+          reason: "The MIN of the CPI formula and the CAO formula requires computing both averages first, which are themselves untranslatable"
+          suggestion: "Resolve after AVERAGE operation is available"
+          legal_text_excerpt: "dan wel, indien dat leidt tot een lager percentage"
+          accepted: false
+      open_terms:
+        - id: maximale_huurverhoging_percentage_laag
+          type: number
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 10, tweede lid, Uitvoeringswet huurprijzen woonruimte
+        - id: maximale_huurverhoging_percentage_midden
+          type: number
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 10, tweede lid, Uitvoeringswet huurprijzen woonruimte
+        - id: maximale_huurverhoging_percentage_hoog
+          type: number
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 10, tweede lid, Uitvoeringswet huurprijzen woonruimte
+      execution:
+        parameters:
+          - name: huishoudinkomen
+            type: number
+            required: true
+            description: Het huishoudinkomen over het peiljaar of inkomenstoetsjaar in eurocent
+          - name: is_meerpersoons_huishouden
+            type: boolean
+            required: true
+            description: Of het huishouden bestaat uit de huurder en een of meer overige bewoners (true) of alleen de huurder (false)
+        output:
+          - name: inkomenscategorie
+            type: string
+            description: Inkomenscategorie op basis van lid 2a (LAAG, MIDDEN of HOOG)
+          - name: maximale_huurverhoging_percentage
+            type: number
+            description: Het van toepassing zijnde maximale huurverhogingspercentage (via open_term, ingevuld door ministeriële regeling)
+        actions:
+          - output: inkomenscategorie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_meerpersoons_huishouden
+                        value: false
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $huishoudinkomen
+                        value: 5950400
+                  then: LAAG
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_meerpersoons_huishouden
+                        value: false
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $huishoudinkomen
+                        value: 7014900
+                  then: MIDDEN
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_meerpersoons_huishouden
+                        value: true
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $huishoudinkomen
+                        value: 6885800
+                  then: LAAG
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_meerpersoons_huishouden
+                        value: true
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $huishoudinkomen
+                        value: 9353100
+                  then: MIDDEN
+              default: HOOG
+          - output: maximale_huurverhoging_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $inkomenscategorie
+                    value: LAAG
+                  then: $maximale_huurverhoging_percentage_laag
+                - when:
+                    operation: EQUALS
+                    subject: $inkomenscategorie
+                    value: MIDDEN
+                  then: $maximale_huurverhoging_percentage_midden
+              default: $maximale_huurverhoging_percentage_hoog
   - number: 10a
     text: |-
       1 In afwijking van [artikel 10, tweede lid][ref1], kan de huurprijs worden verhoogd tot ten hoogste:
@@ -1159,6 +1418,62 @@ articles:
         artikel: '10'
         hoofdstuk: III
         paragraaf: '1'
+    machine_readable:
+      untranslatables:
+        - construct: "datum_eerste_ingebruikname na 1 juli 2024 en datum_start_bouw voor 1 januari 2028 (lid 1b)"
+          reason: "Date comparison between a parameter date and a fixed date is not expressible without a date-comparison operation"
+          suggestion: "Add DATE_COMPARE or allow GREATER_THAN/LESS_THAN with date operands"
+          legal_text_excerpt: "indien die woonruimte na 1 juli 2024 voor het eerst in gebruik wordt genomen als woonruimte en waarvan de bouw of de verbouw ... voor 1 januari 2028 is gestart"
+          accepted: false
+        - construct: "20-jarige termijn eindigt (lid 1b)"
+          reason: "Checking whether 20 years have passed since ingebruikname requires date difference which is not expressible"
+          suggestion: "Add DATE_COMPARE or YEAR_DIFFERENCE operation to engine"
+          legal_text_excerpt: "met dien verstande dat deze vermeerdering vanaf het moment van ingebruikname na twintig jaar eindigt"
+          accepted: false
+      execution:
+        parameters:
+          - name: kwaliteitswaardering
+            type: number
+            required: true
+            description: De puntenwaardering van de kwaliteit van de woonruimte (onbewerkt)
+          - name: is_rijksmonument
+            type: boolean
+            required: true
+            description: Of de woonruimte deel uitmaakt van een monument ingeschreven in het rijksmonumentenregister (artikel 1.1 Erfgoedwet)
+          - name: maximale_huurprijsgrens_middelduur
+            type: number
+            required: false
+            description: De maximale huurprijsgrens voor middeldure huurwoonruimte in eurocent (voor toepassing lid 1b)
+        output:
+          - name: kwaliteitswaardering_na_monument_opslag
+            type: number
+            description: De kwaliteitswaardering vermeerderd met 35% voor rijksmonumenten (lid 1a)
+          - name: maximale_huurprijsgrens_middelduur_na_opslag
+            type: amount
+            description: De maximale huurprijsgrens voor middeldure huurwoonruimte vermeerderd met 10% (lid 1b, mits voldaan aan voorwaarden)
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kwaliteitswaardering_na_monument_opslag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_rijksmonument
+                    value: true
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $kwaliteitswaardering
+                      - 1.35
+              default: $kwaliteitswaardering
+          - output: maximale_huurprijsgrens_middelduur_na_opslag
+            value:
+              operation: MULTIPLY
+              values:
+                - $maximale_huurprijsgrens_middelduur
+                - 1.10
   - number: 10d
     text: |-
       Bij of krachtens de algemene maatregel van bestuur, bedoeld in [artikel 10, eerste lid][ref1], wordt ten minste
@@ -1186,6 +1501,47 @@ articles:
       - id: ref2
         bwb_id: BWBR0037521
         artikel: '1.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: energielabel
+            type: string
+            required: true
+            description: Het op het energieprestatiecertificaat vermelde energielabel (A, B, C, D, E, F of G)
+          - name: is_monument
+            type: boolean
+            required: true
+            description: Of de woonruimte een rijksmonument, provinciaal monument of gemeentelijk monument is (monumenten zijn uitgezonderd van de aftrek)
+        output:
+          - name: energie_label_puntenaftrek
+            type: number
+            description: Puntenaftrek op de puntenwaardering voor energielabel E (-4), F (-9) of G (-15); 0 voor A t/m D of monument
+        actions:
+          - output: energie_label_puntenaftrek
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_monument
+                    value: true
+                  then: 0
+                - when:
+                    operation: EQUALS
+                    subject: $energielabel
+                    value: E
+                  then: -4
+                - when:
+                    operation: EQUALS
+                    subject: $energielabel
+                    value: F
+                  then: -9
+                - when:
+                    operation: EQUALS
+                    subject: $energielabel
+                    value: G
+                  then: -15
+              default: 0
   - number: '11'
     text: |-
       1 In geval van een verzoek als bedoeld in [artikel 7:249 van het Burgerlijk Wetboek][ref1] doet de huurcommissie
@@ -1657,6 +2013,68 @@ articles:
       - id: ref1
         bwb_id: BWBR0005290
         artikel: '258'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overeengekomen_prijs
+            type: number
+            required: true
+            description: De tussen partijen overeengekomen prijs (inclusief huurprijs en servicekosten samen) in eurocent
+          - name: voorgestelde_huurprijs
+            type: number
+            required: true
+            description: De door de verhuurder voorgestelde huurprijs in eurocent
+          - name: voorgesteld_voorschotbedrag
+            type: number
+            required: true
+            description: Het door de verhuurder voorgestelde voorschotbedrag voor kosten voor nutsvoorzieningen en servicekosten in eurocent
+        output:
+          - name: vastgestelde_huurprijs
+            type: amount
+            description: De vastgestelde huurprijs (55% van de overeengekomen prijs)
+            type_spec:
+              unit: eurocent
+          - name: vastgesteld_voorschotbedrag
+            type: amount
+            description: Het vastgestelde voorschotbedrag (25% van de overeengekomen prijs)
+            type_spec:
+              unit: eurocent
+          - name: huurprijs_voorstel_redelijk
+            type: boolean
+            description: Of het voorstel redelijk is (voorgestelde huurprijs >= 55% en voorschotbedrag >= 25% van overeengekomen prijs)
+        actions:
+          - output: vijfenvijftig_procent_prijs
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $overeengekomen_prijs
+                    - 55
+                - 100
+          - output: vijfentwintig_procent_prijs
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $overeengekomen_prijs
+                    - 25
+                - 100
+          - output: huurprijs_voorstel_redelijk
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $voorgestelde_huurprijs
+                  value: $vijfenvijftig_procent_prijs
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $voorgesteld_voorschotbedrag
+                  value: $vijfentwintig_procent_prijs
+          - output: vastgestelde_huurprijs
+            value: $vijfenvijftig_procent_prijs
+          - output: vastgesteld_voorschotbedrag
+            value: $vijfentwintig_procent_prijs
   - number: 17a
     text: |-
       1 Ingeval bij een verzoek als bedoeld in [artikel 7:249][ref1], [7:253][ref2], [7:254][ref3], [7:255][ref4],
@@ -2062,6 +2480,23 @@ articles:
       - id: ref13
         bwb_id: BWBR0009810
         artikel: 8a
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzending_uitspraak
+            type: date
+            required: true
+            description: Datum van verzending van het afschrift van de voorzittersuitspraak (lid 6)
+        output:
+          - name: verzettermijn_einddatum
+            type: date
+            description: Uiterste datum voor het schriftelijk en gemotiveerd in verzet gaan (drie weken na verzending uitspraak)
+        actions:
+          - output: verzettermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzending_uitspraak
+              weeks: 3
   - number: '21'
     text: |-
       1 Het bestuur vormt voor de behandeling van zaken ter zitting bij bestuursreglement als bedoeld in
@@ -2324,6 +2759,38 @@ articles:
       - id: ref3
         bwb_id: BWBR0005290
         artikel: '262'
+    machine_readable:
+      execution:
+        parameters:
+          - name: betaaltermijn_einddatum
+            type: date
+            required: true
+            description: De uiterste datum voor betaling van het voorschot ingevolge artikel 7 lid 4
+          - name: is_artikel_4a_geschil
+            type: boolean
+            required: true
+            description: Of het geschil een geschil is als bedoeld in artikel 4a (Wet op het overleg huurders verhuurder / Woningwet)
+        output:
+          - name: uitspraak_uiterste_datum
+            type: date
+            description: Uiterste datum voor het doen van schriftelijke uitspraak door de huurcommissie
+        actions:
+          - output: uitspraak_uiterste_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_artikel_4a_geschil
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $betaaltermijn_einddatum
+                    weeks: 8
+              default:
+                operation: DATE_ADD
+                date: $betaaltermijn_einddatum
+                months: 4
   - number: '38'
     text: |-
       De voorzitter, de plaatsvervangend voorzitter, de zittingsvoorzitters, de zittingsleden en de ambtenaren van de
