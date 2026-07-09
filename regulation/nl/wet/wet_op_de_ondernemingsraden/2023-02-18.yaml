@@ -94,6 +94,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: 5a
         hoofdstuk: II
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+        output:
+          - name: verplicht_ondernemingsraad_instellen
+            type: boolean
+            description: Of de ondernemer verplicht is een ondernemingsraad in te stellen (lid 1)
+        actions:
+          - output: verplicht_ondernemingsraad_instellen
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_werkzame_personen
+              value: 50
   - number: '3'
     text: |-
       1 De ondernemer die twee of meer ondernemingen in stand houdt waarin tezamen in de regel ten minste 50
@@ -247,6 +264,113 @@ articles:
       6 Tijdens een zittingsperiode van de ondernemingsraad kan geen wijziging worden gebracht in het aantal leden van de
       raad op grond van vermeerdering of vermindering van het aantal in de onderneming werkzame personen.
     url: https://wetten.overheid.nl/BWBR0002747/2023-02-18#Artikel6
+    machine_readable:
+      untranslatables:
+        - construct: "en zo vervolgens bij elk volgend duizendtal personen 2 leden meer, tot ten hoogste 25 leden"
+          reason: "General formula for employee counts above 2000 cannot be expressed as a finite IF-table within the 8-case limit"
+          suggestion: "Add DIV/MOD/CLAMP operations to the engine to support this formula"
+          legal_text_excerpt: "en zo vervolgens bij elk volgend duizendtal personen 2 leden meer, tot ten hoogste 25 leden"
+          accepted: false
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+          - name: diensttijd_maanden
+            type: number
+            required: true
+            description: Aantal maanden dat de persoon in de onderneming werkzaam is geweest
+        output:
+          - name: aantal_or_leden
+            type: number
+            description: Vereist aantal leden van de ondernemingsraad (lid 1; alleen geldig voor <2000 personen)
+          - name: kiesgerechtigd
+            type: boolean
+            description: Of de persoon kiesgerechtigd is voor de OR-verkiezing (lid 2)
+          - name: verkiesbaar
+            type: boolean
+            description: Of de persoon verkiesbaar is als lid van de ondernemingsraad (lid 3)
+        actions:
+          - output: aantal_or_leden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: LESS_THAN
+                    subject: $aantal_werkzame_personen
+                    value: 50
+                  then: 3
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 50
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 100
+                  then: 5
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 100
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 200
+                  then: 7
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 200
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 400
+                  then: 9
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 400
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 600
+                  then: 11
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 600
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 1000
+                  then: 13
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_werkzame_personen
+                        value: 1000
+                      - operation: LESS_THAN
+                        subject: $aantal_werkzame_personen
+                        value: 2000
+                  then: 15
+          - output: kiesgerechtigd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $diensttijd_maanden
+              value: 3
+          - output: verkiesbaar
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $diensttijd_maanden
+              value: 3
   - number: '7'
     text: |-
       De ondernemingsraad kiest uit zijn midden een voorzitter en een of meer plaatsvervangende voorzitters. De
@@ -490,6 +614,74 @@ articles:
         bwb_id: BWBR0002747
         artikel: '15'
         hoofdstuk: III
+    machine_readable:
+      definitions:
+        MINIMUM_UREN_PER_JAAR:
+          value: 60
+          description: Minimum aantal uren per jaar voor beraad en overleg (lid 3)
+        MINIMUM_DAGEN_COMMISSIE_NIET_OR:
+          value: 3
+          description: Minimum scholingsdagen per jaar voor commissieleden die geen OR-lid zijn (lid 3a)
+        MINIMUM_DAGEN_OR_NIET_COMMISSIE:
+          value: 5
+          description: Minimum scholingsdagen per jaar voor OR-leden die geen commissielid zijn (lid 3b)
+        MINIMUM_DAGEN_OR_EN_COMMISSIE:
+          value: 8
+          description: Minimum scholingsdagen per jaar voor OR-leden die tevens commissielid zijn (lid 3c)
+      execution:
+        parameters:
+          - name: is_lid_ondernemingsraad
+            type: boolean
+            required: true
+            description: Of de persoon lid is van de ondernemingsraad
+          - name: is_lid_vaste_commissie_of_onderdeelcommissie
+            type: boolean
+            required: true
+            description: Of de persoon lid is van een vaste commissie of onderdeelcommissie (artikel 15, lid 2 of 3)
+        output:
+          - name: minimum_uren_beraad_per_jaar
+            type: number
+            description: Minimum aantal uren per jaar voor beraad en overleg (lid 3)
+          - name: minimum_scholingsdagen_per_jaar
+            type: number
+            description: Minimum aantal scholingsdagen per jaar (lid 3a/b/c)
+        actions:
+          - output: minimum_uren_beraad_per_jaar
+            value: $MINIMUM_UREN_PER_JAAR
+          - output: minimum_scholingsdagen_per_jaar
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_lid_ondernemingsraad
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_lid_vaste_commissie_of_onderdeelcommissie
+                        value: true
+                  then: $MINIMUM_DAGEN_OR_EN_COMMISSIE
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_lid_ondernemingsraad
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_lid_vaste_commissie_of_onderdeelcommissie
+                        value: false
+                  then: $MINIMUM_DAGEN_OR_NIET_COMMISSIE
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_lid_ondernemingsraad
+                        value: false
+                      - operation: EQUALS
+                        subject: $is_lid_vaste_commissie_of_onderdeelcommissie
+                        value: true
+                  then: $MINIMUM_DAGEN_COMMISSIE_NIET_OR
   - number: '20'
     text: |-
       1 De leden van de ondernemingsraad en de leden van de commissies van die raad, alsmede de overeenkomstig
@@ -921,6 +1113,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: '24'
         hoofdstuk: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum waarop de ondernemingsraad van het besluit in kennis is gesteld (lid 5)
+        output:
+          - name: opschortingstermijn_einddatum
+            type: date
+            description: Datum tot wanneer de ondernemer de uitvoering van zijn besluit moet opschorten (lid 6)
+        actions:
+          - output: opschortingstermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              months: 1
   - number: '26'
     text: |-
       1 De ondernemingsraad kan bij de ondernemingskamer van het gerechtshof Amsterdam beroep instellen tegen een besluit
@@ -972,6 +1181,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: '25'
         hoofdstuk: IVA
+    machine_readable:
+      execution:
+        parameters:
+          - name: kennisgeving_datum
+            type: date
+            required: true
+            description: Datum waarop de OR van het besluit (artikel 25 lid 5) in kennis is gesteld
+        output:
+          - name: beroepstermijn_einddatum
+            type: date
+            description: Uiterste datum voor indiening van het beroepschrift bij de ondernemingskamer (lid 2)
+        actions:
+          - output: beroepstermijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $kennisgeving_datum
+              months: 1
   - number: '27'
     text: |-
       1 De ondernemer behoeft de instemming van de ondernemingsraad voor elk door hem voorgenomen besluit tot
@@ -1068,6 +1294,29 @@ articles:
       - id: ref4
         bwb_id: BWBR0020809
         artikel: '23'
+    machine_readable:
+      untranslatables:
+        - construct: "bij gebreke van mededeling — de OR is gebleken dat de ondernemer uitvoering geeft aan zijn besluit"
+          reason: "The alternative trigger for the 1-month nullity period requires a judgment about when the OR became aware of execution, which cannot be computed automatically"
+          suggestion: "Model as an additional optional parameter 'gebleken_uitvoering_datum' that overrides mededeling_datum when the latter is absent"
+          legal_text_excerpt: "hetzij - bij gebreke van deze mededeling - de ondernemingsraad is gebleken dat de ondernemer uitvoering of toepassing geeft aan zijn besluit"
+          accepted: false
+      execution:
+        parameters:
+          - name: mededeling_datum
+            type: date
+            required: true
+            description: Datum waarop de ondernemer zijn besluit aan de OR heeft meegedeeld (lid 2, laatste volzin); primaire trigger voor de nietigheidsroepingstermijn
+        output:
+          - name: nietigheidsroeping_termijn_einddatum
+            type: date
+            description: Uiterste datum waarop de OR een beroep op nietigheid kan doen (lid 5, eerste trigger)
+        actions:
+          - output: nietigheidsroeping_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $mededeling_datum
+              months: 1
   - number: '28'
     text: |-
       1 De ondernemingsraad bevordert zoveel als in zijn vermogen ligt de naleving van de voor de onderneming geldende
@@ -1339,6 +1588,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: '24'
         hoofdstuk: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+        output:
+          - name: artikel_31d_van_toepassing
+            type: boolean
+            description: Of artikel 31d van toepassing is op de onderneming (lid 6)
+        actions:
+          - output: artikel_31d_van_toepassing
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_werkzame_personen
+              value: 100
   - number: 31e
     text: |-
       De [artikelen 23, tweede lid, tweede zin][ref1], en [31d][ref2] zijn niet van toepassing op:
@@ -1636,6 +1902,52 @@ articles:
         bwb_id: BWBR0002747
         artikel: 5a
         hoofdstuk: II
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+          - name: heeft_ondernemingsraad
+            type: boolean
+            required: true
+            description: Of voor de onderneming een ondernemingsraad is ingesteld
+          - name: heeft_personeelsvertegenwoordiging
+            type: boolean
+            required: true
+            description: Of voor de onderneming een personeelsvertegenwoordiging is ingesteld
+          - name: diensttijd_maanden
+            type: number
+            required: true
+            description: Aantal maanden dat de persoon in de onderneming werkzaam is
+        output:
+          - name: vergaderplicht_35b_van_toepassing
+            type: boolean
+            description: Of de ondernemer onder de vergaderplicht van artikel 35b valt (lid 1)
+          - name: persoon_valt_onder_verplichtingen_35b
+            type: boolean
+            description: Of de verplichtingen van artikel 35b op deze persoon van toepassing zijn (lid 8)
+        actions:
+          - output: vergaderplicht_35b_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $aantal_werkzame_personen
+                  value: 10
+                - operation: LESS_THAN
+                  subject: $aantal_werkzame_personen
+                  value: 50
+                - operation: NOT
+                  value: $heeft_ondernemingsraad
+                - operation: NOT
+                  value: $heeft_personeelsvertegenwoordiging
+          - output: persoon_valt_onder_verplichtingen_35b
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $diensttijd_maanden
+              value: 6
   - number: 35c
     text: |-
       1 De ondernemer die een onderneming in stand houdt waarin in de regel ten minste 10 personen maar minder dan
