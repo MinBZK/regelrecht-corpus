@@ -682,7 +682,7 @@ articles:
           - name: aantal_werknemers
             type: number
             required: true
-            description: Aantal werknemers dat de werkgever in de regel in dienst heeft
+            description: Aantal werknemers dat de werkgever in de regel in dienst heeft (lid 10)
           - name: werkgever_is_natuurlijk_persoon
             type: boolean
             required: true
@@ -691,21 +691,10 @@ articles:
             type: boolean
             required: true
             description: Geeft aan of de bijstandsverlener de directeur is van de werkgever-rechtspersoon (lid 10)
-          - name: totale_arbeidsuren_per_week
-            type: number
-            required: true
-            description: Totale arbeidsduur per week voor alle werknemers gezamenlijk (lid 12a)
-          - name: gebruikt_goedgekeurd_rie_model
-            type: boolean
-            required: true
-            description: Gebruik van goedgekeurd RI&E-model of -instrument als bedoeld in lid 12b
         output:
           - name: mag_zelfstandig_bijstand_verlenen
             type: boolean
             description: Werkgever of directeur mag zelf de bijstandstaken uitvoeren (lid 10)
-          - name: vrijgesteld_van_artikel14_lid1a
-            type: boolean
-            description: De verplichting van artikel 14, eerste lid, onderdeel a, is niet van toepassing (lid 12)
         actions:
           - output: mag_zelfstandig_bijstand_verlenen
             value:
@@ -721,21 +710,6 @@ articles:
                       value: true
                     - operation: EQUALS
                       subject: $is_directeur
-                      value: true
-          - output: vrijgesteld_van_artikel14_lid1a
-            value:
-              operation: OR
-              conditions:
-                - operation: LESS_THAN_OR_EQUAL
-                  subject: $totale_arbeidsuren_per_week
-                  value: 40
-                - operation: AND
-                  conditions:
-                    - operation: LESS_THAN_OR_EQUAL
-                      subject: $aantal_werknemers
-                      value: 25
-                    - operation: EQUALS
-                      subject: $gebruikt_goedgekeurd_rie_model
                       value: true
     references:
       - id: ref1
@@ -910,6 +884,99 @@ articles:
       [ref17]: https://wetten.overheid.nl/BWBR0005290#Artikel464
       [ref18]: https://wetten.overheid.nl/BWBR0010346#Artikel13
     url: https://wetten.overheid.nl/BWBR0010346/2026-07-01#Artikel14
+    machine_readable:
+      execution:
+        parameters:
+          - name: inwerkingtreding_cao
+            type: date
+            required: true
+            description: >-
+              Datum van inwerkingtreding van de collectieve arbeidsovereenkomst
+              of regeling als bedoeld in lid 9 en 11, eerste zin
+          - name: peildatum
+            type: date
+            required: true
+            description: Datum waarop wordt getoetst of de cao/regeling nog geldig is voor dit artikel
+          - name: heeft_gewijzigde_cao
+            type: boolean
+            required: true
+            description: >-
+              Geeft aan of de cao/regeling binnen 5 jaar na inwerkingtreding is gewijzigd
+              als bedoeld in lid 11, tweede zin
+          - name: inwerkingtreding_gewijzigde_cao
+            type: date
+            description: >-
+              Datum van inwerkingtreding van de gewijzigde cao/regeling
+              (lid 11, tweede zin); alleen vereist als heeft_gewijzigde_cao = true
+          - name: totale_arbeidsuren_per_week
+            type: number
+            required: true
+            description: >-
+              Totale arbeidsduur per week voor alle werknemers gezamenlijk
+              (lid 12, onderdeel a)
+          - name: aantal_werknemers
+            type: number
+            required: true
+            description: >-
+              Aantal werknemers dat de werkgever in de regel in dienst heeft
+              (lid 12, onderdeel b)
+          - name: gebruikt_goedgekeurd_rie_model
+            type: boolean
+            required: true
+            description: >-
+              Gebruik van een goedgekeurd RI&E-model of -instrument als bedoeld in
+              lid 12, onderdeel b, onder 1° of 2°
+        output:
+          - name: cao_verval_datum
+            type: date
+            description: >-
+              Datum waarop de cao/regeling haar geldigheid verliest voor toepassing
+              van dit artikel (lid 11): 5 jaar na inwerkingtreding, of eerder bij wijziging
+          - name: cao_is_geldig_voor_artikel14
+            type: boolean
+            description: >-
+              Geeft aan of de cao/regeling op de peildatum nog geldig is
+              voor de toepassing van dit artikel (lid 11)
+          - name: vrijgesteld_van_artikel14_lid1a
+            type: boolean
+            description: >-
+              De verplichting van het eerste lid, onderdeel a, is niet van toepassing
+              op de werkgever (lid 12): werknemers <= 40 uur/week of <= 25 werknemers met
+              goedgekeurd RI&E-model
+        actions:
+          - output: cao_verval_datum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $heeft_gewijzigde_cao
+                    value: true
+                  then: $inwerkingtreding_gewijzigde_cao
+              default:
+                operation: DATE_ADD
+                date: $inwerkingtreding_cao
+                years: 5
+          - output: cao_is_geldig_voor_artikel14
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $peildatum
+              value: $cao_verval_datum
+          - output: vrijgesteld_van_artikel14_lid1a
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $totale_arbeidsuren_per_week
+                  value: 40
+                - operation: AND
+                  conditions:
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $aantal_werknemers
+                      value: 25
+                    - operation: EQUALS
+                      subject: $gebruikt_goedgekeurd_rie_model
+                      value: true
     references:
       - id: ref1
         bwb_id: BWBR0010346
@@ -1963,6 +2030,62 @@ articles:
       [ref13]: https://wetten.overheid.nl/BWBR0010346#Artikel28b
       [ref14]: https://wetten.overheid.nl/BWBR0005537#Artikel881
     url: https://wetten.overheid.nl/BWBR0010346/2026-07-01#Artikel29b
+    machine_readable:
+      untranslatables:
+        - construct: "tien werkdagen (lid 5)"
+          reason: >-
+            Werkdagen (business days) is not an available operation. The engine
+            supports DATE_ADD with calendar days/weeks/months/years but has no
+            concept of working days that excludes weekends and public holidays.
+          suggestion: "Add a BUSINESS_DAY_ADD operation to the engine to support werkdagen calculations."
+          legal_text_excerpt: >-
+            De openbaarmaking geschiedt niet eerder dan nadat tien werkdagen zijn
+            verstreken na de dag waarop het besluit aan belanghebbende bekend is gemaakt
+          accepted: false
+      execution:
+        parameters:
+          - name: voorlopige_voorziening_aangevraagd
+            type: boolean
+            required: true
+            description: >-
+              Geeft aan of een verzoek om voorlopige voorziening als bedoeld in
+              artikel 8:81 Awb is ingediend (lid 7)
+          - name: uitspraak_voorzieningenrechter_gedaan
+            type: boolean
+            required: true
+            description: >-
+              Geeft aan of de voorzieningenrechter een uitspraak heeft gedaan
+              op het verzoek om voorlopige voorziening (lid 7)
+          - name: directe_openbaarmaking_publiekbelang
+            type: boolean
+            required: true
+            description: >-
+              Geeft aan of directe openbaarmaking noodzakelijk is in het belang
+              van bescherming van het publiek (lid 7, tenzij-clausule)
+        output:
+          - name: openbaarmaking_opgeschort
+            type: boolean
+            description: >-
+              Geeft aan of de openbaarmaking is opgeschort vanwege een aangevraagde
+              voorlopige voorziening waarvoor nog geen uitspraak is gedaan (lid 7)
+        actions:
+          - output: openbaarmaking_opgeschort
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $voorlopige_voorziening_aangevraagd
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $uitspraak_voorzieningenrechter_gedaan
+                    value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $directe_openbaarmaking_publiekbelang
+                    value: true
     references:
       - id: ref1
         bwb_id: BWBR0010346
