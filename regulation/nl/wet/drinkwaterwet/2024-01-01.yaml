@@ -820,6 +820,22 @@ articles:
       2 Bij of krachtens algemene maatregel van bestuur worden criteria vastgelegd waaraan door Onze Minister een verzoek
       tot fusie wordt getoetst.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel18
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_toestemming_minister
+            type: boolean
+            required: true
+            description: "Is door Onze Minister voorafgaande toestemming verleend voor de fusie (lid 1)?"
+        output:
+          - name: fusie_verboden
+            type: boolean
+            description: "Is de fusie verboden op grond van artikel 18, lid 1 (fusie zonder voorafgaande toestemming van de Minister is niet toegestaan)?"
+        actions:
+          - output: fusie_verboden
+            value:
+              operation: NOT
+              value: $heeft_toestemming_minister
   - number: '19'
     text: |-
       1 Indien een drinkwaterbedrijf de rechtsvorm van een naamloze vennootschap
@@ -1000,6 +1016,30 @@ articles:
       behandeling kunnen worden vastgesteld. Het vierde tot en met zesde lid, onderdeel b, zijn van overeenkomstige
       toepassing.
     url: https://wetten.overheid.nl/BWBR0026338/2024-01-01#Artikel22
+    machine_readable:
+      execution:
+        parameters:
+          - name: oppervlaktewater_voldoet_aan_microbiologische_chemische_eisen
+            type: boolean
+            required: true
+            description: "Voldoet het te gebruiken oppervlaktewater aan de bij of krachtens AMvB gestelde eisen voor microbiologische of chemische parameters als bedoeld in lid 2, onderdeel 1?"
+          - name: water_behandeld_op_voorgeschreven_wijze
+            type: boolean
+            required: true
+            description: "Is het water tevoren behandeld op de bij of krachtens AMvB vastgestelde wijze, zoals bedoeld in lid 3, tweede volzin (uitzondering op het verbod)?"
+        output:
+          - name: bereiding_verboden
+            type: boolean
+            description: "Is de bereiding van drinkwater uit dit oppervlaktewater verboden op grond van artikel 22, lid 3? (verboden tenzij water voldoet aan eisen of op voorgeschreven wijze is behandeld)"
+        actions:
+          - output: bereiding_verboden
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $oppervlaktewater_voldoet_aan_microbiologische_chemische_eisen
+                - operation: NOT
+                  value: $water_behandeld_op_voorgeschreven_wijze
   - number: '23'
     text: |-
       Onze Minister kan, indien naar zijn oordeel ter voorkoming of beperking van ernstig gevaar voor de volksgezondheid
