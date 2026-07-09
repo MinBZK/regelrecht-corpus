@@ -633,6 +633,49 @@ articles:
       periode, zodat de depositie op termijn wordt verminderd tot een niveau dat nodig is voor een gunstige staat van
       instandhouding van de betrokken natuurlijke habitats en soorten op landelijk niveau.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel2.15a
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: "Het jaar waarvoor de omgevingswaarde wordt getoetst (2025, 2030 of 2035)"
+          - name: werkelijk_percentage
+            type: number
+            required: false
+            description: "Het werkelijke percentage van het areaal van stikstofgevoelige habitats waar de depositie de kritische depositiewaarde niet overschrijdt"
+        output:
+          - name: minimum_percentage
+            type: number
+            description: "Het op grond van lid 1 vereiste minimumpercentage voor het opgegeven jaar"
+          - name: omgevingswaarde_gehaald
+            type: boolean
+            description: "Of het werkelijke percentage voldoet aan de omgevingswaarde voor het opgegeven jaar"
+        actions:
+          - output: minimum_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2025
+                  then: 40
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2030
+                  then: 50
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2035
+                  then: 74
+          - output: omgevingswaarde_gehaald
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $werkelijk_percentage
+              value: $minimum_percentage
   - number: '2.16'
     text: |-
       1 Bij het gemeentebestuur berusten, naast de elders in deze wet en op grond van andere wetten aan dat bestuur
@@ -7521,6 +7564,23 @@ articles:
       respectievelijk de Staat in beginsel bereid is het goed tegen nader overeen te komen voorwaarden te kopen of op
       grond van een andere titel te verkrijgen.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel9.13
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitnodiging_ontvangst_datum
+            type: date
+            required: true
+            description: "Datum waarop het bevoegd gezag de uitnodiging van de vervreemder heeft ontvangen"
+        output:
+          - name: beslistermijn_uiterste_datum
+            type: date
+            description: "Uiterste datum waarop het bevoegd gezag moet beslissen (6 weken na ontvangst van de uitnodiging)"
+        actions:
+          - output: beslistermijn_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $uitnodiging_ontvangst_datum
+              weeks: 6
   - number: '9.14'
     text: |-
       1 De vervreemder mag, nadat hij de uitnodiging heeft gedaan, overgaan tot vervreemding van het in de uitnodiging
@@ -7584,6 +7644,23 @@ articles:
       2 Bij het verzoek van het bevoegd gezag aan de rechtbank wordt een afschrift van het verzoek van de vervreemder
       gevoegd.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel9.16
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: "Datum van het verzoek van de vervreemder aan het bevoegd gezag om de rechtbank te verzoeken een oordeel over de prijs te geven"
+        output:
+          - name: verzoek_rechtbank_deadline
+            type: date
+            description: "Uiterste datum waarop het bevoegd gezag de rechtbank moet verzoeken (4 weken na het verzoek van de vervreemder)"
+        actions:
+          - output: verzoek_rechtbank_deadline
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 4
   - number: '9.17'
     text: |-
       1 De vervreemder mag tot vervreemding aan derden overgaan gedurende een periode van drie jaar vanaf het moment dat:
@@ -9745,6 +9822,33 @@ articles:
 
       d. die bestemd is voor andere maatregelen en voorzieningen van openbaar nut.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel12.29
+    machine_readable:
+      untranslatables:
+        - construct: "aggregatie van oppervlakten per categorie (a tot en met d)"
+          reason: "De som van oppervlakten van meerdere percelen per categorie vereist aggregatie over een variabele verzameling; de engine heeft geen SUM/AGGREGATE-operatie"
+          legal_text_excerpt: "de oppervlakte van alle in het herverkavelingsblok opgenomen percelen: a. die in het belang van de herverkaveling nodig is voor het tot stand brengen of verbeteren van openbare wegen en waterstaatswerken"
+          suggestion: "Voeg SUM-operatie toe voor aggregatie over collecties"
+          accepted: false
+      execution:
+        parameters:
+          - name: totale_oppervlakte
+            type: number
+            required: true
+            description: "Totale oppervlakte van alle bij de herverkaveling betrokken percelen in het herverkavelingsblok (in m²)"
+        output:
+          - name: maximum_kortingsoppervlakte
+            type: number
+            description: "De maximaal toegestane korting op de totale oppervlakte voor openbare doeleinden (5% van de totale oppervlakte, in m²)"
+        actions:
+          - output: maximum_kortingsoppervlakte
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $totale_oppervlakte
+                    - 5
+                - 100
   - number: '12.30'
     text: |-
       1 Bij de toewijzing van rechten op kavels heeft elke eigenaar aanspraak op een oppervlakte in kavels die
@@ -9767,6 +9871,64 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0037885#Artikel12.29
       [ref2]: https://wetten.overheid.nl/BWBR0037885#Artikel12.29
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel12.30
+    machine_readable:
+      untranslatables:
+        - construct: "toewijzing aan iedere eigenaar afzonderlijk in het herverkavelingsblok (lid 1)"
+          reason: "De toewijzing voor elke individuele eigenaar vereist iteratie over een verzameling; de engine heeft geen FOREACH/MAP-operatie"
+          legal_text_excerpt: "heeft elke eigenaar aanspraak op een oppervlakte in kavels die gelijk is aan de oppervlakte van de door hem ingebrachte percelen"
+          suggestion: "Voeg iteratie over verzamelingen toe aan de engine"
+          accepted: false
+      execution:
+        parameters:
+          - name: ingebrachte_oppervlakte_eigenaar
+            type: number
+            required: true
+            description: "Oppervlakte van de door de eigenaar ingebrachte percelen in het herverkavelingsblok (in m²)"
+          - name: kortingspercentage
+            type: number
+            required: true
+            description: "Het percentage waarmee de totale oppervlakte op grond van artikel 12.29 is verminderd (0-5)"
+        output:
+          - name: aanspraak_oppervlakte
+            type: number
+            description: "Oppervlakte in kavels waarop de eigenaar aanspraak heeft na toepassing van de korting op grond van lid 1 (in m²)"
+          - name: maximale_lid3_afwijking
+            type: number
+            description: "Maximale toegestane afwijking van de aanspraak zonder overeenstemming met de eigenaar op grond van lid 3 (5% van aanspraak_oppervlakte, in m²)"
+          - name: maximale_totale_korting
+            type: number
+            description: "Maximale totale korting: toewijzing mag niet meer dan 5% kleiner zijn dan de ingebrachte oppervlakte (lid 3 tweede volzin, in m²)"
+        actions:
+          - output: aanspraak_oppervlakte
+            value:
+              operation: SUBTRACT
+              values:
+                - $ingebrachte_oppervlakte_eigenaar
+                - operation: DIVIDE
+                  values:
+                    - operation: MULTIPLY
+                      values:
+                        - $ingebrachte_oppervlakte_eigenaar
+                        - $kortingspercentage
+                    - 100
+          - output: maximale_lid3_afwijking
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $aanspraak_oppervlakte
+                    - 5
+                - 100
+          - output: maximale_totale_korting
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $ingebrachte_oppervlakte_eigenaar
+                    - 5
+                - 100
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -11505,6 +11667,75 @@ articles:
       [ref4]: https://wetten.overheid.nl/BWBR0037885#Artikel13.11
       [ref5]: https://wetten.overheid.nl/BWBR0037885#Artikel13.15
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel13.20
+    machine_readable:
+      execution:
+        parameters:
+          - name: beschikking_geldsom
+            type: number
+            required: true
+            description: "De bij beschikking vastgestelde verschuldigde geldsom (in eurocent)"
+          - name: opnieuw_berekende_geldsom
+            type: number
+            required: true
+            description: "De op grond van de eindafrekening opnieuw berekende geldsom (in eurocent)"
+          - name: eindafrekening_datum
+            type: date
+            required: true
+            description: "Datum van de eindafrekening"
+        output:
+          - name: vijf_procent_drempel
+            type: amount
+            description: "De drempelwaarde van vijf procent van de beschikking geldsom (in eurocent)"
+            type_spec:
+              unit: eurocent
+          - name: verschil_geldsom
+            type: amount
+            description: "Het verschil tussen de beschikking geldsom en de opnieuw berekende geldsom (in eurocent)"
+            type_spec:
+              unit: eurocent
+          - name: recht_op_terugbetaling
+            type: boolean
+            description: "Of de opnieuw berekende geldsom meer dan vijf procent lager is dan de beschikking geldsom (lid 2)"
+          - name: terugbetaling_bedrag
+            type: amount
+            description: "Het te terug te betalen bedrag: het verschil voor zover het groter is dan vijf procent (in eurocent, lid 2)"
+            type_spec:
+              unit: eurocent
+          - name: terugbetaling_uiterste_datum
+            type: date
+            description: "Uiterste datum voor terugbetaling (4 weken na de eindafrekening, lid 2)"
+        actions:
+          - output: vijf_procent_drempel
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $beschikking_geldsom
+                    - 5
+                - 100
+          - output: verschil_geldsom
+            value:
+              operation: SUBTRACT
+              values:
+                - $beschikking_geldsom
+                - $opnieuw_berekende_geldsom
+          - output: recht_op_terugbetaling
+            value:
+              operation: GREATER_THAN
+              subject: $verschil_geldsom
+              value: $vijf_procent_drempel
+          - output: terugbetaling_bedrag
+            value:
+              operation: SUBTRACT
+              values:
+                - $verschil_geldsom
+                - $vijf_procent_drempel
+          - output: terugbetaling_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $eindafrekening_datum
+              weeks: 4
     references:
       - id: ref1
         bwb_id: BWBR0037885
