@@ -207,6 +207,23 @@ articles:
       5 De zittingsleden genieten een vergoeding voor reis- en verblijfkosten en verdere vergoedingen volgens bij
       ministeriële regeling te geven regels.
     url: https://wetten.overheid.nl/BWBR0014315/2026-06-04#Artikel3d
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_voordracht
+            type: date
+            required: true
+            description: Datum waarop de voordracht voor benoeming van een zittingslid is gedaan (lid 4)
+        output:
+          - name: benoemingsbeslissing_uiterste_datum
+            type: date
+            description: Uiterste datum voor de Ministersbeslissing over de benoeming (zes weken na de voordracht, lid 4)
+        actions:
+          - output: benoemingsbeslissing_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_voordracht
+              weeks: 6
   - number: 3e
     text: |-
       Onverminderd [artikel 12, tweede lid, van de Kaderwet zelfstandige bestuursorganen][ref1], worden de voorzitter,
@@ -2124,6 +2141,43 @@ articles:
         artikel: '17'
         hoofdstuk: III
         paragraaf: '7'
+    machine_readable:
+      execution:
+        parameters:
+          - name: overeengekomen_prijs
+            type: number
+            required: true
+            description: De tussen partijen overeengekomen prijs (inclusief huurprijs en servicekosten samen) in eurocent
+        output:
+          - name: ambtshalve_huurprijs
+            type: amount
+            description: De ambtshalve vastgestelde huurprijs (55% van de overeengekomen prijs)
+            type_spec:
+              unit: eurocent
+          - name: ambtshalve_voorschotbedrag
+            type: amount
+            description: Het ambtshalve vastgestelde voorschotbedrag voor nutsvoorzieningen en servicekosten (25% van de overeengekomen prijs)
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: ambtshalve_huurprijs
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $overeengekomen_prijs
+                    - 55
+                - 100
+          - output: ambtshalve_voorschotbedrag
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $overeengekomen_prijs
+                    - 25
+                - 100
   - number: '18'
     text: |-
       1 In geval van een verzoek als bedoeld in [artikel 7:260 van het Burgerlijk Wetboek][ref1] doet de huurcommissie
@@ -2884,6 +2938,23 @@ articles:
         artikel: 4a
         hoofdstuk: II
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzending_afschrift
+            type: date
+            required: true
+            description: Datum van verzending van het afschrift van de uitspraak aan partijen
+        output:
+          - name: rechterlijke_termijn_einddatum
+            type: date
+            description: Uiterste datum waarop een partij een beslissing van de rechter kan vorderen (acht weken na verzending afschrift uitspraak)
+        actions:
+          - output: rechterlijke_termijn_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzending_afschrift
+              weeks: 8
   - number: '46'
     text: |-
       Een voordracht voor een krachtens [artikel 3, tweede lid][ref1], [7, eerste lid][ref2], [7a, eerste lid][ref3],
@@ -2930,6 +3001,23 @@ articles:
         artikel: '12'
         hoofdstuk: III
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_overlegging_staten_generaal
+            type: date
+            required: true
+            description: Datum waarop het ontwerp van de AMvB aan beide kamers der Staten-Generaal is overgelegd
+        output:
+          - name: vroegste_voordracht_datum
+            type: date
+            description: Vroegste datum waarop de voordracht voor de AMvB gedaan mag worden (vier weken na overlegging aan Staten-Generaal)
+        actions:
+          - output: vroegste_voordracht_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_overlegging_staten_generaal
+              weeks: 4
   - number: '47'
     text: |-
       Bij ministeriële regeling kunnen:
