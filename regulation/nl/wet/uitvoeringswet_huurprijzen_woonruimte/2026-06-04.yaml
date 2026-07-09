@@ -339,6 +339,35 @@ articles:
         artikel: 3d
         hoofdstuk: II
         paragraaf: '1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_start_aanbevelingsperiode
+            type: date
+            required: true
+            description: Startdatum van de negen weken durende aanbevelingsperiode waarbij aangewezen organisaties een aanbeveling kunnen doen (lid 3)
+          - name: datum_voordracht_onafhankelijk
+            type: date
+            required: true
+            description: Datum van de voordracht door het bestuur voor de benoeming van leden afkomstig uit onafhankelijke organisaties of personen (lid 4)
+        output:
+          - name: aanbevelingsperiode_einddatum
+            type: date
+            description: Uiterste datum van de negen weken durende aanbevelingsperiode voor aangewezen organisaties om een aanbeveling te doen (lid 3)
+          - name: beslissing_onafhankelijk_uiterste_datum
+            type: date
+            description: Uiterste datum voor de ministersbeslissing over de benoeming van leden afkomstig uit onafhankelijke organisaties (zes weken na de voordracht, lid 4)
+        actions:
+          - output: aanbevelingsperiode_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_start_aanbevelingsperiode
+              weeks: 9
+          - output: beslissing_onafhankelijk_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_voordracht_onafhankelijk
+              weeks: 6
   - number: 3h
     text: Onze Minister voorziet in de administratieve ondersteuning van de huurcommissie.
     url: https://wetten.overheid.nl/BWBR0014315/2026-06-04#Artikel3h
@@ -645,6 +674,23 @@ articles:
       - id: ref4
         bwb_id: BWBR0008659
         artikel: '5'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoek_dienst_toeslagen
+            type: date
+            required: true
+            description: Datum van het verzoek van de Dienst Toeslagen als bedoeld in artikel 5, tweede lid, van de Wet op de huurtoeslag (lid 1b)
+        output:
+          - name: verklaring_uiterste_datum
+            type: date
+            description: Uiterste datum voor het verstrekken van de verklaring omtrent de redelijkheid van de huurprijs (zes weken na het verzoek van Dienst Toeslagen, lid 1b)
+        actions:
+          - output: verklaring_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoek_dienst_toeslagen
+              weeks: 6
   - number: '7'
     text: |-
       1 Voor het door de huurcommissie doen van een uitspraak als bedoeld in
