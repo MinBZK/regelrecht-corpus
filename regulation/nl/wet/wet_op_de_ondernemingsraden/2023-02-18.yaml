@@ -75,6 +75,23 @@ articles:
       - id: ref4
         bwb_id: BWBR0005290
         artikel: '690'
+    machine_readable:
+      execution:
+        parameters:
+          - name: diensttijd_uitzend_maanden
+            type: number
+            required: true
+            description: Aantal maanden dat de uitzendkracht in het kader van werkzaamheden van de onderneming daarin werkzaam is krachtens een uitzendovereenkomst (lid 3a)
+        output:
+          - name: uitzendkracht_telt_mee_als_werkzame_persoon
+            type: boolean
+            description: Of de uitzendkracht ten minste 15 maanden werkzaam is en daarmee als in de onderneming werkzame persoon telt (lid 3a)
+        actions:
+          - output: uitzendkracht_telt_mee_als_werkzame_persoon
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $diensttijd_uitzend_maanden
+              value: 15
   - number: '2'
     text: |-
       1 De ondernemer die een onderneming in stand houdt waarin in de regel ten minste 50 personen werkzaam zijn, is in
@@ -202,6 +219,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: '2'
         hoofdstuk: II
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontheffing_verleend_datum
+            type: date
+            required: true
+            description: Datum waarop de Raad de ontheffing schriftelijk heeft verleend (lid 1)
+        output:
+          - name: ontheffing_max_einddatum
+            type: date
+            description: Uiterste einddatum van de ontheffing (ten hoogste vijf jaren na de verleningsdatum, lid 1)
+        actions:
+          - output: ontheffing_max_einddatum
+            value:
+              operation: DATE_ADD
+              date: $ontheffing_verleend_datum
+              years: 5
   - number: 5a
     text: |-
       1 Het bij of krachtens deze wet bepaalde is mede van toepassing wanneer een ondernemer op grond van een collectieve
@@ -1675,6 +1709,32 @@ articles:
       - id: ref5
         bwb_id: BWBR0003045
         artikel: '397'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_bv_met_dga
+            type: boolean
+            required: true
+            description: Of de rechtspersoon een BV is waarvan een bestuurder of commissaris een natuurlijk persoon is met een direct of indirect belang overeenkomstig artikel 4.6 Wet IB 2001 (onderdeel a)
+          - name: valt_onder_bw2_396_of_397
+            type: boolean
+            required: true
+            description: Of de rechtspersoon een rechtspersoon is waarop artikel 396 of 397 van Titel 9 van Boek 2 BW van toepassing zijn (onderdeel b)
+        output:
+          - name: artikelen_23_en_31d_niet_van_toepassing
+            type: boolean
+            description: Of de artikelen 23, tweede lid, tweede zin, en 31d niet van toepassing zijn op deze rechtspersoon (artikel 31e)
+        actions:
+          - output: artikelen_23_en_31d_niet_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_bv_met_dga
+                  value: true
+                - operation: EQUALS
+                  subject: $valt_onder_bw2_396_of_397
+                  value: true
   - number: 31f
     text: |-
       De ondernemer is verplicht de ondernemingsraad zo spoedig mogelijk schriftelijk te informeren over
