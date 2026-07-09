@@ -887,9 +887,438 @@ articles:
       [ref59]: https://wetten.overheid.nl/BWBR0035917#Artikel3.2.1
       [ref60]: https://wetten.overheid.nl/BWBR0035917#Artikel3.2.2
       [ref61]: https://wetten.overheid.nl/BWBR0035917#Artikel11.1.1
-      [ref62]: https://wetten.overheid.nl/BWBR0011353
-      [ref63]: https://wetten.overheid.nl/BWBR0011353
+       [ref62]: https://wetten.overheid.nl/BWBR0011353
+       [ref63]: https://wetten.overheid.nl/BWBR0011353
     url: https://wetten.overheid.nl/BWBR0017017/2026-07-01#Artikel1.6
+    machine_readable:
+       execution:
+        input:
+            - name: ouder_verricht_tegenwoordige_arbeid
+              type: boolean
+              description: "Indicatie of de ouder tegenwoordige arbeid verricht waaruit inkomen uit werk en woning (Wet inkomstenbelasting 2001) wordt genoten (1.6.1.a)"
+            - name: ouder_verricht_arbeid_partner_zonder_vergoeding
+              type: boolean
+              description: "Indicatie of de ouder zonder vergoeding arbeid verricht in de onderneming van de partner (Wet inkomstenbelasting 2001, Art. 3.78) (1.6.1.b)"
+            - name: ouder_ontvangt_algemene_bijstand_of_uitkering
+              type: boolean
+              description: "Indicatie of de ouder algemene bijstand of een uitkering ontvangt op grond van Participatiewet, IOAW, IOAZ, of ANW (1.6.1.c)"
+            - name: ouder_gebruikt_voorziening_arbeidsinschakeling
+              type: boolean
+              description: "Indicatie of de ouder gebruikmaakt van een voorziening gericht op arbeidsinschakeling (Participatiewet Art. 7.1.a of 7a.1.a) (1.6.1.c)"
+            - name: ouder_onder_18_in_opleiding
+              type: boolean
+              description: "Indicatie of de ouder jonger is dan 18, scholing/opleiding volgt, en algemene bijstand ontvangt of kan ontvangen (Participatiewet Art. 16 of 18) (1.6.1.e)"
+            - name: ouder_geregistreerd_werkzoekende
+              type: boolean
+              description: "Indicatie of de ouder als niet-uitkeringsgerechtigde werkzoekende is geregistreerd bij UWV (1.6.1.f)"
+            - name: ouder_inburgeringsplichtig_en_volgt_cursus
+              type: boolean
+              description: "Indicatie of de ouder inburgeringsplichtig is (Wet inburgering 2021) en een cursus/opleiding volgt om aan de leerroute te voldoen (1.6.1.g)"
+            - name: ouder_ontvangt_werkloosheidsuitkering_en_deelneemt_scholing
+              type: boolean
+              description: "Indicatie of de ouder recht heeft op of een uitkering ontvangt op grond van Werkloosheidswet en deelneemt aan scholing/werkzaamheden (Art. 76, 76a, 77a) (1.6.1.h)"
+            - name: ouder_ontvangt_armeidsongeschiktheidsuitkering_en_deelneemt_activiteiten
+              type: boolean
+              description: "Indicatie of de ouder recht heeft op een arbeidsongeschiktheidsuitkering en werkzaamheden verricht gericht op arbeidsinschakeling (1.6.1.i)"
+            - name: ouder_ingeschreven_in_onderwijs
+              type: boolean
+              description: "Indicatie of de ouder is ingeschreven bij een school/instelling voor voortgezet onderwijs, VAV, beroepsopleiding, of hoger onderwijs (1.6.1.j)"
+            - name: ouder_woont_niet_in_nederland
+              type: boolean
+              description: "Indicatie of de ouder niet in Nederland woont (1.6.2)"
+            - name: ouder_woont_in_lidstaat_of_zwitserland
+              type: boolean
+              description: "Indicatie of de ouder in een andere lidstaat of Zwitserland woont (1.6.2)"
+            - name: ouder_verricht_arbeid_in_nederland
+              type: boolean
+              description: "Indicatie of de ouder in Nederland of op het continentaal plat tegenwoordige arbeid verricht (1.6.2)"
+            - name: ouder_heeft_partner
+              type: boolean
+              description: "Indicatie of de ouder een partner heeft (1.6.3)"
+            - name: partner_verricht_tegenwoordige_arbeid
+              type: boolean
+              description: "Indicatie of de partner tegenwoordige arbeid verricht waaruit inkomen uit werk en woning wordt genoten (1.6.3.a)"
+            - name: partner_ontvangt_uitkering_en_gebruikt_voorziening
+              type: boolean
+              description: "Indicatie of de partner een uitkering ontvangt (1.6.1.c, e, h, i) en gebruikmaakt van een voorziening gericht op arbeidsinschakeling (1.6.3.b)"
+            - name: partner_voldoet_aan_1_6_1_f_g_j_k_l
+              type: boolean
+              description: "Indicatie of de partner voldoet aan 1.6.1.f, g, j, k, of l (1.6.3.c)"
+            - name: partner_verricht_arbeid_in_onderneming_ouder
+              type: boolean
+              description: "Indicatie of de partner arbeid verricht in de onderneming van de ouder (Wet inkomstenbelasting 2001, Art. 3.78) (1.6.3.d)"
+            - name: partner_ontvangt_buitenlands_inkomen_of_uitkering
+              type: boolean
+              description: "Indicatie of de partner een buitenlands inkomen of uitkering ontvangt dat gelijkgesteld is met Nederlandse uitkeringen (1.6.3.b)"
+            - name: ouder_partner_voldoet_aan_1_6_5
+              type: boolean
+              description: "Indicatie of de ouder of partner voldoet aan de 3-maanden grace period (1.6.5) (UNTRANSLATABLE: date arithmetic)"
+            - name: ouder_partner_voldoet_aan_1_6_7
+              type: boolean
+              description: "Indicatie of de ouder of partner voldoet aan de 6-maanden grace period voor AMvB-jaar (1.6.7) (UNTRANSLATABLE: AMvB dependency)"
+            - name: partner_heeft_recht_op_zorg_wlz
+              type: boolean
+              description: "Indicatie of de partner recht heeft op zorg op grond van Wet langdurige zorg (Art. 3.2.1, 3.2.2, 11.1.1) (1.6.8)"
+            - name: ouder_heeft_recht_op_zorg_wlz
+              type: boolean
+              description: "Indicatie of de ouder recht heeft op zorg op grond van Wet langdurige zorg (Art. 3.2.1, 3.2.2, 11.1.1) (1.6.9)"
+            - name: ouder_is_gevangengezet
+              type: boolean
+              description: "Indicatie of de ouder Several maanden is veroordeeld tot gevangenisstraf (1.6.10)"
+            - name: partner_voldoet_aan_1_6_10_condities
+              type: boolean
+              description: "Indicatie of de partner voldslaat aan de condities in 1.6.10.a, b, of c"
+        output:
+            - name: heeft_aanspraak_op_kinderopvangtoeslag
+              type: boolean
+              description: "Indicatie of de ouder aanspraak heeft op kinderopvangtoeslag (Art. 1.6)"
+        actions:
+            - type: IF
+              cases:
+                # --- 1.6.1: Parent eligibility conditions ---
+                - condition:
+                    type: OR
+                    conditions:
+                      # 1.6.1.a: Tegenwoordige arbeid
+                      - type: EQUALS
+                        subject: ouder_verricht_tegenwoordige_arbeid
+                        value: true
+                      # 1.6.1.b: Arbeid in partner's onderneming zonder vergoeding
+                      - type: EQUALS
+                        subject: ouder_verricht_arbeid_partner_zonder_vergoeding
+                        value: true
+                      # 1.6.1.c: Algemene bijstand/uitkering + voorziening arbeidsinschakeling
+                      - type: AND
+                        conditions:
+                          - type: EQUALS
+                            subject: ouder_ontvangt_algemene_bijstand_of_uitkering
+                            value: true
+                          - type: EQUALS
+                            subject: ouder_gebruikt_voorziening_arbeidsinschakeling
+                            value: true
+                      # 1.6.1.e: Onder 18 + scholing + bijstand
+                      - type: EQUALS
+                        subject: ouder_onder_18_in_opleiding
+                        value: true
+                      # 1.6.1.f: Geregistreerd werkzoekende + voorziening
+                      - type: AND
+                        conditions:
+                          - type: EQUALS
+                            subject: ouder_geregistreerd_werkzoekende
+                            value: true
+                          - type: EQUALS
+                            subject: ouder_gebruikt_voorziening_arbeidsinschakeling
+                            value: true
+                      # 1.6.1.g: Inburgeringsplichtig + cursus
+                      - type: EQUALS
+                        subject: ouder_inburgeringsplichtig_en_volgt_cursus
+                        value: true
+                      # 1.6.1.h: Werkloosheidsuitkering + scholing/activiteiten
+                      - type: EQUALS
+                        subject: ouder_ontvangt_werkloosheidsuitkering_en_deelneemt_scholing
+                        value: true
+                      # 1.6.1.i: Arbeidsongeschiktheidsuitkering + activiteiten
+                      - type: EQUALS
+                        subject: ouder_ontvangt_armeidsongeschiktheidsuitkering_en_deelneemt_activiteiten
+                        value: true
+                      # 1.6.1.j: Ingeschreven in onderwijs
+                      - type: EQUALS
+                        subject: ouder_ingeschreven_in_onderwijs
+                        value: true
+                      # 1.6.1.d, k, l: Placeholders (UNTRANSLATABLE)
+                      - type: EQUALS
+                        subject: open_terms.ouder_voldoet_aan_1_6_1_d_k_l
+                        value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_1
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_1
+                    value: false
+
+                # --- 1.6.2: Non-NL residents ---
+                - condition:
+                    type: AND
+                    conditions:
+                      - type: EQUALS
+                        subject: ouder_woont_niet_in_nederland
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_woont_in_lidstaat_of_zwitserland
+                        value: true
+                      - type: OR
+                        conditions:
+                          - type: EQUALS
+                            subject: ouder_verricht_arbeid_in_nederland
+                            value: true
+                          - type: AND
+                            conditions:
+                              - type: OR
+                                conditions:
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_algemene_bijstand_of_uitkering
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_onder_18_in_opleiding
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_werkloosheidsuitkering_en_deelneemt_scholing
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_armeidsongeschiktheidsuitkering_en_deelneemt_activiteiten
+                                    value: true
+                              - type: EQUALS
+                                subject: ouder_gebruikt_voorziening_arbeidsinschakeling
+                                value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_2
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_2
+                    value: false
+
+                # --- 1.6.3: Partner conditions ---
+                - condition:
+                    type: AND
+                    conditions:
+                      - type: EQUALS
+                        subject: ouder_heeft_partner
+                        value: true
+                      - type: OR
+                        conditions:
+                          # 1.6.3.a: Partner verricht tegenwoordige arbeid
+                          - type: EQUALS
+                            subject: partner_verricht_tegenwoordige_arbeid
+                            value: true
+                          # 1.6.3.b: Partner ontvangt uitkering + voorziening
+                          - type: OR
+                            conditions:
+                              - type: AND
+                                conditions:
+                                  - type: EQUALS
+                                    subject: partner_ontvangt_uitkering_en_gebruikt_voorziening
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_algemene_bijstand_of_uitkering
+                                    value: true
+                              - type: EQUALS
+                                subject: partner_ontvangt_buitenlands_inkomen_of_uitkering
+                                value: true
+                          # 1.6.3.c: Partner voldoet aan 1.6.1.f, g, j, k, l
+                          - type: EQUALS
+                            subject: partner_voldoet_aan_1_6_1_f_g_j_k_l
+                            value: true
+                          # 1.6.3.d: Partner verricht arbeid in onderneming ouder
+                          - type: EQUALS
+                            subject: partner_verricht_arbeid_in_onderneming_ouder
+                            value: true
+                  then:
+                    type: SET
+                    name: partner_voldoet_aan_1_6_3
+                    value: true
+                  default:
+                    type: SET
+                    name: partner_voldoet_aan_1_6_3
+                    value: false
+
+                # --- 1.6.5: 3-month grace period (UNTRANSLATABLE: date arithmetic) ---
+                - condition:
+                    type: EQUALS
+                    subject: ouder_partner_voldoet_aan_1_6_5
+                    value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_grace_period_3_maanden
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_grace_period_3_maanden
+                    value: false
+
+                # --- 1.6.7: 6-month grace period for AMvB year (UNTRANSLATABLE: AMvB dependency) ---
+                - condition:
+                    type: EQUALS
+                    subject: ouder_partner_voldoet_aan_1_6_7
+                    value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_grace_period_6_maanden
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_grace_period_6_maanden
+                    value: false
+
+                # --- 1.6.8: Exception - Partner heeft recht op zorg (WLZ) ---
+                - condition:
+                    type: AND
+                    conditions:
+                      - type: EQUALS
+                        subject: ouder_heeft_partner
+                        value: true
+                      - type: EQUALS
+                        subject: partner_heeft_recht_op_zorg_wlz
+                        value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_8
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_8
+                    value: false
+
+                # --- 1.6.9: Exception - Ouder heeft recht op zorg (WLZ) ---
+                - condition:
+                    type: AND
+                    conditions:
+                      - type: EQUALS
+                        subject: ouder_heeft_recht_op_zorg_wlz
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_heeft_partner
+                        value: true
+                      - type: OR
+                        conditions:
+                          - type: EQUALS
+                            subject: partner_verricht_tegenwoordige_arbeid
+                            value: true
+                          - type: AND
+                            conditions:
+                              - type: EQUALS
+                                subject: partner_ontvangt_uitkering_en_gebruikt_voorziening
+                                value: true
+                              - type: OR
+                                conditions:
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_algemene_bijstand_of_uitkering
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_onder_18_in_opleiding
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_werkloosheidsuitkering_en_deelneemt_scholing
+                                    value: true
+                                  - type: EQUALS
+                                    subject: ouder_ontvangt_armeidsongeschiktheidsuitkering_en_deelneemt_activiteiten
+                                    value: true
+                          - type: OR
+                            conditions:
+                              - type: EQUALS
+                                subject: partner_voldoet_aan_1_6_1_f_g_j_k_l
+                                value: true
+                              - type: EQUALS
+                                subject: partner_verricht_arbeid_in_onderneming_ouder
+                                value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_9
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_9
+                    value: false
+
+                # --- 1.6.10: Exception - Ouder is gevangengezet ---
+                - condition:
+                    type: AND
+                    conditions:
+                      - type: EQUALS
+                        subject: ouder_is_gevangengezet
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_heeft_partner
+                        value: true
+                      - type: EQUALS
+                        subject: partner_voldoet_aan_1_6_10_condities
+                        value: true
+                  then:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_10
+                    value: true
+                  default:
+                    type: SET
+                    name: ouder_voldoet_aan_1_6_10
+                    value: false
+
+                # --- Final eligibility logic ---
+                - condition:
+                    type: OR
+                    conditions:
+                      # Base eligibility (1.6.1 or 1.6.2)
+                      - type: AND
+                        conditions:
+                          - type: EQUALS
+                            subject: ouder_voldoet_aan_1_6_1
+                            value: true
+                          - type: OR
+                            conditions:
+                              - type: NOT
+                                condition:
+                                  type: EQUALS
+                                  subject: ouder_heeft_partner
+                                  value: true
+                              - type: EQUALS
+                                subject: partner_voldoet_aan_1_6_3
+                                value: true
+                      - type: AND
+                        conditions:
+                          - type: EQUALS
+                            subject: ouder_voldoet_aan_1_6_2
+                            value: true
+                          - type: OR
+                            conditions:
+                              - type: NOT
+                                condition:
+                                  type: EQUALS
+                                  subject: ouder_heeft_partner
+                                  value: true
+                              - type: EQUALS
+                                subject: partner_voldoet_aan_1_6_3
+                                value: true
+                      # Grace periods (1.6.5, 1.6.7)
+                      - type: EQUALS
+                        subject: ouder_voldoet_aan_grace_period_3_maanden
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_voldoet_aan_grace_period_6_maanden
+                        value: true
+                      # Exceptions (1.6.8, 1.6.9, 1.6.10)
+                      - type: EQUALS
+                        subject: ouder_voldoet_aan_1_6_8
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_voldoet_aan_1_6_9
+                        value: true
+                      - type: EQUALS
+                        subject: ouder_voldoet_aan_1_6_10
+                        value: true
+                  then:
+                    type: SET
+                    name: heeft_aanspraak_op_kinderopvangtoeslag
+                    value: true
+                  default:
+                    type: SET
+                    name: heeft_aanspraak_op_kinderopvangtoeslag
+                    value: false
+    untranslatables:
+      - description: "Placeholder subsections 1.6.1.d, 1.6.1.k, and 1.6.1.l are empty and lack defined conditions."
+        type: placeholder
+        location: "Artikel 1.6.1.d, 1.6.1.k, 1.6.1.l"
+      - description: "3-month grace period after employment ends (1.6.5) requires date arithmetic for calculating the period starting from the day after employment ends."
+        type: date_arithmetic
+        location: "Artikel 1.6.5"
+      - description: "6-month grace period for AMvB-specified years (1.6.7) depends on external AMvB regulations to determine applicable years."
+        type: external_dependency
+        location: "Artikel 1.6.7"
+        dependency: "AMvB"
+    open_terms:
+      - name: ouder_voldoet_aan_1_6_1_d_k_l
+        description: "Placeholder for undefined conditions in 1.6.1.d, 1.6.1.k, and 1.6.1.l"
     references:
       - id: ref1
         bwb_id: BWBR0011353
