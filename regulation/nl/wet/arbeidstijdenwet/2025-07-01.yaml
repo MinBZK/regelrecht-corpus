@@ -736,6 +736,31 @@ articles:
         artikel: 5:6
         hoofdstuk: '5'
         paragraaf: '5.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geplande_datum
+            type: date
+            required: true
+            description: Datum waarop het arbeids- en rusttijdenpatroon ingaat
+        output:
+          - name: uiterste_meldingsdatum
+            type: date
+            description: Uiterste datum waarop het arbeids- en rusttijdenpatroon moet worden medegedeeld (ten minste 28 dagen van te voren, lid 2)
+          - name: uiterste_meldingsdatum_tijdstippen
+            type: date
+            description: Uiterste datum waarop de werktijdstippen bekend moeten worden gemaakt (ten minste 4 dagen van te voren, lid 3)
+        actions:
+          - output: uiterste_meldingsdatum
+            value:
+              operation: DATE_ADD
+              date: $geplande_datum
+              days: -28
+          - output: uiterste_meldingsdatum_tijdstippen
+            value:
+              operation: DATE_ADD
+              date: $geplande_datum
+              days: -4
   - number: 4:3
     text: |-
       1 Een werkgever en een persoon als bedoeld in [artikel 2:7, eerste lid][ref1], voert een deugdelijke registratie
@@ -1559,6 +1584,61 @@ articles:
         artikel: 5:12
         hoofdstuk: '5'
         paragraaf: '5.3'
+    machine_readable:
+      untranslatables:
+        - construct: "14 maal een periode van 24 aaneengesloten uren geen consignatie in elke periode van 28 maal 24 uren (lid 2a)"
+          reason: "Counting non-consignation-day occurrences over a rolling 28-day window is not available as an engine operation"
+          legal_text_excerpt: "in elke aaneengesloten periode van 28 maal 24 uren ten minste 14 maal een periode van 24 aaneengesloten uren geen consignatie wordt opgelegd"
+          accepted: false
+        - construct: "2 maal een aaneengesloten periode van 48 uren geen arbeid noch consignatie in elke 28 maal 24 uren (lid 2b)"
+          reason: "Counting consecutive 48-hour rest blocks per rolling 28-day window is not available as an engine operation"
+          legal_text_excerpt: "2 maal een aaneengesloten periode van 48 uren geen arbeid verricht noch consignatie wordt opgelegd"
+          accepted: false
+        - construct: "11 uren geen consignatie voor elke nachtdienst (lid 3a) en 14 uren na elke nachtdienst (lid 3b)"
+          reason: "Temporal proximity check relative to each night shift occurrence is not available as an engine operation"
+          legal_text_excerpt: "geen consignatie wordt opgelegd gedurende 11 aaneengesloten uren voor elke nachtdienst, en 14 aaneengesloten uren na elke nachtdienst"
+          accepted: false
+        - construct: "gemiddeld 40 uren per week in periode van 16 aaneengesloten weken bij 16 of meer malen consignatie (lid 5)"
+          reason: "Aggregation over a rolling 16-week period is not available as an engine operation"
+          legal_text_excerpt: "ten hoogste gemiddeld 40 uren per week arbeid verricht"
+          accepted: false
+        - construct: "gemiddeld 45 uren per week bij alternatieve regeling (lid 6b)"
+          reason: "Aggregation over a rolling 16-week period is not available as an engine operation"
+          legal_text_excerpt: "in die periode van 16 aaneengesloten weken ten hoogste gemiddeld 45 uren arbeid per week verricht"
+          accepted: false
+      execution:
+        parameters:
+          - name: leeftijd_werknemer
+            type: number
+            required: true
+            description: Leeftijd van de werknemer in jaren
+          - name: uren_per_dag_bij_consignatie
+            type: number
+            required: true
+            description: Aantal uren arbeid verricht in een periode van 24 aaneengesloten uren waarbij consignatie is opgelegd
+        output:
+          - name: consignatie_toegestaan_leeftijd
+            type: boolean
+            description: Is consignatie toegestaan gezien de leeftijd? (lid 1 - uitsluitend voor werknemers van 18 jaar of ouder)
+          - name: max_uren_per_dag_consignatie
+            type: number
+            description: Maximum arbeidstijd per 24-uursperiode bij consignatie (lid 4 - ten hoogste 13 uren)
+          - name: voldoet_consignatie_arbeidstijd
+            type: boolean
+            description: Voldoet de arbeidstijd per 24-uursperiode bij consignatie aan de wettelijke eis?
+        actions:
+          - output: consignatie_toegestaan_leeftijd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd_werknemer
+              value: 18
+          - output: max_uren_per_dag_consignatie
+            value: 13
+          - output: voldoet_consignatie_arbeidstijd
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $uren_per_dag_bij_consignatie
+              value: $max_uren_per_dag_consignatie
   - number: 5:10
     text: |-
       1 Deze paragraaf en de op [artikel 5:12, eerste lid][ref1], berustende bepalingen zijn niet van toepassing
@@ -1729,6 +1809,85 @@ articles:
         artikel: 5:12
         hoofdstuk: '5'
         paragraaf: '5.3'
+    machine_readable:
+      untranslatables:
+        - construct: "meerdere regels van toepassing zijn die voortvloeien uit artikel 5:12, tweede lid, onder a voor motorrijtuigen (lid 5)"
+          reason: "Identifying which specific sectoral sub-regulation applies to which portion of a shift requires runtime context not expressible as an engine operation"
+          legal_text_excerpt: "arbeid verricht waarop meerdere regels van toepassing zijn die voortvloeien uit artikel 5:12, tweede lid, onder a, voor zover het betreft motorrijtuigen"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_jeugdige_werknemer
+            type: boolean
+            required: true
+            description: Is de werknemer een jeugdige werknemer (16 of 17 jaar)?
+          - name: totale_arbeidstijd_uren
+            type: number
+            required: true
+            description: Totale arbeidstijd in de dienst in uren
+          - name: arbeidstijd_dominante_regel_uren
+            type: number
+            required: true
+            description: Arbeidstijd in uren waarop één specifieke regel van toepassing is (voor lid 2 driekwart-toets)
+          - name: is_ingekort_rusttijd
+            type: boolean
+            required: false
+            description: Betreft het de eenmalig toegestane inkorting van de dagelijkse rusttijd voor werknemer 18+ (art. 5:3, lid 2)?
+        output:
+          - name: dominante_regel_van_toepassing
+            type: boolean
+            description: Is één regel van toepassing op ten minste driekwart van de arbeidstijd EN ten minste 1 uur? (lid 2)
+          - name: max_uren_per_dienst_meerdere_regels
+            type: number
+            description: Maximum arbeidstijd per dienst wanneer lid 2 niet van toepassing is (lid 3)
+          - name: min_rusttijd_na_dienst_uren
+            type: number
+            description: Minimum rusttijd na de dienst bij meerdere regels wanneer lid 2 niet van toepassing is (lid 3 en 4)
+        actions:
+          - output: dominante_regel_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $totale_arbeidstijd_uren
+                  value: 1
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $arbeidstijd_dominante_regel_uren
+                  value:
+                    operation: MULTIPLY
+                    values:
+                      - $totale_arbeidstijd_uren
+                      - 0.75
+          - output: max_uren_per_dienst_meerdere_regels
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_jeugdige_werknemer
+                    value: true
+                  then: 9
+              default: 12
+          - output: min_rusttijd_na_dienst_uren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_jeugdige_werknemer
+                    value: true
+                  then: 12
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige_werknemer
+                        value: false
+                      - operation: EQUALS
+                        subject: $is_ingekort_rusttijd
+                        value: true
+                  then: 8
+              default: 11
   - number: 5:16
     text: |-
       1 Indien een werknemer naast het verrichten van arbeid in Nederland tevens buiten Nederland arbeid verricht, zorgt
@@ -2129,6 +2288,23 @@ articles:
         artikel: 8:1
         hoofdstuk: '8'
         paragraaf: '8.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: dagtekening_waarschuwing
+            type: date
+            required: true
+            description: Datum van de dagtekening van de waarschuwing (lid 1)
+        output:
+          - name: vervaldatum_waarschuwing
+            type: date
+            description: Datum waarop de waarschuwing vervalt (vijf jaren na dagtekening, lid 4)
+        actions:
+          - output: vervaldatum_waarschuwing
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_waarschuwing
+              years: 5
   - number: 8:4
     text: |-
       De toezichthouders zijn, behoudens tegenover hen aan wier gezag zij uit hoofde van hun ambt zijn onderworpen,
@@ -2680,6 +2856,23 @@ articles:
       Indien een bestuurlijke boete ten onrechte is opgelegd, wordt deze binnen zes weken nadat is vastgesteld dat de
       bestuurlijke boete ten onrechte is vastgesteld, aan de rechthebbende terugbetaald.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel1013
+    machine_readable:
+      execution:
+        parameters:
+          - name: vaststellingsdatum
+            type: date
+            required: true
+            description: Datum waarop is vastgesteld dat de bestuurlijke boete ten onrechte is opgelegd
+        output:
+          - name: uiterste_terugbetalingsdatum
+            type: date
+            description: Uiterste datum voor terugbetaling van de ten onrechte opgelegde bestuurlijke boete (zes weken na vaststelling)
+        actions:
+          - output: uiterste_terugbetalingsdatum
+            value:
+              operation: DATE_ADD
+              date: $vaststellingsdatum
+              weeks: 6
   - number: 10:14
     text: |-
       1 Voor de toepassing van deze paragraaf wordt verstaan onder:
