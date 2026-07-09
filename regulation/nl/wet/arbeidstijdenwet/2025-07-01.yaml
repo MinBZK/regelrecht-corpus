@@ -996,6 +996,24 @@ articles:
 
       4 Elk beding waarbij ten nadele van de vrouwelijke werknemer wordt afgeweken van dit artikel, is nietig.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel48
+    machine_readable:
+      execution:
+        parameters:
+          - name: arbeidstijd_uren_per_dienst
+            type: number
+            required: true
+            description: Arbeidstijd per dienst in uren
+        output:
+          - name: max_onderbrekingstijd_borstvoeding_uren
+            type: number
+            description: Maximum totale onderbrekingstijd voor borstvoeding per dienst (ten hoogste een vierde van de arbeidstijd per dienst, lid 2)
+        actions:
+          - output: max_onderbrekingstijd_borstvoeding_uren
+            value:
+              operation: DIVIDE
+              values:
+                - $arbeidstijd_uren_per_dienst
+                - 4
   - number: 4:9
     text: |-
       1 Indien uit arbeidsgezondheidskundig onderzoek blijkt, dat de gezondheidsproblemen van een werknemer voortvloeien
@@ -1921,6 +1939,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0010346
         artikel: '14'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aanvang_termijn_datum
+            type: date
+            required: true
+            description: Dag volgend op die waarop het verzoek om ontheffing is ingediend, of het bevel is gegeven, of de beschikking aan de werkgever bekend is gemaakt (lid 2)
+        output:
+          - name: uiterste_kennisgevingsdatum
+            type: date
+            description: Uiterste datum waarop de werkgever de inhoud ter kennis moet brengen van het medezeggenschapsorgaan of werknemers (binnen 7 dagen na aanvang termijn, lid 1)
+        actions:
+          - output: uiterste_kennisgevingsdatum
+            value:
+              operation: DATE_ADD
+              date: $aanvang_termijn_datum
+              days: 7
   - number: 6:3
     text: |-
       De werkgever stelt de leden van een medezeggenschapsorgaan in verband met hun taak inzake arbeids- en rusttijden in
