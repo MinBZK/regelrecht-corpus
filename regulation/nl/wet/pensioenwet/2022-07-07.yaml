@@ -2386,6 +2386,31 @@ articles:
         artikel: '14'
         hoofdstuk: '2'
         paragraaf: '2.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_beeindiging_dienstbetrekking
+            type: date
+            required: true
+            description: Datum van beëindiging van de dienstbetrekking
+        output:
+          - name: uiterste_datum_verzoek_voortzetting
+            type: date
+            description: Uiterste datum voor het verzoek vrijwillige voortzetting (lid 4, binnen negen maanden na beëindiging dienstbetrekking)
+          - name: uiterste_startdatum_voortzetting
+            type: date
+            description: Uiterste startdatum van de vrijwillige voortzetting (lid 5, uiterlijk vijftien maanden na beëindiging dienstbetrekking)
+        actions:
+          - output: uiterste_datum_verzoek_voortzetting
+            value:
+              operation: DATE_ADD
+              date: $datum_beeindiging_dienstbetrekking
+              months: 9
+          - output: uiterste_startdatum_voortzetting
+            value:
+              operation: DATE_ADD
+              date: $datum_beeindiging_dienstbetrekking
+              months: 15
   - number: '55'
     text: |-
       1 Bij beëindiging van de deelneming behoudt de gewezen deelnemer de tot dat moment opgebouwde pensioenaanspraken
@@ -4281,6 +4306,23 @@ articles:
       of andere aanspraakgerechtigde ondervindt ten gevolge van de aan die pensioenuitvoerder toerekenbare niet tijdige
       overdracht; de schade is ten minste gelijk aan de wettelijke rente op het over te dragen pensioenkapitaal.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel82
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_verzoek_overdracht
+            type: date
+            required: true
+            description: Datum van het verzoek tot overdracht van het pensioenkapitaal door de (gewezen) deelnemer of andere aanspraakgerechtigde
+        output:
+          - name: uiterste_datum_overdracht
+            type: date
+            description: Uiterste datum waarop de overdragende pensioenuitvoerder het pensioenkapitaal moet overdragen (lid 1, binnen acht weken na verzoek)
+        actions:
+          - output: uiterste_datum_overdracht
+            value:
+              operation: DATE_ADD
+              date: $datum_verzoek_overdracht
+              weeks: 8
   - number: '83'
     text: |-
       1 De pensioenuitvoerder is op verzoek van de werkgever of, bij bedrijfstakpensioenfondsen, de partijen die de
@@ -4370,6 +4412,23 @@ articles:
         artikel: '71'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_melding_toezichthouder
+            type: date
+            required: true
+            description: Datum waarop het voornemen tot collectieve waardeoverdracht schriftelijk wordt gemeld aan de toezichthouder (lid 2c)
+        output:
+          - name: vroegste_datum_collectieve_overdracht
+            type: date
+            description: Vroegste datum waarop de collectieve waardeoverdracht kan plaatsvinden (lid 2c, uiterlijk drie maanden na melding aan toezichthouder)
+        actions:
+          - output: vroegste_datum_collectieve_overdracht
+            value:
+              operation: DATE_ADD
+              date: $datum_melding_toezichthouder
+              months: 3
   - number: '84'
     text: |-
       1 De pensioenuitvoerder is verplicht tot waardeoverdracht aan een andere pensioenuitvoerder bij liquidatie van
@@ -4416,6 +4475,23 @@ articles:
         artikel: '71'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_melding_toezichthouder
+            type: date
+            required: true
+            description: Datum waarop het voornemen tot waardeoverdracht bij liquidatie schriftelijk wordt gemeld aan de toezichthouder (lid 2a)
+        output:
+          - name: vroegste_datum_overdracht_bij_liquidatie
+            type: date
+            description: Vroegste datum waarop de waardeoverdracht bij liquidatie kan plaatsvinden (lid 2a, uiterlijk drie maanden na melding aan toezichthouder)
+        actions:
+          - output: vroegste_datum_overdracht_bij_liquidatie
+            value:
+              operation: DATE_ADD
+              date: $datum_melding_toezichthouder
+              months: 3
   - number: '85'
     text: |-
       1 De pensioenuitvoerder is verplicht om na een verzoek van de gewezen deelnemer tot waardeoverdracht de
@@ -4770,6 +4846,35 @@ articles:
         artikel: '202'
         hoofdstuk: '7'
         paragraaf: '7.4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_ontvangst_aanvraag_goedkeuring
+            type: date
+            required: true
+            description: Datum van ontvangst van de aanvraag tot goedkeuring voor de grensoverschrijdende collectieve waardeoverdracht (lid 5)
+          - name: datum_besluit_goedkeuring
+            type: date
+            required: false
+            description: Datum van ontvangst van het besluit waarmee goedkeuring wordt verleend voor de collectieve waardeoverdracht (lid 6)
+        output:
+          - name: uiterste_datum_mededeling_resultaten
+            type: date
+            description: Uiterste datum waarop de toezichthouder de resultaten van zijn beoordeling deelt met de bevoegde autoriteiten (lid 5, binnen acht weken na ontvangst aanvraag)
+          - name: uiterste_datum_informeren_autoriteiten
+            type: date
+            description: Uiterste datum waarop de toezichthouder de bevoegde autoriteiten informeert over de sociale en arbeidswetgeving (lid 6, binnen vier weken na ontvangst besluit goedkeuring)
+        actions:
+          - output: uiterste_datum_mededeling_resultaten
+            value:
+              operation: DATE_ADD
+              date: $datum_ontvangst_aanvraag_goedkeuring
+              weeks: 8
+          - output: uiterste_datum_informeren_autoriteiten
+            value:
+              operation: DATE_ADD
+              date: $datum_besluit_goedkeuring
+              weeks: 4
   - number: '91'
     text: |-
       1 Indien een pensioenuitvoerder het verzoek krijgt om in het kader van waardeoverdracht een waarde van een
@@ -6975,6 +7080,31 @@ articles:
         bwb_id: BWBR0020809
         artikel: '132'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_constatering_onderdekking
+            type: date
+            required: true
+            description: Datum per einde van het kalenderkwartaal waarop de beleidsdekkingsgraad is komen te liggen onder het vereist eigen vermogen (lid 1)
+        output:
+          - name: uiterste_datum_indiening_herstelplan
+            type: date
+            description: Uiterste datum voor indiening van het herstelplan bij de toezichthouder (lid 2, binnen drie maanden na constatering)
+          - name: uiterste_datum_inwerkingtreding_herstelplan
+            type: date
+            description: Uiterste datum waarop het herstelplan in gaat (lid 6, uiterlijk zes maanden na constatering onderdekking)
+        actions:
+          - output: uiterste_datum_indiening_herstelplan
+            value:
+              operation: DATE_ADD
+              date: $datum_constatering_onderdekking
+              months: 3
+          - output: uiterste_datum_inwerkingtreding_herstelplan
+            value:
+              operation: DATE_ADD
+              date: $datum_constatering_onderdekking
+              months: 6
   - number: '139'
     text: |-
       1 Wanneer de beleidsdekkingsgraad die op grond van [artikel 138, zevende lid][ref1], is vastgesteld ligt
@@ -7023,6 +7153,23 @@ articles:
         bwb_id: BWBR0020809
         artikel: '138'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_vaststelling_beleidsdekkingsgraad
+            type: date
+            required: true
+            description: Datum van de jaarlijkse vaststelling van de beleidsdekkingsgraad als bedoeld in artikel 138 lid 7 waaruit de onderdekking (opnieuw) blijkt
+        output:
+          - name: uiterste_datum_indiening_herstelplan_geactualiseerd
+            type: date
+            description: Uiterste datum voor indiening van het geactualiseerde herstelplan bij de toezichthouder (lid 1, binnen drie maanden na vaststelling)
+        actions:
+          - output: uiterste_datum_indiening_herstelplan_geactualiseerd
+            value:
+              operation: DATE_ADD
+              date: $datum_vaststelling_beleidsdekkingsgraad
+              months: 3
   - number: '140'
     text: |-
       1 Indien de beleidsdekkingsgraad in een situatie als bedoeld in [artikel 138, eerste lid][ref1], of vastgesteld
@@ -7072,6 +7219,32 @@ articles:
         bwb_id: BWBR0020809
         artikel: '138'
         hoofdstuk: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "zes maal opeenvolgend onder het minimaal vereist eigen vermogen"
+          reason: >
+            Tellen over opeenvolgende kwartaalmetingen vereist stateful aggregatie over een tijdreeks.
+            Dit is niet uitdrukbaar als enkelvoudige berekening in de engine.
+          suggestion: >
+            Voeg CONSECUTIVE_COUNT of tijdreeksaggregatie toe aan het engine-operatieset,
+            of laat het upstream systeem een boolean meegeven die aangeeft of de drempel bereikt is.
+          accepted: false
+      execution:
+        parameters:
+          - name: datum_zesde_opeenvolgende_kwartaal
+            type: date
+            required: true
+            description: Datum van de zesde (of tweede voor grensoverschrijdende fondsen) opeenvolgende kwartaalvaststelling waaruit blijkt dat de beleidsdekkingsgraad onder het minimaal vereist eigen vermogen ligt (lid 1)
+        output:
+          - name: uiterste_datum_maatregelen_dekkingsgraad
+            type: date
+            description: Uiterste datum waarop het pensioenfonds maatregelen moet nemen zodat de dekkingsgraad direct voldoet aan artikel 131 (lid 1, binnen zes maanden na de laatste vaststelling)
+        actions:
+          - output: uiterste_datum_maatregelen_dekkingsgraad
+            value:
+              operation: DATE_ADD
+              date: $datum_zesde_opeenvolgende_kwartaal
+              months: 6
   - number: '141'
     text: |-
       1 De toezichthouder kan, rekening houdend met de specifieke situatie van het pensioenfonds en in het belang van de

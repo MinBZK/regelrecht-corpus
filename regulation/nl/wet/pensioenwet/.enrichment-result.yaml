@@ -41,3 +41,75 @@ related_legislation:
   - name: Wet verplichte deelneming in een bedrijfstakpensioenfonds 2000
     relation: source_regulation
     bwb_id: BWBR0012092
+
+enrichment:
+  date: '2026-07-09'
+  pipeline_steps: 3
+
+  step_1_mvt_research:
+    status: skipped
+    reason: WebFetch and WebSearch tools not approved during enrichment session
+    documents_found: 0
+    feature_file: null
+
+  step_2_generation:
+    status: complete
+    total_articles_with_machine_readable: 28
+    newly_generated:
+      - {artikel: '54', basis: 'lid 4 (9 maanden verzoek), lid 5 (15 maanden start)'}
+      - {artikel: '82', basis: 'lid 1 (8 weken na verzoek overdracht)'}
+      - {artikel: '83', basis: 'lid 2c (3 maanden voor beoogde overdrachsdatum)'}
+      - {artikel: '84', basis: 'lid 2a (3 maanden voor beoogde overdrachsdatum bij liquidatie)'}
+      - {artikel: '90a', basis: 'lid 5 (8 weken na aanvraag), lid 6 (4 weken na besluit)'}
+      - {artikel: '138', basis: 'lid 2 (3 maanden indiening herstelplan), lid 6 (6 maanden inwerkingtreding)'}
+      - {artikel: '139', basis: 'lid 1 (3 maanden geactualiseerd herstelplan)'}
+      - {artikel: '140', basis: 'lid 1 (6 maanden maatregelen), untranslatable: zes maal opeenvolgend'}
+    previously_existing:
+      - '7'
+      - '8'
+      - '14'
+      - '21'
+      - '22'
+      - '26'
+      - '27'
+      - '28'
+      - '29'
+      - '55'
+      - '56'
+      - '61'
+      - '63'
+      - '66'
+      - '67'
+      - '68'
+      - '69a'
+      - '70a'
+      - '134'
+      - '135'
+
+  step_3_reverse_validation:
+    status: complete
+    articles_checked: 28
+    fully_grounded: 26
+    scope_violations: 0
+    deprecated_operations: 0
+    elements_removed: 0
+    fixed_during_validation:
+      - artikel: '140'
+        fix: Corrected untranslatable field names from id/description/workaround to construct/reason/suggestion/accepted
+    assumptions_requiring_review:
+      - artikel: '134'
+        note: Lid 1b 'redelijke termijn' is untranslatable open norm — flagged, execution skips this condition
+      - artikel: '90a'
+        note: datum_besluit_goedkeuring is optional; lid 6 conditionality (grensoverschrijdend) not modelled as a guard
+    cross_law_bindings_verified:
+      - {source: '67', target_output: afkoopdrempel, target_artikel: '66', status: valid}
+      - {source: '68', target_output: afkoopdrempel, target_artikel: '66', status: valid}
+      - {source: '69a', target_output: afkoopdrempel, target_artikel: '66', status: valid}
+      - {source: '70a', target_output: afkoopdrempel, target_artikel: '66', status: valid}
+
+todos:
+  - Run 'just validate regulation/nl/wet/pensioenwet/2022-07-07.yaml' to confirm schema validity
+  - Run 'just bdd' after schema validation passes
+  - When WebFetch is available: run law-mvt-research for BWBR0020809 to generate features/pensioenwet.feature
+  - Review untranslatables in artikel 134 and 140 with legal expert; set accepted: true when confirmed
+  - Consider machine_readable for artikel 100 (bestuurszetels gepensioneerden 25%/50%) and artikel 102 (10% deelnemers drempel) if needed
