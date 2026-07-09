@@ -1360,6 +1360,25 @@ articles:
   - number: '31'
     text: De premie wordt bij ministeriële regeling vastgesteld op een percentage van het loon.
     url: https://wetten.overheid.nl/BWBR0017745/2026-07-01#Artikel31
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_ufo
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: "artikel 31, Wet financiering sociale verzekeringen"
+      execution:
+        output:
+          - name: premiepercentage_ufo
+            type: number
+            description: "Premiepercentage voor het Uitvoeringsfonds voor de overheid"
+        actions:
+          - output: premiepercentage_ufo
+            value: $premiepercentage_ufo
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '31'
   - number: '33'
     text: |-
       1 De financiële middelen tot dekking van de uitgaven ten laste van het Arbeidsongeschiktheidsfonds worden verkregen
@@ -1626,6 +1645,47 @@ articles:
       - id: ref14
         bwb_id: BWBR0009267
         artikel: '1'
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_aof_laag
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: "artikel 36, eerste lid, Wet financiering sociale verzekeringen (laag tarief kleine werkgevers)"
+        - id: premiepercentage_aof_hoog
+          type: number
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: "artikel 36, eerste lid, Wet financiering sociale verzekeringen (hoog tarief overige werkgevers)"
+      execution:
+        parameters:
+          - name: is_kleine_werkgever
+            type: boolean
+            required: true
+            description: "Of de werkgever als kleine werkgever wordt aangemerkt krachtens AMvB (artikel 36, tweede lid)"
+          - name: is_uitkering_of_toeslag_of_wsw
+            type: boolean
+            required: true
+            description: "Of het loon een uitkering, toeslag of WSW-loon betreft als bedoeld in artikel 36, vierde lid"
+        output:
+          - name: premiepercentage_aof
+            type: number
+            description: "Toepasselijk premiepercentage voor het Arbeidsongeschiktheidsfonds"
+        actions:
+          - output: premiepercentage_aof
+            value:
+              operation: IF
+              cases:
+                - when: $is_uitkering_of_toeslag_of_wsw
+                  then: $premiepercentage_aof_hoog
+                - when: $is_kleine_werkgever
+                  then: $premiepercentage_aof_laag
+              default: $premiepercentage_aof_hoog
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '36'
   - number: '38'
     text: |-
       1 In dit artikel wordt onder *categorie werkgevers* verstaan:
@@ -3290,6 +3350,38 @@ articles:
         hoofdstuk: '3'
         paragraaf: '5'
         afdeling: '2'
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_vrijwillige_ww
+          type: number
+          required: true
+          delegated_to: uwv
+          delegation_type: BESLUIT
+          legal_basis: "artikel 74, tweede lid, Wet financiering sociale verzekeringen"
+      execution:
+        parameters:
+          - name: dagloon
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: "Dagloon als bedoeld in artikel 58, eerste lid, van de Werkloosheidswet"
+        output:
+          - name: premie_vrijwillige_ww
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Verschuldigde premie voor de vrijwillige WW-verzekering"
+        actions:
+          - output: premie_vrijwillige_ww
+            value:
+              operation: MULTIPLY
+              values:
+                - $dagloon
+                - $premiepercentage_vrijwillige_ww
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '74'
   - number: '75'
     text: |-
       1 De premie voor de vrijwillige verzekering op grond van de
@@ -3317,6 +3409,38 @@ articles:
         hoofdstuk: '3'
         paragraaf: '4'
         afdeling: '4'
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_vrijwillige_wao
+          type: number
+          required: true
+          delegated_to: uwv
+          delegation_type: BESLUIT
+          legal_basis: "artikel 75, tweede lid, Wet financiering sociale verzekeringen"
+      execution:
+        parameters:
+          - name: dagloon
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: "Dagloon als bedoeld in artikel 84, eerste lid, van de Wet op de arbeidsongeschiktheidsverzekering"
+        output:
+          - name: premie_vrijwillige_wao
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Verschuldigde premie voor de vrijwillige WAO-verzekering"
+        actions:
+          - output: premie_vrijwillige_wao
+            value:
+              operation: MULTIPLY
+              values:
+                - $dagloon
+                - $premiepercentage_vrijwillige_wao
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '75'
   - number: '76'
     text: |-
       1 De premie voor de vrijwillige verzekering op grond van de [Ziektewet][ref1] wordt berekend over het dagloon,
@@ -3334,6 +3458,38 @@ articles:
       - id: ref2
         bwb_id: BWBR0001888
         artikel: '68'
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_vrijwillige_zw
+          type: number
+          required: true
+          delegated_to: uwv
+          delegation_type: BESLUIT
+          legal_basis: "artikel 76, tweede lid, Wet financiering sociale verzekeringen"
+      execution:
+        parameters:
+          - name: dagloon
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: "Dagloon als bedoeld in artikel 68, eerste lid, van de Ziektewet"
+        output:
+          - name: premie_vrijwillige_zw
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Verschuldigde premie voor de vrijwillige ZW-verzekering"
+        actions:
+          - output: premie_vrijwillige_zw
+            value:
+              operation: MULTIPLY
+              values:
+                - $dagloon
+                - $premiepercentage_vrijwillige_zw
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '76'
   - number: 76a
     text: |-
       1 De premie voor de vrijwillige verzekering op grond van de
@@ -3370,6 +3526,38 @@ articles:
         hoofdstuk: '3'
         paragraaf: '4'
         afdeling: '4'
+    machine_readable:
+      open_terms:
+        - id: premiepercentage_vrijwillige_wia
+          type: number
+          required: true
+          delegated_to: uwv
+          delegation_type: BESLUIT
+          legal_basis: "artikel 76a, tweede lid, Wet financiering sociale verzekeringen"
+      execution:
+        parameters:
+          - name: dagloon
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: "Dagloon als bedoeld in artikel 21, eerste lid, van de Wet werk en inkomen naar arbeidsvermogen"
+        output:
+          - name: premie_vrijwillige_wia
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Verschuldigde premie voor de vrijwillige WIA-verzekering"
+        actions:
+          - output: premie_vrijwillige_wia
+            value:
+              operation: MULTIPLY
+              values:
+                - $dagloon
+                - $premiepercentage_vrijwillige_wia
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: 76a
   - number: '77'
     text: >-
       Degene die is toegelaten tot een vrijwillige verzekering, is verplicht aan de SVB of het UWV onverwijld uit eigen
