@@ -2,7 +2,7 @@ enrichment:
   regulation: wet_milieubeheer
   bwb_id: BWBR0003245
   valid_from: "2026-06-20"
-  completed_at: "2026-07-08"
+  completed_at: "2026-07-09"
   model: claude-sonnet-4-6
 
   steps:
@@ -14,8 +14,8 @@ enrichment:
 
     generate:
       status: completed
-      articles_total: 300+
-      articles_with_machine_readable: 8
+      articles_total: 450
+      articles_with_machine_readable: 11
       articles_skipped_reason: >-
         The vast majority of Wet milieubeheer articles are framework provisions,
         delegation clauses, definitional articles, or procedural rules that contain
@@ -29,8 +29,8 @@ enrichment:
 
     reverse_validate:
       status: completed
-      articles_checked: 8
-      fully_grounded: 7
+      articles_checked: 11
+      fully_grounded: 10
       contains_untranslatables: 1
       elements_removed: 0
       scope_violations: 0
@@ -90,6 +90,18 @@ enrichment:
         50% voor reizen van/naar buiten-EU havens; 100% voor EU-interne reizen
         en verblijf in Nederlandse haven.
 
+    - number: "16.39t"
+      lid: null
+      topic: Inleverplicht emissierechten luchtvaart en scheepvaart — deadline, fasering en ijsklasse-uitzondering
+      outputs:
+        - inleverdeadline
+        - te_leveren_rechten_luchtvaart
+        - te_leveren_rechten_scheepvaart
+      notes: >-
+        Deadline 1 oktober volgend kalenderjaar (lids 1 en 2). Luchtvaart: rechten
+        = emissies (lid 1). Scheepvaart fasering: 40% (2024), 70% (2025), 100%
+        (2026+) (lid 6). IJsklasse-uitzondering: 5% korting t/m 31-12-2030 (lid 7).
+
     - number: "16.39w"
       lid: 1
       topic: Automatische verhoging inleverplicht bij tekort (luchtvaart/scheepvaart)
@@ -113,11 +125,35 @@ enrichment:
         Lid 1: IF omzet > € 4.500.000 (= 450.000.000 eurocent) THEN 10% van omzet
         ELSE € 450.000 (= 45.000.000 eurocent). Lids 2 en 3 zijn untranslatables.
 
+    - number: "18.16l"
+      lid: null
+      topic: Verjaringstermijn bestuurlijke boete — 10 jaar (in afwijking van AWB 5:45)
+      outputs:
+        - verjaringstermijn_jaren
+        - verjaring_einddatum
+      notes: >-
+        Overrides AWB artikel 5:45. Verjaringstermijn is 10 jaar na datum overtreding.
+        DATE_ADD(overtreding_datum, years=10).
+
+    - number: "18.16q"
+      lid: 1
+      topic: Maximale bestuurlijke boete — belemmering toezichthouders (€ 4.500)
+      outputs:
+        - maximale_boete_medewerking
+      notes: >-
+        Vaste boeteplafond: ten hoogste € 4.500 = 450.000 eurocent.
+
   reverse_validation_report:
-    fully_grounded: 7
+    fully_grounded: 10
     assumptions: 0
     elements_removed: 0
     untranslatable_workarounds: 0
     new_untranslatables_flagged: 2
     operation_correctness: passed
     scope_violations: 0
+    notes: >-
+      Artikel 16.39t: inleverdeadline (lids 1+2), luchtvaartrechten (lid 1),
+      faseringpercentages (lid 6), ijsklasse-uitzondering 5% t/m 2030 (lid 7) —
+      alle elementen herleidbaar. Artikel 18.16l: "tien jaren" + "In afwijking van
+      artikel 5:45" — volledig gegrond. Artikel 18.16q: "ten hoogste € 4 500" =
+      450.000 eurocent — volledig gegrond.

@@ -8830,6 +8830,93 @@ articles:
         hoofdstuk: '16'
         paragraaf: 16.2.1.4
         afdeling: 16.2.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: kalenderjaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarover broeikasgasemissierechten dienen te worden ingeleverd
+          - name: emissies_luchtvaart
+            type: number
+            required: false
+            description: Hoeveelheid emissie van luchtvaartactiviteiten in het kalenderjaar (tonnen CO2-equivalent, lid 1)
+          - name: emissies_scheepvaart
+            type: number
+            required: false
+            description: Totale geverifieerde emissie van maritieme vervoersactiviteiten in het kalenderjaar (tonnen CO2-equivalent, lid 2)
+          - name: heeft_ijsklasse_1a
+            type: boolean
+            required: false
+            description: Of het schip ijsklasse 1A of 1A super of een gelijkwaardige ijsklasse heeft (lid 7)
+        output:
+          - name: inleverdeadline
+            type: date
+            description: Uiterste datum voor inlevering van broeikasgasemissierechten (voor 1 oktober van het volgend kalenderjaar)
+          - name: te_leveren_rechten_luchtvaart
+            type: number
+            description: Aantal in te leveren emissierechten voor vliegtuigexploitant (lid 1)
+          - name: te_leveren_rechten_scheepvaart
+            type: number
+            description: Aantal in te leveren emissierechten voor scheepvaartmaatschappij na toepassing fasering (lid 6) en ijsklasse-uitzondering (lid 7)
+        actions:
+          - output: volgend_jaar
+            value:
+              operation: ADD
+              values:
+                - $kalenderjaar
+                - 1
+          - output: inleverdeadline
+            value:
+              operation: DATE
+              year: $volgend_jaar
+              month: 10
+              day: 1
+          - output: te_leveren_rechten_luchtvaart
+            value: $emissies_luchtvaart
+          - output: scheepvaart_fasering_percentage
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $kalenderjaar
+                    value: 2024
+                  then: 40
+                - when:
+                    operation: EQUALS
+                    subject: $kalenderjaar
+                    value: 2025
+                  then: 70
+              default: 100
+          - output: scheepvaart_gefaseerd
+            value:
+              operation: MULTIPLY
+              values:
+                - $emissies_scheepvaart
+                - operation: DIVIDE
+                  values:
+                    - $scheepvaart_fasering_percentage
+                    - 100
+          - output: te_leveren_rechten_scheepvaart
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $heeft_ijsklasse_1a
+                        value: true
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $kalenderjaar
+                        value: 2030
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $emissies_scheepvaart
+                      - 0.95
+              default: $scheepvaart_gefaseerd
   - number: 16.39v
     text: |-
       [Artikel 16.36][ref1] is van overeenkomstige toepassing.
@@ -13192,6 +13279,32 @@ articles:
         bwb_id: BWBR0003245
         artikel: 18.16c
         hoofdstuk: '18'
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '5:45'
+          output: verjaringstermijn_jaren
+      execution:
+        parameters:
+          - name: overtreding_datum
+            type: date
+            required: true
+            description: Datum waarop de overtreding heeft plaatsgevonden (artikel 18.16a, 18.16b of 18.16c)
+        output:
+          - name: verjaringstermijn_jaren
+            type: number
+            description: Verjaringstermijn voor het opleggen van een bestuurlijke boete (10 jaar, in afwijking van AWB artikel 5:45)
+          - name: verjaring_einddatum
+            type: date
+            description: Datum waarop de bevoegdheid tot oplegging van de bestuurlijke boete vervalt (10 jaar na overtreding)
+        actions:
+          - output: verjaringstermijn_jaren
+            value: 10
+          - output: verjaring_einddatum
+            value:
+              operation: DATE_ADD
+              date: $overtreding_datum
+              years: 10
   - number: 18.16p
     text: |-
       1 Het bestuur van de emissieautoriteit stelt elk jaar voor 1 oktober een overzicht op van personen die het bepaalde
@@ -13249,6 +13362,17 @@ articles:
       - id: ref3
         bwb_id: BWBR0001854
         artikel: '184'
+    machine_readable:
+      execution:
+        output:
+          - name: maximale_boete_medewerking
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale bestuurlijke boete voor belemmering van toezichthouders (ten hoogste € 4.500)
+        actions:
+          - output: maximale_boete_medewerking
+            value: 450000
   - number: 18.16r
     text: |-
       1 Het bestuur van de emissieautoriteit kan de Commissie van Europese Gemeenschappen verzoeken een exploitatieverbod
