@@ -1336,6 +1336,38 @@ articles:
       c. de totale jaarpremie, bestaande uit de werkgeverspremie en de werknemerspremies, wordt uiterlijk binnen zes
       maanden na afloop van het kalenderjaar voldaan aan de pensioenuitvoerder.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel26
+    machine_readable:
+      execution:
+        parameters:
+          - name: tijdvak_einddatum
+            type: date
+            required: true
+            description: Einddatum van het tijdvak waarover de premie verschuldigd is (einde maand of kwartaal)
+          - name: administratiemethode
+            type: string
+            required: true
+            description: "ACTUELE_LOONSOM indien de pensioenuitvoerder op basis van actuele loonsomgegevens administreert (lid a1), KWARTAAL voor maandelijkse kwartaalafrekening (lid a2)"
+        output:
+          - name: uiterste_betaaldatum
+            type: date
+            description: Uiterste datum waarop de werkgever de premie aan de pensioenuitvoerder moet voldoen (lid a)
+        actions:
+          - output: uiterste_betaaldatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $administratiemethode
+                    value: ACTUELE_LOONSOM
+                  then:
+                    operation: DATE_ADD
+                    date: $tijdvak_einddatum
+                    months: 2
+              default:
+                operation: DATE_ADD
+                date: $tijdvak_einddatum
+                months: 1
   - number: '27'
     text: |-
       De in [artikel 26][ref1] genoemde termijnen gelden niet indien sprake is van een beëindiging van de deelneming. In
@@ -1350,6 +1382,23 @@ articles:
         artikel: '26'
         hoofdstuk: '3'
         paragraaf: '3.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: einddatum_deelneming
+            type: date
+            required: true
+            description: Datum van beëindiging van de deelneming
+        output:
+          - name: uiterste_premiebetalingsdatum
+            type: date
+            description: Uiterste datum waarop de nog verschuldigde premie bij beëindiging van de deelneming moet worden voldaan (binnen dertien weken)
+        actions:
+          - output: uiterste_premiebetalingsdatum
+            value:
+              operation: DATE_ADD
+              date: $einddatum_deelneming
+              weeks: 13
   - number: '28'
     text: |-
       1 Een pensioenfonds informeert elk kwartaal schriftelijk het verantwoordingsorgaan of het belanghebbendenorgaan
@@ -1371,6 +1420,50 @@ articles:
         bwb_id: BWBR0020809
         artikel: '131'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: premieachterstand
+            type: amount
+            required: true
+            description: De huidige premieachterstand bij het pensioenfonds (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: jaarpremie
+            type: amount
+            required: true
+            description: De totale door het pensioenfonds te ontvangen jaarpremie (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: voldoet_aan_minimaal_eigen_vermogen
+            type: boolean
+            required: true
+            description: True als het pensioenfonds voldoet aan de eisen van artikel 131 inzake het minimaal vereist eigen vermogen
+        output:
+          - name: informatieplicht_actief
+            type: boolean
+            description: True als het pensioenfonds verplicht is om kwartaal te informeren over de premieachterstand (lid 1)
+        actions:
+          - output: drempelachterstand
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.05
+                - $jaarpremie
+          - output: achterstand_boven_drempel
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $premieachterstand
+              value: $drempelachterstand
+          - output: informatieplicht_actief
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $achterstand_boven_drempel
+                  value: true
+                - operation: NOT
+                  value: $voldoet_aan_minimaal_eigen_vermogen
   - number: '29'
     text: |-
       1 Een verzekeraar informeert de deelnemers en de werkgever wanneer de premieachterstand het noodzakelijk maakt de
@@ -3092,6 +3185,32 @@ articles:
         artikel: '66'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitkering_nabestaandenpensioen_jaarbasis
+            type: amount
+            required: true
+            description: Hoogte van de uitkering van het partnerpensioen of wezenpensioen op de ingangsdatum op jaarbasis (in eurocent)
+            type_spec:
+              unit: eurocent
+        input:
+          - name: afkoopdrempel
+            type: amount
+            source:
+              output: afkoopdrempel
+            type_spec:
+              unit: eurocent
+        output:
+          - name: recht_op_afkoop_nabestaandenpensioen
+            type: boolean
+            description: True als de pensioenuitvoerder het recht heeft het nabestaandenpensioen af te kopen (lid 1, uitkering lager dan het op basis van artikel 66 bepaalde drempelbedrag)
+        actions:
+          - output: recht_op_afkoop_nabestaandenpensioen
+            value:
+              operation: LESS_THAN
+              subject: $uitkering_nabestaandenpensioen_jaarbasis
+              value: $afkoopdrempel
   - number: '68'
     text: |-
       1 De pensioenuitvoerder heeft jegens de gewezen partner het recht om een aanspraak op bijzonder partnerpensioen af
@@ -3133,6 +3252,32 @@ articles:
         artikel: '66'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitkering_bijzonder_partnerpensioen_jaarbasis
+            type: amount
+            required: true
+            description: Hoogte van de uitkering van het bijzonder partnerpensioen op de ingangsdatum op jaarbasis (in eurocent)
+            type_spec:
+              unit: eurocent
+        input:
+          - name: afkoopdrempel
+            type: amount
+            source:
+              output: afkoopdrempel
+            type_spec:
+              unit: eurocent
+        output:
+          - name: recht_op_afkoop_bijzonder_partnerpensioen
+            type: boolean
+            description: True als de pensioenuitvoerder het recht heeft het bijzonder partnerpensioen af te kopen (lid 1, uitkering lager dan het op basis van artikel 66 bepaalde drempelbedrag)
+        actions:
+          - output: recht_op_afkoop_bijzonder_partnerpensioen
+            value:
+              operation: LESS_THAN
+              subject: $uitkering_bijzonder_partnerpensioen_jaarbasis
+              value: $afkoopdrempel
   - number: '69'
     text: |-
       1 Een pensioenuitvoerder is verplicht om op verzoek van de gerechtigde tot een pensioen over te gaan
@@ -3330,6 +3475,32 @@ articles:
         artikel: '66'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: uitkering_ouderdomspensioen_jaarbasis
+            type: amount
+            required: true
+            description: De verwachte jaarlijkse uitkering van het ouderdomspensioen op de reguliere ingangsdatum (in eurocent)
+            type_spec:
+              unit: eurocent
+        input:
+          - name: afkoopdrempel
+            type: amount
+            source:
+              output: afkoopdrempel
+            type_spec:
+              unit: eurocent
+        output:
+          - name: recht_op_overdracht
+            type: boolean
+            description: True als de pensioenuitvoerder het recht heeft de overdrachtswaarde over te dragen (lid 1a, ouderdomspensioen op jaarbasis lager dan het op basis van artikel 66 bepaalde drempelbedrag)
+        actions:
+          - output: recht_op_overdracht
+            value:
+              operation: LESS_THAN
+              subject: $uitkering_ouderdomspensioen_jaarbasis
+              value: $afkoopdrempel
   - number: '71'
     text: |-
       1 De pensioenuitvoerder is verplicht om na een verzoek van de gewezen deelnemer tot waardeoverdracht de
@@ -6523,6 +6694,71 @@ articles:
       4 Een pensioenfonds vermeldt in zijn bestuursverslag op welke wijze in het beleggingsbeleid rekening wordt gehouden
       met milieu en klimaat, mensenrechten en sociale verhoudingen.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel135
+    machine_readable:
+      execution:
+        parameters:
+          - name: beleggingswaarde_bijdragende_onderneming
+            type: amount
+            required: true
+            description: Totale waarde van de beleggingen in de bijdragende onderneming (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: totale_portefeuillewaarde
+            type: amount
+            required: true
+            description: Totale waarde van de beleggingsportefeuille als geheel (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: bijdragende_onderneming_in_groep
+            type: boolean
+            required: true
+            description: True als de bijdragende onderneming tot een groep behoort
+          - name: beleggingswaarde_groep
+            type: amount
+            required: true
+            description: Totale waarde van beleggingen in alle ondernemingen van dezelfde groep als de bijdragende onderneming (in eurocent); stel 0 als bijdragende_onderneming_in_groep = false
+            type_spec:
+              unit: eurocent
+        output:
+          - name: belegging_bijdragende_onderneming_binnen_limiet
+            type: boolean
+            description: True als beleggingen in bijdragende onderneming ten hoogste 5% van de portefeuille bedragen (lid 1 onderdeel b)
+          - name: belegging_groep_binnen_limiet
+            type: boolean
+            description: True als beleggingen in alle groepsondernemingen ten hoogste 10% van de portefeuille bedragen, of als de onderneming niet in een groep zit (lid 1 onderdeel b)
+        actions:
+          - output: maximale_belegging_bijdragende_onderneming
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.05
+                - $totale_portefeuillewaarde
+          - output: maximale_belegging_groep
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.10
+                - $totale_portefeuillewaarde
+          - output: belegging_bijdragende_onderneming_binnen_limiet
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $beleggingswaarde_bijdragende_onderneming
+              value: $maximale_belegging_bijdragende_onderneming
+          - output: belegging_groep_voldoet
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $beleggingswaarde_groep
+              value: $maximale_belegging_groep
+          - output: belegging_groep_binnen_limiet
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bijdragende_onderneming_in_groep
+                    value: true
+                  then: $belegging_groep_voldoet
+              default: true
   - number: '136'
     text: |-
       1 Een pensioenfonds gaat geen leningen aan, tenzij de lening tijdelijk wordt aangegaan voor
