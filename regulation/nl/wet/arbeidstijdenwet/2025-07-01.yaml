@@ -513,6 +513,84 @@ articles:
       - id: ref1
         bwb_id: BWBR0044212
         artikel: '2.32'
+    machine_readable:
+      execution:
+        parameters:
+          - name: leeftijd_kind
+            type: number
+            required: true
+            description: Leeftijd van het kind in jaren
+          - name: type_arbeid
+            type: string
+            required: true
+            description: "Type arbeid: ALTERNATIEVE_SANCTIE, LICHT_NIET_INDUSTRIEEL, LICHTE_ARBEID, OCHTENDKRANT_BEZORGEN"
+          - name: is_schooltijd
+            type: boolean
+            required: true
+            description: Wordt de arbeid verricht gedurende schooltijd?
+          - name: is_maatschappelijke_stage
+            type: boolean
+            required: false
+            description: Betreft het een maatschappelijke stage als bedoeld in artikel 2.32 WVO 2020?
+          - name: naast_en_in_samenhang_onderwijs
+            type: boolean
+            required: false
+            description: Wordt arbeid naast en in samenhang met onderwijs verricht?
+        output:
+          - name: arbeid_toegestaan
+            type: boolean
+            description: Geeft aan of het kind de arbeid mag verrichten op grond van de uitzonderingen in lid 2
+        actions:
+          - output: arbeid_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $leeftijd_kind
+                      value: 12
+                    - operation: EQUALS
+                      subject: $type_arbeid
+                      value: ALTERNATIEVE_SANCTIE
+                    - operation: NOT
+                      value: $is_schooltijd
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $leeftijd_kind
+                      value: 13
+                    - operation: EQUALS
+                      subject: $type_arbeid
+                      value: LICHT_NIET_INDUSTRIEEL
+                    - operation: OR
+                      conditions:
+                        - operation: NOT
+                          value: $is_schooltijd
+                        - operation: EQUALS
+                          subject: $is_maatschappelijke_stage
+                          value: true
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $leeftijd_kind
+                      value: 14
+                    - operation: EQUALS
+                      subject: $type_arbeid
+                      value: LICHTE_ARBEID
+                    - operation: EQUALS
+                      subject: $naast_en_in_samenhang_onderwijs
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $leeftijd_kind
+                      value: 15
+                    - operation: EQUALS
+                      subject: $type_arbeid
+                      value: OCHTENDKRANT_BEZORGEN
+                    - operation: NOT
+                      value: $is_schooltijd
   - number: 3:3
     text: |-
       1 De toezichthouder, bedoeld in [artikel 8:1, eerste lid][ref1], kan ontheffing verlenen van
@@ -768,6 +846,54 @@ articles:
         artikel: 5:12
         hoofdstuk: '5'
         paragraaf: '5.3'
+    machine_readable:
+      untranslatables:
+        - construct: "gemiddeld 50 uren per week in elke periode van 4 aaneengesloten weken"
+          reason: "Aggregation over a period (average weekly hours) is not available as an engine operation"
+          legal_text_excerpt: "gemiddeld 50 uren per week in elke periode van 4 aaneengesloten weken"
+          accepted: false
+        - construct: "gemiddeld 45 uren per week in elke periode van 16 aaneengesloten weken"
+          reason: "Aggregation over a period (average weekly hours) is not available as an engine operation"
+          legal_text_excerpt: "gemiddeld 45 uren per week in elke periode van 16 aaneengesloten weken"
+          accepted: false
+      execution:
+        parameters:
+          - name: leeftijd_werknemer
+            type: number
+            required: true
+            description: Leeftijd van de zwangere werknemer in jaren
+          - name: uren_per_dienst
+            type: number
+            required: true
+            description: Geplande uren arbeid per dienst
+        output:
+          - name: max_uren_per_dienst_zwangere
+            type: number
+            description: Maximum toegestane arbeidstijd per dienst voor zwangere werkneemster van 18 jaar of ouder (lid 4a)
+          - name: nachtdienst_verbod
+            type: boolean
+            description: Geeft aan of nachtdienst in beginsel verboden is voor de zwangere werknemer (lid 5)
+          - name: voldoet_diensttijd_zwangere
+            type: boolean
+            description: Voldoet de dienstduur aan het maximum voor zwangere werknemers?
+        actions:
+          - output: max_uren_per_dienst_zwangere
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $leeftijd_werknemer
+                    value: 18
+                  then: 10
+              default: 0
+          - output: nachtdienst_verbod
+            value: true
+          - output: voldoet_diensttijd_zwangere
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $uren_per_dienst
+              value: $max_uren_per_dienst_zwangere
   - number: 4:6
     text: |-
       De werkgever organiseert de arbeid zodanig, dat een vrouwelijke werknemer:
@@ -780,6 +906,40 @@ articles:
 
       b. geen arbeid verricht binnen 42 dagen na haar bevalling.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel46
+    machine_readable:
+      untranslatables:
+        - construct: "verlengd met het tijdvak dat verloopt tussen de vermoedelijke datum van de bevalling en de werkelijke datum van de bevalling"
+          reason: "Date difference (number of days between two dates) is not available as an engine operation"
+          legal_text_excerpt: "verlengd met het tijdvak, dat verloopt tussen de vermoedelijke datum van de bevalling en de werkelijke datum van de bevalling"
+          accepted: false
+      execution:
+        parameters:
+          - name: vermoedelijke_bevallingsdatum
+            type: date
+            required: true
+            description: Vermoedelijke datum van bevalling zoals aangegeven door arts of verloskundige
+          - name: werkelijke_bevallingsdatum
+            type: date
+            required: true
+            description: Werkelijke datum van bevalling
+        output:
+          - name: vrije_periode_start
+            type: date
+            description: Datum waarop de vrije periode van arbeid aanvangt (28 dagen voor vermoedelijke bevallingsdatum, lid a)
+          - name: vrije_periode_einde
+            type: date
+            description: Datum waarop de vrije periode eindigt (42 dagen na werkelijke bevalling, lid b)
+        actions:
+          - output: vrije_periode_start
+            value:
+              operation: DATE_ADD
+              date: $vermoedelijke_bevallingsdatum
+              days: -28
+          - output: vrije_periode_einde
+            value:
+              operation: DATE_ADD
+              date: $werkelijke_bevallingsdatum
+              days: 42
   - number: 4:7
     text: |-
       [Artikel 4:5, met uitzondering van het zesde lid][ref1], is van overeenkomstige toepassing ten aanzien van een
@@ -861,6 +1021,59 @@ articles:
       3 De in het eerste of tweede lid bedoelde periode vangt aan op het eerste tijdstip van de dag, waarop de werknemer
       arbeid verricht.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel53
+    machine_readable:
+      untranslatables:
+        - construct: "eenmaal in elke aaneengesloten periode van 7 maal 24 uren mag worden ingekort"
+          reason: "Counting allowable reductions over a rolling 7-day period is not available as an engine operation"
+          legal_text_excerpt: "welke rusttijd eenmaal in elke aaneengesloten periode van 7 maal 24 uren mag worden ingekort tot ten minste 8 uren"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_jeugdige_werknemer
+            type: boolean
+            required: true
+            description: Is de werknemer een jeugdige werknemer (16 of 17 jaar)?
+          - name: rusttijd_uren
+            type: number
+            required: true
+            description: Aaneengesloten rusttijd in uren (in de betreffende periode van 24 uren)
+          - name: is_ingekort_rusttijd
+            type: boolean
+            required: false
+            description: Betreft het de eenmalig toegestane inkorting van de dagelijkse rusttijd (alleen voor werknemer 18+, art. 5:3 lid 2)?
+        output:
+          - name: minimum_rusttijd_uren
+            type: number
+            description: Wettelijk vereiste minimum rusttijd in uren voor de betreffende categorie werknemer
+          - name: voldoet_rusttijdeis
+            type: boolean
+            description: Voldoet de genoten rusttijd aan de wettelijke eis?
+        actions:
+          - output: minimum_rusttijd_uren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_jeugdige_werknemer
+                    value: true
+                  then: 12
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige_werknemer
+                        value: false
+                      - operation: EQUALS
+                        subject: $is_ingekort_rusttijd
+                        value: true
+                  then: 8
+              default: 11
+          - output: voldoet_rusttijdeis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $rusttijd_uren
+              value: $minimum_rusttijd_uren
   - number: 5:4
     text: |-
       1 De werkgever organiseert de arbeid van een jeugdige werknemer zodanig dat, indien hij meer dan 4,5 uren arbeid
@@ -880,6 +1093,69 @@ articles:
       wordt onderbroken door een pauze van ten minste 15 minuten. Elk beding, waarbij op een andere wijze dan in dit lid
       is bepaald, wordt afgeweken van het tweede lid, is nietig.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel54
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_jeugdige_werknemer
+            type: boolean
+            required: true
+            description: Is de werknemer een jeugdige werknemer (16 of 17 jaar)?
+          - name: uren_per_dienst
+            type: number
+            required: true
+            description: Aantal uren arbeid per dienst
+          - name: pauze_minuten
+            type: number
+            required: true
+            description: Feitelijk genoten pauze in minuten
+        output:
+          - name: vereiste_pauze_minuten
+            type: number
+            description: Wettelijk vereiste minimum pauze in minuten
+          - name: voldoet_pauzeeis
+            type: boolean
+            description: Voldoet de pauze aan de wettelijke eis?
+        actions:
+          - output: vereiste_pauze_minuten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige_werknemer
+                        value: true
+                      - operation: GREATER_THAN
+                        subject: $uren_per_dienst
+                        value: 4.5
+                  then: 30
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige_werknemer
+                        value: false
+                      - operation: GREATER_THAN
+                        subject: $uren_per_dienst
+                        value: 10
+                  then: 45
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_jeugdige_werknemer
+                        value: false
+                      - operation: GREATER_THAN
+                        subject: $uren_per_dienst
+                        value: 5.5
+                  then: 30
+              default: 0
+          - output: voldoet_pauzeeis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $pauze_minuten
+              value: $vereiste_pauze_minuten
   - number: 5:5
     text: |-
       1 De werkgever organiseert de arbeid zodanig, dat de jeugdige werknemer een onafgebroken rusttijd heeft van ten
@@ -896,6 +1172,33 @@ articles:
       3 De in het eerste of tweede lid bedoelde periode vangt aan op het eerste tijdstip van de dag, waarop de werknemer
       arbeid verricht.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel55
+    machine_readable:
+      untranslatables:
+        - construct: "72 uren in elke aaneengesloten periode van 14 maal 24 uren, welke rusttijd kan worden gesplitst in onafgebroken rustperioden van elk ten minste 32 uren"
+          reason: "Aggregation of split rest periods over a 14-day rolling window is not available as an engine operation"
+          legal_text_excerpt: "72 uren in elke aaneengesloten periode van 14 maal 24 uren, welke rusttijd kan worden gesplitst in onafgebroken rustperioden van elk ten minste 32 uren"
+          accepted: false
+      execution:
+        parameters:
+          - name: wekelijkse_rusttijd_uren
+            type: number
+            required: true
+            description: Aaneengesloten rusttijd per periode van 7 maal 24 uren in uren
+        output:
+          - name: minimum_wekelijkse_rusttijd_uren
+            type: number
+            description: Wettelijk vereiste minimum aaneengesloten rusttijd per week in uren (lid 1 jeugdige en lid 2a werknemer 18+; beide 36 uur)
+          - name: voldoet_wekelijkse_rusttijdeis
+            type: boolean
+            description: Voldoet de genoten wekelijkse rusttijd aan de wettelijke eis?
+        actions:
+          - output: minimum_wekelijkse_rusttijd_uren
+            value: 36
+          - output: voldoet_wekelijkse_rusttijdeis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $wekelijkse_rusttijd_uren
+              value: $minimum_wekelijkse_rusttijd_uren
   - number: 5:6
     text: |-
       1 De werkgever organiseert de arbeid zodanig, dat de werknemer op zondag geen arbeid verricht, behalve voor zover
@@ -944,6 +1247,78 @@ articles:
       4 Bij collectieve regeling kan, met inachtneming van het tweede lid, van het derde lid worden afgeweken. Elk
       beding, waarbij op een andere wijze dan in de vorige zin is bepaald, wordt afgeweken van het derde lid, is nietig.
     url: https://wetten.overheid.nl/BWBR0007671/2025-07-01#Artikel57
+    machine_readable:
+      untranslatables:
+        - construct: "gemiddeld 40 uren per week in elke periode van 4 aaneengesloten weken (jeugdige werknemer)"
+          reason: "Aggregation over a rolling period (average weekly hours) is not available as an engine operation"
+          legal_text_excerpt: "gemiddeld 40 uren per week in elke periode van 4 aaneengesloten weken"
+          accepted: false
+        - construct: "gemiddeld 48 uren per week in elke periode van 16 aaneengesloten weken"
+          reason: "Aggregation over a rolling period (average weekly hours) is not available as an engine operation"
+          legal_text_excerpt: "gemiddeld 48 uren per week in elke periode van 16 aaneengesloten weken"
+          accepted: false
+        - construct: "gemiddeld 55 uren per week in elke periode van 4 aaneengesloten weken"
+          reason: "Aggregation over a rolling period (average weekly hours) is not available as an engine operation"
+          legal_text_excerpt: "gemiddeld 55 uren per week in elke periode van 4 aaneengesloten weken"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_jeugdige_werknemer
+            type: boolean
+            required: true
+            description: Is de werknemer een jeugdige werknemer (16 of 17 jaar)?
+          - name: uren_per_dienst
+            type: number
+            required: true
+            description: Aantal uren arbeid in de betreffende dienst
+          - name: uren_per_week
+            type: number
+            required: true
+            description: Totaal aantal uren arbeid in de betreffende week
+        output:
+          - name: max_uren_per_dienst
+            type: number
+            description: Maximum aantal uren arbeid toegestaan per dienst
+          - name: max_uren_per_week
+            type: number
+            description: Maximum aantal uren arbeid toegestaan per week
+          - name: voldoet_arbeidstijdeis_dienst
+            type: boolean
+            description: Voldoet de arbeidstijd per dienst aan de wettelijke eis?
+          - name: voldoet_arbeidstijdeis_week
+            type: boolean
+            description: Voldoet de arbeidstijd per week aan de wettelijke eis?
+        actions:
+          - output: max_uren_per_dienst
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_jeugdige_werknemer
+                    value: true
+                  then: 9
+              default: 12
+          - output: max_uren_per_week
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_jeugdige_werknemer
+                    value: true
+                  then: 45
+              default: 60
+          - output: voldoet_arbeidstijdeis_dienst
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $uren_per_dienst
+              value: $max_uren_per_dienst
+          - output: voldoet_arbeidstijdeis_week
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $uren_per_week
+              value: $max_uren_per_week
   - number: 5:8
     text: |-
       1 In afwijking van [artikel 5:7, tweede lid, onderdeel a][ref1], organiseert de werkgever, behoudens het derde lid,
@@ -1006,6 +1381,74 @@ articles:
         artikel: 5:7
         hoofdstuk: '5'
         paragraaf: '5.2'
+    machine_readable:
+      untranslatables:
+        - construct: "In elke periode van 16 aaneengesloten weken waarin een werknemer 16 of meer malen arbeid in een nachtdienst verricht"
+          reason: "Counting occurrences of night shifts per rolling 16-week period is not available as an engine operation"
+          legal_text_excerpt: "In elke periode van 16 aaneengesloten weken waarin een werknemer 16 of meer malen arbeid in een nachtdienst verricht organiseert de werkgever, in afwijking van artikel 5:7, tweede lid, onderdeel c, de arbeid zodanig dat ten hoogste gemiddeld 40 uren per week arbeid wordt verricht"
+          accepted: false
+        - construct: "ten hoogste 5 malen in elke aaneengesloten periode van 14 maal 24 uren en ten hoogste 22 malen in elke aaneengesloten periode van 52 weken (lid 3)"
+          reason: "Counting occurrences of extended night shifts per rolling period is not available as an engine operation"
+          legal_text_excerpt: "ten hoogste 5 malen in elke aaneengesloten periode van 14 maal 24 uren, en ten hoogste 22 malen in elke aaneengesloten periode van 52 weken"
+          accepted: false
+        - construct: "na het verrichten van een reeks van 3 of meer achtereenvolgende nachtdiensten een onafgebroken rusttijd van ten minste 46 uren (lid 5)"
+          reason: "Counting consecutive night shifts is not available as an engine operation"
+          legal_text_excerpt: "na het verrichten van een reeks van 3 of meer achtereenvolgende nachtdiensten een onafgebroken rusttijd heeft van ten minste 46 uren"
+          accepted: false
+        - construct: "in elke periode van 16 aaneengesloten weken ten hoogste 36 malen en in elke periode van 52 weken ten hoogste 140 malen (lid 8 en 9)"
+          reason: "Counting occurrences per rolling period is not available as an engine operation"
+          legal_text_excerpt: "in elke periode van 16 aaneengesloten weken ten hoogste 36 malen arbeid verricht in een nachtdienst die eindigt na 02.00 uur"
+          accepted: false
+      execution:
+        parameters:
+          - name: uren_per_nachtdienst
+            type: number
+            required: true
+            description: Aantal uren arbeid in de betreffende nachtdienst
+          - name: dienst_eindigt_na_0200
+            type: boolean
+            required: true
+            description: Eindigt de nachtdienst na 02:00 uur?
+          - name: is_uitzondering_lid3
+            type: boolean
+            required: false
+            description: Is de uitzondering van lid 3 van toepassing (max 12 uur nachtdienst toegestaan, gevolgd door 12 uur rust)?
+        output:
+          - name: max_uren_per_nachtdienst
+            type: number
+            description: Maximum toegestane arbeidstijd per nachtdienst (lid 1 en lid 3)
+          - name: min_rusttijd_na_nachtdienst_eindigt_na_0200_uren
+            type: number
+            description: Minimum rusttijd na een nachtdienst die eindigt na 02:00 uur — 14 uren conform lid 4; bij andere nachtdiensten geldt artikel 5:3
+          - name: voldoet_nachtdienst_arbeidstijd
+            type: boolean
+            description: Voldoet de arbeidstijd per nachtdienst aan de eis?
+        actions:
+          - output: max_uren_per_nachtdienst
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_uitzondering_lid3
+                    value: true
+                  then: 12
+              default: 10
+          - output: min_rusttijd_na_nachtdienst_eindigt_na_0200_uren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $dienst_eindigt_na_0200
+                    value: true
+                  then: 14
+              default: 0
+          - output: voldoet_nachtdienst_arbeidstijd
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $uren_per_nachtdienst
+              value: $max_uren_per_nachtdienst
   - number: 5:9
     text: |-
       1 De werkgever organiseert de arbeid zodanig, dat consignatie uitsluitend aan een werknemer van 18 jaar of ouder
@@ -2136,6 +2579,87 @@ articles:
       - id: ref6
         bwb_id: BWBR0005537
         artikel: 8:69
+    machine_readable:
+      untranslatables:
+        - construct: "ten hoogste het bedrag van de vijfde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          reason: "External reference to statutory fine category table in Wetboek van Strafrecht cannot be resolved without cross-law reference"
+          legal_text_excerpt: "De bestuurlijke boete die voor een overtreding kan worden opgelegd bedraagt ten hoogste het bedrag van de vijfde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          accepted: false
+      open_terms:
+        - id: basis_boetebedrag
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: BELEIDSREGEL
+          legal_basis: artikel 10:7 zesde lid Arbeidstijdenwet
+      execution:
+        parameters:
+          - name: aantal_eerdere_overtredingen
+            type: number
+            required: true
+            description: Aantal onherroepelijk beboete eerdere gelijksoortige overtredingen in het relevante tijdvak
+          - name: is_ernstige_overtreding
+            type: boolean
+            required: true
+            description: Is zowel de huidige als de eerdere overtreding bij AMvB aangewezen als ernstige overtreding?
+          - name: eerdere_boetes_onherroepelijk
+            type: boolean
+            required: true
+            description: Zijn de bestuurlijke boetes wegens eerdere overtredingen onherroepelijk geworden?
+        output:
+          - name: verhogingsfactor
+            type: number
+            description: Vermenigvuldigingsfactor voor de bestuurlijke boete (1 = geen verhoging, 2 = 100% verhoging, 3 = 200% verhoging)
+          - name: definitieve_boete
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Definitieve op te leggen bestuurlijke boete (basis_boetebedrag x verhogingsfactor)
+        actions:
+          - output: verhogingsfactor
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $eerdere_boetes_onherroepelijk
+                        value: true
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_eerdere_overtredingen
+                        value: 2
+                  then: 3
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $eerdere_boetes_onherroepelijk
+                        value: true
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_eerdere_overtredingen
+                        value: 1
+                      - operation: EQUALS
+                        subject: $is_ernstige_overtreding
+                        value: true
+                  then: 3
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $eerdere_boetes_onherroepelijk
+                        value: true
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $aantal_eerdere_overtredingen
+                        value: 1
+                  then: 2
+              default: 1
+          - output: definitieve_boete
+            value:
+              operation: MULTIPLY
+              values:
+                - $basis_boetebedrag
+                - $verhogingsfactor
   - number: 10:10
     text: |-
       De persoon aan wie een bestuurlijke boete is opgelegd, verstrekt desgevraagd aan de daartoe op grond van
