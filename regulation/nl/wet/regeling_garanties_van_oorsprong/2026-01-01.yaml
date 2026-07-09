@@ -905,7 +905,7 @@ articles:
     url: https://wetten.overheid.nl/BWBR0035971/2026-01-01#Artikel19
   - number: 19a
     text: |-
-      Het percentage, bedoeld in [artikel 19, eerste lid][ref1], bedraagt in het kalenderjaar 2026 53 procent.
+      Het percentage, bedoeld in [artikel 19, eerste lid][ref1], bedraagt in het kalenderjaar 2026 53 procent.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0035971#Artikel19
@@ -915,6 +915,15 @@ articles:
         bwb_id: BWBR0035971
         artikel: '19'
         paragraaf: '5'
+    machine_readable:
+      execution:
+        output:
+          - name: percentage_hernieuwbare_energie_2026
+            type: number
+            description: Percentage hernieuwbare energie voor 2026 (Artikel 19a)
+        actions:
+          - output: percentage_hernieuwbare_energie_2026
+            value: 53
   - number: '20'
     text: |-
       1 Dit artikel is uitsluitend van toepassing op een producent als bedoeld in
@@ -979,6 +988,15 @@ articles:
   - number: '21'
     text: Een garantie van oorsprong heeft betrekking op een hoeveelheid energie ter grootte van 1 MWh.
     url: https://wetten.overheid.nl/BWBR0035971/2026-01-01#Artikel21
+    machine_readable:
+      execution:
+        output:
+          - name: garantie_eenheid_grootte
+            type: number
+            description: Grootte van een garantie van oorsprong (1 MWh, Artikel 21)
+        actions:
+          - output: garantie_eenheid_grootte
+            value: 1
   - number: '22'
     text: |-
       1 De minister boekt garanties van oorsprong die betrekking hebben op de energie die is opgewekt vanaf de eerste dag
