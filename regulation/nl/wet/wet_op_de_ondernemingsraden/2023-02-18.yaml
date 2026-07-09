@@ -456,6 +456,23 @@ articles:
       5 Hij die optreedt ter vervulling van een tussentijds opengevallen plaats, treedt af op het tijdstip waarop degene
       in wiens plaats hij komt had moeten aftreden.
     url: https://wetten.overheid.nl/BWBR0002747/2023-02-18#Artikel12
+    machine_readable:
+      execution:
+        parameters:
+          - name: installatie_datum
+            type: date
+            required: true
+            description: Datum waarop de zittingsperiode van de ondernemingsraad is begonnen (lid 1)
+        output:
+          - name: zittingsperiode_einddatum
+            type: date
+            description: Datum waarop de zittingsperiode van drie jaar eindigt (lid 1)
+        actions:
+          - output: zittingsperiode_einddatum
+            value:
+              operation: DATE_ADD
+              date: $installatie_datum
+              years: 3
   - number: '13'
     text: |-
       1 Op verzoek van de ondernemer of van de ondernemingsraad kan de kantonrechter voor een door hem te bepalen termijn
@@ -871,6 +888,23 @@ articles:
         bwb_id: BWBR0002747
         artikel: '24'
         hoofdstuk: IV
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+        output:
+          - name: jaarlijkse_bespreking_beloningsverhoudingen_vereist
+            type: boolean
+            description: Of de jaarlijkse bespreking van beloningsverhoudingen als bedoeld in artikel 31d vereist is in de overlegvergadering (lid 2, tweede zin)
+        actions:
+          - output: jaarlijkse_bespreking_beloningsverhoudingen_vereist
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_werkzame_personen
+              value: 100
   - number: 23a
     text: |-
       1 Een overlegvergadering kan slechts worden gehouden, indien ten aanzien van de ondernemingsraad wordt voldaan aan
@@ -2075,6 +2109,51 @@ articles:
         bwb_id: BWBR0002747
         artikel: '31'
         hoofdstuk: IVB
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+          - name: heeft_ondernemingsraad
+            type: boolean
+            required: true
+            description: Of voor de onderneming een ondernemingsraad is ingesteld
+          - name: meerderheid_verzoek_pvt
+            type: boolean
+            required: true
+            description: Of de meerderheid van de in de onderneming werkzame personen heeft verzocht om een personeelsvertegenwoordiging in te stellen (lid 2)
+        output:
+          - name: pvt_optioneel_mogelijk
+            type: boolean
+            description: Of de ondernemer een personeelsvertegenwoordiging kan instellen op grond van artikel 35c lid 1 (10-50 personen, geen OR)
+          - name: pvt_instelling_verplicht
+            type: boolean
+            description: Of de ondernemer verplicht is een personeelsvertegenwoordiging in te stellen op verzoek van de meerderheid (lid 2)
+        actions:
+          - output: pvt_optioneel_mogelijk
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $aantal_werkzame_personen
+                  value: 10
+                - operation: LESS_THAN
+                  subject: $aantal_werkzame_personen
+                  value: 50
+                - operation: NOT
+                  value: $heeft_ondernemingsraad
+          - output: pvt_instelling_verplicht
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $pvt_optioneel_mogelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $meerderheid_verzoek_pvt
+                  value: true
   - number: 35d
     text: |-
       1 De ondernemer die een onderneming in stand houdt waarin in de regel minder dan 10 personen werkzaam
@@ -2164,6 +2243,31 @@ articles:
         bwb_id: BWBR0002747
         artikel: 35c
         hoofdstuk: VA
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werkzame_personen
+            type: number
+            required: true
+            description: Aantal in de regel in de onderneming werkzame personen
+          - name: heeft_ondernemingsraad
+            type: boolean
+            required: true
+            description: Of voor de onderneming een ondernemingsraad is ingesteld
+        output:
+          - name: pvt_35d_optioneel_mogelijk
+            type: boolean
+            description: Of de ondernemer een personeelsvertegenwoordiging kan instellen op grond van artikel 35d lid 1 (minder dan 10 personen, geen OR)
+        actions:
+          - output: pvt_35d_optioneel_mogelijk
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN
+                  subject: $aantal_werkzame_personen
+                  value: 10
+                - operation: NOT
+                  value: $heeft_ondernemingsraad
   - number: '36'
     text: |-
       1 Iedere belanghebbende kan de kantonrechter verzoeken te bepalen dat de ondernemer of de ondernemingsraad gevolg
