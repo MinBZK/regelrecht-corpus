@@ -143,6 +143,23 @@ articles:
       3 De ondernemingen waarvoor een gemeenschappelijke ondernemingsraad is ingesteld, worden beschouwd als één
       onderneming in de zin van deze wet.
     url: https://wetten.overheid.nl/BWBR0002747/2023-02-18#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: gezamenlijk_aantal_werkzame_personen
+            type: number
+            required: true
+            description: Totaal aantal in de regel in de tezamen gehouden ondernemingen werkzame personen (lid 1 en 2)
+        output:
+          - name: gemeenschappelijke_or_drempel_bereikt
+            type: boolean
+            description: Of het gezamenlijk aantal werkzame personen ten minste 50 bedraagt, zodat een gemeenschappelijke ondernemingsraad ingesteld kan worden (lid 1 en 2)
+        actions:
+          - output: gemeenschappelijke_or_drempel_bereikt
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $gezamenlijk_aantal_werkzame_personen
+              value: 50
   - number: '4'
     text: |-
       1 De ondernemer die een onderneming in stand houdt waarin in de regel ten minste 50 personen werkzaam zijn stelt
@@ -428,6 +445,23 @@ articles:
       binnen een jaar na de bekendmaking van de goedgekeurde verordening in de *Staatscourant*, de bepalingen in hun
       reglement die in strijd zijn met deze verordening daarmee in overeenstemming.
     url: https://wetten.overheid.nl/BWBR0002747/2023-02-18#Artikel8
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_datum_verordening
+            type: date
+            required: true
+            description: Datum waarop de goedgekeurde verordening van de Raad in de Staatscourant is bekendgemaakt (lid 3)
+        output:
+          - name: uiterste_aanpassing_reglement_datum
+            type: date
+            description: Uiterste datum waarop de ondernemingsraad het reglement in overeenstemming met de Raadsverordening moet brengen (lid 3; binnen een jaar na bekendmaking in de Staatscourant)
+        actions:
+          - output: uiterste_aanpassing_reglement_datum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_datum_verordening
+              years: 1
   - number: '9'
     text: |-
       1 De verkiezing van leden van de ondernemingsraad geschiedt bij geheime schriftelijke stemming en aan de hand van
@@ -546,6 +580,13 @@ articles:
       onderneming werkzame personen van de verslagen van de vergaderingen van de ondernemingsraad en van het jaarverslag
       van de ondernemingsraad.
     url: https://wetten.overheid.nl/BWBR0002747/2023-02-18#Artikel14
+    machine_readable:
+      untranslatables:
+        - construct: "agenda uiterlijk 7 dagen vóór de vergadering bekendmaken"
+          reason: "Computing a deadline that lies BEFORE a reference date requires date subtraction, which is not available as an engine operation"
+          suggestion: "Add DATE_SUBTRACT operation to the engine, or allow negative duration values in DATE_ADD"
+          legal_text_excerpt: "welk tijdstip niet later kan worden gesteld dan 7 dagen vóór de vergadering, behoudens in spoedeisende gevallen"
+          accepted: false
   - number: '15'
     text: |-
       1 De ondernemingsraad kan de commissies instellen die hij voor de vervulling van zijn taak redelijkerwijze nodig
@@ -929,16 +970,28 @@ articles:
             type: number
             required: true
             description: Aantal in de regel in de onderneming werkzame personen
+          - name: verzoek_datum
+            type: date
+            required: true
+            description: Datum waarop de ondernemingsraad of de ondernemer om een overlegvergadering heeft verzocht (lid 1)
         output:
           - name: jaarlijkse_bespreking_beloningsverhoudingen_vereist
             type: boolean
             description: Of de jaarlijkse bespreking van beloningsverhoudingen als bedoeld in artikel 31d vereist is in de overlegvergadering (lid 2, tweede zin)
+          - name: vergadering_uiterste_datum
+            type: date
+            description: Uiterste datum waarop de overlegvergadering gehouden moet worden na het verzoek (lid 1; binnen twee weken na het verzoek)
         actions:
           - output: jaarlijkse_bespreking_beloningsverhoudingen_vereist
             value:
               operation: GREATER_THAN_OR_EQUAL
               subject: $aantal_werkzame_personen
               value: 100
+          - output: vergadering_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $verzoek_datum
+              weeks: 2
   - number: 23a
     text: |-
       1 Een overlegvergadering kan slechts worden gehouden, indien ten aanzien van de ondernemingsraad wordt voldaan aan
@@ -1100,6 +1153,32 @@ articles:
         bwb_id: BWBR0002747
         artikel: '27'
         hoofdstuk: IVA
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_or_ondernemingen_ondernemer
+            type: number
+            required: true
+            description: Aantal ondernemingen waarvoor de ondernemer zelf een ondernemingsraad heeft ingesteld (lid 3, eerste geval)
+          - name: groep_totaal_or_ondernemingen
+            type: number
+            required: true
+            description: Totaal aantal ondernemingsraden dat de groep verbonden ondernemers tezamen heeft ingesteld (lid 3, tweede geval)
+        output:
+          - name: uitzondering_aanwezigheid_commissarissen_van_toepassing
+            type: boolean
+            description: Of de uitzondering van lid 3 geldt waardoor de verplichting tot aanwezigheid van commissarissen in de overlegvergadering (lid 2) niet geldt
+        actions:
+          - output: uitzondering_aanwezigheid_commissarissen_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $aantal_or_ondernemingen_ondernemer
+                  value: 5
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $groep_totaal_or_ondernemingen
+                  value: 5
   - number: '25'
     text: |-
       1 De ondernemingsraad wordt door de ondernemer in de gelegenheid gesteld advies uit te brengen over elk door hem
