@@ -1161,6 +1161,36 @@ articles:
         artikel: '7'
         hoofdstuk: II
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_verzoekende_huurders
+            type: number
+            required: true
+            description: Aantal huurders dat het collectieve verzoek indient (lid 1)
+          - name: totaal_huurders_wooncomplex
+            type: number
+            required: true
+            description: Totaal aantal huurders binnen het wooncomplex of deel van het wooncomplex (lid 1)
+        output:
+          - name: helft_wooncomplex
+            type: number
+            description: De helft van het totaal aantal huurders in het wooncomplex (berekend hulpvariabele)
+          - name: collectief_vereiste_voldaan
+            type: boolean
+            description: Of het verzoek aan het collectief vereiste voldoet (ten minste de helft van de huurders heeft het ingediend, lid 1)
+        actions:
+          - output: helft_wooncomplex
+            value:
+              operation: DIVIDE
+              values:
+                - $totaal_huurders_wooncomplex
+                - 2
+          - output: collectief_vereiste_voldaan
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aantal_verzoekende_huurders
+              value: $helft_wooncomplex
   - number: '10'
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur worden regels gegeven voor de waardering van de
@@ -2256,6 +2286,37 @@ articles:
       - id: ref3
         bwb_id: BWBR0005290
         artikel: '260'
+    machine_readable:
+      open_terms:
+        - id: fallback_servicekosten_bedrag
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 18, vierde lid, Uitvoeringswet huurprijzen woonruimte
+      execution:
+        parameters:
+          - name: dienst_geleverd
+            type: boolean
+            required: true
+            description: Of de zaak of dienst door de verhuurder is geleverd (lid 4)
+        output:
+          - name: vastgestelde_servicekosten
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De vastgestelde servicekosten bij ontbreken of onvolledig formulier (lid 4); €0 indien dienst niet geleverd, anders bij ministeriële regeling vastgesteld bedrag
+        actions:
+          - output: vastgestelde_servicekosten
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $dienst_geleverd
+                    value: false
+                  then: 0
+              default: $fallback_servicekosten_bedrag
   - number: '19'
     text: |-
       1 In geval van een verzoek als bedoeld in [artikel 7:261 van het Burgerlijk Wetboek][ref1] doet de huurcommissie
