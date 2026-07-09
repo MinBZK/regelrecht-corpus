@@ -1418,6 +1418,12 @@ articles:
         UITKERING_MAXIMUM_VOLTIJDS:
           value: 7500000
           description: Wettelijk maximum uitkering beëindiging dienstverband voltijds (€ 75.000 in eurocent, artikel 2.10 lid 1)
+        PERCENTAGE_LID:
+          value: 0.10
+          description: Maximaal percentage voor leden van hoogste toezichthoudende organen (10%, artikel 2.10 lid 5)
+        PERCENTAGE_VOORZITTER:
+          value: 0.15
+          description: Maximaal percentage voor voorzitters van hoogste toezichthoudende organen (15%, artikel 2.10 lid 5)
       execution:
         parameters:
           - name: som_beloning_12_maanden
@@ -1436,12 +1442,21 @@ articles:
             type: boolean
             required: false
             description: Heeft het dienstverband een kleinere omvang dan voltijds (artikel 2.10 lid 1 tweede volzin)
+          - name: is_voorzitter
+            type: boolean
+            required: false
+            description: Is de functionaris voorzitter van het hoogste toezichthoudende orgaan (voorzitter = 15%, lid = 10%, artikel 2.10 lid 5)
         output:
           - name: maximale_uitkering_beeindiging
             type: amount
             type_spec:
               unit: eurocent
-            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 2.10
+            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 2.10 lid 1
+          - name: maximale_uitkering_beeindiging_toezichthouder
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale uitkering wegens beëindiging van het dienstverband voor leden/voorzitters van het hoogste toezichthoudende orgaan (artikel 2.10 lid 5)
         actions:
           - output: maximale_uitkering_beeindiging
             value:
@@ -1467,6 +1482,19 @@ articles:
                 values:
                   - $som_beloning_12_maanden
                   - $UITKERING_MAXIMUM_VOLTIJDS
+          - output: maximale_uitkering_beeindiging_toezichthouder
+            value:
+              operation: MULTIPLY
+              values:
+                - $maximale_uitkering_beeindiging
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: EQUALS
+                        subject: $is_voorzitter
+                        value: true
+                      then: $PERCENTAGE_VOORZITTER
+                  default: $PERCENTAGE_LID
   - number: '3.1'
     text: |-
       1 Partijen komen geen bezoldiging overeen die per kalenderjaar meer bedraagt dan het door Onze Minister wie het
@@ -1961,6 +1989,12 @@ articles:
         UITKERING_MAXIMUM_VOLTIJDS:
           value: 7500000
           description: Wettelijk maximum uitkering beëindiging dienstverband voltijds (€ 75.000 in eurocent, artikel 3.7 lid 1)
+        PERCENTAGE_LID:
+          value: 0.10
+          description: Maximaal percentage voor leden van hoogste toezichthoudende organen (10%, artikel 3.7 lid 5)
+        PERCENTAGE_VOORZITTER:
+          value: 0.15
+          description: Maximaal percentage voor voorzitters van hoogste toezichthoudende organen (15%, artikel 3.7 lid 5)
       execution:
         parameters:
           - name: som_beloning_12_maanden
@@ -1979,12 +2013,21 @@ articles:
             type: boolean
             required: false
             description: Heeft het dienstverband een kleinere omvang dan voltijds (artikel 3.7 lid 1 tweede volzin)
+          - name: is_voorzitter
+            type: boolean
+            required: false
+            description: Is de functionaris voorzitter van het hoogste toezichthoudende orgaan (voorzitter = 15%, lid = 10%, artikel 3.7 lid 5)
         output:
           - name: maximale_uitkering_beeindiging_paragraaf3
             type: amount
             type_spec:
               unit: eurocent
-            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 3.7
+            description: Maximale uitkering wegens beëindiging van het dienstverband conform artikel 3.7 lid 1
+          - name: maximale_uitkering_beeindiging_toezichthouder_paragraaf3
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Maximale uitkering wegens beëindiging van het dienstverband voor leden/voorzitters van het hoogste toezichthoudende orgaan (artikel 3.7 lid 5)
         actions:
           - output: maximale_uitkering_beeindiging_paragraaf3
             value:
@@ -2010,6 +2053,19 @@ articles:
                 values:
                   - $som_beloning_12_maanden
                   - $UITKERING_MAXIMUM_VOLTIJDS
+          - output: maximale_uitkering_beeindiging_toezichthouder_paragraaf3
+            value:
+              operation: MULTIPLY
+              values:
+                - $maximale_uitkering_beeindiging_paragraaf3
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: EQUALS
+                        subject: $is_voorzitter
+                        value: true
+                      then: $PERCENTAGE_VOORZITTER
+                  default: $PERCENTAGE_LID
   - number: '4.1'
     text: |-
       1 In het financieel verslaggevingsdocument worden van iedere topfunctionaris de bij regeling van Onze Minister vast
@@ -2045,6 +2101,31 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.1'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bezoldiging_functionaris
+            type: number
+            required: true
+            description: De bezoldiging van de functionaris (niet zijnde topfunctionaris) in het boekjaar in eurocent (artikel 4.1 lid 2)
+        input:
+          - name: toepasselijke_drempel
+            type: amount
+            source:
+              output: maximaal_toegestane_bezoldiging
+            type_spec:
+              unit: eurocent
+            description: Maximale bezoldiging als bedoeld in artikel 2.3 lid 1, met overeenkomstige toepassing van artikel 2.1 lid 2 voor deeltijdcorrectie (artikel 4.1 lid 2)
+        output:
+          - name: openbaarmaking_vereist_niet_topfunctionaris
+            type: boolean
+            description: Geeft aan of de bezoldiging van de functionaris in het financieel verslaggevingsdocument vermeld moet worden (artikel 4.1 lid 2)
+        actions:
+          - output: openbaarmaking_vereist_niet_topfunctionaris
+            value:
+              operation: GREATER_THAN
+              subject: $bezoldiging_functionaris
+              value: $toepasselijke_drempel
   - number: '4.2'
     text: |-
       Rechtspersonen en instellingen die de op grond van [artikel 4.1, eerste en tweede lid][ref1], vastgestelde gegevens
@@ -2487,6 +2568,84 @@ articles:
         bwb_id: BWBR0032249
         artikel: '2.6'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bezoldiging_bij_aanvang_afbouw
+            type: number
+            required: true
+            description: De bezoldiging die op grond van artikel 7.3 lid 1 t/m 4 werd genoten op het moment dat de vierjarige overgangsperiode verstreek (in eurocent, artikel 7.3 lid 8)
+          - name: geldende_maximum
+            type: number
+            required: true
+            description: Het voor de rechtspersoon of instelling geldende bezoldigingsmaximum in eurocent (artikel 2.3 of lager ex artikel 2.6/2.7, artikel 7.3 lid 8)
+          - name: jaar_in_afbouwperiode
+            type: number
+            required: true
+            description: Het jaar in de driejarige afbouwperiode (1, 2 of 3), aanvangend nadat de vierjarige overgangsperiode ex artikel 7.3 lid 1-5 is verstreken (artikel 7.3 lid 8)
+        output:
+          - name: maximale_bezoldiging_in_afbouwjaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De maximale toegestane bezoldiging in het betreffende afbouwjaar conform artikel 7.3 lid 8
+        actions:
+          - output: bezoldiging_na_jaar1
+            value:
+              operation: SUBTRACT
+              values:
+                - $bezoldiging_bij_aanvang_afbouw
+                - operation: DIVIDE
+                  values:
+                    - operation: SUBTRACT
+                      values:
+                        - $bezoldiging_bij_aanvang_afbouw
+                        - $geldende_maximum
+                    - 4
+          - output: bezoldiging_na_jaar2
+            value:
+              operation: SUBTRACT
+              values:
+                - $bezoldiging_na_jaar1
+                - operation: DIVIDE
+                  values:
+                    - operation: SUBTRACT
+                      values:
+                        - $bezoldiging_na_jaar1
+                        - $geldende_maximum
+                    - 3
+          - output: bezoldiging_na_jaar3
+            value:
+              operation: SUBTRACT
+              values:
+                - $bezoldiging_na_jaar2
+                - operation: DIVIDE
+                  values:
+                    - operation: SUBTRACT
+                      values:
+                        - $bezoldiging_na_jaar2
+                        - $geldende_maximum
+                    - 2
+          - output: maximale_bezoldiging_in_afbouwjaar
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $jaar_in_afbouwperiode
+                    value: 1
+                  then: $bezoldiging_na_jaar1
+                - when:
+                    operation: EQUALS
+                    subject: $jaar_in_afbouwperiode
+                    value: 2
+                  then: $bezoldiging_na_jaar2
+                - when:
+                    operation: EQUALS
+                    subject: $jaar_in_afbouwperiode
+                    value: 3
+                  then: $bezoldiging_na_jaar3
+              default: $geldende_maximum
   - number: 7.3a
     text: |-
       1 Indien op grond van [artikel 7.3][ref1], zoals dat artikel luidde op de dag voorafgaande aan de inwerkingtreding
