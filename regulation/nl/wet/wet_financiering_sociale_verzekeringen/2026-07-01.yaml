@@ -813,6 +813,58 @@ articles:
       - id: ref1
         bwb_id: BWBR0011353
         artikel: '8.1'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van BIKK-bedrag"
+          reason: "De berekening BIKKt = (BIKKt-1 + A*Kt-1)*Kt/Kt-1 levert doorgaans geen geheel aantal eurocenten op; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "BIKKt = (BIKKt-1 + A*Kt-1)*Kt/Kt-1"
+          accepted: false
+      execution:
+        parameters:
+          - name: bikk_vorig_jaar
+            type: number
+            required: true
+            description: "Bijdrage in de kosten van de heffingskortingen ten gunste van het fonds in het voorafgaande jaar (BIKKt-1), in eurocent"
+          - name: a_aandeel_verschil
+            type: number
+            required: true
+            description: "Aandeel van de premie ten gunste van het fonds in het gecombineerde heffingspercentage (art. 8.1 lid 1 onderdeel c IB2001) in het huidige jaar minus het aandeel in het voorafgaande jaar (A in de formule, als decimale breuk)"
+          - name: kt_geraamde_kosten
+            type: number
+            required: true
+            description: "Geraamde totale kosten voor de heffingskortingen in het jaar waarvoor de bijdrage wordt toegekend (Kt), in eurocent"
+          - name: kt1_geraamde_kosten_vorig_jaar
+            type: number
+            required: true
+            description: "Geraamde totale kosten voor de heffingskortingen in het voorafgaande jaar (Kt-1), in eurocent"
+        output:
+          - name: bikk
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Rijksbijdrage in de kosten van de heffingskortingen voor het fonds (BIKKt; zie untranslatable voor afrondingskwestie)"
+        actions:
+          - output: som_bikk1_plus_a_maal_kt1
+            value:
+              operation: ADD
+              values:
+                - $bikk_vorig_jaar
+                - operation: MULTIPLY
+                  values:
+                    - $a_aandeel_verschil
+                    - $kt1_geraamde_kosten_vorig_jaar
+          - output: bikk
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $som_bikk1_plus_a_maal_kt1
+                    - $kt_geraamde_kosten
+                - $kt1_geraamde_kosten_vorig_jaar
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '15'
   - number: '16'
     text: |-
       1 Voor de toepassing van dit hoofdstuk wordt onder loon verstaan het loon en de gage overeenkomstig de
@@ -3577,6 +3629,22 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 7:10
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '7:10'
+          output: beslistermijn_bezwaar_weken
+      execution:
+        output:
+          - name: beslistermijn_bezwaar_weken
+            type: number
+            description: "Beslistermijn op bezwaar voor SVB en UWV: 13 weken (in afwijking van AWB art. 7:10 lid 1)"
+        actions:
+          - output: beslistermijn_bezwaar_weken
+            value: 13
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: '79'
   - number: '80'
     text: >-
       Bij of krachtens algemene maatregel van bestuur kunnen nadere regels worden gesteld met betrekking tot de
@@ -3765,6 +3833,51 @@ articles:
       - id: ref4
         bwb_id: BWBR0018450
         artikel: '43'
+    machine_readable:
+      untranslatables:
+        - construct: "afronden van de bijdrage op gehele eurocenten"
+          reason: "De berekening (percentage_lid1 - percentage_lid2) * lasten_aov levert doorgaans geen geheel aantal eurocenten op; afronden is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "De bijdrage vormt het verschil tussen het... percentage... vermenigvuldigd met de lasten van de algemene ouderdomsverzekering"
+          accepted: false
+      execution:
+        parameters:
+          - name: percentage_zvw_art45_lid1
+            type: number
+            required: true
+            description: "Percentage bedoeld in artikel 45, eerste lid, van de Zorgverzekeringswet (voor het loon bedoeld in art. 42 lid 1 ZVW)"
+          - name: percentage_zvw_art45_lid2
+            type: number
+            required: true
+            description: "Percentage bedoeld in artikel 45, tweede lid, van de Zorgverzekeringswet (voor het bijdrage-inkomen bedoeld in art. 43 lid 2 ZVW)"
+          - name: lasten_aov
+            type: number
+            required: true
+            description: "Lasten van de algemene ouderdomsverzekering en de vrijwillige algemene ouderdomsverzekering (in eurocent)"
+        output:
+          - name: bijdrage_zorgverzekeringsfonds
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: "Bijdrage ten laste van het Ouderdomsfonds ten gunste van het Zorgverzekeringsfonds (art. 87a lid 2; zie untranslatable voor afrondingskwestie)"
+        actions:
+          - output: verschil_percentages
+            value:
+              operation: SUBTRACT
+              values:
+                - $percentage_zvw_art45_lid1
+                - $percentage_zvw_art45_lid2
+          - output: bijdrage_zorgverzekeringsfonds
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $verschil_percentages
+                    - $lasten_aov
+                - 100
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              article: 87a
   - number: '89'
     text: Het Zorginstituut beheert en administreert afzonderlijk een Fonds langdurige zorg.
     url: https://wetten.overheid.nl/BWBR0017745/2026-07-01#Artikel89
