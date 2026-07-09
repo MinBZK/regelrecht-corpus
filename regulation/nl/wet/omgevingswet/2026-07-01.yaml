@@ -7321,6 +7321,49 @@ articles:
       [ref7]: https://wetten.overheid.nl/BWBR0037885#Artikel9.1
       [ref8]: https://wetten.overheid.nl/BWBR0037885#Artikel9.1
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel9.4
+    machine_readable:
+      untranslatables:
+        - construct: "verlengde termijn bij omgevingsplan-gebaseerd voorkeursrecht (lid 2)"
+          reason: "De berekening van de verlengde termijn vereist datum-aftrekking (zestien jaar verminderd met verstreken tijd) wat niet beschikbaar is als engine-operatie"
+          legal_text_excerpt: "bedraagt de verlengde termijn in totaal ten hoogste zestien jaar verminderd met de tijd die is verstreken tussen het ingaan van het voorkeursrecht en de vaststelling van het omgevingsplan"
+          suggestion: "Voeg DATE_SUBTRACT/DATE_DIFF toe aan de engine voor het berekenen van tijdsverschillen"
+          accepted: false
+        - construct: "vervaltermijnen na type-conversie (leden 4 en 5)"
+          reason: "De leden 4 en 5 regelen vervaltermijnen na conversie van het ene type voorkeursrecht naar het andere; de conditie is afhankelijk van het tijdstip van eerdere besluitvorming en valt buiten het bereik van eenvoudige date-operaties"
+          legal_text_excerpt: "bij een voorkeursrecht als bedoeld in het eerste lid, onder a, dat door tijdige vaststelling van een omgevingsvisie of een programma als bedoeld in dat onderdeel is komen te gelden"
+          suggestion: "Vereis externe registratie van de conversiehistorie als input"
+          accepted: false
+      execution:
+        parameters:
+          - name: ingangsdatum
+            type: date
+            required: true
+            description: "Datum waarop het voorkeursrecht is ingegaan"
+          - name: voorkeursrecht_type
+            type: string
+            required: true
+            description: "Type voorkeursrecht: '9.1.1a' (omgevingsplan), '9.1.1b' (omgevingsvisie/programma), '9.1.1c' (alleen beschikking), '9.1.2' (voorlopig)"
+        output:
+          - name: basistermijn_vervaldatum
+            type: date
+            description: "Basistermijn vervaldatum: 5 jaar na ingangsdatum (lid 1 voor typen 9.1.1a/b/c) of 3 maanden (lid 3 voor type 9.1.2)"
+        actions:
+          - output: basistermijn_vervaldatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $voorkeursrecht_type
+                    value: "9.1.2"
+                  then:
+                    operation: DATE_ADD
+                    date: $ingangsdatum
+                    months: 3
+              default:
+                operation: DATE_ADD
+                date: $ingangsdatum
+                years: 5
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -10998,6 +11041,28 @@ articles:
       [ref9]: https://wetten.overheid.nl/BWBR0037885#Artikel5.42
       [ref10]: https://wetten.overheid.nl/BWBR0037885#Artikel5.1
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel13.4
+    machine_readable:
+      execution:
+        parameters:
+          - name: schadevgoeding_besluit_datum
+            type: date
+            required: true
+            description: "Datum waarop het besluit tot toekenning van schadevergoeding (lid 1) in werking is getreden (lid 4)"
+        output:
+          - name: heffing_instelling_deadline
+            type: date
+            description: "Uiterste datum voor het instellen van de heffing bij provinciale verordening (1 jaar na inwerkingtreding schadevergoedingsbesluit, lid 4)"
+          - name: max_heffingtermijn_jaren
+            type: number
+            description: "Maximale duur van de jaarlijkse heffing in jaren (lid 5)"
+        actions:
+          - output: heffing_instelling_deadline
+            value:
+              operation: DATE_ADD
+              date: $schadevgoeding_besluit_datum
+              years: 1
+          - output: max_heffingtermijn_jaren
+            value: 10
     references:
       - id: ref1
         bwb_id: BWBR0005537
@@ -13232,6 +13297,35 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0037885#Artikel11.15
       [ref2]: https://wetten.overheid.nl/BWBR0037885#Artikel11.14
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel15.51
+    machine_readable:
+      untranslatables:
+        - construct: "aggregatie over alle schadeloosstellingen per beschikking"
+          reason: "De vaste schadeloosstelling wordt berekend voor elk van de door de rechtbank bij beschikking vastgestelde of vermelde schadeloosstellingen; iteratie over een verzameling is niet beschikbaar als engine-operatie"
+          legal_text_excerpt: "tien procent van de voor elk van de door de rechtbank bij beschikking vastgestelde of vermelde schadeloosstellingen"
+          suggestion: "Voeg SUM/FOREACH toe voor aggregatie over collecties; model ondersteunt één schadeloosstelling per aanroep"
+          accepted: false
+      execution:
+        parameters:
+          - name: rechtbank_schadeloosstelling
+            type: number
+            required: true
+            description: "Door de rechtbank bij beschikking vastgestelde of vermelde schadeloosstelling voor één rechthebbende (in eurocent, lid 2)"
+        output:
+          - name: vaste_schadeloosstelling
+            type: amount
+            description: "Vaste schadeloosstelling: tien procent van de rechtbank_schadeloosstelling (lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: vaste_schadeloosstelling
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $rechtbank_schadeloosstelling
+                    - 10
+                - 100
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -16744,6 +16838,24 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel344
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel610
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel16.96
+    machine_readable:
+      execution:
+        parameters:
+          - name: ter_inzage_datum
+            type: date
+            required: true
+            description: "Datum waarop de onteigeningsbeschikking overeenkomstig artikel 3:44 lid 1 onder a AWB ter inzage is gelegd en hiervan kennis is gegeven (lid 2)"
+        output:
+          - name: verzoekschrift_deadline
+            type: date
+            description: "Uiterste datum voor indiening van een verzoekschrift: 6 weken met ingang van de dag na ter inzage legging (leden 1 en 2)"
+        actions:
+          - output: verzoekschrift_deadline
+            value:
+              operation: DATE_ADD
+              date: $ter_inzage_datum
+              weeks: 6
+              days: 1
     references:
       - id: ref1
         bwb_id: BWBR0005537
@@ -16819,6 +16931,24 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel344
       [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel69
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel16.98
+    machine_readable:
+      execution:
+        parameters:
+          - name: ter_inzage_datum
+            type: date
+            required: true
+            description: "Datum waarop de onteigeningsbeschikking overeenkomstig artikel 3:44 lid 1 onder a AWB ter inzage is gelegd en hiervan kennis is gegeven (lid 2)"
+        output:
+          - name: bedenkingen_deadline
+            type: date
+            description: "Uiterste datum voor het inbrengen van bedenkingen: 6 weken met ingang van de dag na ter inzage legging (leden 1 en 2)"
+        actions:
+          - output: bedenkingen_deadline
+            value:
+              operation: DATE_ADD
+              date: $ter_inzage_datum
+              weeks: 6
+              days: 1
     references:
       - id: ref1
         bwb_id: BWBR0005537
@@ -16834,6 +16964,23 @@ articles:
 
       2 De rechtbank kan deze termijn verlengen.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel16.99
+    machine_readable:
+      execution:
+        parameters:
+          - name: verzending_bedenkingen_datum
+            type: date
+            required: true
+            description: "Datum waarop de rechtbank de bedenkingen aan het bestuursorgaan heeft verzonden (lid 1)"
+        output:
+          - name: reactie_deadline
+            type: date
+            description: "Uiterste datum voor indiening van de reactie door het bestuursorgaan bij de rechtbank (4 weken na verzending bedenkingen, lid 1)"
+        actions:
+          - output: reactie_deadline
+            value:
+              operation: DATE_ADD
+              date: $verzending_bedenkingen_datum
+              weeks: 4
   - number: '16.100'
     text: >-
       1 De rechtbank kan belanghebbenden die bedenkingen hebben ingebracht tegen de onteigeningsbeschikking in de
@@ -18706,6 +18853,50 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0037885#Artikel4.3
       [ref2]: https://wetten.overheid.nl/BWBR0001854#Artikel23
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel18.11
+    machine_readable:
+      untranslatables:
+        - construct: "bedrag voor de zesde categorie van artikel 23 lid 4 Wetboek van Strafrecht"
+          reason: "Het categoriebedrag is vastgesteld in artikel 23, vierde lid, van het Wetboek van Strafrecht; dat wetboek is niet aanwezig in het corpus en het bedrag kan niet automatisch worden opgelost"
+          legal_text_excerpt: "het bedrag dat is vastgesteld voor de zesde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          suggestion: "Implementeer Wetboek van Strafrecht artikel 23 in het corpus en bind via source.regulation"
+          accepted: false
+      execution:
+        parameters:
+          - name: omzet_vorig_boekjaar
+            type: number
+            required: true
+            description: "Omzet van de onderneming in het boekjaar voorafgaande aan het boekjaar waarin de boete wordt opgelegd (in eurocent, lid 2)"
+          - name: zesde_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag vastgesteld voor de zesde categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2)"
+        output:
+          - name: tien_procent_omzet
+            type: amount
+            description: "Tien procent van de omzet in het vorige boekjaar (lid 2)"
+            type_spec:
+              unit: eurocent
+          - name: max_bestuurlijke_boete
+            type: amount
+            description: "Maximale bestuurlijke boete: het hogere van de zesde categorie WvSr en 10% van de jaaromzet (lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: tien_procent_omzet
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $omzet_vorig_boekjaar
+                    - 10
+                - 100
+          - output: max_bestuurlijke_boete
+            value:
+              operation: MAX
+              values:
+                - $zesde_categorie_bedrag
+                - $tien_procent_omzet
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -18742,6 +18933,44 @@ articles:
       [ref3]: https://wetten.overheid.nl/BWBR0001854#Artikel23
       [ref4]: https://wetten.overheid.nl/BWBR0001854#Artikel23
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel18.12
+    machine_readable:
+      untranslatables:
+        - construct: "bedragen voor de tweede en vierde categorie van artikel 23 lid 4 Wetboek van Strafrecht"
+          reason: "De categoriebedragen zijn vastgesteld in artikel 23, vierde lid, van het Wetboek van Strafrecht; dat wetboek is niet aanwezig in het corpus"
+          legal_text_excerpt: "het bedrag dat is vastgesteld voor de tweede categorie [...] het bedrag dat is vastgesteld voor de vierde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          suggestion: "Implementeer Wetboek van Strafrecht artikel 23 in het corpus en bind via source.regulation"
+          accepted: false
+      execution:
+        parameters:
+          - name: bedreiging_leefbaarheid_of_gevaar
+            type: boolean
+            required: true
+            description: "Of de overtreding een bedreiging van de leefbaarheid of een gevaar voor de gezondheid of veiligheid veroorzaakt (lid 3)"
+          - name: tweede_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag vastgesteld voor de tweede categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2)"
+          - name: vierde_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag vastgesteld voor de vierde categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 3)"
+        output:
+          - name: max_bestuurlijke_boete
+            type: amount
+            description: "Maximale bestuurlijke boete: tweede categorie (lid 2) of vierde categorie bij bedreiging leefbaarheid of gevaar gezondheid/veiligheid (lid 3)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_bestuurlijke_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $bedreiging_leefbaarheid_of_gevaar
+                    value: true
+                  then: $vierde_categorie_bedrag
+              default: $tweede_categorie_bedrag
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -18799,6 +19028,28 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0037885#Artikel19.4
       [ref9]: https://wetten.overheid.nl/BWBR0001854#Artikel23
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel18.13
+    machine_readable:
+      untranslatables:
+        - construct: "bedrag voor de vijfde categorie van artikel 23 lid 4 Wetboek van Strafrecht"
+          reason: "Het categoriebedrag is vastgesteld in artikel 23, vierde lid, van het Wetboek van Strafrecht; dat wetboek is niet aanwezig in het corpus"
+          legal_text_excerpt: "het bedrag dat is vastgesteld voor de vijfde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          suggestion: "Implementeer Wetboek van Strafrecht artikel 23 in het corpus en bind via source.regulation"
+          accepted: false
+      execution:
+        parameters:
+          - name: vijfde_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag vastgesteld voor de vijfde categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2)"
+        output:
+          - name: max_bestuurlijke_boete
+            type: amount
+            description: "Maximale bestuurlijke boete voor overtredingen inzake cultureel erfgoed, werelderfgoed en flora/fauna (vijfde categorie WvSr, lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_bestuurlijke_boete
+            value: $vijfde_categorie_bedrag
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -18871,6 +19122,28 @@ articles:
       [ref4]: https://wetten.overheid.nl/BWBR0037885#Artikel5.5
       [ref5]: https://wetten.overheid.nl/BWBR0001854#Artikel23
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel18.14
+    machine_readable:
+      untranslatables:
+        - construct: "bedrag voor de vijfde categorie van artikel 23 lid 4 Wetboek van Strafrecht"
+          reason: "Het categoriebedrag is vastgesteld in artikel 23, vierde lid, van het Wetboek van Strafrecht; dat wetboek is niet aanwezig in het corpus"
+          legal_text_excerpt: "het bedrag dat is vastgesteld voor de vijfde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          suggestion: "Implementeer Wetboek van Strafrecht artikel 23 in het corpus en bind via source.regulation"
+          accepted: false
+      execution:
+        parameters:
+          - name: vijfde_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag vastgesteld voor de vijfde categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2)"
+        output:
+          - name: max_bestuurlijke_boete
+            type: amount
+            description: "Maximale bestuurlijke boete voor overtredingen inzake luchthaven-beperkingengebied en hoofdspoorweg/spoorweg (vijfde categorie WvSr, lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_bestuurlijke_boete
+            value: $vijfde_categorie_bedrag
     references:
       - id: ref1
         bwb_id: BWBR0037885
@@ -18980,6 +19253,44 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0001854#Artikel23
       [ref3]: https://wetten.overheid.nl/BWBR0001903#Artikel257ba
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel18.15a
+    machine_readable:
+      untranslatables:
+        - construct: "bedragen voor de eerste en tweede categorie van artikel 23 lid 4 Wetboek van Strafrecht"
+          reason: "De categoriebedragen zijn vastgesteld in artikel 23, vierde lid, van het Wetboek van Strafrecht; dat wetboek is niet aanwezig in het corpus"
+          legal_text_excerpt: "het bedrag dat is bepaald voor de eerste categorie [...] het bedrag dat is bepaald voor de tweede categorie, bedoeld in artikel 23, vierde lid, van dat wetboek"
+          suggestion: "Implementeer Wetboek van Strafrecht artikel 23 in het corpus en bind via source.regulation"
+          accepted: false
+      execution:
+        parameters:
+          - name: is_rechtspersoon
+            type: boolean
+            required: true
+            description: "Of de overtreder een rechtspersoon of vennootschap is (lid 2 tweede volzin); anders: een natuurlijk persoon"
+          - name: eerste_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag bepaald voor de eerste categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2 eerste volzin)"
+          - name: tweede_categorie_bedrag
+            type: number
+            required: true
+            description: "Het bedrag bepaald voor de tweede categorie bedoeld in artikel 23 lid 4 Wetboek van Strafrecht (in eurocent, lid 2 tweede volzin)"
+        output:
+          - name: max_bestuurlijke_boete
+            type: amount
+            description: "Maximale bestuurlijke boete per overtreding: eerste categorie voor natuurlijk persoon, tweede categorie voor rechtspersoon of vennootschap (lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_bestuurlijke_boete
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_rechtspersoon
+                    value: true
+                  then: $tweede_categorie_bedrag
+              default: $eerste_categorie_bedrag
     references:
       - id: ref1
         bwb_id: BWBR0037885
