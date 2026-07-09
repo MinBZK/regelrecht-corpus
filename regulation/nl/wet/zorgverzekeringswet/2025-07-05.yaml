@@ -255,6 +255,57 @@ articles:
         bwb_id: BWBR0002656
       - id: ref8
         bwb_id: BWBR0002656
+    machine_readable:
+       parameters:
+         - name: person_bsn
+           type: string
+           description: BSN of the person being evaluated for insurance obligation.
+         - name: is_covered_under_wlz
+           type: boolean
+           description: Whether the person is covered under Wet langdurige zorg (BWBR0035917).
+           source:
+             regulation: BWBR0035917
+         - name: is_military_active_duty
+           type: boolean
+           description: Whether the person is a military officer in active duty as defined in Wet ambtenaren defensie, Art. 1 (BWBR0001952).
+           source:
+             regulation: BWBR0001952
+             artikel: '1'
+         - name: is_exempted_wfsv
+           type: boolean
+           description: Whether the person is exempted under Wet financiering sociale verzekeringen, Art. 64 (BWBR0017745).
+           source:
+             regulation: BWBR0017745
+             artikel: '64'
+         - name: is_guardian
+           type: boolean
+           description: Whether the person is a guardian, curator, administrator, or mentor for a minor or dependent.
+       outputs:
+         - name: is_verzekeringsplichtig
+           type: boolean
+           description: Whether the person is obligated to take out healthcare insurance (Lid 1 + Lid 2 exceptions).
+         - name: moet_zorgen_voor_verzekering
+           type: boolean
+           description: Whether the guardian must ensure the dependent is insured (Lid 3).
+       execute:
+          - name: base_obligation
+            operation: AND
+            operands:
+              - is_covered_under_wlz
+              - operation: NOT
+                operands:
+                  - operation: OR
+                    operands:
+                      - is_military_active_duty
+                      - is_exempted_wfsv
+            output: is_verzekeringsplichtig
+          - name: guardian_obligation
+            operation: AND
+            operands:
+              - is_guardian
+              - operation: REF
+                reference: is_verzekeringsplichtig
+            output: moet_zorgen_voor_verzekering
   - number: '3'
     text: |-
       1 Een zorgverzekeraar is verplicht met of ten behoeve van iedere verzekeringsplichtige die in zijn werkgebied
