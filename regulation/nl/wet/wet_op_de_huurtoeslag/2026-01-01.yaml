@@ -186,13 +186,13 @@ articles:
   - number: '10'
     text: |-
       De huurder die tijdelijke bescherming geniet als bedoeld in [artikel 1 van de Vreemdelingenwet 2000][ref1] omdat
-      hij onder de reikwijdte valt van het Uitvoeringsbesluit (EU) 2022/382 van de Raad van 4 maart 2022 tot vaststelling
+      hij onder de reikwijdte valt van het Uitvoeringsbesluit (EU) 2022/382 van de Raad van 4-maart 2022 tot vaststelling
       van het bestaan van een massale toestroom van ontheemden uit Oekraïne in de zin van artikel 5 van [Richtlijn
-      2001/55/EG](32001L0055), en tot invoering van tijdelijke bescherming naar aanleiding daarvan (PbEU 2022, L 71/1) of
+      2001/55/EG](32001L0055), en tot invoering van tijdelijke bescherming naar aanleiding daarvan (PbEU 2022, L-71/1) of
       een verlenging van dat besluit, heeft recht op huurtoeslag.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel1
+        [ref1]: https://wetten.overheid.nl/BWBR0011823#Artikel1
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel10
     references:
       - id: ref1
@@ -214,7 +214,7 @@ articles:
       regels worden gesteld, waarbij een lagere maximale rekenhuur kan worden vastgesteld dan uit [artikel 13][ref1]
       voortvloeit.
 
-      3 Voor de huur van een woonwagen zonder eigen aandrijving wordt slechts een huurtoeslag toegekend, indien deze:
+      3 Voor de huur van een woonwagen zonder eigen aandrijving wordt meestal een huurtoeslag toegekend, indien deze:
 
       a. is geplaatst op een standplaats of op een regionaal woonwagencentrum dat tot stand is gekomen voor 1 oktober
       1970, en
@@ -237,7 +237,7 @@ articles:
     text: |-
       1 De maximale huurgrens is:
 
-      a. € 932,93 per maand als:
+      a. € 932,93 per maand als:
 
       1º. de huurder, diens partner of een van de medebewoners 21 jaar of ouder is, dan wel de woning deelt met een kind
       of pleegkind van de huurder, diens partner of een medebewoner of
@@ -246,10 +246,10 @@ articles:
 
       of
 
-      b. € 498,20 per maand in andere gevallen dan bedoeld onder a.
+      b. € 498,20 per maand in andere gevallen dan bedoeld onder a.
 
-      2 De in het eerste lid, onder a en b, genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
-      overeenkomstig [artikel 27][ref1].
+      2 De in het eerste lid, onder a en b, genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd
+      overeenskomtig [artikel 27][ref1].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008659#Artikel27
@@ -259,22 +259,33 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      type: calculation
+      formula: |
+        IF (age >= 21 OR household_includes_child OR disability) THEN 932.93
+        ELSE 498.20
+      variables:
+        - age
+        - household_includes_child
+        - disability
+      article_references:
+        - article: 27
   - number: '14'
     text: |-
       1 Het norminkomen bedraagt:
 
-      a. € 29.400 bij een eenpersoonshuishouden;
+      a. € 29.400 bij een eenpersoonshuishouden;
 
-      b. € 39.925 bij een meerpersoonshuishouden;
+      b. € 39.925 bij een meerpersoonshuishouden;
 
-      c. € 28.089,78 bij een eenpersoonsouderenhuishouden;
+      c. € 28.089,78 bij een eenpersoonsouderenhuishouden;
 
-      d. € 37.183,99 bij een meerpersoonsouderenhuishouden.
+      d. € 37.183,99 bij een meerpersoonsouderenhuishouden.
 
-      2 Het norminkomen, genoemd in het eerste lid, onderdelen c en d, wordt vermeerderd met € 665 onderscheidenlijk
-      € 1 462.
+      2 Het norminkomen, genoemd in het eerste lid, onderdelen c en d, wordt vermeerderd met € 665 onderscheidenlijk
+      € 1 462.
 
-      3 De in het eerste lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
+      3 De in het eerste lid genoemde bedragen worden met ingang van 1 januari van elk jaar gewijzigd overeenkomstig
       [artikel 27][ref1].
 
 
@@ -285,6 +296,17 @@ articles:
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      type: definition
+      formula: |
+        IF household_type == "single" THEN 29400
+        ELSE IF household_type == "multi" THEN 39925
+        ELSE IF household_type == "single_elderly" THEN 28089.78
+        ELSE IF household_type == "multi_elderly" THEN 37183.99
+      variables:
+        - household_type
+      article_references:
+         - article: 27
   - number: '16'
     text: |-
       De basishuur is het gedeelte van de rekenhuur dat minimaal voor rekening van de huurder blijft. De basishuur is het
@@ -299,6 +321,14 @@ articles:
         artikel: '17'
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      type: calculation
+      formula: |
+        normhuur + 12
+      variables:
+        - normhuur
+      article_references:
+        - article: 17
   - number: '17'
     text: |-
       1 Het minimum-inkomensijkpunt wordt verkregen door:
@@ -333,25 +363,38 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0002221#Artikel29
       [ref3]: https://wetten.overheid.nl/BWBR0002221#Artikel9
       [ref4]: https://wetten.overheid.nl/BWBR0002221#Artikel29
-      [ref5]: https://wetten.overheid.nl/BWBR0008659#Artikel27
+        [ref5]: https://wetten.overheid.nl/BWBR0008659#Artikel27
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel17
     references:
-      - id: ref1
-        bwb_id: BWBR0002221
-        artikel: '9'
-      - id: ref2
-        bwb_id: BWBR0002221
-        artikel: '29'
-      - id: ref3
-        bwb_id: BWBR0002221
-        artikel: '9'
-      - id: ref4
-        bwb_id: BWBR0002221
-        artikel: '29'
-      - id: ref5
-        bwb_id: BWBR0008659
-        artikel: '27'
-        hoofdstuk: '5'
+        - id: ref1
+          bwb_id: BWBR0002221
+          artikel: '9'
+        - id: ref2
+          bwb_id: BWBR0002221
+          artikel: '29'
+        - id: ref3
+          bwb_id: BWBR0002221
+          artikel: '9'
+        - id: ref4
+          bwb_id: BWBR0002221
+          artikel: '29'
+        - id: ref5
+          bwb_id: BWBR0008659
+          artikel: '27'
+          hoofdstuk: '5'
+    machine_readable:
+      type: calculation
+      formula: |
+        IF household_type == "single" THEN
+          (bruto_ouderdomspensioen + bruto_vakantie_uitkering) * 12 + 2340
+        ELSE IF household_type == "multi" THEN
+          2 * (bruto_ouderdomspensioen + bruto_vakantie_uitkering) * 12 + 2512
+      variables:
+        - household_type
+        - bruto_ouderdomspensioen
+        - bruto_vakantie_uitkering
+      article_references:
+        - article: 27
   - number: '20'
     text: |-
       1 De kwaliteitskortingsgrens is € 498,20 per maand.
@@ -368,13 +411,26 @@ articles:
       overeenkomstig [artikel 27][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008659#Artikel27
+       [ref1]: https://wetten.overheid.nl/BWBR0008659#Artikel27
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel20
     references:
       - id: ref1
         bwb_id: BWBR0008659
         artikel: '27'
         hoofdstuk: '5'
+    machine_readable:
+      type: definition
+      formula: |
+        IF household_size <= 2 THEN
+          kwaliteitskortingsgrens = 498.20
+          aftoppingsgrens = 713.02
+        ELSE
+          kwaliteitskortingsgrens = 498.20
+          aftoppingsgrens = 764.14
+      variables:
+        - household_size
+      article_references:
+        - article: 27
   - number: '21'
     text: |-
       1 De hoogte van de huurtoeslag wordt als volgt bepaald:
@@ -407,7 +463,7 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0008659#Artikel17
       [ref2]: https://wetten.overheid.nl/BWBR0008659#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0008659#Artikel17
+       [ref3]: https://wetten.overheid.nl/BWBR0008659#Artikel17
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel21
     references:
       - id: ref1
@@ -425,6 +481,32 @@ articles:
         artikel: '17'
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      type: calculation
+      formula: |
+        IF rekenhuur <= basishuur THEN 0
+        ELSE IF rekenhuur <= kwaliteitskortingsgrens THEN (rekenhuur - basishuur) * 1.0
+        ELSE IF rekenhuur <= aftoppingsgrens THEN
+          (kwaliteitskortingsgrens - basishuur) + (rekenhuur - kwaliteitskortingsgrens) * 0.8876
+        ELSE
+          (kwaliteitskortingsgrens - basishuur) + (aftoppingsgrens - kwaliteitskortingsgrens) * 0.8876
+        END IF
+        IF rekeninkomen > minimum_inkomensijkpunt THEN
+          afbouw = (rekeninkomen - minimum_inkomensijkpunt) * (afbouwpercentage / 12)
+          huurtoeslag = huurtoeslag - afbouw
+        END IF
+      variables:
+        - rekenhuur
+        - basishuur
+        - kwaliteitskortingsgrens
+        - aftoppingsgrens
+        - rekeninkomen
+        - minimum_inkomensijkpunt
+        - afbouwpercentage
+      article_references:
+        - article: 17
+        - article: 20
+        - article: 2
   - number: '23'
     text: |-
       Bij verhuizing van de huurder blijft het in [artikel 7, eerste lid][ref1], bedoelde recht op huurtoeslag in stand,
@@ -507,7 +589,7 @@ articles:
       [ref11]: https://wetten.overheid.nl/BWBR0008659#Artikel16
       [ref12]: https://wetten.overheid.nl/BWBR0008659#Artikel17
       [ref13]: https://wetten.overheid.nl/BWBR0008659#Artikel21
-      [ref14]: https://wetten.overheid.nl/BWBR0008659#Artikel17
+       [ref14]: https://wetten.overheid.nl/BWBR0008659#Artikel17
     url: https://wetten.overheid.nl/BWBR0008659/2026-01-01#Artikel27
     references:
       - id: ref1
@@ -578,6 +660,29 @@ articles:
         artikel: '17'
         hoofdstuk: '3'
         paragraaf: '1'
+    machine_readable:
+      type: calculation
+      formula: |
+        max_huurgrens_13a = max_huurgrens_13a * factor_10_2
+        norminkomen_14 = norminkomen_14 * factor_10_2
+        max_huurgrens_13b = max_huurgrens_13b * huurprijsontwikkeling
+        normhuur_17 = normhuur_17 * huurprijsontwikkeling
+        kwaliteitskortingsgrens_20 = kwaliteitskortingsgrens_20 * huurprijsontwikkeling
+        aftoppingsgrens_20 = aftoppingsgrens_20 * huurprijsontwikkeling
+      variables:
+        - max_huurgrens_13a
+        - norminkomen_14
+        - max_huurgrens_13b
+        - normhuur_17
+        - kwaliteitskortingsgrens_20
+        - aftoppingsgrens_20
+        - factor_10_2
+        - huurprijsontwikkeling
+      article_references:
+        - article: 13
+        - article: 14
+        - article: 17
+        - article: 20
   - number: '28'
     text: |-
       1 Burgemeester en wethouders bevorderen dat binnen hun gemeente een of meer voorzieningen tot stand komen die
