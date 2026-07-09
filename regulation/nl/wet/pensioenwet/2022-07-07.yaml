@@ -747,6 +747,23 @@ articles:
       5 Voor het elektronisch verstrekken van de informatie, bedoeld in het eerste en tweede lid, is uitdrukkelijke
       instemming van de werknemer vereist.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel7
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_aanvang_werkzaamheden
+            type: date
+            required: true
+            description: Datum waarop de werknemer de werkzaamheden heeft aangevangen
+        output:
+          - name: informatie_uiterste_datum
+            type: date
+            description: Uiterste datum waarop de werkgever de werknemer over het pensioen moet informeren
+        actions:
+          - output: informatie_uiterste_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_aanvang_werkzaamheden
+              months: 1
   - number: '8'
     text: |-
       1 Ingeval een werkgever aan een of meer werknemers een aanbod doet tot het sluiten van een pensioenovereenkomst,
@@ -788,6 +805,32 @@ articles:
       - id: ref2
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de werknemer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsbepaling
+        output:
+          - name: uitgezonderd_van_pensioen_wegens_leeftijd
+            type: boolean
+            description: True als de werknemer jonger is dan 21 jaar (tenzij-grond lid 5a voor uitsluiting van pensioen aanbod)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: uitgezonderd_van_pensioen_wegens_leeftijd
+            value:
+              operation: LESS_THAN
+              subject: $leeftijd
+              value: 21
   - number: '9'
     text: |-
       Door de overgang van een onderneming, bedoeld in [artikel 662 van Boek 7 van het Burgerlijk Wetboek][ref1], waarbij
@@ -884,6 +927,32 @@ articles:
       - id: ref3
         bwb_id: BWBR0005290
         artikel: '691'
+    machine_readable:
+      execution:
+        parameters:
+          - name: geboortedatum
+            type: date
+            required: true
+            description: Geboortedatum van de werknemer
+          - name: peildatum
+            type: date
+            required: true
+            description: Peildatum voor leeftijdsbepaling
+        output:
+          - name: minimum_opbouwleeftijd_bereikt
+            type: boolean
+            description: True als de werknemer de leeftijd van 21 jaar heeft bereikt (pensioenopbouw moet uiterlijk gestart zijn)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: minimum_opbouwleeftijd_bereikt
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $leeftijd
+              value: 21
   - number: '15'
     text: |-
       1 Indien een pensioenovereenkomst voorziet in een ouderdomspensioen, wordt in de overeenkomst bepaald
@@ -1033,6 +1102,47 @@ articles:
       met de in het eerste lid bedoelde werkgever, over het bestaan van een vereniging van pensioengerechtigden als
       bedoeld in het eerste lid.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel22
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_werknemers
+            type: number
+            required: true
+            description: Aantal werknemers met een pensioenovereenkomst bij de werkgever op het moment van het besluit
+          - name: aantal_gepensioneerden
+            type: number
+            required: true
+            description: Aantal gepensioneerden met een pensioenovereenkomst bij de werkgever op het moment van het besluit
+          - name: besluit_van_invloed_op_pensioenrechten
+            type: boolean
+            required: true
+            description: Geeft aan of het voorgenomen besluit van invloed is op de uitvoering of hoogte van pensioenrechten van gepensioneerden
+        output:
+          - name: recht_op_raadpleging
+            type: boolean
+            description: True als de vereniging van pensioengerechtigden recht heeft op het uitspreken van een oordeel
+        actions:
+          - output: totaal_deelnemers
+            value:
+              operation: ADD
+              values:
+                - $aantal_werknemers
+                - $aantal_gepensioneerden
+          - output: drempel_bereikt
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $totaal_deelnemers
+              value: 250
+          - output: recht_op_raadpleging
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $besluit_van_invloed_op_pensioenrechten
+                  value: true
+                - operation: EQUALS
+                  subject: $drempel_bereikt
+                  value: true
   - number: '23'
     text: |-
       1 De werkgever brengt een pensioenovereenkomst, uiterlijk wanneer een werknemer pensioenaanspraken verwerft, onder
@@ -1286,6 +1396,31 @@ articles:
 
       7 Dit artikel is van overeenkomstige toepassing op een premiepensioeninstelling.
     url: https://wetten.overheid.nl/BWBR0020809/2022-07-07#Artikel29
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_mededeling
+            type: date
+            required: true
+            description: Datum van de mededeling bedoeld in het eerste lid (premieachterstand mededeling)
+        output:
+          - name: vroegste_datum_premievrijmaking
+            type: date
+            description: Vroegste datum waarop de verzekeraar de opbouw kan beëindigen door premievrijmaking (lid 3, op zijn vroegst 3 maanden na mededeling)
+          - name: einde_risicodekking_datum
+            type: date
+            description: Datum waarop de dekking van het arbeidsongeschiktheids- en overlijdensrisico eindigt (lid 5, 3 maanden na mededeling)
+        actions:
+          - output: vroegste_datum_premievrijmaking
+            value:
+              operation: DATE_ADD
+              date: $datum_mededeling
+              months: 3
+          - output: einde_risicodekking_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_mededeling
+              months: 3
   - number: '30'
     text: |-
       In een uitvoeringsovereenkomst met een verzekeraar met zetel buiten Nederland waarin bij de totstandkoming of op
@@ -2203,6 +2338,37 @@ articles:
         bwb_id: BWBR0020809
         artikel: '134'
         hoofdstuk: '6'
+    machine_readable:
+      definitions:
+        MINIMALE_PENSIOENUITKERING_JAARBASIS:
+          value: 200
+          description: Minimale jaarlijkse pensioenuitkering in eurocent (€2 per jaar), lid 6
+      execution:
+        parameters:
+          - name: ouderdomspensioen_jaarbasis
+            type: amount
+            required: true
+            description: Verwachte jaarlijkse ouderdomspensioenuitkering op de reguliere ingangsdatum (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: deelnemer_verhuist_naar_andere_lidstaat
+            type: boolean
+            required: true
+            description: True als de deelnemer na beëindiging van de deelneming naar een andere EU-lidstaat verhuist en de pensioenuitvoerder hierover heeft geïnformeerd
+        output:
+          - name: aanspraken_vervallen
+            type: boolean
+            description: True als de pensioenaanspraken bij beëindiging vervallen wegens te laag pensioen (lid 6)
+        actions:
+          - output: aanspraken_vervallen
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $ouderdomspensioen_jaarbasis
+                  value: $MINIMALE_PENSIOENUITKERING_JAARBASIS
+                - operation: NOT
+                  value: $deelnemer_verhuist_naar_andere_lidstaat
   - number: '56'
     text: |-
       Indien de pensioenovereenkomst voorziet in een partnerpensioen is het opnemen van onbetaald verlof tot een
@@ -2414,6 +2580,37 @@ articles:
         artikel: '66'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ouderdomspensioen_na_uitruil
+            type: amount
+            required: true
+            description: Hoogte van het ouderdomspensioen dat na de uitruil resteert (in eurocent op jaarbasis)
+            type_spec:
+              unit: eurocent
+          - name: partnerpensioen_na_uitruil
+            type: amount
+            required: true
+            description: Hoogte van het gekozen partnerpensioen na uitruil (in eurocent op jaarbasis)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: uitruil_binnen_maximum
+            type: boolean
+            description: True als het partnerpensioen na uitruil niet meer bedraagt dan 70% van het resterende ouderdomspensioen (lid 1)
+        actions:
+          - output: maximaal_partnerpensioen
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.7
+                - $ouderdomspensioen_na_uitruil
+          - output: uitruil_binnen_maximum
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $partnerpensioen_na_uitruil
+              value: $maximaal_partnerpensioen
   - number: '62'
     text: |-
       1 Indien de pensioenovereenkomst de deelnemer of gewezen deelnemer de mogelijkheid biedt:
@@ -2519,6 +2716,37 @@ articles:
       - id: ref3
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      execution:
+        parameters:
+          - name: laagste_uitkering
+            type: amount
+            required: true
+            description: Laagste uitkering in het kader van de variabele pensioenuitkering (in eurocent op jaarbasis)
+            type_spec:
+              unit: eurocent
+          - name: hoogste_uitkering
+            type: amount
+            required: true
+            description: Hoogste uitkering in het kader van de variabele pensioenuitkering (in eurocent op jaarbasis)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: variatie_binnen_toegestane_grens
+            type: boolean
+            description: True als de laagste uitkering ten minste 75% van de hoogste uitkering bedraagt (lid 1 onderdeel a)
+        actions:
+          - output: minimum_toegestaan
+            value:
+              operation: MULTIPLY
+              values:
+                - 0.75
+                - $hoogste_uitkering
+          - output: variatie_binnen_toegestane_grens
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $laagste_uitkering
+              value: $minimum_toegestaan
   - number: 63a
     text: |-
       1 Onverminderd [artikel 63][ref1] kan de hoogte van een variabele uitkering na de ingangsdatum van het pensioen
@@ -2779,6 +3007,48 @@ articles:
         artikel: '62'
         hoofdstuk: '4'
         paragraaf: '4.3'
+    machine_readable:
+      open_terms:
+        - id: afkoopdrempel
+          type: amount
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 66 zesde lid Pensioenwet (jaarlijkse CPI-indexatie via mededeling in Staatscourant)
+      execution:
+        parameters:
+          - name: uitkering_ouderdomspensioen_jaarbasis
+            type: amount
+            required: true
+            description: Hoogte van de uitkering van het ouderdomspensioen op de ingangsdatum op jaarbasis (in eurocent)
+            type_spec:
+              unit: eurocent
+          - name: instemming_of_geen_bezwaar
+            type: boolean
+            required: true
+            description: True als de gepensioneerde instemt met de afkoop (deelneming eindigde ≥ 1 jan 2007) of geen bezwaar heeft gemaakt (deelneming eindigde vóór 1 jan 2007)
+        output:
+          - name: recht_op_afkoop
+            type: boolean
+            description: True als de pensioenuitvoerder het recht heeft de ouderdomspensioenaanspraken af te kopen bij ingang (lid 1)
+          - name: afkoopdrempel
+            type: amount
+            description: Het drempelbedrag voor afkoop op jaarbasis, zoals jaarlijks vastgesteld door de Minister (lid 6)
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: afkoopdrempel
+            value: $afkoopdrempel
+          - output: recht_op_afkoop
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN
+                  subject: $uitkering_ouderdomspensioen_jaarbasis
+                  value: $afkoopdrempel
+                - operation: EQUALS
+                  subject: $instemming_of_geen_bezwaar
+                  value: true
   - number: '67'
     text: |-
       1 De pensioenuitvoerder heeft jegens de nabestaanden het recht om een recht op partnerpensioen of wezenpensioen
@@ -6173,6 +6443,61 @@ articles:
         bwb_id: BWBR0020809
         artikel: '139'
         hoofdstuk: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "niet in staat is binnen een redelijke termijn te voldoen aan artikel 131 of artikel 132"
+          reason: "Redelijke termijn is een open norm die niet precies te operationaliseren is zonder aanvullende (AMvB-)criteria"
+          suggestion: "Voeg een tijdsgebonden evaluatiecriterium toe zodra AMvB nadere regels stelt"
+          legal_text_excerpt: "het pensioenfonds niet in staat is binnen een redelijke termijn te voldoen aan artikel 131 of artikel 132 zonder dat de belangen van deelnemers, gewezen deelnemers, pensioengerechtigden, andere aanspraakgerechtigden of de werkgever onevenredig worden geschaad"
+          accepted: false
+      execution:
+        parameters:
+          - name: voldoet_aan_minimaal_vereist_eigen_vermogen
+            type: boolean
+            required: true
+            description: True als het pensioenfonds op basis van de beleidsdekkingsgraad voldoet aan de eisen ten aanzien van het minimaal vereist eigen vermogen (art 131) of vereist eigen vermogen (art 132)
+          - name: overige_sturingsmiddelen_ingezet
+            type: boolean
+            required: true
+            description: True als alle overige beschikbare sturingsmiddelen (met uitzondering van het beleggingsbeleid) zijn ingezet in het herstelplan (art 138 of 139)
+          - name: datum_informatie_pensioengerechtigden
+            type: date
+            required: true
+            description: Datum waarop de pensioengerechtigden schriftelijk zijn geïnformeerd over het besluit tot vermindering (lid 2)
+          - name: datum_informatie_overigen
+            type: date
+            required: true
+            description: Datum waarop deelnemers, gewezen deelnemers, werkgever en toezichthouder zijn geïnformeerd over het besluit tot vermindering (lid 2)
+        output:
+          - name: kan_verminderen
+            type: boolean
+            description: True als aan de voorwaarden lid 1a en lid 1c is voldaan (lid 1b vereist afzonderlijke juridische beoordeling)
+          - name: vroegste_verminderingsdatum_pensioengerechtigden
+            type: date
+            description: Vroegste verminderingsdatum berekend op basis van informatiedatum pensioengerechtigden plus 3 maanden (lid 3)
+          - name: vroegste_verminderingsdatum_overigen
+            type: date
+            description: Vroegste verminderingsdatum berekend op basis van informatiedatum overige betrokkenen plus 1 maand (lid 3)
+        actions:
+          - output: kan_verminderen
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $voldoet_aan_minimaal_vereist_eigen_vermogen
+                - operation: EQUALS
+                  subject: $overige_sturingsmiddelen_ingezet
+                  value: true
+          - output: vroegste_verminderingsdatum_pensioengerechtigden
+            value:
+              operation: DATE_ADD
+              date: $datum_informatie_pensioengerechtigden
+              months: 3
+          - output: vroegste_verminderingsdatum_overigen
+            value:
+              operation: DATE_ADD
+              date: $datum_informatie_overigen
+              months: 1
   - number: '135'
     text: |-
       1 Een pensioenfonds voert een beleggingsbeleid dat in overeenstemming is met de prudent-person regel en met name
