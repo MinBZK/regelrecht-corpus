@@ -474,6 +474,60 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0010346#Artikel14
     url: https://wetten.overheid.nl/BWBR0010346/2026-07-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_geleid_tot_dood
+            type: boolean
+            required: true
+            description: Het arbeidsongeval heeft de dood tot vrijwel onmiddellijk gevolg gehad (lid 1)
+          - name: heeft_geleid_tot_blijvend_letsel
+            type: boolean
+            required: true
+            description: Het arbeidsongeval heeft blijvend letsel tot gevolg gehad (lid 1)
+          - name: heeft_geleid_tot_ziekenhuisopname
+            type: boolean
+            required: true
+            description: Het arbeidsongeval heeft een ziekenhuisopname tot gevolg gehad (lid 1)
+          - name: verzuim_meer_dan_3_werkdagen
+            type: boolean
+            required: true
+            description: Het arbeidsongeval heeft geleid tot een verzuim van meer dan drie werkdagen (lid 2)
+        output:
+          - name: moet_direct_melden
+            type: boolean
+            description: >-
+              De werkgever moet het arbeidsongeval direct melden aan de toezichthouder
+              (lid 1): wanneer het leidt tot de dood, blijvend letsel of ziekenhuisopname
+          - name: moet_op_lijst
+            type: boolean
+            description: >-
+              De werkgever moet het arbeidsongeval opnemen in de lijst (lid 2):
+              wanneer het is gemeld (lid 1) of heeft geleid tot verzuim van meer dan 3 werkdagen
+        actions:
+          - output: moet_direct_melden
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_geleid_tot_dood
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_geleid_tot_blijvend_letsel
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_geleid_tot_ziekenhuisopname
+                  value: true
+          - output: moet_op_lijst
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $moet_direct_melden
+                  value: true
+                - operation: EQUALS
+                  subject: $verzuim_meer_dan_3_werkdagen
+                  value: true
     references:
       - id: ref1
         bwb_id: BWBR0010346
