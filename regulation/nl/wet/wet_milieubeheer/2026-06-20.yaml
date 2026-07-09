@@ -580,6 +580,34 @@ articles:
 
       3 De leden worden benoemd voor een periode van vier jaren. Zij zijn aansluitend twee malen herbenoembaar.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel2.3
+    machine_readable:
+      execution:
+        output:
+          - name: benoemingstermijn_jaren
+            type: number
+            description: Benoemingstermijn van leden van het bestuur (vier jaren, lid 3)
+          - name: max_herbenoemingen
+            type: number
+            description: Maximum aantal opeenvolgende herbenoemingen (twee malen aansluitend, lid 3)
+          - name: maximale_aaneengesloten_diensttijd_jaren
+            type: number
+            description: Maximale aaneengesloten diensttijd (vier jaren × drie termijnen = twaalf jaren)
+          - name: max_bestuursleden
+            type: number
+            description: Maximaal aantal leden van het bestuur inclusief voorzitter (ten hoogste vijf, lid 1)
+        actions:
+          - output: benoemingstermijn_jaren
+            value: 4
+          - output: max_herbenoemingen
+            value: 2
+          - output: maximale_aaneengesloten_diensttijd_jaren
+            value:
+              operation: MULTIPLY
+              values:
+                - $benoemingstermijn_jaren
+                - 3
+          - output: max_bestuursleden
+            value: 5
   - number: '2.5'
     text: >-
       Leden van het bestuur van de emissieautoriteit en medewerkers van de emissieautoriteit zijn direct noch
@@ -618,6 +646,24 @@ articles:
       - id: ref1
         bwb_id: BWBR0020495
         artikel: '18'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarvoor het jaarverslag wordt opgesteld
+        output:
+          - name: jaarverslag_deadline
+            type: date
+            description: Uiterste datum voor het opstellen van het jaarverslag (voor 1 juli van het betreffende jaar, in afwijking van de Kaderwet zelfstandige bestuursorganen)
+        actions:
+          - output: jaarverslag_deadline
+            value:
+              operation: DATE
+              year: $jaar
+              month: 7
+              day: 1
   - number: '2.16'
     text: |-
       1 Onverminderd [artikel 16.8][ref1] verstrekken het bestuur van de emissieautoriteit en het bestuursorgaan
@@ -786,6 +832,23 @@ articles:
       voorstellen kunnen worden gedaan voor gewenste veranderingen. Onze Minister zendt dit rapport, voorzien van zijn
       standpunt, aan de beide kamers der Staten-Generaal.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel2.29
+    machine_readable:
+      execution:
+        parameters:
+          - name: vorig_rapport_datum
+            type: date
+            required: true
+            description: Datum van het vorige rapport van de Commissie genetische modificatie aan Onze Minister
+        output:
+          - name: volgende_rapport_deadline
+            type: date
+            description: Uiterste datum voor het uitbrengen van het volgende rapport (binnen vier jaren na het vorige rapport)
+        actions:
+          - output: volgende_rapport_deadline
+            value:
+              operation: DATE_ADD
+              date: $vorig_rapport_datum
+              years: 4
   - number: '2.30'
     text: >-
       1 De commissie bestaat uit een voorzitter en ten minste vijftien en ten hoogste twintig andere leden.
@@ -8184,6 +8247,29 @@ articles:
 
       3 Bij ministeriële regeling kunnen regels worden gesteld ter uitvoering van dit artikel.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel16.36
+    machine_readable:
+      untranslatables:
+        - construct: "bepaling van de tienjarige periode op basis van de verleningsdatum (lid 2)"
+          reason: "Berekening van periode-index vereist gehele-getaldeling (FLOOR/INT), niet beschikbaar als engine-operatie"
+          suggestion: "Voeg FLOOR/INT-operatie toe aan de engine of modelleer als opzoektabel"
+          legal_text_excerpt: "periode van tien jaar te rekenen vanaf 1 januari 2021 het is verstrekt en is geldig voor emissies met ingang van het eerste jaar van die periode"
+          accepted: false
+      execution:
+        parameters:
+          - name: verlening_jaar
+            type: number
+            required: true
+            description: Het jaar waarin het broeikasgasemissierecht is verleend
+        output:
+          - name: geldig_voor_onbepaalde_tijd
+            type: boolean
+            description: Of het broeikasgasemissierecht voor onbepaalde tijd geldig is (lid 1 — verleend vanaf 1 januari 2013)
+        actions:
+          - output: geldig_voor_onbepaalde_tijd
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verlening_jaar
+              value: 2013
   - number: '16.37'
     text: |-
       1 Onverminderd artikel 30, tiende lid, van de Verordening EU-register handel in emissierechten, levert de
@@ -13336,6 +13422,24 @@ articles:
         bwb_id: BWBR0003245
         artikel: 18.16k
         hoofdstuk: '18'
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarvoor het overzicht van overtreders wordt opgesteld
+        output:
+          - name: overzicht_deadline
+            type: date
+            description: Uiterste datum voor het opstellen en publiceren van het overzicht van overtreders (voor 1 oktober van dat jaar)
+        actions:
+          - output: overzicht_deadline
+            value:
+              operation: DATE
+              year: $jaar
+              month: 10
+              day: 1
   - number: 18.16q
     text: |-
       1 Het bestuur van de emissieautoriteit kan degene die jegens de in [artikel 18.4, eerste of tweede lid][ref1],
@@ -13583,6 +13687,30 @@ articles:
         artikel: 9.8.3.6
         hoofdstuk: '9'
         paragraaf: 9.8.3
+    machine_readable:
+      untranslatables:
+        - construct: "boetemaximum zesde categorie WvSr (lid 2)"
+          reason: "Het bedrag van de zesde categorie, bedoeld in artikel 23, vierde lid, WvSr is extern vastgesteld en periodiek bijgesteld; het is niet als constante in de engine uitgedrukt en MAX(categorie_6, 10% omzet) kan niet volledig worden berekend"
+          suggestion: "Voeg een open_term of extern datapunt toe voor het geldende bedrag van de zesde categorie WvSr"
+          legal_text_excerpt: "ten hoogste het bedrag dat is vastgesteld voor de zesde categorie, bedoeld in artikel 23, vierde lid, van het Wetboek van Strafrecht"
+          accepted: false
+      execution:
+        parameters:
+          - name: omzet
+            type: number
+            required: true
+            description: Omzet van de onderneming in het boekjaar voorafgaande aan de beschikking (eurocent)
+        output:
+          - name: boetemaximum_omzet_percentage
+            type: number
+            description: 10% van de omzet als boetemaximum (eurocent); het hogere van dit bedrag en het zesde categorie WvSr-bedrag geldt als werkelijk maximum (zie untranslatables)
+        actions:
+          - output: boetemaximum_omzet_percentage
+            value:
+              operation: DIVIDE
+              values:
+                - $omzet
+                - 10
   - number: '18.17'
     text: |-
       Indien binnen een periode van vier jaar aan een persoon tweemaal voor eenzelfde feit een bestuurlijke boete
@@ -13605,6 +13733,35 @@ articles:
         hoofdstuk: '16'
         paragraaf: 16.2.1.2
         afdeling: 16.2.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_eerste_boete_onherroepelijk
+            type: date
+            required: true
+            description: Datum waarop de eerste bestuurlijke boete krachtens artikel 18.16a voor het betreffende feit onherroepelijk werd
+          - name: datum_tweede_boete_onherroepelijk
+            type: date
+            required: true
+            description: Datum waarop de tweede bestuurlijke boete krachtens artikel 18.16a voor hetzelfde feit onherroepelijk werd
+        output:
+          - name: intrekking_mogelijk
+            type: boolean
+            description: Of de bevoegdheid tot intrekking van de vergunning (artikel 16.5) is ontstaan (twee onherroepelijke boetes voor hetzelfde feit binnen vier jaar)
+          - name: vier_jaar_periode_einddatum
+            type: date
+            description: Einddatum van de vier-jaar-periode te rekenen vanaf de eerste onherroepelijke boete
+        actions:
+          - output: vier_jaar_periode_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_eerste_boete_onherroepelijk
+              years: 4
+          - output: intrekking_mogelijk
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $datum_tweede_boete_onherroepelijk
+              value: $vier_jaar_periode_einddatum
   - number: '18.18'
     text: |-
       Een gedraging in strijd met een voorschrift dat is verbonden aan een krachtens deze wet of een verordening als

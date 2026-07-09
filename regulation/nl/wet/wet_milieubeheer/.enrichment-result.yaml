@@ -15,7 +15,7 @@ enrichment:
     generate:
       status: completed
       articles_total: 450
-      articles_with_machine_readable: 11
+      articles_with_machine_readable: 18
       articles_skipped_reason: >-
         The vast majority of Wet milieubeheer articles are framework provisions,
         delegation clauses, definitional articles, or procedural rules that contain
@@ -29,9 +29,9 @@ enrichment:
 
     reverse_validate:
       status: completed
-      articles_checked: 11
-      fully_grounded: 10
-      contains_untranslatables: 1
+      articles_checked: 18
+      fully_grounded: 15
+      contains_untranslatables: 3
       elements_removed: 0
       scope_violations: 0
 
@@ -143,17 +143,99 @@ enrichment:
       notes: >-
         Vaste boeteplafond: ten hoogste € 4.500 = 450.000 eurocent.
 
+    - number: "2.3"
+      lid: 3
+      topic: Bestuur emissieautoriteit — samenstelling, benoemingstermijn en herbenoeming
+      outputs:
+        - benoemingstermijn_jaren
+        - max_herbenoemingen
+        - maximale_aaneengesloten_diensttijd_jaren
+        - max_bestuursleden
+      notes: >-
+        Lid 1: ten hoogste 5 leden. Lid 3: termijn 4 jaren, aansluitend 2x herbenoembaar;
+        maximale aaneengesloten diensttijd = 3 × 4 = 12 jaren.
+
+    - number: "2.9"
+      lid: null
+      topic: Jaarverslag emissieautoriteit — deadline 1 juli (afwijking Kaderwet ZBO)
+      outputs:
+        - jaarverslag_deadline
+      notes: >-
+        In afwijking van Kaderwet ZBO artikel 18 eerste lid: jaarlijks voor 1 juli.
+        DATE(jaar, 7, 1).
+
+    - number: "2.29"
+      lid: null
+      topic: Rapport Commissie genetische modificatie — vierjarige rapportageplicht
+      outputs:
+        - volgende_rapport_deadline
+      notes: >-
+        Telkens binnen vier jaren na vorig rapport. DATE_ADD(vorig_rapport_datum, years=4).
+
+    - number: "16.36"
+      lid: 1
+      topic: Geldigheid broeikasgasemissierechten (vanaf 2013 onbepaalde tijd)
+      outputs:
+        - geldig_voor_onbepaalde_tijd
+      untranslatables:
+        - construct: "bepaling tienjarige periode op basis van verleningsdatum (lid 2)"
+          reason: Gehele-getaldeling (FLOOR) niet beschikbaar als engine-operatie
+      notes: >-
+        Lid 1: rechten verleend vanaf 1 jan 2013 zijn voor onbepaalde tijd geldig.
+        Lid 2 (10-jaar periode) is untranslatable door ontbrekende FLOOR operatie.
+
+    - number: "18.16p"
+      lid: 1
+      topic: Overzicht overtreders emissierechten — jaarlijkse deadline 1 oktober
+      outputs:
+        - overzicht_deadline
+      notes: >-
+        Elk jaar voor 1 oktober een overzicht van overtreders publiceren.
+        DATE(jaar, 10, 1).
+
+    - number: "18.16s"
+      lid: 2
+      topic: Maximale bestuurlijke boete hernieuwbare energie — 10% omzet of categorie 6 WvSr
+      outputs:
+        - boetemaximum_omzet_percentage
+      untranslatables:
+        - construct: "boetemaximum zesde categorie WvSr (lid 2)"
+          reason: Extern vastgesteld bedrag niet beschikbaar als engine-waarde
+      notes: >-
+        10% van omzet berekend. Het hogere van categorie 6 WvSr en 10% omzet geldt;
+        categorie 6 is untranslatable (extern bedrag, periodiek bijgesteld).
+
+    - number: "18.17"
+      lid: null
+      topic: Intrekking vergunning na tweemaal bestuurlijke boete binnen vier jaar
+      outputs:
+        - intrekking_mogelijk
+        - vier_jaar_periode_einddatum
+      notes: >-
+        Bevoegdheid tot intrekking ontstaat indien twee onherroepelijke boetes voor
+        hetzelfde feit binnen vier jaar. Periode_einddatum = DATE_ADD(datum_eerste_boete, years=4);
+        intrekking_mogelijk = datum_tweede_boete <= periode_einddatum.
+
   reverse_validation_report:
-    fully_grounded: 10
+    fully_grounded: 15
     assumptions: 0
     elements_removed: 0
     untranslatable_workarounds: 0
-    new_untranslatables_flagged: 2
+    new_untranslatables_flagged: 4
     operation_correctness: passed
     scope_violations: 0
     notes: >-
-      Artikel 16.39t: inleverdeadline (lids 1+2), luchtvaartrechten (lid 1),
-      faseringpercentages (lid 6), ijsklasse-uitzondering 5% t/m 2030 (lid 7) —
-      alle elementen herleidbaar. Artikel 18.16l: "tien jaren" + "In afwijking van
-      artikel 5:45" — volledig gegrond. Artikel 18.16q: "ten hoogste € 4 500" =
-      450.000 eurocent — volledig gegrond.
+      Alle 18 machine_readable secties zijn geverifieerd. Nieuwe secties (2.3, 2.9,
+      2.29, 16.36, 18.16p, 18.16s, 18.17) zijn volledig herleidbaar naar de wettekst.
+      Untranslatables toegevoegd: 16.36 lid 2 (FLOOR voor tienjarige periodeberekening),
+      18.16e lids 2 en 3 (ETS boetebedrag en CPI-indexering),
+      18.16s lid 2 (zesde categorie WvSr bedrag). Geen scope-overtredingen.
+
+law_id: wet_milieubeheer
+related_legislation:
+  - name: Algemene wet bestuursrecht
+    relation: legal_basis
+    bwb_id: BWBR0005537
+    slug: algemene_wet_bestuursrecht
+    open_term: verjaringstermijn_jaren
+    # Artikel 18.16l overrides AWB artikel 5:45 (verjaringstermijn); lex specialis
