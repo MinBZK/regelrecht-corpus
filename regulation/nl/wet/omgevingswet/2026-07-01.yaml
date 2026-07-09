@@ -7618,6 +7618,31 @@ articles:
         hoofdstuk: '9'
         paragraaf: 9.2.3
         afdeling: '9.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: start_datum
+            type: date
+            required: true
+            description: "Startdatum van de termijn: datum van weigeringsbeslissing (lid 1a) of afloop van de beslistermijn van artikel 9.13 (lid 1b); tevens dag na welke het voorkeursrecht vervalt bij lid 2"
+        output:
+          - name: vervreemdingstermijn_einde
+            type: date
+            description: "Uiterste datum van de driejaarstermijn waarbinnen de vervreemder aan derden mag vervreemden (lid 1)"
+          - name: voorkeursrecht_vervaldatum_lid2
+            type: date
+            description: "Datum met ingang waarvan het omgevingsplan-gebaseerde voorkeursrecht vervalt (lid 2): dag na start_datum"
+        actions:
+          - output: vervreemdingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $start_datum
+              years: 3
+          - output: voorkeursrecht_vervaldatum_lid2
+            value:
+              operation: DATE_ADD
+              date: $start_datum
+              days: 1
   - number: '9.15'
     text: |-
       Deze paragraaf is van toepassing op een goed waarvoor een uitnodiging als bedoeld in
@@ -7696,6 +7721,31 @@ articles:
         hoofdstuk: '9'
         paragraaf: 9.2.4
         afdeling: '9.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: start_datum
+            type: date
+            required: true
+            description: "Startdatum van de termijn: datum waarop de termijn van artikel 9.16 lid 1 is verstreken (lid 1a) of de intrekking bij de griffie is ontvangen (lid 1b); tevens dag na welke het voorkeursrecht vervalt bij lid 2"
+        output:
+          - name: vervreemdingstermijn_einde
+            type: date
+            description: "Uiterste datum van de driejaarstermijn waarbinnen de vervreemder aan derden mag vervreemden (lid 1)"
+          - name: voorkeursrecht_vervaldatum_lid2
+            type: date
+            description: "Datum met ingang waarvan het omgevingsplan-gebaseerde voorkeursrecht vervalt (lid 2): dag na start_datum"
+        actions:
+          - output: vervreemdingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $start_datum
+              years: 3
+          - output: voorkeursrecht_vervaldatum_lid2
+            value:
+              operation: DATE_ADD
+              date: $start_datum
+              days: 1
   - number: '9.18'
     text: |-
       1 De vervreemder kan de rechtbank verzoeken te bepalen dat de rechtspersoon op wiens naam het voorkeursrecht is
@@ -7721,6 +7771,23 @@ articles:
         hoofdstuk: '9'
         paragraaf: 9.2.4
         afdeling: '9.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: triggerdatum
+            type: date
+            required: true
+            description: "Datum van de triggerende gebeurtenis: beslissing geen verzoek in te dienen (lid 2a), overschrijding termijn artikel 9.16 lid 1 (lid 2b), of ontvangst intrekking (lid 2c)"
+        output:
+          - name: verzoek_deadline
+            type: date
+            description: "Uiterste datum voor indiening van het verzoek bij de rechtbank (twee maanden na de triggerdatum, lid 2)"
+        actions:
+          - output: verzoek_deadline
+            value:
+              operation: DATE_ADD
+              date: $triggerdatum
+              months: 2
   - number: '9.19'
     text: |-
       De vervreemder mag tot vervreemding aan derden overgaan gedurende een periode van drie jaar na het onherroepelijk
@@ -7737,6 +7804,23 @@ articles:
         hoofdstuk: '9'
         paragraaf: 9.2.4
         afdeling: '9.2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: beschikking_onherroepelijk_datum
+            type: date
+            required: true
+            description: "Datum waarop de rechterlijke beschikking waarbij het verzoek (artikel 9.18 lid 1) is afgewezen onherroepelijk is geworden"
+        output:
+          - name: vervreemdingstermijn_einde
+            type: date
+            description: "Uiterste datum van de driejaarstermijn waarbinnen de vervreemder aan derden mag vervreemden"
+        actions:
+          - output: vervreemdingstermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $beschikking_onherroepelijk_datum
+              years: 3
   - number: '9.20'
     text: |-
       1 Het bevoegd gezag verleent medewerking aan de totstandkoming van een notariële akte tot levering van het goed
@@ -7765,6 +7849,23 @@ articles:
         artikel: '16.123'
         hoofdstuk: '16'
         afdeling: '16.11'
+    machine_readable:
+      execution:
+        parameters:
+          - name: beschikking_onherroepelijk_datum
+            type: date
+            required: true
+            description: "Datum waarop de beschikking (artikel 16.123 lid 1 of 2) onherroepelijk is geworden"
+        output:
+          - name: medewerking_verzoek_deadline
+            type: date
+            description: "Uiterste datum voor schriftelijk verzoek om medewerking aan de notariële levering (drie maanden na onherroepelijk worden, lid 1)"
+        actions:
+          - output: medewerking_verzoek_deadline
+            value:
+              operation: DATE_ADD
+              date: $beschikking_onherroepelijk_datum
+              months: 3
   - number: '9.21'
     text: |-
       1 Inschrijving in de openbare registers van een akte tot vervreemding anders dan aan een gemeente, een provincie
@@ -7800,6 +7901,23 @@ articles:
       3 Het verzoek tot nietigverklaring is niet-ontvankelijk als de indiener schriftelijk heeft ingestemd met de
       rechtshandeling.
     url: https://wetten.overheid.nl/BWBR0037885/2026-07-01#Artikel9.22
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_akte_datum
+            type: date
+            required: true
+            description: "Datum waarop de gemeente, provincie of Staat een afschrift heeft ontvangen van de akte waarin de rechtshandeling is vervat (lid 2)"
+        output:
+          - name: nietigverklaring_verzoek_deadline
+            type: date
+            description: "Uiterste datum voor indiening van het verzoek tot nietigverklaring bij de rechtbank (acht weken na ontvangst akte, lid 2)"
+        actions:
+          - output: nietigverklaring_verzoek_deadline
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_akte_datum
+              weeks: 8
   - number: '10.1'
     text: |-
       In dit hoofdstuk en de daarop berustende bepalingen wordt verstaan onder:
@@ -11462,6 +11580,38 @@ articles:
         hoofdstuk: '13'
         paragraaf: 13.6.1
         afdeling: '13.6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: te_verhalen_kosten_netto
+            type: number
+            required: true
+            description: "Te verhalen kosten verminderd met ontvangen of te ontvangen bijdragen en subsidies van derden (eurocent, lid 2)"
+          - name: opbrengsten_gronden
+            type: number
+            required: true
+            description: "Opbrengsten van de gronden binnen het kostenverhaalsgebied (eurocent, lid 2)"
+        output:
+          - name: plafond_van_toepassing
+            type: boolean
+            description: "Of het opbrengstplafond van toepassing is: de kosten zijn hoger dan de opbrengsten (lid 2)"
+          - name: maximum_te_verhalen_kosten
+            type: amount
+            description: "Maximaal te verhalen kostenbedrag: niet hoger dan de opbrengsten van de gronden (lid 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: plafond_van_toepassing
+            value:
+              operation: GREATER_THAN
+              subject: $te_verhalen_kosten_netto
+              value: $opbrengsten_gronden
+          - output: maximum_te_verhalen_kosten
+            value:
+              operation: MIN
+              values:
+                - $te_verhalen_kosten_netto
+                - $opbrengsten_gronden
   - number: '13.15'
     text: |-
       1 Als voor een kostenverhaalsgebied in een omgevingsplan geen tijdvak voor de uitvoering van de werken,
@@ -11617,6 +11767,54 @@ articles:
         hoofdstuk: '13'
         paragraaf: 13.6.3
         afdeling: '13.6'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+        parameters:
+          - name: te_verhalen_kosten
+            type: number
+            required: true
+            description: "De op grond van artikel 13.14 of 13.15 te verhalen kosten (eurocent, lid 1)"
+          - name: inbrengwaarde_gronden
+            type: number
+            required: true
+            description: "Inbrengwaarde van de gronden waarop de aanvraag betrekking heeft (eurocent, lid 2a)"
+          - name: kosten_aanvrager
+            type: number
+            required: true
+            description: "Kosten die door de aanvrager zijn gemaakt (eurocent, lid 2b)"
+          - name: raming_kosten
+            type: number
+            required: true
+            description: "Raming van de kosten in het omgevingsplan, omgevingsvergunning of projectbesluit (eurocent, lid 2b)"
+        output:
+          - name: aftrekbare_aanvrager_kosten
+            type: amount
+            description: "Aftrekbare aanvragerskosten: gemaakte kosten voor zover gelijk aan of lager dan de raming (eurocent, lid 2b)"
+            type_spec:
+              unit: eurocent
+          - name: verschuldigde_geldsom
+            type: amount
+            description: "Bij beschikking vast te stellen verschuldigde geldsom na aftrek van inbrengwaarde en aanvragerskosten (eurocent, leden 1 en 2)"
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: aftrekbare_aanvrager_kosten
+            value:
+              operation: MIN
+              values:
+                - $kosten_aanvrager
+                - $raming_kosten
+          - output: verschuldigde_geldsom
+            value:
+              operation: SUBTRACT
+              values:
+                - operation: SUBTRACT
+                  values:
+                    - $te_verhalen_kosten
+                    - $inbrengwaarde_gronden
+                - $aftrekbare_aanvrager_kosten
   - number: '13.19'
     text: |-
       1 Bij de beschikking kan worden bepaald dat de betaling geheel of gedeeltelijk na aanvang van de activiteit
