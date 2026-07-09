@@ -42,10 +42,64 @@ articles:
       4 Voor de gelijkstelling van een zweefvliegbewijs geldt dat de houder minimaal 17 jaren moet zijn en minimaal 100
       starts heeft verricht.
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: peildatum
+            type: date
+            description: Datum waarop de leeftijd wordt beoordeeld
+          - name: geboortedatum
+            type: date
+            description: Geboortedatum van de houder
+          - name: heeft_medisch_certificaat_klasse_2
+            type: boolean
+            description: Beschikt de houder over een medisch certificaat klasse 2
+          - name: vlieguren
+            type: number
+            description: Aantal vlieguren (voor PPL(A) ballonvaarder)
+          - name: starts
+            type: number
+            description: Aantal starts (voor zweefvliegbewijs)
+        output:
+          - name: voldoet_aan_ppl_ballonvaarder_voorwaarden
+            type: boolean
+            description: Voldoet aan de voorwaarden voor gelijkstelling PPL(A) als ballonvaarder (artikel 2, lid 3)
+          - name: voldoet_aan_zweefvliegbewijs_voorwaarden
+            type: boolean
+            description: Voldoet aan de voorwaarden voor gelijkstelling zweefvliegbewijs (artikel 2, lid 4)
+        actions:
+          - output: leeftijd
+            value:
+              operation: AGE
+              date_of_birth: $geboortedatum
+              reference_date: $peildatum
+          - output: voldoet_aan_ppl_ballonvaarder_voorwaarden
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 17
+                - operation: EQUALS
+                  subject: $heeft_medisch_certificaat_klasse_2
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $vlieguren
+                  value: 100
+          - output: voldoet_aan_zweefvliegbewijs_voorwaarden
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $leeftijd
+                  value: 17
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $starts
+                  value: 100
   - number: '10'
     text: |-
       1 De aanvraag van een bewijs van gelijkstelling moet zijn gesteld op een daartoe bestemd en deugdelijk ingevuld
-      aanvraagformulier met daarbij gevoegd het origineel of een gewaarmerkte kopie van het gelijk te stellen
+      aanvraagformulier met daarbij gevoegde het origineel of een gewaarmerkte kopie van het gelijk te stellen
       bewijs van bevoegdheid, het logboek, de examenresultaten en een geldige medische verklaring als bedoeld in
       [artikel 2.4 Wet Luchtvaart][ref1].
 
@@ -56,9 +110,51 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0005555#Artikel2.4
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel10
     references:
-      - id: ref1
-        bwb_id: BWBR0005555
-        artikel: '2.4'
+       - id: ref1
+         bwb_id: BWBR0005555
+         artikel: '2.4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_aanvraagformulier
+            type: boolean
+            description: Is het aanvraagformulier deugdelijk ingevuld
+          - name: heeft_origineel_of_gewaarmerkte_kopie_bewijs
+            type: boolean
+            description: Is het origineel of gewaarmerkte kopie van het gelijk te stellen bewijs van bevoegdheid meegestuurd
+          - name: heeft_logboek
+            type: boolean
+            description: Is het logboek meegestuurd
+          - name: heeft_examenresultaten
+            type: boolean
+            description: Zijn de examenresultaten meegestuurd
+          - name: heeft_geldige_medische_verklaring
+            type: boolean
+            description: Is een geldige medische verklaring als bedoeld in Wet Luchtvaart Artikel 2.4 meegestuurd
+        output:
+          - name: voldoet_aan_aanvraagvereisten
+            type: boolean
+            description: Voldoet de aanvraag aan alle vereisten van artikel 10, lid 1
+        actions:
+          - output: voldoet_aan_aanvraagvereisten
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_aanvraagformulier
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_origineel_of_gewaarmerkte_kopie_bewijs
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_logboek
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_examenresultaten
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_geldige_medische_verklaring
+                  value: true
   - number: '12'
     text: |-
       Het bepaalde in de [artikelen 27][ref1], [28][ref2] en [29 van de Regeling Toezicht Luchtvaart][ref3] ten aanzien
@@ -80,6 +176,19 @@ articles:
       - id: ref3
         bwb_id: BWBR0002309
         artikel: '29'
+    machine_readable:
+      execution:
+        parameters: []
+        output:
+          - name: regeling_toezicht_luchtvaart_artikelen_toepasselijk
+            type: boolean
+            description: Zijn de artikelen 27, 28 en 29 van de Regeling Toezicht Luchtvaart van toepassing op het bewijs van gelijkstelling
+        actions:
+          - output: regeling_toezicht_luchtvaart_artikelen_toepasselijk
+            value:
+              operation: EQUALS
+              subject: true
+              value: true
   - number: '13'
     text: |-
       13.1 Indien in het Nederlands luchtvaartuigenregister ingeschreven luchtvaartuigen ter beschikking worden gesteld
@@ -96,17 +205,103 @@ articles:
       b. vanaf de in Nederland gevestigde fabriek naar het buitenland of vanuit het buitenland naar de in Nederland
       gevestigde fabriek worden overgebracht.
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel13
+    machine_readable:
+      execution:
+        parameters:
+          - name: luchtvaartuigen_in_nederlands_register
+            type: boolean
+            description: Zijn de luchtvaartuigen ingeschreven in het Nederlands luchtvaartuigenregister
+          - name: buitenlandse_onderneming
+            type: boolean
+            description: Is de onderneming in het buitenland gevestigd
+          - name: vluchten_buiten_nederland
+            type: boolean
+            description: Gaat de onderneming vluchten uitvoeren buiten Nederland
+          - name: geldige_buitenlandse_bewijzen
+            type: boolean
+            description: Beschikt het stuurhutpersoneel over geldige buitenlandse bewijzen van bevoegdheid
+          - name: bedient_bepaalde_luchtvaartuigen
+            type: boolean
+            description: Zal het stuurhutpersoneel één of meer bepaalde luchtvaartuigen bedienen
+        output:
+          - name: voldoet_aan_groepsgelijkstelling_voorwaarden
+            type: boolean
+            description: Voldoet aan de voorwaarden voor groepsgelijkstelling (artikel 13, lid 1)
+        actions:
+          - output: voldoet_aan_groepsgelijkstelling_voorwaarden
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $luchtvaartuigen_in_nederlands_register
+                  value: true
+                - operation: EQUALS
+                  subject: $buitenlandse_onderneming
+                  value: true
+                - operation: EQUALS
+                  subject: $vluchten_buiten_nederland
+                  value: true
+                - operation: EQUALS
+                  subject: $geldige_buitenlandse_bewijzen
+                  value: true
+                - operation: EQUALS
+                  subject: $bedient_bepaalde_luchtvaartuigen
+                  value: true
   - number: '14'
     text: |-
       De in de buitenlandse bewijzen van bevoegdheid gestelde bevoegdverklaringen komen eveneens in aanmerking voor
       groepsgelijkstelling met uitzondering van de bevoegdverklaring Vliegonderricht.
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel14
+    machine_readable:
+      execution:
+         parameters:
+           - name: bevoegdverklaring_type
+             type: string
+             description: Type bevoegdverklaring in het buitenlandse bewijs van bevoegdheid
+         output:
+           - name: komt_in_aanmerking_voor_groepsgelijkstelling
+             type: boolean
+             description: Komt de bevoegdverklaring in aanmerking voor groepsgelijkstelling (artikel 14)
+         actions:
+           - output: komt_in_aanmerking_voor_groepsgelijkstelling
+             value:
+               operation: NOT
+               value:
+                 operation: EQUALS
+                 subject: $bevoegdverklaring_type
+                 value: Vliegonderricht
   - number: '15'
     text: |-
       De groepsgelijkstelling wordt afgegeven voor de duur van de gebruiksovereenkomst van het in het Nederlands
       Luchtvaartuigregister ingeschreven luchtvaartuig met een maximum van 5 jaar en beperkt zich tot de in de
       overeenkomst afgesproken taken en werkzaamheden. De termijn van de groepsgelijkstelling kan worden verlengd.
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel15
+    machine_readable:
+      execution:
+        parameters:
+          - name: duur_gebruiksovereenkomst
+            type: number
+            description: Duur van de gebruiksovereenkomst in jaren
+          - name: maximum_duur
+            type: number
+            description: Maximale duur van de groepsgelijkstelling (5 jaar)
+            default: 5
+        output:
+          - name: groepsgelijkstelling_duur
+            type: number
+            description: Duur van de groepsgelijkstelling (artikel 15)
+          - name: groepsgelijkstelling_beperkt_tot_taken
+            type: boolean
+            description: Beperkt de groepsgelijkstelling zich tot de afgesproken taken en werkzaamheden
+        actions:
+          - output: groepsgelijkstelling_duur
+            value:
+              operation: MIN
+              values:
+                - $duur_gebruiksovereenkomst
+                - $maximum_duur
+          - output: groepsgelijkstelling_beperkt_tot_taken
+            value: true
   - number: '16'
     text: |-
       Het bepaalde in de [Wet luchtvaart][ref1] ten aanzien van schorsing, intrekking en vernieuwing van bewijzen van
@@ -118,6 +313,19 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0005555
+    machine_readable:
+      execution:
+        parameters: []
+        output:
+          - name: wet_luchtvaart_toepasselijk
+            type: boolean
+            description: Is het bepaalde in de Wet luchtvaart ten aanzien van schorsing, intrekking en vernieuwing van toepassing op de groepsgelijkstelling
+        actions:
+          - output: wet_luchtvaart_toepasselijk
+            value:
+              operation: EQUALS
+              subject: true
+              value: true
   - number: '21'
     text: De regeling van 29 december 1987, nr. LI/26626, Stcrt. 1988, 7, wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0006099/2014-03-15#Artikel21
