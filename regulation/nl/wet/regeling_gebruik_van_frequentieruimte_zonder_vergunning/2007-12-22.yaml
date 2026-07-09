@@ -19,6 +19,29 @@ articles:
       van het gewenste signaal van het radiozendapparaat geen storing of belemmering wordt veroorzaakt in andere
       radiozendapparaten dan wel in overige elektrische of elektronische apparaten.
     url: https://wetten.overheid.nl/BWBR0015732/2007-12-22#Artikel1
+    machine_readable:
+      input:
+        - name: storing_veroorzaakt
+          type: boolean
+          description: Geeft aan of storing wordt veroorzaakt
+        - name: belemmering_veroorzaakt
+          type: boolean
+          description: Geeft aan of belemmering wordt veroorzaakt
+      execution:
+        output:
+          - name: geen_storing_of_belemmering
+            type: boolean
+            description: Geeft aan of geen storing of belemmering wordt veroorzaakt
+        actions:
+          - output: geen_storing_of_belemmering
+            value:
+              operation: NOT
+              value:
+                operation: OR
+                conditions:
+                  - subject: $storing_veroorzaakt
+                  - subject: $belemmering_veroorzaakt
+
   - number: '2.1'
     text: |-
       Als categorieën radiozendapparaten, bedoeld in [artikel 3.4, eerste lid, onder a, van de Telecommunicatiewet][ref1],
@@ -31,6 +54,7 @@ articles:
       - id: ref1
         bwb_id: BWBR0009950
         artikel: '3'
+
   - number: 2.1.a
     text: |-
       randapparaten die bestemd zijn voor aansluiting op een mobiel openbaar elektronisch communicatienetwerk, waar voor
@@ -43,11 +67,53 @@ articles:
       - id: ref1
         bwb_id: BWBR0009950
         artikel: '3'
+    machine_readable:
+      input:
+        - name: vergunning_verleend_voor_frequentieruimte
+          type: boolean
+          description: Geeft aan of er een vergunning is verleend voor de gebruikte frequentieruimte
+      execution:
+        output:
+          - name: is_compliant_2_1_a
+            type: boolean
+            description: Geeft aan of het apparaat voldoet aan 2.1.a
+        actions:
+          - output: is_compliant_2_1_a
+            value:
+              subject: $vergunning_verleend_voor_frequentieruimte
+
   - number: 2.1.b
     text: |-
       randapparaten die bestemd zijn voor aansluiting op een openbaar satellietsysteem, ten behoeve van mobiele
       communicatie, met uitzondering van het nood-, spoed en veiligheidsverkeer;
     url: https://wetten.overheid.nl/BWBR0015732/2007-12-22#Artikel2
+    machine_readable:
+      input:
+        - name: bestemd_voor_openbaar_satellietsysteem
+          type: boolean
+          description: Geeft aan of het apparaat bestemd is voor aansluiting op een openbaar satellietsysteem
+        - name: voor_mobiele_communicatie
+          type: boolean
+          description: Geeft aan of het apparaat ten behoeve is van mobiele communicatie
+        - name: is_nood_spoed_veiligheidsverkeer
+          type: boolean
+          description: Geeft aan of het apparatus vallet onder nood-, spoed en veiligheidsverkeer
+      execution:
+        output:
+          - name: is_compliant_2_1_b
+            type: boolean
+            description: Geeft aan of het apparaat voldoet aan 2.1.b
+        actions:
+          - output: is_compliant_2_1_b
+            value:
+              operation: AND
+              conditions:
+                - subject: $bestemd_voor_openbaar_satellietsysteem
+                - subject: $voor_mobiele_communicatie
+                - operation: NOT
+                  value:
+                    subject: $is_nood_spoed_veiligheidsverkeer
+
   - number: 2.1.c
     text: |-
       randapparaten, zijnde koordloze telefoons, die bestemd zijn voor aansluiting op een openbaar telefoonnetwerk
@@ -60,6 +126,35 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_koordloze_telefoon
+          type: boolean
+          description: Geeft aan of het apparaat een koordloze telefoon is
+        - name: bestemd_voor_openbaar_telefoonnetwerk
+          type: boolean
+          description: Geeft aan of het apparaat bestemd is voor aansluiting op een openbaar telefoonnetwerk
+        - name: vaste_locatie
+          type: boolean
+          description: Geeft aan of het apparaat op een vaste locatie wordt gebruikt
+        - name: voldoet_aan_bijlage_1
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 1 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_c
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.c
+        actions:
+          - output: is_compliant_2_1_c
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_koordloze_telefoon
+                - subject: $bestemd_voor_openbaar_telefoonnetwerk
+                - subject: $vaste_locatie
+                - subject: $voldoet_aan_bijlage_1
+
   - number: 2.1.d
     text: |-
       radiozendapparaten voor algemene radiocommunicatie in de 27 MHz-frequentieband (CB), mits de in [bijlage 2][ref1]
@@ -71,11 +166,47 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_radiozendapparaat_voor_CB
+          type: boolean
+          description: Geeft aan of het een radiozendapparaat voor algemene radiocommunicatie in de 27 MHz-band (CB) is
+        - name: voldoet_aan_bijlage_2
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 2 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_d
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.d
+        actions:
+          - output: is_compliant_2_1_d
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_radiozendapparaat_voor_CB
+                - subject: $voldoet_aan_bijlage_2
+
   - number: 2.1.e
     text: |-
       randapparaten die bestemd zijn voor aansluiting op een openbaar telecommunicatienetwerk ten behoeve van
       plaatsbepaling;
     url: https://wetten.overheid.nl/BWBR0015732/2007-12-22#Artikel2
+    machine_readable:
+      input:
+        - name: bestemd_voor_plaatsbepaling
+          type: boolean
+          description: Geeft aan of het apparaat bestemd is voor aansluiting op een openbaar telecommunicatienetwerk ten behoeve van plaatsbepaling
+      execution:
+        output:
+          - name: is_compliant_2_1_e
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.e
+        actions:
+          - output: is_compliant_2_1_e
+            value:
+              subject: $bestemd_voor_plaatsbepaling
+
   - number: 2.1.f
     text: |-
       mobiele VHF/UHF radiozendapparaten voor landmobiel gebruik die daadwerkelijk en krachtens een daartoe
@@ -83,6 +214,35 @@ articles:
       frequentietoewijzing ten behoeve waarvan een vergunning is verleend voor het gebruik van frequentieruimte
       (trunkinginstallatie);
     url: https://wetten.overheid.nl/BWBR0015732/2007-12-22#Artikel2
+    machine_readable:
+      input:
+        - name: is_mobiel_VHF_UHF_radiozendapparaat
+          type: boolean
+          description: Geeft aan of het een mobiel VHF/UHF radiozendapparaat voor landmobiel gebruik is
+        - name: onderdeel_van_besloten_netwerk
+          type: boolean
+          description: Geeft aan of het apparaat daadwerkelijk onderdeel is van een besloten netwerk
+        - name: deel_van_radionetwerk_met_dynamische_toewijzing
+          type: boolean
+          description: Geeft aan of het netwerk deel is van een radionetwerk met dynamische frequentietoewijzing
+        - name: vergunning_verleend_voor_frequentieruimte_trunking
+          type: boolean
+          description: Geeft aan of er een vergunning is verleend voor het gebruik van frequentieruimte (trunkinginstallatie)
+      execution:
+        output:
+          - name: is_compliant_2_1_f
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.f
+        actions:
+          - output: is_compliant_2_1_f
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_mobiel_VHF_UHF_radiozendapparaat
+                - subject: $onderdeel_van_besloten_netwerk
+                - subject: $deel_van_radionetwerk_met_dynamische_toewijzing
+                - subject: $vergunning_verleend_voor_frequentieruimte_trunking
+
   - number: 2.1.g
     text: |-
       mobiele radiozendapparaten behorend tot een digitaal radionetwerk met dynamische frequentietoewijzing, mits de in
@@ -94,6 +254,27 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_mobiel_radiozendapparaat_digitaal_netwerk
+          type: boolean
+          description: Geeft aan of het een mobiel radiozendapparaat behorend tot een digitaal radionetwerk met dynamische frequentietoewijzing is
+        - name: voldoet_aan_bijlage_3
+          type: boolean
+          description: Geeft aan of de frequentieband en gebruiksvoorschriften uit bijlage 3 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_g
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.g
+        actions:
+          - output: is_compliant_2_1_g
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_mobiel_radiozendapparaat_digitaal_netwerk
+                - subject: $voldoet_aan_bijlage_3
+
   - number: 2.1.h
     text: |-
       mobiele UHF radiozendapparaten, werkend in de frequentieband 446 MHz, bedoeld voor algemeen gebruik ten behoeve van
@@ -106,6 +287,27 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_mobiel_UHF_radiozendapparaat_446MHz
+          type: boolean
+          description: Geeft aan of het een mobiel UHF radiozendapparaat werkend in de 446 MHz-band (PMR 446) is
+        - name: voldoet_aan_bijlage_4
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 4 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_h
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.h
+        actions:
+          - output: is_compliant_2_1_h
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_mobiel_UHF_radiozendapparaat_446MHz
+                - subject: $voldoet_aan_bijlage_4
+
   - number: 2.1.i
     text: |-
       randapparaten, zijnde satellietgrondstations, mits de in [bijlage 5][ref1] aangegeven frequentiebanden en de
@@ -117,6 +319,27 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_satellietgrondstation
+          type: boolean
+          description: Geeft aan of het een satellietgrondstation is
+        - name: voldoet_aan_bijlage_5
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 5 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_i
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.i
+        actions:
+          - output: is_compliant_2_1_i
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_satellietgrondstation
+                - subject: $voldoet_aan_bijlage_5
+
   - number: 2.1.j
     text: |-
       randapparaten voor mobiele communicatie via ionisatiesporen van meteoren, mits de in [bijlage 6][ref1] aangegeven
@@ -128,6 +351,27 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_randapparaat_ionisatiesporen
+          type: boolean
+          description: Geeft aan of het een randapparaat voor mobiele communicatie via ionisatiesporen van meteoren is
+        - name: voldoet_aan_bijlage_6
+          type: boolean
+          description: Geeft aan of de frequentieband en gebruiksvoorschriften uit bijlage 6 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_j
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.j
+        actions:
+          - output: is_compliant_2_1_j
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_randapparaat_ionisatiesporen
+                - subject: $voldoet_aan_bijlage_6
+
   - number: 2.1.k
     text: |-
       radiozendapparaten, zijnde GSM1800-basisstations, die zich bevinden aan boord van luchtvaartuigen en bestemd
@@ -140,6 +384,39 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: is_GSM1800_basisstation
+          type: boolean
+          description: Geeft aan of het een GSM1800-basisstation is
+        - name: aan_boord_van_luchtvaartuig
+          type: boolean
+          description: Geeft aan of het zich aan boord van een luchtvaartuig bevindt
+        - name: bestemd_voor_mobiel_openbaar_netwerk
+          type: boolean
+          description: Geeft aan of het bestemd is voor aansluiting op een mobiel openbaar elektronisch communicatienetwerk
+        - name: vlieghoogte_boven_3000m
+          type: boolean
+          description: Geeft aan of het wordt gebruikt boven een vlieghoogte van 3000 meter
+        - name: voldoet_aan_bijlage_7
+          type: boolean
+          description: Geeft aan of de frequentiebanden uit bijlage 7 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_k
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.k
+        actions:
+          - output: is_compliant_2_1_k
+            value:
+              operation: AND
+              conditions:
+                - subject: $is_GSM1800_basisstation
+                - subject: $aan_boord_van_luchtvaartuig
+                - subject: $bestemd_voor_mobiel_openbaar_netwerk
+                - subject: $vlieghoogte_boven_3000m
+                - subject: $voldoet_aan_bijlage_7
+
   - number: 2.1.l
     text: |-
       de in [bijlage 8][ref1] bedoelde categorieën radiozendapparaten, mits de in [die bijlage][ref2] aangegeven
@@ -154,6 +431,27 @@ articles:
         bwb_id: BWBR0015732
       - id: ref2
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: valt_onder_bijlage_8_categorieen
+          type: boolean
+          description: Geeft aan of het apparatus valt onder de in bijlage 8 bedoelde categorieën radiozendapparaten
+        - name: voldoet_aan_bijlage_8
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 8 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_l
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.l
+        actions:
+          - output: is_compliant_2_1_l
+            value:
+              operation: AND
+              conditions:
+                - subject: $valt_onder_bijlage_8_categorieen
+                - subject: $voldoet_aan_bijlage_8
+
   - number: 2.1.m
     text: |-
       radiozendapparaten die gebruik maken van ultrabreedbandtechnologie, mits de in [bijlage 9][ref1] aangegeven
@@ -165,6 +463,27 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015732
+    machine_readable:
+      input:
+        - name: gebruikt_ultrabreedbandtechnologie
+          type: boolean
+          description: Geeft aan of het radiozendapparaat gebruik maakt van ultrabreedbandtechnologie
+        - name: voldoet_aan_bijlage_9
+          type: boolean
+          description: Geeft aan of de frequentiebanden en gebruiksvoorschriften uit bijlage 9 in acht worden genomen
+      execution:
+        output:
+          - name: is_compliant_2_1_m
+            type: boolean
+            description: Geeft aan of het apparatus voldoet aan 2.1.m
+        actions:
+          - output: is_compliant_2_1_m
+            value:
+              operation: AND
+              conditions:
+                - subject: $gebruikt_ultrabreedbandtechnologie
+                - subject: $voldoet_aan_bijlage_9
+
   - number: '2.2'
     text: |-
       Onder de aanwijzing, bedoeld in het eerste lid, vallen slechts apparaten die voldoen aan het bij of krachtens het
@@ -176,6 +495,7 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0021037
+
   - number: '3'
     text: |-
       Deze regeling treedt in werking met ingang van de dag waarop de
@@ -187,6 +507,7 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0015731
+
   - number: '4'
     text: 'Deze regeling wordt aangehaald als: Regeling gebruik van frequentieruimte zonder vergunning.'
     url: https://wetten.overheid.nl/BWBR0015732/2007-12-22#Artikel4
