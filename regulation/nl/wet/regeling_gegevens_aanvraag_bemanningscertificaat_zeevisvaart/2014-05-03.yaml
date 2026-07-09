@@ -18,38 +18,16 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
-
-
-            a
-
-              *voortstuwingsvermogen:*
-
-
-              het maximale vermogen, uitgedrukt in kiloWatt (kW), dat door de voortstuwingsmachines zonder overbelasting
+      a. *voortstuwingsvermogen*: het maximale vermogen, uitgedrukt in kiloWatt (kW), dat door de voortstuwingsmachines zonder overbelasting
       gedurende onbeperkte tijdsduur kan worden geleverd;
 
-
-
-            b
-
-              *scheepslengte:*
-
-
-              tenzij anders bepaald, 96 procent van de totale lengte op een waterlijn op 85 procent van de kleinste holte
+      b. *scheepslengte*: tenzij anders bepaald, 96 procent van de totale lengte op een waterlijn op 85 procent van de kleinste holte
       gemeten vanaf de kiellijn, of de lengte van de voorzijde van de voorsteven tot de hartlijn van de roerkoning op die
       waterlijn, indien deze lengte groter is. Bij vissersvaartuigen die met stuurlast ontworpen zijn, moet de waterlijn
       waarop deze lengte gemeten wordt, evenwijdig aan de ontwerplastlijn worden genomen;
 
-
-
-            c
-
-              *vaargebied:*
-
-
-              onbeperkt vaargebied of, indien het gebied geografisch beperkt is, het vaargebied, genoemd in
+      c. *vaargebied*: onbeperkt vaargebied of, indien het gebied geografisch beperkt is, het vaargebied, genoemd in
       [artikel 1, onderdeel c, d of e, van het Besluit zeevisvaartbemanning][ref1].
-
 
       [ref1]: https://wetten.overheid.nl/BWBR0012790#Artikel1
     url: https://wetten.overheid.nl/BWBR0013473/2014-05-03#Artikel1
@@ -74,7 +52,7 @@ articles:
 
       f. de naam van het vissersvaartuig;
 
-      g. het letterteken en het nummer waaronder het vissersvaartuig is ingeschreven in het visserijregister, bedoeld in
+      g. het letterteken en het nummer ondear het vissersvaartuig is ingeschreven in het visserijregister, bedoeld in
       [artikel 4 van het Besluit registratie vissersvaartuigen 1998][ref1];
 
       h. de categorie waartoe het vissersvaartuig behoort;
@@ -104,10 +82,108 @@ articles:
       - id: ref2
         bwb_id: BWBR0012790
         artikel: '4'
+    machine_readable:
+      execution:
+        parameters:
+          - name: letterteken_nummer
+            type: string
+            required: true
+            description: Letterteken en nummer onderdeel het vissersvaartuig is ingeschreven
+          - name: datum_aanvraag
+            type: date
+            required: true
+            description: Datum van de aanvraag
+          - name: naam_scheepsbeheerder
+            type: string
+            required: true
+            description: Naam van de scheepsbeheerder
+          - name: postadres_scheepsbeheerder
+            type: string
+            required: true
+            description: Postadres van de scheepsbeheerder
+          - name: contactpersoon_scheepsbeheerder
+            type: string
+            required: true
+            description: Contactpersoon van de scheepsbeheerder
+          - name: telefoon_fax_email_scheepsbeheerder
+            type: string
+            required: true
+            description: Telefoon-, faxnummer en elektronisch postadres van de scheepsbeheerder
+          - name: naam_vissersvaartuig
+            type: string
+            required: true
+            description: Naam van het vissersvaartuig
+          - name: categorie_vissersvaartuig
+            type: string
+            required: true
+            description: Categorie waartoe het vissersvaartuig behoort
+          - name: bouwjaar_vissersvaartuig
+            type: number
+            required: true
+            description: Bouwjaar van het vissersvaartuig
+          - name: voortstuwingsvermogen
+            type: number
+            required: true
+            description: Voortstuwingsvermogen van het vissersvaartuig
+          - name: scheepslengte
+            type: number
+            required: true
+            description: Lengte van het vissersvaartuig
+          - name: handtekening_scheepsbeheerder
+            type: boolean
+            required: true
+            description: Handtekening van de scheepsbeheerder of diens gevolmachtigde
+        input:
+          - name: vaargebied
+            type: string
+            source:
+              regulation: besluit_zeevisvaartbemanning
+              output: vaargebied
+              parameters:
+                letterteken_nummer: $letterteken_nummer
+          - name: beperkingen
+            type: string
+            source:
+              regulation: besluit_zeevisvaartbemanning
+              output: beperkingen
+              parameters:
+                letterteken_nummer: $letterteken_nummer
+        output:
+          - name: aanvraag_gegevens_valide
+            type: boolean
+            description: Geeft aan of alle vereiste gegevens voor de aanvraag aanwezig zijn
+        actions:
+          - output: aanvraag_gegevens_valide
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT_NULL
+                  subject: $datum_aanvraag
+                - operation: NOT_NULL
+                  subject: $naam_scheepsbeheerder
+                - operation: NOT_NULL
+                  subject: $postadres_scheepsbeheerder
+                - operation: NOT_NULL
+                  subject: $contactpersoon_scheepsbeheerder
+                - operation: NOT_NULL
+                  subject: $telefoon_fax_email_scheepsbeheerder
+                - operation: NOT_NULL
+                  subject: $naam_vissersvaartuig
+                - operation: NOT_NULL
+                  subject: $letterteken_nummer
+                - operation: NOT_NULL
+                  subject: $categorie_vissersvaartuig
+                - operation: NOT_NULL
+                  subject: $bouwjaar_vissersvaartuig
+                - operation: NOT_NULL
+                  subject: $voortstuwingsvermogen
+                - operation: NOT_NULL
+                  subject: $scheepslengte
+                - operation: NOT_NULL
+                  subject: $handtekening_scheepsbeheerder
   - number: '3'
-    text: |-
+    text: |
       Deze regeling berust op [artikel 17, derde lid, van de Wet zeevarenden][ref1].
-
 
       [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel17
     url: https://wetten.overheid.nl/BWBR0013473/2014-05-03#Artikel3
@@ -116,5 +192,6 @@ articles:
         bwb_id: BWBR0009124
         artikel: '17'
   - number: '4'
-    text: 'Deze regeling wordt aangehaald als: Regeling gegevens aanvraag bemanningscertificaat zeevisvaart.'
+    text: |
+      Deze regeling wordt aangehaald als: Regeling gegevens aanvraag bemanningscertificaat zeevisvaart.
     url: https://wetten.overheid.nl/BWBR0013473/2014-05-03#Artikel4
