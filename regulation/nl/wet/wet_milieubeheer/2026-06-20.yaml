@@ -858,6 +858,20 @@ articles:
       het vervaardigen van of van handelingen met genetisch gemodificeerde organismen en de mogelijke gevolgen daarvan
       voor mens en milieu, daarbij inbegrepen de ecologische gevolgen en de daarbij te nemen veiligheidsmaatregelen.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel2.30
+    machine_readable:
+      execution:
+        output:
+          - name: min_leden_exclusief_voorzitter
+            type: number
+            description: Minimum aantal andere leden van de commissie (ten minste vijftien, lid 1)
+          - name: max_leden_exclusief_voorzitter
+            type: number
+            description: Maximum aantal andere leden van de commissie (ten hoogste twintig, lid 1)
+        actions:
+          - output: min_leden_exclusief_voorzitter
+            value: 15
+          - output: max_leden_exclusief_voorzitter
+            value: 20
   - number: '2.31'
     text: >-
       1 De voorzitter van de commissie wordt door Onze Minister benoemd. Onze Minister hoort de commissie alvorens hij de
@@ -877,6 +891,20 @@ articles:
       5 Onze Minister kan in bijzondere gevallen de voorzitter en de andere leden in hun functie schorsen en uit hun
       functie ontslaan.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel2.31
+    machine_readable:
+      execution:
+        output:
+          - name: benoemingstermijn_jaren
+            type: number
+            description: Duur van de benoemingstermijn van de voorzitter en de leden (vier jaren, lid 3)
+          - name: onmiddellijk_herbenoembaar
+            type: boolean
+            description: Of de voorzitter en leden direct aansluitend herbenoemd mogen worden (ja, lid 3 — geen beperking op aantal herbenoemingen)
+        actions:
+          - output: benoemingstermijn_jaren
+            value: 4
+          - output: onmiddellijk_herbenoembaar
+            value: true
   - number: '2.32'
     text: >-
       1 De commissie wijst uit haar midden een plaatsvervangend voorzitter aan.
@@ -7897,6 +7925,118 @@ articles:
       - id: ref1
         bwb_id: BWBR0029672
         artikel: '18'
+    machine_readable:
+      definitions:
+        REDUCTIEPERCENTAGE:
+          value: 20
+          description: Percentage waarmee kosteloos toegewezen rechten worden verminderd (lid 2)
+      execution:
+        parameters:
+          - name: heeft_opwek_elektriciteit
+            type: boolean
+            required: true
+            description: Of de installatie elektriciteit opwekt (lid 1, sub a)
+          - name: gebruikt_restgassen
+            type: boolean
+            required: true
+            description: Of de elektriciteit wordt geproduceerd met restgassen (uitzondering lid 1, sub a)
+          - name: valt_onder_andere_koolstoflekkage_maatregelen
+            type: boolean
+            required: true
+            description: Of de installatie valt onder andere maatregelen die het risico op koolstoflekkage aanpakken (lid 1, sub b)
+          - name: is_mswi_installatie
+            type: boolean
+            required: true
+            description: Of de installatie een broeikasgasinstallatie is voor de verbranding van stedelijk afval (lid 1, sub c)
+          - name: heeft_energie_audit_verplichting
+            type: boolean
+            required: false
+            description: Of voor de installatie de verplichting geldt een energie-audit uit te voeren (lid 2, sub a)
+          - name: aanbevelingen_niet_uitgevoerd
+            type: boolean
+            required: false
+            description: Of de aanbevelingen van de energie-audit of het energiebeheersysteem niet worden uitgevoerd (lid 2, sub a)
+          - name: terugverdientijd_meer_dan_3_jaar
+            type: boolean
+            required: false
+            description: Of de terugverdientijd van de betrokken investeringen meer dan drie jaar bedraagt (uitzondering lid 2, sub a)
+          - name: kosten_onevenredig
+            type: boolean
+            required: false
+            description: Of de kosten van de investeringen onevenredig zijn (uitzondering lid 2, sub a)
+          - name: emissieniveaus_hoger_dan_80_procent_benchmark
+            type: boolean
+            required: false
+            description: Of de broeikasgasemissieniveaus hoger zijn dan 80 procent van de relevante productbenchmarks (lid 2, sub b)
+          - name: geen_klimaatneutraliteitsplan
+            type: boolean
+            required: false
+            description: Of uiterlijk op 1 mei 2024 geen klimaatneutraliteitsplan voor de installatie is opgesteld (lid 2, sub b)
+        output:
+          - name: kosteloze_toewijzing_uitgesloten
+            type: boolean
+            description: Of de installatie volledig is uitgesloten van kosteloze toewijzing (lid 1)
+          - name: vermindering_van_toepassing
+            type: boolean
+            description: Of de 20% vermindering op de kosteloos toegewezen rechten van toepassing is (lid 2)
+        actions:
+          - output: kosteloze_toewijzing_uitgesloten
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $heeft_opwek_elektriciteit
+                      value: true
+                    - operation: NOT
+                      value: $gebruikt_restgassen
+                - operation: EQUALS
+                  subject: $valt_onder_andere_koolstoflekkage_maatregelen
+                  value: true
+                - operation: EQUALS
+                  subject: $is_mswi_installatie
+                  value: true
+          - output: niet_naleving_energie_audit
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_energie_audit_verplichting
+                  value: true
+                - operation: EQUALS
+                  subject: $aanbevelingen_niet_uitgevoerd
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $terugverdientijd_meer_dan_3_jaar
+                        value: true
+                      - operation: EQUALS
+                        subject: $kosten_onevenredig
+                        value: true
+          - output: niet_naleving_klimaatneutraliteitsplan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $emissieniveaus_hoger_dan_80_procent_benchmark
+                  value: true
+                - operation: EQUALS
+                  subject: $geen_klimaatneutraliteitsplan
+                  value: true
+          - output: vermindering_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $niet_naleving_energie_audit
+                  value: true
+                - operation: EQUALS
+                  subject: $niet_naleving_klimaatneutraliteitsplan
+                  value: true
   - number: '16.29'
     text: >-
       Bij ministeriële regeling kunnen regels worden gesteld met betrekking tot:
@@ -8003,6 +8143,23 @@ articles:
         artikel: 20.5a
         hoofdstuk: '20'
         paragraaf: '20.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: tussenuitspraak_datum
+            type: date
+            required: true
+            description: Datum waarop de tussenuitspraak als bedoeld in artikel 20.5a in het openbaar is uitgesproken (lid 2)
+        output:
+          - name: wijzigingsbesluit_deadline
+            type: date
+            description: Uiterste datum voor het nemen van het besluit tot wijziging van het nationale toewijzingsbesluit (binnen tien weken na de tussenuitspraak, lid 2)
+        actions:
+          - output: wijzigingsbesluit_deadline
+            value:
+              operation: DATE_ADD
+              date: $tussenuitspraak_datum
+              weeks: 10
   - number: '16.32'
     text: |-
       1 De exploitant van de broeikasgasinstallatie, die kan worden aangemerkt als nieuwkomer als bedoeld in artikel
@@ -10434,11 +10591,93 @@ articles:
         artikel: 16b.6
         hoofdstuk: 16b
         afdeling: 16b.2.1
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaar
+            type: number
+            required: true
+            description: Het kalenderjaar waarvoor de verslag-deadline en correctiefactor worden bepaald
+        output:
+          - name: verslag_deadline
+            type: date
+            description: Uiterste datum voor indiening van het verslag over dispensatierechten (uiterlijk 31 maart van het betreffende jaar, lid 1)
+          - name: reductiefactor
+            type: number
+            description: De reductiefactor voor de berekening van dispensatierechten (1,023, lid 3)
+          - name: correctiefactor_mswi
+            type: number
+            description: De correctiefactor voor broeikasgasinstallaties voor de verbranding van stedelijk afval voor het opgegeven jaar (lid 4)
+        actions:
+          - output: verslag_deadline
+            value:
+              operation: DATE
+              year: $jaar
+              month: 3
+              day: 31
+          - output: reductiefactor
+            value: 1.023
+          - output: correctiefactor_mswi
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2026
+                  then: 0.85
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2027
+                  then: 0.70
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2028
+                  then: 0.55
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2029
+                  then: 0.40
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2030
+                  then: 0.25
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2031
+                  then: 0.17
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2032
+                  then: 0.09
+              default: 0
   - number: 16b.18
     text: >-
       Indien een exploitant voor een industriële installatie het verslag over het aantal dispensatierechten niet of niet
       tijdig heeft ingediend bedraagt het aantal dispensatierechten nihil.
     url: https://wetten.overheid.nl/BWBR0003245/2026-06-20#Artikel16b.18
+    machine_readable:
+      execution:
+        parameters:
+          - name: verslag_tijdig_ingediend
+            type: boolean
+            required: true
+            description: Of het verslag over het aantal dispensatierechten tijdig is ingediend (uiterlijk 31 maart, artikel 16b.17 lid 1)
+        output:
+          - name: dispensatierechten_nihil
+            type: boolean
+            description: Of het aantal dispensatierechten nihil is vanwege niet-tijdige indiening van het verslag
+        actions:
+          - output: dispensatierechten_nihil
+            value:
+              operation: NOT
+              value: $verslag_tijdig_ingediend
   - number: 16b.19
     text: |-
       1 De exploitant stelt, voor zover dat noodzakelijk is om het aantal dispensatierechten te berekenen, voor een
@@ -14501,6 +14740,47 @@ articles:
         hoofdstuk: '16'
         paragraaf: 16.2.1.3
         afdeling: 16.2.1
+    machine_readable:
+      overrides:
+        - law: algemene_wet_bestuursrecht
+          article: '6:7'
+          output: beroepstermijn_weken
+      execution:
+        parameters:
+          - name: beroepstermijn_einddatum
+            type: date
+            required: true
+            description: Datum waarop de beroepstermijn eindigt (startpunt voor de beslistermijn van de Afdeling)
+          - name: betreft_nationaal_toewijzingsbesluit
+            type: boolean
+            required: true
+            description: Of het beroep betrekking heeft op een nationaal toewijzingsbesluit (art. 16.24 lid 1) of gewijzigd nationaal toewijzingsbesluit (art. 16.31 lid 1)
+        output:
+          - name: beslistermijn_einddatum
+            type: date
+            description: Uiterste datum voor de beslissing op beroep door de Afdeling bestuursrechtspraak (12 maanden algemeen, 40 weken voor nationaal toewijzingsbesluit, lid 1)
+          - name: beroepstermijn_weken
+            type: number
+            description: Beroepstermijn voor gewijzigd nationaal toewijzingsbesluit (vier weken, in afwijking van AWB 6:7, lid 3)
+        actions:
+          - output: beslistermijn_einddatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $betreft_nationaal_toewijzingsbesluit
+                    value: true
+                  then:
+                    operation: DATE_ADD
+                    date: $beroepstermijn_einddatum
+                    weeks: 40
+              default:
+                operation: DATE_ADD
+                date: $beroepstermijn_einddatum
+                months: 12
+          - output: beroepstermijn_weken
+            value: 4
   - number: '20.2'
     text: |-
       Het beroep tegen een beschikking omtrent het nemen van maatregelen als bedoeld in [artikel 17.10, derde lid][ref1],
