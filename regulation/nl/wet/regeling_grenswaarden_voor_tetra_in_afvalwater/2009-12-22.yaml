@@ -23,62 +23,33 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
+        a. TETRA:
+          tetrachloorkoolstof (Cas nr. 56-23-5);
 
+        b. verwerken van TETRA:
+          elk industrieel proces waarbij TETRA of TETRA bevattende stoffen worden geproduceerd, omgezet of gebruikt,
+          of waarbij TETRA of TETRA bevattende stoffen vrijkomen;
 
-            a
-            TETRA:
+        c. bestaand bedrijf:
+          bedrijf dat TETRA verwerkt, dat op 16 juni 1987 in werking is en waarvan de capaciteit voor het verwerken
+          van TETRA na 16 juni 1987 niet aanzienlijk is uitgebreid;
 
-              tetrachloorkoolstof (Cas nr. 56-23-5);
+        d. nieuw bedrijf:
+          bedrijf dat TETRA verwerkt en geen bestaand bedrijf is;
 
+        e. bijlage I:
+          bij deze regeling behorende [bijlage I][ref1];
 
+        f. bijlage II:
+          bij deze regeling behorende [bijlage II][ref2];
 
-            b
-            verwerken van TETRA:
-
-              elk industrieel proces waarbij TETRA of TETRA bevattende stoffen worden geproduceerd, omgezet of gebruikt,
-      of waarbij TETRA of TETRA bevattende stoffen vrijkomen;
-
-
-
-            c
-            bestaand bedrijf:
-
-              bedrijf dat TETRA verwerkt, dat op 16 juni 1987 in werking is en waarvan de capaciteit voor het verwerken
-      van TETRA na 16 juni 1987 niet aanzienlijk is uitgebreid;
-
-
-
-            d
-            nieuw bedrijf:
-
-              bedrijf dat TETRA verwerkt en geen bestaand bedrijf is;
-
-
-
-            e
-            bijlage I:
-
-              bij deze regeling behorende [bijlage I][ref1];
-
-
-
-            f
-            bijlage II:
-
-              bij deze regeling behorende [bijlage II][ref2];
-
-
-
-            g
-            lozen:
-
-              brengen van:
-              stoffen in een oppervlaktewaterlichaam;
-      afvalwater of andere afvalstoffen in een openbaar hemelwaterstelsel, een openbaar ontwateringstelsel, een openbaar
-      vuilwaterriool of een andere voorziening voor de inzameling en het transport van afvalwater, of
-      stoffen op een zuiveringtechnisch werk met behulp van een werk niet zijnde een voorziening voor de inzameling en
-      het transport van afvalwater.
-
+        g. lozen:
+          brengen van:
+            stoffen in een oppervlaktewaterlichaam;
+            afvalwater of andere afvalstoffen in een openbaar hemelwaterstelsel, een openbaar ontwateringstelsel, een openbaar
+            vuilwaterriool of een andere voorziening voor de inzameling en het transport van afvalwater, of
+            stoffen op een zuiveringtechnisch werk met behulp van een werk niet zijnde een voorziening voor de inzameling en
+            het transport van afvalwater.
 
       [ref1]: https://wetten.overheid.nl/BWBR0005477
       [ref2]: https://wetten.overheid.nl/BWBR0005477
@@ -122,6 +93,77 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0005477
+    machine_readable:
+      scope:
+        - regeling_grenswaarden_voor_tetra_in_afvalwater
+      inputs:
+        - name: bedrijfstak
+          type: string
+          description: De bedrijfstak waartoe het bedrijf behoort.
+        - name: is_nieuw_bedrijf
+          type: boolean
+          description: Indicates of het bedrijf een nieuw bedrijf is.
+      outputs:
+        - name: grenswaarde_gewichtshoeveelheid_tetra
+          type: amount
+          description: De hoogst toelaatbare gewichtshoeveelheid TETRA in afvalwater.
+          unit: kilogram per jaar
+        - name: grenswaarde_concentratie_tetra
+          type: amount
+          description: De hoogst toelaatbare concentratie TETRA in afvalwater.
+          unit: milligram per liter
+      execution:
+        open_terms:
+          - id: bedrijfstakken_in_bijlage_I
+            type: array
+            description: Lijst van bedrijfstakken in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: grenswaarde_gewichtshoeveelheid_tetra_bijlage_I
+            type: amount
+            description: Grenswaarde gewichtshoeveelheid TETRA voor de desbetreffende bedrijfstak in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: grenswaarde_concentratie_tetra_bijlage_I
+            type: amount
+            description: Grenswaarde concentratie TETRA voor de desbetreffende bedrijfstak in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: beste_bestaande_technieken_gewichtshoeveelheid
+            type: amount
+            description: Grenswaarde gewichtshoeveelheid TETRA gebaseerd op beste bestaande technieken.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: beste_bestaande_technieken_concentratie
+            type: amount
+            description: Grenswaarde concentratie TETRA gebaseerd op beste bestaande technieken.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+        actions:
+          - output: in_bijlage_I
+            value:
+              operation: IN
+              subject: $bedrijfstak
+              value: $bedrijfstakken_in_bijlage_I
+          - output: grenswaarde_gewichtshoeveelheid_tetra
+            value:
+              operation: IF
+              cases:
+                - when: $in_bijlage_I
+                  then: $grenswaarde_gewichtshoeveelheid_tetra_bijlage_I
+              default: $beste_bestaande_technieken_gewichtshoeveelheid
+          - output: grenswaarde_concentratie_tetra
+            value:
+              operation: IF
+              cases:
+                - when: $in_bijlage_I
+                  then: $grenswaarde_concentratie_tetra_bijlage_I
+              default: $beste_bestaande_technieken_concentratie
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie TETRA voorkomend in
@@ -143,11 +185,104 @@ articles:
         bwb_id: BWBR0005477
       - id: ref2
         bwb_id: BWBR0005477
+    machine_readable:
+      scope:
+        - regeling_grenswaarden_voor_tetra_in_afvalwater
+      inputs:
+        - name: bedrijfstak
+          type: string
+          description: De bedrijfstak waartoe het bedrijf behoort.
+        - name: is_bestaand_bedrijf
+          type: boolean
+          description: Indicates of het bedrijf een bestaand bedrijf is.
+      outputs:
+        - name: grenswaarde_gewichtshoeveelheid_tetra
+          type: amount
+          description: De hoogst toelaatbare gewichtshoeveelheid TETRA in afvalwater.
+          unit: kilogram per jaar
+        - name: grenswaarde_concentratie_tetra
+          type: amount
+          description: De hoogst toelaatbare concentratie TETRA in afvalwater.
+          unit: milligram per liter
+      execution:
+        open_terms:
+          - id: bedrijfstakken_in_bijlage_I
+            type: array
+            description: Lijst van bedrijfstakken in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: grenswaarde_gewichtshoeveelheid_tetra_bijlage_I
+            type: amount
+            description: Grenswaarde gewichtshoeveelheid TETRA voor de desbetreffende bedrijfstak in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: grenswaarde_concentratie_tetra_bijlage_I
+            type: amount
+            description: Grenswaarde concentratie TETRA voor de desbetreffende bedrijfstak in bijlage I.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: beste_bestaande_technieken_gewichtshoeveelheid_1987
+            type: amount
+            description: Grenswaarde gewichtshoeveelheid TETRA gebaseerd op beste bestaande technieken per 31 december 1987.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: beste_bestaande_technieken_concentratie_1987
+            type: amount
+            description: Grenswaarde concentratie TETRA gebaseerd op beste bestaande technieken per 31 december 1987.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+        actions:
+          - output: in_bijlage_I
+            value:
+              operation: IN
+              subject: $bedrijfstak
+              value: $bedrijfstakken_in_bijlage_I
+          - output: grenswaarde_gewichtshoeveelheid_tetra
+            value:
+              operation: IF
+              cases:
+                - when: $in_bijlage_I
+                  then: $grenswaarde_gewichtshoeveelheid_tetra_bijlage_I
+              default: $beste_bestaande_technieken_gewichtshoeveelheid_1987
+          - output: grenswaarde_concentratie_tetra
+            value:
+              operation: IF
+              cases:
+                - when: $in_bijlage_I
+                  then: $grenswaarde_concentratie_tetra_bijlage_I
+              default: $beste_bestaande_technieken_concentratie_1987
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie TETRA, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005477/2009-12-22#Artikel4
+    machine_readable:
+      scope:
+        - regeling_grenswaarden_voor_tetra_in_afvalwater
+      inputs:
+        - name: meetmethode_voldoet_aan_bijlage_II
+          type: boolean
+          description: Indicates whether the measurement method meets Appendix II requirements.
+      outputs:
+        - name: voldoet_aan_meetvoorschriften
+          type: boolean
+          description: Whether the measurement method complies with Article 4 requirements.
+      execution:
+        open_terms:
+          - id: bijlage_II_eisen
+            type: string
+            description: Requirements for measurement methods as specified in Appendix II.
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+        actions:
+          - output: voldoet_aan_meetvoorschriften
+            value: $meetmethode_voldoet_aan_bijlage_II
   - number: '5'
     text: |-
       De Regeling van de Minister van Volkshuisvesting, Ruimtelijke Ordening en Milieubeheer van 14 december 1987,
