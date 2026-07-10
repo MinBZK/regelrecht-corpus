@@ -74,29 +74,77 @@ articles:
         bwb_id: BWBR0003245
         artikel: '21.6'
   - number: '2'
-    text: |-
+    text: |
       Voor een nieuw bedrijf gelden, als de hoogst toelaatbare gewichtshoeveelheid en concentratie cadmium voorkomend in
       afvalwater dat wordt geloosd, de grenswaarden die overeenkomen met de waarden die het resultaat zijn van toepassing
       van de beste bestaande technieken, met dien verstande dat voor een nieuw bedrijf behorende tot een van de in
       bijlage I vermelde bedrijfstakken, die gewichtshoeveelheid en concentratie in ieder geval niet hoger is dan de in
-      die bijlage opgenomen grenswaarde de op de betrokken bedrijfstak van toepassing is.
+      die bijlage opgenomen grenswaarde die op de betrokken bedrijfstak van toepassing is.
     url: https://wetten.overheid.nl/BWBR0006648/2009-12-22#Artikel2
+    machine_readable:
+      operations:
+        - check:
+            input:
+              - type: business_type
+                source: user
+              - type: industry_sector
+                source: user
+              - type: BijlageI
+                source:
+                  regulation: BWBR0006648
+                  article: bijlage I
+            output:
+              type: max_cadmium_limits
+            logic: |
+              IF (business_type == nieuw_bedrijf AND industry_sector IN BijlageI.bedrijfstakken)
+                THEN max_cadmium_limits = BijlageI.grenswaarden[industry_sector]
+              ELSE max_cadmium_limits = beste_bestaande_technieken(industry_sector)
   - number: '3'
-    text: |-
+    text: |
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie cadmium voorkomend
       in afvalwater dat wordt geloosd:
 
-      a. . indien dat bedrijf behoort tot een van de in bijlage I genoemde bedrijfstakken: de in die bijlage voor die
+      a. indien dat bedrijf behoort tot een van de in bijlage I genoemde bedrijfstakken: de in die bijlage voor die
       bedrijfstak opgenomen grenswaarde;
 
-      b. indien dat bedrijf niet behoort tot een in bijlage I genoemde bedrijfstak: de grenswaarden die overeenkomen met
+      b. indien dat bedrijf niet behoort tot een in bijlage I genoemde bedrijfstak: de grenswaarden dieçeenkomen met
       de waarden die het resultaat zijn van de toepassing van de beste bestaande technieken.
     url: https://wetten.overheid.nl/BWBR0006648/2009-12-22#Artikel3
+    machine_readable:
+      operations:
+        - check:
+            input:
+              - type: business_type
+                source: user
+              - type: industry_sector
+                source: user
+              - type: BijlageI
+                source:
+                  regulation: BWBR0006648
+                  article: bijlage I
+            output:
+              type: max_cadmium_limits
+            logic: |
+              IF (business_type == bestaand_bedrijf AND industry_sector IN BijlageI.bedrijfstakken)
+                THEN max_cadmium_limits = BijlageI.grenswaarden[industry_sector]
+              ELSE max_cadmium_limits = beste_bestaande_technieken(industry_sector)
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie cadmium, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0006648/2009-12-22#Artikel4
+    machine_readable:
+      operations:
+        - check:
+            input:
+              - type: BijlageII
+                source:
+                  regulation: BWBR0006648
+                  article: bijlage II
+            output:
+              type: meets_measurement_requirements
+            logic: |
+              meets_measurement_requirements = (measurement_method >= BijlageII.eisen)
   - number: '5'
     text: |-
       De regeling van de Minister van Volkshuisvesting, Ruimtelijke Ordening en Milieubeheer van 2 augustus 1985,
@@ -104,7 +152,7 @@ articles:
     url: https://wetten.overheid.nl/BWBR0006648/2009-12-22#Artikel5
   - number: '6'
     text: |-
-      Deze regeling treedt in werking met ingang van de tweede dag na de datum van uitgifte van het Staatsblad waarin zij
+      Deze regeling treedt in werking met ingang van de tweede dag na de datum van uitgifte van het Staatsblad wherein zij
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0006648/2009-12-22#Artikel6
   - number: '7'
