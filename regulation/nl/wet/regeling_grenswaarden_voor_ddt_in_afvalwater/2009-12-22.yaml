@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+# Schema URL temporarily removed: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json (unaccessible)
 $id: regeling_grenswaarden_voor_ddt_in_afvalwater
 regulatory_layer: WET
 publication_date: '2020-12-03'
@@ -124,6 +124,18 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0005478
+    machine_readable:
+      type: threshold
+      applies_to: nieuw_bedrijf
+      best_available_techniques: true
+      bijlage_I_limits: true
+      max_concentration:
+        mg_per_liter: 0.2
+      max_weight:
+        g_per_ton: 4
+      daily_max_multiplier: 2
+      sampling_point: bedrijfsterrein_exit
+      measurement_average_period: monthly
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie DDT voorkomend in
@@ -145,6 +157,19 @@ articles:
         bwb_id: BWBR0005478
       - id: ref2
         bwb_id: BWBR0005478
+    machine_readable:
+      type: threshold
+      applies_to: bestaand_bedrijf
+      bijlage_I_limits: true
+      fallback_1987_techniques: true
+      max_concentration:
+        mg_per_liter: 0.2
+      max_weight:
+        g_per_ton: 4
+      daily_max_multiplier: 2
+      sampling_point: bedrijfsterrein_exit
+      measurement_average_period: monthly
+      reference_date: '1987-12-31'
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie DDT, bedoeld in de artikelen 2 en 3, dient ten
@@ -161,5 +186,120 @@ articles:
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0005478/2009-12-22#Artikel6
   - number: '7'
-    text: 'Deze regeling kan worden aangehaald als: Regeling grenswaarden voor DDT in afvalwater.'
+    text: 'Deze regeling kan worden angehaald als: Regeling grenswaarden voor DDT in afvalwater.'
     url: https://wetten.overheid.nl/BWBR0005478/2009-12-22#Artikel7
+annexes:
+  - id: bijlage_I
+    title: Bijlage I
+    machine_readable:
+      type: industry_limits
+      industries:
+        - name: productie_van_DDT_en_formulering
+          description: Productie van DDT en eventueel formulering op dezelfde plaats
+          max_weight:
+            g_per_ton: 4
+            note: Voor nieuwe bedrijven geldt 1 g/ton verwerkt produkt
+          max_concentration:
+            mg_per_liter: 0.2
+          sampling_point: bedrijfsterrein_exit
+          daily_max_multiplier: 2
+          measurement_average_period: monthly
+      notes:
+        - All wastewater streams potentially contaminated with DDT must be considered.
+        - Limits apply at the point where DDT-containing wastewater leaves the company premises.
+    text: |-
+      bedrijfstak | grenswaarden gewicht (g per ton) | concentratie (mg/l)
+      --- | --- | ---
+      productie van DDT en eventueel formulering op dezelfde plaats | 4 | 0,2
+
+      * Voor nieuwe bedrijven geldt de volgende grenswaarde voor lozing van DDT: 1 g/ton verwerkt produkt.
+      ** De grenswaarden gelden op het punt waar het DDT bevattende afvalwater het bedrijfsterrein verlaat. Alle afvalstromen die verontreinigd kunnen zijn met DDT dienen bij de beoordeling of aan de grenswaarden wordt voldaan betrokken te zijn.
+      *** De grenswaarden geven de hoogst toelaatbare gewichtshoeveelheid en concentratie DDT aan, die gemiddeld per maand mag worden geloosd. Daarbij geldt dat de hoogst toelaatbare gewichtshoeveelheid en concentratie op één dag ten hoogste twee maal de in de tabel aangegeven waarden mag bedragen.
+    url: https://wetten.overheid.nl/BWBR0005478/2009-12-22#BijlageI
+  - id: bijlage_II
+    title: Bijlage II
+    machine_readable:
+      type: measurement_requirements
+      sampling:
+        location: bedrijfsterrein_exit
+        alt_location_allowed: true
+        alt_location_condition: All contaminated water must be accounted for, and regular control measurements must confirm representativeness.
+      flow_measurement:
+        method: any
+        accuracy_requirement: <10%
+        calibration: required
+      sample_collecton:
+        method: 24_hour_composite
+        requirement: Representative of total discharged wastewater
+      measurement_frequency:
+        requirement: Representative of concentration and total DDT discharged over a month
+      sample_treatment:
+        requirement: No removal of settleable or floating constituents
+      reference_method:
+        name: Gas Chromatography with Electron Capture Detection
+        short_name: GC-ECD
+        detection_limit: "~1 µg/L (depends on interfering substances)"
+      precision:
+        condition: At 2× detection limit
+        requirement: 2× standard_deviation ≤ 50%
+      systematic_deviation:
+        condition: At 2× detection limit
+        requirement: Difference between true value and arithmetic mean ≤ 50%
+      calibration_solution:
+        requirement: DDT concentration within ±10% of 2× detection limit
+        matrix_matching: Must closely match the sample matrix
+        measurements: ≥10 single measurements under identical conditions
+    text: |-
+      Vereisten waaraan de wijze van meting van de gewichtshoeveelheid en concentratie DDT,
+      bedoeld in de artikelen 2 en 3, ten minste dient te voldoen.
+
+      1. Het nemen van monsters en het meten van het lozingsdebiet geschiedt op het punt
+      waar het DDT bevattende afvalwater het terrein van het betrokken bedrijf verlaat.
+      Het nemen van monsters en het meten van het lozingsdebiet mag geschieden op een punt
+      dat ligt vóór het punt waar de grenswaarden gelden, indien al het van het bedrijf
+      afkomstige water dat met de betrokken stof verontreinigd kan zijn bij die metingen
+      in aanmerking wordt genomen en indien uit regelmatige controlemetingen blijkt dat
+      de metingen een goed beeld geven van de hoeveelheden die worden geloosd op het punt
+      waar de grenswaarden gelden of altijd een hogere uitkomst geven.
+
+      2. Voor de meting van de geloosde hoeveelheid afvalwater (in m3/dag) wordt een methode
+      gehanteerd, waarvan de onnauwkeurigheid in de debietmeting kleiner is dan 10%. Dit
+      kan door ijking worden vastgesteld.
+
+      3. De bemonstering van het afvalwater wordt zodanig uitgevoerd dat een monster wordt
+      verkregen dat representatief is voor de geloosde totale hoeveelheid afvalwater gedurende
+      24 uur.
+
+      4. De frequentie van meting en bemonstering is zodanig dat een representatief beeld
+      wordt verkregen van de concentratie en van de totale hoeveelheid DDT die gedurende
+      een maand wordt geloosd.
+
+      5. Het monster wordt in behandeling genomen zonder dat daaruit bezinkbare of opdrijvende
+      bestanddelen zijn verwijderd.
+
+      De referentiemethode voor het meten van DDT is gaschromatografie met detectie door
+      elektronenvangst, na een geschikte behandeling van het monster<formule> onder extractie
+      met een geschikt oplosmiddel. De bepalingsdrempel ligt voor DDT, naar gelang het aantal
+      storende begeleidende stoffen in het monster, bij ongeveer 1 µg/l voor afvalwater.
+      Hierbij wordt onder de bepalingsdrempel verstaan de kleinste met een gegeven werkwijze
+      in een monster kwantitatief bepaalbare hoeveelheid die nog van nul kan worden onderscheiden.
+      De analyse moet zodanig worden uitgevoerd dat wordt voldaan aan de volgende eisen
+      ten aanzien van de precisie en de systematische afwijking:
+
+      a. de precisie: tweemaal de waarde van de standaardafwijking van een serie meetuitkomsten
+      is kleiner dan, of gelijk aan 50% bij een concentratie van tweemaal de bepalingsdrempel.
+
+      b. de systematische afwijking: het verschil tussen de werkelijke waarde en de waarde
+      van het rekenkundig gemiddelde van een serie meetuitkomsten is kleiner dan, of gelijk
+      aan 50% bij een concentratie van tweemaal de bepalingsdrempel.
+
+      Voor de vaststelling van de precisie en de systematische afwijking van de toegepaste
+      meetmethode wordt gebruik gemaakt van een oplossing waarin DDT voorkomt in nauwkeurig
+      bekende concentraties die ten hoogste 10% mogen afwijken van tweemaal de bepalingsdrempel.
+      Deze oplossing dient qua matrix zoveel mogelijk overeen te komen met het te onderzoeken
+      monster. De serie meetuitkomsten, bedoeld onder a en b, bestaat uit ten minste 10 enkelvoudige meetuitkomsten. Deze meetuitkomsten worden
+      verkregen uit metingen, verricht nadat steeds de gehele analytische opwerking is doorlopen
+      (volgens een gelijke procedure, door dezelfde waarnemer, met dezelfde middelen en
+      dezelfde hulpstoffen) en onder zoveel mogelijk gelijke omstandigheden als bij de behandeling
+      van het monster.
+    url: https://wetten.overheid.nl/BWBR0005478/2009-12-22#BijlageII
