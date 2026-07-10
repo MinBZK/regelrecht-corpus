@@ -95,6 +95,35 @@ articles:
         bwb_id: BWBR0005376
       - id: ref2
         bwb_id: BWBR0005376
+    machine_readable:
+      inputs:
+        - name: is_nieuw_bedrijf
+          type: boolean
+        - name: behoort_tot_annex_I_bedrijfstak
+          type: boolean
+        - name: grenswaarde_EDC_bat
+          type: number
+        - name: grenswaarde_EDC_annex_I
+          type: number
+          open_term: true
+      outputs:
+        - name: grenswaarde_EDC
+          type: number
+      logic:
+        - IF:
+            condition: is_nieuw_bedrijf
+            then:
+              - IF:
+                  condition: behoort_tot_annex_I_bedrijfstak
+                  then:
+                    - MIN:
+                        output: grenswaarde_EDC
+                        left: grenswaarde_EDC_bat
+                        right: grenswaarde_EDC_annex_I
+                  else:
+                    - SET:
+                        output: grenswaarde_EDC
+                        value: grenswaarde_EDC_bat
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie EDC voorkomend in
@@ -117,11 +146,51 @@ articles:
         bwb_id: BWBR0005376
       - id: ref2
         bwb_id: BWBR0005376
+    machine_readable:
+      inputs:
+        - name: is_bestaand_bedrijf
+          type: boolean
+        - name: behoort_tot_annex_I_bedrijfstak
+          type: boolean
+        - name: grenswaarde_EDC_annex_I
+          type: number
+          open_term: true
+        - name: grenswaarde_EDC_bat_1992
+          type: number
+      outputs:
+        - name: grenswaarde_EDC
+          type: number
+      logic:
+        - IF:
+            condition: is_bestaand_bedrijf
+            then:
+              - IF:
+                  condition: behoort_tot_annex_I_bedrijfstak
+                  then:
+                    - SET:
+                        output: grenswaarde_EDC
+                        value: grenswaarde_EDC_annex_I
+                  else:
+                    - SET:
+                        output: grenswaarde_EDC
+                        value: grenswaarde_EDC_bat_1992
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie EDC, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005376/2009-12-22#Artikel4
+    machine_readable:
+      inputs:
+        - name: voldoet_aan_annex_II_eisen
+          type: boolean
+          open_term: true
+      outputs:
+        - name: is_goedgekeurde_meting
+          type: boolean
+      logic:
+        - SET:
+            output: is_goedgekeurde_meting
+            value: voldoet_aan_annex_II_eisen
   - number: '5'
     text: Deze regeling treedt in werking met ingang van 31 januari 1992.
     url: https://wetten.overheid.nl/BWBR0005376/2009-12-22#Artikel5
