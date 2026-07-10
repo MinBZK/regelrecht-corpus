@@ -57,6 +57,21 @@ articles:
         bwb_id: BWBR0005482
       - id: ref2
         bwb_id: BWBR0005482
+    machine_readable:
+      definitions:
+        HCBD:
+          name: hexachloorbutadieen
+          cas_number: 87-68-3
+        verwerken_van_HCBD:
+          description: elk industrieel proces waarbij HCBD of HCBD bevattende stoffen worden geproduceerd, omgezet, gebruikt, of vrijkomen
+        bestaand_bedrijf:
+          cutoff_date: 1989-06-24
+          capacity_constraint: geen aanzienlijke uitbreiding na cutoff_date
+        nieuw_bedrijf:
+          logical_not: bestaand_bedrijf
+        lozen:
+          description: brengen van stoffen in oppervlaktewater, afvalwater in openbaar stelsel, of stoffen op zuiveringstechnisch werk
+          methods: [discharge_to_surface_water, discharge_to_public_sewer_system, discharge_to_treatment_plant]
   - number: 1a
     text: |-
       Deze regeling berust op [artikel 6.3 van het Waterbesluit][ref1] en [artikel 8.40, eerste lid][ref2], in samenhang
@@ -85,6 +100,20 @@ articles:
       bijlage I genoemde bedrijfstakken, die gewichtshoeveelheid en concentratie in ieder geval niet hoger is dan de in
       die bijlage opgenomen grenswaarde die op de betrokken bedrijfstak van toepassing is.
     url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#Artikel2
+    machine_readable:
+      conditions:
+        - if:
+            type: nieuw_bedrijf
+            in_annex_I: true
+          then:
+            limit: annex_I_value
+            fallback: best_available_techniques
+        - if:
+            type: nieuw_bedrijf
+            in_annex_I: false
+          then:
+            limit: best_available_techniques
+      notes: "Daily limits can be up to 2x the monthly average"
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie HCBD voorkomend in
@@ -96,11 +125,25 @@ articles:
       b. indien dat bedrijf niet behoort tot een in bijlage I genoemde bedrijfstak: de grenswaarden die op 31 december
       1989 overeenkomen met de waarden die het resultaat zijn van de toepassing van de beste bestaande technieken.
     url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#Artikel3
+    machine_readable:
+      conditions:
+        - if:
+            type: bestaand_bedrijf
+            in_annex_I: true
+          then:
+            limit: annex_I_value
+        - if:
+            type: bestaand_bedrijf
+            in_annex_I: false
+          then:
+            limit: best_available_techniques_1989
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie HCBD, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#Artikel4
+    machine_readable:
+      reference: annex_II
   - number: '5'
     text: |-
       De Regeling van de Minister van Volkshuisvesting, Ruimtelijke Ordening en Milieubeheer van 12 december 1988,
@@ -112,5 +155,35 @@ articles:
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#Artikel6
   - number: '7'
-    text: 'Deze regeling kan worden aangehaald als: Regeling grenswaarden voor HCBD in afvalwater.'
+    text: 'Deze regeling kan worden angehaald als: Regeling grenswaarden voor HCBD in afvalwater.'
     url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#Artikel7
+annexes:
+  - number: I
+    title: Grenswaarden HCBD
+    text: |-
+      Bedrijfstak: Produktie van perchloorethyleen (PER) en koolstoftetrachloride (CCl4) via perchlorering
+      Grenswaarden: 1,5 g/ton (gewichtshoeveelheid) en 1,5 mg/L (concentratie)
+    url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#BijlageI
+    machine_readable:
+      table:
+        - bedrijfstak: "Produktie van perchloorethyleen (PER) en koolstoftetrachloride (CCl4) via perchlorering"
+          grenswaarden:
+            weight_g_per_ton: 1.5
+            concentration_mg_per_l: 1.5
+      notes:
+        - "Limits apply at the point where wastewater leaves the company premises"
+        - "Daily limits can be up to 2x the monthly average"
+  - number: II
+    title: "Vereisten wijze van meting"
+    text: |-
+      Samengestelde monsters: bewegend gemiddelde over een tijdvak van 24 uur
+      Analysemethode: gaschromatografie met elektronenvangst
+      Detectielimiet: 0,5-1 µg/L
+      Nauwkeurigheid: <10%
+    url: https://wetten.overheid.nl/BWBR0005482/2009-12-22#BijlageII
+    machine_readable:
+      requirements:
+        sampling_point: "exit of company premises"
+        flow_accuracy: "<10%"
+        analysis_method: "gas chromatografie met elektronenvangst"
+        detection_limit: "0.5-1 µg/L"
