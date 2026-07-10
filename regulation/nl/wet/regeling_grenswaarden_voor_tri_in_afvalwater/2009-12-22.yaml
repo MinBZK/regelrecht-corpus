@@ -97,6 +97,81 @@ articles:
         bwb_id: BWBR0005377
       - id: ref2
         bwb_id: BWBR0005377
+    machine_readable:
+      parameters:
+        - name: bedrijfstype
+          type: string
+          description: Type van bedrijf (moet "nieuw bedrijf" zijn voor deze regeling).
+        - name: sector_in_bijlage_I
+          type: boolean
+          description: Geeft aan of het bedrijf behoort tot een in bijlage I genoemde bedrijfstak.
+        - name: datum_lozing
+          type: date
+          description: Datum waarop het lozen plaatsvindt.
+      inputs:
+        - name: grenswaarde_bijlage_I
+          type: number
+          description: TRI-grenswaarde voor de bedrijfstak uit bijlage I.
+          open_terms:
+            - name: bijlage_I_grenswaarde
+              implements: De TRI-grenswaarde voor de bedrijfstak uit bijlage I.
+              delegation_type: BIJLAGE
+              delegated_to: bijlage I
+        - name: datum_ingang_grenswaarde_bijlage_I
+          type: date
+          description: Datum waarop de grenswaarde uit bijlage I voor de bedrijfstak in werking treedt.
+          open_terms:
+            - name: bijlage_I_ingangsdatum
+              implements: De ingangsdatum voor de grenswaarde uit bijlage I.
+              delegation_type: BIJLAGE
+              delegated_to: bijlage I
+        - name: grenswaarde_beste_bestaande_technieken
+          type: number
+          description: TRI-grenswaarde gebaseerd op beste bestaande technieken.
+          open_terms:
+            - name: beste_bestaande_technieken_grenswaarde
+              implements: De TRI-grenswaarde gebaseerd op beste bestaande technieken.
+              delegation_type: ALGEMEEN_BESLUIT
+      outputs:
+        - name: max_toegestane_tri_gewichtshoeveelheid
+          type: number
+          description: Maximale toegestane gewichtshoeveelheid TRI in afvalwater.
+        - name: max_toegestane_tri_concentratie
+          type: number
+          description: Maximale toegestane concentratie TRI in afvalwater.
+      logic:
+        - operation: IF
+          cases:
+            - condition:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $bedrijfstype
+                    value: "nieuw bedrijf"
+                  - operation: EQUALS
+                    subject: $sector_in_bijlage_I
+                    value: true
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_lozing
+                    value: $datum_ingang_grenswaarde_bijlage_I
+              output:
+                max_toegestane_tri_gewichtshoeveelheid: $grenswaarde_bijlage_I
+                max_toegestane_tri_concentratie: $grenswaarde_bijlage_I
+            - condition:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $bedrijfstype
+                    value: "nieuw bedrijf"
+                  - operation: EQUALS
+                    subject: $sector_in_bijlage_I
+                    value: false
+              output:
+                max_toegestane_tri_gewichtshoeveelheid: $grenswaarde_beste_bestaande_technieken
+                max_toegestane_tri_concentratie: $grenswaarde_beste_bestaande_technieken
+          default:
+            max_toegestane_tri_gewichtshoeveelheid: null
+            max_toegestane_tri_concentratie: null
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie TRI voorkomend in
@@ -119,11 +194,89 @@ articles:
         bwb_id: BWBR0005377
       - id: ref2
         bwb_id: BWBR0005377
+    machine_readable:
+      parameters:
+        - name: bedrijfstype
+          type: string
+          description: Type van bedrijf (moet "bestaand bedrijf" zijn voor deze regeling).
+        - name: sector_in_bijlage_I
+          type: boolean
+          description: Geeft aan of het bedrijf behoort tot een in bijlage I genoemde bedrijfstak.
+        - name: datum_lozing
+          type: date
+          description: Datum waarop het lozen plaatsvindt.
+      inputs:
+        - name: grenswaarde_bijlage_I
+          type: number
+          description: TRI-grenswaarde voor de bedrijfstak uit bijlage I.
+          open_terms:
+            - name: bijlage_I_grenswaarde
+              implements: De TRI-grenswaarde voor de bedrijfstak uit bijlage I.
+              delegation_type: BIJLAGE
+              delegated_to: bijlage I
+        - name: datum_ingang_grenswaarde_bijlage_I
+          type: date
+          description: Datum waarop de grenswaarde uit bijlage I voor de bedrijfstak in werking treedt.
+          open_terms:
+            - name: bijlage_I_ingangsdatum
+              implements: De ingangsdatum voor de grenswaarde uit bijlage I.
+              delegation_type: BIJLAGE
+              delegated_to: bijlage I
+        - name: grenswaarde_beste_bestaande_technieken_1992
+          type: number
+          description: TRI-grenswaarde gebaseerd op beste bestaande technieken per 31 januari 1992.
+          open_terms:
+            - name: beste_bestaande_technieken_1992_grenswaarde
+              implements: De TRI-grenswaarde gebaseerd op beste bestaande technieken per 31 januari 1992.
+              delegation_type: ALGEMEEN_BESLUIT
+      outputs:
+        - name: max_toegestane_tri_gewichtshoeveelheid
+          type: number
+          description: Maximale toegestane gewichtshoeveelheid TRI in afvalwater.
+        - name: max_toegestane_tri_concentratie
+          type: number
+          description: Maximale toegestane concentratie TRI in afvalwater.
+      logic:
+        - operation: IF
+          cases:
+            - condition:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $bedrijfstype
+                    value: "bestaand bedrijf"
+                  - operation: EQUALS
+                    subject: $sector_in_bijlage_I
+                    value: true
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_lozing
+                    value: $datum_ingang_grenswaarde_bijlage_I
+              output:
+                max_toegestane_tri_gewichtshoeveelheid: $grenswaarde_bijlage_I
+                max_toegestane_tri_concentratie: $grenswaarde_bijlage_I
+            - condition:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $bedrijfstype
+                    value: "bestaand bedrijf"
+                  - operation: EQUALS
+                    subject: $sector_in_bijlage_I
+                    value: false
+              output:
+                max_toegestane_tri_gewichtshoeveelheid: $grenswaarde_beste_bestaande_technieken_1992
+                max_toegestane_tri_concentratie: $grenswaarde_beste_bestaande_technieken_1992
+          default:
+            max_toegestane_tri_gewichtshoeveelheid: null
+            max_toegestane_tri_concentratie: null
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie TRI, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005377/2009-12-22#Artikel4
+    untranslatables:
+      - description: De wijze van meting van TRI is proceduraal en niet machine-leesbaar ofensizeerbaar.
+        legal_reference: Artikel 4
   - number: '5'
     text: Deze regeling treedt in werking met ingang van 31 januari 1992.
     url: https://wetten.overheid.nl/BWBR0005377/2009-12-22#Artikel5
