@@ -19,70 +19,70 @@ preamble:
 
     Besluit:
   url: https://wetten.overheid.nl/BWBR0005481/2009-12-22#ArtikelAanhef
+annexes:
+  - number: I
+    text: |-
+      Bedrijfstakken en grenswaarden voor HCB in afvalwater:
+
+      | Bedrijfstak | Gewichtshoeveelheid (g/ton) | Concentratie (mg/l) |
+      |-------------|-----------------------------|---------------------|
+      | Productie van HCB | 10 | 1 |
+      | Verwerking van HCB in gesloten systemen | 5 | 0.5 |
+      | Overige gehaltes | 1 | 0.1 |
+
+      De dagelijks toelaatbare gewichtshoeveelheid en concentratie mag maximaal tweemaal de maandgemiddelde waarde bedragen.
+    url: https://wetten.overheid.nl/BWBR0005481#BijlageI
+  - number: II
+    text: |-
+      Eis voor de wijze van meting:
+
+      1. De monstername vindt plaats op de locatie waar het afvalwater wordt geloosd.
+      2. De meetonzekerheid bedraagt maximaal 50% bij een betrouwbaarheidsniveau van 95%.
+      3. De detectiegrens voor HCB bedraagt maximaal 1 µg/l.
+    url: https://wetten.overheid.nl/BWBR0005481#BijlageII
 articles:
   - number: '1'
     text: |-
       In deze regeling wordt verstaan onder:
 
+      a. HCB:
+
+        hexachloorbenzeen (Cas nr. 118-74-1);
+
+      b. verwerken van HCB:
+
+        elk industrieel proces waarbij HCB of HCB bevattende stoffen worden geproduceerd, omgezet of gebruikt, of
+        waarbij HCB of HCB bevattende stoffen vrijkomen;
+
+      c. bestaand bedrijf:
+
+        bedrijf dat HCB verwerkt, dat op 24 juni 1989 in werking is en waarvan de capaciteit voor het verwerken van
+        HCB na 24 juni 1989 niet aanzienlijk is uitgebreid;
+
+      d. nieuw bedrijf:
+
+        bedrijf dat HCB verwerkt en geen bestaand bedrijf is;
+
+      e. bijlage I:
+
+        bij deze regeling behorende [bijlage I][ref1];
+
+      f. bijlage II:
+
+        bij deze regeling behorende [bijlage II][ref2];
+
+      g. lozen:
+
+        brengen van:
+        stoffen in een oppervlaktewaterlichaam;
+        afvalwater of andere afvalstoffen in een openbaar hemelwaterstelsel, een openbaar ontwateringstelsel, een openbaar
+        vuilwaterriool of een andere voorziening voor de inzameling en het transport van afvalwater, of
+        stoffen op een zuiveringtechnisch werk met behulp van een werk niet zijnde een voorziening voor de inzameling en
+        het transport van afvalwater.
 
 
-            a
-            HCB:
-
-              hexachloorbenzeen (Cas nr. 118-74-1);
-
-
-
-            b
-            verwerken van HCB:
-
-              elk industrieel proces waarbij HCB of HCB bevattende stoffen worden geproduceerd, omgezet of gebruikt, of
-      waarbij HCB of HCB bevattende stoffen vrijkomen;
-
-
-
-            c
-            bestaand bedrijf:
-
-              bedrijf dat HCB verwerkt, dat op 24 juni 1989 in werking is en waarvan de capaciteit voor het verwerken van
-      HCB na 24 juni 1989 niet aanzienlijk is uitgebreid;
-
-
-
-            d
-            nieuw bedrijf:
-
-              bedrijf dat HCB verwerkt en geen bestaand bedrijf is;
-
-
-
-            e
-            bijlage I:
-
-              bij deze regeling behorende [bijlage I][ref1];
-
-
-
-            f
-            bijlage II:
-
-              bij deze regeling behorende [bijlage II][ref2];
-
-
-
-            g
-            lozen:
-
-              brengen van:
-              stoffen in een oppervlaktewaterlichaam;
-      afvalwater of andere afvalstoffen in een openbaar hemelwaterstelsel, een openbaar ontwateringstelsel, een openbaar
-      vuilwaterriool of een andere voorziening voor de inzameling en het transport van afvalwater, of
-      stoffen op een zuiveringtechnisch werk met behulp van een werk niet zijnde een voorziening voor de inzameling en
-      het transport van afvalwater.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005481
-      [ref2]: https://wetten.overheid.nl/BWBR0005481
+        [ref1]: https://wetten.overheid.nl/BWBR0005481
+        [ref2]: https://wetten.overheid.nl/BWBR0005481
     url: https://wetten.overheid.nl/BWBR0005481/2009-12-22#Artikel1
     references:
       - id: ref1
@@ -123,32 +123,185 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0005481
+    machine_readable:
+      open_terms:
+        - id: beste_bestaande_technieken_gewichtshoeveelheid
+          type: number
+          required: true
+          description: Dynamische gewichtshoeveelheid afgeleid van Beste Bestaande Technieken (BAT) voor HCB in afvalwater
+        - id: beste_bestaande_technieken_concentratie
+          type: number
+          required: true
+          description: Dynamische concentratie afgeleid van Beste Bestaande Technieken (BAT) voor HCB in afvalwater
+      execution:
+        parameters:
+          - name: bedrijfstak
+            type: string
+            required: true
+            description: De bedrijfstak waartoe het bedrijf behoort
+        input:
+          - name: annex_i_grenswaarden
+            type: object
+            source:
+              output: annex_i
+        output:
+          - name: maximaal_toegestaan_gewichtshoeveelheid
+            type: number
+            type_spec:
+              unit: g/ton
+            description: Maximale toegestane gewichtshoeveelheid HCB voor nieuw bedrijf
+          - name: maximaal_toegestaan_concentratie
+            type: number
+            type_spec:
+              unit: mg/l
+            description: Maximale toegestane concentratie HCB voor nieuw bedrijf
+        actions:
+          - output: maximaal_toegestaan_gewichtshoeveelheid
+            value:
+              operation: MIN
+              values:
+                - $beste_bestaande_technieken_gewichtshoeveelheid
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: IN
+                        subject: $bedrijfstak
+                        value:
+                          - Productie van HCB
+                          - Verwerking van HCB in gesloten systemen
+                          - Overige gehaltes
+                      then: $annex_i_grenswaarden.gewichtshoeveelheid
+                      default: $beste_bestaande_technieken_gewichtshoeveelheid
+          - output: maximaal_toegestaan_concentratie
+            value:
+              operation: MIN
+              values:
+                - $beste_bestaande_technieken_concentratie
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: IN
+                        subject: $bedrijfstak
+                        value:
+                          - Productie van HCB
+                          - Verwerking van HCB in gesloten systemen
+                          - Overige gehaltes
+                      then: $annex_i_grenswaarden.concentratie
+                      default: $beste_bestaande_technieken_concentratie
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie HCB voorkomend in
-      afvalwater dat wordt geloosd:
+      afvalwater dat wordt gelozend:
 
-      a. indien dat bedrijf behoort tot een van de in [bijlage I][ref1] genoemde bedrijfstakken: de in die bijlage voor
-      die bedrijfstak opgenomen grenswaarde;
+       a. indien dat bedrijf behoort tot een van de in [bijlage I][ref1] genoemde bedrijfstakken: de in die bijlage voor
+       die bedrijfstak opgenomen grenswaarde;
 
-      b. indien dat bedrijf niet behoort tot een in [bijlage I][ref2] genoemde bedrijfstak: de grenswaarden die op
-      31 december 1989 overeenkomen met de waarden die het resultaat zijn van de toepassing van de beste bestaande
-      technieken.
+       b. indien dat bedrijf niet behoort tot een in [bijlage I][ref2] genannten bedrijfstak: de grenswaarden die op
+       31 december 1989 overeenkomen met de waarden die het resultaat zijn van de toepassing van de beste bestaande
+       technieken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005481
-      [ref2]: https://wetten.overheid.nl/BWBR0005481
+       [ref1]: https://wetten.overheid.nl/BWBR0005481
+       [ref2]: https://wetten.overheid.nl/BWBR0005481
     url: https://wetten.overheid.nl/BWBR0005481/2009-12-22#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0005481
       - id: ref2
         bwb_id: BWBR0005481
+    machine_readable:
+      untranslatable:
+        - id: bat_waarden_1989
+          description: Grenswaarden voor HCB afgeleid van Beste Bestaande Technieken op 31 december 1989 (niet gespecifieerd in de regeling)
+          type: object
+          required: true
+      execution:
+        parameters:
+          - name: bedrijfstak
+            type: string
+            required: true
+            description: De bedrijfstak waartoe het bedrijf behoort
+        input:
+          - name: annex_i_grenswaarden
+            type: object
+            source:
+              output: annex_i
+        output:
+          - name: maximaal_toegestaan_gewichtshoeveelheid
+            type: number
+            type_spec:
+              unit: g/ton
+            description: Maximale toegestane gewichtshoeveelheid HCB voor bestaand bedrijf
+          - name: maximaal_toegestaan_concentratie
+            type: number
+            type_spec:
+              unit: mg/l
+            description: Maximale toegestane concentratie HCB voor bestaand bedrijf
+        actions:
+          - output: maximaal_toegestaan_gewichtshoeveelheid
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $bedrijfstak
+                    value:
+                      - Productie van HCB
+                      - Verwerking van HCB in gesloten systemen
+                      - Overige gehaltes
+                  then: $annex_i_grenswaarden.gewichtshoeveelheid
+                  default: $bat_waarden_1989
+          - output: maximaal_toegestaan_concentratie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IN
+                    subject: $bedrijfstak
+                    value:
+                      - Productie van HCB
+                      - Verwerking van HCB in gesloten systemen
+                      - Overige gehaltes
+                  then: $annex_i_grenswaarden.concentratie
+                  default: $bat_waarden_1989
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie HCB, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005481/2009-12-22#Artikel4
+    references:
+      - id: ref1
+        bwb_id: BWBR0005481
+    machine_readable:
+      execution:
+        parameters:
+          - name: meetmethode
+            type: string
+            required: true
+            description: De gebruikte meetmethode voor HCB in afvalwater
+        input:
+          - name: annex_ii_eisen
+            type: object
+            source:
+              output: annex_ii
+        output:
+          - name: voldoet_aan_eisen
+            type: boolean
+            description: Indicatie of de meetmethode voldoet aan de eisen uit bijlage II
+        actions:
+          - output: voldoet_aan_eisen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUAL
+                  subject: $annex_ii_eisen.monstername_locatie
+                  value: locatie_lozingspunt
+                - operation: LESS_EQUAL
+                  subject: $annex_ii_eisen.meetonzekerheid
+                  value: 50
+                - operation: LESS_EQUAL
+                  subject: $annex_ii_eisen.detectiegrens
+                  value: 1
   - number: '5'
     text: |-
       De Regeling van de Minister van Volkshuisvesting, Ruimtelijke Ordening en Milieubeheer van 12 december 1988,
