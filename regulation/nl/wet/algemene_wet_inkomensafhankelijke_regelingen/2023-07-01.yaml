@@ -1233,6 +1233,37 @@ articles:
       - id: ref3
         bwb_id: BWBR0002320
         artikel: '6'
+    machine_readable:
+      untranslatables:
+        - construct: "verlenging aanvraagtermijn bij verlengde belastingaangiftetermijn (lid 1 tweede en derde volzin)"
+          reason: "The extended deadline depends on the tax filing deadline set by the inspector, which is not derivable from AWIR itself and requires an external date input"
+          suggestion: "Accept aangifte_termijn_einde as an optional input parameter when the inspector has set a later deadline"
+          legal_text_excerpt: "Indien de belanghebbende of diens partner voor de in de eerste volzin genoemde datum is uitgenodigd om over het berekeningsjaar aangifte inkomstenbelasting te doen binnen een termijn die na die datum verloopt, wordt de in die volzin bedoelde termijn verlengd tot de laatste dag van de door de inspecteur voor het indienen van die aangifte gestelde termijn"
+          accepted: false
+      execution:
+        parameters:
+          - name: berekeningsjaar
+            type: number
+            required: true
+            description: Het berekeningsjaar waarop de aanvraag betrekking heeft (kalenderjaargetal, bijv. 2023)
+        output:
+          - name: aanvraag_deadline
+            type: date
+            description: Standaard uiterste aanvraagdatum (1 september van het jaar volgend op het berekeningsjaar, art. 15 lid 1 eerste volzin AWIR)
+        actions:
+          - output: aanvraag_deadline
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $berekeningsjaar
+                  - 1
+              month: 9
+              day: 1
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '15'
   - number: '16'
     text: |-
       1 De Belastingdienst/Toeslagen verleent de belanghebbende die een aanvraag voor een tegemoetkoming indient vóór
@@ -1773,6 +1804,49 @@ articles:
       - id: ref1
         bwb_id: BWBR0002320
         artikel: 30hb
+    machine_readable:
+      untranslatables:
+        - construct: "rentepercentage gelijk aan AWR artikel 30hb (lid 3)"
+          reason: "Cross-law reference to the belastingrente percentage set under AWR art. 30hb; the target output does not yet exist in the AWR corpus file"
+          suggestion: "Add rentepercentage output to algemene_wet_inzake_rijksbelastingen art. 30hb and bind via source.regulation"
+          legal_text_excerpt: "Het percentage van de rente is gelijk aan het percentage dat ingevolge artikel 30hb van de Algemene wet inzake rijksbelastingen ten aanzien van de inkomstenbelasting wordt gehanteerd"
+          accepted: false
+      execution:
+        parameters:
+          - name: berekeningsjaar
+            type: number
+            required: true
+            description: Het berekeningsjaar waarop de rente betrekking heeft (kalenderjaargetal, bijv. 2023)
+          - name: dagtekening_beschikking
+            type: date
+            required: true
+            description: Dagtekening van de beschikking tot toekenning, herziening of terugvordering (art. 27 lid 2 AWIR)
+        output:
+          - name: rentetijdvak_start
+            type: date
+            description: Begindag van het rentetijdvak (1 juli van het jaar volgend op het berekeningsjaar, art. 27 lid 2 AWIR)
+          - name: rentetijdvak_einde
+            type: date
+            description: Einddag van het rentetijdvak (dag van dagtekening beschikking, art. 27 lid 2 AWIR)
+        actions:
+          - output: rentetijdvak_start
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $berekeningsjaar
+                  - 1
+              month: 7
+              day: 1
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '27'
+          - output: rentetijdvak_einde
+            value: $dagtekening_beschikking
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '27'
   - number: '28'
     text: |-
       1 De belanghebbende heeft de verplichting om het bedrag van een terugvordering alsmede de op de voet van
