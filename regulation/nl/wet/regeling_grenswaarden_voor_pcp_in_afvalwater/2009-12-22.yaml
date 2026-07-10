@@ -97,7 +97,8 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0026872#Artikel6.3
       [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel8.40
       [ref3]: https://wetten.overheid.nl/BWBR0003245#Artikel21.6
-    url: https://wetten.overheid.nl/BWBR0005479/2009-12-22#Artikel1a
+
+      url: https://wetten.overheid.nl/BWBR0005479/2009-12-22#Artikel1a
     references:
       - id: ref1
         bwb_id: BWBR0026872
@@ -122,6 +123,63 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0005479
+    machine_readable:
+       open_terms:
+         - id: bijlage_I_grenswaarden
+           type: object
+           required: true
+           delegated_to: minister
+           delegation_type: MINISTERIELE_REGELING
+           legal_basis: artikel 2 Regeling grenswaarden voor PCP in afvalwater
+           description: Grenswaarden voor PCP per bedrijfstak zoals opgenomen in bijlage I
+       execution:
+         parameters:
+           - name: bedrijfstak
+             type: string
+             required: true
+             description: Bedrijfstak waartoe het nieuwe bedrijf behoort
+           - name: is_nieuw_bedrijf
+             type: boolean
+             required: true
+             description: is het bedrijf een nieuw bedrijf (zoals gedefinieerd in artikel 1d)
+         input:
+           - name: beste_bestaande_technieken_grenswaarde
+             type: object
+             description: Grenswaarden afgeleid van beste bestaande technieken
+             source:
+               description: Extern te bepalen op basis van beste beschikbare technieken
+         output:
+           - name: maximaal_toegestane_gewichtshoeveelheid
+             type: number
+             type_spec:
+               unit: kilogram
+             description: Maximale toegestane gewichtshoeveelheid PCP in afvalwater
+           - name: maximaal_toegestane_concentratie
+             type: number
+             type_spec:
+               unit: milligram_per_liter
+             description: Maximale toegestane concentratie PCP in afvalwater
+         actions:
+           - output: maximaal_toegestane_gewichtshoeveelheid
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: IN
+                     subject: $bedrijfstak
+                     value: $bijlage_I_grenswaarden.bedrijfstakken
+                   then: $bijlage_I_grenswaarden.grenswaarden[$bedrijfstak].gewichtshoeveelheid
+               default: $beste_bestaande_technieken_grenswaarde.gewichtshoeveelheid
+           - output: maximaal_toegestane_concentratie
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: IN
+                     subject: $bedrijfstak
+                     value: $bijlage_I_grenswaarden.bedrijfstakken
+                   then: $bijlage_I_grenswaarden.grenswaarden[$bedrijfstak].concentratie
+               default: $beste_bestaande_technieken_grenswaarde.concentratie
   - number: '3'
     text: |-
       Voor een bestaand bedrijf gelden als de hoogst toelaatbare gewichtshoeveelheid en concentratie PCP voorkomend in
@@ -143,11 +201,99 @@ articles:
         bwb_id: BWBR0005479
       - id: ref2
         bwb_id: BWBR0005479
+    machine_readable:
+       open_terms:
+         - id: bijlage_I_grenswaarden
+           type: object
+           required: true
+           delegated_to: minister
+           delegation_type: MINISTERIELE_REGELING
+           legal_basis: artikel 3 Regeling grenswaarden voor PCP in afvalwater
+           description: Grenswaarden voor PCP per bedrijfstak zoals opgenomen in bijlage I
+       execution:
+         parameters:
+           - name: bedrijfstak
+             type: string
+             required: true
+             description: Bedrijfstak waartoe het bestaande bedrijf behoort
+           - name: is_bestaand_bedrijf
+             type: boolean
+             required: true
+             description: is het bedrijf een bestaand bedrijf (zoals gedefinieerd in artikel 1c)
+         input:
+           - name: beste_bestaande_technieken_1987_grenswaarde
+             type: object
+             description: Grenswaarden afgeleid van beste bestaande technieken per 31 december 1987
+             source:
+               description: Extern te bepalen op basis van beste beschikbare technieken per 31 december 1987
+         output:
+           - name: maximaal_toegestane_gewichtshoeveelheid
+             type: number
+             type_spec:
+               unit: kilogram
+             description: Maximale toegestane gewichtshoeveelheid PCP in afvalwater voor bestaand bedrijf
+           - name: maximaal_toegestane_concentratie
+             type: number
+             type_spec:
+               unit: milligram_per_liter
+             description: Maximale toegestane concentratie PCP in afvalwater voor bestaand bedrijf
+         actions:
+           - output: maximaal_toegestane_gewichtshoeveelheid
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: IN
+                     subject: $bedrijfstak
+                     value: $bijlage_I_grenswaarden.bedrijfstakken
+                   then: $bijlage_I_grenswaarden.grenswaarden[$bedrijfstak].gewichtshoeveelheid
+               default: $beste_bestaande_technieken_1987_grenswaarde.gewichtshoeveelheid
+           - output: maximaal_toegestane_concentratie
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: IN
+                     subject: $bedrijfstak
+                     value: $bijlage_I_grenswaarden.bedrijfstakken
+                   then: $bijlage_I_grenswaarden.grenswaarden[$bedrijfstak].concentratie
+               default: $beste_bestaande_technieken_1987_grenswaarde.concentratie
   - number: '4'
     text: |-
       De wijze van meting van de gewichtshoeveelheid en concentratie PCP, bedoeld in de artikelen 2 en 3, dient ten
       minste te voldoen aan de in bijlage II daaraan gestelde eisen.
     url: https://wetten.overheid.nl/BWBR0005479/2009-12-22#Artikel4
+    machine_readable:
+       open_terms:
+         - id: bijlage_II_metingseisen
+           type: object
+           required: true
+           delegated_to: minister
+           delegation_type: MINISTERIELE_REGELING
+           legal_basis: artikel 4 Regeling grenswaarden voor PCP in afvalwater
+           description: Metingseisen voor PCP zoals opgenomen in bijlage II
+       execution:
+         parameters:
+           - name: meetmethode
+             type: string
+             required: true
+             description: Gekozen meetmethode voor PCP meting
+         input:
+           - name: geselecteerde_meetmethode
+             type: object
+             description: De meetmethode die wordt toegepast
+             source:
+               description: Extern te bepalen meetmethode
+         output:
+           - name: voldoet_aan_minimale_eisen
+             type: boolean
+             description: Indicatie of de meetmethode voldoet aan bijlage II eisen
+         actions:
+           - output: voldoet_aan_minimale_eisen
+             value:
+               operation: INCLUDES
+               subject: $bijlage_II_metingseisen.eisen
+               value: $geselecteerde_meetmethode.eigenschappen
   - number: '5'
     text: |-
       De Regeling van de Minister van Volkshuisvesting, Ruimtelijke Ordening en Milieubeheer van 14 december 1987,
