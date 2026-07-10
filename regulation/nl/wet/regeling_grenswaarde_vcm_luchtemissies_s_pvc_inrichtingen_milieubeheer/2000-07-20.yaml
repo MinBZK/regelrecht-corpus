@@ -68,10 +68,55 @@ articles:
       3 Degene die een VCM-inrichting drijft, draagt er zorg voor dat diffuse emissies van VCM naar de lucht tot een
       minimum worden beperkt.
     url: https://wetten.overheid.nl/BWBR0011472/2000-07-20#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: jaarlijkse_vcm_emissie_gram
+            type: number
+            required: true
+            description: Jaarlijkse gemiddelde VCM-emissie in gram
+          - name: s_pvc_productie_ton
+            type: number
+            required: true
+            description: Hoeveelheid geproduceerd s-PVC in ton
+          - name: gebruikte_verdunning
+            type: boolean
+            required: true
+            description: Wordt aan de grenswaarde voldaan door middel van verdunning?
+          - name: diffuse_emissies_geminimaliseerd
+            type: boolean
+            required: true
+            description: Zijn diffuse emissies tot een minimum beperkt?
+        output:
+          - name: voldoet_aan_grenswaarde
+            type: boolean
+            description: Voldoet de inrichting aan de VCM-emissiegrenswaarde?
+          - name: voldoet_aan_verdunningsverbod
+            type: boolean
+            description: Wordt niet aan de grenswaarde voldaan door verdunning?
+          - name: voldoet_aan_diffuse_emissie_minimalisatie
+            type: boolean
+            description: Wordt voldaan aan de verplichting tot minimalisatie van diffuse emissies?
+        actions:
+          - output: voldoet_aan_grenswaarde
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $jaarlijkse_vcm_emissie_gram
+              value:
+                operation: MULTIPLY
+                values:
+                  - 80
+                  - $s_pvc_productie_ton
+          - output: voldoet_aan_verdunningsverbod
+            value:
+              operation: NOT
+              value: $gebruikte_verdunning
+          - output: voldoet_aan_diffuse_emissie_minimalisatie
+            value: $diffuse_emissies_geminimaliseerd
   - number: '3'
     text: |-
       1 Degene die een VCM-inrichting drijft, draagt er zorg voor dat monsters van emissies van VCM op een zodanige wijze
-      genomen worden dat deze representatief zijn voor de emissie gedurende een periode van één uur.
+      genomen worden dat deze representatief zijn voor de emissie gedurende een période van één uur.
 
       2 De analysefrequentie van emissies van VCM wordt bepaald door het bevoegd gezag. Hierbij wordt rekening gehouden
       met de resultaten van de bemonstering, meting en analyse van emissies van VCM.
@@ -82,6 +127,63 @@ articles:
       4 Degene die een VCM-inrichting drijft, draagt er zorg voor dat diffuse emissies gekwantificeerd worden door middel
       van de tracergasmethode of een gelijkwaardige methode.
     url: https://wetten.overheid.nl/BWBR0011472/2000-07-20#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: monster_representatief_voor_uur
+            type: boolean
+            required: true
+            description: Zijn de monsters representatief voor een periode van één uur?
+          - name: analysefrequentie_bepaald_door_bevoegd_gezag
+            type: boolean
+            required: true
+            description: Is de analysefrequentie bepaald door het bevoegd gezag?
+          - name: analysemethode
+            type: string
+            required: true
+            description: Welke analysemethode wordt gebruikt voor VCM?
+          - name: diffuse_emissie_kwantificatiemethode
+            type: string
+            required: true
+            description: Welke methode wordt gebruikt voor kwantificering van diffuse emissies?
+        output:
+          - name: voldoet_aan_bemonstering
+            type: boolean
+            description: Voldoet de bemonstering aan de eisen?
+          - name: voldoet_aan_analysefrequentie
+            type: boolean
+            description: Is de analysefrequentie conform de eisen?
+          - name: voldoet_aan_analysemethode
+            type: boolean
+            description: Voldoet de analysemethode aan de eisen?
+          - name: voldoet_aan_kwantificatiemethode
+            type: boolean
+            description: Voldoet de kwantificatiemethode voor diffuse emissies aan de eisen?
+        actions:
+          - output: voldoet_aan_bemonstering
+            value: $monster_representatief_voor_uur
+          - output: voldoet_aan_analysefrequentie
+            value: $analysefrequentie_bepaald_door_bevoegd_gezag
+          - output: voldoet_aan_analysemethode
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $analysemethode
+                  value: "gaschromatografie"
+                - operation: EQUALS
+                  subject: $analysemethode
+                  value: "gelijkwaardige_methode"
+          - output: voldoet_aan_kwantificatiemethode
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $diffuse_emissie_kwantificatiemethode
+                  value: "tracergasmethode"
+                - operation: EQUALS
+                  subject: $diffuse_emissie_kwantificatiemethode
+                  value: "gelijkwaardige_methode"
   - number: '4'
     text: |-
       1 Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
@@ -100,6 +202,48 @@ articles:
       - id: ref1
         bwb_id: BWBR0003245
         artikel: '8.1'
+    machine_readable:
+      execution:
+        parameters:
+          - name: staatscourant_d-agtekening_datum
+            type: date
+            required: true
+            description: Datum van dagtekening van de Staatscourant
+          - name: heeft_vergunning_voor_inwerkingtreding
+            type: boolean
+            required: true
+            description: Had de inrichting een vergunning vóór de inwerkingtreding?
+          - name: capaciteit_aanzienlijk_uitgebreid
+            type: boolean
+            required: true
+            description: Is de capaciteit voor s-PVC-productie aanzienlijk uitgebreid na inwerkingtreding?
+          - name: aanzienlijke_technische_wijzigingen
+            type: boolean
+            required: true
+            description: Hebben er aanzienlijke technische wijzigingen van het productieproces plaatsgevonden?
+        output:
+          - name: inwerkingtredingsdatum
+            type: date
+            description: Datum waarop de regeling in werking treedt
+          - name: van_toepassing
+            type: boolean
+            description: Is de regeling van toepassing op de inrichting?
+        actions:
+          - output: inwerkingtredingsdatum
+            value:
+              operation: DATE_ADD
+              date: $staatscourant_dagtekening_datum
+              days: 2
+          - output: van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $heeft_vergunning_voor_inwerkingtreding
+                - operation: OR
+                  conditions:
+                    - $capaciteit_aanzienlijk_uitgebreid
+                    - $aanzienlijke_technische_wijzigingen
   - number: '5'
     text: 'Deze regeling wordt aangehaald als: Regeling grenswaarde VCM-luchtemissies s-PVC-inrichtingen milieubeheer.'
     url: https://wetten.overheid.nl/BWBR0011472/2000-07-20#Artikel5
