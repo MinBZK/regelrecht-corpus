@@ -1462,6 +1462,37 @@ articles:
         artikel: '38'
         hoofdstuk: '2'
         paragraaf: '5'
+    machine_readable:
+      untranslatables:
+        - construct: "laatste aanslag als startpunt voor zes-maandstermijn (lid 1)"
+          reason: "Aggregation over a variable-length collection of persons (belanghebbende, partner, medebewoner) to find the last-dated income tax assessment is not available as an engine operation"
+          suggestion: "Add MAX_DATE or AGGREGATE operations for date collections to engine"
+          legal_text_excerpt: "kent de Belastingdienst/Toeslagen de tegemoetkoming ... toe binnen zes maanden na de vaststelling van de laatste in dit kader van belang zijnde aanslag"
+          accepted: false
+      execution:
+        parameters:
+          - name: berekeningsjaar
+            type: number
+            required: true
+            description: Het berekeningsjaar waarop de tegemoetkoming betrekking heeft (kalenderjaargetal, bijv. 2023)
+        output:
+          - name: toekenning_deadline_geen_aanslag
+            type: date
+            description: Uiterste datum voor toekenning bij geen belastingaanslag over het berekeningsjaar (31 december van het jaar volgend op het berekeningsjaar, art. 19 lid 2 AWIR)
+        actions:
+          - output: toekenning_deadline_geen_aanslag
+            value:
+              operation: DATE
+              year:
+                operation: ADD
+                values:
+                  - $berekeningsjaar
+                  - 1
+              month: 12
+              day: 31
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '19'
   - number: '20'
     text: |-
       1 Indien na de toekenning van de tegemoetkoming uit een eerste vaststelling, eerste bepaling of
@@ -1494,6 +1525,30 @@ articles:
         artikel: '7'
         hoofdstuk: '1'
         paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: bekendwording_datum
+            type: date
+            required: true
+            description: Datum waarop de eerste vaststelling, eerste bepaling of wijziging van het inkomensgegeven of de rendementsgrondslag aan de Belastingdienst/Toeslagen bekend is geworden (art. 20 lid 2 AWIR)
+        output:
+          - name: herziening_deadline
+            type: date
+            description: Uiterste datum voor herziening van de tegemoetkoming (8 weken na bekendwording van het inkomensgegeven, art. 20 lid 2 AWIR)
+        actions:
+          - output: herziening_deadline
+            value:
+              operation: DATE_ADD
+              date: $bekendwording_datum
+              weeks: 8
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '20'
   - number: '21'
     text: |-
       1 De Belastingdienst/Toeslagen kan een toegekende tegemoetkoming herzien:
@@ -2170,6 +2225,30 @@ articles:
       - id: ref12
         bwb_id: BWBR0004770
         artikel: '27'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: Burgerservicenummer van de belanghebbende
+          - name: dagtekening_aanmaning
+            type: date
+            required: true
+            description: Dagtekening van de schriftelijke aanmaning tot betaling (art. 32 lid 1 AWIR)
+        output:
+          - name: aanmaning_betaaltermijn_einde
+            type: date
+            description: Uiterste betaaldatum na aanmaning (2 weken na dagtekening aanmaning, art. 32 lid 1 AWIR)
+        actions:
+          - output: aanmaning_betaaltermijn_einde
+            value:
+              operation: DATE_ADD
+              date: $dagtekening_aanmaning
+              weeks: 2
+            legal_basis:
+              law: Algemene wet inkomensafhankelijke regelingen
+              article: '32'
   - number: '33'
     text: |-
       1 De partner van de belanghebbende is hoofdelijk aansprakelijk voor een door de belanghebbende verschuldigd bedrag
