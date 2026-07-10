@@ -37,7 +37,7 @@ articles:
       b. een werkplaats als bedoeld in richtlijn, nr. 94/65/EEG;
 
       c. een herverpakkingscentrum als bedoeld in [richtlijnen nrs. 64/433/EEG](31964L0433) en [77/99/EEG](31977L0099)
-      waar produkten van hun onmiddellijke verpakking worden ontdaan en van een nieuwe onmiddellijke verpakking worden
+      waar produkten van hun onmiddellijke verpakking worden ontdaan en van een nieuwe onmmiddellijke verpakking worden
       voorzien.
     url: https://wetten.overheid.nl/BWBR0007674/2003-01-01#ArtikelI
   - number: '2'
@@ -49,6 +49,32 @@ articles:
       bedoeld in bijlage I wordt overgelegd;
         - een verklaring als bedoeld in bijlage II wordt overgelegd.
     url: https://wetten.overheid.nl/BWBR0007674/2003-01-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: mag_te_werken
+            type: boolean
+        parameters:
+          - name: medisch_onderzoek_uitgevoerd
+            type: boolean
+          - name: verklaring_bijlage_I_overgelegd
+            type: boolean
+          - name: verklaring_bijlage_II_overgelegd
+            type: boolean
+        actions:
+          - output: mag_te_werken
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $medisch_onderzoek_uitgevoerd
+                  value: true
+                - operation: EQUALS
+                  subject: $verklaring_bijlage_I_overgelegd
+                  value: true
+                - operation: EQUALS
+                  subject: $verklaring_bijlage_II_overgelegd
+                  value: true
   - number: '3'
     text: |-
       Wanneer de aan de onderneming verbonden geneeskundige instantie het nodig oordeelt dat degene die betrokken is bij
@@ -58,6 +84,30 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007674#Artikel2
     url: https://wetten.overheid.nl/BWBR0007674/2003-01-01#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: mag_weer_te_werken
+            type: boolean
+        parameters:
+          - name: aanvullend_onderzoek_nodig
+            type: boolean
+          - name: verklaring_bijlage_III_overgelegd
+            type: boolean
+        actions:
+          - output: mag_weer_te_werken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $aanvullend_onderzoek_nodig
+                    value: true
+                  then:
+                    operation: EQUALS
+                    subject: $verklaring_bijlage_III_overgelegd
+                    value: true
+              default: true
     references:
       - id: ref1
         bwb_id: BWBR0007674
@@ -93,5 +143,5 @@ articles:
       vleesindustrie behouden hun geldigheid.
     url: https://wetten.overheid.nl/BWBR0007674/2003-01-01#Artikel7
   - number: '8'
-    text: 'Deze regeling kan worden aangehaald als: ’Regeling gezondheidsverklaring personen werkzaam in de vleessector’.'
+    text: 'Deze regeling kan worden aangehaald als: ''Regeling gezondheidsverklaring personen werkzaam in de vleessector''.'
     url: https://wetten.overheid.nl/BWBR0007674/2003-01-01#Artikel8
