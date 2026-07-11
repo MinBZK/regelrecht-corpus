@@ -1,4 +1,4 @@
-# Artikel 2 - Wet op de zorgtoeslag 
+# Artikel 2 - Wet op de zorgtoeslag
 
 1. Indien de normpremie voor een verzekerde in het berekeningsjaar minder bedraagt dan de standaardpremie in dat jaar, heeft de verzekerde aanspraak op een zorgtoeslag ter grootte van dat verschil. Voor een verzekerde met een partner wordt daarbij tweemaal de standaardpremie in aanmerking genomen; in dat geval worden de verzekerde en zijn partner voor de toepassing van deze wet geacht gezamenlijk één aanspraak te hebben.
  
