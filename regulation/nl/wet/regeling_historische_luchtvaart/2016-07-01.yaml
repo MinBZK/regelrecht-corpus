@@ -78,16 +78,88 @@ articles:
       Met betrekking tot een historisch luchtvaartuig dat als een luchtvaartuig met een duidelijk historisch belang als
       bedoeld in bijlage II bij de verordening (EG) nr. 216/2008 van het Europees Parlement en de Raad van de Europese
       Unie van 20 februari 2008 tot vaststelling van gemeenschappelijke regels op het gebied van burgerluchtvaart en
-      tot oprichting van een Europees Agentschap voor de veiligheid van de luchtvaart, houdende intrekking van Richtlijn
+      tot oprichting van een Europees Agentschap voor de veiligheid van de luchtvaart, houdende intregging van Richtlijn
       91/670/EEG, Verordening (EG) nr. 1592/2002 en Richtlijn 2004/36/EG (PbEU L 79) dient te worden aangemerkt, kan na
       de beoordeling van de luchtwaardigheid van dat luchtvaartuig een speciaal-BvL worden afgegeven.
     url: https://wetten.overheid.nl/BWBR0017356/2016-07-01#Artikel2
+    machine_readable:
+       execution:
+         parameters:
+           - name: is_historisch_luchtvaartuig
+             type: boolean
+             required: true
+             description: Is het luchtvaartuig historisch volgens bijlage II van EU 216/2008?
+           - name: heeft_goedgekeurde_luchtwaardigheid
+             type: boolean
+             required: true
+             description: Heeft het luchtvaartuig een goedgekeurde luchtwaardigheid?
+         output:
+           - name: mag_speciaal_BvL_afgegeven
+             type: boolean
+             description: Mag een speciaal-BvL worden afgegeven voor dit luchtvaartuig?
+         actions:
+           - output: mag_speciaal_BvL_afgegeven
+             value:
+               operation: AND
+               conditions:
+                 - operation: EQUALS
+                   subject: $is_historisch_luchtvaartuig
+                   value: true
+                 - operation: EQUALS
+                   subject: $heeft_goedgekeurde_luchtwaardigheid
+                   value: true
   - number: '2.2'
     text: |-
       Ten aanzien van straalvliegtuigen en van helikopters van buitenlands militair ontwerp, niet voorzien van een bewijs
       van luchtwaardigheid of slechts voorzien van een bewijs van luchtwaardigheid, dat door een buitenlandse militaire
       autoriteit is afgegeven, wordt geen speciaal-BvL afgegeven.
     url: https://wetten.overheid.nl/BWBR0017356/2016-07-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_straalvliegtuig
+            type: boolean
+            required: true
+            description: Is het luchtvaartuig een straalvliegtuig?
+          - name: is_buitenlandse_militaire_helikopter
+            type: boolean
+            required: true
+            description: Is het luchtvaartuig een helikopter van buitenlands militair ontwerp?
+          - name: heeft_bewijs_van_luchtwaardigheid
+            type: boolean
+            required: true
+            description: Heeft het luchtvaartuig een bewijs van luchtwaardigheid?
+          - name: heeft_alleen_buitenlands_militaire_luchtwaardigheid
+            type: boolean
+            required: true
+            description: Heeft het luchtvaartuig slechts een bewijs van luchtwaardigheid afgegeven door een buitenlandse militaire autoriteit?
+        output:
+          - name: mag_geen_speciaal_BvL_afgegeven
+            type: boolean
+            description: Mag geen speciaal-BvL worden afgegeven voor dit luchtvaartuig?
+        actions:
+          - output: mag_geen_speciaal_BvL_afgegeven
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_straalvliegtuig
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_buitenlandse_militaire_helikopter
+                      value: true
+                    - operation: OR
+                      conditions:
+                        - operation: NOT
+                          condition:
+                            operation: EQUALS
+                            subject: $heeft_bewijs_van_luchtwaardigheid
+                            value: true
+                        - operation: EQUALS
+                          subject: $heeft_alleen_buitenlands_militaire_luchtwaardigheid
+                          value: true
   - number: '3.1'
     text: |-
       De aanvraag van een speciaal-BvL wordt ingediend bij de minister door middel van een volledig ingevuld en
