@@ -48,7 +48,7 @@ articles:
         bwb_id: BWBR0017228
         artikel: '10'
         paragraaf: '8'
-  - number: 1a
+  - number: '1a'
     text: |-
       Deze regeling berust mede op de [artikelen 6c, derde lid, van de wet][ref1].
 
@@ -75,6 +75,30 @@ articles:
       - id: ref1
         bwb_id: BWBR0003642
         artikel: 6c
+    machine_readable:
+      actors:
+        - houder van havenontvangstvoorziening
+        - havenbeheerder
+      actions:
+        - actor: houder van havenontvangstvoorziening
+          verb: meldt
+          object: afmelding
+          target: havenbeheerder
+          timing: onverwijld
+          method: door havenbeheerder te bepalen
+        - actor: houder van havenontvangstvoorziening
+          verb: verstrekt
+          object: S-formulier
+          timing: met afmelding
+        - actor: havenbeheerder
+          verb: neemt op
+          object: gegevens
+          target: registratie (BWBR0003642 Art.6c lid1)
+      references:
+        - bwb_id: BWBR0003642
+          artikel: 6c
+          paragraaf: '1'
+      conditions: []
   - number: '4'
     text: |-
       De havenbeheerder meldt onverwijld aan de inspecteur-generaal, op diens verzoek en op een door hem te bepalen
@@ -92,6 +116,26 @@ articles:
         bwb_id: BWBR0017228
         artikel: '3'
         paragraaf: '3'
+    machine_readable:
+      actors:
+        - havenbeheerder
+        - inspecteur-generaal
+      actions:
+        - actor: havenbeheerder
+          verb: meldt
+          object: gegevens
+          target: inspecteur-generaal
+          timing: onverwijld
+          method: op verzoek en door inspecteur-generaal te bepalen
+          details:
+            - gegevenstype: aanmelding van aangewezen schepen
+            - gegevenstype: gegevens uit artikel 3 lid 1 en 2
+      references:
+        - bwb_id: BWBR0017228
+          artikel: '3'
+          paragraaf: '3'
+      conditions:
+        - op verzoek van inspecteur-generaal
   - number: '5'
     text: |-
       1 De houder van een havenontvangstvoorziening meldt binnen een maand na afloop van ieder kalenderjaar aan de
@@ -115,18 +159,53 @@ articles:
       - id: ref1
         bwb_id: BWBR0003642
         artikel: 6c
+    machine_readable:
+      actors:
+        - houder van havenontvangstvoorziening
+        - havenbeheerder
+        - Onze Minister
+      actions:
+        - actor: houder van havenontvangstvoorziening
+          verb: meldt
+          object: gegevens
+          target: havenbeheerder
+          timing: binnen een maand na afloop van ieder kalenderjaar
+          method: door havenbeheerder te bepalen
+          details:
+            - kostensom per afvalcategorie
+            - totale hoeveelheid scheepsafvalstoffen per afvalcategorie
+        - actor: havenbeheerder
+          verb: neemt op
+          object: gegevens
+          target: registratie (BWBR0003642 Art.6c lid1)
+        - actor: havenbeheerder
+          verb: bewaart
+          object: gegevens
+          timing: ten minste vijf jaar
+        - actor: havenbeheerder
+          verb: verstrekt
+          object: gegevens of inlichtingen
+          target: Onze Minister
+          timing: op verzoek
+          method: op door Onze Minister aangegeven wijze
+      references:
+        - bwb_id: BWBR0003642
+          artikel: 6c
+          paragraaf: '1'
+      conditions:
+        - gegevens betreffen vorig kalenderjaar
   - number: '6'
     text: |-
       De havenbeheerder meldt binnen twee maanden na afloop van ieder kalenderjaar aan de inspecteur-generaal de volgende
       gegevens over het desbetreffende jaar:
 
-      a. de som van de geheven bijdragen, bedoeld in [artikel 6d, eerste lid, van de wet][ref1];
+      a. de som van de geheven bijdragen, bedoeld in [ hoofdstuk 6d, eerste lid, van de wet][ref1];
 
       b. de som van de in de desbetreffende haven gemaakte kosten gemoeid met de inzameling, opslag en verwerking van
-      scheepsafvalstoffen dat krachtens [artikel 6d, tweede lid][ref2], is afgegeven;
+      scheepsafvalstoffen dat krachtens [artikel 6d, tweede lid][ref2], is afgegeven;
 
       c. de som van de in de desbetreffende haven gemaakte kosten gemoeid met de inzameling, opslag en verwerking van
-      scheepsafval dat krachtens [artikel 6d, derde lid, van de wet][ref3] is afgegeven;
+      scheepsafval dat krachtens [artikel 6d, derde lid, van de wet][ref3] is afgegeven;
 
       d. de totale hoeveelheid ingezamelde, opgeslagen en verwerkte scheepsafvalstoffen, opgesplitst per afvalcategorie,
       met uitzondering van ladingresiduen;
@@ -148,6 +227,33 @@ articles:
       - id: ref3
         bwb_id: BWBR0003642
         artikel: 6d
+    machine_readable:
+      actors:
+        - havenbeheerder
+        - inspecteur-generaal
+      actions:
+        - actor: havenbeheerder
+          verb: meldt
+          object: gegevens
+          target: inspecteur-generaal
+          timing: binnen twee maanden na afloop van ieder kalenderjaar
+          details:
+            - som van geheven bijdragen (BWBR0003642 Art.6d lid1)
+            - som van kosten voor scheepsafvalstoffen (BWBR0003642 Art.6d lid2)
+            - som van kosten voor scheepsafval (BWBR0003642 Art.6d lid3)
+            - totale hoeveelheid scheepsafvalstoffen per afvalcategorie (excl. ladingresiduen)
+            - totale hoeveelheid ladingresiduen
+      references:
+        - bwb_id: BWBR0003642
+          artikel: 6d
+          paragraaf: '1'
+        - bwb_id: BWBR0003642
+          artikel: 6d
+          paragraaf: '2'
+        - bwb_id: BWBR0003642
+          artikel: 6d
+          paragraaf: '3'
+      conditions: []
   - number: '8'
     text: |-
       1 De ambtenaren van de Inspectie Leefomgeving en Transport inspecteren ten minste 15% van het totale aantal
@@ -156,8 +262,27 @@ articles:
       voorgaande kalenderjaren aan SafeSeaNet hebben gemeld.
 
       2 Schepen die buiten het toepassingsgebied van de richtlijn monitoring- en informatiesysteem zeescheepvaart vallen
-      worden door de ambtenaren van de Inspectie Leefomgeving en Transport geïnspecteerd als hiertoe aanleiding bestaat.
+       worden door de ambtenaren van de Inspectie Leefomgeving en Transport geïnspecteerd als hiertoe aanleiding bestaat.
     url: https://wetten.overheid.nl/BWBR0017228/2022-06-01#Artikel8
+    references: []
+    machine_readable:
+      actors:
+        - ambtenaren van Inspectie Leefomgeving en Transport
+        - schepen
+      actions:
+        - actor: ambtenaren van Inspectie Leefomgeving en Transport
+          verb: inspecteren
+          object: ten minste 15% van het totale aantal afzonderlijke schepen
+          timing: jaarlijks
+          method: berekenen gemiddelde aantal schepen over drie voorgaande kalenderjaren
+        - actor: ambtenaren van Inspectie Leefomgeving en Transport
+          verb: inspecteren
+          object: schepen buiten toepassingsgebied richtlijn monitoring- en informatiesysteem zeescheepvaart
+          conditions: als hiertoe aanleiding bestaat
+      references: []
+      conditions:
+        - ten minste 15% van het totale aantal schepen
+        - schepen buiten toepassingsgebied worden geïnspecteerd als hiertoe aanleiding bestaat
   - number: '10'
     text: |-
       De havenbeheerders van de in bijlage I aangewezen havens dragen zorg voor toereikende havenontvangstvoorzieningen
@@ -170,9 +295,22 @@ articles:
       - id: ref1
         bwb_id: BWBR0017136
         artikel: '2'
+    machine_readable:
+      actors:
+        - havenbeheerders
+      actions:
+        - actor: havenbeheerders
+          verb: dragen zorg voor
+          object: toereikende havenontvangstvoorzieningen
+          target: havens aangewezen in bijlage I
+          references: BWBR0017136 Art.2
+      references:
+        - bwb_id: BWBR0017136
+          artikel: '2'
+      conditions: []
   - number: '11'
     text: |-
-      Als rechtspersoon, bedoeld in [artikel 9, tweede lid, van het Besluit havenontvangstvoorzieningen][ref1], wordt
+      Als rechtspersoon, bedoeld in [artikel 9, tweede lid, van het Besluit havenontvangstvoorzieningen][ref1], wordt
       aangewezen de Stichting Financiering Afvalstoffen Visserij, statutair gevestigd te Urk.
 
 
@@ -182,6 +320,19 @@ articles:
       - id: ref1
         bwb_id: BWBR0017136
         artikel: '9'
+    machine_readable:
+      actors:
+        - Onze Minister
+        - Stichting Financiering Afvalstoffen Visserij
+      actions:
+        - actor: Onze Minister
+          verb: wijst aan
+          object: rechtspersoon
+          target: Stichting Financiering Afvalstoffen Visserij
+      references:
+        - bwb_id: BWBR0017136
+          artikel: '9'
+      conditions: []
   - number: '14'
     text: |-
       De circulaire van de Minister van Verkeer en Waterstaat inzake melding door de scheepvaart van de voorgenomen
@@ -202,6 +353,22 @@ articles:
         bwb_id: BWBR0017228
         artikel: '5'
         paragraaf: '4'
+    machine_readable:
+      actors:
+        - houder van havenontvangstvoorziening
+      actions:
+        - actor: houder van havenontvangstvoorziening
+          verb: meldt
+          object: gegevens
+          target: havenbeheerder
+          timing: gelijktijdig met gegevens eerstvolgende kalenderjaar
+          references: BWBR0017228 Art.5
+      references:
+        - bwb_id: BWBR0017228
+          artikel: '5'
+      conditions:
+        - in afwijking van artikel 5
+        - gegevens betreffen lopende kalenderjaar bij inwerkingtreding
   - number: '17'
     text: 'Deze regeling wordt aangehaald als: Regeling havenontvangstvoorzieningen.'
     url: https://wetten.overheid.nl/BWBR0017228/2022-06-01#Artikel17
