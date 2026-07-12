@@ -34,8 +34,7 @@ articles:
       informatie verschaft over de gemeentelijke uitvoering op het gebied van de inburgering van oudkomers en de
       resultaten ervan en aan de hand waarvan hoogte van de bijdrage over 2004 wordt vastgesteld als bedoeld in
       [artikel 9][ref2].
-
-
+      
       [ref1]: https://wetten.overheid.nl/BWBR0009544
       [ref2]: https://wetten.overheid.nl/BWBR0015683#Artikel9
     url: https://wetten.overheid.nl/BWBR0015683/2004-12-05#Artikel1
@@ -80,6 +79,11 @@ articles:
       3 De hoogte van het bedrag, genoemd in de bijlage, is afhankelijk van het aantal oudkomers, genoemd in de bijlage,
       en het normbedrag, genoemd in het tweede lid.
     url: https://wetten.overheid.nl/BWBR0015683/2004-12-05#Artikel4
+    machine_readable:
+      normbedrag_per_traject: 6400
+      bedrag_uit_bijlage:
+        formula: "normbedrag_per_traject * aantal_oudkomers_uit_bijlage"
+        references: ["artikel 4, lid 2", "artikel 4, lid 3"]
   - number: '5'
     text: |-
       1 De Minister verleent het gemeentebestuur de bijdrage, bedoeld in [artikel 3, eerste lid][ref1], bij wijze van
@@ -105,16 +109,29 @@ articles:
 
       3 De Minister stelt het voorschot vóór 1 januari 2004 vast.
 
-      4 Het voorschot wordt uiterlijk 31 mei 2004 betaald.
+       4 Het voorschot wordt uiterlijk 31 mei 2004 betaald.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel3
+         [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel3
     url: https://wetten.overheid.nl/BWBR0015683/2004-12-05#Artikel5
     references:
       - id: ref1
         bwb_id: BWBR0015683
         artikel: '3'
         hoofdstuk: '2'
+    machine_readable:
+      voorschot:
+        formula: |
+          if prognose == oudkomers_uit_bijlage:
+            bedrag_uit_bijlage
+          elif prognose < oudkomers_uit_bijlage:
+            bedrag_uit_bijlage * (prognose / oudkomers_uit_bijlage)
+          else:
+            if budget_toereikend:
+              bedrag_uit_bijlage * (prognose / oudkomers_uit_bijlage)
+            else:
+              bedrag_uit_bijlage + (resterende_middelen / totale_oudkomers)
+        references: ["artikel 5, lid 2"]
   - number: '6'
     text: |-
       1 Het gemeentebestuur aan wie het voorschot, bedoeld in [artikel 5][ref1], is verleend, sluit een overeenkomst met
@@ -199,15 +216,15 @@ articles:
 
       5 De verstrekte informatie, bedoeld in het eerste lid, is voorzien van een accountantsverklaring.
 
-      6 Het gemeentebestuur draagt er zorg voor dat zijn accountant meewerkt aan de door of namens de auditdienst van het
-      ministerie van Justitie in te stellen onderzoeken naar de verrichte controlewerkzaamheden door die accountant. De
-      daaraan verbonden kosten zijn begrepen in de bijdrage, bedoeld in [artikel 3, eerste lid][ref4].
+       6 Het gemeentebestuur draagt er zorg voor dat zijn accountant meewerkt aan de door of namens de auditdienst van het
+       ministerie van Justitie in te stellen onderzoeken naar de verrichte controlewerkzaamheden door die accountant. De
+       daaraan verbonden kosten zijn begrepen in de bijdrage, bedoeld in [artikel 3, eerste lid][ref4].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0015683#Artikel6
-      [ref3]: https://wetten.overheid.nl/BWBR0015683#Artikel3
-      [ref4]: https://wetten.overheid.nl/BWBR0015683#Artikel3
+       [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel3
+       [ref2]: https://wetten.overheid.nl/BWBR0015683#Artikel6
+       [ref3]: https://wetten.overheid.nl/BWBR0015683#Artikel3
+       [ref4]: https://wetten.overheid.nl/BWBR0015683#Artikel3
     url: https://wetten.overheid.nl/BWBR0015683/2004-12-05#Artikel8
     references:
       - id: ref1
@@ -239,13 +256,13 @@ articles:
       genoemd in de overeenkomst, bedoeld in [artikel 6][ref2], heeft voldaan en die een begintoets en een eindtoets als
       bedoeld in [artikel 7][ref3] is afgenomen.
 
-      3 Het aantal oudkomers dat de Minister bij het vaststellen van de bijdrage betrekt, kan het aantal in de
-      beschikking genoemde oudkomers niet overtreffen.
+       3 Het aantal oudkomers dat de Minister bij het vaststellen van de bijdrage betrekt, kan het aantal in de
+       beschikking genoemde oudkomers niet overtreffen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0015683#Artikel6
-      [ref3]: https://wetten.overheid.nl/BWBR0015683#Artikel7
+        [ref1]: https://wetten.overheid.nl/BWBR0015683#Artikel6
+        [ref2]: https://wetten.overheid.nl/BWBR0015683#Artikel6
+        [ref3]: https://wetten.overheid.nl/BWBR0015683#Artikel7
     url: https://wetten.overheid.nl/BWBR0015683/2004-12-05#Artikel9
     references:
       - id: ref1
@@ -260,6 +277,13 @@ articles:
         bwb_id: BWBR0015683
         artikel: '7'
         hoofdstuk: '3'
+    machine_readable:
+      bijdrage_2004:
+        formula: "2667 * aantal_contracten_2004"
+        references: ["artikel 9, lid 2a"]
+      bijdrage_2005:
+        formula: "5333 * aantal_afgeronde_trajecten_2005"
+        references: ["artikel 9, lid 2b"]
   - number: '10'
     text: |-
       1 Het bedrag van de vastgestelde bijdrage, bedoeld in [artikel 9, eerste lid][ref1], wordt betaald onder
