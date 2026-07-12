@@ -88,6 +88,15 @@ articles:
       - id: ref2
         bwb_id: BWBR0018238
         artikel: '10'
+    machine_readable:
+      operations:
+        - output: deadline_prognose
+          value:
+            operation: DATE_ADD
+            values:
+              - $inwerkingtreding_datum
+              - 8
+              - weeks
   - number: '4'
     text: |-
       1 De Minister stelt de factor T als bedoeld in [artikel 13, eerste lid, van de Uitvoeringsregeling][ref1] vast
@@ -115,11 +124,11 @@ articles:
       het beschikbare budget naar evenredigheid van het aantal oudkomers als genoemd in [bijlage 1, vierde kolom][ref5].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0018516#Artikel13
-      [ref2]: https://wetten.overheid.nl/BWBR0018320
-      [ref3]: https://wetten.overheid.nl/BWBR0018320
-      [ref4]: https://wetten.overheid.nl/BWBR0018320
-      [ref5]: https://wetten.overheid.nl/BWBR0018320
+        [ref1]: https://wetten.overheid.nl/BWBR0018516#Artikel13
+        [ref2]: https://wetten.overheid.nl/BWBR0018320
+        [ref3]: https://wetten.overheid.nl/BWBR0018320
+        [ref4]: https://wetten.overheid.nl/BWBR0018320
+        [ref5]: https://wetten.overheid.nl/BWBR0018320
     url: https://wetten.overheid.nl/BWBR0018320/2005-06-01#Artikel4
     references:
       - id: ref1
@@ -133,6 +142,54 @@ articles:
         bwb_id: BWBR0018320
       - id: ref5
         bwb_id: BWBR0018320
+    machine_readable:
+      variables:
+        - baseline_aantal_oudkomers
+        - prognose
+        - baseline_factor_t
+      operations:
+         - output: factor_t
+           value:
+             operation: IF
+             cases:
+               - when:
+                   operation: EQUALS
+                   subject: $prognose
+                   value: $baseline_aantal_oudkomers
+                 then:
+                   value: $baseline_factor_t
+               - when:
+                   operation: LESS_THAN
+                   subject: $prognose
+                   value: $baseline_aantal_oudkomers
+                 then:
+                   operation: MULTIPLY
+                   values:
+                     - $baseline_factor_t
+                     - operation: DIVIDE
+                       values:
+                         - $prognose
+                         - $baseline_aantal_oudkomers
+               - when:
+                   operation: GREATER_THAN
+                   subject: $prognose
+                   value: $baseline_aantal_oudkomers
+                 then:
+                   operation: ADD
+                   values:
+                     - $baseline_factor_t
+                     - operation: MULTIPLY
+                       values:
+                         - $baseline_factor_t
+                         - operation: DIVIDE
+                           values:
+                             - operation: SUBTRACT
+                               values:
+                                 - $prognose
+                                 - $baseline_aantal_oudkomers
+                             - $baseline_aantal_oudkomers
+             default:
+               value: $baseline_factor_t
   - number: '5'
     text: |-
       1 Het gemeentebestuur sluit een overeenkomst met de oudkomer die een traject zal aanvangen.
@@ -156,10 +213,16 @@ articles:
       g. de informatieoverdracht tussen het gemeentebestuur, de instellingen betrokken bij het aanbieden van het traject
       en de oudkomer over de voortgang van die oudkomer in het traject;
 
-      h. de gevolgen welke zijn verbonden aan niet-nakoming van de overeenkomst door de oudkomer.
+       h. de gevolgen welke zijn verbonden aan niet-nakoming van de overeenkomst door de oudkomer.
 
-      4 Het gemeentebestuur sluit op grond van deze regeling met een oudkomer slechts één overeenkomst.
+        4 Het gemeentebestuur sluit op grond van deze regeling met een oudkomer slechts één overeenkomst.
     url: https://wetten.overheid.nl/BWBR0018320/2005-06-01#Artikel5
+    machine_readable:
+      variables:
+        - min_contacturen
+      operations:
+        - output: min_contacturen
+          value: 300
   - number: '6'
     text: |-
       1 Het gemeentebestuur waaraan ingevolge [artikel 13 van de Uitvoeringsregeling][ref1] een voorschot op het
@@ -186,6 +249,14 @@ articles:
         bwb_id: BWBR0018320
         artikel: '5'
         hoofdstuk: '3'
+    machine_readable:
+      operations:
+        - output: toegestane_toetscombinaties
+          value:
+            operation: LIST
+            values:
+              - "Intaketoets NT2 + NT2-Profieltoets / NT2-Cat / Itemdito"
+              - "Intaketoets Alfabetisering NT2 + NT2-Profieltoets Alfabetisering"
   - number: '7'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop het
