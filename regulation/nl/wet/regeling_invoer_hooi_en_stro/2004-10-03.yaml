@@ -25,93 +25,176 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#ArtikelAanhef
 articles:
-  - number: '1'
-    text: De begripsbepalingen van artikel 1.1 van de Regeling keuring en handel dierlijke producten zijn van toepassing.
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel1
-  - number: '2'
-    text: |-
-      1 Het brengen in Nederland van een partij hooi of stro die via Nederland voor het eerst op het grondgebied van de
-      Europese Gemeenschap wordt gebracht en is verzonden vanuit een derde land is verboden, tenzij:
+   - number: '1'
+     text: De begripsbepalingen van artikel 1.1 van de Regeling keuring en handel dierlijke producten zijn van toepassing.
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel1
+   - number: '2'
+     text: |-
+       1 Het brengen in Nederland van een partij hooi of stro die via Nederland voor het eerst op het grondgebied van de
+       Europese Gemeenschap wordt gebracht en is verzonden vanuit een derde land is verboden, tenzij:
 
-      a. de partij afkomstig is uit een derde land of gedeelte van een derde land dat voorkomt op de lijst, opgenomen in
-      bijlage V, deel 1, van [verordening 136/2004/EG](32004R0136);
+       a. de partij afkomstig is uit een derde land of gedeelte van een derde land dat voorkomt op de lijst, opgenomen in
+       bijlage V, deel 1, van [verordening 136/2004/EG](32004R0136);
 
-      b. de partij vergezeld gaat van een bij de partij behorend document waaruit de oorsprong en bestemming van het
-      hooi of stro blijkt en waaruit tevens blijkt dat, indien de partij is bestemd voor een lid-staat en voor zover van
-      toepassing, is voldaan aan de veterinairrechtelijke voorschriften van die lid-staat van bestemming;
+       b. de partij vergezeld gaat van een bij de partij behorend document waaruit de oorsprong en bestemming van het
+       hooi of stro blijkt en waaruit tevens blijkt dat, indien de partij is bestemd voor een lid-staat en voor zover van
+       toepassing, is voldaan aan de veterinairrechtelijke voorschriften van die lid-staat van bestemming;
 
-      c. wordt voldaan aan [verordening 136/2004/EG](32004R0136) en de [artikelen 2.17 tot en met 2.23f][ref1] en
-      [2.27 van de Regeling keuring en handel dierlijke producten][ref2], met dien verstande dat met het in die artikelen
-      genoemde originele certificaat of document, het document, genoemd in onderdeel b, wordt bedoeld.
+       c. wordt voldaan aan [verordening 136/2004/EG](32004R0136) en de [artikelen 2.17 tot en met 2.23f][ref1] en
+       [2.27 van de Regeling keuring en handel dierlijke producten][ref2], met dien verstande dat met het in die artikelen
+       genoemde originele certificaat of document, het document, genoemd in onderdeel b, wordt bedoeld.
 
-      2 De [artikelen 2.24][ref3], [227][ref4] en [22.7 a van de Regeling keuring en handel dierlijke producten][ref5]
-      zijn van overeenkomstige toepassing op hooi en stro.
+       2 De [artikelen 2.24][ref3], [227][ref4] en [22.7 a van de Regeling keuring en handel dierlijke producten][ref5]
+       zijn van overeenkomstige toepassing op hooi en stro.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006727#Artikel2.17
-      [ref2]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27
-      [ref3]: https://wetten.overheid.nl/BWBR0006727#Artikel2.24
-      [ref4]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27
-      [ref5]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27a
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006727
-        artikel: '2.17'
-      - id: ref2
-        bwb_id: BWBR0006727
-        artikel: '2.27'
-      - id: ref3
-        bwb_id: BWBR0006727
-        artikel: '2.24'
-      - id: ref4
-        bwb_id: BWBR0006727
-        artikel: '2.27'
-      - id: ref5
-        bwb_id: BWBR0006727
-        artikel: 2.27a
-  - number: '3'
-    text: |-
-      Het brengen in Nederland van een partij hooi of stro die afkomstig is uit een derde land en via het grondgebied van
-      een lid-staat in Nederland wordt gebracht, is verboden, tenzij de partij vergezeld gaat van:
+       [ref1]: https://wetten.overheid.nl/BWBR0006727#Artikel2.17
+       [ref2]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27
+       [ref3]: https://wetten.overheid.nl/BWBR0006727#Artikel2.24
+       [ref4]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27
+       [ref5]: https://wetten.overheid.nl/BWBR0006727#Artikel2.27a
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel2
+     references:
+       - id: ref1
+         bwb_id: BWBR0006727
+         artikel: '2.17'
+       - id: ref2
+         bwb_id: BWBR0006727
+         artikel: '2.27'
+       - id: ref3
+         bwb_id: BWBR0006727
+         artikel: '2.24'
+       - id: ref4
+         bwb_id: BWBR0006727
+         artikel: '2.27'
+       - id: ref5
+         bwb_id: BWBR0006727
+         artikel: '2.27a'
+     machine_readable:
+       execution:
+         parameters:
+           - name: country
+             type: string
+           - name: has_origin_destination_document
+             type: boolean
+           - name: complies_with_136_2004_eg
+             type: boolean
+           - name: complies_with_bwbr0006727_arts
+             type: boolean
+         input:
+           - name: approved_countries
+             type: array
+             source:
+               regulation: 32004R0136
+               article: Annex V, Part 1
+         output:
+           - name: is_import_allowed
+             type: boolean
+         actions:
+           - output: is_import_allowed
+             value:
+               operation: AND
+               conditions:
+                 - operation: IN
+                   subject: $country
+                   value: $approved_countries
+                 - $has_origin_destination_document
+                 - operation: AND
+                   conditions:
+                     - $complies_with_136_2004_eg
+                     - $complies_with_bwbr0006727_arts
+   - number: '3'
+     text: |-
+       Het brengen in Nederland van een partij hooi of stro die afkomstig is uit een derde land en via het grondgebied van
+       een lid-staat in Nederland wordt gebracht, is verboden, tenzij de partij vergezeld gaat van:
 
-      a. indien zij is bestemd voor Nederland of een lidstaat, een Gemeenschappelijk veterinair document van binnenkomst
-      als bedoeld in [verordening 136/2004/EG](32004R0136) en gewaarmerkt afschrift als bedoeld in artikel 7, vierde lid,
-      van [richtlijn 97/78/EG](31997L0078);
+       a. indien zij is bestemd voor Nederland of een lidstaat, een Gemeenschappelijk veterinair document van binnenkomst
+       als bedoeld in [verordening 136/2004/EG](32004R0136) en gewaarmerkt afschrift als bedoeld in artikel 7, vierde lid,
+       van [richtlijn 97/78/EG](31997L0078);
 
-      b. indien zij bestemd is voor een derde land, het bij de partij behorende originele document en een
-      Gemeenschappelijk veterinair document van binnenkomst als bedoeld in onderdeel a.
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel3
-  - number: 3a
-    text: De minister is de bevoegde autoriteit, bedoeld in artikel 10 van [verordening 136/2004/EG](32004R0136).
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel3a
-  - number: '4'
-    text: |-
-      Deze regeling is niet van toepassing op een partij als bedoeld in artikel 16, eerste lid, van [richtlijn 97/78/
-      EG](31997L0078), mits, met inachtneming van artikel 8 van [verordening 136/2004/EG](32004R0136), wordt voldaan aan
-      artikel 16, eerste lid, van [richtlijn 97/78/EG](31997L0078).
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel4
-  - number: '5'
-    text: |-
-      1 Een wijziging van de in deze regeling genoemde richtlijn of beschikking treedt voor de toepassing van de
-      artikelen waarin naar die richtlijn, onderscheidenlijk beschikking is verwezen, in werking met ingang van de dag
-      waarop aan de betrokken wijzigingsrichtlijn onderscheidenlijk wijzigingsbeschikking uitvoering moet zijn gegeven,
-      tenzij, in geval van een wijzigingsrichtlijn, bij ministerieel besluit dat in de Staatscourant wordt bekendgemaakt,
-      een ander tijdstip wordt vastgesteld.
+       b. indien zij bestemd is voor een derde land, het bij de partij behorende originele document en een
+       Gemeenschappelijk veterinair document van binnenkomst als bedoeld in onderdeel a.
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel3
+     machine_readable:
+       execution:
+         parameters:
+           - name: destination_type
+             type: string
+           - name: has_common_veterinary_document
+             type: boolean
+           - name: has_certified_copy
+             type: boolean
+           - name: has_original_document
+             type: boolean
+         output:
+           - name: is_transit_allowed
+             type: boolean
+         actions:
+           - output: is_transit_allowed
+             value:
+               operation: OR
+               conditions:
+                 - operation: AND
+                   conditions:
+                     - operation: EQUALS
+                       subject: $destination_type
+                       value: "EU/EEA"
+                     - $has_common_veterinary_document
+                     - $has_certified_copy
+                 - operation: AND
+                   conditions:
+                     - operation: EQUALS
+                       subject: $destination_type
+                       value: "third_country"
+                     - $has_original_document
+                     - $has_common_veterinary_document
+   - number: 3a
+     text: De minister is de bevoegde autoriteit, bedoeld in artikel 10 van [verordening 136/2004/EG](32004R0136).
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel3a
+   - number: '4'
+     text: |-
+       Deze regeling is niet van toepassing op een partij als bedoeld in artikel 16, eerste lid, van [richtlijn 97/78/
+       EG](31997L0078), mits, met inachtneming van artikel 8 van [verordening 136/2004/EG](32004R0136), wordt voldaan aan
+       artikel 16, eerste lid, van [richtlijn 97/78/EG](31997L0078).
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel4
+     machine_readable:
+       execution:
+         parameters:
+           - name: complies_with_97_78_eg_art16
+             type: boolean
+           - name: complies_with_136_2004_eg_art8
+             type: boolean
+         output:
+           - name: is_exemption_applicable
+             type: boolean
+         actions:
+           - output: is_exemption_applicable
+             value:
+               operation: AND
+               conditions:
+                 - $complies_with_97_78_eg_art16
+                 - $complies_with_136_2004_eg_art8
+   - number: '5'
+     text: |-
+       1 Een wijziging van de in deze regeling genoemde richtlijn of beschikking treedt voor de toepassing van de
+       artikelen waarin naar die richtlijn, onderscheidenlijk beschikking is verwezen, in werking met ingang van de dag
+       waarop aan de betrokken wijzigingsrichtlijn onderscheidenlijk wijzigingsbeschikking uitvoering moet zijn gegeven,
+       tenzij, in geval van een wijzigingsrichtlijn, bij ministerieel besluit dat in de Staatscourant wordt bekendgemaakt,
+       een ander tijdstip wordt vastgesteld.
 
-      2 De minister doet van een wijzigingsrichtlijn als bedoeld in het eerste lid mededeling in de Staatscourant.
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel5
-  - number: '6'
-    text: |-
-      1 De Regeling in-, door- en vervoer niet-geharmoniseerde produkten 1993 wordt ingetrokken.
+       2 De minister doet van een wijzigingsrichtlijn als bedoeld in het eerste lid mededeling in de Staatscourant.
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel5
+   - number: '6'
+     text: |-
+       1 De Regeling in-, door- en vervoer niet-geharmoniseerde produkten 1993 wordt ingetrokken.
 
-      2 De Beschikking vervoer niet-geharmoniseerde produkten 1993 wordt ingetrokken.
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel6
-  - number: '7'
-    text: |-
-      Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
-      wordt geplaatst.
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel7
-  - number: '8'
-    text: 'Deze regeling wordt aangehaald als: Regeling invoer hooi en stro.'
-    url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel8
+       2 De Beschikking vervoer niet-geharmoniseerde produkten 1993 wordt ingetrokken.
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel6
+   - number: '7'
+     text: |-
+       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
+       wordt geplaatst.
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel7
+   - number: '8'
+     text: 'Deze regeling wordt aangehaald als: Regeling invoer hooi en stro.'
+     url: https://wetten.overheid.nl/BWBR0007458/2004-10-03#Artikel8
