@@ -20,77 +20,92 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
+      *regeling:* Regeling keuring en handelsverkeer konijne- en hazevlees 1993;
 
+      *konijnen:* tamme konijnen;
 
+      *konijnevlees:* alle voor menselijke consumptie geschikte delen van konijnen;
 
-              *regeling:*
+      *hazen:* hazen die in gevangenschap zijn gekweekt, gehouden of geslacht;
 
+      *hazevlees:* alle voor menselijke consumptie geschikte delen van hazen;
 
-              Regeling keuring en handelsverkeer konijne- en hazevlees 1993;
+      *lid-staat:* lid-staat van de Europese Unie, niet zijnde Nederland
 
-
-
-
-              *konijnen:*
-
-
-              tamme konijnen;
-
-
-
-
-              *konijnevlees:*
-
-
-              alle voor menselijke consumptie geschikte delen van konijnen;
-
-
-
-
-              *hazen:*
-
-
-              hazen die in gevangenschap zijn gekweekt, gehouden of geslacht;
-
-
-
-
-              *hazevlees:*
-
-
-              alle voor menselijke consumptie geschikte delen van hazen;
-
-
-
-            lid-staat:
-
-              lid-staat van de Europese Unie, niet zijnde Nederland
-
-
-
-            derde land:
-
-              land, niet zijnde Nederland en niet zijnde een lid-staat.
+      *derde land:* land, niet zijnde Nederland en niet zijnde een lid-staat.
     url: https://wetten.overheid.nl/BWBR0006049/2004-11-25#Artikel1
   - number: '2'
     text: De invoer van konijnevlees en hazevlees is verboden.
     url: https://wetten.overheid.nl/BWBR0006049/2004-11-25#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: invoer_verboden
+            type: boolean
+            description: De invoer van konijnevlees en hazevlees is verboden.
+        actions:
+          - output: invoer_verboden
+            value: true
+            legal_basis:
+              law: Regeling invoer konijne en hazevlees 1993
+              article: '2'
   - number: '3'
     text: |-
-      Het verbod, gesteld in [artikel 2, onderdeel a en b][ref1], is niet van toepassing op de invoer van konijnevlees of
-      hazevlees, mits wordt voldaan aan:
-
+      Het verbod, gesteld in artikel 2, is niet van toepassing op de invoer van konijnevlees of hazevlees, mits wordt voldaan aan:
       a. voor zover het betreft invoer uit een Lid-Staat of Noorwegen, artikel 5 van de regeling;
-
       b. voor zover het betreft invoer uit een derde land, niet zijnde Noorwegen, artikel 7 van de regeling.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006049#Artikel2
     url: https://wetten.overheid.nl/BWBR0006049/2004-11-25#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0006049
         artikel: '2'
+    machine_readable:
+      open_terms:
+        - id: voldoet_aan_artikel_5
+          type: boolean
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          description: Voldoet aan de voorwaarden van artikel 5 van de regeling.
+        - id: voldoet_aan_artikel_7
+          type: boolean
+          required: true
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          description: Voldoet aan de voorwaarden van artikel 7 van de regeling.
+      execution:
+        parameters:
+          - name: land_van_herkomst
+            type: string
+            description: Het land van herkomst van het vlees.
+        output:
+          - name: invoer_toegestaan
+            type: boolean
+            description: Indicates of de invoer van konijnevlees of hazevlees is toegestaan.
+        actions:
+          - output: invoer_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: IN
+                      subject: $land_van_herkomst
+                      values: ["lid-staat", "Noorwegen"]
+                    - operation: EQUALS
+                      subject: $voldoet_aan_artikel_5
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $land_van_herkomst
+                      value: "derde land"
+                    - operation: EQUALS
+                      subject: $voldoet_aan_artikel_7
+                      value: true
+            legal_basis:
+              law: Regeling invoer konijne en hazevlees 1993
+              article: '3'
   - number: '5'
     text: De Regeling in- en doorvoer levende en dode konijnen 1974 wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0006049/2004-11-25#Artikel5
@@ -121,6 +136,66 @@ articles:
       - id: ref1
         bwb_id: BWBR0006727
         artikel: '9.15'
+    machine_readable:
+      execution:
+        parameters:
+          - name: product_type
+            type: string
+            description: Het type product (bv. gehakt, vleesbereidingen, vlees in stukken).
+          - name: gewicht
+            type: number
+            description: Het gewicht van het vlees in grammen.
+          - name: richtlijn_88_657_eee_compliant
+            type: boolean
+            description: Voldoet het product aan Richtlijn 88/657/EEG.
+          - name: richtlijn_94_65_eg_compliant
+            type: boolean
+            description: Voldoet het product aan Richtlijn 94/65/EG.
+          - name: verordening_745_2004_compliant
+            type: boolean
+            description: Voldoet het product aan Verordening (EG) nr. 745/2004 voor persoonlijke consumptie.
+        output:
+          - name: uitzondering_toepasselijk
+            type: boolean
+            description: Is de uitzondering van Artikel 5a van toepassing.
+        actions:
+          - output: uitzondering_toepasselijk
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: IN
+                      subject: $product_type
+                      values: ["gehakt", "vleesbereidingen"]
+                    - operation: EQUALS
+                      subject: $richtlijn_88_657_eee_compliant
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $product_type
+                      value: "vlees in stukken"
+                    - operation: LESS_THAN
+                      subject: $gewicht
+                      value: 100
+                    - operation: EQUALS
+                      subject: $richtlijn_88_657_eee_compliant
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: IN
+                      subject: $product_type
+                      values: ["gehakt vlees", "vleesbereidingen"]
+                    - operation: EQUALS
+                      subject: $richtlijn_94_65_eg_compliant
+                      value: true
+                - operation: EQUALS
+                  subject: $verordening_745_2004_compliant
+                  value: true
+            legal_basis:
+              law: Regeling invoer konijne en hazevlees 1993
+              article: '5a'
   - number: '6'
     text: |-
       1 Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
