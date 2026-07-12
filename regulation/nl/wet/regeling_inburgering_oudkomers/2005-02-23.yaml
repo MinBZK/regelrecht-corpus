@@ -254,10 +254,10 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0014009#Artikel3
     url: https://wetten.overheid.nl/BWBR0014009/2005-02-23#Artikel4
     references:
-      - id: ref1
-        bwb_id: BWBR0014009
-        artikel: '3'
-        hoofdstuk: '2'
+       - id: ref1
+         bwb_id: BWBR0014009
+         artikel: '3'
+         hoofdstuk: '2'
   - number: '5'
     text: |-
       1 De hoogte van het voorschot voor de bijdrage voor de vaste kosten bedraagt € 1.200 vermenigvuldigd met de
@@ -270,6 +270,23 @@ articles:
       4 De hoogte van het voorschot voor de bijdrage voor de variabele kosten bedraagt € 4.600 vermenigvuldigd met de
       prognose.
     url: https://wetten.overheid.nl/BWBR0014009/2005-02-23#Artikel5
+    machine_readable:
+      inputs:
+        - name: prognose
+          type: integer
+          source:
+            output: prognose
+      outputs:
+        - name: voorschot_vaste_kosten
+          type: integer
+          operation:
+            - MULTIPLY: [120000, $prognose]
+            - MAX: [$result, 1200000]
+            - MIN: [$result, 4800000]
+        - name: voorschot_variabele_kosten
+          type: integer
+          operation:
+            - MULTIPLY: [460000, $prognose]
   - number: '6'
     text: |-
       Bij het verlenen van het voorschot bepaalt de minister op welke wijze en op welk moment het voorschot wordt
