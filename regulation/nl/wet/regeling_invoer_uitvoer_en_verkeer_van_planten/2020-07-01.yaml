@@ -122,6 +122,85 @@ articles:
         bwb_id: BWBR0005997
         artikel: '16'
         paragraaf: '3'
+    machine_readable:
+      inputs:
+        - name: voldoet_aan_artikel_4
+          type: boolean
+          source:
+            output: 4
+        - name: voldoet_aan_artikel_5
+          type: boolean
+          source:
+            output: 5
+        - name: voldoet_aan_artikel_6
+          type: boolean
+          source:
+            output: 6
+        - name: voldoet_aan_artikel_7
+          type: boolean
+          source:
+            output: 7
+        - name: voldoet_aan_artikel_8
+          type: boolean
+          source:
+            output: 8
+        - name: voldoet_aan_artikel_9
+          type: boolean
+          source:
+            output: 9
+        - name: voldoet_aan_artikel_10
+          type: boolean
+          source:
+            output: 10
+        - name: voldoet_aan_artikel_11
+          type: boolean
+          source:
+            output: 11
+        - name: voldoet_aan_artikel_12
+          type: boolean
+          source:
+            output: 12
+        - name: voldoet_aan_artikel_13
+          type: boolean
+          source:
+            output: 13
+        - name: voldoet_aan_artikel_16
+          type: boolean
+          source:
+            output: 16
+      outputs:
+        - name: verbod_van_toepassing
+          type: boolean
+          value:
+            operation: NOT
+            value:
+              operation: AND
+              conditions:
+                - $source.output.4
+                - $source.output.5
+                - $source.output.6
+                - $source.output.7
+                - $source.output.8
+                - $source.output.9
+                - $source.output.10
+                - $source.output.11
+                - $source.output.12
+                - $source.output.13
+                - $source.output.16
+      open_terms:
+        - id: ontheffing_algemene_gevallen
+          type: boolean
+          description: Ontheffing verleend door de Minister voor algemene gevallen (art. 2 lid 2)
+          delegated_to: Minister van Landbouw, Natuur en Voedselkwaliteit
+          delegation_type: MINISTERIEEL_BESLUIT
+        - id: ontheffing_proefnemingen
+          type: boolean
+          description: Ontheffing verleend voor proefnemingen, wetenschappelijke doeleinden of selectiewerkzaamheden (art. 2 lid 3)
+          delegated_to: Minister van Landbouw, Natuur en Voedselkwaliteit
+          delegation_type: MINISTERIEEL_BESLUIT
+          conditions:
+            - description: Voldoet aan richtlijn 2008/61/EG
+              untranslatable: true
   - number: 2 bis
     text: |-
       Op kleine hoeveelheden planten, plantaardige producten, voedingsmiddelen of diervoeders, voor zover verband
