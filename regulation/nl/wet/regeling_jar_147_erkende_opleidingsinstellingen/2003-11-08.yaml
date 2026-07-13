@@ -77,13 +77,31 @@ articles:
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel4
   - number: '5'
     text: |-
-      1 Van de MTOA wordt een bewijs afgegeven, dat vermeldt tot welke datum de MTOA geldig is en op welke opleidingen de
+      1 Van de MTOA wordt een bewijs afgegeven, dat meldt tot welke datum de MTOA geldig is en op welke opleidingen de
       MTOA betrekking heeft.
 
       2 Een MTOA wordt verleend voor ten hoogste twee jaar.
 
       3 Het model van het bewijs van erkenning is overeenkomstig de bij deze regeling behorende bijlage.
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel5
+    machine_readable:
+      execution:
+        output:
+          - name: mtoa_geldig_tot
+            type: date
+          - name: mtoa_duur_jaar
+            type: number
+        parameters:
+          - name: mtoa_afgifte_datum
+            type: date
+        actions:
+          - output: mtoa_duur_jaar
+            value: 2
+          - output: mtoa_geldig_tot
+            value:
+              operation: DATE_ADD
+              date: $mtoa_afgifte_datum
+              years: $mtoa_duur_jaar
   - number: '6'
     text: |-
       1 Ten aanzien van verlenging van een MTOA zijn de [artikelen 3][ref1] en [4][ref2] van overeenkomstige toepassing,
@@ -104,6 +122,27 @@ articles:
       - id: ref2
         bwb_id: BWBR0012920
         artikel: '4'
+    machine_readable:
+      execution:
+        output:
+          - name: verlenging_aanvraag_vroegste_datum
+            type: date
+          - name: verlenging_aanvraag_laatste_datum
+            type: date
+        parameters:
+          - name: mtoa_geldig_tot
+            type: date
+        actions:
+          - output: verlenging_aanvraag_vroegste_datum
+            value:
+              operation: DATE_ADD
+              date: $mtoa_geldig_tot
+              weeks: -12
+          - output: verlenging_aanvraag_laatste_datum
+            value:
+              operation: DATE_ADD
+              date: $mtoa_geldig_tot
+              weeks: -8
   - number: '7'
     text: |-
       1 Een MTOA wordt gewijzigd, nadat de houder heeft aangetoond, dat ook na de wijziging aan de voor de verkrijging
@@ -127,6 +166,20 @@ articles:
       - id: ref2
         bwb_id: BWBR0012920
         artikel: '4'
+    machine_readable:
+      execution:
+        output:
+          - name: wijziging_aanvraag_laatste_datum
+            type: date
+        parameters:
+          - name: gewenste_wijziging_datum
+            type: date
+        actions:
+          - output: wijziging_aanvraag_laatste_datum
+            value:
+              operation: DATE_ADD
+              date: $gewenste_wijziging_datum
+              weeks: -4
   - number: '8'
     text: |-
       1 De gehele of gedeeltelijke intrekking van de MTOA door de minister wordt 28 dagen vooraf bij aangetekende brief
@@ -140,6 +193,24 @@ articles:
       4 De minister neemt het bewijs van erkenning in dan wel geeft, in geval van gedeeltelijke intrekking, een nieuw
       bewijs van erkenning af.
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel8
+    machine_readable:
+      execution:
+        output:
+          - name: intrekking_mededeling_datum
+            type: date
+          - name: certificaat_geldigheid_einde
+            type: boolean
+        parameters:
+          - name: intrekking_datum
+            type: date
+        actions:
+          - output: intrekking_mededeling_datum
+            value:
+              operation: DATE_ADD
+              date: $intrekking_datum
+              weeks: -4
+          - output: certificaat_geldigheid_einde
+            value: false
   - number: '9'
     text: |-
       1 De houder van een MTOA zal voorgenomen wijzigingen van zijn organisatie zoals gesteld in JAR 147.75 vooraf aan de
@@ -151,9 +222,31 @@ articles:
       3 Wanner wijzigingen niet vooraf aan de minister worden voorgelegd kan de minister besluiten de erkenning in te
       trekken met terugwerkende kracht tot het moment van invoering van de wijziging.
 
-      4 De houder van een MTOA informeert bij wijziging van het handboek van de onderhoudsorganisatie zoals gesteld in
-      JAR 147.65 de minister.
+         4 De houder van een MTOA informeert bij wijziging van het handboek van de onderhoudsorganisatie zoals gesteld in
+         JAR 147.65 de minister.
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel9
+    machine_readable:
+      execution:
+        output:
+          - name: wijziging_voorgelegd
+            type: boolean
+          - name: voorwaarden_gesteld
+            type: boolean
+        parameters:
+          - name: organisatie_wijziging_voorgelegd
+            type: boolean
+          - name: minister_toestemming
+            type: boolean
+        actions:
+          - output: wijziging_voorgelegd
+            value: $organisatie_wijziging_voorgelegd
+          - output: voorwaarden_gesteld
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $minister_toestemming
+                value: true
   - number: '10'
     text: |-
       1 De houder van een MTOA is, voor zover opgenomen in zijn erkenning, bevoegd tot:
@@ -164,8 +257,30 @@ articles:
       b. het onder zijn verantwoordelijkheid uitbesteden van theoretische basis training, type training en gerelateerde
       examens;
 
-      c. de afgifte van certificaten ten aanzien van het bepaalde onder a en b.
+       c. de afgifte van certificaten ten aanzien van het bepaalde onder a en b.
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel10
+    machine_readable:
+      execution:
+        output:
+          - name: bevoegdheid_opleidingen
+            type: boolean
+          - name: bevoegdheid_examens
+            type: boolean
+        parameters:
+          - name: erkenning_oplocaties
+            type: array
+          - name: uitbesteding_toegestaan
+            type: boolean
+        actions:
+          - output: bevoegdheid_opleidingen
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $erkenning_oplocaties
+                value: ""
+          - output: bevoegdheid_examens
+            value: $uitbesteding_toegestaan
   - number: '11'
     text: |-
       1 De houder van een MTOA is verplicht:
@@ -178,16 +293,37 @@ articles:
       2 De houder van een MTOA gebruikt een archiveringssysteem waarin de kwalificatie- en ervaringsgegevens van alle
       instructeurs, leraren en examinatoren worden bewaard volgens de eisen van JAR-147.40.
 
-      3 De houder van een MTOA bewaart alle opleidingsgegevens, examen resultaten en beoordeling staten voor tenminste 5
-      jaar na beëindiging van het opleidingstraject van de betreffende leerling.
+       3 De houder van een MTOA bewaart alle opleidingsgegevens, examen resultaten en beoordeling staten voor tenminste 5
+        jaar na beëindiging van het opleidingstraject van de betreffende leerling.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0012920#Artikel4
+         [ref1]: https://wetten.overheid.nl/BWBR0012920#Artikel4
     url: https://wetten.overheid.nl/BWBR0012920/2003-11-08#Artikel11
     references:
       - id: ref1
         bwb_id: BWBR0012920
         artikel: '4'
+    machine_readable:
+      execution:
+        output:
+          - name: archiveringsplicht_5jaar
+            type: boolean
+        parameters:
+          - name: opleidingstraject_beindigd
+            type: date
+          - name: gegevens_bewaard
+            type: boolean
+        actions:
+          - output: archiveringsplicht_5jaar
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $gegevens_bewaard
+                  value: true
+                - operation: GREATER_THAN
+                  subject: $opleidingstraject_beindigd
+                  value: "1970-01-01"
   - number: '12'
     text: |-
       De minister publiceert periodiek de volgende gegevens van de houders van een MTOA:
