@@ -37,6 +37,39 @@ articles:
       - id: ref2
         bwb_id: BWBR0009755
         artikel: 95a
+    machine_readable:
+      execution:
+        parameters:
+          - name: tarief_vorig_jaar_elektriciteit
+            type: amount
+            required: true
+            description: Tarief voor meting van elektriciteit uit het voorafgaande kalenderjaar
+            type_spec:
+              unit: eurocent
+          - name: cpi_4e_maand
+            type: number
+            required: true
+            description: Consumentenprijsindex (alle huishoudens) in de vierde maand voorafgaand aan het kalenderjaar waarvoor het tarief geldt
+          - name: cpi_16e_maand
+            type: number
+            required: true
+            description: Consumentenprijsindex (alle huishoudens) in de zestiende maand voorafgaand aan het kalenderjaar waarvoor het tarief geldt
+        output:
+          - name: elektriciteit_meettarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor meting van elektriciteit, gecorrigeerd met inflatie
+        actions:
+          - output: elektriciteit_meettarief
+            value:
+              operation: MULTIPLY
+              values:
+                - $tarief_vorig_jaar_elektriciteit
+                - operation: DIVIDE
+                  values:
+                    - $cpi_4e_maand
+                    - $cpi_16e_maand
   - number: '2'
     text: |-
       1 Het tarief, bedoeld in [artikel 81e, eerste lid, van de Gaswet][ref1], dat een netbeheerder in rekening brengt
@@ -75,6 +108,72 @@ articles:
       - id: ref4
         bwb_id: BWBR0011440
         artikel: '43'
+    machine_readable:
+      execution:
+        parameters:
+          - name: tarief_vorig_jaar_gas
+            type: amount
+            required: true
+            description: Tarief voor meting van gas uit het voorafgaande kalenderjaar
+            type_spec:
+              unit: eurocent
+          - name: cpi_4e_maand
+            type: number
+            required: true
+            description: Consumentenprijsindex (alle huishoudens) in de vierde maand voorafgaand aan het kalenderjaar waarvoor het tarief geldt
+          - name: cpi_16e_maand
+            type: number
+            required: true
+            description: Consumentenprijsindex (alle huishoudens) in de zestiende maand voorafgaand aan het kalenderjaar waarvoor het tarief geldt
+          - name: jaar
+            type: number
+            required: true
+            description: Kalenderjaar waarvoor het tarief geldt
+          - name: gewogen_gemiddelde_tarief_2005
+            type: amount
+            required: false
+            description: Gewogen gemiddelde tarief van alle netbeheerders voor gas in 2005
+            type_spec:
+              unit: eurocent
+          - name: cpi_augustus_2005
+            type: number
+            required: false
+            description: Consumentenprijsindex (alle huishoudens) in augustus 2005
+          - name: cpi_augustus_2011
+            type: number
+            required: false
+            description: Consumentenprijsindex (alle huishoudens) in augustus 2011
+        output:
+          - name: gas_meettarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor meting van gas, gecorrigeerd met inflatie
+        actions:
+          - output: gas_meettarief
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $jaar
+                    value: 2012
+                  then:
+                    operation: MULTIPLY
+                    values:
+                      - $gewogen_gemiddelde_tarief_2005
+                      - operation: DIVIDE
+                        values:
+                          - $cpi_augustus_2011
+                          - $cpi_augustus_2005
+              default:
+                operation: MULTIPLY
+                values:
+                  - $tarief_vorig_jaar_gas
+                  - operation: DIVIDE
+                    values:
+                      - $cpi_4e_maand
+                      - $cpi_16e_maand
   - number: 4a
     text: |-
       1 Ten behoeve van de toepassing van [artikel 3, tweede lid][ref1], in enig jaar, stelt de Autoriteit Consument en
@@ -123,6 +222,34 @@ articles:
       - id: ref6
         bwb_id: BWBR0011440
         artikel: 81e
+    machine_readable:
+      execution:
+        parameters:
+          - name: inkomsten_uit_tarieven
+            type: amount
+            required: true
+            description: Inkomsten uit de vastgestelde tarieven
+            type_spec:
+              unit: eurocent
+          - name: kosten
+            type: amount
+            required: true
+            description: Kosten van de netbeheerder
+            type_spec:
+              unit: eurocent
+        output:
+          - name: verschil_inkomsten_kosten
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschil tussen inkomsten uit tarieven en kosten
+        actions:
+          - output: verschil_inkomsten_kosten
+            value:
+              operation: SUBTRACT
+              values:
+                - $inkomsten_uit_tarieven
+                - $kosten
   - number: '5'
     text: |-
       1 [Artikel 1][ref1] treedt in werking met ingang van 1 januari 2011.
@@ -149,6 +276,34 @@ articles:
         bwb_id: BWBR0028965
         artikel: 4a
         paragraaf: '2'
+    machine_readable:
+      execution:
+        output:
+          - name: ingangsdatum_artikel_1
+            type: date
+            description: Ingangsdatum voor Artikel 1
+          - name: ingangsdatum_artikel_2
+            type: date
+            description: Ingangsdatum voor Artikel 2
+          - name: ingangsdatum_artikel_4a
+            type: date
+            description: Ingangsdatum voor Artikel 4a
+        actions:
+          - output: ingangsdatum_artikel_1
+            value: '2011-01-01'
+          - output: ingangsdatum_artikel_2
+            value: '2012-01-01'
+          - output: ingangsdatum_artikel_4a
+            value: '2013-01-01'
   - number: '6'
     text: 'Deze regeling wordt aangehaald als: Regeling meettarieven.'
     url: https://wetten.overheid.nl/BWBR0028965/2014-08-01#Artikel6
+    machine_readable:
+      execution:
+        output:
+          - name: citatie
+            type: string
+            description: Officiële naam van de regeling
+        actions:
+          - output: citatie
+            value: Regeling meettarieven
