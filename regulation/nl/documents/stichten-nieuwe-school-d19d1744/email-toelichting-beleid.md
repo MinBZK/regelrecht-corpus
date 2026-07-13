@@ -25,3 +25,6 @@ Ook hebben we recent nog beantwoording gestuurd van een Schriftelijk Overleg ove
 Alle uitvoeringsbeleid dat hiermee gemoeid is
 Website van DUO met informatie voor initiatiefnemers van nieuwe scholen
 Advieskader van de inspectie van het onderwijs (waarmee zij nieuwe initiatieven beoordelen op onderwijskwaliteit)
+
+Evaluatie Wet Meer Ruimte voor Nieuwe Scholen: 
+https://open.overheid.nl/documenten/4f79fa5f-6cff-45e6-8c3a-e9988676e845/file
