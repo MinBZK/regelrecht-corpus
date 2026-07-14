@@ -534,6 +534,55 @@ articles:
         artikel: '5.8'
         hoofdstuk: '5'
         paragraaf: '5.2'
+    machine_readable:
+      description: Bepaal de maximaal toe te passen schaal voor tekeningen bij een bouwactiviteit, tenzij Artikel 5.8 van toepassing is.
+      untranslatables:
+        - construct: bruto vloeroppervlakte
+          reason: Definieerd in NEN 2580, niet in deze regeling.
+          accepted: false
+      execution:
+         input:
+           - name: bruto_vloeroppervlakte
+             type: number
+             type_spec:
+               unit: m2
+           - name: betreft_rijksmonument
+             type: boolean
+             description: Indien de activiteit een rijksmonument betreft, is Artikel 5.8 van toepassing.
+         output:
+           - name: schaal_situatietekeningen
+             type: string
+           - name: schaal_geveltekeningen_plattegronden_doorsneden
+             type: string
+           - name: schaal_detailtekeningen
+             type: array
+             type_spec:
+               item_type: string
+         actions:
+           - output: schaal_situatietekeningen
+             value: "1:1000"
+           - output: schaal_detailtekeningen
+             value:
+               operation: LIST
+               items:
+                 - "1:5"
+                 - "1:10"
+                 - "1:20"
+           - output: schaal_geveltekeningen_plattegronden_doorsneden
+             value:
+               operation: IF
+               cases:
+                 - when:
+                     operation: EQUALS
+                     subject: $betreft_rijksmonument
+                     value: true
+                   then: "1:100"
+                 - when:
+                     operation: LESS_THAN
+                     subject: $bruto_vloeroppervlakte
+                     value: 10000
+                   then: "1:100"
+               default: "1:200"
   - number: '2.9'
     text: |-
       1 Een plattegrond bij de aanvraag om een omgevingsvergunning voor een bouwactiviteit betreft een doorsnede van een
