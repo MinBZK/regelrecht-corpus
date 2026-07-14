@@ -15,52 +15,190 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      In deze regeling wordt onder oefennadering verstaan het met een vliegtuig uitvoeren van naderingsprocedures en
-      procedures ter voorbereiding van een landing zonder dat deze procedures gevolgd worden door een landing waarbij de
-      wielen het aardoppervlak raken, zulks in het kader van een vliegopleiding of het onderhoud van vliegvaardigheid.
-    url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel1
-  - number: '2'
-    text: |-
-      1 Voor het uitvoeren van de in het tweede lid bedoelde oefennaderingen zijn de volgende gebieden aangewezen:
-      Deventer en Flevopolder, onder verwijzing naar de luchtvaartgids, volume 1, hoofdstuk RAC-5-5-1, alwaar deze
-      gebieden zijn gepubliceerd;
+    - number: '1'
+      text: |-
+        In deze regeling wordt onder oefennadering verstaan het met een vliegtuig uitvoeren van naderingsprocedures en
+        procedures ter voorbereiding van een landing zonder dat deze procedures gevolgd worden door een landing waarbij de
+        wielen het aardoppervlak raken, zulks in het kader van een vliegopleiding of het onderhoud van vliegvaardigheid.
+      url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel1
+    - number: '2'
+      text: |-
+        1 Voor het uitvoeren van de in het tweede lid bedoelde oefennaderingen zijn de volgende gebieden aangewezen:
+        Deventer en Flevopolder, onder verwijzing naar de luchtvaartgids, volume 1, hoofdstuk RAC-5-5-1, alwaar deze
+        gebieden zijn gepubliceerd;
 
-      Gouda, onder verwijzing naar de luchtvaartgids, volume 1, hoofdstuk RAC-5-5-2, alwaar dit gebied is gepubliceerd.
+        Gouda, onder verwijzing naar de luchtvaartgids, volume 1, hoofdstuk RAC-5-5-2, alwaar dit gebied is gepubliceerd.
 
-      Van wijzigingen in de bladzijden in de luchtvaartgids wordt mededeling gedaan in de Staatscourant.
+        Van wijzigingen in de bladzijden in de luchtvaartgids wordt mededeling gedaan in de Staatscourant.
 
-      2 Het bepaalde in [artikel 45, eerste lid, onder b van het Luchtverkeersreglement][ref1] geldt niet voor
-      oefennaderingen voor zover deze worden uitgevoerd met een éénmotorig vliegtuig en met inachtneming van een minimum
-      vlieghoogte van 30 meter (100 ft) boven grond of water, doch tenminste 30 meter (100 ft) boven de hoogste hindernis
-      gelegen binnen een afstand van 600 meter van het vliegtuig, gedurende de daglichtperiode, boven de in het eerste
-      lid genoemde gebieden.
+        2 Het bepaalde in [ artikel 45, eerste lid, onder b van het Luchtverkeersreglement][ref1] geldt niet voor
+        oefennaderingen voor zover deze worden uitgevoerd met een éénmotorig vliegtuig en met inachtneming van een minimum
+        vlieghoogte van 30 meter (100 ft) boven grond of water, doch tenminste 30 meter (100 ft) boven de hoogste hindernis
+        gelegen binnen een afstand van 600 meter van het vliegtuig, gedurende de daglichtperiode, boven de in het eerste
+        lid genoemde gebieden.
 
-      3 Oefennaderingen mogen niet worden uitgevoerd boven wegen, kanalen, meren, rivieren en gebieden ingericht voor het
-      verblijf van personen, gelegen binnen de in het eerste lid bedoelde gebieden.
+        3 Oefennaderingen mogen niet worden uitgevoerd boven wegen, kanalen, meren, rivieren en gebieden ingericht voor het
+        verblijf van personen, gelegen binnen de in het eerste lid bedoelde gebieden.
 
-      4 Oefennaderingen mogen niet worden uitgevoerd indien zich op het terrein personen of vee bevinden.
+        4 Oefennaderingen mogen niet worden uitgevoerd indien zich op het terrein personen of vee bevinden.
+      url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel2
+      references:
+        - id: ref1
+          bwb_id: BWBR0005775
+          artikel: '45'
+      machine_readable:
+         open_terms:
+           - id: aangewezen_gebieden
+             type: string
+             description: Gebieden aangewezen voor oefennaderingen, gepubliceerd in de luchtvaartgids (Deventer, Flevopolder, Gouda).
+         execution:
+           parameters:
+             - name: locatie
+               type: string
+               required: true
+               description: Locatie waar de oefennadering wordt uitgevoerd.
+             - name: vliegtuig_type
+               type: string
+               required: true
+               description: Type vliegtuig (bijv. "éénmotorig").
+             - name: vlieghoogte_boven_grond_of_water
+               type: number
+               required: true
+               description: Vlieghoogte boven grond of water in meters.
+             - name: hoogste_hindernis_hoogte
+               type: number
+               required: true
+               description: Hoogte van de hoogste hindernis in meters.
+             - name: afstand_tot_hindernis
+               type: number
+               required: true
+               description: Afstand tot de hindernis in meters.
+             - name: is_daglichtperiode
+               type: boolean
+               required: true
+               description: of de oefennadering plaatsvindt tijdens de daglichtperiode.
+             - name: terrain_type
+               type: string
+               required: true
+               description: Type terrein (bijv. weg, kanaal, meer, rivier, gebied ingericht voor verblijf van personen).
+             - name: personeel_aanwezig
+               type: boolean
+               required: true
+               description: of er personeel aanwezig is op het terrein.
+             - name: vee_aanwezig
+               type: boolean
+               required: true
+               description: of er vee aanwezig is op het terrein.
+           input:
+             - name: is_boven_aangewezen_gebied_input
+               type: boolean
+               source:
+                 output: is_boven_aangewezen_gebied
+           output:
+             - name: is_boven_aangewezen_gebied
+               type: boolean
+               description: of de locatie zich binnen een aangewezen gebied bevindt.
+               source:
+                 open_term: aangewezen_gebieden
+             - name: is_vrijgesteld_van_artikel_45_lid_1_onder_b
+               type: boolean
+               description: Bepaalt of een oefennadering vrijgesteld is van artikel 45, eerste lid, onder b van het Luchtverkeersreglement.
+               source:
+                 regulation: BWBR0005775
+                 article: '45'
+                 subsection: 1
+                 under: b
+             - name: mag_oefennadering_boven_terrein
+               type: boolean
+               description: Bepaaldt of een oefennadering mag worden uitgevoerd boven het terrein.
+             - name: mag_oefennadering_met_aanwezigheid
+               type: boolean
+               description: Bepaalt of een oefennadering mag worden uitgevoerd als er mensen of vee op het terrein aanwezig zijn.
+           actions:
+             - output: is_boven_aangewezen_gebied
+               value:
+                 operation: OR
+                 conditions:
+                   - operation: EQUALS
+                     subject: $locatie
+                     value: Deventer
+                   - operation: EQUALS
+                     subject: $locatie
+                     value: Flevopolder
+                   - operation: EQUALS
+                     subject: $locatie
+                     value: Gouda
+             - output: is_vrijgesteld_van_artikel_45_lid_1_onder_b
+               value:
+                 operation: AND
+                 conditions:
+                   - operation: EQUALS
+                     subject: $vliegtuig_type
+                     value: éénmotorig
+                   - operation: OR
+                     conditions:
+                       - operation: GREATER_THAN_OR_EQUAL
+                         subject: $vlieghoogte_boven_grond_of_water
+                         value: 30
+                       - operation: AND
+                         conditions:
+                           - operation: GREATER_THAN_OR_EQUAL
+                             subject: $hoogste_hindernis_hoogte
+                             value: 30
+                           - operation: LESS_THAN_OR_EQUAL
+                             subject: $afstand_tot_hindernis
+                             value: 600
+                   - operation: EQUALS
+                     subject: $is_daglichtperiode
+                     value: true
+                   - operation: EQUALS
+                     subject: $is_boven_aangewezen_gebied_input
+                     value: true
+             - output: mag_oefennadering_boven_terrein
+               value:
+                 operation: NOT
+                 value:
+                   operation: OR
+                   conditions:
+                     - operation: EQUALS
+                       subject: $terrain_type
+                       value: "wegen"
+                     - operation: EQUALS
+                       subject: $terrain_type
+                       value: "kanalen"
+                     - operation: EQUALS
+                       subject: $terrain_type
+                       value: "meren"
+                     - operation: EQUALS
+                       subject: $terrain_type
+                       value: "rivieren"
+                     - operation: EQUALS
+                       subject: $terrain_type
+                       value: "gebieden ingericht voor verblijf van personen"
+             - output: mag_oefennadering_met_aanwezigheid
+               value:
+                 operation: NOT
+                 value:
+                   operation: OR
+                   conditions:
+                     - operation: EQUALS
+                       subject: $personeel_aanwezig
+                       value: true
+                     - operation: EQUALS
+                       subject: $vee_aanwezig
+                       value: true
+    - number: '3'
+      text: |-
+        De regeling van de Minister van Verkeer en Waterstaat van 4 juli 1991/nr. L91.007523 Rijksluchtvaartdienst en de
+        Beschikkingen van 1 september 1982, nr. LT/L 24155 Rijksluchtvaartdienst en van 5 september 1983, nr. LVB/L 24529
+        Rijksluchtvaartdienst, worden ingetrokken.
+      url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel3
+    - number: '4'
+      text: Deze regeling treedt in werking met ingang van 1 januari 1995.
+      url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel4
+    - number: '5'
+      text: |-
+        Deze regeling wordt aangehaald als: Regeling oefennaderingen.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005775#Artikel45
-    url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0005775
-        artikel: '45'
-  - number: '3'
-    text: |-
-      De regeling van de Minister van Verkeer en Waterstaat van 4 juli 1991/nr. L91.007523 Rijksluchtvaartdienst en de
-      Beschikkingen van 1 september 1982, nr. LT/L 24155 Rijksluchtvaartdienst en van 5 september 1983, nr. LVB/L 24529
-      Rijksluchtvaartdienst, worden ingetrokken.
-    url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel3
-  - number: '4'
-    text: Deze regeling treedt in werking met ingang van 1 januari 1995.
-    url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel4
-  - number: '5'
-    text: |-
-      Deze regeling wordt aangehaald als: Regeling oefennaderingen.
-
-      Deze regeling zal met de toelichting in de Staatscourant worden geplaatst.
-    url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel5
+        Deze regeling zal met de toelichting in de Staatscourant worden geplaatst.
+      url: https://wetten.overheid.nl/BWBR0007092/1995-01-01#Artikel5
