@@ -10,6 +10,7 @@ To add photos, image galleries, audio clips, videos, charts or any of more than 
 ## Heading
 
 You can use Pages for both word processing and page layout. This Simple Report template is set up for word processing, so your text flows from one page to the next as you type, with new pages created automatically when you reach the end of a page.
+
 In page layout documents, you can manually rearrange pages and freely position text boxes, images and other objects on the page. To create a page layout document, choose a page layout template in the template chooser. You can also change this document to page layout on your Mac, iPad or iPhone by turning off Document Body in the Document controls.
 
 > This is an example of a pull quote (a key phrase from your report). Tap or click this text to add your own.
