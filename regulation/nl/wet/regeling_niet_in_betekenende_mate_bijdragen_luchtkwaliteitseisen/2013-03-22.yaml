@@ -55,6 +55,37 @@ articles:
         artikel: '4'
       - id: ref4
         bwb_id: BWBR0022816
+    machine_readable:
+      execution:
+        parameters:
+          - name: tijdelijke_1_procent_grens_toepasbaar
+            type: boolean
+            required: true
+            description: Geeft aan of de tijdelijke 1% grens van toepassing is
+        input:
+          - name: bijlage_1A
+            type: array
+            source:
+              output: bijlage_1A
+          - name: bijlage_1B
+            type: array
+            source:
+              output: bijlage_1B
+        output:
+          - name: aangewezen_categorieen
+            type: array
+            description: De aangewezen categorieën van gevallen voor inrichtingen
+        actions:
+          - output: aangewezen_categorieen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $tijdelijke_1_procent_grens_toepasbaar
+                    value: true
+                  then: $bijlage_1B
+              default: $bijlage_1A
   - number: '3'
     text: |-
       1 Aangewezen krachtens [artikel 4, eerste lid, van het Besluit][ref1] worden de in [bijlage 2A][ref2] genoemde
