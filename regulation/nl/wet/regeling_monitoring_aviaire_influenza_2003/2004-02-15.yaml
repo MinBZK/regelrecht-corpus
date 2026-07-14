@@ -63,28 +63,154 @@ articles:
       - id: ref4
         bwb_id: BWBR0014789
         artikel: '3'
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Bepaalt of het verbod van Artikel 1.2 niet van toepassing is
+        actions:
+          - output: voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject:
+                    source:
+                      output: "Artikel2.voldaan"
+                  value: true
+                - operation: EQUALS
+                  subject:
+                    source:
+                      output: "Artikel3.1.voldaan"
+                  value: true
   - number: '2.1'
     text: |-
       De ondernemer meldt onverwijld elke verhoogde sterfte van AI-gevoelige dieren van meer dan 3% per week aan het
       Landelijk LNV dierziekten meldnummer.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Bepaalt of de ondernemer de verhoogde sterfte (>3% per week) heeft gemeld
+        actions:
+          - output: voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN
+                  subject:
+                    source:
+                      input: "verhoogde_sterfte_per_week"
+                  value: 3
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "gemeld_aan_meldnummer"
+                  value: true
   - number: '2.2'
     text: |-
       De ondernemer consulteert een dierenarts indien bij AI-gevoelige dieren een klinisch probleem zichtbaar is of
       indien er een reductie van voer- of drinkwateropname is van meer dan 20%.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Bepaalt of de ondernemer een dierenarts heeft geconsulteerd
+        actions:
+          - output: voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject:
+                        source:
+                          input: "klinisch_probleem_zichtbaar"
+                      value: true
+                    - operation: GREATER_THAN
+                      subject:
+                        source:
+                          input: "reductie_voer_of_water_opname"
+                      value: 20
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "dierenarts_geconsulteerd"
+                  value: true
   - number: '2.3'
     text: |-
       Indien er geen sprake is van aviaire influenza of new castle disease doet de dierenarts binnen acht uur melding van
       de klacht en het klinische probleem van de desbetreffende dieren en van de naam- en adresgegevens van het bedrijf
       aan de Gezondheidsdienst voor Dieren.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Bepaalt of de dierenarts melding heeft gedaan aan de Gezondheidsdienst voor Dieren
+        actions:
+          - output: voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  conditions:
+                    - operation: OR
+                      conditions:
+                        - operation: EQUALS
+                          subject:
+                            source:
+                              input: "aviaire_influenza_aangetroffen"
+                          value: true
+                        - operation: EQUALS
+                          subject:
+                            source:
+                              input: "new_castle_disease_aangetroffen"
+                          value: true
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "melding_binnen_8_uur"
+                  value: true
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "melding_aan_gezondheidsdienst_voor_dieren"
+                  value: true
   - number: '3.1'
     text: |-
       In het kader van het Monitoringsprogramma Aviaire Influenza 2003 nemen de personen die bedrijfsmatig kippen,
       kalkoenen en eenden houden, op instructie van de Gezondheidsdienst voor dieren, bloed af bij deze dieren, ten einde
       dat in laboratoria te laten onderzoeken op Aviaire Influenza.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Bepaalt of bloedmonsters zijn afgenomen voor het Monitoringsprogramma Aviaire Influenza 2003
+        actions:
+          - output: voldaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "bloed_afgenomen"
+                  value: true
+                - operation: EQUALS
+                  subject:
+                    source:
+                      input: "op_instructie_van_gezondheidsdienst_voor_dieren"
+                  value: true
   - number: '3.2'
     text: |-
       Van het verbod tot het verrichten van operaties, bedoeld in
@@ -99,6 +225,20 @@ articles:
       - id: ref1
         bwb_id: BWBR0004730
         artikel: '7'
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Vrijstelling voor het verbod tot het verrichten van operaties voor bloedafname
+        actions:
+          - output: voldaan
+            value:
+              operation: EQUALS
+              subject:
+                source:
+                  input: "bloed_afgenomen_in_kader_monitoring"
+              value: true
   - number: 3a.1
     text: |-
       Ter uitvoering van de [artikelen 17][ref1], [18][ref2] en [30 van de Gezondheids- en welzijnwet voor dieren][ref3]
@@ -119,17 +259,44 @@ articles:
       - id: ref3
         bwb_id: BWBR0005662
         artikel: '30'
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Medewerking gevraagd van Productschap Pluimvee en Eieren
+        actions:
+          - output: voldaan
+            value: true
   - number: 3a.2
     text: |-
       De in het eerste lid bedoelde medewerking bestaat uit het verrichten van de noodzakelijke werkzaamheden, het
       aanwijzen van laboratoria en het bij verordening stellen van regels, inzake het laten afnemen van bloed bij
       pluimvee teneinde dit te laten onderzoeken op de aanwezigheid van AI.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel3a
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Werkzaamheden, laboratoria en regels voor bloedafname
+        actions:
+          - output: voldaan
+            value: true
   - number: 3a.3
     text: |-
       De minister kan met betrekking tot het verlenen van de in het eerste lid bedoelde medewerking beleidsregels
       stellen.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel3a
+    machine_readable:
+      execution:
+        output:
+          - name: voldaan
+            type: boolean
+            description: Beleidsregels voor medewerking
+        actions:
+          - output: voldaan
+            value: true
   - number: '4'
     text: Deze regeling wordt aan de media bekend gemaakt en treedt op 8 maart 2003 om 18.00 uur in werking.
     url: https://wetten.overheid.nl/BWBR0014789/2004-02-15#Artikel4
