@@ -180,6 +180,18 @@ articles:
       - id: ref1
         bwb_id: BWBR0024796
         artikel: '13'
+    machine_readable:
+      input:
+        - name: loonkosten
+          type: number
+          description: Loonkosten (salary costs)
+      output:
+        - name: vaste_opslag_indirecte_kosten
+          type: number
+          description: Vaste opslag voor indirecte kosten (50% van loonkosten)
+      actions:
+        - name: bereken_opslag
+          value: input.loonkosten * 0.5
   - number: '1.5'
     text: |-
       De accountant of accountant-administratiefconsulent controleert en stelt de controleverklaring vast met
