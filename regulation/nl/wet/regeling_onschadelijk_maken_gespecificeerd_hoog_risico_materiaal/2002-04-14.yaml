@@ -19,37 +19,111 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
+      [verordening 999/2001/EG](32001R0999):
 
-
-
-              [verordening 999/2001/EG](32001R0999):
-
-              [verordening nr. 999/2001/EG](32001R0999) van het Europees Parlement en de Raad van 22 mei 2001, houdende
+      [verordening nr. 999/2001/EG](32001R0999) van het Europees Parlement en de Raad van 22 mei 2001, houdende
       vaststelling van voorschriften inzake preventie, bestrijding en uitroeiing van bepaalde overdraagbare spongiforme
       encefalopathieën.
     url: https://wetten.overheid.nl/BWBR0011845/2002-04-14#Artikel1
   - number: '2'
     text: |-
       1 Gespecificeerd hoog-risico-materiaal als bedoeld in
-      [artikel 2, eerste lid, van de Regeling aanwijzing gespecificeerd hoog-risico-materiaal 2000][ref1] wordt behandeld
-      en vernietigd overeenkomstig bijlage XI, hoofdstuk A, punt 7, van [verordening 999/2001/EG](32001R0999), met dien
+      artikel 2, eerste lid, van de Regeling aanwijzing gespecificeerd hoog-risico-materiaal 2000 wordt behandeld
+      en vernietigd overeenkomstig bijlage XI, hoofdstuk A, punt 7, van verordening 999/2001/EG, met dien
       verstande dat:
 
         - kadavers van gestorven slachtdieren niet behoeven te worden gekleurd;
-        - de voorbehandeling, bedoeld in bijlage XI, hoofdstuk A, punt 7, van [verordening 999/2001/EG](32001R0999),
-      geschiedt door middel van een warmtebehandeling in een afgesloten verwerkingsinstallatie.
+        - de voorbehandeling, bedoeld in bijlage XI, hoofdstuk A, punt 7, van verordening 999/2001/EG,
+        geschiedt door middel van een warmtebehandeling in een afgesloten verwerkingsinstallatie.
 
-      2 Het kleuren als bedoeld in bijlage XI, hoofdstuk A, punt 7, van [verordening 999/2001/EG](32001R0999), vindt
+      2 Het kleuren als bedoeld in bijlage XI, hoofdstuk A, punt 7, van verordening 999/2001/EG, vindt
       plaats met de kleurstoffen methyleen blauw, patent-blauw E131, brillant-blauw E133 of pistache-groen E102 of
       pistache-groen E131, dan wel met een andere door de toezichthoudende ambtenaar aangewezen kleurstof.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011443#Artikel2
     url: https://wetten.overheid.nl/BWBR0011845/2002-04-14#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0011443
-        artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: gespecificeerd_hoog_risico_materiaal
+            type: boolean
+            required: true
+            description: Indicatie of het materiaal gespecificeerd hoog-risico-materiaal is.
+          - name: is_kadaver_van_gestorven_slachtdier
+            type: boolean
+            required: true
+            description: Indicatie of het materiaal een kadaver van een gestorven slachtdier is.
+          - name: gekozen_kleurstof
+            type: string
+            required: true
+            enum:
+              - methyleen blauw
+              - patent-blauw E131
+              - brillant-blauw E133
+              - pistache-groen E102
+              - pistache-groen E131
+              - andere door toezichthoudende ambtenaar aangewezen kleurstof
+            description: De kleurstof gebruikt voor het kleuren.
+          - name: voorbehandeling_methode
+            type: string
+            required: true
+            enum:
+              - warmtebehandeling in een afgesloten verwerkingsinstallatie
+              - andere
+            description: Methode gebruikt voor voorbehandeling.
+        input:
+          - name: gespecifieerd_hoog_risico_materiaal_extern
+            type: boolean
+            source:
+              regulation: regeling_aanwijzing_gespecificeerd_hoog_risico_materiaal_2000
+              output: is_gespecificeerd_hoog_risico_materiaal
+        output:
+          - name: behandeld_en_vernietigd
+            type: boolean
+            description: Indicatie of het materiaal is behandeld en vernietigd volgens bijlage XI, hoofdstuk A, punt 7 van verordening 999/2001/EG.
+          - name: gekleurd
+            type: boolean
+            description: Indicatie of het materiaal is gekleurd.
+          - name: geldige_kleurstof_gebruikt
+            type: boolean
+            description: Indicatie of de gebruikte kleurstof geldig is.
+          - name: voorbehandeling_geldig
+            type: boolean
+            description: Indicatie of de voorbehandeling geldig is.
+        actions:
+          - output: behandeld_en_vernietigd
+            value:
+              operation: EQUALS
+              subject: $gespecifieerd_hoog_risico_materiaal
+              value: true
+          - output: voorbehandeling_geldig
+            value:
+              operation: EQUALS
+              subject: $voorbehandeling_methode
+              value: warmtebehandeling in een afgesloten verwerkingsinstallatie
+          - output: gekleurd
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $is_kadaver_van_gestorven_slachtdier
+                value: true
+          - output: geldige_kleurstof_gebruikt
+            value:
+              operation: OR
+              conditions:
+                - operation: IN
+                  subject: $gekozen_kleurstof
+                  values:
+                    - methyleen blauw
+                    - patent-blauw E131
+                    - brillant-blauw E133
+                    - pistache-groen E102
+                    - pistache-groen E131
+                - operation: EQUALS
+                  subject: $gekozen_kleurstof
+                  value: andere door toezichthoudende ambtenaar aangewezen kleurstof
   - number: '3'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
