@@ -46,7 +46,7 @@ articles:
 
       gesloten stortplaats: stortplaats die ingevolge artikel 8.47, derde lid, van de wet voor gesloten is verklaard;
 
-      gedeputeerde staten: gedeputeerde staten van de provincie waarin de gesloten stortplaats geheel of gedeeltelijk
+      gedeputeerde staten: gedeputeerde staten van de provincie waar de gesloten stortplaats geheel of gedeeltelijk
       is gelegen.
 
       2 De Richtlijn dichte eindafwerking, de Richtlijn geohydrologische isolatie en de Ontwerpprocedure
@@ -65,6 +65,24 @@ articles:
         bwb_id: BWBR0005877
         artikel: '17'
         hoofdstuk: '6'
+    machine_readable:
+      execution:
+        parameters:
+          - name: year
+            type: number
+            required: true
+            description: Jaar voor de deadline berekening
+        output:
+          - name: deadline
+            type: date
+            description: Jaarlijkse rapportage deadline voor 1 maart
+        actions:
+          - output: deadline
+            value:
+              operation: DATE
+              year: $year
+              month: 3
+              day: 1
   - number: '17'
     text: |-
       1 De hoeveelheid en de samenstelling van het percolaat wordt in de nazorgfase halfjaarlijks gecontroleerd.
@@ -80,17 +98,44 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0045528#Artikel9.18
       [ref2]: https://wetten.overheid.nl/BWBR0045528#Artikel9.20
       [ref3]: https://wetten.overheid.nl/BWBR0045528#Artikel9.25
-    url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel17
-    references:
-      - id: ref1
-        bwb_id: BWBR0045528
-        artikel: '9.18'
-      - id: ref2
-        bwb_id: BWBR0045528
-        artikel: '9.20'
-      - id: ref3
-        bwb_id: BWBR0045528
-        artikel: '9.25'
+      url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel17
+      references:
+        - id: ref1
+          bwb_id: BWBR0045528
+          artikel: '9.18'
+        - id: ref2
+          bwb_id: BWBR0045528
+          artikel: '9.20'
+        - id: ref3
+          bwb_id: BWBR0045528
+          artikel: '9.25'
+      machine_readable:
+        execution:
+          parameters:
+            - name: evaluatie_even_effectief
+              type: boolean
+              required: false
+              description: Geeft aan of langere tussenpozen even effectief zijn volgens evaluatie
+          output:
+            - name: controle_frequentie_percolaat
+              type: number
+              description: Frequentie van percolaatcontrole in jaren
+          actions:
+            - output: controle_frequentie_percolaat
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $evaluatie_even_effectief
+                      value: true
+                    then: custom
+                  - when:
+                      operation: EQUALS
+                      subject: $evaluatie_even_effectief
+                      value: false
+                    then: 0.5
+                default: 0.5
   - number: '18'
     text: |-
       1 De hoeveelheid en samenstelling van het in de omgeving aanwezige oppervlaktewater wordt in de nazorgfase
@@ -103,7 +148,58 @@ articles:
       a. dit op grond van de kenmerken van de stortplaats niet vereist is, dan wel
 
       b. de evaluatie van de gegevens aangeeft dat langere tussenpozen even effectief zijn.
-    url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel18
+      url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel18
+      references:
+        - id: ref1
+          bwb_id: BWBR0045528
+          artikel: '9.18'
+        - id: ref2
+          bwb_id: BWBR0045528
+          artikel: '9.20'
+        - id: ref3
+          bwb_id: BWBR0045528
+          artikel: '9.25'
+      machine_readable:
+        execution:
+          parameters:
+            - name: kenmerken_niet_vereist
+              type: boolean
+              required: false
+              description: Geeft aan of metingen op grond van kenmerken niet vereist zijn
+            - name: evaluatie_even_effectief
+              type: boolean
+              required: false
+              description: Geeft aan of langere tussenpozen even effectief zijn volgens evaluatie
+          output:
+            - name: controle_frequentie_oppervlaktewater
+              type: number
+              description: Frequentie van oppervlaktewatercontrole in jaren
+          actions:
+            - output: controle_frequentie_oppervlaktewater
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: OR
+                      conditions:
+                        - operation: EQUALS
+                          subject: $kenmerken_niet_vereist
+                          value: true
+                        - operation: EQUALS
+                          subject: $evaluatie_even_effectief
+                          value: true
+                    then: custom
+                  - when:
+                      operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $kenmerken_niet_vereist
+                          value: false
+                        - operation: EQUALS
+                          subject: $evaluatie_even_effectief
+                          value: false
+                    then: 0.5
+                default: 0.5
   - number: '19'
     text: |-
       1 De samenstelling en atmosferische druk van de gasuitstoot wordt halfjaarlijks gemeten.
@@ -118,7 +214,34 @@ articles:
       5 In afwijking van het eerste lid, kunnen gedeputeerde staten bepalen dat metingen van de samenstelling en
       atmosferische druk minder frequent mogen worden uitgevoerd als de evaluatie van de gegevens aangeeft dat langere
       tussenpozen even effectief zijn.
-    url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel19
+      url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel19
+      machine_readable:
+        execution:
+          parameters:
+            - name: evaluatie_even_effectief
+              type: boolean
+              required: false
+              description: Geeft aan of langere tussenpozen even effectief zijn volgens evaluatie
+          output:
+            - name: controle_frequentie_gasemissie
+              type: number
+              description: Frequentie van gasemissiecontrole in jaren
+          actions:
+            - output: controle_frequentie_gasemissie
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $evaluatie_even_effectief
+                      value: true
+                    then: custom
+                  - when:
+                      operation: EQUALS
+                      subject: $evaluatie_even_effectief
+                      value: false
+                    then: 0.5
+                default: 0.5
   - number: '20'
     text: |-
       1 De gemiddeld hoogste en gemiddeld laagste grondwaterstand worden halfjaarlijks vastgesteld.
@@ -138,29 +261,56 @@ articles:
       [ref5]: https://wetten.overheid.nl/BWBR0045528#Artikel9.18
       [ref6]: https://wetten.overheid.nl/BWBR0045528#Artikel9.19
       [ref7]: https://wetten.overheid.nl/BWBR0045528#Artikel9.25
-    url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel20
-    references:
-      - id: ref1
-        bwb_id: BWBR0045528
-        artikel: '9.9'
-      - id: ref2
-        bwb_id: BWBR0045528
-        artikel: '9.10'
-      - id: ref3
-        bwb_id: BWBR0045528
-        artikel: '9.13'
-      - id: ref4
-        bwb_id: BWBR0045528
-        artikel: '9.14'
-      - id: ref5
-        bwb_id: BWBR0045528
-        artikel: '9.18'
-      - id: ref6
-        bwb_id: BWBR0045528
-        artikel: '9.19'
-      - id: ref7
-        bwb_id: BWBR0045528
-        artikel: '9.25'
+      url: https://wetten.overheid.nl/BWBR0005877/2024-01-01#Artikel20
+      references:
+        - id: ref1
+          bwb_id: BWBR0045528
+          artikel: '9.9'
+        - id: ref2
+          bwb_id: BWBR0045528
+          artikel: '9.10'
+        - id: ref3
+          bwb_id: BWBR0045528
+          artikel: '9.13'
+        - id: ref4
+          bwb_id: BWBR0045528
+          artikel: '9.14'
+        - id: ref5
+          bwb_id: BWBR0045528
+          artikel: '9.18'
+        - id: ref6
+          bwb_id: BWBR0045528
+          artikel: '9.19'
+        - id: ref7
+          bwb_id: BWBR0045528
+          artikel: '9.25'
+      machine_readable:
+        execution:
+          parameters:
+            - name: veranderende_grondwaterniveaus
+              type: boolean
+              required: false
+              description: Geeft aan of er sprake is van veranderende grondwaterniveaus
+          output:
+            - name: controle_frequentie_grondwaterstand
+              type: number
+              description: Frequentie van grondwaterstandcontrole in jaren
+          actions:
+            - output: controle_frequentie_grondwaterstand
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $veranderende_grondwaterniveaus
+                      value: true
+                    then: custom
+                  - when:
+                      operation: EQUALS
+                      subject: $veranderende_grondwaterniveaus
+                      value: false
+                    then: 0.5
+                default: 0.5
   - number: '21'
     text: |-
       De [artikelen 9.22][ref1] en [9.23 van de Omgevingsregeling][ref2] zijn van overeenkomstige toepassing op gesloten
