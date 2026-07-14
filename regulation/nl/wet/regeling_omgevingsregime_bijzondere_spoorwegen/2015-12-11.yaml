@@ -27,6 +27,13 @@ articles:
       - id: ref1
         bwb_id: BWBR0036778
         artikel: '11'
+    machine_readable:
+      afstand:
+        description: Definitie van 'afstand' als bedoeld in artikel 11 van het Besluit bijzondere spoorwegen
+        type: distance
+        source:
+          regulation: BWBR0036778
+          output: artikel_11_afstand
   - number: '2'
     text: |-
       1 Voor een bijzondere spoorweg is de afstand 3 meter.
@@ -37,6 +44,25 @@ articles:
       ten aanzien van leidingen, werken, inrichtingen, andere objecten en beplantingen die een meter of hoger reiken dan
       het maaiveld.
     url: https://wetten.overheid.nl/BWBR0037317/2015-12-11#Artikel2
+    machine_readable:
+      afstand_bijzondere_spoorweg:
+        description: Standaard afstand voor een bijzondere spoorweg
+        type: distance
+        value: 3
+        unit: meter
+      afstand_spoorwegovergang:
+        description: Afstand voor een openbare spoorwegovergang
+        type: geometric_plane
+        conditions:
+          - object_type: [leidingen, werken, inrichtingen, andere_objecten, beplantingen]
+            height_above_maiveld: ">= 1 meter"
+        points:
+          - coordinate: [0, 0]
+            description: Hart van het buitenste spoor op de as van de weg
+          - coordinate: [50, 11]
+            description: 50 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
+          - coordinate: [-50, 11]
+            description: 50 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
   - number: '3'
     text: |-
       1 In afwijking van [artikel 2][ref1] gelden bij een bijzondere spoorweg, waarvoor op grond van
@@ -72,6 +98,49 @@ articles:
       - id: ref2
         bwb_id: BWBR0036778
         artikel: '8'
+    machine_readable:
+      afstand_rechte_baan:
+        description: Afstand voor een bijzondere spoorweg als rechte baan langs de buitenzijde van de boog
+        type: distance
+        value: 8
+        unit: meter
+        condition: spoorweg_in_gebogen_richting_Opgelegd == true
+      afstand_binnenboog:
+        description: Afstand voor een bijzondere spoorweg langs de binnenzijde van de boog
+        type: distance
+        value: 20
+        unit: meter
+        condition: spoorweg_in_gebogen_richting_Opgelegd == true
+      afstand_spoorwegovergang_40km:
+        description: Afstand voor een openbare spoorwegovergang met maximumsnelheid van 40 km/u
+        type: geometric_plane
+        conditions:
+          - ontheffing_verleend: true
+            maximum_snelheid: 40
+            object_type: [leidingen, werken, inrichtingen, andere_objecten, beplantingen]
+            height_above_maiveld: ">= 1 meter"
+        points:
+          - coordinate: [0, 0]
+            description: Hart van het buitenste spoor op de as van de weg
+          - coordinate: [220, 11]
+            description: 220 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
+          - coordinate: [-220, 11]
+            description: 220 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
+      afstand_spoorwegovergang_41km:
+        description: Afstand voor een openbare spoorwegovergang met maximumsnelheid van 41 km/u of hoger
+        type: geometric_plane
+        conditions:
+          - ontheffing_verleend: true
+            maximum_snelheid: ">= 41"
+            object_type: [leidingen, werken, inrichtingen, andere_objecten, beplantingen]
+            height_above_maiveld: ">= 1 meter"
+        points:
+          - coordinate: [0, 0]
+            description: Hart van het buitenste spoor op de as van de weg
+          - coordinate: [500, 11]
+            description: 500 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
+          - coordinate: [-500, 11]
+            description: 500 meter aan weerszijden van de as van de weg, 11 meter uit het hart van het spoor
   - number: '4'
     text: |-
       1 De afstanden, genoemd in de [artikelen 2][ref1] en [3][ref2], worden bij een spoorweg op maaiveldniveau gemeten
@@ -101,6 +170,25 @@ articles:
       - id: ref4
         bwb_id: BWBR0037317
         artikel: '3'
+    machine_readable:
+      meetpunt_maaiveldniveau:
+        description: Meetpunt voor afstanden bij spoorweg op maaiveldniveau
+        type: point
+        coordinate: [0, 0]
+        description: Hart van het buitenste spoor, denkbeeldige lijn midden tussen beide spoorstaven
+        condition: spoorweg_op_maaiveldniveau == true
+      meetpunt_ingraving:
+        description: Meetpunt voor afstanden bij ingraving van de spoorweg
+        type: point
+        coordinate: [0, 0]
+        description: Meetpunt uit de bovenzijde van de ingraving
+        condition: spoorweg_ingraven == true
+      meetpunt_ophoging:
+        description: Meetpunt voor afstanden bij ophoging van de spoorweg
+        type: point
+        coordinate: [0, 0]
+        description: Meetpunt uit de teen van het talud
+        condition: spoorweg_opgehoogd == true
   - number: '5'
     text: |-
       Deze regeling is uitsluitend van toepassing op activiteiten die zijn of worden aangevangen na het moment van
