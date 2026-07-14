@@ -14,6 +14,7 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0008534/2001-12-21#ArtikelAanhef
 articles:
+  # NOTE: No machine_readable - Declarative reference to external treaty appendices (non-computable).
   - number: '1'
     text: |-
       Als model van het Internationaal certificaat van voorkoming van verontreiniging door olie, genoemd in
@@ -27,6 +28,7 @@ articles:
       - id: ref1
         bwb_id: BWBR0003936
         artikel: '5'
+  # NOTE: No machine_readable - Declarative reference to external treaty appendices (non-computable).
   - number: '2'
     text: |-
       Als model van het Internationaal certificaat van voorkoming van verontreiniging
@@ -44,3 +46,12 @@ articles:
   - number: '3'
     text: Deze regeling treedt in werking met ingang van 1 maart 1997.
     url: https://wetten.overheid.nl/BWBR0008534/2001-12-21#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: inwerkingtrede_datum
+            type: date
+            description: Datum waarop deze regeling in werking treedt
+        actions:
+          - output: inwerkingtrede_datum
+            value: '1997-03-01'
