@@ -15,41 +15,78 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Ten aanzien van vluchten met luchtvaartuigen die in gebruik zijn bij de Nederlandse politie waarbij door het doel
-      van de vlucht niet kan worden voldaan aan het bij of krachtens [artikel 28 van het Luchtverkeersreglement][ref1]
-      gestelde regels, gelden de volgende nadere regels:
+    - number: '1'
+      text: |-
+        Ten aanzien van vluchten met luchtvaartuigen die in gebruik zijn bij de Nederlandse politie waarbij door het doel
+        van de vlucht niet kan worden voldaan aan het bij of krachtens [artikel 28 van het Luchtverkeersreglement](https://wetten.overheid.nl/BWBR0005775#Artikel28)
+        gestelde regels, gelden de volgende nadere regels:
 
-      a. de noodzaak van het uitvoeren van een vlucht met gedoofde lichten blijkt uit een dienstopdracht;
+        a. de noodzaak van het uitvoeren van een vlucht met gedoofde lichten blijkt uit een dienstopdracht;
 
-      b. de vlucht wordt vooraf afgestemd met de betrokken luchtverkeersdienst of -diensten, die voorwaarden kan of
-      kunnen stellen ten aanzien van te volgen procedures;
+        b. de vlucht wordt vooraf afgestemd met de betrokken luchtverkeersdienst of -diensten, die voorwaarden kan of
+        kunnen stellen ten aanzien van te volgen procedures;
 
-      c. in het vliegplan wordt melding gemaakt van het voornemen om tijdens de vlucht of een deel daarvan de verplichte
-      lichten niet te tonen;
+        c. in het vliegplan wordt melding gemaakt van het voornemen om tijdens de vlucht of een deel daarvan de verplichte
+        lichten niet te tonen;
 
-      d. het luchtvaartuig is uitgerust met een goed functionerend radar beantwoordingssysteem (SSR-transponder) met 4096
-      code mogelijkheden in mode A en automatische hoogterapportering in mode C.
+        d. het luchtvaartuig is uitgerust met een goed functionerend radar beantwoordingssysteem (SSR-transponder) met 4096
+        code mogelijkheden in mode A en automatische hoogterapportering in mode C.
+      url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel1
+      references:
+        - id: ref1
+          bwb_id: BWBR0005775
+          artikel: '28'
+      machine_readable:
+        execution:
+          parameters:
+            - name: dienstopdracht_aanwezig
+              type: boolean
+              required: true
+              description: De noodzaak van de vlucht met gedoofde lichten blijkt uit een dienstopdracht
+            - name: afstemming_luchtverkeersdienst
+              type: boolean
+              required: true
+              description: De vlucht is vooraf afgestemd met de betrokken luchtverkeersdienst(en)
+            - name: vliegplan_melding
+              type: boolean
+              required: true
+              description: In het vliegplan is melding gemaakt van het voornemen om lichten niet te tonen
+            - name: ssr_transponder_aanwezig
+              type: boolean
+              required: true
+              description: Het luchtvaartuig is uitgerust met een goed functionerend SSR-transponder (4096 codes in mode A, automatische hoogterapportering in mode C)
+          output:
+            - name: politievlucht_goedgekeurd
+              type: boolean
+              description: Bepaalt of een politievlucht mag plaatsvinden met gedoofde lichten tegen Artikel 28 LVR
+          actions:
+            - output: politievlucht_goedgekeurd
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: dienstopdracht_aanwezig
+                    value: true
+                  - operation: EQUALS
+                    subject: afstemming_luchtverkeersdienst
+                    value: true
+                  - operation: EQUALS
+                    subject: vliegplan_melding
+                    value: true
+                  - operation: EQUALS
+                    subject: ssr_transponder_aanwezig
+                    value: true
+    - number: '2'
+      text: |-
+        De beschikking van de directeur-generaal van de Rijksluchtvaartdienst, nr LVB/L 24153 van 1 september 1982 wordt
+        ingetrokken.
+      url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel2
+    - number: '3'
+      text: Deze regeling treedt in werking met ingang van 1 januari 1995.
+      url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel3
+    - number: '4'
+      text: |-
+        Deze regeling wordt angehaald als: Regeling politievluchten.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005775#Artikel28
-    url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0005775
-        artikel: '28'
-  - number: '2'
-    text: |-
-      De beschikking van de directeur-generaal van de Rijksluchtvaartdienst, nr LVB/L 24153 van 1 september 1982 wordt
-      ingetrokken.
-    url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel2
-  - number: '3'
-    text: Deze regeling treedt in werking met ingang van 1 januari 1995.
-    url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel3
-  - number: '4'
-    text: |-
-      Deze regeling wordt aangehaald als: Regeling politievluchten.
-
-      Deze regeling zal met de toelichting in de Staatscourant worden geplaatst.
-    url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel4
+        Deze regeling zal met de toelichting in de Staatscourant worden geplaatst.
+      url: https://wetten.overheid.nl/BWBR0007095/1995-01-01#Artikel4
