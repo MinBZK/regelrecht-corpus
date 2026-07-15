@@ -59,6 +59,42 @@ articles:
         bwb_id: BWBR0003381
       - id: ref3
         bwb_id: BWBR0003381
+    machine_readable:
+        execution:
+          parameters:
+            - name: is_horizontal_row_excluded
+              type: boolean
+              description: "Indicates whether the goods fall under excluded horizontal rows (I-l, VI-a, VI-b, VI-c, VII-a) in bijlage I of BWBR0003381."
+          output:
+            - name: bevoegde_instantie
+              type: string
+              description: "The competent authority for granting exemption (produktschap or Belastingdienst)."
+            - name: vrijstelling_mogelijk
+              type: boolean
+              description: "Whether exemption from import duties is possible for passive processing goods."
+          actions:
+            - output: bevoegde_instantie
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: NOT
+                      value:
+                        operation: EQUALS
+                        subject: $is_horizontal_row_excluded
+                        value: true
+                    then: "produktschap"
+                  - when:
+                      operation: EQUALS
+                      subject: $is_horizontal_row_excluded
+                      value: true
+                    then: "Belastingdienst"
+                default: "onbekend"
+            - output: vrijstelling_mogelijk
+              value: true
+        untranslatables:
+          - construct: "Dynamic lookup of goods categories in kolom I vs. kolom 1 of bijlage I in BWBR0003381 (Regeling in- en uitvoer landbouwgoederen)."
+            reason: "Table-based categorization cannot be directly modeled in YAML; requires external input (is_horizontal_row_excluded)."
   - number: '3'
     text: |-
       1 De gehele of gedeeltelijke vrijstelling geldt voor personen aan wie de in [artikel 2][ref1] genoemde instanties
@@ -67,12 +103,38 @@ articles:
       2 De vergunning kan worden ingetrokken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005060#Artikel2
+       [ref1]: https://wetten.overheid.nl/BWBR0005060#Artikel2
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0005060
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: vergunninghouder
+            type: boolean
+            description: "Indicates whether the person holds a permit for passive processing."
+          - name: vergunning_ingetrokken
+            type: boolean
+            description: "Indicates whether the permit has been revoked."
+        output:
+          - name: heeft_vrijstelling
+            type: boolean
+            description: "Whether the person has an active exemption (permit held and not revoked)."
+        actions:
+          - output: heeft_vrijstelling
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $vergunninghouder
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $vergunning_ingetrokken
+                    value: true
   - number: '4'
     text: |-
       1 Van de uitvoer in passief veredelingsverkeer dient te blijken door middel van een door een ambtenaar der
@@ -82,21 +144,21 @@ articles:
 
       2 In geval van invoer in passief veredelingsverkeer van goederen, die zijn verkregen door de be- of verwerking
       van uit Nederland uitgevoerde goederen, dient van deze invoer te blijken door middel van een door een ambtenaar
-      der invoerrechten en accijnzen afgetekend formulier L, als bedoeld in [artikel 37 van de Douaneregeling][ref2]. In
+      der invoorrechten en accijnzen afgetekend formulier L, als bedoeld in [artikel 37 van de Douaneregeling][ref2]. In
       vak 44 van voornoemd formulier dient het nummer van de vergunning alsmede de gehanteerde identificatiemiddelen te
       worden vermeld.
 
       3 In geval van invoer in passief veredelingsverkeer van goederen, die zijn verkregen door de be- of
       verwerking van uit een andere Lid-Staat uitgevoerde goederen, dient van deze invoer te blijken door
-      middel van een door een ambtenaar der invoerrechten en accijnzen afgetekend formulier L, als bedoeld in
-      [artikel 37 van de Douaneregeling][ref3] benevens door overlegging van een volledig en naar waarheid ingevuld en
+      middel van een door een ambtenaar der invoorrechten en accijnzen afgetekend formulier L, als bedoeld in
+      [artikel 37 van de Douaneregeling][ref3] benevens door verlegging van een volledig en naar waarheid ingevuld en
       ondertekend, door de bevoegde autoriteiten van het land van uitvoer afgegeven en geviseerd document INF-2, waarvan
       het model is opgenomen als bijlage bij Toepassingsverordening communautair douanewetboek.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008032#Artikel39
-      [ref2]: https://wetten.overheid.nl/BWBR0008032#Artikel37
-      [ref3]: https://wetten.overheid.nl/BWBR0008032#Artikel37
+       [ref1]: https://wetten.overheid.nl/BWBR0008032#Artikel39
+       [ref2]: https://wetten.overheid.nl/BWBR0008032#Artikel37
+       [ref3]: https://wetten.overheid.nl/BWBR0008032#Artikel37
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel4
     references:
       - id: ref1
@@ -108,12 +170,22 @@ articles:
       - id: ref3
         bwb_id: BWBR0008032
         artikel: '37'
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Documentary requirements for form L (export/import) and INF-2 (EU member state imports) as defined in Douaneregeling (BWBR0008032)."
+          reason: "Requires validation of physical documents (formulier L, INF-2) and manual verification of permit numbers and identification methods, which cannot be automated."
   - number: '5'
     text: |-
       Teneinde vast te stellen dat de veredelingsprodukten zijn vervaardigd uit tijdelijk uit het douanegebied van de
       Europese Gemeenschappen uitgevoerde goederen kan het produktschap bepalen op welke wijze de tijdelijk uitgevoerde
       goederen in de veredelingsprodukten moeten worden voorzien van een identificatie.
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel5
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Discretionary authority of produktschap to determine identification methods for temporarily exported goods in processed products."
+          reason: "Involves discretionary decision-making by produktschap, which cannot be modeled as a deterministic rule."
   - number: '6'
     text: |-
       Het produktschap kan, ingeval de omstandigheden dit naar zijn oordeel rechtvaardigen en een juiste toepassing van
@@ -123,37 +195,62 @@ articles:
       een ander worden overgedragen, mits deze laatste aan het produktschap een verklaring van de vergunninghouder, ten
       bewijzen van de overdracht, overlegt en voor zover de voorwaarden van de vergunning zijn vervuld.
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel6
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Discretionary approval by produktschap for transfer of rights/obligations under a passive processing permit."
+          reason: "Involves discretionary assessment by produktschap based on circumstances and compliance with Community Customs Code, which cannot be automated."
   - number: '7'
     text: |-
       Ingeval de uit het [In- en uitvoerbesluit landbouwgoederen 1980][ref1] voortvloeiende bevoegdheden met betrekking
       tot een na veredeling in te voeren goed toekomen aan een ander produktschap, dan dat hetwelk deze bevoegdheden
       met betrekking tot het ter veredeling uit te voeren goed uitoefent, wordt door de toepassing van deze regeling
-      het eerstbedoelde produktschap mede als bevoegd produktieschap aangemerkt en treedt dit, voor wat het deel van de
+      het eerstbedoelde produktieschap mede als bevoegd produktieschap aangemerkt en treedt dit, voor wat het deel van de
       veredelingshandelingen betreft, dan binnen zijn sector valt, als zodanig op.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003360
+       [ref1]: https://wetten.overheid.nl/BWBR0003360
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel7
     references:
       - id: ref1
         bwb_id: BWBR0003360
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Jurisdictional overlap between produktenschaps for imported and exported goods."
+          reason: "Involves dynamic assignment of authority based on sectoral jurisdiction, which cannot be modeled as a deterministic rule."
   - number: '8'
     text: |-
       Deze regeling laat onverlet de bevoegdheid van het produktschap om, indien de daarin geregelde onderwerpen in
       het belang van haar goede uitvoering nadere regeling behoeven, daarin met inachtneming van het Communautair
       douanewetboek te voorzien.
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel8
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Authority of produktschap to create additional regulations for proper execution."
+          reason: "Involves discretionary rule-making authority, which cannot be modeled deterministically."
   - number: '9'
     text: |-
       Indien in geval van passief veredelingsverkeer bij de be- of verwerking verschillende soorten goederen worden
       verkregen, die niet alle ter compensatie van de uitvoer worden ingevoerd, stelt het produktschap de gevolgen
-      daarvan voor de bepaling van het bedrag van de vrijstelling vast. Het neemt daarbij hetgeen bij het Communautair
+      daarvvan voor de bepaling van het bedrag van de vrijstelling vast. Het neemt daarbij hetgeen bij het Communautair
       douanewetboek is vastgesteld in acht.
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel9
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Discretionary calculation of exemption amount by produktenschaps for partial compensation of exported goods."
+          reason: "Involves discretionary determination by produktschap of financial implications for partial non-compensated imports, which cannot be modeled deterministically."
   - number: '10'
     text: |-
       1 De Verordeningsverkeerbeschikking landbouwgoederen 1968 (Stcrt. 189) wordt ingetrokken.
 
       2 Deze regeling treedt in werking met ingang van de dag na die van haar publikatie in de Staatscourant en kan
-      worden aangehaald als: ‘Regeling passief veredelingsverkeer landbouwgoederen’.
+      worden aangehaald als: Regeling passief veredelingsverkeer landbouwgoederen.
     url: https://wetten.overheid.nl/BWBR0005060/2000-01-20#Artikel10
+    machine_readable:
+      execution: {}
+      untranslatables:
+        - construct: "Repeal of previous regulation (Verordeningsverkeerbeschikking landbouwgoederen 1968) and citation instructions."
+          reason: "Involves legal housekeeping (repeal) and metadata (citation), which do not require computational logic."
