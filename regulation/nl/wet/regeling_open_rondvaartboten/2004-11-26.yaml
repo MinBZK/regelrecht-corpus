@@ -104,9 +104,32 @@ articles:
       aanvaringsschot, gelegen op ten minste 0,10 m en ten hoogste 0,60 m achter de voorloodlijn. Het schip moet voor dit
       aanvaringsschot met een waterdicht dek zijn afgesloten.
     url: https://wetten.overheid.nl/BWBR0004941/2004-11-26#Artikel4
+    machine_readable:
+      endpoint: collision_bulkhead_requirement
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: Lwl_length
+            type: number
+            type_spec: { unit: meter }
+        output:
+          - name: requires_collision_bulkhead
+            type: boolean
+        actions:
+          - output: requires_collision_bulkhead
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $Lwl_length
+                    value: 10
+                  then: true
+              default: false
   - number: '4.2'
     text: |-
-      Voor houten open rondvaartboten die worden gebruikt voor de vaart op de binnenwateren van de zone 4 kan worden
+      Voor houten open rundvaartboten die worden gebruikt voor de vaart op de binnenwateren van de zone 4 kan worden
       afgeweken van hetgeen in het eerste lid is bepaald.
     url: https://wetten.overheid.nl/BWBR0004941/2004-11-26#Artikel4
   - number: '4.3'
@@ -114,6 +137,28 @@ articles:
       Op open rondvaartboten met een vast in het schip opgestelde voortstuwingsmotor moet deze motor geheel door een
       brandvertragende omkasting zijn omsloten.
     url: https://wetten.overheid.nl/BWBR0004941/2004-11-26#Artikel4
+    machine_readable:
+      endpoint: engine_enclosure_requirement
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: has_fixed_propulsion_motor
+            type: boolean
+        output:
+          - name: requires_engine_enclosure
+            type: boolean
+        actions:
+          - output: requires_engine_enclosure
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $has_fixed_propulsion_motor
+                    value: true
+                  then: true
+              default: false
   - number: '5.1'
     text: |-
       Er kan voor open rondvaartboten bij gebruik op de binnenwateren van zone 3 door de inspecteur-generaal
