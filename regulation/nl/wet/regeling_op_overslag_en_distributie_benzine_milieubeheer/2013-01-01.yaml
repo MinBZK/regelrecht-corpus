@@ -123,6 +123,22 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0007806
+    machine_readable:
+       execution:
+         output:
+           - name: opslaginstallatie_voldoet_aan_bijlage_I
+             type: boolean
+             description: Indicates whether the terminal's storage installation complies with the requirements of Bijlage I.
+         inputs:
+           - name: bijlage_I_voorschriften
+             type: object
+             description: The requirements specified in Bijlage I for storage installations.
+             source:
+               regulation: BWBR0007806
+               output: bijlage_I
+       actions:
+         - output: opslaginstallatie_voldoet_aan_bijlage_I
+           value: true
   - number: '3'
     text: |-
       1 Degene die een terminal drijft, voldoet, behalve aan de voorschriften die aan de vergunning zijn verbonden, wat
@@ -142,39 +158,89 @@ articles:
         bwb_id: BWBR0007806
         artikel: '4'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        output:
+          - name: overslaginstallatie_voldoet_aan_bijlage_II_en_artikel_4
+            type: boolean
+            description: Indicates whether the terminal's transfer installation complies with Bijlage II and Article 4, unless exempted.
+        inputs:
+          - name: bijlage_II_voorschriften
+            type: object
+            description: The requirements specified in Bijlage II for transfer installations.
+            source:
+              regulation: BWBR0007806
+              output: bijlage_II
+          - name: artikel_4_voorschriften
+            type: object
+            description: The requirements specified in Article 4 for loading portals.
+            source:
+              regulation: BWBR0007806
+              output: artikel_4
+          - name: is_bestaande_terminal
+            type: boolean
+            description: Whether the terminal is a 'bestaande terminal' (in operation or permitted before 31 December 1995).
+            untranslatable: true
+          - name: debiet
+            type: number
+            description: The greatest total annual quantity of benzine transferred in the past three years, in metric tons.
+            untranslatable: true
+      actions:
+           - output: overslaginstallatie_voldoet_aan_bijlage_II_en_artikel_4
+             IF:
+               cases:
+                 - condition: AND(is_bestaande_terminal = true, debiet < 10000)
+                   then: false
+             default: true
   - number: '4'
     text: |-
       Laadportalen van overslaginstallaties voldoen aan de specificaties, bedoeld in de bij deze regeling behorende
       [bijlage III][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0007806
+       [ref1]: https://wetten.overheid.nl/BWBR0007806
     url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel4
     references:
       - id: ref1
         bwb_id: BWBR0007806
+    machine_readable:
+       execution:
+         output:
+           - name: laadportaal_voldoet_aan_bijlage_III
+             type: boolean
+             description: Indicates whether the loading portal of the transfer installation complies with the specifications of Bijlage III.
+         inputs:
+           - name: bijlage_III_specificaties
+             type: object
+             description: The specifications outlined in Bijlage III for loading portals.
+             source:
+               regulation: BWBR0007806
+               output: bijlage_III
+         actions:
+            - output: laadportaal_voldoet_aan_bijlage_III
+              value: true
   - number: 4a
     text: |-
-      1 Het is degene die een terminal drijft, verboden een ladingtank te beladen waarin volgens de stoffenlijst benzine
-      mag worden vervoerd.
+       1 Het is degene die een terminal drijft, verboden een ladingtank te beladen waarin volgens de stoffenlijst benzine
+       mag worden vervoerd.
 
-      2 Het eerste lid geldt niet indien:
+       2 Het eerste lid geldt niet indien:
 
-      a. de schipper aan degene die de terminal drijft, aantoont dat hij beschikt
-      over een bijgewerkte reisregistratie overeenkomstig randnummer 7.2.4.12 van
-      [bijlage 1 bij de Regeling vervoer over de binnenwateren van gevaarlijke stoffen][ref1], en
+       a. de schipper aan degene die de terminal drijft, aantoont dat hij beschikt
+       over een bijgewerkte reisregistratie overeenkomstig randnummer 7.2.4.12 van
+       [bijlage 1 bij de Regeling vervoer over de binnenwateren van gevaarlijke stoffen][ref1], en
 
-      b. [artikel 2 van de Regeling benzinevervoer in mobiele tanks 2006][ref2] van toepassing is of de
-      schipper aan degene die de terminal drijft, aantoont dat de ladingtank is ontgast met toepassing van
-      [artikel 4 van de Regeling benzinevervoer in mobiele tanks 2006][ref3].
+       b. [artikel 2 van de Regeling benzinevervoer in mobiele tanks 2006][ref2] van toepassing is of de
+       schipper aan degene die de terminal drijft, aantoont dat de ladingtank is ontgast met toepassing van
+       [artikel 4 van de Regeling benzinevervoer in mobiele tanks 2006][ref3].
 
-      3 Het eerste lid geldt voorts niet indien tijdens het beladen van een ladingtank verplaatsingsdampen uit die tank
-      door een dampdichte leiding worden teruggevoerd naar een dampverwerkingseenheid.
+       3 Het eerste lid geldt voorts niet indien tijdens het beladen van een ladingtank verplaatsingsdampen uit die tank
+       door een dampdichte leiding worden teruggevoerd naar een dampverwerkingseenheid.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0010115
-      [ref2]: https://wetten.overheid.nl/BWBR0018575#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0018575#Artikel4
+        [ref1]: https://wetten.overheid.nl/BWBR0010115
+        [ref2]: https://wetten.overheid.nl/BWBR0018575#Artikel2
+        [ref3]: https://wetten.overheid.nl/BWBR0018575#Artikel4
     url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel4a
     references:
       - id: ref1
@@ -185,6 +251,42 @@ articles:
       - id: ref3
         bwb_id: BWBR0018575
         artikel: '4'
+    machine_readable:
+       execution:
+         output:
+           - name: beladen_ladingtank_toegestaan
+             type: boolean
+             description: Indicates whether loading a ladingtank is allowed under the conditions of Article 4a.
+         inputs:
+           - name: has_reisregistratie
+             type: boolean
+             description: Indicates if the skipper has provided an updated travel registration as per bijlage 1, randnummer 7.2.4.12 of BWBR0010115.
+             source:
+               regulation: BWBR0010115
+               output: bijlage_1/randnummer_7.2.4.12
+           - name: artikel_2_BWBR0018575_toepasbaar
+             type: boolean
+             description: Indicates if Article 2 of BWBR0018575 (Regeling benzinevervoer in mobiele tanks 2006) applies.
+             source:
+               regulation: BWBR0018575
+               output: artikel_2
+           - name: artikel_4_BWBR0018575_toepasbaar
+             type: boolean
+             description: Indicates if Article 4 of BWBR0018575 (Regeling benzinevervoer in mobiele tanks 2006) applies.
+             source:
+               regulation: BWBR0018575
+               output: artikel_4
+           - name: heeft_dampdichte_leiding
+             type: boolean
+             description: Indicates if the ladingtank is connected to a vapor-tight pipeline for returning displacement vapors.
+             untranslatable: true
+       actions:
+         - output: beladen_ladingtank_toegestaan
+           IF:
+             cases:
+               - condition: OR(has_reisregistratie = true, artikel_2_BWBR0018575_toepasbaar = true, artikel_4_BWBR0018575_toepasbaar = true, heeft_dampdichte_leiding = true)
+                 then: true
+             default: false
   - number: '5'
     text: |-
       1 Degene die een benzinestation drijft, dient, behalve aan de voorschriften die aan de vergunning zijn verbonden,
@@ -201,12 +303,42 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0007806
       [ref2]: https://wetten.overheid.nl/BWBR0022762
-    url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0007806
-      - id: ref2
-        bwb_id: BWBR0022762
+      url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel5
+      references:
+        - id: ref1
+          bwb_id: BWBR0007806
+        - id: ref2
+          bwb_id: BWBR0022762
+      machine_readable:
+        execution:
+          output:
+            - name: vul_en_opslaginstallatie_voldoet_aan_bijlage_IV
+              type: boolean
+              description: Indicates whether the filling and storage installation of a gas station complies with Bijlage IV, unless exempted.
+          inputs:
+            - name: bijlage_IV_voorschriften
+              type: object
+              description: The requirements specified in Bijlage IV for filling and storage installations.
+              source:
+                regulation: BWBR0007806
+                output: bijlage_IV
+            - name: is_activiteitenbesluit_toepasbaar
+              type: boolean
+              description: Indicates if the Activiteitenbesluit milieubeheer applies to the gas station.
+              source:
+                regulation: BWBR0022762
+                output: toepasselijkheid
+            - name: debiet
+              type: number
+              description: de in de drie voorgaande jaren gemeten grootste totale jaarlijkse hoeveelheid benzine (in m³/jaar).
+              untranslatable: true
+        actions:
+          - output: vul_en_opslaginstallatie_voldoet_aan_bijlage_IV
+            IF:
+              cases:
+                - condition: OR(is_activiteitenbesluit_toepasbaar = true, debiet < 100)
+                  then: false
+              default: true
   - number: '9'
     text: |-
       Indien voor het opslaan van benzine in een ondergrondse tank voorschriften krachtens het
@@ -214,7 +346,7 @@ articles:
       deze regeling andere voorschriften van toepassing zijn.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0022762
+        [ref1]: https://wetten.overheid.nl/BWBR0022762
     url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel9
     references:
       - id: ref1
@@ -223,5 +355,5 @@ articles:
     text: Deze regeling treedt in werking met ingang van 31 december 1995.
     url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel10
   - number: '11'
-    text: 'Deze regeling wordt aangehaald als: Regeling op-, overslag en distributie benzine milieubeheer.'
+    text: 'Deze regeling wird angehaald als: Regeling op-, overslag en distributie benzine milieubeheer.'
     url: https://wetten.overheid.nl/BWBR0007806/2013-01-01#Artikel11
