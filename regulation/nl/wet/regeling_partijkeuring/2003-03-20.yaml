@@ -49,30 +49,29 @@ articles:
               partijvrijgifte-document:
 
                 document opgesteld door de bereider ter zake van een bepaalde partij van een diergeneesmiddel waarop zijn
-      vermeld de naam en het registratienummer van het middel, het nummer van de desbetreffende partij, de partijgrootte
-      alsmede een verklaring van de voor controle verantwoordelijke persoon dat de partij aan de gestelde eisen aangaande
-      produktie en controle voldoet;
+       vermeld de naam en het registratienummer van het middel, het nummer van de desbetreffende partij, de partijgrootte
+       alsmede een verklaring van de voor controle verantwoordelijke persoon dat de partij aan de gestelde eisen aangaande
+       produktie en controle voldoet;
 
 
 
               partijvrijgiftecertificaat:
 
                 document afgegeven door het bureau op grond waarvan de desbetreffende partij in de handel mag worden
-      gebracht;
+       gebracht;
 
 
 
               experimentele keuring:
 
                 een zuiverheids- en onschadelijkheidstest met betrekking tot een bepaalde partij van een voor het eerst
-      in de handel gebracht serum, entstof of biologisch diagnosticum;
+       in de handel gebracht serum, entstof of biologisch diagnosticum;
 
 
 
               bureau:
 
                 Bureau Registratie Diergeneesmiddelen, Postbus 289, 6700 AG Wageningen.
-
 
 
 
@@ -104,7 +103,7 @@ articles:
       regeling is gevoegd.
 
       2 Binnen drie dagen na ontvangst van die aanvraag bevestigt het bureau schriftelijk die ontvangst onder vermelding
-      van het nummer waaronder deze is ingeschreven en het voor de keuring verschuldigde bedrag.
+      van het nummer waardoor deze is ingeschreven en het voor de keuring verschuldigde bedrag.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003818#Artikel15
@@ -113,6 +112,28 @@ articles:
       - id: ref1
         bwb_id: BWBR0003818
         artikel: '15'
+    machine_readable:
+      execution:
+        parameters:
+          - name: ontvangst_datum
+            type: date
+            required: true
+            description: Datum waarop de aanvraag is ontvangen
+        output:
+          - name: bevestigingsdatum
+            type: date
+            description: Datum waarop de bevestiging verzonden moet zijn
+          - name: bevestiging_verzonden
+            type: boolean
+            description: Indicatie of de bevestiging is verzonden
+        actions:
+          - output: bevestigingsdatum
+            value:
+              operation: DATE_ADD
+              date: $ontvangst_datum
+              days: 3
+          - output: bevestiging_verzonden
+            value: true
   - number: '3'
     text: |-
       1 Een overeenkomstig [artikel 2][ref1] ingediende aanvraag wordt slechts in behandeling genomen indien:
@@ -131,7 +152,7 @@ articles:
       diergeneesmiddel reeds eerder een zodanige keuring heeft plaats gehad, waarbij goedkeuring plaatsvond, danwel
       indien een verklaring wordt overgelegd als bedoeld in onderdeel a;
 
-      c. de aanvraag vergezeld gaat van het partijprotocol en het partijvrij gifte-document;
+      c. de aanvraag vergezeld gaat van het partijprotocol en het partijvrijgifte-document;
 
       d. het partijkeuringsprotocol is gedagtekend en ondertekend door de persoon die verantwoordelijk is voor de
       controle;
@@ -152,7 +173,7 @@ articles:
       bedoeld in bijlage II van deze regeling.
 
       3 De bedragen, bedoeld in het eerste lid, onderdeel 1 danwel onderdeel b, welke dienen te worden voldaan op
-      postrekeningnummer 10.41.759 ten name van het bureau, onder vermelding van ‘Aanvraag voor een partijkeuring’ en van
+      postrekeningnummer 10.41.759 ten name van het bureau, onder vermelding van 'Aanvraag voor een partijkeuring' en van
       de naam waaronder het diergeneesmiddel is geregistreerd en het daarbij behorende batchnummer, zijn:
 
       a. een bedrag van:
@@ -183,6 +204,113 @@ articles:
       - id: ref2
         bwb_id: BWBR0003818
         artikel: '16'
+    machine_readable:
+      execution:
+        parameters:
+          - name: experimentele_keuring_noodzakelijk
+            type: boolean
+            required: true
+            description: Indicatie of experimentele keuring noodzakelijk is
+          - name: soort_product
+            type: string
+            required: true
+            description: Type product (sera_entstoffen_pluimvee, sera_entstoffen_schaap_geit, etc.)
+          - name: behoort_tot_EU_of_EER
+            type: boolean
+            required: true
+            description: Indicatie of het product afkomstig is uit EU of EER
+          - name: heeft_verklaring
+            type: boolean
+            required: true
+            description: Indicatie of er een verklaring van goedgekeurde keuring is
+          - name: partijprotocol_aanwezig
+            type: boolean
+            required: true
+            description: Indicatie of het partijprotocol aanwezig is
+          - name: partijvrijgifte_document_aanwezig
+            type: boolean
+            required: true
+            description: Indicatie of het partijvrijgifte-document aanwezig is
+          - name: verklaring_monster_bewaard
+            type: boolean
+            required: true
+            description: Indicatie of de verklaring over monsterbewaring aanwezig is
+        output:
+          - name: is_eligible
+            type: boolean
+            description: Indicatie of de aanvraag in behandeling kan worden genomen
+          - name: bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Verschuldigd bedrag voor de partijkeuring in eurocent
+        actions:
+          - output: is_eligible
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $experimentele_keuring_noodzakelijk
+                          value: true
+                        - operation: EQUALS
+                          subject: $behoort_tot_EU_of_EER
+                          value: true
+                    - operation: EQUALS
+                      subject: $heeft_verklaring
+                      value: true
+                    - operation: NOT
+                      value:
+                        operation: EQUALS
+                        subject: $experimentele_keuring_noodzakelijk
+                        value: true
+                - operation: EQUALS
+                  subject: $partijprotocol_aanwezig
+                  value: true
+                - operation: EQUALS
+                  subject: $partijvrijgifte_document_aanwezig
+                  value: true
+                - operation: EQUALS
+                  subject: $verklaring_monster_bewaard
+                  value: true
+          - output: bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: sera_entstoffen_pluimvee
+                  then: 408402
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: sera_entstoffen_schaap_geit
+                  then: 476469
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: sera_entstoffen_varken_hond_kat
+                  then: 544536
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: sera_entstoffen_rund_paard
+                  then: 907560
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: sera_entstoffen_overige_dieren
+                  then: 158823
+                - when:
+                    operation: EQUALS
+                    subject: $soort_product
+                    value: biologische_diagnostica
+                  then: 158823
+              default: 9076
   - number: '4'
     text: |-
       1 De uitslag van de partijkeuring worden aanvrager uiterlijk binnen 60 dagen, nadat aan alle in [artikel 3][ref1]
@@ -198,6 +326,35 @@ articles:
         bwb_id: BWBR0005641
         artikel: '3'
         paragraaf: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_voldaan_artikel_3
+            type: date
+            required: true
+            description: Datum waarop aan alle eisen van artikel 3 is voldaan
+          - name: is_eligible
+            type: boolean
+            required: true
+            description: Indicatie of de aanvraag in behandeling is genomen (uit artikel 3)
+        output:
+          - name: uitslag_datum
+            type: date
+            description: Uiterlijke datum waarop de uitslag wordt meegedeeld
+          - name: partijvrijgifte_certificaat_verstrekt
+            type: boolean
+            description: Indicatie of het partijvrijgifte-certificaat is verstrekt
+        actions:
+          - output: uitslag_datum
+            value:
+              operation: DATE_ADD
+              date: $datum_voldaan_artikel_3
+              days: 60
+          - output: partijvrijgifte_certificaat_verstrekt
+            value:
+              operation: EQUALS
+              subject: $is_eligible
+              value: true
   - number: '5'
     text: |-
       1 Vrijstelling wordt verleend van het verbod, gesteld in [artikel 14, eerste lid, van de wet][ref1] met
@@ -211,6 +368,34 @@ articles:
       - id: ref1
         bwb_id: BWBR0003818
         artikel: '14'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_geregistreerd
+            type: boolean
+            required: true
+            description: Indicatie of het serum, entstof of biologisch diagnosticum is geregistreerd
+          - name: heeft_goedgekeurde_partij
+            type: boolean
+            required: true
+            description: Indicatie of de partij goedgekeurd is
+        output:
+          - name: vrijstelling_verleend
+            type: boolean
+            description: Indicatie of vrijstelling wordt verleend
+        actions:
+          - output: vrijstelling_verleend
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_geregistreerd
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $heeft_goedgekeurde_partij
+                    value: true
   - number: '7'
     text: |-
       1 Deze regeling treedt in werking met ingang van 1 oktober 1992.
