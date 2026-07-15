@@ -3,7 +3,7 @@
 
 To get started, just tap or click this placeholder text and begin typing. You can view and edit this document on your Mac, iPad, iPhone, or on iCloud.com.
 
-It’s easy to edit text, change fonts and add beautiful graphics. Use paragraph styles to get a consistent look throughout your document. For example, this paragraph uses Body style. You can change it in the Text tab of the Format controls. dit is een wijziging
+It’s easy to edit text, change fonts and add beautiful graphics. Use paragraph styles to get a consistent look throughout your document. For example, this paragraph uses Body style. You can change it in the Text tab of the Format controls.
 
 To add photos, image galleries, audio clips, videos, charts or any of more than 700 customisable shapes, tap or click one of the insert buttons in the toolbar or drag and drop the objects onto the page. You can layer objects, resize them and place them anywhere on the page. To change how an object moves with text, select the object and then tap or click the Arrange tab in the Format controls.
 
