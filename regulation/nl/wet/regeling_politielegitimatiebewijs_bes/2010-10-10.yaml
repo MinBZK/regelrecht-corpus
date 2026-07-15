@@ -13,116 +13,232 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Tijdens de uitoefening van de dienst dragen de volgende ambtenaren van politie een politielegitimatiebewijs volgens
-      het door onze Minister vastgesteld model bij zich:
+    - number: '1'
+      text: |-
+        Tijdens de uitoefening van de dienst dragen de volgende ambtenaren van politie een politielegitimatiebewijs volgens
+        het door onze Minister vastgesteld model bij zich:
 
-      a. de ambtenaar van politie, bedoeld in [artikel 3, onder a en c, van de Rijkswet][ref1], die werkzaam is bij het
-      politiekorps, met uitzondering van de aspirant voor de duur dat hij geen praktijkstage volgt;
+        a. de ambtenaar van politie, bedoeld in [artikel 3, onder a en c, van de Rijkswet][ref1], die werkzaam is bij het
+        politiekorps, met uitzondering van de aspirant voor de duur dat hij geen praktijkstage volgt;
 
-      b. de door de korpsbeheerder politie aangewezen ambtenaren als bedoeld in
-      [artikel 3, onder b, van de Rijkswet][ref2], die over opsporingsbevoegdheid beschikken.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0028079#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0028079#Artikel3
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0028079
-        artikel: '3'
-      - id: ref2
-        bwb_id: BWBR0028079
-        artikel: '3'
-  - number: '2'
-    text: De Staat is eigenaar van het politielegitimatiebewijs.
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel2
-  - number: '3'
-    text: |-
-      De korpsbeheerder politie draagt zorg voor een behoorlijk toezicht op de bewaring van het te verstrekken
-      politielegitimatiebewijs.
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel3
-  - number: '4'
-    text: |-
-      1 De korpsbeheerder politie draagt er zorg voor dat het politielegitimatiebewijs voor de uitreiking wordt
-      geprepareerd op de wijze zoals door onze minister vastgesteld.
-
-      2 De korpsbeheerder politie reikt het politielegitimatiebewijs na ondertekening uit aan de ambtenaar, bedoeld in
-      [artikel 1][ref1].
-
-      3 De korpsbeheerder politie registreert de uitgifte van het politielegitimatiebewijs waarbij de naam van de
-      ambtenaar, bedoeld in [artikel 1][ref2], en het uitgiftenummer worden vermeld.
+        b. de door de korpsbeheerder politie aangewezen ambtenaren als bedoeld in
+        [artikel 3, onder b, van de Rijkswet][ref2], die over opsporingsbevoegdheid beschikken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0028800#Artikel1
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0028800
-        artikel: '1'
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0028800
-        artikel: '1'
-        paragraaf: '1'
-  - number: '5'
-    text: |-
-      De ambtenaar, bedoeld in [artikel 1][ref1], meldt vermissing, ontvreemding en geheel of gedeeltelijk tenietgaan van
-      zijn politielegitimatiebewijs terstond aan de korpsbeheerder politie.
+          [ref1]: https://wetten.overheid.nl/BWBR0028079#Artikel3
+          [ref2]: https://wetten.overheid.nl/BWBR0028079#Artikel3
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel1
+      references:
+        - id: ref1
+          bwb_id: BWBR0028079
+          artikel: '3'
+        - id: ref2
+          bwb_id: BWBR0028079
+          artikel: '3'
+      machine_readable:
+        execution:
+          output:
+            - name: moet_legitimatiebewijs_dragen
+              type: boolean
+          input:
+            - name: is_ambtenaar_a_of_c
+              type: boolean
+              source:
+                regulation: rijkswet_politiekorps_bes
+                output: is_ambtenaar_a_of_c
+            - name: is_ambtenaar_b
+              type: boolean
+              source:
+                regulation: rijkswet_politiekorps_bes
+                output: is_ambtenaar_b
+          parameters:
+            - name: is_werkzaam_bij_politiekorps
+              type: boolean
+            - name: is_aspirant_zonder_stage
+              type: boolean
+            - name: heeft_opsporingsbevoegdheid
+              type: boolean
+            - name: is_aangewezen_door_korpsbeheerder
+              type: boolean
+          actions:
+            - output: moet_legitimatiebewijs_dragen
+              value:
+                operation: OR
+                conditions:
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_ambtenaar_a_of_c
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_werkzaam_bij_politiekorps
+                        value: true
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $is_aspirant_zonder_stage
+                          value: true
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_ambtenaar_b
+                        value: true
+                      - operation: EQUALS
+                        subject: $heeft_opsporingsbevoegdheid
+                        value: true
+                      - operation: EQUALS
+                        subject: $is_aangewezen_door_korpsbeheerder
+                        value: true
+    - number: '2'
+      text: De Staat is eigenaar van het politielegitimatiebewijs.
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel2
+    - number: '3'
+      text: |-
+        De korpsbeheerder politie draagt zorg voor een behoorlijk toezicht op de bewaring van het te verstrekken
+        politielegitimatiebewijs.
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel3
+    - number: '4'
+      text: |-
+        1 De korpsbeheerder politie draagt er zorg voor dat het politielegitimatiebewijs voor de uitreiking wordt
+        geprepareerd op de wijze zoals door onze minister vastgesteld.
+
+        2 De korpsbeheerder politie reikt het politielegitimatiebewijs na ondertekening uit aan de ambtenaar, bedoeld in
+        [artikel 1][ref1].
+
+        3 De korpsbeheerder politie registreert de uitgifte van het politielegitimatiebewijs waarbij de naam van de
+        ambtenaar, bedoeld in [artikel 1][ref2], en het uitgiftenummer worden vermeld.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0028800
-        artikel: '1'
-        paragraaf: '1'
-  - number: '6'
-    text: |-
-      1 Bij overlijden of beëindiging van het dienstverband van de ambtenaar, bedoeld in [artikel 1][ref1], of bij
-      vervanging van het politielegitimatiebewijs neemt de korpsbeheerder politie het politielegitimatiebewijs in.
-
-      2 De korpsbeheerder politie draagt zorg voor vernietiging van het ingenomen politielegitimatiebewijs.
-
-      3 De korpsbeheerder politie haalt de registratie van de uitgifte, bedoeld in [artikel 4, derde lid][ref2], door.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0028800#Artikel4
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel6
-    references:
-      - id: ref1
-        bwb_id: BWBR0028800
-        artikel: '1'
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0028800
-        artikel: '4'
-        paragraaf: '1'
-  - number: '7'
-    text: |-
-      Het legitimatiebewijs Korps politie, verstrekt op basis van de in de voormalige Nederlandse Antillen geldende
-      Landsverordening van de 25ste september 1961 nopens de beëdiging en legitimatie van opsporingsambtenaren wordt
-      uiterlijk 4 maanden na inwerkingtreding van deze regeling ingeleverd bij en vernietigd door de korpsbeheerder
-      politie en behoudt tot het moment dat het is ingeleverd, maar uiterlijk 4 maanden na inwerkingtreding van deze
-      regeling, zijn geldigheid.
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel7
-  - number: '8'
-    text: |-
-      Deze regeling treedt in werking met ingang van het tijdstip waarop het [Besluit beheer politiekorps BES][ref1]
-      in werking treedt. Indien de Staatscourant waarin deze regeling wordt geplaatst, wordt uitgeven na dat tijdstip,
-      treedt deze regeling in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
-      wordt geplaatst, en werkt zij terug tot het in de eerste volzin bedoelde tijdstip.
+        [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
+        [ref2]: https://wetten.overheid.nl/BWBR0028800#Artikel1
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel4
+      references:
+        - id: ref1
+          bwb_id: BWBR0028800
+          artikel: '1'
+          paragraaf: '1'
+        - id: ref2
+          bwb_id: BWBR0028800
+          artikel: '1'
+          paragraaf: '1'
+    - number: '5'
+      text: |-
+        De ambtenaar, bedoeld in [artikel 1][ref1], meldt vermissing, ontvreemding en geheel of gedeeltelijk tenietgaan van
+        zijn politielegitimatiebewijs terstond aan de korpsbeheerder politie.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0028780
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel8
-    references:
-      - id: ref1
-        bwb_id: BWBR0028780
-  - number: '9'
-    text: 'Deze regeling wordt aangehaald als: Regeling politielegitimatiebewijs BES.'
-    url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel9
+        [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel5
+      references:
+        - id: ref1
+          bwb_id: BWBR0028800
+          artikel: '1'
+          paragraaf: '1'
+      machine_readable:
+        execution:
+          output:
+            - name: moet_verlies_melden
+              type: boolean
+          input:
+            - name: moet_legitimatiebewijs_dragen
+              type: boolean
+              source:
+                regulation: regeling_politielegitimatiebewijs_bes
+                output: moet_legitimatiebewijs_dragen
+          parameters:
+            - name: heeft_verlies
+              type: boolean
+            - name: heeft_diefstal
+              type: boolean
+            - name: heeft_beschadiging
+              type: boolean
+          actions:
+            - output: moet_verlies_melden
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $moet_legitimatiebewijs_dragen
+                    value: true
+                  - operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $heeft_verlies
+                        value: true
+                      - operation: EQUALS
+                        subject: $heeft_diefstal
+                        value: true
+                      - operation: EQUALS
+                        subject: $heeft_beschadiging
+                        value: true
+    - number: '6'
+      text: |-
+        1 Bij overlijden of beëindiging van het dienstverband van de ambtenaar, bedoeld in [artikel 1][ref1], of bij
+        vervanging van het politielegitimatiebewijs neemt de korpsbeheerder politie het politielegitimatiebewijs in.
+
+        2 De korpsbeheerder politie draagt zorg voor vernietiging van het ingenomen politielegitimatiebewijs.
+
+        3 De korpsbeheerder politie haalt de registratie van de uitgifte, bedoeld in [artikel 4, derde lid][ref2], door.
+
+
+        [ref1]: https://wetten.overheid.nl/BWBR0028800#Artikel1
+        [ref2]: https://wetten.overheid.nl/BWBR0028800#Artikel4
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel6
+      references:
+        - id: ref1
+          bwb_id: BWBR0028800
+          artikel: '1'
+          paragraaf: '1'
+        - id: ref2
+          bwb_id: BWBR0028800
+          artikel: '4'
+          paragraaf: '1'
+    - number: '7'
+      text: |-
+        Het legitimatiebewijs Korps politie, verstrekt op basis van de in de voormalige Nederlandse Antillen geldende
+        Landsverordening van de 25ste september 1961 nopens de beëdiging en legitimatie van opsporingsambtenaren wordt
+        uiterlijk 4 maanden na inwerkingtreding van deze regeling ingeleverd bij en vernietigd door de korpsbeheerder
+        politie en behoudt tot het moment dat het is ingeleverd, maar uiterlijk 4 maanden na inwerkingtreding van deze
+        regeling, zijn geldigheid.
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel7
+      machine_readable:
+        execution:
+          output:
+            - name: moet_oude_kaart_teruggeven
+              type: boolean
+          input:
+            - name: valid_from
+              type: date
+              source:
+                regulation: regeling_politielegitimatiebewijs_bes
+                output: valid_from
+          parameters:
+            - name: inleverdatum
+              type: date
+          actions:
+            - output: moet_oude_kaart_teruggeven
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $inleverdatum
+                    value: null
+                  - operation: GREATER_THAN
+                    subject: $valid_from
+                    value: 2011-02-10
+    - number: '8'
+      text: |-
+        Deze regeling treedt in werking met ingang van het tijdstip waarop het [Besluit beheer politiekorps BES][ref1]
+        in werking treedt. Indien de Staatscourant waarin deze regeling wordt geplaatst, wordt uitgeven na dat tijdstip,
+        treedt deze regeling in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
+        wordt geplaatst, en werkt zij terug tot het in de eerste volzin bedoelde tijdstip.
+
+
+        [ref1]: https://wetten.overheid.nl/BWBR0028780
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel8
+      references:
+        - id: ref1
+          bwb_id: BWBR0028780
+    - number: '9'
+      text: 'Deze regeling wordt aangehaald als: Regeling politielegitimatiebewijs BES.'
+      url: https://wetten.overheid.nl/BWBR0028800/2010-10-10#Artikel9
