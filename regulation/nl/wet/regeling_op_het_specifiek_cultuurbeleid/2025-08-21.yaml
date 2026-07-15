@@ -150,7 +150,7 @@ articles:
 
       b. de aanvrager naar het oordeel van de minister de behoefte aan subsidie niet heeft aangetoond.
 
-      3 Subsidie wordt niet verstrekt voor een subsidiebedrag dat minder dan € 125.000 bedraagt.
+      3 Subsidie wordt niet verstrekt voor een subsidiebedrag dat minder dan € 125.000 bedraagt.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel435
@@ -159,6 +159,23 @@ articles:
       - id: ref1
         bwb_id: BWBR0005537
         artikel: 4:35
+    machine_readable:
+      operations:
+        - id: check_min_subsidy_threshold
+          type: comparison
+          operator: ">="
+          left:
+            type: input
+            path: subsidiebedrag
+            unit: eurocent
+          right:
+            type: literal
+            value: 12500000
+            unit: eurocent
+      outputs:
+        - id: is_eligible
+          type: boolean
+          expression: check_min_subsidy_threshold
   - number: '2.10'
     text: |-
       1 Bij de subsidieverlening kan de minister, al dan niet in afwijking van het subsidieplafond dat van toepassing is,
@@ -180,6 +197,33 @@ articles:
       of de kosten van het prijspeil, bepaalt de minister welk percentage van de subsidie wordt aangemerkt als
       loongevoelig onderscheidenlijk prijsgevoelig.
     url: https://wetten.overheid.nl/BWBR0027597/2025-08-21#Artikel2.10
+    machine_readable:
+      operations:
+        - id: apply_loonkosten_indexation
+          type: multiplication
+          left:
+            type: input
+            path: subsidiebedrag
+            unit: eurocent
+          right:
+            type: input
+            path: loonkostenontwikkeling
+            unit: percentage
+        - id: apply_prijspeil_indexation
+          type: multiplication
+          left:
+            type: input
+            path: subsidiebedrag
+            unit: eurocent
+          right:
+            type: input
+            path: prijspeil
+            unit: percentage
+      outputs:
+        - id: adjusted_subsidiebedrag
+          type: integer
+          unit: eurocent
+          expression: apply_loonkosten_indexation + apply_prijspeil_indexation
   - number: '2.11'
     text: |-
       1 De minister betaalt als voorschot per kwartaal een gelijk deel van het subsidiebedrag dat aan een instelling
@@ -199,14 +243,31 @@ articles:
       bevoorschotting overeenkomstig de wijziging aangepast.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027597#Artikel2.10
+       [ref1]: https://wetten.overheid.nl/BWBR0027597#Artikel2.10
     url: https://wetten.overheid.nl/BWBR0027597/2025-08-21#Artikel2.11
     references:
       - id: ref1
         bwb_id: BWBR0027597
         artikel: '2.10'
-        hoofdstuk: '2'
-        paragraaf: '2.3'
+    machine_readable:
+      operations:
+        - id: calculate_quarterly_payment
+          type: division
+          left:
+            type: input
+            path: subsidiebedrag
+            unit: eurocent
+          right:
+            type: literal
+            value: 4
+            unit: scalar
+      outputs:
+        - id: voorschot
+          type: list
+          unit: eurocent
+          expression: "[calculate_quarterly_payment, calculate_quarterly_payment, calculate_quarterly_payment, calculate_quarterly_payment]"
+    hoofdstuk: '2'
+    paragraaf: '2.3'
   - number: '2.12'
     text: |-
       De subsidieontvanger zorgt ervoor dat de werkzaamheden op een zodanige manier worden uitgevoerd dat de subsidie op
