@@ -89,6 +89,80 @@ articles:
       - id: ref1
         bwb_id: BWBR0023362
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: water_type
+            type: string
+            description: Type of rijkswateren where dredging occurs
+        output:
+          - name: max_vaste_stoffen_m3
+            type: number
+            type_spec:
+              unit: m3
+            description: Maximum quantity of solids per dredging in cubic meters
+          - name: max_aantal_reizen
+            type: number
+            description: Maximum number of trips for dredging
+        actions:
+          - output: max_vaste_stoffen_m3
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $water_type
+                    value: Noordzee
+                  then: 40000
+                - when:
+                    operation: IN
+                    subject: $water_type
+                    values:
+                      - Eems
+                      - Dollard
+                      - IJsselmeer
+                      - Markermeer (met inbegrip van Oostvaardersdiep)
+                      - Ketelmeer
+                      - Keteldiep
+                      - Haringvliet
+                      - Hollandsch Diep
+                      - Grevelingenmeer
+                      - Krammer
+                      - Volkerak
+                      - Zoommeer
+                      - Oosterschelde
+                      - Westerschelde
+                  then: 5000
+              default: 2500
+          - output: max_aantal_reizen
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $water_type
+                    value: Noordzee
+                  then: 10
+                - when:
+                    operation: IN
+                    subject: $water_type
+                    values:
+                      - Eems
+                      - Dollard
+                      - IJsselmeer
+                      - Markermeer (met inbegrip van Oostvaardersdiep)
+                      - Ketelmeer
+                      - Keteldiep
+                      - Haringvliet
+                      - Hollandsch Diep
+                      - Grevelingenmeer
+                      - Krammer
+                      - Volkerak
+                      - Zoommeer
+                      - Oosterschelde
+                      - Westerschelde
+                  then: 5
+              default: 5
   - number: '3'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop het [Besluit ontgrondingen in rijkswateren][ref1] in werking
