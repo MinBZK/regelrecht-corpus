@@ -13,48 +13,136 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Na een aangifte wordt in de daaropvolgende week in ieder geval éénmaal het volgende hoog-risico-materiaal of
-      gespecificeerd hoog-risico-materiaal opgehaald:
+   - number: '1'
+     text: |-
+       Na een aangifte wordt in de daaropvolgende week in ieder januari éénmaal het volgende hoog-risico-materiaal of
+       gespecificeerd hoog-risico-materiaal opgehaald:
 
-      a. kadavers van slachtdieren en van voor de landbouwproductie gehouden dieren, beide tot een gewicht van 40 kg, met
-      uitzondering van kalveren;
+       a. kadavers van slachtdieren en van voor de landbouwproductie gehouden dieren, beide tot een gewicht van 40 kg, met
+       uitzondering van kalveren;
 
-      b. hoog-risico-materiaal als bedoeld in artikel 2, eerste lid, onderdelen c, d, en e, van de wet;
+       b. hoog-risico-materiaal als bedoeld in artikel 2, eerste lid, onderdelen c, d, en e, van de wet;
 
-      c. gespecificeerd hoog-risico-materiaal als bedoeld in [artikel 2, eerste lid, onderdelen c][ref1] en k, van de
-      [Regeling aanwijzing gespecificeerd hoog-risico-materiaal 2000][ref2]..
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011797#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0011443
-    url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0011797
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0011443
-  - number: '2'
-    text: |-
-      De laatste zin van [artikel 2, vierde lid, van de Regeling eisen eigenaar of houder van destructiemateriaal][ref1]
-      vervalt.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007341#Artikel2
-    url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0007341
-        artikel: '2'
-  - number: '3'
-    text: |-
-      Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
-      wordt geplaatst.
-    url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel3
-  - number: '4'
-    text: |-
-      Deze regeling wordt aangehaald als: Regeling ophalen hoog- of gespecificeerd hoog-risico-materiaal op gezette
-      tijden.
-    url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel4
+       c. gespecificeerd hoog-risico-materiaal als bedoeld in artikel 2, eerste lid, onderdelen c en k, van de
+       Regeling aanwijzing gespecificeerd hoog-risico-materiaal 2000.
+     url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel1
+     references:
+       - id: ref1
+         bwb_id: BWBR0011797
+         artikel: '2'
+       - id: ref2
+         bwb_id: BWBR0011443
+     machine_readable:
+        execution:
+           parameters:
+              - name: aangifte_datum
+                type: date
+                required: true
+                description: Datum waarop de aangifte is gedaan
+              - name: current_date
+                type: date
+                required: true
+                description: Datum waarop de check wordt uitgevoerd
+           input:
+              - name: materiaal_soort
+                type: string
+                required: true
+                description: Soort materiaal dat wordt geëvalueerd
+                source:
+                   regulation: BWBR0011797
+                   output: materiaal_soort
+              - name: gespecificeerd_hoog_risico_materiaal_BWBR0011443
+                type: string
+                source:
+                   regulation: BWBR0011443
+                   output: gespecificeerd_hoog_risico_materiaal
+           output:
+              - name: ophalen_gegenereerd
+                type: boolean
+                description: Boolean die aangeeft of het materiaal in de daaropvolgende week opgehaald moet worden
+           actions:
+              - output: ophalen_gegenereerd
+                value:
+                   operation: AND
+                   conditions:
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $current_date
+                        value:
+                           operation: DATE_ADD
+                           date: $aangifte_datum
+                           days: 7
+                      - operation: OR
+                        conditions:
+                           - operation: EQUALS
+                             subject: $materiaal_soort
+                             value: kadavers_van_slachtdieren_en_landbouwproductie_dieren_tot_40kg_geen_kalveren
+                           - operation: EQUALS
+                             subject: $materiaal_soort
+                             value: hoog_risico_materiaal_art_2_lid_1_onderdelen_c_d_e
+                           - operation: EQUALS
+                             subject: $materiaal_soort
+                             value: gespecificeerd_hoog_risico_materiaal_BWBR0011443
+   - number: '2'
+     text: |
+       De laatste zin van artikel 2, vierde lid, van de Regeling eisen eigenaar of houder van destructiemateriaal vervalt.
+     url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel2
+     references:
+       - id: ref1
+         bwb_id: BWBR0007341
+         artikel: '2'
+     machine_readable:
+        overrides:
+           - law: BWBR0007341
+             article: '2'
+             output: laatste_zin_vierde_lid
+        execution:
+           parameters: []
+           input: []
+           output:
+              - name: laatste_zin_art_2_vierde_lid_vervalt
+                type: boolean
+                description: Boolean die aangeeft dat de laatste zin van Artikel 2, vierde lid van BWBR0007341 vervalt
+           actions:
+              - output: laatste_zin_art_2_vierde_lid_vervalt
+                value: true
+   - number: '3'
+     text: |-
+       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
+       wordt geplaatst.
+     url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel3
+     references: []
+     machine_readable:
+        execution:
+           parameters:
+              - name: staatscourant_publicatie_datum
+                type: date
+                required: true
+                description: Datum waarop de regeling in de Staatscourant is geplaatst
+           input: []
+           output:
+              - name: in_werkings_datum
+                type: date
+                description: Datum waarop de regeling in werking treedt
+           actions:
+              - output: in_werkings_datum
+                value:
+                   operation: DATE_ADD
+                   date: $staatscourant_publicatie_datum
+                   days: 2
+   - number: '4'
+     text: |-
+       Deze regeling wordt aangehaald als: Regeling ophalen hoog- of gespecificeerd hoog-risico-materiaal op gezette
+       tijden.
+     url: https://wetten.overheid.nl/BWBR0011797/2002-04-14#Artikel4
+     references: []
+     machine_readable:
+        execution:
+           parameters: []
+           input: []
+           output:
+              - name: citaat_titel
+                type: string
+                description: Officiële citaatitel van de regeling
+           actions:
+              - output: citaat_titel
+                value: Regeling ophalen hoog- of gespecificeerd hoog-risico-materiaal op gezette tijden
