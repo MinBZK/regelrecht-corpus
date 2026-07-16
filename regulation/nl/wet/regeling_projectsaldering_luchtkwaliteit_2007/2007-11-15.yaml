@@ -70,6 +70,41 @@ articles:
       - id: ref1
         bwb_id: BWBR0003245
         artikel: '5.16'
+    machine_readable:
+      inputs:
+        - beschrijving_ontwikkeling_of_activiteit
+        - omschrijving_plangebied
+        - omschrijving_salderingsgebied
+        - topografische_kaart
+        - beschrijving_concentratieverandering
+        - beschrijving_autonome_situatie
+        - beschrijving_maatregelen
+        - beschrijving_effect_maatregelen
+        - tijdstip_of_termijn_maatregelen
+      output:
+        type: boolean
+        name: besluit_bevat_benodigde_onderdelen
+      logic:
+        AND:
+          conditions:
+            - subject: beschrijving_ontwickeling_of_activiteit
+              operator: is_not_empty
+            - subject: omschrijving_plangebied
+              operator: is_not_empty
+            - subject: omschrijving_salderingsgebied
+              operator: is_not_empty
+            - subject: topografische_kaart
+              operator: is_not_empty
+            - subject: beschrijving_concentratieverandering
+              operator: is_not_empty
+            - subject: beschrijving_autonome_situatie
+              operator: is_not_empty
+            - subject: beschrijving_maatregelen
+              operator: is_not_empty
+            - subject: beschrijving_effect_maatregelen
+              operator: is_not_empty
+            - subject: tijdstip_of_termijn_maatregelen
+              operator: is_not_empty
   - number: '3'
     text: |-
       In geval van uitoefening van een bevoegdheid met projectsaldering bevat de motivering van het betrokken besluit in
@@ -104,6 +139,32 @@ articles:
         bwb_id: BWBR0022813
         artikel: '2'
         paragraaf: '2'
+    machine_readable:
+      inputs:
+        - overwegingen_voorkomen_beperken_toename
+        - overwegingen_geografische_samenhang
+        - overwegingen_kwalitatieve_gevolgen
+        - overwegingen_blootstelling_mensen
+        - overwegingen_tijdstip_termijn_maatregelen
+        - overwegingen_waarborgen_uitvoering
+      output:
+        type: boolean
+        name: motivering_bevat_benodigde_overwegingen
+      logic:
+        AND:
+          conditions:
+            - subject: overwegingen_voorkomen_beperken_toename
+              operator: is_not_empty
+            - subject: overwegingen_geografische_samenhang
+              operator: is_not_empty
+            - subject: overwegingen_kwalitatieve_gevolgen
+              operator: is_not_empty
+            - subject: overwegingen_blootstelling_mensen
+              operator: is_not_empty
+            - subject: overwegingen_tijdstip_termijn_maatregelen
+              operator: is_not_empty
+            - subject: overwegingen_waarborgen_uitvoering
+              operator: is_not_empty
   - number: '4'
     text: |-
       Deze regeling treedt in werking op het tijdstip waarop de
