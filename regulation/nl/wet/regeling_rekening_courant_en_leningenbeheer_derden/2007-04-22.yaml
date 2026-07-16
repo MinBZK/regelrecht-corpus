@@ -94,6 +94,27 @@ articles:
 
       5 Het vervroegd laten vrijvallen van een deposito is uitsluitend mogelijk tegen de actuele marktwaarde.
     url: https://wetten.overheid.nl/BWBR0021734/2007-04-22#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: vervroegd_vrijvallen_deposito
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het vervroegd vrijvallen van een deposito tegen de actuele marktwaarde
+        parameters:
+          - name: berekeningsdatum
+            type: date
+            required: true
+            description: Datum waarop het vervroegd vrijvallen wordt berekend
+        untranslatables:
+          - description: Aggregatie over collecties (Σ) voor cashflows en disconteringsfactoren
+            rationale: De engine ondersteunt geen dynamische aggregatie over collecties van cashflows en disconteringsfactoren.
+        actions:
+          - output: vervroegd_vrijvallen_deposito
+            value:
+              source:
+                output: actuele_marktwaarde
   - number: '3'
     text: |-
       1 Over aangehouden liquide middelen in rekening-courant wordt een daggeldrente vergoed waarvan de hoogte gelijk is
@@ -122,11 +143,36 @@ articles:
       uitstaan, wordt over het netto in deposito uitstaande bedrag een bonusrente vergoed die gebaseerd is op de Staat-
       swapspread.
 
-      6 Bij de berekening van rente, bedoeld in dit artikel, wordt zowel het jaar als de periode waarop de rente
-      betrekking heeft op het juiste aantal dagen gesteld, resulterend in de formule ‘actual/actual’, indien de
-      overeengekomen rentevaste periode minimaal gelijk is aan een jaar en een dag. In de overige gevallen wordt het jaar
-      op 360 dagen gesteld (‘actual/360’).
-    url: https://wetten.overheid.nl/BWBR0021734/2007-04-22#Artikel3
+       6 Bij de berekening van rente, bedoeld in dit artikel, wordt zowel het jaar als de periode waarop de rente
+       betrekking heeft op het juiste aantal dagen gesteld, resulterend in de formule ‘actual/actual’, indien de
+       overeengekomen rentevaste periode minimaal gelijk is aan een jaar en een dag. In de overige gevallen wordt het jaar
+        op 360 dagen gesteld (‘actual/360’).
+      url: https://wetten.overheid.nl/BWBR0021734/2007-04-22#Artikel3
+      machine_readable:
+        execution:
+          output: []
+          parameters:
+            - name: EONIA
+              type: amount
+              type_spec:
+                unit: eurocent
+              description: Euro Overnight Index Average (dagelijkse rente)
+              open_term: true
+            - name: Euribor
+              type: amount
+              type_spec:
+                unit: eurocent
+              description: Euro Interbank Offered Rate (rente voor deposito's en leningen)
+              open_term: true
+            - name: Staat_swapspread
+              type: amount
+              type_spec:
+                unit: eurocent
+              description: Verschil tussen effectief rendement staatsleningen en interbancaire rentestromen
+              open_term: true
+          untranslatables:
+            - description: Dag-telling conventies (actual/actual, actual/360)
+              rationale: De engine ondersteunt geen dynamische dag-telling conventies (actual/actual, actual/360).
   - number: '4'
     text: |-
       1 Een lening heeft een looptijd van minimaal twaalf maanden.
@@ -141,6 +187,55 @@ articles:
 
       6 De Minister kan met inachtneming van deze regeling in een overeenkomst nadere voorwaarden opnemen.
     url: https://wetten.overheid.nl/BWBR0021734/2007-04-22#Artikel4
+    machine_readable:
+      execution:
+        output:
+          - name: actuele_marktwaarde
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De actuele marktwaarde van de lening bij vervroegde aflossing
+        parameters:
+          - name: berekeningsdatum
+            type: date
+            required: true
+            description: Datum waarop de marktwaarde wordt berekend
+        untranslatables:
+          - description: Aggregatie over collecties (Σ) voor cashflows en disconteringsfactoren
+            rationale: De engine ondersteunt geen dynamische aggregatie over collecties van cashflows en disconteringsfactoren.
+        actions:
+          - output: actuele_marktwaarde
+            value:
+              operation: ADD
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - operation: ADD
+                      values:
+                        - 29561096
+                        - 2500000000
+                    - 0.9880
+                - operation: MULTIPLY
+                  values:
+                    - operation: ADD
+                      values:
+                        - 21989589
+                        - 1500000000
+                    - 0.9660
+                - operation: MULTIPLY
+                  values:
+                    - operation: ADD
+                      values:
+                        - 17591671
+                        - 1000000000
+                    - 0.9419
+                - operation: MULTIPLY
+                  values:
+                    - operation: ADD
+                      values:
+                        - 14700000
+                        - 5000000000
+                    - 0.9141
   - number: '5'
     text: |-
       De Minister kan een trekkingsrecht voor derden toestaan op middelen die een rechtspersoon in ’s Rijks schatkist
