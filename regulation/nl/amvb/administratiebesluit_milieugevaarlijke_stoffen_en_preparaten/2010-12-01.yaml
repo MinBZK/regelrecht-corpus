@@ -35,7 +35,7 @@ articles:
       c. administratieplichtige: ieder die beroepshalve stoffen of preparaten vervaardigt of in Nederland invoert.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003245
+       [ref1]: https://wetten.overheid.nl/BWBR0003245
     url: https://wetten.overheid.nl/BWBR0004321/2010-12-01#Artikel1
     references:
       - id: ref1
@@ -45,6 +45,41 @@ articles:
       De administratieplichtige houdt een administratie bij van de hoeveelheden van de stoffen of preparaten die hij
       heeft vervaardigd, in Nederland ingevoerd of aan een ander ter beschikking gesteld.
     url: https://wetten.overheid.nl/BWBR0004321/2010-12-01#Artikel1a
+    machine_readable:
+      execution:
+        parameters:
+          - name: hoeveelheid_vervaardigd
+            type: number
+            required: false
+            description: Hoeveelheid stoffen of preparaten vervaardigd (in kg)
+          - name: hoeveelheid_ingevoerd
+            type: number
+            required: false
+            description: Hoeveelheid stoffen of preparaten in Nederland ingevoerd (in kg)
+          - name: hoeveelheid_ter_beschikking_gesteld
+            type: number
+            required: false
+            description: Hoeveelheid stoffen of preparaten aan een ander ter beschikking gesteld (in kg)
+        output:
+          - name: administratie_verplicht
+            type: boolean
+            description: Indicates whether the administrative obligation applies
+          - name: totale_hoeveelheid
+            type: number
+            description: Totale hoeveelheid stoffen of preparaten (in kg)
+        actions:
+          - output: totale_hoeveelheid
+            value:
+              operation: ADD
+              values:
+                - $hoeveelheid_vervaardigd
+                - $hoeveelheid_ingevoerd
+                - $hoeveelheid_ter_beschikking_gesteld
+          - output: administratie_verplicht
+            value:
+              operation: GREATER_THAN
+              subject: $totale_hoeveelheid
+              value: 0
   - number: '2'
     text: |-
       1 De administratieplichtige administreert met betrekking tot stoffen en preparaten die hij heeft vervaardigd, in
@@ -53,7 +88,7 @@ articles:
       hij daarover beschikt of redelijkerwijs kan beschikken, de chemische namen van de stoffen die de resterende 5
       gewichtsprocenten van een preparaat vormen.
 
-      2 Het eerste lid is niet van toepassing, indien degene die aan de administratieplichtige een preparaat of een
+      2 Het eerste lid is niet van toepassing, indien degene die aan de administratorieplichtige een preparaat of een
       of meer bestanddelen van een door de administratieplichtige vervaardigd preparaat ter beschikking heeft gesteld,
       de gegevens met betrekking tot de samenstelling daarvan niet heeft verstrekt in verband met de bescherming van
       bedrijfsgeheimen:
@@ -76,6 +111,80 @@ articles:
       verbonden gevaren, bedoeld in de EG-verordening indeling, etikettering en verpakking van stoffen en mengsels, te
       administreren.
     url: https://wetten.overheid.nl/BWBR0004321/2010-12-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: hoeveelheid_deze_preparaat_per_jaar
+            type: number
+            required: true
+            description: Hoeveelheid van dit preparaat per jaar (in kg)
+          - name: gegevens_samenstelling_verstrekt
+            type: boolean
+            required: true
+            description: Indicates whether composition data was provided by the supplier
+          - name: gegevens_reeds_verstrekt_of_geadministreerd
+            type: boolean
+            required: false
+            description: Indicates whether composition data was already provided to the Minister or is already administered
+          - name: bestanddelen_behoren_tot_gevaarcategorie
+            type: boolean
+            required: false
+            description: Indicates whether the components belong to a hazard category in Annex I of the CLP Regulation
+        output:
+          - name: administreer_chemische_namen_en_percentages
+            type: boolean
+            description: Indicates whether chemical names and weight percentages must be recorded
+          - name: administreer_gevaarbemanding_en_symbolen
+            type: boolean
+            description: Indicates whether hazard names and symbols must be recorded
+        actions:
+          - output: administreer_chemische_namen_en_percentages
+            value:
+              operation: NOT
+              value:
+                operation: AND
+                conditions:
+                  - operation: NOT
+                    value: $gegevens_samenstelling_verstrekt
+                  - operation: OR
+                    conditions:
+                      - operation: LESS_THAN
+                        subject: $hoeveelheid_deze_preparaat_per_jaar
+                        value: 1000
+                      - operation: AND
+                        conditions:
+                          - operation: GREATER_THAN_OR_EQUAL
+                            subject: $hoeveelheid_deze_preparaat_per_jaar
+                            value: 1000
+                          - operation: EQUAL
+                            subject: $gegevens_reeds_verstrekt_of_geadministreerd
+                            value: true
+          - output: administreer_gevaarbemanding_en_symbolen
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUAL
+                  subject: $bestanddelen_behoren_tot_gevaarcategorie
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: AND
+                    conditions:
+                      - operation: NOT
+                        value: $gegevens_samenstelling_verstrekt
+                      - operation: OR
+                        conditions:
+                          - operation: LESS_THAN
+                            subject: $hoeveelheid_deze_preparaat_per_jaar
+                            value: 1000
+                          - operation: AND
+                            conditions:
+                              - operation: GREATER_THAN_OR_EQUAL
+                                subject: $hoeveelheid_deze_preparaat_per_jaar
+                                value: 1000
+                              - operation: EQUAL
+                                subject: $gegevens_reeds_verstrekt_of_geadministreerd
+                                value: true
   - number: '3'
     text: |-
       1 De administratieplichtige dient de gegevens, bedoeld in de [artikelen 1a][ref1] en [2][ref2], op zodanige wijze
@@ -90,7 +199,7 @@ articles:
       categorieën van gebruikers ter beschikking heeft gesteld.
 
       3 De administratieplichtige dient de gegevens, bedoeld in het eerste, onderscheidenlijk het tweede lid, te bewaren
-      gedurende ten minste 10 jaren vanaf het tijdstip waarop hij die gegevens krijgt.
+      gedurende ten minste 10 jaren vanuit het tijdstip waarop hij die gegevens krijgt.
 
       4 Indien toepassing wordt gegeven aan het tweede lid, dient de administratieplichtige tevens de namen en adressen
       van de afnemers van de stoffen en preparaten, bestemd voor de desbetreffende categorie van gebruikers, gedurende
@@ -115,6 +224,58 @@ articles:
       - id: ref3
         bwb_id: BWBR0004321
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: toepassing_artikel_2_lid_2
+            type: boolean
+            required: true
+            description: Indicates whether Article 2, paragraph 2 applies (exemption for trade secrets)
+          - name: stoffen_bestemd_particuliere_huishoudens_of_buitenland
+            type: boolean
+            required: true
+            description: Indicates whether substances are intended for private households or foreign customers
+        output:
+          - name: bewaartermijn_gegevens_jaar
+            type: number
+            description: Number of years to retain data (10 years by default, 1 year for specific cases)
+          - name: bewaarplicht_leveranciersgegevens
+            type: boolean
+            description: Indicates whether supplier data must be retained
+        actions:
+          - output: bewaartermijn_gegevens_jaar
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $toepassing_artikel_2_lid_2
+                        value: false
+                      - operation: EQUAL
+                        subject: $stoffen_bestemd_particuliere_huishoudens_of_buitenland
+                        value: false
+                  then:
+                    value: 10
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUAL
+                        subject: $toepassing_artikel_2_lid_2
+                        value: false
+                      - operation: EQUAL
+                        subject: $stoffen_bestemd_particuliere_huishoudens_of_buitenland
+                        value: true
+                  then:
+                    value: 1
+              default:
+                value: 10
+          - output: bewaarplicht_leveranciersgegevens
+            value:
+              operation: EQUAL
+              subject: $toepassing_artikel_2_lid_2
+              value: true
   - number: '4'
     text: |-
       Van de administratieplicht zijn uitgezonderd:
@@ -134,6 +295,48 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0021670
+    machine_readable:
+      execution:
+        parameters:
+          - name: stof_of_preparaat_in_niet_vrij_verkeer
+            type: boolean
+            required: true
+            description: Indicates whether the substance/preparation is imported and not in free circulation
+          - name: verwerkt_of_omgezet_binnen_nederland
+            type: boolean
+            required: true
+            description: Indicates whether the substance/preparation is processed or converted within the Netherlands
+          - name: stof_omgezet_in_procesinstallatie_zonder_opslag
+            type: boolean
+            required: true
+            description: Indicates whether the substance is converted in a process installation without intermediate storage
+          - name: is_gewasbeschermingsmiddel_of_biocide_toegelaten_of_vrijgesteld
+            type: boolean
+            required: true
+            description: Indicates whether the substance is an approved or exempted pesticide/biocide
+        output:
+          - name: uitgezonderd_van_administratieplicht
+            type: boolean
+            description: Indicates whether the substance/preparation is exempt from administrative obligations
+        actions:
+          - output: uitgezonderd_van_administratieplicht
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUAL
+                      subject: $stof_of_preparaat_in_niet_vrij_verkeer
+                      value: true
+                    - operation: EQUAL
+                      subject: $verwerkt_of_omgezet_binnen_nederland
+                      value: false
+                - operation: EQUAL
+                  subject: $stof_omgezet_in_procesinstallatie_zonder_opslag
+                  value: true
+                - operation: EQUAL
+                  subject: $is_gewasbeschermingsmiddel_of_biocide_toegelaten_of_vrijgesteld
+                  value: true
   - number: 4a
     text: |-
       Dit besluit berust op [artikel 9.2.1.4 van de wet][ref1].
