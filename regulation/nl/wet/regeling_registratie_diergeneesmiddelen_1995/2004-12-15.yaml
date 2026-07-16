@@ -340,6 +340,10 @@ articles:
   - number: '8.1'
     text: Een besluit omtrent registratie wordt genomen binnen 210 dagen na ontvangst van de aanvraag.
     url: https://wetten.overheid.nl/BWBR0006988/2004-12-15#Artikel8
+    machine_readable:
+      type: procedure
+      logic: { decision_deadline_days: 210, start_event: "ontvangst van de aanvraag" }
+      dependencies: []
   - number: '8.2'
     text: |-
       Indien registratie wordt verleend, deelt het Bureau aan de aanvrager de samenvatting van de productkenmerken mede
