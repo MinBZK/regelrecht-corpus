@@ -112,6 +112,18 @@ articles:
         bwb_id: BWBR0010333
         artikel: '8'
         paragraaf: '3'
+    machine_readable:
+      rule:
+        condition: |
+          (input.user.is_geleider == True) AND
+          (input.combinatie.has_certificate == True)
+        then:
+          output.can_use_police_dog: True
+        else:
+          output.can_use_police_dog: False
+      sources:
+        - article: 2
+          lines: [100, 105]
   - number: '3'
     text: |-
       1 Er is een keuringscommissie voor de politiesurveillancehond. De leden van deze commissie worden aangewezen door
