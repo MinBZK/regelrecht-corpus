@@ -60,9 +60,86 @@ articles:
       2 Indien met toepassing van het eerste lid een bedrag wordt uitbetaald, wordt deze uitbetaling achtereenvolgens
       toegerekend aan de kinderbijslag en het kindgebonden budget.
     url: https://wetten.overheid.nl/BWBR0025183/2018-01-01#Artikel2
+    references: []
+    machine_readable:
+      execution:
+        input:
+          - name: kinderbijslag_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0002368
+              output: kinderbijslag_bedrag
+          - name: kindgebonden_budget_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0022751
+              output: kindgebonden_budget_bedrag
+          - name: buitenlandse_tegemoetkomingen
+            type: array
+            items:
+              type: amount
+              type_spec:
+                unit: eurocent
+            source:
+              output: buitenlandse_tegemoetkomingen_per_kind
+        output:
+          - name: kinderbijslag_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: kindgebonden_budget_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_buitenlandse_tegemoetkoming
+            value:
+              operation: MAX
+              values:
+                - operation: LIST
+                  items: $buitenlandse_tegemoetkomingen
+          - output: kinderbijslag_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $kinderbijslag_bedrag
+                    value: $max_buitenlandse_tegemoetkoming
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $kinderbijslag_bedrag
+                      - $max_buitenlandse_tegemoetkoming
+                - when: true
+                  then: 0
+          - output: kindgebonden_budget_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN
+                        subject: $kindgebonden_budget_bedrag
+                        value: $max_buitenlandse_tegemoetkoming
+                      - operation: GREATER_THAN
+                        subject: $kinderbijslag_uitbetaling
+                        value: 0
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $kindgebonden_budget_bedrag
+                      - $max_buitenlandse_tegemoetkoming
+                - when: true
+                  then: 0
   - number: '3'
     text: |-
-      1 Indien ten aanzien van hetzelfde kind over eenzelfde tijdvak in Nederland recht bestaat
+      1 Indien ten aanzien van het zelfde kind over eenzelfde tijdvak in Nederland recht bestaat
       op kinderbijslag of kindgebonden budget en tevens recht bestaat op een of meer daarmee
       naar aard en strekking overeenkomende tegemoetkomingen op grond van een regeling van een
       volkenrechtelijke organisatie als bedoeld in de [artikelen 3, eerste lid, onderdeel d][ref1], of
@@ -84,6 +161,82 @@ articles:
       - id: ref2
         bwb_id: BWBR0010182
         artikel: '14'
+    machine_readable:
+      execution:
+        input:
+          - name: kinderbijslag_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0002368
+              output: kinderbijslag_bedrag
+          - name: kindgebonden_budget_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0022751
+              output: kindgebonden_budget_bedrag
+          - name: volkenrechtelijke_tegemoetkomingen
+            type: array
+            items:
+              type: amount
+              type_spec:
+                unit: eurocent
+            source:
+              output: volkenrechtelijke_tegemoetkomingen_per_kind
+        output:
+          - name: kinderbijslag_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: kindgebonden_budget_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_volkenrechtelijke_tegemoetkoming
+            value:
+              operation: MAX
+              values:
+                - operation: LIST
+                  items: $volkenrechtelijke_tegemoetkomingen
+          - output: kinderbijslag_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $kinderbijslag_bedrag
+                    value: $max_volkenrechtelijke_tegemoetkoming
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $kinderbijslag_bedrag
+                      - $max_volkenrechtelijke_tegemoetkoming
+                - when: true
+                  then: 0
+          - output: kindgebonden_budget_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN
+                        subject: $kindgebonden_budget_bedrag
+                        value: $max_volkenrechtelijke_tegemoetkoming
+                      - operation: GREATER_THAN
+                        subject: $kinderbijslag_uitbetaling
+                        value: 0
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $kindgebonden_budget_bedrag
+                      - $max_volkenrechtelijke_tegemoetkoming
+                - when: true
+                  then: 0
   - number: '4'
     text: |-
       Indien met toepassing van de Verordening (EEG) nr. 883/2004 en de Verordening (EG) nr. 987/2009 gezinsbijslagen in
@@ -93,6 +246,119 @@ articles:
       tot ten hoogste het bedrag dat zou zijn uitbetaald indien het recht op grond van die verordeningen niet zou zijn
       geschorst.
     url: https://wetten.overheid.nl/BWBR0025183/2018-01-01#Artikel4
+    machine_readable:
+      execution:
+        input:
+          - name: gezinsbijslag_nederland
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              output: gezinsbijslag_nederland_bedrag
+          - name: gezinsbijslag_andere_lidstaat
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              output: gezinsbijslag_andere_lidstaat_bedrag
+          - name: kinderbijslag_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0002368
+              output: kinderbijslag_bedrag
+          - name: kindgebonden_budget_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0022751
+              output: kindgebonden_budget_bedrag
+          - name: kinderopvangtoeslag_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0017017
+              output: kinderopvangtoeslag_bedrag
+        output:
+          - name: kinderbijslag_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: kindgebonden_budget_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: kinderopvangtoeslag_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: uitbetaalbaar_bedrag
+            value:
+              operation: SUBTRACT
+              values:
+                - $gezinsbijslag_nederland
+                - $gezinsbijslag_andere_lidstaat
+          - output: kinderbijslag_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $kinderbijslag_bedrag
+                    value: 0
+                  then:
+                    operation: MIN
+                    values:
+                      - $kinderbijslag_bedrag
+                      - $uitbetaalbaar_bedrag
+                - when: true
+                  then: 0
+          - output: resterend_bedrag_na_kinderbijslag
+            value:
+              operation: SUBTRACT
+              values:
+                - $uitbetaalbaar_bedrag
+                - $kinderbijslag_uitbetaling
+          - output: kindgebonden_budget_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $restering_bedrag_na_kinderbijslag
+                    value: 0
+                  then:
+                    operation: MIN
+                    values:
+                      - $kindgebonden_budget_bedrag
+                      - $restering_bedrag_na_kinderbijslag
+                - when: true
+                  then: 0
+          - output: resterend_bedrag_na_kindgebonden_budget
+            value:
+              operation: SUBTRACT
+              values:
+                - $restering_bedrag_na_kinderbijslag
+                - $kindgebonden_budget_uitbetaling
+          - output: kinderopvangtoeslag_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $restering_bedrag_na_kindgebonden_budget
+                    value: 0
+                  then:
+                    operation: MIN
+                    values:
+                      - $kinderopvangtoeslag_bedrag
+                      - $restering_bedrag_na_kindgebonden_budget
+                - when: true
+                  then: 0
   - number: 4a
     text: |-
       Indien de ouder aanspraak heeft op kindgebonden budget voor meer dan een kind en voor een of meer van
@@ -115,6 +381,29 @@ articles:
       - id: ref3
         bwb_id: BWBR0031508
         artikel: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: kindgebonden_budget_bedrag_per_kind
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0022751
+              output: kindgebonden_budget_bedrag_per_kind
+        output:
+          - name: kindgebonden_budget_uitbetaling_per_kind
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kindgebonden_budget_uitbetaling_per_kind
+            value:
+              operation: CALL
+              regulation: BWBR0031508
+              article: '2'
+              input_mapping:
+                kindgebonden_budget_bedrag: $kindgebonden_budget_bedrag_per_kind
   - number: '5'
     text: |-
       Deze regeling is van overeenkomstige toepassing op de kindertoeslag, bedoeld in
@@ -127,6 +416,51 @@ articles:
       - id: ref1
         bwb_id: BWBR0022751
         artikel: 6a
+    machine_readable:
+      execution:
+        input:
+          - name: kindertoeslag_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0022751
+              output: kindertoeslag_bedrag
+          - name: buitenlandse_tegemoetkomingen
+            type: array
+            items:
+              type: amount
+              type_spec:
+                unit: eurocent
+            source:
+              output: buitenlandse_tegemoetkomingen_per_kind
+        output:
+          - name: kindertoeslag_uitbetaling
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: max_buitenlandse_tegemoetkoming
+            value:
+              operation: MAX
+              values:
+                - operation: LIST
+                  items: $buitenlandse_tegemoetkomingen
+          - output: kindertoeslag_uitbetaling
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $kindertoeslag_bedrag
+                    value: $max_buitenlandse_tegemoetkoming
+                  then:
+                    operation: SUBTRACT
+                    values:
+                      - $kindertoeslag_bedrag
+                      - $max_buitenlandse_tegemoetkoming
+                - when: true
+                  then: 0
   - number: '6'
     text: |-
       De [Regeling samenloop kinderbijslag][ref1] op grond van de Algemene Kinderbijslagwet met buitenlandse
