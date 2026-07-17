@@ -19,20 +19,20 @@ articles:
 
         - *minister:* Minister voor Natuur en Stikstof;
         - *Nationaal Programma Landelijk Gebied:* programma waarin gebiedsgerichte opgaven en maatregelen voor natuur,
-      stikstof, landbouw, water, bodem en klimaat zijn opgenomen, zoals beschreven in de startnotitie van 10 juni 2022
-      (Kamerstukken II 2021/22, 34 682, nr. 96).
+      stikstof, landbouw, water, bodem en klimaat zijn opgenomen, zoals beschreven in de startnotitie van 10 juni 2022
+      (Kamerstukken II 2021/22, 34 682, nr. 96).
         - *uitvoeringskosten:* door de provincie gemaakte of nog te maken: a. kosten voor de ontwikkeling
       en ondersteuning van de Realisatie Transitie Landelijk Gebied op basis van het Nationaal Programma
       Landelijk Gebied; b. kosten voor de voorbereiding van de versnellingsvoorstellen waarvoor op grond van de
       [Regeling specifieke uitkering provinciale versnellingsvoorstellen transitie landelijk gebied][ref1] een
       specifieke uitkering is of wordt verstrekt, en de operationele kosten die zijn verbonden aan de realisatie van die
       versnellingsvoorstellen; of c. kosten voor de voorbereiding van maatregelen ten behoeve van PAS-melders waarvoor
-      een specifieke uitkering is of wordt verstrekt ingevolge de aankondiging in de brief van 15 juli 2022 (Kamerstukken
-      II 2021/22, 35 925-XIV, nr. 161) om € 250 miljoen aan de provincies beschikbaar te stellen ter versnelling van het
+      een specifieke uitkering is of wordt verstrekt ingevolge de aankondiging in de brief van 15 juli 2022 (Kamerstukken
+      II 2021/22, 35 925-XIV, nr. 161) om € 250 miljoen aan de provincies beschikbaar te stellen ter versnelling van het
       legalisatieprogramma, en de operationele kosten die zijn verbonden aan de realisatie van die maatregelen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0047503
+       [ref1]: https://wetten.overheid.nl/BWBR0047503
     url: https://wetten.overheid.nl/BWBR0047505/2024-04-18#Artikel1
     references:
       - id: ref1
@@ -44,12 +44,59 @@ articles:
 
       2 Per provincie wordt één specifieke uitkering verstrekt.
 
-      3 De specifieke uitkering wordt verstrekt voor kosten die zijn of worden gemaakt in de periode 5 april 2022 tot en
-      met 31 december 2023.
+      3 De specifieke uitkering wordt verstrekt voor kosten die zijn of werden gemaakt in de periode 5 april 2022 tot en
+      met 31 december 2023.
 
       4 De specifieke uitkering wordt niet verstrekt voor kosten die reeds uit anderen hoofde zijn of worden
       gesubsidieerd.
     url: https://wetten.overheid.nl/BWBR0047505/2024-04-18#Artikel2
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: provincie_code
+            type: string
+            required: true
+            description: Code van de provincie die de aanvraag indient
+          - name: kosten_datum
+            type: date
+            required: true
+            description: Datum waarop de kosten zijn gemaakt
+          - name: reeds_gesubsidieerd
+            type: boolean
+            required: true
+            description: Indicatie of de kosten reeds uit anderen hoofde zijn gesubsidieerd
+        input:
+          - name: uitvoeringskosten
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: De kosten voor uitvoering waarvoor de uitkering wordt aangevraagd
+        output:
+          - name: specifieke_uitkering_verstrekt
+            type: boolean
+            description: Indicatie of de specifieke uitkering wordt verstrekt
+        actions:
+          - output: specifieke_uitkering_verstrekt
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $provincie_code
+                  value: true
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $kosten_datum
+                  value: "2022-04-05"
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $kosten_datum
+                  value: "2023-12-31"
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $reeds_gesubsidieerd
+                    value: true
   - number: '3'
     text: |-
       1 De specifieke uitkering bedraagt 100% van de uitvoeringskosten, doch ten hoogste het in de beschikking
@@ -64,13 +111,59 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0013817
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: BEREKENING
+        parameters:
+          - name: beslissing_bedrag
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: Het in de beschikking vastgestelde maximumbedrag
+        input:
+          - name: uitvoeringskosten
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: De uitvoeringskosten waarvoor de uitkering wordt berekend
+          - name: btw_compensatie
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: BTW-compensatiebedrag uit BWBR0013817
+            source:
+              regulation: BWBR0013817
+              output: btw_compensatie_bedrag
+        output:
+          - name: specifieke_uitkering_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het bedrag van de specifieke uitkering
+        actions:
+          - output: specifieke_uitkering_bedrag
+            value:
+              operation: SUBTRACT
+              left:
+                operation: MIN
+                left:
+                  operation: MULTIPLY
+                  left: 1
+                  right: $uitvoeringskosten
+                right: $beslissing_bedrag
+              right: $btw_compensatie
   - number: '4'
     text: |-
       1 De specifieke uitkering kan worden aangevraagd tot 1 december 2022, 17:00.
 
       2 De aanvraag bevat in ieder geval:
 
-      a. de beschrijving van de activiteiten en de opgave van de omvang van de kosten waarvoor de specifieke uitkering
+      a. de beschrijving van de activiteiten en de opgave van de omvang van de Kosten waarvoor de specifieke uitkering
       wordt aangevraagd;
 
       b. de opgave van de omvang van de kosten waarvoor de provincie in aanmerking komt voor compensatie op grond van de
@@ -83,18 +176,62 @@ articles:
       - id: ref1
         bwb_id: BWBR0013817
   - number: '5'
-    text: De minister verleent de specifieke uitkering uiterlijk op 31 december 2022.
+    text: De minister verleent de specifieke uitkering uiterlijk op 31 december 2022.
     url: https://wetten.overheid.nl/BWBR0047505/2024-04-18#Artikel5
   - number: '6'
     text: |-
       De provincie wendt de specifieke uitkering zodanig aan dat geen sprake is van ongeoorloofde verlening van
       staatssteun.
     url: https://wetten.overheid.nl/BWBR0047505/2024-04-18#Artikel6
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEZICHT
+        input:
+          - name: geen_ongeoorloofde_staatssteun
+            type: boolean
+            required: true
+            description: Indicatie of er geen sprake is van ongeoorloofde staatssteun
+        output:
+          - name: compliant
+            type: boolean
+            description: Indicatie of de provincie voldoet aan de voorwaarde
+        actions:
+          - output: compliant
+            value:
+              operation: EQUALS
+              subject: $geen_ongeoorloofde_staatssteun
+              value: true
   - number: '7'
     text: |-
       De minister verleent de provincie in de beschikking tot de verlening een voorschot van 100% van het
       uitkeringsbedrag.
     url: https://wetten.overheid.nl/BWBR0047505/2024-04-18#Artikel7
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: BETALING
+        input:
+          - name: uitkeringsbedrag
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: Het bedrag van de specifieke uitkering
+        output:
+          - name: voorschot_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Het voorschotbedrag
+        actions:
+          - output: voorschot_bedrag
+            value:
+              operation: MULTIPLY
+              left: 1
+              right: $uitkeringsbedrag
   - number: '8'
     text: |-
       1 De provincie legt verantwoording af over de besteding van de specifieke uitkering op de wijze, bedoeld in
