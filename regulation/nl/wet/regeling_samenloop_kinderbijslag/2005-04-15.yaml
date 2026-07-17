@@ -26,6 +26,37 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0002368
+    machine_readable:
+      execution:
+        output:
+          - id: bedrag_samenloop_kinderbijslag
+            name: Bedrag samenloop kinderbijslag
+            type: amount
+            type_spec:
+              unit: eurocent
+        parameters:
+          - id: kinderbijslag_op_grond_van_akw
+            name: Kinderbijslag op grond van AKW
+            type: amount
+            type_spec:
+              unit: eurocent
+            source:
+              regulation: BWBR0002368
+          - id: buitenlandse_kinderbijslag
+            name: Buitenlandse kinderbijslag
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: bedrag_samenloop_kinderbijslag
+            value:
+              operation: MAX
+              values:
+                - 0
+                - operation: SUBTRACT
+                  values:
+                    - kinderbijslag_op_grond_van_akw
+                    - buitenlandse_kinderbijslag
   - number: '2'
     text: |-
       Indien ten aanzien van hetzelfde kind over eenzelfde tijdvak recht op kinderbijslag bestaat
