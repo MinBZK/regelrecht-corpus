@@ -122,7 +122,7 @@ articles:
       2 Onverminderd het eerste lid zal een senior-examinator in ieder geval geen supervisie uitoefenen met betrekking
       tot acceptatietesten of het afnemen van examens of proeven van bekwaamheid beoordelen als deze een examen of
       proeve van bekwaamheid voor een type- of klassebevoegdheid inhouden en de senior-examinator binnen de relevante
-      autorisatie niet de bevoegdheid heeft tot het examineren voor tenminste één type- of klassebevoegdverklaring.
+       autorisatie niet de bevoegdheid heeft tot het examineren voor tenminste één type- of klassebevoegdverklaring.
     url: https://wetten.overheid.nl/BWBR0012780/2002-01-01#Artikel4
   - number: '5'
     text: |-
@@ -130,7 +130,7 @@ articles:
       supervisie uit met betrekking tot een acceptatietest als deze wordt uitgevoerd door een kandidaat-examinator die in
       dienst is van dezelfde luchtvaartmaatschappij of opleidingsinstelling.
 
-      2 De minister kan van het gestelde in het eerste lid ontheffing verlenen indien dit in redelijkheid geen toepassing
+      2 De minister kann van het gestelde in het eerste lid ontheffing verlenen indien dit in redelijkheid geen toepassing
       kan vinden.
     url: https://wetten.overheid.nl/BWBR0012780/2002-01-01#Artikel5
   - number: '6'
@@ -143,7 +143,7 @@ articles:
 
       a. een honorarium dat €189 per dag bedraagt, en
 
-      b. de ten behoeve van het uitoefenen van de taak gemaakte reis- en verblijfkosten die volgens het
+      b. de ten behove van het uitoefenen van de taak gemaakte reis- en verblijfkosten die volgens het
       [Reisbesluit binnenland][ref2] worden vergoed.
 
       3 Reis- en verblijfkosten die een senior-examinator in het buitenland maakt worden niet vergoed door de minister.
@@ -160,9 +160,9 @@ articles:
       beoordeelt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0012780#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0005889
-      [ref3]: https://wetten.overheid.nl/BWBR0012780#Artikel5
+       [ref1]: https://wetten.overheid.nl/BWBR0012780#Artikel3
+       [ref2]: https://wetten.overheid.nl/BWBR0005889
+       [ref3]: https://wetten.overheid.nl/BWBR0012780#Artikel5
     url: https://wetten.overheid.nl/BWBR0012780/2002-01-01#Artikel6
     references:
       - id: ref1
@@ -173,6 +173,75 @@ articles:
       - id: ref3
         bwb_id: BWBR0012780
         artikel: '5'
+    machine_readable:
+         execution:
+           parameters:
+             - name: bsn
+               type: string
+               required: true
+               description: Burgerservicenummer van de senior-examinator
+           input:
+             - name: is_RFE_or_RFIE
+               type: boolean
+               source:
+                 output: is_RFE_or_RFIE
+               description: Bepaalt of de senior-examinator RFE of RFIE autorisatie heeft
+             - name: heeft_taak_uit_artikel_3
+               type: boolean
+               source:
+                 output: heeft_taak_uit_artikel_3
+               description: Bepaalt of de senior-examinator een taak uitoefent als bedoeld in artikel 3
+             - name: heeft_ontheffing_artikel_5_lid_2
+               type: boolean
+               source:
+                 output: heeft_ontheffing_artikel_5_lid_2
+               description: Bepaalt of ontheffing is verleet volgens artikel 5, lid 2
+             - name: werkt_voor_zelfde_werkgever
+               type: boolean
+               source:
+                 output: werkt_voor_zelfde_werkgever
+               description: Bepaalt of de kandidaat-examinator in dienst is van dezelfde werkgever
+             - name: werkt_voor_zelfde_werkgever_examen
+               type: boolean
+               source:
+                 output: werkt_voor_zelfde_werkgever_examen
+               description: Bepaalt of de examinator in dienst is van dezelfde werkgever
+           output:
+             - name: vergoeding_bedrag
+               type: amount
+               type_spec:
+                 unit: eurocent
+               description: De vergoeding voor de senior-examinator per dag
+           actions:
+             - output: vergoeding_bedrag
+               value:
+                 operation: IF
+                 cases:
+                   - when:
+                       operation: AND
+                       conditions:
+                         - operation: NOT
+                           value: $is_RFE_or_RFIE
+                         - operation: EQUALS
+                           subject: $heeft_taak_uit_artikel_3
+                           value: true
+                         - operation: NOT
+                           value:
+                             operation: OR
+                             conditions:
+                               - operation: AND
+                                 conditions:
+                                   - operation: EQUALS
+                                     subject: $heeft_ontheffing_artikel_5_lid_2
+                                     value: true
+                                   - operation: EQUALS
+                                     subject: $werkt_voor_zelfde_werkgever
+                                     value: true
+                               - operation: EQUALS
+                                 subject: $werkt_voor_zelfde_werkgever_examen
+                                 value: true
+                     then: 18900
+                 default: 0
   - number: '7'
     text: |-
       1 Senior-examinatoren worden voor onbepaalde tijd benoemd.
