@@ -47,6 +47,84 @@ articles:
       3 Het eerste en tweede lid, zijn van overeenkomstige toepassing op de bediening van ETCS-cabineseinen, met dien
       verstande dat ETCS-cabineseinen door de beheerder worden bediend door het versturen van informatie.
     url: https://wetten.overheid.nl/BWBR0017707/2026-01-01#Artikel23
+    machine_readable:
+      execution:
+        parameters:
+          - name: hoofdspoorweg_id
+            type: string
+            required: true
+            description: Identificatie van de hoofdspoorweg
+          - name: sein_id
+            type: string
+            required: true
+            description: Identificatie van het sein
+          - name: beheerder
+            type: string
+            required: true
+            description: Naam of identiteit van de beheerder
+          - name: treindienstleider
+            type: string
+            required: true
+            description: Naam of identiteit van de treindienstleider
+          - name: spoorwegondernemingen
+            type: string
+            required: true
+            description: Lijst van betrokken spoorwegondernemingen
+          - name: ETCS_actief
+            type: boolean
+            required: true
+            description: Geeft aan of ETCS-cabineseinen van toepassing zijn
+        input:
+          - name: is_hoofdspoorweg
+            type: boolean
+            source:
+              description: Indicatie of het spoor een hoofdspoorweg is
+          - name: sein_plaatsing_vereist
+            type: boolean
+            source:
+              description: Indicatie of deelname aan verkeer op hoofdspoorweg placeholder voor toekomstige logica
+          - name: richtlijnen_raadpleging_afgerond
+            type: boolean
+            source:
+              description: Indicatie of raadpleging van spoorwegondernemingen en Minister is afgerond
+        output:
+          - name: plaatsing_en_bediening_seinen_vereist
+            type: boolean
+            description: Geeft aan of de beheerder zorg draagt voor plaatsing en bediening van vaste seinen
+          - name: richtlijnen_vastgesteld
+            type: boolean
+            description: Geeft aan of de beheerder interne richtlijnen heeft vastgesteld
+          - name: ETCS_bediening_informatie
+            type: string
+            description: Methode voor bediening van ETCS-cabineseinen
+        actions:
+          - output: plaatsing_en_bediening_seinen_vereist
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_hoofdspoorweg
+                  value: true
+                - operation: EQUALS
+                  subject: $sein_plaatsing_vereist
+                  value: true
+          - output: richtlijnen_vastgesteld
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $richtlijnen_raadpleging_afgerond
+                  value: true
+          - output: ETCS_bediening_informatie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $ETCS_actief
+                    value: true
+                  then: "informatie versturen"
+              default: "niet van toepassing"
   - number: '24'
     text: |-
       De aard, uitvoering en betekenis van de seinen anders dan ETCS-cabineseinen zijn opgenomen in [bijlage 4][ref1].
