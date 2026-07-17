@@ -50,6 +50,30 @@ articles:
         bwb_id: BWBR0007266
       - id: ref4
         bwb_id: BWBR0007266
+    machine_readable:
+      input:
+        - name: document_a_aanwezig
+          type: boolean
+          description: Indien het overzicht overeenkomstig onderdeel A van bijlage I aanwezig is
+        - name: document_b_aanwezig
+          type: boolean
+          description: Indien de verantwoording omtrent de inhoud van het besluit tot vaststelling van het saneringsprogramma aanwezig is
+        - name: document_c_aanwezig
+          type: boolean
+          description: Indien de verantwoording omtrent de inhoud van het saneringsprogramma aanwezig is
+        - name: document_d_aanwezig
+          type: boolean
+          description: Indien de verantwoording omtrent de inrichting van de kaart of kaarten aanwezig is
+      output:
+        - name: alle_vereiste_documenten_aanwezig
+          type: boolean
+          description: Indien alle vereiste documenten (A, B, C en D) aanwezig zijn
+      action:
+        - AND:
+            - $document_a_aanwezig
+            - $document_b_aanwezig
+            - $document_c_aanwezig
+            - $document_d_aanwezig
   - number: '3'
     text: |-
       1 Het aan de minister voorgelegde saneringsprogramma gaat bovendien vergezeld van een verklaring van een
@@ -64,6 +88,17 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0007266
+    machine_readable:
+      input:
+        - name: verklaring_onafhankelijke_deskundige_aanwezig
+          type: boolean
+          description: Indien de verklaring van een onafhankelijke deskundige aanwezig is
+      output:
+        - name: verklaring_aanwezig
+          type: boolean
+          description: Indien de verklaring van een onafhankelijke deskundige aanwezig is
+      action:
+        - SET: $verklaring_onafhankelijke_deskundige_aanwezig
   - number: '4'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
