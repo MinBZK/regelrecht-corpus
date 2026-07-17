@@ -33,136 +33,149 @@ articles:
   - number: '2.1'
     text: |-
       De in onderstaande tabel genoemde visies, plannen, besluiten, verordeningen of algemene maatregelen van bestuur
-      worden vormgegeven, ingericht en beschikbaar gesteld overeenkomstig de in de tabel genoemde standaarden, die als
-      bijlagen bij deze regeling behoren, indien dit in de desbetreffende kolom is aangegeven.
+       worden vormgegeven, ingericht en beschikbaar gesteld overeenkomstig de in de tabel genoemde standaarden, die als
+       bijlagen bij deze regeling behoren, indien dit in de desbetreffende kolom is aangegeven.
     url: https://wetten.overheid.nl/BWBR0024656/2011-03-08#Artikel2
+    machine_readable:
+      execution:
+        input:
+          - name: instrument_type
+            type: string
+            description: Het type instrument (bv. structuurvisie, bestemmingsplan).
+        output:
+          - name: toepasselijke_standaarden
+            type: array
+            description: Lijst van standaarden waar het instrument aan moet voldoen.
+        actions:
+          - output: toepasselijke_standaarden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "structuurvisie"
+                  then: "['IMRO2008', 'SVBP2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "voorbereidingsbesluit"
+                  then: "['IMRO2008', 'SVBP2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "bestemmingsplan"
+                  then: "['IMRO2008', 'SVBP2008', 'STRI2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "inpassingsplan"
+                  then: "['IMRO2008', 'SVBP2008', 'STRI2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "rijksbestemmingsplan"
+                  then: "['IMRO2008', 'SVBP2008', 'STRI2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "beheersverordening"
+                  then: "['IMRO2008', 'SVBP2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "provinciale_verordening"
+                  then: "['IMRO2008', 'SVBP2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "aanwijzing"
+                  then: "['IMRO2008', 'SVBP2008']"
+                - when:
+                    operation: EQUALS
+                    subject: $instrument_type
+                    value: "algemene_maatregel_van_bestuur"
+                  then: "['IMRO2008', 'SVBP2008']"
+              default: "[]"
   - number: '2.2'
     text: |-
       Het beheer van de in het eerste lid bedoelde standaarden wordt opgedragen aan een of meer nader aan te wijzen
       instanties.
-            Tabel
+              Tabel
 
 
 
+                      Standaarden [Wro][ref1]
+
+                      IMRO2008
+
+                      SVBP2008
+
+                      STRI2008
+
+                      Instrumenten
 
 
 
+                      structuurvisie
+
+                      x
+
+                      x
 
 
-                    Standaarden [Wro][ref1]
+                      voorbereidingsbesluit
 
+                      x
 
-                    IMRO2008
-
-
-                    SVBP2008
-
-
-                    STRI2008
-
-
-
-
-                    Instrumenten
+                      x
 
 
 
-
-
-
-
-
-
-                    structuurvisie
-
-
-                    x
-
-
-
-                    x
-
-
-
-
-                    voorbereidingsbesluit
-
-
-                    x
-
-
-
-                    x
-
-
-
-
-                    bestemmingsplan, inpassingsplan, rijksbestemmingsplan, in voorkomend geval met bijbehorende
+                      bestemmingsplan, inpassingsplan, rijksbestemmingsplan, in voorkomend geval met bijbehorende
       uitwerking of wijziging
 
+                      x
 
-                    x
+                      x
 
-
-                    x
-
-
-                    x
+                      x
 
 
 
+                      beheersverordening
 
-                    beheersverordening
+                      x
 
-
-                    x
-
-
-
-                    x
+                      x
 
 
+                      provinciale verordening als bedoeld in [art. 4.1 Wro][ref2]
+
+                      x
+
+                      x
 
 
-                    provinciale verordening als bedoeld in [art. 4.1 Wro][ref2]
+                      aanwijzing als bedoeld in [artikel 4.2][ref3] of [4.4 Wro][ref4]
+
+                      x
+
+                      x
 
 
-                    x
+                      algemene maatregel van bestuur als bedoeld in [art. 4.3 Wro][ref5]
+
+                      x
+
+                      x
 
 
-
-                    x
-
-
-
-
-                    aanwijzing als bedoeld in [artikel 4.2][ref3] of [4.4 Wro][ref4]
-
-
-                    x
-
-
-
-                    x
-
-
-
-
-                    algemene maatregel van bestuur als bedoeld in [art. 4.3 Wro][ref5]
-
-
-                    x
-
-
-
-                    x
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020449
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel4
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel4
-      [ref4]: https://wetten.overheid.nl/BWBR0020449#Artikel4
-      [ref5]: https://wetten.overheid.nl/BWBR0020449#Artikel4
+        [ref1]: https://wetten.overheid.nl/BWBR0020449
+        [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel4
+        [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel4
+        [ref4]: https://wetten.overheid.nl/BWBR0020449#Artikel4
+        [ref5]: https://wetten.overheid.nl/BWBR0020449#Artikel4
     url: https://wetten.overheid.nl/BWBR0024656/2011-03-08#Artikel2
     references:
       - id: ref1
@@ -183,23 +196,56 @@ articles:
     text: |-
       De mededeling van een besluit tot verlening van een omgevingsvergunning waarbij sprake is van een geval als
       bedoeld in [artikel 2.12. eerste lid, onder a, onder 3; van de Wet algemene bepalingen omgevingsrecht][ref1], wordt
-      beschikbaar gesteld conform de vereisten zoals die zijn vastgelegd voor ‘projectbesluiten’ in IMRO2008 en STRI2008.
-      De waarde van het attribuut ‘naam’ van de klasse Besluitgebied_X begint met: omgevingsvergunning.
+      beschikbaar gesteld conform de vereisten zoals die zijn vastgelegd voor 'projectbesluiten' in IMRO2008 en STRI2008.
+      De waarde van het attribuut 'naam' van de klasse Besluitgebied_X begint met: omgevingsvergunning.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+
+         [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
     url: https://wetten.overheid.nl/BWBR0024656/2011-03-08#Artikel2
     references:
       - id: ref1
         bwb_id: BWBR0024779
         artikel: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: besluit_naam
+            type: string
+            description: De naam van het besluit (attribuut 'naam' van Besluitgebied_X).
+        output:
+          - name: naam_begint_met_omgevingsvergunning
+            type: boolean
+            description: Of de naam begint met "omgevingsvergunning".
+          - name: moet_voldoen_aan_IMRO_STRI
+            type: boolean
+            description: Of het besluit moet voldoen aan IMRO2008 en STRI2008.
+        actions:
+          - output: naam_begint_met_omgevingsvergunning
+            value:
+              operation: EQUALS
+              subject:
+                operation: LEFT
+                source: $besluit_naam
+                length: "19"
+              value: "omgevingsvergunning"
+          - output: moet_voldoen_aan_IMRO_STRI
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $naam_begint_met_omgevingsvergunning
+                    value: "true"
+                  then: "true"
+              default: "false"
   - number: '3'
     text: |-
       Voor zover in de [bijlagen I][ref1], [II][ref2] en [III][ref3] bij deze regeling ten aanzien van producten
-      technische voorschriften zijn gesteld als bedoeld in de richtlijn nr. 98/34/EG van het Europees Parlement en
-      de Raad van de Europese Unie van 22 juni 1998 betreffende een informatieprocedure op het gebied van normen en
+      technische voorschriften zijn gesteld als bedoeld in de richtlijn nr. 98/34/EG van het Europees Parlement en
+      de Raad van de Europese Unie van 22 juni 1998 betreffende een informatieprocedure op het gebied van normen en
       technische voorschriften en regels betreffende diensten van de informatiemaatschappij (PbEG L 204), zoals gewijzigd
-      bij richtlijn nr. 98/48/EG van 20 juli 1998 (PbEG L 217), worden met die producten gelijkgesteld producten die
+      bij richtlijn nr. 98/48/EG van 20 juli 1998 (PbEG L 217), worden met die producten gelijkgesteld producten die
       rechtmatig zijn vervaardigd of in de handel zijn gebracht in een andere lidstaat van de Europese Unie dan wel
       rechtmatig zijn vervaardigd of in de handel zijn gebracht in een staat niet zijnde een lidstaat van de Europese
       Unie, die partij is bij een daartoe strekkend of mede daartoe strekkend Verdrag dat Nederland bindt, en die voldoen
