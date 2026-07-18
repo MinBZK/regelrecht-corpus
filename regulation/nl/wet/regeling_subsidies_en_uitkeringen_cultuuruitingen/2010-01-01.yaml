@@ -173,6 +173,25 @@ articles:
       - id: ref2
         bwb_id: BWBR0006759
         artikel: '33'
+    machine_readable:
+      condition: >-
+        AND(
+          NOT(submitted_on_time),
+          OR(
+            late_submission_type = "jaarverantwoording",
+            late_submission_type = "eindverantwoording"
+          )
+        )
+      then:
+        action: calculate_penalty
+        description: Bereken de verlaging van de subsidie voor elke maand vertraging
+        steps:
+          - monthly_penalty_percentage: MUL(0.01, subsidiebedrag)
+          - monthly_penalty_cap: 10000.00
+          - monthly_penalty: MIN(monthly_penalty_percentage, monthly_penalty_cap)
+          - total_penalty: MUL(monthly_penalty, months_late)
+          - adjusted_subsidie: SUB(subsidiebedrag, total_penalty)
+        result: adjusted_subsidie
   - number: '9.1'
     text: 'In dit hoofdstuk wordt verstaan onder:'
     url: https://wetten.overheid.nl/BWBR0007155/2010-01-01#Artikel9
