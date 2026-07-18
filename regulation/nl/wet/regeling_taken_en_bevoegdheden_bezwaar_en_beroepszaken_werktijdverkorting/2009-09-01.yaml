@@ -18,7 +18,7 @@ articles:
     text: |-
       1 Het hoofd van de afdeling Juridische Zaken van de Arbeidsinspectie is belast met het behandelen van
       bezwaar- en beroepszaken naar aanleiding van beslissingen op verzoeken om ontheffing als bedoeld in
-      [artikel 8, derde lid, van het Buitengewoon Besluit Arbeidsverhoudingen 1945][ref1] alsmede met juridische
+      [artikel 8, derde lid, van het Buitengewoon Besluit Arbeidsverhoudingen 1945][ref1] alsmede met juridische
       advisering op het gebied van werktijdverkorting.
 
       2 Aan het hoofd van de afdeling Juridische Zaken van de Arbeidsinspectie wordt in het kader van de behandeling van
@@ -35,10 +35,49 @@ articles:
       - id: ref1
         bwb_id: BWBR0002014
         artikel: '8'
+    machine_readable:
+      lid_2:
+        description: >-
+          Verleent mandaat en machtiging aan het hoofd van de afdeling Juridische Zaken van de Arbeidsinspectie
+          voor afhandeling van administratieve stukken en vertegenwoordiging in gerechtelijke procedures.
+        produces:
+          - field: heeft_mandaat_afhandeling_administratieve_stukken
+            type: boolean
+            description: Indicatie of het hoofd van de afdeling Juridische Zaken bevoegde is tot afhandeling van administratieve stukken in het kader van bezwaar- en beroepszaken.
+            legal_character: INFORMATIEF
+          - field: heeft_machtiging_vertegenwoordiging
+            type: boolean
+            description: Indicatie of het hoofd van de afdeling Juridische Zaken bevoegd is tot het machtigen van personen om een bewindspersoon in gerechtelijke procedures te vertegenwoordigen.
+            legal_character: INFORMATIEF
+        source:
+          - ref: lid_2
+        logic:
+          - if:
+            - and:
+              - equals:
+                - var: input.rol_aanvrager
+                  type: string
+                - const: hoofd afdeling Juridische Zaken van de Arbeidsinspectie
+              - or:
+                - equals:
+                  - var: input.context
+                    type: string
+                  - const: behandeling bezwaar- en beroepszaken
+                - equals:
+                  - var: input.context
+                    type: string
+                  - const: werktijdverkorting
+            then:
+              - set:
+                - var: output.heeft_mandaat_afhandeling_administratieve_stukken
+                - const: true
+              - set:
+                - var: output.heeft_machtiging_vertegenwoordiging
+                - const: true
   - number: '2'
     text: |-
       1 Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
-      wordt geplaatst en werkt terug tot en met 1 januari 2004.
+      wordt geplaatst en werkt terug tot en met 1 januari 2004.
 
       2 Deze regeling wordt aangehaald als: Regeling taken en bevoegdheden bezwaar- en beroepszaken werktijdverkorting.
     url: https://wetten.overheid.nl/BWBR0016492/2009-09-01#Artikel2
