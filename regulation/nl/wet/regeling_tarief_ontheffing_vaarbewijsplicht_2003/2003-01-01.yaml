@@ -1,7 +1,7 @@
 ---
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
 $id: regeling_tarief_ontheffing_vaarbewijsplicht_2003
-regulatory_layer: WET
+regulatory_layer: MINISTERIELE_REGELING
 publication_date: '2003-12-22'
 valid_from: '2003-01-01'
 valid_to: '2003-12-31'
@@ -19,6 +19,16 @@ articles:
       De kosten van behandeling van een aanvraag van een ontheffing van de verplichting tot het voorzien zijn van een
       geldig vaarbewijs bedragen € 135.
     url: https://wetten.overheid.nl/BWBR0014426/2003-01-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: tarief_ontheffing_vaarbewijsplicht
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: tarief_ontheffing_vaarbewijsplicht
+            value: 13500
   - number: '2'
     text: De Regeling tarieven ontheffing vaarbewijsplicht wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0014426/2003-01-01#Artikel2
