@@ -25,6 +25,34 @@ articles:
 
       b. voor herinspectie als gevolg van geconstateerde gebreken € 130.
     url: https://wetten.overheid.nl/BWBR0016078/2004-01-01#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: inspectietype
+            type: string
+            required: true
+            description: Type inspectie (periodieke_inspectie of herinspectie_gebreken)
+        output:
+          - name: vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: vergoeding
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $inspectietype
+                    value: periodieke_inspectie
+                  then: 16100
+                - when:
+                    operation: EQUALS
+                    subject: $inspectietype
+                    value: herinspectie_gebreken
+                  then: 13000
+              default: 0
   - number: '2'
     text: |-
       De [Regeling tarieven controle radarinstallaties en bochtaanwijzers Rijnvaart 2003][ref1] wordt ingetrokken.
