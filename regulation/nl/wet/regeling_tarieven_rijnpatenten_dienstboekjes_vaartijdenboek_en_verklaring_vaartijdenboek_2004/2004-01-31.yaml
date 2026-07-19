@@ -21,11 +21,27 @@ articles:
       2 Voor de uitbreiding, het verlengen, het vervangen of het omruilen van een Rijnpatent is een vergoeding
       verschuldigd van € 50.
     url: https://wetten.overheid.nl/BWBR0016070/2004-01-31#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: rijnpatent_afgifte_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: rijnpatent_wijziging_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: rijnpatent_afgifte_vergoeding
+            value: 6000
+          - output: rijnpatent_wijziging_vergoeding
+            value: 5000
   - number: '2'
     text: |-
       1 Voor de afgifte van een dienstboekje, bedoeld in
       [artikel 23.04, eerste lid, van het Reglement onderzoek schepen op de Rijn 1995][ref1] en
-      [artikel 2.06, eerste lid, van het Reglement Rijnpatenten 1998][ref2], is een vergoeding verschuldigd van € 12.
+      [artikel 2.06, eerste lid, van het Reglement Rijnpatenten 1998][ref2], is een vergoeding verschuldigd van € 12.
 
       2 Voor het jaarlijks afstempelen van een dienstboekje is een vergoeding verschuldigd van € 4,20.
 
@@ -40,22 +56,38 @@ articles:
       - id: ref2
         bwb_id: BWBR0008934
         artikel: '2.06'
+    machine_readable:
+      execution:
+        output:
+          - name: dienstboekje_afgifte_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: dienstboekje_jaarlijks_afstempelen_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: dienstboekje_afgifte_vergoeding
+            value: 1200
+          - output: dienstboekje_jaarlijks_afstempelen_vergoeding
+            value: 420
   - number: '3'
     text: |-
       1 Voor de afgifte van een vaartijdenboek, bedoeld in
       [artikel 25, onder a, van de Besluit vaartijden en bemanningssterkte binnenvaart][ref1] en
       [artikel 23.08, eerste lid, van het Reglement onderzoek schepen op de Rijn 1995][ref2], is een vergoeding
-      verschuldigd van € 14.
+      verschuldigd van € 14.
 
       2 Voor de afgifte van een verklaring bij het vaartijdenboek, bedoeld in artikel
       26, derde lid, van de [Wet vaartijden en bemanningssterkte binnenvaart][ref3] en
       [artikel 23.08, vierde lid, van het Reglement onderzoek schepen op de Rijn 1995][ref4], is een vergoeding
-      verschuldigd van € 4,20.
+      verschuldigd van € 4,20.
 
-      3 Voor het verrichten van mutaties in het vaartijdenboek is een vergoeding verschuldigd van € 4,20.
+      3 Voor het verrichten van mutaties in het vaartijdenboek is een vergoeding verschuldigd van € 4,20.
 
       4 Voor het verrichten van mutaties in een verklaring bij het vaartijdenboek is een vergoeding verschuldigd van
-      € 4,20.
+      € 4,20.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0007124#Artikel25
@@ -75,14 +107,42 @@ articles:
       - id: ref4
         bwb_id: BWBR0007858
         artikel: '23.08'
+    machine_readable:
+      execution:
+        output:
+          - name: vaartijdenboek_afgifte_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: verklaring_vaartijdenboek_afgifte_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: vaartijdenboek_mutatie_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: verklaring_vaartijdenboek_mutatie_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: vaartijdenboek_afgifte_vergoeding
+            value: 1400
+          - output: verklaring_vaartijdenboek_afgifte_vergoeding
+            value: 420
+          - output: vaartijdenboek_mutatie_vergoeding
+            value: 420
+          - output: verklaring_vaartijdenboek_mutatie_vergoeding
+            value: 420
   - number: '4'
     text: De Regeling tarieven Rijnpatenten, dienstboekjes, vaartijdenboek en verklaring vaartijdenboek wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016070/2004-01-31#Artikel4
   - number: '5'
-    text: Deze regeling treedt in werking op 1 januari 2004.
+    text: Deze regeling treedt in werking op 1 januari 2004.
     url: https://wetten.overheid.nl/BWBR0016070/2004-01-31#Artikel5
   - number: '6'
     text: |-
-      Deze regeling wordt aangehaald als: Regeling tarieven Rijnpatenten, dienstboekjes, vaartijdenboek en verklaring
+      Deze regeling wordt angehaald als: Regeling tarieven Rijnpatenten, dienstboekjes, vaartijdenboek en verklaring
       vaartijdenboek 2004.
     url: https://wetten.overheid.nl/BWBR0016070/2004-01-31#Artikel6
