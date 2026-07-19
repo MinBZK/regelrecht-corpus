@@ -17,8 +17,18 @@ articles:
   - number: '1'
     text: |-
       De kosten van behandeling van een aanvraag van een ontheffing van de verplichting tot het voorzien zijn van een
-      geldig vaarbewijs bedragen € 141.
+      geldig vaarbewijs bedragen € 141.
     url: https://wetten.overheid.nl/BWBR0016088/2004-01-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: kost_behandeling_ontheffing_vaarbewijsplicht
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kost_behandeling_ontheffing_vaarbewijsplicht
+            value: 14100
   - number: '2'
     text: |-
       De [Regeling tarief ontheffing vaarbewijsplicht 2003][ref1] wordt ingetrokken.
@@ -30,7 +40,7 @@ articles:
       - id: ref1
         bwb_id: BWBR0014426
   - number: '3'
-    text: Deze regeling treedt in werking met ingang van 1 januari 2004.
+    text: Deze regeling treedt in werking met ingang van 1 januari 2004.
     url: https://wetten.overheid.nl/BWBR0016088/2004-01-01#Artikel3
   - number: '4'
     text: 'Deze regeling wordt aangehaald als: Regeling tarief ontheffing vaarbewijsplicht 2004.'
