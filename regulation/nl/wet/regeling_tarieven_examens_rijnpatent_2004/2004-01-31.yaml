@@ -17,6 +17,17 @@ articles:
   - number: '1'
     text: De kosten van het examen voor het Schippersdiploma Rijnvaart ter verkrijging van het Rijnpatent bedragen € 156.
     url: https://wetten.overheid.nl/BWBR0016315/2004-01-31#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: kosten_examen_rijnpatent
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kosten_examen_rijnpatent
+            value: 15600
+    references: []
   - number: '2'
     text: |-
       De kosten van het herexamen voor het diploma, bedoeld in [artikel 1][ref1], bedragen per examenonderdeel € 55, doch
@@ -25,6 +36,28 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0016315#Artikel1
     url: https://wetten.overheid.nl/BWBR0016315/2004-01-31#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: aantal_examenonderdelen
+            type: number
+            required: true
+            description: Aantal examenonderdelen voor het herexamen
+        output:
+          - name: kosten_herexamen_rijnpatent
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kosten_herexamen_rijnpatent
+            value:
+              operation: MIN
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - 5500
+                    - $aantal_examenonderdelen
+                - 15600
     references:
       - id: ref1
         bwb_id: BWBR0016315
@@ -33,10 +66,8 @@ articles:
     text: De Regeling tarieven examens Rijnpatent 2003 wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016315/2004-01-31#Artikel3
   - number: '4'
-    text: |-
-      Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
-      wordt geplaatst.
+    text: Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0016315/2004-01-31#Artikel4
   - number: '5'
-    text: 'Deze regeling wordt aangehaald als: Regeling tarieven examens Rijnpatent 2004.'
+    text: Deze regeling wordt aangehaald als Regeling tarieven examens Rijnpatent 2004.
     url: https://wetten.overheid.nl/BWBR0016315/2004-01-31#Artikel5
