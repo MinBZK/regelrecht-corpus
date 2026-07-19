@@ -1,7 +1,7 @@
 ---
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
 $id: regeling_tarieven_controle_radarinstallaties_en_bochtaanwijzers_rijnvaart_2003
-regulatory_layer: WET
+regulatory_layer: MINISTERIELE_REGELING
 publication_date: '2003-12-22'
 valid_from: '2003-01-01'
 valid_to: '2003-12-31'
@@ -25,6 +25,22 @@ articles:
 
       b. voor herinspectie als gevolg van geconstateerde gebreken € 124.
     url: https://wetten.overheid.nl/BWBR0014428/2003-01-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: periodieke_inspectie_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+          - name: herinspectie_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: periodieke_inspectie_vergoeding
+            value: 15400
+          - output: herinspectie_vergoeding
+            value: 12400
   - number: '2'
     text: Deze regeling treedt in werking met ingang van 1 januari 2003.
     url: https://wetten.overheid.nl/BWBR0014428/2003-01-01#Artikel2
