@@ -31,6 +31,20 @@ articles:
       Voor het onderzoek en de verdere werkzaamheden nodig voor de afgifte van het certificaat, is een tarief
       verschuldigd van € 270.
     url: https://wetten.overheid.nl/BWBR0017600/2004-12-10#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: tarief_afgifte_certificaat
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor afgifte van het certificaat
+        actions:
+          - output: tarief_afgifte_certificaat
+            value: 27000
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '2'
   - number: '3'
     text: |-
       1 Voor het onderzoek aan boord en de verdere werkzaamheden nodig voor een tussentijdse aanpassing van een
@@ -47,6 +61,71 @@ articles:
       4 Voor de vervanging van certificaten die door een scheepsongeval verloren zijn gegaan, is geen vergoeding
       verschuldigd.
     url: https://wetten.overheid.nl/BWBR0017600/2004-12-10#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: type_werkzaamheid
+            type: string
+            required: true
+            description: Type werkzaamheid (tussentijdse_aanpassing, extra_exemplaar, verlies_door_ongeval)
+          - name: aantal_extra_documenten
+            type: number
+            required: false
+            description: Aantal extra documenten richete in het tweede lid
+        output:
+          - name: tarief_tussentijdse_aanpassing
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor tussentijdse aanpassing van certificaat
+          - name: tarief_extra_exemplaar
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor extra exemplaar of tussentijdse vervanging zonder onderzoek
+          - name: tarief_volgend_document
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor elk volgend document
+          - name: tarief_vervangingscertificaat
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Tarief voor vervanging van verloren certificaat
+        actions:
+          - output: tarief_tussentijdse_aanpassing
+            value: 27000
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '3'
+              lid: '1'
+          - output: tarief_extra_exemplaar
+            value: 18300
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '3'
+              lid: '2'
+          - output: tarief_volgend_document
+            value: 11800
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '3'
+              lid: '3'
+          - output: tarief_vervangingscertificaat
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $type_werkzaamheid
+                    value: verlies_door_ongeval
+                  then: 0
+              default: null
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '3'
+              lid: '4'
   - number: '4'
     text: |-
       De [artikelen 46][ref1] en [47 van de Regeling Nederlandse tarieven Schepenwet 2004][ref2] zijn van toepassing.
@@ -62,11 +141,28 @@ articles:
       - id: ref2
         bwb_id: BWBR0016086
         artikel: '47'
+    machine_readable:
+      execution:
+        input:
+          - name: artikelen_46_47_tarieven
+            type: object
+            source:
+              regulation: regeling_nederlandse_tarieven_schepenwet_2004
+        output:
+          - name: toepasselijke_tarieven
+            type: object
+            description: Tarieven uit Regeling Nederlandse tarieven Schepenwet 2004 zijn van toepassing
+        actions:
+          - output: toepasselijke_tarieven
+            value: $artikelen_46_47_tarieven
+            legal_basis:
+              law: Regeling tarieven Besluit aangroeiwerende verfsystemen zeeschepen 2004
+              article: '4'
   - number: '5'
     text: |-
       Indien het bij koninklijke boodschap van 3 juli 2003 ingediende voorstel van wet tot wijziging van de Wet voorkoming
       Wet voorkoming verontreiniging door schepen, de Wet verontreiniging zeewater en de Scheepvaartverkeerswet in
-      verband met de instelling van de Nederlandse exclusieve economische zone en enkele andere onderwerpen (28 984)
+      verband met de instelling van de Nederlandse exclusieve economische zone en enkele andere onderwerpen (28 984)
       tot wet is verheven en artikel I, onderdeel U, van die wet in werking treedt, berust deze regeling na die
       inwerkingtreding op [artikel 40, tweede lid, van de Wet voorkoming verontreiniging door schepen][ref1].
 
