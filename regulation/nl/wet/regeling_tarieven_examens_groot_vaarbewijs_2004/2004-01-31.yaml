@@ -20,6 +20,16 @@ articles:
       vaarbewijs voor de vaart op rivieren, kanalen en meren, en de kosten van het examen voor het Schippersdiploma Alle
       Binnenwateren ter verkrijging van het groot vaarbewijs voor de vaart op alle binnenwateren, bedragen € 156.
     url: https://wetten.overheid.nl/BWBR0016317/2004-01-31#Artikel1
+    machine_readable:
+      output:
+        name: examen_kosten
+        type: amount
+        type_spec:
+          unit: eurocent
+      actions:
+        - operation: ASSIGN
+          target: examen_kosten
+          value: 15600
   - number: '2'
     text: |-
       De kosten van het herexamen voor het Schippersdiploma Rivieren, Kanalen en Meren ter verkrijging van het groot
@@ -35,6 +45,33 @@ articles:
       - id: ref1
         bwb_id: BWBR0016317
         artikel: '1'
+    machine_readable:
+      parameters:
+        - name: aantal_examenonderdelen
+          type: number
+      output:
+        name: herexamen_kosten
+        type: amount
+        type_spec:
+          unit: eurocent
+      actions:
+        - operation: ASSIGN
+          target: totaal_kosten
+          value:
+            operation: MULTIPLY
+            left: 5500
+            right: $aantal_examenonderdelen
+        - operation: ASSIGN
+          target: herexamen_kosten
+          value:
+            operation: IF
+            cases:
+              - when:
+                  operation: GREATER_THAN
+                  subject: $totaal_kosten
+                  value: 15600
+                then: 15600
+            default: $totaal_kosten
   - number: '3'
     text: De Regeling tarieven examens groot vaarbewijs 2003 wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016317/2004-01-31#Artikel3
