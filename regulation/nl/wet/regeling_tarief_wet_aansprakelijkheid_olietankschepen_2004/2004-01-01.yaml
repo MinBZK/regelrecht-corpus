@@ -9,7 +9,7 @@ bwb_id: BWBR0016087
 url: https://wetten.overheid.nl/BWBR0016087/2004-01-01
 preamble:
   text: |-
-    Gelet op artikel 2 van het besluit van 28 februari 1976, ter uitvoering van artikel 29 van de Wet aansprakelijkheid
+    Gelet op artikel 2 van het besluit van 28 februari 1976, ter uitvoering van artikel 29 van de Wet aansprakelijkheid
     olietankschepen (Stb. 137);
 
     Besluit:
@@ -28,6 +28,21 @@ articles:
       - id: ref1
         bwb_id: BWBR0002976
         artikel: '15'
+    machine_readable:
+      input:
+        - name: certificaat_vereist
+          type: boolean
+          description: Certificaat als bedoeld in artikel 15 van de Wet aansprakelijkheid olietankschepen (BWBR0002976).
+      output:
+        - name: vergoeding_bedrag
+          type: amount
+          unit: eurocent
+          description: De verschuldigde vergoeding voor afgifte, waarmerking, of verlenging van het certificaat.
+      logic:
+        - action: set
+          output: vergoeding_bedrag
+          value: 14500
+          legal_basis: Artikel 1
   - number: '2'
     text: De [Regeling tarief Wet aansprakelijkheid olietankschepen 2003](onbekend) wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016087/2004-01-01#Artikel2
