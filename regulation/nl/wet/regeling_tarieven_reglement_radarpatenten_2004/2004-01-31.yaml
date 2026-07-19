@@ -40,6 +40,24 @@ articles:
       - id: ref3
         bwb_id: BWBR0010915
         artikel: '3.03'
+    machine_readable:
+      execution:
+        output:
+          - name: examen_tarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 19700
+          - name: theorieherexamen_tarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 7300
+          - name: praktijkexamen_tarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 19700
   - number: '2'
     text: |-
       1 Voor de afgifte van een radarpatent als
@@ -60,6 +78,19 @@ articles:
       - id: ref2
         bwb_id: BWBR0010915
         artikel: '3.04'
+    machine_readable:
+      execution:
+        output:
+          - name: radarpatent_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 6000
+          - name: bijschrijven_vergoeding
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 5000
   - number: '3'
     text: |-
       Voor de werkzaamheden die samenhangen met het omwisselen van radardiploma’s als bedoeld in
@@ -72,6 +103,14 @@ articles:
       - id: ref1
         bwb_id: BWBR0010915
         artikel: '4.02'
+    machine_readable:
+      execution:
+        output:
+          - name: omwisselen_tarief
+            type: amount
+            type_spec:
+              unit: eurocent
+            value: 5000
   - number: '4'
     text: De Regeling tarieven Reglement radarpatenten 2003 wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016316/2004-01-31#Artikel4
