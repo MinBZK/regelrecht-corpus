@@ -7,118 +7,218 @@ valid_from: '2026-01-01'
 bwb_id: BWBR0020708
 url: https://wetten.overheid.nl/BWBR0020708/2026-01-01
 preamble:
-  text: |-
-    Gelet op de artikel 36, achtste lid en 62, vierde lid, van de Wegenverkeerswet 1994, artikel 24a van het
-    Kentekenreglement en artikel 4.6a van het Voertuigreglement;
+    text: |-
+        Gelet op de artikel 36, achtste lid en 62, vierde lid, van de Wegenverkeerswet 1994, artikel 24a van het
+        Kentekenreglement en artikel 4.6a van het Voertuigreglement;
 
-    Besluit:
-  url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#ArtikelAanhef
+        Besluit:
+    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      In deze regeling wordt verstaan onder transitokenteken: kenteken als bedoeld in
-      [artikel 4, derde lid, onderdeel b, van het Kentekenreglement][ref1].
+    - number: '1'
+      text: |-
+          In deze regeling wordt verstaan onder transitokenteken: kenteken als bedoeld in
+          [artikel 4, derde lid, onderdeel b, van het Kentekenreglement][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006951#Artikel4
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0006951
-        artikel: '4'
-  - number: '2'
-    text: |-
-      De aanvraag voor een inschrijving en tenaamstelling ten behoeve de verkrijging van een transitokenteken wordt
-      buiten behandeling gelaten indien in de drie maanden voorafgaand aan de aanvraag een transitokenteken voor het
-      voertuig is opgegeven.
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel2
-  - number: '3'
-    text: |-
-      [Artikel 72, eerste lid, van de wet][ref1] is niet van toepassing op voertuigen waarvoor een transitokenteken is
-      opgegeven.
+          [ref1]: https://wetten.overheid.nl/BWBR0006951#Artikel4
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel1
+      references:
+          - id: ref1
+            bwb_id: BWBR0006951
+            artikel: '4'
+      machine_readable:
+          definition:
+              transitokenteken:
+                  description: Kenteken als bedoeld in artikel 4, derde lid, onderdeel b, van het Kentekenreglement
+                  reference: BWBR0006951:4
+    - number: '2'
+      text: |-
+          De aanvraag voor een inschrijving en tenaamstelling ten behoeve de verkrijging van een transitokenteken wordt
+          buiten behandeling gelaten indien in de drie maanden voorafgaand aan de aanvraag een transitokenteken voor het
+          voertuig is opgegeven.
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel2
+      machine_readable:
+          rule:
+              condition:
+                  - fact: aanvraag_inschrijving_tenaamstelling
+                  - fact: transitokenteken_voertuig_opgegeven
+                  - operator: within
+                  - value: 3 maanden
+                  - direction: before
+              conclusion:
+                  - fact: aanvraag_buiten_behandeling_gelaten
+                    value: true
+    - number: '3'
+      text: |-
+          [Artikel 72, eerste lid, van de wet][ref1] is niet van toepassing op voertuigen waarvoor een transitokenteken is
+          opgegeven.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006622#Artikel72
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel3
-    references:
-      - id: ref1
-        bwb_id: BWBR0006622
-        artikel: '72'
-  - number: '4'
-    text: |-
-      1 De aanvrager die niet beschikt over, dan wel geen gebruik maakt van de erkenning inschrijven met onderzoek of
-      de erkenning inschrijven zonder onderzoek, biedt het voertuig waarvoor hij de aanvraag indient aan bij een van
-      de daartoe op grond van [artikel 4, eerste lid, onderdeel a, van de Regeling kentekenbewijzen][ref1] aangewezen
-      vestiging van de Dienst Wegverkeer, dan wel bij een andere locatie die voldoet aan de door deze dienst te stellen
-      voorwaarden.
+          [ref1]: https://wetten.overheid.nl/BWBR0006622#Artikel72
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel3
+      references:
+          - id: ref1
+            bwb_id: BWBR0006622
+            artikel: '72'
+      machine_readable:
+          rule:
+              condition:
+                  - fact: voertuig_heeft_transitokenteken
+              conclusion:
+                  - fact: artikel_72_eerste_lid_niet_van_toepassing
+                    value: true
+    - number: '4'
+      text: |-
+          1 De aanvrager die niet beschikt over, dan wel geen gebruik maakt van de erkenning inschrijven met onderzoek of
+          de erkenning inschrijven zonder onderzoek, biedt het voertuig waarvoor hij de aanvraag indient aan bij een van
+          de daartoe op grond van [artikel 4, eerste lid, onderdeel a, van de Regeling kentekenbewijzen][ref1] aangewenegn
+          vestiging van de Dienst Wegverkeer, dan wel bij een andere locatie die voldoet aan de door deze dienst te stellen
+          voorwaarden.
 
-      2 Indien sinds de datum waarop een ambulance of waarop een motorrijtuig of aanhangwagen, waarvan de toegestane
-      maximale massa meer bedraagt dan 3500 kg, dan wel dat bestemd is om te worden gebruikt voor het vervoer van
-      personen waarop de [Wet personenvervoer 2000][ref2] betrekking heeft, voor het eerst is toegelaten een jaar is
-      verstreken, stelt de aanvrager het voertuig ter beschikking om de technische staat ervan te doen vaststellen.
+          2 Indien sinds de datum waarop een ambulance of waarop een motorrijtuig of aanhangwagen, waarvan de toegestane
+          maximale massa meer bedraagt dan 3500 kg, dan wel dat bestemd is om te worden gebruikt voor het vervoer van
+          personen waarop de [Wet personenvervoer 2000][ref2] betrekking heeft, voor het eerst is toegelaten een jaar is
+          verstreken, stelt de aanvrager het voertuig ter beschikking om de technische staat ervan te doen vaststellen.
 
-      3 Indien sinds de datum waarop een motorrijtuig of aanhangwagen, anders dan bedoeld in het derde lid, voor het
-      eerst is toegelaten drie jaren zijn verstreken stelt de aanvrager het voertuig ter beschikking om de technische
-      staat ervan te doen vaststellen.
+          3 Indien sinds de datum waarop een motorrijtuig of aanhangwagen, anders dan bedoeld in het derde lid, voor het
+          eerst is toegelaten drie jaren zijn verstreken stelt de aanvrager het voertuig ter beschikking om de technische
+          staat ervan te doen vaststellen.
 
-      4 In afwijking van het tweede en derde lid hoeft het voertuig niet ter beschikking te worden gesteld om de
-      technische staat ervan te doen vaststellen, indien een geldig kentekenbewijs afgegeven door een van de lidstaten
-      van de Europese Unie, alsmede een geldig bewijs dat in het land waar het voertuig is gekentekend de periodieke
-      keuring als bedoeld in artikel 1 van richtlijn 2009/40/EG van het Europees Parlement en de Raad van 6 mei 2009
-      betreffende de technische controle van motorvoertuigen en aanhangwagens (PbEU L 141) met goed gevolg heeft
-      doorstaan, worden overgelegd.
+          4 In afwijking van het tweede en derde lid hoeft het voertuig niet ter beschikking te worden gesteld om de
+          technische staat ervan te doen vaststellen, indien een geldig kentekenbewijs afgegeven door een van de lidstaten
+          van de Europese Unie, alsmede een geldig bewijs dat in het land waar het voertuig is gekentekend de periodieke
+          keuring als bedoeld in artikel 1 van richtlijn 2009/40/EG van het Europees Parlement en de Raad van 6 mei 2009
+          betreffende de technische controle van motorvoertuigen en aanhangwagens (PbEU L 141) met goed gevolg heeft
+          doorstaan, worden overgelegd.
 
-      5 De Dienst Wegverkeer kan besluiten dat het vaststellen van de technische staat steekproefsgewijs geschiedt.
+          5 De Dienst Wegverkeer kan besluiten dat het vaststellen van de technische staat steekproefsgewijs geschiedt.
 
-      6 Alvorens door de Dienst Wegverkeer op de aanvraag wordt beslist vindt een onderzoek plaats naar de identiteit
-      van het voertuig, tenzij de aanvrager beschikt over de erkenning inschrijven met onderzoek of de erkenning zonder
-      onderzoek.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007090#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0011470
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel4
-    references:
-      - id: ref1
-        bwb_id: BWBR0007090
-        artikel: '4'
-      - id: ref2
-        bwb_id: BWBR0011470
-  - number: '5'
-    text: |-
-      1 Indien de aanvrager een natuurlijke persoon is legt deze een legitimatiebewijs over als bedoeld in
-      [artikel 2 van de Regeling legitimatievoorschriften kentekenbewijzen en kentekenplaten][ref1].
-
-      2 Indien de aanvraag wordt ingediend door een tekenbevoegde namens een rechtspersoon
-      als bedoeld in [artikel 50, derde lid, van de wet][ref2], legt deze de in
-      [artikel 3, eerste lid, van de Regeling legitimatievoorschriften kentekenbewijzen][ref3] bedoelde documenten over.
-
-      3 Indien de aanvraag namens een natuurlijke persoon wordt ingediend door een erkend bedrijf,
-      brengt het erkende bedrijf de persoon die het voertuig op de openbare weg brengt onder de aandacht
-      dat er voor het voertuig een verzekering tegen wettelijke aansprakelijkheid als bedoeld in de
-      [Wet aansprakelijkheidsverzekering motorrijtuigen][ref4] dient te zijn afgesloten.
+          6 Alvorens door de Dienst Wegverkeer op de aanvraag wordt beslist vindt een onderzoek plaats naar de identiteit
+          van het voertuig, tenzij de aanvrager beschikt over de erkenning inschrijven met onderzoek of de erkenning zonder
+          onderzoek.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0007091#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0006622#Artikel50
-      [ref3]: https://wetten.overheid.nl/BWBR0007091#Artikel3
-      [ref4]: https://wetten.overheid.nl/BWBR0002415
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0007091
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0006622
-        artikel: '50'
-      - id: ref3
-        bwb_id: BWBR0007091
-        artikel: '3'
-      - id: ref4
-        bwb_id: BWBR0002415
-  - number: '6'
-    text: Deze regeling treedt in werking met ingang van 1 januari 2007.
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel6
-  - number: '7'
-    text: 'Deze regeling wordt aangehaald als: Regeling transitokentekens.'
-    url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel7
+          [ref1]: https://wetten.overheid.nl/BWBR0007090#Artikel4
+          [ref2]: https://wetten.overheid.nl/BWBR0011470
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel4
+      references:
+          - id: ref1
+            bwb_id: BWBR0007090
+            artikel: '4'
+          - id: ref2
+            bwb_id: BWBR0011470
+      machine_readable:
+          rule:
+              - condition:
+                  - fact: aanvrager_beschikt_niet_over_erkenning_inschrijven_met_onderzoek
+                  - fact: aanvrager_beschikt_niet_over_erkenning_inschrijven_zonder_onderzoek
+                conclusion:
+                  - fact: voertuig_moet_worden_aangeboden_bij_rdw
+                    value: true
+              - condition:
+                  - fact: voertuig_is_ambulance
+                  - operator: or
+                  - condition:
+                    - fact: voertuig_heeft_toegestane_maximale_massa_groter_dan_3500_kg
+                    - operator: or
+                    - fact: voertuig_is_bestemd_voor_personenvervoer
+                  - fact: datum_eerste_toelating_voertuig
+                  - operator: plus
+                  - value: 1 jaar
+                  - operator: lte
+                  - fact: huidige_datum
+                conclusion:
+                  - fact: voertuig_moet_ter_beschikking_gesteld_worden_voor_technische_inspectie
+                    value: true
+              - condition:
+                  - fact: voertuig_is_geen_ambulance
+                  - fact: voertuig_heeft_toegestane_maximale_massa_kleiner_dan_of_gelijk_aan_3500_kg
+                  - fact: voertuig_is_niet_bestemd_voor_personenvervoer
+                  - fact: datum_eerste_toelating_voertuig
+                  - operator: plus
+                  - value: 3 jaren
+                  - operator: lte
+                  - fact: huidige_datum
+                conclusion:
+                  - fact: voertuig_moet_ter_beschikking_gesteld_worden_voor_technische_inspectie
+                    value: true
+              - condition:
+                  - fact: voertuig_heeft_geldig_eu_kentekenbewijs
+                  - fact: voertuig_heeft_geldig_bewijs_van_periodieke_keuring
+                conclusion:
+                  - fact: voertuig_hoeft_niet_ter_beschikking_gesteld_worden_voor_technische_inspectie
+                    value: true
+              - condition:
+                  - fact: rdw_besluit_steekproefsgewijze_inspectie
+                conclusion:
+                  - fact: technische_staat_wordt_steekproefsgewijs_vastgesteld
+                    value: true
+              - condition:
+                  - fact: aanvrager_beschikt_niet_over_erkenning_inschrijven_met_onderzoek
+                  - fact: aanvrager_beschikt_niet_over_erkenning_inschrijven_zonder_onderzoek
+                conclusion:
+                  - fact: identiteit_voertuig_moet_worden_onderzocht
+                    value: true
+    - number: '5'
+      text: |-
+          1 Indien de aanvrager een natuurlijke persoon is legt deze een legitimatiebewijs over als bedoeld in
+          [artikel 2 van de Regeling legitimatievoorschriften kentekenbewijzen en kentekenplaten][ref1].
+
+          2 Indien de aanvraag wordt ingediend door een tekenbevoegde namens een rechtspersoon
+          als bedoeld in [artikel 50, derde lid, van de wet][ref2], legt deze de in
+          [artikel 3, eerste lid, van de Regeling legitimatievoorschriften kentekenbewijzen][ref3] bedoelde documenten over.
+
+          3 Indien de aanvraag namens een natuurlijke persoon wordt ingediend door een erkend bedrijf,
+          brengt het erkende bedrijf de persoon die het voertuig op de openbare weg brengt onder de aandacht
+          dat er voor het voertuig een verzekering tegen wettelijke aansprakelijkheid als bedoeld in de
+          [Wet aansprakelijkheidsverzekering motorrijtuigen][ref4] dient te zijn afgesloten.
+
+
+          [ref1]: https://wetten.overheid.nl/BWBR0007091#Artikel2
+          [ref2]: https://wetten.overheid.nl/BWBR0006622#Artikel50
+          [ref3]: https://wetten.overheid.nl/BWBR0007091#Artikel3
+          [ref4]: https://wetten.overheid.nl/BWBR0002415
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel5
+      references:
+          - id: ref1
+            bwb_id: BWBR0007091
+            artikel: '2'
+          - id: ref2
+            bwb_id: BWBR0006622
+            artikel: '50'
+          - id: ref3
+            bwb_id: BWBR0007091
+            artikel: '3'
+          - id: ref4
+            bwb_id: BWBR0002415
+      machine_readable:
+          rule:
+              - condition:
+                  - fact: aanvrager_is_natuurlijke_persoon
+                conclusion:
+                  - fact: aanvrager_moet_legitimatiebewijs_overleggen
+                    reference: BWBR0007091:2
+              - condition:
+                  - fact: aanvraag_ingediend_door_tekenbevoegde_namens_rechtspersoon
+                conclusion:
+                  - fact: aanvrager_moet_documenten_overleggen
+                    reference: BWBR0007091:3
+              - condition:
+                  - fact: aanvraag_ingediend_door_erkend_bedrijf_namens_natuurlijke_persoon
+                conclusion:
+                  - fact: erkend_bedrijf_moet_verzekeringsplicht_melden
+                    reference: BWBR0002415
+    - number: '6'
+      text: Deze regeling treedt in werking met ingang van 1 januari 2007.
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel6
+      machine_readable:
+          fact:
+              - fact: regeling_treedt_in_werking_op
+                value: '2007-01-01'
+    - number: '7'
+      text: 'Deze regeling wordt aangehaald als: Regeling transitokentekens.'
+      url: https://wetten.overheid.nl/BWBR0020708/2026-01-01#Artikel7
+      machine_readable:
+          fact:
+              - fact: regeling_wordt_aangehaald_als
+                value: Regeling transitokentekens
