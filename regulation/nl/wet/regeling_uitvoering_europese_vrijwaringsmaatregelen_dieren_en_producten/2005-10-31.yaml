@@ -53,25 +53,112 @@ articles:
       desbetreffende land of een deel daarvan te schorsen;
 
       b. bijzondere voorwaarden aan de invoer van desbetreffende dieren, producten dan wel voorwerpen uit het
-      desbetreffende land of een deel daarvan te stellen, indien niet is voldaan aan de bij deze communautaire
+      desbetreffende land of een deel daarvan te stellen, indien niet is voldaan aan de bij deze communautair
       uitvoeringsmaatregel voorgeschreven voorwaarden.
     url: https://wetten.overheid.nl/BWBR0018875/2005-10-31#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_invoer_geschorst
+            type: boolean
+            required: true
+            description: Geeft aan of de communautair uitvoeringsmaatregel de invoer schorst
+          - name: is_voorwaarden_niet_voldaan
+            type: boolean
+            required: true
+            description: Geeft aan of niet is voldaan aan de bij de communautaire uitvoeringsmaatregel voorgeschreven voorwaarden
+        output:
+          - name: invoer_verboden
+            type: boolean
+            description: Geeft aan of de invoer verboden is op grond van de communautair uitvoeringsmaatregel
+        actions:
+          - output: invoer_verboden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $is_invoer_geschorst
+                    value: true
+                  then: true
+                - when:
+                    operation: EQUALS
+                    subject: $is_voorwaarden_niet_voldaan
+                    value: true
+                  then: true
+              default: false
   - number: '3'
     text: |-
-      1 De bevoegde autoriteit, bedoeld in een communautaire uitvoeringsmaatregel, is de minister.
+      1 De bevoegde autoriteit, bedoeld in een communautair uitvoeringsmaatregel, is de minister.
 
-      2 In afwijking van het eerste lid is, ingeval een communautaire uitvoeringsmaatregel de bevoegde autoriteit een
+      2 In afwijking van het eerste lid is, ingeval een communautair uitvoeringsmaatregel de bevoegde autoriteit een
       taak opdraagt die niet bestaat in het nemen van een besluit, de bevoegde autoriteit de Voedsel en Waren Autoriteit.
 
-      3 De officiële dierenarts, bedoeld in een communautaire uitvoeringsmaatregel, is een dierenarts, verbonden aan de
+      3 De officiële dierenarts, bedoeld in een communautair uitvoeringsmaatregel, is een dierenarts, verbonden aan de
       Voedsel- en Warenautoriteit.
     url: https://wetten.overheid.nl/BWBR0018875/2005-10-31#Artikel3
+    machine_readable:
+      execution:
+        parameters:
+          - name: taak_bestaat_uit_besluit
+            type: boolean
+            required: true
+            description: Geeft aan of de taak bestaat in het nemen van een besluit
+        output:
+          - name: bevoegde_autoriteit
+            type: string
+            description: De bevoegde autoriteit op grond van de communautair uitvoeringsmaatregel
+        actions:
+          - output: bevoegde_autoriteit
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $taak_bestaat_uit_besluit
+                    value: true
+                  then: minister
+                - when:
+                    operation: EQUALS
+                    subject: $taak_bestaat_uit_besluit
+                    value: false
+                  then: Voedsel- en Warenautoriteit
+              default: minister
   - number: '4'
     text: |-
-      Een communautaire uitvoeringsmaatregel, of een wijziging daarvan, treedt voor de toepassing van deze regeling in
+      Een communautair uitvoeringsmaatregel, of een wijziging daarvan, treedt voor de toepassing van deze regeling in
       werking met ingang van de dag waarop daaraan uiterlijk uitvoering moet zijn gegeven, of bij gebreke daarvan, de dag
       waarop de maatregel is vastgesteld.
     url: https://wetten.overheid.nl/BWBR0018875/2005-10-31#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: uiterlijk_uitvoeringsdag
+            type: date
+            required: false
+            description: De dag waarop uiterlijk uitvoering moet zijn gegeven
+          - name: vaststellingsdag
+            type: date
+            required: true
+            description: De dag-Hop de communautair uitvoeringsmaatregel is vastgesteld
+        output:
+          - name: ingangsdatum
+            type: date
+            description: De ingangsdatum van de communautair uitvoeringsmaatregel
+        actions:
+          - output: ingangsdatum
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: IS_NULL
+                    subject: $uiterlijk_uitvoeringsdag
+                  then:
+                    operation: VALUE
+                    value: $vaststellingsdag
+              default:
+                operation: VALUE
+                value: $uiterlijk_uitvoeringsdag
   - number: '5'
     text: |-
       De [Tijdelijke regeling maatregelen in verband met Aviaire Influenza 2004][ref1] wordt ingetrokken.
