@@ -54,52 +54,27 @@ articles:
         artikel: '4'
   - number: '4'
     text: |-
-      Als legeringspoeder voor de amal-gaambereiding wordt een poeder gebruikt dat is samengesteld uit circa 50
+      Als legeringspoeder voor de amalgaambereiding wordt een poeder gebruikt dat is samengesteld uit circa 50
       gewichtsprocent zilver, circa 30 gewichtsprocent tin en circa 20 gewichtsprocent koper. De maximale afwijking in
-      het gewichtspercentage voor elke stof bedraagt 5 gewichts-procent.
+      het gewichtspercentage voor elke stof bedraagt 5 gewichtsprocent.
 
-      Het legeringspoeder wordt met kwik gemengd in de gewichtsverhouding
-
-      1 : 1,2 en wordt daarna tot amalgaampasta gemengd in een amalgaammenger, zodanig dat er geen vrij kwik meer in het
-      mengsel aanwezig is.
+       Het legeringspoeder wordt met kwik gemengd in de gewichtsverhouding 1 : 1,2 en wordt daarna tot amalgaampasta gemengd in een amalgaammenger, zodanig dat er geen vrij kwik meer in het mengsel aanwezig is.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel4
   - number: '5'
     text: |-
-      De verkregen amalgaampasta wordt op een glasplaat met een spatel in porties verdeeld van 2 à 3 mm. De deeltjes
+      De verkregen amalgampasta wordt op een glasplaat met een spatel in porties verdeeld van 2 à 3 mm. De deeltjes
       moeten vervolgens 48 uur uitharden en daarna tot poeder worden verkleind. Hiervoor wordt een kogelmolen gebruikt,
       gevuld met stalen kogels met een diameter van 15 mm. Het toerental van de kogelmolen bedraagt tijdens het
-      maalproces 1300 toeren per minuut.
+       maalproces 1300 toeren per minuut.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel5
   - number: '6'
     text: |-
       Het poeder wordt verdeeld in de volgende vier fracties:
 
-
-
-             fractie 1:
-
-              deeltjes met een afmeting van 1000 mm tot 2000 mm;
-
-
-
-             fractie 2:
-
-              deeltjes met een afmeting van 350 mm tot 1000 mm;
-
-
-
-            fractie 3:
-
-              deeltjes met een afmeting van 44 mm tot 350 mm;
-
-
-
-             fractie 4:
-
-              deeltjes met een afmeting van 20 mm tot 44 mm.
-
-
-
+          - fractie 1: deeltjes met een afmeting van 1000 mm tot 2000 mm;
+          - fractie 2: deeltjes met een afmeting van 350 mm tot 1000 mm;
+          - fractie 3: deeltjes met een afmeting van 44 mm tot 350 mm;
+          - fractie 4: deeltjes met een afmeting van 20 mm tot 44 mm.
 
       De massa van elke fractie bedraagt ten minste 8 gram.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel6
@@ -107,13 +82,23 @@ articles:
     text: |-
       Het standaard testmonster wordt samengesteld uit:
 
-        - 5 gram deeltjes fractie 1
-        - 2,5 gram deeltjes fractie 2
-        - 1,5 gram deeltjes fractie 3
-        - 1 gram deeltjes fractie 4.
+          - 5 gram deeltjes fractie 1
+          - 2,5 gram deeltjes fractie 2
+          - 1,5 gram deeltjes fractie 3
+          - 1 gram deeltjes fractie 4.
 
       De totale massa (A) van het testmonster bedraagt 10 gram.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel7
+    machine_readable:
+       execution:
+         output:
+           - name: A
+             type: number
+             description: Totale massa van het standaard testmonster in gram.
+         actions:
+           - output: A
+             value:
+               value: 10
   - number: '8'
     text: |-
       De testopstelling wordt zo uitgevoerd dat het waterdebiet door de amal-gaamafscheider kan worden geregeld en
@@ -162,36 +147,59 @@ articles:
 
 
 
+          η=
 
 
 
+          (A-B)
 
 
 
-                  η=
-
-
-                  (A-B)
-
-
-                  .100%
+          .100%
 
 
 
-
-
-                  A
-
-
-
-
-
-
-
-      Er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 0 procent en er wordt een gemiddeld
-      rendement bepaald uit 3 testen bij een vulgraad van 100 procent. Het in het testcertificaat vermelde rendement van
+      Er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 0 percent en er wordt een gemiddeld
+      rendement bepaald uit 3 testen bij een vulgraad van 100 percent. Het in het testcertificaat vermelde rendement van
       de afscheider is het kleinste van deze twee gemiddelden.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel13
+    machine_readable:
+       untranslatables:
+         - construct: "op 3 decimalen nauwkeurig"
+           reason: "Rounding to a specific number of decimal places is not supported by the engine."
+           legal_text_excerpt: "De massa (B) van het amalgaam dat de amalgaamafscheider is gepasseerd, wordt daarna op 3 decimalen nauwkeurig teruggewonnen."
+           accepted: false
+         - construct: "gemiddeld rendement bepaald uit 3 testen"
+           reason: "Aggregation over multiple tests (averaging) is not supported by the engine."
+           legal_text_excerpt: "Er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 0 percent en er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 100 Prozent."
+           accepted: false
+       execution:
+         output:
+           - name: afscheidingsrendement_percentage
+             type: number
+             description: Het afscheidingsrendement voor amalgaam, berekend als η = ((A-B)/A) * 100%.
+         input:
+           - name: A
+             type: number
+             description: Totale massa van het testmonster in gram (10 gram, vastgesteld in Artikel 7).
+           - name: B
+             type: number
+             description: Massa van het amalgaam dat de amalgaamafscheider is gepasseerd, in gram (gemeten volgens Artikel 12).
+         actions:
+           - output: afscheidingsrendement_percentage
+             value:
+               operation: MULTIPLY
+               values:
+                 - operation: DIVIDE
+                   values:
+                     - operation: SUBTRACT
+                       values:
+                         - source:
+                             output: A
+                         - value: B
+                     - source:
+                         output: A
+                 - value: 100
   - number: '14'
     text: |-
       Aan de in de [artikelen 2 tot en met 13][ref1] beschreven methode zijn in ieder geval gelijkwaardig:
