@@ -45,6 +45,27 @@ articles:
       Het is verboden te vissen met een vissersvaartuig indien de bruto-tonnage van dat vaartuig, zoals aangegeven in de
       op dat vaartuig betrekking hebbende meetbrief, niet is vastgesteld overeenkomstig artikel 4 van de verordening.
     url: https://wetten.overheid.nl/BWBR0009264/1998-01-01#Artikel2
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+          decision_type: GEEN_BESLUIT
+        input:
+          - name: bruto_tonnage_vastgesteld_overeenkomstig_artikel_4
+            type: boolean
+            description: Of de bruto-tonnage van het vaartuig is vastgesteld overeenkomstig artikel 4 van verordening (EEG) nr. 2930/86
+        output:
+          - name: verbod_van_toepassing
+            type: boolean
+            description: Of het verbod om te vissen van toepassing is
+        actions:
+          - output: verbod_van_toepassing
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $bruto_tonnage_vastgesteld_overeenkomstig_artikel_4
+                value: true
   - number: '3'
     text: Deze regeling treedt in werking met ingang van 1 januari 1998.
     url: https://wetten.overheid.nl/BWBR0009264/1998-01-01#Artikel3
