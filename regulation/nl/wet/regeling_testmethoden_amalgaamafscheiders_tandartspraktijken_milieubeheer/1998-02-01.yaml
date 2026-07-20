@@ -40,6 +40,34 @@ articles:
       het water waaraan het testmonster is toegevoegd, wordt door dit filter geleid, voordat het de amalgaamafscheider
       doorstroomt.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: water_type
+            type: string
+            description: Type water gebruikt voor de test.
+          - name: water_filter_porie_grootte_mm
+            type: number
+            description: Poriegrootte van het waterfilter in millimeters.
+          - name: pre_test_temperature
+            type: string
+            description: Temperatuur waarbij de amalgaamafscheider en testmateriaal worden bewaard.
+          - name: pre_test_duration_hours
+            type: number
+            description: Minimale duur voorafgaande aan de rendementstest in uren.
+        actions:
+          - output: water_type
+            value:
+              value: drinkwater
+          - output: water_filter_porie_grootte_mm
+            value:
+              value: 1
+          - output: pre_test_temperature
+            value:
+              value: kamertemperatuur
+          - output: pre_test_duration_hours
+            value:
+              value: 10
   - number: '3'
     text: |-
       Bij de rendementstest wordt gebruik gemaakt van een standaard testmonster zoals beschreven in de
@@ -60,6 +88,43 @@ articles:
 
        Het legeringspoeder wordt met kwik gemengd in de gewichtsverhouding 1 : 1,2 en wordt daarna tot amalgaampasta gemengd in een amalgaammenger, zodanig dat er geen vrij kwik meer in het mengsel aanwezig is.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel4
+    machine_readable:
+      execution:
+        output:
+          - name: alloy_silver_percentage
+            type: number
+            description: Gewichtsprocent zilver in het legeringspoeder.
+          - name: alloy_tin_percentage
+            type: number
+            description: Gewichtsprocent tin in het legeringspoeder.
+          - name: alloy_copper_percentage
+            type: number
+            description: Gewichtsprocent koper in het legeringspoeder.
+          - name: alloy_max_deviation_percentage
+            type: number
+            description: Maximale afwijking in gewichtspercentage voor elke stof.
+          - name: alloy_to_mercury_ratio
+            type: number
+            description: Gewichtsverhouding legeringspoeder tot kwik.
+        actions:
+          - output: alloy_silver_percentage
+            value:
+              value: 50
+          - output: alloy_tin_percentage
+            value:
+              value: 30
+          - output: alloy_copper_percentage
+            value:
+              value: 20
+          - output: alloy_max_deviation_percentage
+            value:
+              value: 5
+          - output: alloy_to_mercury_ratio
+            value:
+              operation: DIVIDE
+              values:
+                - value: 1
+                - value: 1.2
   - number: '5'
     text: |-
       De verkregen amalgampasta wordt op een glasplaat met een spatel in porties verdeeld van 2 à 3 mm. De deeltjes
@@ -67,6 +132,34 @@ articles:
       gevuld met stalen kogels met een diameter van 15 mm. Het toerental van de kogelmolen bedraagt tijdens het
        maalproces 1300 toeren per minuut.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel5
+    machine_readable:
+      execution:
+        output:
+          - name: hardening_duration_hours
+            type: number
+            description: Duur van het uitharden van de amalgampasta in uren.
+          - name: ball_mill_ball_diameter_mm
+            type: number
+            description: Diameter van de stalen kogels in millimeters.
+          - name: ball_mill_rpm
+            type: number
+            description: Toerental van de kogelmolen in toeren per minuut.
+          - name: pasta_portion_size_mm
+            type: string
+            description: Grootte van de porties amalgampasta.
+        actions:
+          - output: hardening_duration_hours
+            value:
+              value: 48
+          - output: ball_mill_ball_diameter_mm
+            value:
+              value: 15
+          - output: ball_mill_rpm
+            value:
+              value: 1300
+          - output: pasta_portion_size_mm
+            value:
+              value: "2 à 3 mm"
   - number: '6'
     text: |-
       Het poeder wordt verdeeld in de volgende vier fracties:
@@ -78,6 +171,40 @@ articles:
 
       De massa van elke fractie bedraagt ten minste 8 gram.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel6
+    machine_readable:
+      execution:
+        output:
+          - name: fractie_1_size_mm
+            type: string
+            description: Afmeting van deeltjes in fractie 1.
+          - name: fractie_2_size_mm
+            type: string
+            description: Afmeting van deeltjes in fractie 2.
+          - name: fractie_3_size_mm
+            type: string
+            description: Afmeting van deeltjes in fractie 3.
+          - name: fractie_4_size_mm
+            type: string
+            description: Afmeting van deeltjes in fractie 4.
+          - name: fractie_min_mass_gram
+            type: number
+            description: Minimale massa van elke fractie in gram.
+        actions:
+          - output: fractie_1_size_mm
+            value:
+              value: "1000 mm tot 2000 mm"
+          - output: fractie_2_size_mm
+            value:
+              value: "350 mm tot 1000 mm"
+          - output: fractie_3_size_mm
+            value:
+              value: "44 mm tot 350 mm"
+          - output: fractie_4_size_mm
+            value:
+              value: "20 mm tot 44 mm"
+          - output: fractie_min_mass_gram
+            value:
+              value: 8
   - number: '7'
     text: |-
       Het standaard testmonster wordt samengesteld uit:
@@ -90,15 +217,15 @@ articles:
       De totale massa (A) van het testmonster bedraagt 10 gram.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel7
     machine_readable:
-       execution:
-         output:
-           - name: A
-             type: number
-             description: Totale massa van het standaard testmonster in gram.
-         actions:
-           - output: A
-             value:
-               value: 10
+      execution:
+        output:
+          - name: A
+            type: number
+            description: Totale massa van het standaard testmonster in gram.
+        actions:
+          - output: A
+            value:
+              value: 10
   - number: '8'
     text: |-
       De testopstelling wordt zo uitgevoerd dat het waterdebiet door de amal-gaamafscheider kan worden geregeld en
@@ -119,6 +246,38 @@ articles:
       - id: ref1
         bwb_id: BWBR0009188
         artikel: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: A
+            type: number
+            description: Massa van het standaard testmonster in gram.
+        output:
+          - name: water_volume_liters
+            type: number
+            description: Volume van het gefilterde water in liters.
+          - name: surfactant_volume_ml
+            type: number
+            description: Volume van waterontspanningsvloeistof in milliliters.
+          - name: ultrasound_duration_minutes
+            type: number
+            description: Minimale duur van ultrasoonbehandeling in minuten.
+          - name: beaker_diameter_cm
+            type: number
+            description: Minimale binnendiameter van het bekerglas in centimeters.
+        actions:
+          - output: water_volume_liters
+            value:
+              value: 1
+          - output: surfactant_volume_ml
+            value:
+              value: 2
+          - output: ultrasound_duration_minutes
+            value:
+              value: 15
+          - output: beaker_diameter_cm
+            value:
+              value: 7
   - number: '10'
     text: |-
       Het rendement van de te testen afscheider wordt bepaald bij het door de fabrikant aangegeven maximale
@@ -127,6 +286,38 @@ articles:
       aan. Bij amalgaamafscheiders met een sedimenteersysteem bedraagt het volume water daarbij minstens 2 maal het
       amalgaamafvalwatervolume van de afscheider.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel10
+    machine_readable:
+      execution:
+        input:
+          - name: max_water_flow_rate
+            type: number
+            description: Maximaal waterdebiet zoals aangegeven door de fabrikant.
+        output:
+          - name: test_sample_feed_duration_min
+            type: number
+            description: Minimale duur van toevoeren van het testmonster in minuten.
+          - name: test_sample_feed_duration_max
+            type: number
+            description: Maximale duur van toevoeren van het testmonster in minuten.
+          - name: post_feed_water_flow_duration_minutes
+            type: number
+            description: Duur dat de waterstroom na toevoeren van het testmonster aanhoudt in minuten.
+          - name: sedimentation_water_volume_factor
+            type: number
+            description: Factor voor het watervolume bij amalgaamafscheiders met sedimenteersysteem.
+        actions:
+          - output: test_sample_feed_duration_min
+            value:
+              value: 2
+          - output: test_sample_feed_duration_max
+            value:
+              value: 10
+          - output: post_feed_water_flow_duration_minutes
+            value:
+              value: 8
+          - output: sedimentation_water_volume_factor
+            value:
+              value: 2
   - number: '11'
     text: |-
       De bepaling van het rendement geschiedt bij een vulgraad van 0 procent en bij een vulgraad van 100 procent.
@@ -135,12 +326,70 @@ articles:
       uitgevoerd waarbij de amalgaamafvalhouder tot 70 procent van de maximale vulhoogte is volgegoten met een harde,
       niet waterdoorlaatbare kunststof.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel11
+    machine_readable:
+      execution:
+        output:
+          - name: fill_level_0_percent
+            type: number
+            description: Vulgraad van 0 procent.
+          - name: fill_level_100_percent_simulation_glass_beads
+            type: number
+            description: Vulgraad van 100 percent gesimuleerd met glaskogels tot 70% van maximale vulhoogte.
+          - name: fill_level_100_percent_simulation_test_material
+            type: string
+            description: Rest van de vulhoogte gevuld met testmateriaal.
+          - name: blank_test_fill_material
+            type: string
+            description: Materiaal gebruikt voor blanco proef.
+          - name: blank_test_fill_level
+            type: number
+            description: Vulgraad voor blanco proef in procenten van maximale vulhoogte.
+        actions:
+          - output: fill_level_0_percent
+            value:
+              value: 0
+          - output: fill_level_100_percent_simulation_glass_beads
+            value:
+              value: 70
+          - output: fill_level_100_percent_simulation_test_material
+            value:
+              value: "rest met testmateriaal"
+          - output: blank_test_fill_material
+            value:
+              value: "harde, niet waterdoorlaatbare kunststof"
+          - output: blank_test_fill_level
+            value:
+              value: 70
   - number: '12'
     text: |-
       Het water-amalgaam mengsel dat de afscheider verlaat, wordt gefilterd over een glasfilter nummer 4 en wordt
       vervolgens onder vacuüm gedroogd. De massa (B) van het amalgaam dat de amalgaamafscheider is gepasseerd, wordt
       daarna op 3 decimalen nauwkeurig teruggewonnen.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel12
+    machine_readable:
+      untranslatables:
+        - construct: "op 3 decimalen nauwkeurig"
+          reason: "Rounding to a specific number of decimal places is not supported by the engine."
+          legal_text_excerpt: "De massa (B) van het amalgaam dat de amalgaamafscheider is gepasseerd, wordt daarna op 3 decimalen nauwkeurig teruggewonnen."
+          accepted: false
+      execution:
+        output:
+          - name: B
+            type: number
+            description: Massa van het amalgaam dat de amalgaamafscheider is gepasseerd, in gram.
+          - name: filter_type
+            type: string
+            description: Type filter gebruikt voor filtratie.
+          - name: drying_method
+            type: string
+            description: Methode gebruikt voor drogen.
+        actions:
+          - output: filter_type
+            value:
+              value: "glasfilter nummer 4"
+          - output: drying_method
+            value:
+              value: "onder vacuüm"
   - number: '13'
     text: |-
       Het afscheidingsrendement h voor amalgaam wordt berekend met de volgende formule:
@@ -164,42 +413,42 @@ articles:
       de afscheider is het kleinste van deze twee gemiddelden.
     url: https://wetten.overheid.nl/BWBR0009188/1998-02-01#Artikel13
     machine_readable:
-       untranslatables:
-         - construct: "op 3 decimalen nauwkeurig"
-           reason: "Rounding to a specific number of decimal places is not supported by the engine."
-           legal_text_excerpt: "De massa (B) van het amalgaam dat de amalgaamafscheider is gepasseerd, wordt daarna op 3 decimalen nauwkeurig teruggewonnen."
-           accepted: false
-         - construct: "gemiddeld rendement bepaald uit 3 testen"
-           reason: "Aggregation over multiple tests (averaging) is not supported by the engine."
-           legal_text_excerpt: "Er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 0 percent en er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 100 Prozent."
-           accepted: false
-       execution:
-         output:
-           - name: afscheidingsrendement_percentage
-             type: number
-             description: Het afscheidingsrendement voor amalgaam, berekend als η = ((A-B)/A) * 100%.
-         input:
-           - name: A
-             type: number
-             description: Totale massa van het testmonster in gram (10 gram, vastgesteld in Artikel 7).
-           - name: B
-             type: number
-             description: Massa van het amalgaam dat de amalgaamafscheider is gepasseerd, in gram (gemeten volgens Artikel 12).
-         actions:
-           - output: afscheidingsrendement_percentage
-             value:
-               operation: MULTIPLY
-               values:
-                 - operation: DIVIDE
-                   values:
-                     - operation: SUBTRACT
-                       values:
-                         - source:
-                             output: A
-                         - value: B
-                     - source:
-                         output: A
-                 - value: 100
+      untranslatables:
+        - construct: "op 3 decimalen nauwkeurig"
+          reason: "Rounding to a specific number of decimal places is not supported by the engine."
+          legal_text_excerpt: "De massa (B) van het amalgaam dat de amalgaamafscheider is gepasseerd, wordt daarna op 3 decimalen nauwkeurig teruggewonnen."
+          accepted: false
+        - construct: "gemiddeld rendement belangrijke uit 3 testen"
+          reason: "Aggregation over multiple tests (averaging) is not supported by the engine."
+          legal_text_excerpt: "Er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 0 percent en er wordt een gemiddeld rendement bepaald uit 3 testen bij een vulgraad van 100 Prozent."
+          accepted: false
+      execution:
+        output:
+          - name: afscheidingsrendement_percentage
+            type: number
+            description: Het afscheidingsrendement voor amalgaam, berekend als η = ((A-B)/A) * 100%.
+        input:
+          - name: A
+            type: number
+            description: Totale massa van het testmonster in gram (10 gram, vastgesteld in Artikel 7).
+          - name: B
+            type: number
+            description: Massa van het amalgaam dat de amalgaamafscheider is gepasseerd, in gram (gemeten volgens Artikel 12).
+        actions:
+          - output: afscheidingsrendement_percentage
+            value:
+              operation: MULTIPLY
+              values:
+                - operation: DIVIDE
+                  values:
+                    - operation: SUBTRACT
+                      values:
+                        - source:
+                            output: A
+                        - value: B
+                    - source:
+                        output: A
+                - value: 100
   - number: '14'
     text: |-
       Aan de in de [artikelen 2 tot en met 13][ref1] beschreven methode zijn in ieder geval gelijkwaardig:
