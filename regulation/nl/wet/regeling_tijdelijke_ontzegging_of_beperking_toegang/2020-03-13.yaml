@@ -7,37 +7,183 @@ valid_from: '2020-03-13'
 bwb_id: BWBR0040797
 url: https://wetten.overheid.nl/BWBR0040797/2020-03-13
 articles:
-  - number: '1'
-    text: |-
-      1 Indien buitengewone omstandigheden dit naar het oordeel van het Presidium noodzakelijk maken, kan het Presidium
-      besluiten tijdelijk bezoekers de toegang tot het gebouw van de Kamer of in het bijzonder de tribunes te ontzeggen
-      of deze toegang op andere wijze te beperken.
+    - number: '1'
+      text: |
+        1 Indien buitengewone omstandigheden dit naar het oordeel van het Presidium noodzakelijk maken, kan het Presidium
+        besluiten tijdelijk bezoekers de toegang tot het gebouw van de Kamer of in het bijzonder de tribunes te ontzeggen
+        of deze toegang op andere wijze te beperken.
 
-      2 Tijdens een periode waarin een maatregel als bedoeld in het eerste lid geldt, blijven genodigden en
-      geaccrediteerde journalisten toegang tot het gebouw of de tribunes hebben, voor zover dit naar het oordeel van
-      het Presidium verantwoord is. Het Presidium kan tevens toestaan dat andere bezoekers tot het gebouw of de tribunes
-      worden toegelaten.
+        2 Tijdens een periode waarin een maatregel als bedoeld in het eerste lid geldt, blijven genodigden en
+        geaccrediteerde journalisten toegang tot het gebouw of de tribunes hebben, voor zover dit naar het oordeel van
+        het Presidium verantwoord is. Het Presidium kan tevens toestaan dat andere bezoekers tot het gebouw of de tribunes
+        worden toegelaten.
 
-      3 Een maatregel als bedoeld in het eerste lid, kan voor de duur van ten hoogste drie maanden worden genomen en
-      telkens worden verlengd, en wordt niet langer gehandhaafd dan door het Presidium noodzakelijk wordt geacht in
-      verband met de buitengewone omstandigheden.
-    url: https://wetten.overheid.nl/BWBR0040797/2020-03-13#Artikel1
-  - number: '2'
-    text: |-
-      1 Het Presidium kan degene die een overtreding heeft begaan als bedoeld in
-      [artikel 152, tweede of derde lid, van het Reglement van Orde van de Tweede Kamer][ref1] tijdelijk de toegang tot
-      het gebouw van de Kamer of in het bijzonder de tribunes ontzeggen. De toegang kan slechts worden ontzegd indien
-      naar het oordeel van het Presidium de overtreding de orde ernstig heeft verstoord en vrees bestaat voor een nieuwe
-      verstoring van de orde.
+        3 Een maatregel als bedoeld in het eerste lid, kan voor de duur van ten hoogste drie maanden worden genomen en
+        telkens worden verlengd, en wordt niet langer gehandhaafd dan door het Presidium noodzakelijk wordt geacht in
+        verband met de buitengewone omstandigheden.
+      url: https://wetten.overheid.nl/BWBR0040797/2020-03-13#Artikel1
+      machine_readable:
+        execution:
+          parameters:
+            - name: buitengewone_omstandigheden
+              type: boolean
+              required: true
+              description: Indicatie of er buitengewone omstandigheden zijn
+            - name: presidium_oordeel_noodzakelijk
+              type: boolean
+              required: true
+              description: Oordeel van het Presidium of de maatregel noodzakelijk is
+            - name: is_genodigde
+              type: boolean
+              required: false
+              description: Of de persoon een genodigde is
+            - name: is_geaccrediteerde_journalist
+              type: boolean
+              required: false
+              description: Of de persoon een geaccrediteerde journalist is
+            - name: presidium_oordeel_verantwoord
+              type: boolean
+              required: true
+              description: Oordeel van het Presidium of toegang verantwoord is
+            - name: presidium_toestaat_andere_bezoekers
+              type: boolean
+              required: false
+              description: Of het Presidium andere bezoekers toestaat
+            - name: start_datum
+              type: date
+              required: true
+              description: Startdatum van de maatregel
+            - name: presidium_oordeel_noodzakelijk_duur
+              type: boolean
+              required: true
+              description: Oordeel van het Presidium of verlenging noodzakelijk is
+          output:
+            - name: toegang_ontzegd_of_beperkt
+              type: boolean
+              description: Of de toegang wordt ontzegd of beperkt
+            - name: toegang_toegestaan_tijdens_maatregel
+              type: boolean
+              description: Of toegang wordt toegestaan ondanks de maatregel
+            - name: eind_datum
+              type: date
+              description: Einddatum van de maatregel
+            - name: verlengd
+              type: boolean
+              description: Of de maatregel is verlengd
+          actions:
+            - output: toegang_ontzegd_of_beperkt
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $buitengewone_omstandigheden
+                    value: true
+                  - operation: EQUALS
+                    subject: $presidium_oordeel_noodzakelijk
+                    value: true
+            - output: toegang_toegestaan_tijdens_maatregel
+              value:
+                operation: OR
+                conditions:
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_genodigde
+                        value: true
+                      - operation: EQUALS
+                        subject: $presidium_oordeel_verantwoord
+                        value: true
+                  - operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_geaccrediteerde_journalist
+                        value: true
+                      - operation: EQUALS
+                        subject: $presidium_oordeel_verantwoord
+                        value: true
+                  - operation: EQUALS
+                    subject: $presidium_toestaat_andere_bezoekers
+                    value: true
+            - output: eind_datum
+              value:
+                operation: DATE_ADD
+                date: $start_datum
+                months: 3
+            - output: verlengd
+              value: $presidium_oordeel_noodzakelijk_duur
+    - number: '2'
+      text: |
+        1 Het Presidium kan degene die een overtreding heeft begaan als bedoeld in
+        [artikel 152, tweede of derde lid, van het Reglement van Orde van de Tweede Kamer][ref1] tijdelijk de toegang tot
+        het gebouw van de Kamer of in het bijzonder de tribunes ontzeggen. De toegang kan slechts worden ontzegd indien
+        naar het oordeel van het Presidium de overtreding de orde ernstig heeft verstoord en vrees bestaat voor een nieuwe
+        verstoring van de orde.
 
-      2 De in het eerste lid bedoelde ontzegging kan voor de duur van ten hoogste drie maanden worden vastgesteld en
-      telkens worden verlengd, en wordt niet langer gehandhaafd dan door het Presidium noodzakelijk wordt geacht op basis
-      van de overwegingen, bedoeld in het eerste lid, tweede volzin.
+        2 De in het eerste lid bedoelde ontzegging kan voor de duur van ten hoogste drie maanden worden vastgesteld en
+        telkens worden verlengd, en wordt niet langer gehandhaafd dan door het Presidium noodzakelijk wordt geacht op basis
+        van de overwegingen, bedoeld in het eerste lid, tweede volzin.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006023#Artikel152
-    url: https://wetten.overheid.nl/BWBR0040797/2020-03-13#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0006023
-        artikel: '152'
+        [ref1]: https://wetten.overheid.nl/BWBR0006023#Artikel152
+      url: https://wetten.overheid.nl/BWBR0040797/2020-03-13#Artikel2
+      references:
+        - id: ref1
+          bwb_id: BWBR0006023
+          artikel: '152'
+      machine_readable:
+        execution:
+          parameters:
+            - name: overtreding_artikel_152_lid_2_of_3
+              type: boolean
+              required: true
+              description: Of de persoon een overtreding heeft begaan als bedoeld in artikel 152, tweede of derde lid, van BWBR0006023
+              source:
+                regulation: BWBR0006023
+                output: overtreding_artikel_152_lid_2_of_3
+            - name: orde_ernstig_verstoord
+              type: boolean
+              required: true
+              description: Oordeel van het Presidium of de overtreding de orde ernstig heeft verstoord
+            - name: vrees_voor_herhaling
+              type: boolean
+              required: true
+              description: Of vrees bestaat voor een nieuwe verstoring van de orde
+            - name: start_datum
+              type: date
+              required: true
+              description: Startdatum van de ontzegging
+            - name: presidium_oordeel_noodzakelijk_duur
+              type: boolean
+              required: true
+              description: Oordeel van het Presidium of verlenging noodzakelijk is op basis van de overwegingen
+          output:
+            - name: toegang_ontzegd
+              type: boolean
+              description: Of de toegang wordt ontzegd
+            - name: eind_datum
+              type: date
+              description: Einddatum van de ontzegging
+            - name: verlengd
+              type: boolean
+              description: Of de ontzegging is verlengd
+          actions:
+            - output: toegang_ontzegd
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $overtreding_artikel_152_lid_2_of_3
+                    value: true
+                  - operation: EQUALS
+                    subject: $orde_ernstig_verstoord
+                    value: true
+                  - operation: EQUALS
+                    subject: $vrees_voor_herhaling
+                    value: true
+            - output: eind_datum
+              value:
+                operation: DATE_ADD
+                date: $start_datum
+                months: 3
+            - output: verlengd
+              value: $presidium_oordeel_noodzakelijk_duur
