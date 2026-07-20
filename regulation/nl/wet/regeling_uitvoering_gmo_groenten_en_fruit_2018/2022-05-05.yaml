@@ -1061,8 +1061,27 @@ articles:
     text: |-
       De referentieperiode voor het bepalen van de waarde van de afgezette productie, bedoeld in artikel 23, eerste lid,
       van [verordening 2017/891](32791R2017), is het kalenderjaar twee jaar voorafgaande aan het uitvoeringsjaar waarvoor
-      de waarde afgezette productie wordt vastgesteld.
+      de waarde afgzetten productie wordt vastgesteld.
     url: https://wetten.overheid.nl/BWBR0041140/2022-05-05#Artikel36
+    machine_readable:
+      execution:
+        output:
+          - name: referentieperiode
+            type: date
+            description: "Referentieperiode voor waarde afgezette productie (Kalenderjaar 2 jaar voor uitvoeringsjaar)"
+        actions:
+          - output: referentieperiode
+            value:
+              operation: DATE_SUBTRACT
+              values:
+                - $input:uitvoeringsjaar
+                - literal: { type: duration, value: "P2Y" }
+        input:
+          - name: uitvoeringsjaar
+            type: date
+            description: "Uitvoeringsjaar waarvoor de waarde afgezette productie wordt vastgesteld"
+            type_spec:
+              format: year
   - number: '37'
     text: |-
       1 Producten zijn geproduceerd door een producentenorganisatie of een lid van de producentenorganisatie als bedoeld
@@ -1260,7 +1279,7 @@ articles:
       a. de definitieve opgave van de waarde van de afgezette productie, met gebruikmaking van een door de minister
       beschikbaar gesteld middel; en
 
-      b. de in het eerste lid bedoelde controleverklaring met het bijbehorende verslag.
+       b. de in het eerste lid bedoelde controleverklaring met het bijbehorende verslag.
     url: https://wetten.overheid.nl/BWBR0041140/2022-05-05#Artikel43
   - number: '44'
     text: |-
@@ -1278,15 +1297,41 @@ articles:
       door de algemene vergadering van de producentenorganisatie of unie van producentenorganisaties’.
 
       4 In aanvulling op artikel 5 van [verordening 2017/892](32792R2017) overlegt een producentenorganisatie of unie van
-      producentenorganisaties voor 8 december van het jaar waarin een operationeel programma, of een wijziging daarvan
+      producentenorganisaties voor 8 december van het jaar waarin een operationeel programma, of een wijziging daarvan
       als bedoeld in artikel 34, eerste lid, van [verordening 2017/891](32791R2017), voor goedkeuring aan de minister
       is voorgelegd, bewijstukken waarmee wordt aangetoond dat de goedkeuring van het besluit tot vaststelling van de
       bijdragen aan het actiefonds door de algemene vergadering heeft plaatsgevonden.
 
-      5 Indien in een jaar sprake is van een tekort van het actiefonds, kunnen tot en met 14 februari van het volgende
+      5 Indien in een jaar sprake is van een tekort van het actiefonds, kunnen tot en met 14 februari van het volgende
       jaar financiële bijdragen als bedoeld in artikel 32, eerste lid, onderdeel a, van [verordening 1308/2013]
       (32013R1308) in het actiefonds worden gestort.
     url: https://wetten.overheid.nl/BWBR0041140/2022-05-05#Artikel44
+    machine_readable:
+      execution:
+        output:
+          - name: financiele_bijdragen_actiefonds
+            type: amount
+            description: "Financiële bijdragen aan het actiefonds (Art. 32 EU 1308/2013, Art. 25 EU 2017/891)"
+            open_terms:
+              - name: bijdrage_percentage
+                description: "Percentage of value of marketed production delegated to EU regulations"
+                source:
+                  regulation: verordening_1308_2013
+                  artikel: '32'
+              - name: forfaitair_standaardtarief
+                description: "Fixed rates delegated to EU 2017/891"
+                source:
+                  regulation: verordening_2017_891
+                  artikel: '25'
+        input:
+          - name: waarde_afgezette_productie
+            type: amount
+            description: "Waarde van de afgezette productie (Art. 23 EU 2017/891)"
+            source:
+              regulation: verordening_2017_891
+              output: waarde_afgezette_productie
+            type_spec:
+              unit: eurocent
   - number: '45'
     text: |-
       1 Door de producentenorganisatie of unie van producentenorganisaties wordt voor het actiefonds:
