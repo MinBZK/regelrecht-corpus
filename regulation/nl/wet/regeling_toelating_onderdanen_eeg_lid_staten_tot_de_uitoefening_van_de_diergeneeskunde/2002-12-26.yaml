@@ -18,43 +18,26 @@ articles:
     text: |-
       Deze regeling verstaat onder:
 
+      *Wet:*
 
+      [Wet op de uitoefening van de diergeneeskunde 1990][ref1] (Stb. 214);
 
+      *richtlijn No. 78/1026/EEG:*
 
-              *Wet:*
-
-
-              [Wet op de uitoefening van de diergeneeskunde 1990][ref1] (Stb. 214);
-
-
-
-
-              *richtlijn No. 78/1026/EEG:*
-
-
-              Richtlijn van de Raad van 18 december 1978, No. 78/1026/EEG inzake de onderlinge erkenning van
+      Richtlijn van de Raad van 18 december 1978, No. 78/1026/EEG inzake de onderlinge erkenning van
       diploma's, certificaten en andere titels van dierenarts, tevens houdende maatregelen tot vergemakkelijking van de
       daadwerkelijke uitoefening van het recht van vestiging en het vrij verrichten van diensten (Pb EG L 362), zoals
       deze sindsdien is gewijzigd;
 
+      *richtlijn No. 78/1027/EEG:*
 
-
-
-              *richtlijn No. 78/1027/EEG:*
-
-
-              Richtlijn van de Raad van 18 december 1978, No. 78/1027/EEG, inzake de coördinatie van de wettelijke en
+      Richtlijn van de Raad van 18 december 1978, No. 78/1027/EEG, inzake de coördinatie van de wettelijke en
       bestuursrechtelijke bepalingen betreffende de werkzaamheden van dierenarts (Pb EG L 362), zoals deze sindsdien
       is gewijzigd.
 
+      *lid-staat:*
 
-
-
-              *lid-staat:*
-
-
-              lid-staat van de Europese Gemeenschap.
-
+      lid-staat van de Europese Gemeenschap.
 
       [ref1]: https://wetten.overheid.nl/BWBR0004730
     url: https://wetten.overheid.nl/BWBR0005255/2002-12-26#Artikel1
@@ -78,6 +61,22 @@ articles:
       - id: ref2
         bwb_id: BWBR0005255
         artikel: '4'
+    machine_readable:
+      execution:
+        requires:
+          - article: "3"
+          - article: "4"
+        input:
+          - name: EEG_diploma_of_getuigschrift
+            type: boolean
+            description: Heeft de onderdaan een diploma of getuigschrift bedoeld in bijlage en artikel 4 van richtlijn 78/1026/EEG?
+        output:
+          - name: toegelaten_tot_diergeneeskunde
+            type: boolean
+            description: Is de onderdaan toegelaten tot de uitoefening van de diergeneeskunde in haar volle omvang?
+        actions:
+          - output: toegelaten_tot_diergeneeskunde
+            value: $EEG_diploma_of_getuigschrift
   - number: '3'
     text: |-
       Indien een in de bijlage bij de richtlijn No. 78/1026/EEG genoemd diploma of getuigschrift in een lid-staat is
@@ -91,6 +90,50 @@ articles:
       benaming tevens moet inhouden, dat ook de benaming is gelijkgesteld met die vermeld in de bijlage bij de richtlijn
       No. 78/1026/EEG, ten aanzien van die lid-staat.
     url: https://wetten.overheid.nl/BWBR0005255/2002-12-26#Artikel3
+    machine_readable:
+      execution:
+        input:
+          - name: diploma_uitgifte_datum
+            type: date
+            description: Datum waarop het diploma of getuigschrift is uitgegeven.
+          - name: opleiding_start_datum
+            type: date
+            description: Datum waarop de opleiding is angevangen.
+          - name: diploma_naam
+            type: string
+            description: Naam van het diploma of getuigschrift.
+        output:
+          - name: verklaring_vereist
+            type: boolean
+            description: Is een officieel gewaarmerkte verklaring vereist?
+        actions:
+          - output: verklaring_vereist
+            value:
+              operation: OR
+              conditions:
+                - operation: LESS_THAN
+                  subject: $diploma_uitgifte_datum
+                  value: $directive_78_1026_implementation_date
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $diploma_uitgifte_datum
+                      value: $directive_78_1026_implementation_date
+                    - operation: LESS_THAN
+                      subject: $opleiding_start_datum
+                      value: $directive_78_1026_implementation_date
+                - operation: NOT
+                  value:
+                    operation: IN
+                    subject: $diploma_naam
+                    value: $EEG_directive_annex_benamingen
+      definitions:
+        directive_78_1026_implementation_date:
+          description: Datum van tenuitvoerlegging van richtlijn No. 78/1026/EEG in de relevante lid-staat.
+          untranslatable: true
+        EEG_directive_annex_benamingen:
+          description: Lijst van benamingen van diploma's en getuigschriften in de bijlage bij richtlijn No. 78/1026/EEG voor de relevante lid-staat.
+          untranslatable: true
   - number: '4'
     text: |-
       1 Indien het diploma of getuigschrift van een onderdaan van een lid-staat met betrekking tot de uitoefening van
@@ -110,13 +153,79 @@ articles:
       getuigschrift de bevoegdheid geeft tot de uitoefening van de diergeneeskunde op het gehele grondgebied van de
       Bondsrepubliek Duitsland;
 
-      b. het diploma of getuigschrift is afgegeven aan een onderdaan van de Italiaanse Republiek welke onderdaan dit
-      diploma of getuigschrift heeft verkregen ter afsluiting van een opleiding waarmee vóór 1 januari 1985 een aanvang
-      is gemaakt, tenzij het vorenbedoelde diploma of getuigschrift vergezeld gaat van een verklaring van een in Italië
-      ter zake bevoegde aurotiteit, inhoudende dat het diploma of getuigschrift strekt ter afsluiting van een opleiding
-      die volledig in overeenstemming is met de richtlijn No. 78/1027/EEG en in het bijzonder met de daarbij behorende
-      bijlage.
+       b. het diploma of getuigschrift is afgegeven aan een onderdaan van de Italiaanse Republiek welke onderdaan dit
+       diploma of getuigschrift heeft verkregen ter afsluiting van een opleiding waarmee vóór 1 januari 1985 een aanvang
+       is gemaakt, tenzij het vorenbedoelde diploma of getuigschrift vergezeld gaat van een verklaring van een in Italië
+       ter zake bevoegde aurotiteit, inhoudende dat het diploma of getuigschrift strekt ter afsluiting van een opleiding
+       die volledig in overeenstemming is met de richtlijn No. 78/1027/EEG en in het bijzonder met de daarbij behorende
+       bijlage.
     url: https://wetten.overheid.nl/BWBR0005255/2002-12-26#Artikel4
+    machine_readable:
+      execution:
+        input:
+          - name: diploma_uitgifte_datum
+            type: date
+            description: Datum waarop het diploma of getuigschrift is uitgegeven.
+          - name: opleiding_start_datum
+            type: date
+            description: Datum waarop de opleiding is aangevangen.
+          - name: land_van_uitgifte
+            type: string
+            description: Land waar het diploma of getuigschrift is uitgegeven.
+          - name: is_duits_onderdaan
+            type: boolean
+            description: Is de onderdaan een onderdaan van Duitsland?
+          - name: bevoegdheid_hele_duitsland
+            type: boolean
+            description: Geeft het diploma of getuigschrift bevoegdheid tot uitoefening op het gehele grondgebied van Duitsland?
+          - name: heeft_conformiteitsverklaring
+            type: boolean
+            description: Is het diploma of getuigschrift vergezeld van een conformiteitsverklaring?
+        output:
+          - name: extra_voorwaarden_voldaan
+            type: boolean
+            description: Zijn de extra voorwaarden voor toelating voldaan?
+        actions:
+          - output: extra_voorwaarden_voldaan
+            value:
+              operation: OR
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: LESS_THAN
+                      subject: $diploma_uitgifte_datum
+                      value: $directive_78_1027_implementation_date
+                    - operation: LESS_THAN
+                      subject: $opleiding_start_datum
+                      value: $directive_78_1027_implementation_date
+                - operation: AND
+                  conditions:
+                    - operation: EQUAL
+                      subject: $land_van_uitgifte
+                      value: "voormalige Duitse Democratische Republiek"
+                    - operation: EQUAL
+                      subject: $is_duits_onderdaan
+                      value: true
+                    - operation: EQUAL
+                      subject: $bevoegdheid_hele_duitsland
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUAL
+                      subject: $land_van_uitgifte
+                      value: "Italië"
+                    - operation: LESS_THAN
+                      subject: $opleiding_start_datum
+                      value: "1985-01-01"
+                    - operation: NOT
+                      value:
+                        operation: EQUAL
+                        subject: $heeft_conformiteitsverklaring
+                        value: true
+      definitions:
+        directive_78_1027_implementation_date:
+          description: Datum van tenuitvoerlegging van richtlijn No. 78/1027/EEG in de relevante lid-staat.
+          untranslatable: true
   - number: '5'
     text: |-
       Deze regeling treedt in werking met ingang van hetzelfde tijdstip als waarop [artikel 3 van de wet][ref1] in
