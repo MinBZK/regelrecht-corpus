@@ -76,6 +76,73 @@ articles:
       - id: ref2
         bwb_id: BWBR0009124
         artikel: 55j
+    machine_readable:
+      execution:
+        output:
+          - name: vacatiegeld_bedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+        parameters:
+          - name: rol
+            type: string
+          - name: activiteit
+            type: string
+        actions:
+          - output: vacatiegeld_bedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $rol
+                        values:
+                          - lid
+                          - plaatsvervangend_lid
+                      - operation: EQUALS
+                        subject: $activiteit
+                        value: bijwonen_zitting
+                  then: 34200
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $rol
+                        values:
+                          - voorzitter
+                          - plaatsvervangend_voorzitter
+                      - operation: IN
+                        subject: $activiteit
+                        values:
+                          - voorbereiden_zitting
+                          - leiden_zitting
+                          - voorbereiden_uitspraak
+                  then: 68400
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $rol
+                        value: voorzitter
+                      - operation: IN
+                        subject: $activiteit
+                        values:
+                          - nemen_beslissing_55j
+                          - beproeven_minnelijke_schikking
+                  then: 22800
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $rol
+                        value: voorzitter
+                      - operation: EQUALS
+                        subject: $activiteit
+                        value: algemeen_functioneren
+                  then: 68400
+              default: 0
   - number: '3'
     text: |-
       Deze regeling berust op de [artikelen 55c, tweede lid][ref1], en [55e van de Wet zeevarenden][ref2].
