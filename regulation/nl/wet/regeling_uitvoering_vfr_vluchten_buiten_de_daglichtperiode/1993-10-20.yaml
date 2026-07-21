@@ -18,9 +18,55 @@ articles:
   - number: '1'
     text: |-
       Gezagvoerders van burgerluchtvaartuigen wordt toestemming verleend om VFR-vluchten, waarbij stoffen ter bevordering
-      of ter bescherming van het milieu dan wel de land-, tuin- of bosbouw, te bestemder' plaatse worden uitgeworpen, uit
+      of ter bescherming van het milieu dan wel de land-, tuin- of bosbouw, te bestemder' plaats te worden uitgeworpen, uit
       te voeren gedurende de vijftien minuten vóór aanvang en vijftien minuten ná einde van de daglichtperiode.
     url: https://wetten.overheid.nl/BWBR0006173/1993-10-20#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: vlucht_begintijd
+            type: date
+            required: true
+            description: Tijdstip waarop de VFR-vlucht begint
+          - name: daglichtperiode_start
+            type: date
+            required: true
+            description: Begin van de daglichtperiode
+          - name: daglichtperiode_eind
+            type: date
+            required: true
+            description: Einde van de daglichtperiode
+        output:
+          - name: toestemming_verleend
+            type: boolean
+            description: Geeft aan of toestemming wordt verleend voor VFR-vluchten buiten de daglichtperiode
+        actions:
+          - output: toestemming_verleend
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vlucht_begintijd
+                      value:
+                        operation: DATE_ADD
+                        date: $daglichtperiode_start
+                        days: -0.0104167
+                    - operation: LESS_THAN
+                      subject: $vlucht_begintijd
+                      value: $daglichtperiode_start
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN
+                      subject: $vlucht_begintijd
+                      value: $daglichtperiode_eind
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $vlucht_begintijd
+                      value:
+                        operation: DATE_ADD
+                        date: $daglichtperiode_eind
+                        days: 0.0104167
   - number: '2'
     text: |-
       Het besluit van de Directeur-Generaal van de Rijksluchtvaartdienst van 28 juli 1981, nr. LVB/L 23882/Stcrt. 1981,
