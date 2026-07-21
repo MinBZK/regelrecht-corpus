@@ -17,7 +17,7 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      In deze regeling wordt verstaan onder:
+      In diese regeling wordt verstaan onder:
 
       a. doelgebied: het terrein waarop de valschermspringer beoogt neer te komen;
 
@@ -35,11 +35,64 @@ articles:
       zijn verleend en moet het valschermspringgebied als zodanig zijn bekendgesteld aan luchtvarenden door middel van
       een publikatie in de luchtvaartgids AIP of een kennisgeving aan luchtvarenden (NOTAM).
     url: https://wetten.overheid.nl/BWBR0006346/1994-01-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: toestemming_regelmatig_gebruik
+            type: boolean
+            description: Indicates whether regular use of the parachute jump area is approved.
+          - name: bekendgesteld_aan_luchtvarenden
+            type: boolean
+            description: Indicates whether the parachute jump area is announced to airmen via AIP or NOTAM.
+        actions:
+          - output: toestemming_regelmatig_gebruik
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $lvb_toestemming_verleend
+                  value: true
+          - output: bekendgesteld_aan_luchtvarenden
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $aip_publicatie
+                  value: true
+                - operation: EQUALS
+                  subject: $notam_kennisgeving
+                  value: true
+        parameters:
+          - name: lvb_toestemming_verleend
+            type: boolean
+            description: Whether the LVB organization has granted written approval.
+          - name: aip_publicatie
+            type: boolean
+            description: Whether the parachute jump area is published in the AIP.
+          - name: notam_kennisgeving
+            type: boolean
+            description: Whether the parachute jump area is announced via NOTAM.
   - number: '3'
     text: |-
       Het voornemen tot incidenteel gebruik van een deel van het luchtruim als valschermspringgebied moet bekend zijn
       gesteld aan luchtvarenden door middel van een NOTAM.
     url: https://wetten.overheid.nl/BWBR0006346/1994-01-01#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: notam_kennisgeving_incidenteel
+            type: boolean
+            description: Indicates whether the intention for incidental use of the parachute jump area is announced via NOTAM.
+        actions:
+          - output: notam_kennisgeving_incidenteel
+            value:
+              operation: EQUALS
+              subject: $notam_kennisgeving_incidenteel
+              value: true
+        parameters:
+          - name: notam_kennisgeving_incidenteel
+            type: boolean
+            description: Whether the incidental use of the parachute jump area is announced via NOTAM.
   - number: '4'
     text: |-
       1 Voor het incidenteel gebruik van een valschermspringgebied dat geheel of ten dele is gelegen binnen
@@ -76,6 +129,82 @@ articles:
       - id: ref2
         bwb_id: BWBR0006346
         artikel: '3'
+    machine_readable:
+      execution:
+        output:
+          - name: toestemming_incidenteel_gebruik_luchtverkeersleidingsgebied
+            type: boolean
+            description: Indicates whether approval is granted for incidental use in air traffic control areas.
+          - name: toestemming_incidenteel_gebruik_havenmeester
+            type: boolean
+            description: Indicates whether approval is granted by the harbor master for incidental use near uncontrolled airfields.
+          - name: melding_incidenteel_gebruik_luchtvaartinlichtingendienst
+            type: boolean
+            description: Indicates whether the incidental use is reported to the Aeronautical Information Service.
+          - name: melding_incidenteel_gebruik_lvb_ongecontroleerd
+            type: boolean
+            description: Indicates whether the incidental use in uncontrolled airspace is reported to the LVB organization.
+        actions:
+          - output: toestemming_incidenteel_gebruik_luchtverkeersleidingsgebied
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $toestemming_luchtverkeersleidingsdienst
+                  value: true
+                - operation: EQUALS
+                  subject: $verzoek_minimaal_5_werkdagen_tevoren
+                  value: true
+          - output: toestemming_incidenteel_gebruik_havenmeester
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $toestemming_havenmeester
+                  value: true
+                - operation: EQUALS
+                  subject: $verzoek_minimaal_5_werkdagen_tevoren_havenmeester
+                  value: true
+                - operation: EQUALS
+                  subject: $melding_incidenteel_gebruik_aan_luchtvaartinlichtingendienst
+                  value: true
+          - output: melding_incidenteel_gebruik_luchtvaartinlichtingendienst
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $melding_zo_spoedig_mogelijk
+                  value: true
+                - operation: EQUALS
+                  subject: $melding_minimaal_3_dagen_tevoren
+                  value: true
+          - output: melding_incidenteel_gebruik_lvb_ongecontroleerd
+            value:
+              operation: EQUALS
+              subject: $melding_minimaal_3_werkdagen_tevoren_lvb
+              value: true
+        parameters:
+          - name: toestemming_luchtverkeersleidingsdienst
+            type: boolean
+            description: Whether approval is granted by the air traffic control service for use in controlled airspace.
+          - name: verzoek_minimaal_5_werkdagen_tevoren
+            type: boolean
+            description: Whether the request was submitted at least 5 working days in advance to the air traffic control service.
+          - name: toestemming_havenmeester
+            type: boolean
+            description: Whether approval is granted by the harbor master for use near uncontrolled airfields.
+          - name: verzoek_minimaal_5_werkdagen_tevoren_havenmeester
+            type: boolean
+            description: Whether the request was submitted at least 5 working days in advance to the harbor master.
+          - name: melding_zo_spoedig_mogelijk
+            type: boolean
+            description: Whether the notification was made as soon as possible.
+          - name: melding_minimaal_3_dagen_tevoren
+            type: boolean
+            description: Whether the notification was made at least 3 days in advance to the Aeronautical Information Service.
+          - name: melding_minimaal_3_werkdagen_tevoren_lvb
+            type: boolean
+            description: Whether the notification was made at least 3 working days in advance to the LVB organization.
   - number: '5'
     text: |-
       1 De gezagvoerder van het luchtvaartuig van waaruit de valschermsprongen worden uitgevoerd, moet zich voor de
@@ -100,6 +229,67 @@ articles:
       e. onmiddellijk voor het uitvoeren van de valschermsprongen, moet van de betrokken luchtverkeersleidingsdienst een
       definitieve klaring daartoe zijn verkregen.
     url: https://wetten.overheid.nl/BWBR0006346/1994-01-01#Artikel5
+    machine_readable:
+      execution:
+        output:
+          - name: gezagvoerder_controle_bekendstelling
+            type: boolean
+            description: Indicates whether the pilot-in-command has verified the parachute jump area is announced to airmen.
+          - name: vlucht_voldaan_voorschriften
+            type: boolean
+            description: Indicates whether the flight complies with the specified rules for controlled VFR flights.
+        actions:
+          - output: gezagvoerder_controle_bekendstelling
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $aip_publicatie_controle
+                  value: true
+                - operation: EQUALS
+                  subject: $notam_kennisgeving_controle
+                  value: true
+          - output: vlucht_voldaan_voorschriften
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $vfr_regels_nageleefd
+                  value: true
+                - operation: EQUALS
+                  subject: $vliegplan_bevat_gegevens
+                  value: true
+                - operation: EQUALS
+                  subject: $voorlopige_klaring_verkregen
+                  value: true
+                - operation: EQUALS
+                  subject: $melding_valschermsprongen_radiocontact
+                  value: true
+                - operation: EQUALS
+                  subject: $definitieve_klaring_verkregen
+                  value: true
+        parameters:
+          - name: aip_publicatie_controle
+            type: boolean
+            description: Whether the parachute jump area is published in the AIP.
+          - name: notam_kennisgeving_controle
+            type: boolean
+            description: Whether the parachute jump area is announced via NOTAM.
+          - name: vfr_regels_nageleefd
+            type: boolean
+            description: Whether the flight complies with controlled VFR rules.
+          - name: vliegplan_bevat_gegevens
+            type: boolean
+            description: Whether the flight plan includes the area, period, and heights for parachute jumps.
+          - name: voorlopige_klaring_verkregen
+            type: boolean
+            description: Whether a provisional clearance was obtained from the air traffic control service before the flight.
+          - name: melding_valschermsprongen_radiocontact
+            type: boolean
+            description: Whether parachute jumps are reported on first radio contact.
+          - name: definitieve_klaring_verkregen
+            type: boolean
+            description: Whether final clearance was obtained from the air traffic control service before the parachute jumps.
   - number: '6'
     text: |-
       1 De valschermsprong mag slechts worden uitgevoerd gedurende de daglichtperiode, binnen het valschermspringgebied
@@ -113,6 +303,54 @@ articles:
 
       c. voortdurend zicht op grond en water worden behouden.
     url: https://wetten.overheid.nl/BWBR0006346/1994-01-01#Artikel6
+    machine_readable:
+      execution:
+        output:
+          - name: toestemming_uitvoeren_valschermsprong
+            type: boolean
+            description: Indicates whether the parachute jump may be executed under the specified conditions.
+        actions:
+          - output: toestemming_uitvoeren_valschermsprong
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $daglichtperiode
+                  value: true
+                - operation: EQUALS
+                  subject: $binnen_valschermspringgebied
+                  value: true
+                - operation: EQUALS
+                  subject: $toestemming_gezagvoerder
+                  value: true
+                - operation: EQUALS
+                  subject: $zicht_voldoende
+                  value: true
+                - operation: EQUALS
+                  subject: $afstand_van_wolken
+                  value: true
+                - operation: EQUALS
+                  subject: $zicht_grond_en_water
+                  value: true
+        parameters:
+          - name: daglichtperiode
+            type: boolean
+            description: Whether the parachute jump is executed during daylight hours.
+          - name: binnen_valschermspringgebied
+            type: boolean
+            description: Whether the parachute jump is executed within the designated parachute jump area.
+          - name: toestemming_gezagvoerder
+            type: boolean
+            description: Whether explicit permission is granted by the pilot-in-command.
+          - name: zicht_voldoende
+            type: boolean
+            description: Whether visibility meets the minimum VFR requirements.
+          - name: afstand_van_wolken
+            type: boolean
+            description: Whether a horizontal distance of at least 1.5 km from clouds is maintained.
+          - name: zicht_grond_en_water
+            type: boolean
+            description: Whether continuous visibility of ground and water is maintained.
   - number: '7'
     text: |-
       Het besluit van de Directeur-Generaal van de Rijksluchtvaartdienst van 11 mei 1984/nr. LVB/L 22333 wordt
