@@ -19,11 +19,9 @@ articles:
       In deze regeling wordt verstaan onder:
 
 
-
             NVN:
 
               door de Stichting Nederlands Normalisatie-instituut uitgegeven voornorm;
-
 
 
             NEN:
@@ -31,11 +29,9 @@ articles:
               door de Stichting Nederlands Normalisatie-instituut uitgegeven norm;
 
 
-
             NPR:
 
               door de Stichting Nederlands Normalisatie-instituut uitgegeven praktijkrichtlijn;
-
 
 
             standaardbodem:
@@ -66,6 +62,37 @@ articles:
       - id: ref3
         bwb_id: BWBR0009204
         artikel: '3'
+    machine_readable:
+      execution:
+        output:
+          - name: klasse_onderhoudsspecie
+            type: number
+            description: Klasse-indeling van de onderhoudsspecie (1 of 2)
+        input:
+          - name: onderzoek_vereist
+            type: boolean
+            source:
+              output: onderzoek_vereist
+          - name: laboratorium_geldig
+            type: boolean
+            source:
+              output: laboratorium_geldig
+        actions:
+          - output: klasse_onderhoudsspecie
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $onderzoek_vereist
+                        value: true
+                      - operation: EQUALS
+                        subject: $laboratorium_geldig
+                        value: true
+                  then: 1
+              default: 2
   - number: '3'
     text: |-
       1 Onderzocht wordt de kwaliteit van te verspreiden onderhoudsspecie afkomstig van oppervlaktewateren:
@@ -90,18 +117,108 @@ articles:
       3 De verkregen onderzoeksgegevens worden gedurende ten minste twee jaar na het verspreiden bewaard.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004575#Artikel9
+        [ref1]: https://wetten.overheid.nl/BWBR0004575#Artikel9
     url: https://wetten.overheid.nl/BWBR0009204/2000-01-01#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0004575
-        artikel: '9'
+        artikels: '9'
+    machine_readable:
+      execution:
+        output:
+          - name: onderzoek_vereist
+            type: boolean
+            description: Indicates whether an investigation is required for the water body
+        input:
+          - name: is_bebouwd_gebied
+            type: boolean
+            description: Whether the water body is in an urban area
+          - name: heeft_beroeps_motorvaart
+            type: boolean
+            description: Whether professional motor traffic occurs regularly
+          - name: heeft_lozingen_sinds_laatste_baggeren
+            type: boolean
+            description: Whether discharges have occurred since last dredging
+          - name: is_grenzend_aan_weg
+            type: boolean
+            description: Whether the water body is adjacent to a road
+          - name: verkeersintensiteit
+            type: number
+            description: Traffic intensity in vehicles per day
+          - name: heeft_gecreosoteerde_oeverbeschoeiing
+            type: boolean
+            description: Whether the water body has creosote-treated embankments
+          - name: voldoet_aan_toetsingswaarden
+            type: boolean
+            description: Whether the water body meets the toetsingswaarden standards
+          - name: is_in_beheersplan
+            type: boolean
+            description: Whether the water body is included in a management plan
+        actions:
+          - output: onderzoek_vereist
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_bebouwd_gebied
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_beroeps_motorvaart
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_lozingen_sinds_laatste_baggeren
+                  value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_grenzend_aan_weg
+                      value: true
+                    - operation: GREATER_THAN
+                      subject: $verkeersintensiteit
+                      value: 500
+                - operation: EQUALS
+                  subject: $heeft_gecreosoteerde_oeverbeschoeiing
+                  value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $voldoet_aan_toetsingswaarden
+                    value: true
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_in_beheersplan
+                    value: true
   - number: '4'
     text: |-
       Analyses worden uitgevoerd door een onderzoekslaboratorium dat voor deze analyses is erkend door de Raad voor
       Accreditatie (STERLAB) of door een andere Europese laboratoriumaccreditatie-instelling, op basis van de Europese
       norm (NEN)-EN 45001.
     url: https://wetten.overheid.nl/BWBR0009204/2000-01-01#Artikel4
+    machine_readable:
+      execution:
+         output:
+           - name: laboratorium_geldig
+             type: boolean
+             description: Indicates whether the laboratory is valid for analysis
+         input:
+           - name: is_erkend_door_sterlab
+             type: boolean
+             description: Whether the laboratory is accredited by STERLAB
+           - name: is_erkend_door_europees_laboratorium
+             type: boolean
+             description: Whether the laboratory is accredited by a European body under NEN-EN 45001
+         actions:
+           - output: laboratorium_geldig
+             value:
+               operation: OR
+               conditions:
+                 - operation: EQUALS
+                   subject: $is_erkend_door_sterlab
+                   value: true
+                 - operation: EQUALS
+                   subject: $is_erkend_door_europees_laboratorium
+                   value: true
   - number: '5'
     text: |-
       De [Regeling vaststelling klasse-indeling onderhoudsspecie][ref1] (Stcrt. 1993, 246) wordt ingetrokken.
