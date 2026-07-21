@@ -62,15 +62,15 @@ articles:
       p. *swaption:* financieel derivaat dat de koper gedurende een bepaalde periode of op een bepaald moment het recht
       geeft om onder bepaalde voorwaarden een renteswap af te sluiten;
 
-      q. *niet-effectieve positie:* situatie waarin de looptijd en de onderliggende waarde van een financieel derivaat
-      niet overeenkomt met de financieringsbehoefte waaraan het derivaat wordt toegerekend;
+         q. *niet-effectieve positie:* situatie waarin de looptijd en de onderliggende waarde van een financieel derivation
+         niet overeenkomt met de financieringsbehoefte waaraan het derivaat wordt toegerekend;
 
-      r. *financieringsbehoefte:* een lening, groep leningen of een nog aan te trekken lening respectievelijk groep
-      leningen.
+        r. *financieringsbehoefte:* een lening, groep leningen of een nog aan te trekken lening respectievelijk groep
+        leningen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0011987
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel15.47
+        [ref1]: https://wetten.overheid.nl/BWBR0011987
+        [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel15.47
     url: https://wetten.overheid.nl/BWBR0012076/2014-12-30#Artikel1
     references:
       - id: ref1
@@ -100,6 +100,41 @@ articles:
       - id: ref1
         bwb_id: BWBR0011987
         artikel: 2a
+    machine_readable:
+      inputs:
+        - name: lidstaat_rating
+          type: string
+          description: Rating van de lidstaat waar de financiële onderneming is gevestigd
+        - name: financiele_onderneming_rating
+          type: string
+          description: Rating van de financiële onderneming of haar waardepapieren
+        - name: solvabiliteitsratio
+          type: number
+          description: Solvabiliteitsratio van de waardepapieren (in percentage)
+        - name: is_tegen_waardepapieren
+          type: boolean
+          description: Of de uitzetting tegen waardepapieren is
+          default: false
+      outputs:
+        - name: mag_uitzetten
+          type: boolean
+          description: Of de openbare lichamen middelen mogen uitzetten of derivaten mogen afsluiten
+      logic:
+        - IF:
+          - AND:
+            - var: is_tegen_waardepapieren
+            - EQUALS:
+              - var: solvabiliteitsratio
+              - value: 0
+          - THEN: true
+          - ELSE:
+            - AND:
+              - IN:
+                - var: lidstaat_rating
+                - value: ["AA", "AAA"]
+              - IN:
+                - var: financiele_onderneming_rating
+                - value: ["A", "AA", "AAA"]
   - number: 2a
     text: |-
       1 Openbare lichamen gaan geen leningen aan met het enkele doel de aangetrokken gelden tegen een hoger rendement uit
@@ -109,7 +144,7 @@ articles:
       uitsluitend uit bij de financiële onderneming waar deze leningen zijn aangegaan, onverminderd
       [artikel 2, eerste en tweede lid][ref1].
 
-      3 Indien een openbaar lichaam een nettingovereenkomst heeft afgesloten met een financiële onderneming met
+      3 Inden een openbaar lichaam een nettingovereenkomst heeft afgesloten met een financiële onderneming met
       betrekking tot het uitzetten van tijdelijk overtollige gelden van aangetrokken leningen voor projectfinanciering
       als bedoeld in het tweede lid, is [artikel 2, eerste en tweede lid][ref2], niet van toepassing.
 
@@ -124,6 +159,36 @@ articles:
       - id: ref2
         bwb_id: BWBR0012076
         artikel: '2'
+    machine_readable:
+      inputs:
+        - name: is_lening_voor_hoger_rendement
+          type: boolean
+          description: Of de lening is aangegaan met het enkele doel om gelden tegen een hoger rendement uit te zetten
+        - name: is_tijdelijk_overschot
+          type: boolean
+          description: Of het gaat om tijdelijk overtollige gelden van projectfinanciering
+        - name: is_uitgezet_bij_eigen_leninggever
+          type: boolean
+          description: Of de gelden zijn uitgezet bij de financiële onderneming waar de lening is aangegaan
+        - name: heeft_nettingovereenkomst
+          type: boolean
+          description: Of er een nettingovereenkomst is afgesloten met de financiële onderneming
+      outputs:
+        - name: mag_tijdelijk_overschot_uitzetten
+          type: boolean
+          description: Of het tijdelijk overschot mag worden uitgezet onder de voorwaarden van Artikel 2a
+      logic:
+        - IF:
+          - var: is_lening_voor_hoger_rendement
+          - THEN: false
+          - ELSE:
+            - IF:
+              - var: is_tijdelijk_overschot
+              - THEN:
+                - OR:
+                  - var: is_uitgezet_bij_eigen_leninggever
+                  - var: heeft_nettingovereenkomst
+              - ELSE: true
   - number: '3'
     text: |-
       Openbare lichamen als bedoeld in [artikel 1, onderdeel a, van de wet][ref1], zetten uitsluitend gelden uit in de
@@ -149,6 +214,29 @@ articles:
       - id: ref3
         bwb_id: BWBR0012076
         artikel: '2'
+    machine_readable:
+      inputs:
+        - name: is_hoofdsom_intact
+          type: boolean
+          description: Of de hoofdsom aan het einde van de looptijd intact is
+        - name: is_vastrentende_waarde
+          type: boolean
+          description: Of het een vastrentende waarde betreft
+        - name: artikel_2_mag_uitzetten
+          type: boolean
+          description: Of de instelling voldoet aan Artikel 2
+          source:
+            output: mag_uitzetten
+      outputs:
+        - name: mag_beleggen
+          type: boolean
+          description: Of het openbaar lichaam de gelden mag beleggen
+      logic:
+        - AND:
+          - OR:
+            - var: is_hoofdsom_intact
+            - var: is_vastrentende_waarde
+          - var: artikel_2_mag_uitzetten
   - number: 3a
     text: |-
       1 Nazorgfondsen mogen, in afwijking van [artikel 3][ref1], gelden uitzetten in de vorm van beleggingen in aandelen
@@ -178,6 +266,39 @@ articles:
       - id: ref3
         bwb_id: BWBR0012076
         artikel: '2'
+    machine_readable:
+      inputs:
+        - name: is_nazorgfonds
+          type: boolean
+          description: Of het een nazorgfonds betreft
+        - name: portefeuille_bevat_vastrentende_waarden
+          type: boolean
+          description: Of de portefeuille vastrentende waarden bevat
+        - name: portefeuille_bevat_overige_uitzettingen
+          type: boolean
+          description: Of de portefeuille overige uitzettingen bevat
+        - name: artikel_2_mag_uitzetten
+          type: boolean
+          description: Of de instelling voldoet aan Artikel 2
+          source:
+            output: mag_uitzetten
+      outputs:
+        - name: mag_beleggen_nazorgfonds
+          type: boolean
+          description: Of het nazorgfonds gelden mag beleggen
+      logic:
+        - IF:
+          - NOT:
+            - var: is_nazorgfonds
+          - THEN: false
+          - ELSE:
+            - OR:
+              - AND:
+                - var: portefeuille_bevat_vastrentende_waarden
+                - var: artikel_2_mag_uitzetten
+              - AND:
+                - var: portefeuille_bevat_overige_uitzettingen
+                - var: artikel_2_mag_uitzetten
   - number: '4'
     text: |-
       1 Openbare lichamen hanteren financiële derivaten uitsluitend ter beperking van financiële risico’s en nemen geen
@@ -208,6 +329,64 @@ articles:
       - id: ref2
         bwb_id: BWBR0020368
         artikel: 1:1
+    machine_readable:
+      inputs:
+        - name: is_ter_beperking_risico
+          type: boolean
+          description: Of de derivaten worden gebruikt ter beperking van financiële risico's
+        - name: is_niet_effectieve_positie
+          type: boolean
+          description: Of er sprake is van een niet-effectieve positie
+        - name: tegenpartij_voldoet_artikel_2
+          type: boolean
+          description: Of de tegenpartij voldoet aan Artikel 2
+        - name: is_gereglementeerde_markt
+          type: boolean
+          description: Of de transactie plaatsvindt op een gereglementeerde markt in de EER
+        - name: derivaat_type
+          type: string
+          description: Type derivaat
+          enum: ["rentecap", "payer swap", "forward start payer swap", "swaption", "receiver swap"]
+        - name: is_tijdelijke_maatregel
+          type: boolean
+          description: Of de niet-effectieve positie tijdelijk is
+        - name: bijstortverplichting_op_beide_partijen
+          type: boolean
+          description: Of de bijstortverplichting op beide partijen rust
+        - name: bijstortverplichting_op_financiele_onderneming
+          type: boolean
+          description: Of de bijstortverplichting op de financiële onderneming rust
+      outputs:
+        - name: mag_derivaat_gebruiken
+          type: boolean
+          description: Of het openbaar lichaam het derivaat mag gebruiken
+      logic:
+        - AND:
+          - var: is_ter_beperking_risico
+          - OR:
+            - NOT:
+              - var: is_niet_effectieve_positie
+            - AND:
+              - var: is_niet_effectieve_positie
+              - var: is_tijdelijke_maatregel
+              - EQUALS:
+                - var: derivaat_type
+                - value: "receiver swap"
+          - OR:
+            - var: tegenpartij_voldoet_artikel_2
+            - var: is_gereglementeerde_markt
+          - OR:
+            - IN:
+              - var: derivaat_type
+              - value: ["rentecap", "payer swap", "forward start payer swap", "swaption"]
+            - AND:
+              - EQUALS:
+                - var: derivaat_type
+                - value: "receiver swap"
+              - var: is_niet_effectieve_positie
+          - OR:
+            - var: bijstortverplichting_op_beide_partijen
+            - var: bijstortverplichting_op_financiele_onderneming
   - number: '5'
     text: |-
       Deze regeling treedt in werking met ingang van de datum waarop de [Wet financiering decentrale overheden][ref1] in
