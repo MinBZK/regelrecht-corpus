@@ -64,6 +64,32 @@ articles:
       - id: ref4
         bwb_id: BWBR0010646
         artikel: 2.2.3
+    machine_readable:
+      logic:
+        - IF:
+            condition: studiejaar == "2005-2006"
+            then:
+              - SET:
+                  variable: eindtermen
+                  value: source.regulation("BWBR0017258", "bijlage 2")
+              - SET:
+                  variable: onderverdeling_deelkwalificaties
+                  value: source.regulation("BWBR0017258", "bijlage 1.onderverdeling")
+              - SET:
+                  variable: leerweg
+                  value: source.regulation("BWBR0017258", "bijlage 1.leerweg")
+              - SET:
+                  variable: deelkwalificaties_examinering
+                  value: source.regulation("BWBR0017258", "bijlage 1.deelkwalificaties_examinering")
+              - SET:
+                  variable: bekostigingsstatus
+                  value: source.regulation("BWBR0017258", "bijlage 1.bekostiging")
+              - SET:
+                  variable: prijsfactor
+                  value: source.regulation("BWBR0010646", "artikel 2.2.3, derde lid")
+      untranslatables:
+        - construct: table_lookup
+          reason: Bijlage 1 en Bijlage 2 bevatten tabellen met specifieke gegevens per beroepsopleiding die niet rechtstreeks vertaald kunnen worden naar uitvoerbare logica.
   - number: '3'
     text: |-
       1 De bekostiging aan de hand van de maatstaf, bedoeld in [artikel 2.2.2, tweede lid onder a, van de wet][ref1],
@@ -90,6 +116,46 @@ articles:
       - id: ref2
         bwb_id: BWBR0010646
         artikel: 2.1.2
+    machine_readable:
+      input:
+        - studiebelastingsuren
+        - is_bbl_deelnemer_niet_voltijds
+      output:
+        type: object
+        properties:
+          bekostiging_eindjaar:
+            type: string
+      logic:
+        - IF:
+            condition: is_bbl_deelnemer_niet_voltijds == true
+            then:
+              - SET:
+                  variable: bekostiging_eindjaar
+                  value: source.regulation("BWBR0010646", "artikel 2.1.2")
+        - IF:
+            condition: studiebelastingsuren <= 1600
+            then:
+              - SET:
+                  variable: bekostiging_eindjaar
+                  value: "2006-2007"
+        - IF:
+            condition: studiebelastingsuren > 1600 and studiebelastingsuren <= 3200
+            then:
+              - SET:
+                  variable: bekostiging_eindjaar
+                  value: "2007-2008"
+        - IF:
+            condition: studiebelastingsuren > 3200 and studiebelastingsuren <= 4800
+            then:
+              - SET:
+                  variable: bekostiging_eindjaar
+                  value: "2008-2009"
+        - IF:
+            condition: studiebelastingsuren > 4800
+            then:
+              - SET:
+                  variable: bekostiging_eindjaar
+                  value: "2009-2010"
   - number: '4'
     text: |-
       Deze regeling zal met de toelichting in het Gele Katern worden geplaatst. [Bijlage 1][ref1] zal separaat aan de
