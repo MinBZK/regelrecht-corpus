@@ -15,39 +15,39 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      1 [Artikel 72, eerste lid, van de Wegenverkeerswet 1994][ref1] is niet van toepassing op:
+        1 [Artikel 72, eerste lid, van de Wegenverkeerswet 1994][ref1] is niet van toepassing op:
 
-      a. een voertuig waarvoor een kenteken is opgegeven dat de lettergroep ZZ of de enkele letter A, E, H, K, L, N, P,
-      S, T, V, W, X of Z en twee groepen van twee cijfers bevat;
+        a. een voertuig waarvoor een kenteken is opgegeven dat de lettergroep ZZ of de enkele letter A, E, H, K, L, N, P,
+        S, T, V, W, X of Z en twee groepen van twee cijfers bevat;
 
-      b. een voertuig waarvoor een kenteken is opgegeven ter zake waarvan een kentekenbewijs als bedoeld in
-      [artikel 17, zesde lid, van het Kentekenreglement][ref2] is afgegeven;
+        b. een voertuig waarvoor een kenteken isgegeven ter zake waarvan een kentekenbewijs als bedoeld in
+        [artikel 17, zesde lid, van het Kentekenreglement][ref2] is afgegeven;
 
-      c. een voertuig op de dag dat deze door ambtenaren van de Dienst Wegverkeer of door de ambtenaren, bedoeld in
-      [artikel 141 van het Wetboek van Strafvordering][ref3], worden onderzocht in verband met de afgifte of wijziging
-      van een kentekenbewijs of met de teruggave van het voor dat voertuig afgegeven kentekenbewijs waarvan op grond van
-      [artikel 60 van de wet][ref4] de overgifte is gevorderd;.
+        c. een voertuig op de dag dat deze door ambtenaren van de Dienst Wegverkeer of door de ambtenaren, bedoeld in
+        [artikel 141 van het Wetboek van Strafvordering][ref3], worden onderzocht in verband met de afgifte of wijziging
+        van een kentekenbewijs of met de teruggave van het voor dat voertuig afgegeven kentekenbewijs waarvan op grond van
+        [artikel 60 van de wet][ref4] de overgifte is gevorderd;.
 
-      d. rijdende werktuigen, niet zijnde motorrijtuigen met beperkte snelheid, met:
+         d. rijdende werktuigen, niet zijnde motorrijtuigen met beperkte snelheid, met:
 
-      1∞ een lengte van meer dan 12,00 m,
+         1∞ een lengte van meer dan 12,00 m,
 
-      2∞ een breedte van meer dan 2,55 m indien de toegestane maximum massa niet meer bedraagt dan 10.000 kg,
+         2∞ een breedte van meer dan 2,55 m indien de toegestane maximum massa niet meer bedraagt dan 10.000 kg,
 
-      3∞ een breedte van meer dan 2,60 m indien de toegestane maximum massa meer bedraagt dan 10.000 kg,
+         3∞ een breedte van meer dan 2,60 m indien de toegestane maximum massa meer bedraagt dan 10.000 kg,
 
-      4∞ een toegestane maximum massa van meer dan 50.000 kg, dan wel
+         4∞ een toegestane maximum massa van meer dan 50.000 kg, dan wel
 
-      5∞ een toegestane maximum last onder enige as van meer dan 10.000 kg voor een niet-aangedreven as dan wel van meer
-      dan 11.500 kg voor een aangedreven as.
+         5∞ een toegestane maximum last onder enige as van meer dan 10.000 kg voor een niet-aangedreven as dan wel van meer
+         dan 11.500 kg voor een aangedreven as.
 
-      2 Van de in het eerste lid, onderdeel d, bedoelde uitzondering wordt melding gemaakt op het kentekenbewijs.
+          2 Van de in het eerste lid, onderdeel d, bedoelde uitzondering wordt melding gemaakt op het kentekenbewijs.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0006622#Artikel72
-      [ref2]: https://wetten.overheid.nl/BWBR0006951#Artikel17
-      [ref3]: https://wetten.overheid.nl/BWBR0001903#Artikel141
-      [ref4]: https://wetten.overheid.nl/BWBR0006622#Artikel60
+           [ref1]: https://wetten.overheid.nl/BWBR0006622#Artikel72
+           [ref2]: https://wetten.overheid.nl/BWBR0006951#Artikel17
+           [ref3]: https://wetten.overheid.nl/BWBR0001903#Artikel141
+            [ref4]: https://wetten.overheid.nl/BWBR0006622#Artikel60
     url: https://wetten.overheid.nl/BWBR0009149/2002-09-01#Artikel1
     references:
       - id: ref1
@@ -62,6 +62,115 @@ articles:
       - id: ref4
         bwb_id: BWBR0006622
         artikel: '60'
+    machine_readable:
+        execution:
+          produces:
+            legal_character: INFORMATIEF
+          parameters:
+            - name: kenteken
+              type: string
+              required: true
+              description: Kenteken van het voertuig
+            - name: has_kentekenbewijs_artikel_17
+              type: boolean
+              required: false
+              description: Geeft aan of het voertuig een kentekenbewijs heeft volgens Artikel 17 van het Kentekenreglement
+            - name: is_under_investigation
+              type: boolean
+              required: false
+              description: Geeft aan of het voertuig wordt onderzocht door de Dienst Wegverkeer of ambtenaren bedoeld in Artikel 141 van het Wetboek van Strafvordering
+            - name: length_m
+              type: number
+              required: false
+              description: Lengte van het voertuig in meters
+            - name: width_m
+              type: number
+              required: false
+              description: Breedte van het voertuig in meters
+            - name: max_mass_kg
+              type: number
+              required: false
+              description: Toegestane maximum massa van het voertuig in kilogram
+            - name: max_axle_load_kg
+              type: number
+              required: false
+              description: Toegestane maximum last onder een as in kilogram
+            - name: is_driven
+              type: boolean
+              required: false
+              description: Indicateert of de as aangedreven is
+          input:
+            - name: has_kentekenbewijs_artikel_17
+              type: boolean
+              source:
+                regulation: kentekenreglement
+                output: has_kentekenbewijs_artikel_17
+                parameters:
+                  kenteken: $kenteken
+            - name: is_under_investigation
+              type: boolean
+              source:
+                regulation: wetboek_van_strafvordering
+                output: is_under_investigation
+                parameters:
+                  kenteken: $kenteken
+          output:
+            - name: is_exempt_from_inspection
+              type: boolean
+              description: Indicaat of het voertuig vrijgesteld is van de keuringsplicht volgens Artikel 1
+          actions:
+            - output: is_exempt_from_inspection
+              value:
+                operation: OR
+                conditions:
+                  - operation: EQUALS
+                    subject: $has_kentekenbewijs_artikel_17
+                    value: true
+                  - operation: EQUALS
+                    subject: $is_under_investigation
+                    value: true
+                  - operation: OR
+                    conditions:
+                      - operation: GREATER_THAN
+                        subject: $length_m
+                        value: 12.00
+                      - operation: AND
+                        conditions:
+                          - operation: GREATER_THAN
+                            subject: $width_m
+                            value: 2.55
+                          - operation: LESS_THAN_OR_EQUAL
+                            subject: $max_mass_kg
+                            value: 10000
+                      - operation: AND
+                        conditions:
+                          - operation: GREATER_THAN
+                            subject: $width_m
+                            value: 2.60
+                          - operation: GREATER_THAN
+                            subject: $max_mass_kg
+                            value: 10000
+                      - operation: GREATER_THAN
+                        subject: $max_mass_kg
+                        value: 50000
+                      - operation: OR
+                        conditions:
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $is_driven
+                                value: false
+                              - operation: GREATER_THAN
+                                subject: $max_axle_load_kg
+                                value: 10000
+                          - operation: AND
+                            conditions:
+                              - operation: EQUALS
+                                subject: $is_driven
+                                value: true
+                              - operation: GREATER_THAN
+                                subject: $max_axle_load_kg
+                                value: 11500
   - number: '2'
     text: |-
       De regeling van de Minister van Verkeer en Waterstaat van 5 december 1994, nr. RV 187592, houdende aanwijzing van
