@@ -19,6 +19,16 @@ articles:
       De door de aanvrager te betalen kosten van behandeling van de eerste aanvrage van het groot vaarbewijs bedragen
       € 60.
     url: https://wetten.overheid.nl/BWBR0016318/2004-01-31#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: kosten_eerste_aanvraag_groot_vaarbewijs
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kosten_eerste_aanvraag_groot_vaarbewijs
+            value: 6000
   - number: '2'
     text: |-
       De door de aanvrager te betalen kosten van behandeling van de aanvrage van een duplicaat dan wel van een
@@ -32,9 +42,29 @@ articles:
       - id: ref1
         bwb_id: BWBR0003443
         artikel: 23a
+    machine_readable:
+      execution:
+        output:
+          - name: kosten_duplicaat_of_vernieuwing_groot_vaarbewijs
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kosten_duplicaat_of_vernieuwing_groot_vaarbewijs
+            value: 5000
   - number: '3'
     text: De door de aanvrager te betalen kosten van behandeling van de aanvrage van het klein vaarbewijs bedragen € 23,60.
     url: https://wetten.overheid.nl/BWBR0016318/2004-01-31#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: kosten_aanvraag_klein_vaarbewijs
+            type: amount
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kosten_aanvraag_klein_vaarbewijs
+            value: 2360
   - number: '4'
     text: De Regeling vaststelling kosten behandeling aanvrage vaarbewijs 2003 wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0016318/2004-01-31#Artikel4
