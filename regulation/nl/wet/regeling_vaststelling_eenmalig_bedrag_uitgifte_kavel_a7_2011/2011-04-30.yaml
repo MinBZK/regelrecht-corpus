@@ -44,6 +44,7 @@ articles:
       - id: ref3
         bwb_id: BWBR0029915
         artikel: '1'
+
   - number: '2'
     text: |-
       1 De verkrijger of houder van een vergunning voor kavel A7 en van een vergunning voor digitale radio-omroep
@@ -66,6 +67,16 @@ articles:
         bwb_id: BWBR0029915
       - id: ref2
         bwb_id: BWBR0029915
+    machine_readable:
+      fee_calculation:
+        base_fee: 17563200
+        period_start: '2011-09-01'
+        period_end: '2017-08-31'
+        proration:
+          condition: vergunningverlening_date > '2011-09-01'
+          formula: base_fee * (remaining_months / 72)
+          remaining_months: floor(days_between(vergunningverlening_date, period_end) / 30)
+
   - number: '3'
     text: |-
       1 De verkrijger of de houder van de vergunningen betaalt het op grond van [artikel 2][ref1] verschuldigde bedrag
@@ -122,6 +133,27 @@ articles:
       - id: ref6
         bwb_id: BWBR0029920
         artikel: '2'
+    machine_readable:
+      payment_deadline:
+        default_date: '2011-09-01'
+        conditional_date: vergunningverlening_date + 42 days
+        condition: vergunningverlening_date > '2011-07-21'
+      installments:
+        count: 6
+        frequency: annual
+        first_payment_date: '2011-09-01'
+        installment_amount: fee / 6
+        conditional_first_payment: vergunningverlening_date + 42 days
+        conditional_condition: vergunningverlening_date > '2011-07-21'
+      collateral:
+        required: true
+        amount: fee / 6
+        type: bank_guarantee_or_deposit
+      bank_details:
+        account_number: '56.99.94.039'
+        account_holder: Ministerie van Economische Zaken, Landbouw en Innovatie; Agentschap Telecom
+        reference: 'kavel A7, vergunning voor digitale radio-omroep'
+
   - number: '4'
     text: |-
       [Artikel 4 van de Regeling vaststelling eenmalig bedrag landelijke commerciële radio-omroep 2011][ref1] is van
@@ -138,6 +170,7 @@ articles:
         artikel: '4'
       - id: ref2
         bwb_id: BWBR0029915
+
   - number: '5'
     text: |-
       1 Indien op grond van de [Regeling aanvraag][ref1] aan een aanvrager geen vergunningen
@@ -179,11 +212,23 @@ articles:
       - id: ref5
         bwb_id: BWBR0029915
         artikel: '6'
+    machine_readable:
+      refund_conditions:
+        condition: no_license_granted
+        action: refund_collateral_or_bank_guarantee
+      interest_calculation:
+        rate_source: EONIA
+        rate_adjustment: minus 4 basis_points
+        compounding_basis: actual_360
+        start_date: receipt_date_of_collateral
+        end_date: day_before_refund
+
   - number: '6'
     text: |-
       Deze regeling treedt in werking met ingang van de dag na de datum van uitgifte van de Staatscourant waarin zij
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0029920/2011-04-30#Artikel6
+
   - number: '7'
     text: 'Deze regeling wordt aangehaald als: Regeling vaststelling eenmalig bedrag uitgifte kavel A7 2011.'
     url: https://wetten.overheid.nl/BWBR0029920/2011-04-30#Artikel7
