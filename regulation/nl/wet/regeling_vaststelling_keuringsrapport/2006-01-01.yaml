@@ -18,6 +18,23 @@ articles:
       Het model als bedoeld in het eerste lid, moet voorzien zijn van een gele doorslag indien de invulling niet
       rechtstreeks plaatsvindt uit het keuringsregister
     url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: gele_doorslag_vereist
+            type: boolean
+        parameters:
+          - name: invulling_uit_keuringsregister
+            type: boolean
+            description: Of de invulling rechtstreeks plaatsvindt uit het keuringsregister
+        actions:
+          - output: gele_doorslag_vereist
+            value:
+              operation: NOT
+              value:
+                operation: EQUALS
+                subject: $invulling_uit_keuringsregister
+                value: true
   - number: '4'
     text: |-
       De regeling van de Minister van Verkeer en Waterstaat van 12 december 1994, nr. RV 188313 (Stcrt. 252),
@@ -61,5 +78,5 @@ articles:
         bwb_id: BWBR0010803
         artikel: '2'
   - number: '6'
-    text: 'Deze regeling wordt aangehaald als: Regeling vaststelling keuringsrapport.'
+    text: 'Deze regeling wordt aanghaald als: Regeling vaststelling keuringsrapport.'
     url: https://wetten.overheid.nl/BWBR0010803/2006-01-01#Artikel6
