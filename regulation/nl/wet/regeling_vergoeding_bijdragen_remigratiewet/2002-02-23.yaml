@@ -74,7 +74,7 @@ articles:
       [97h, eerste en tweede lid, van de wet][ref2], per kalenderjaar aan de Minister voor Grote Steden-
       en Integratiebeleid de door de Bank in dat jaar aan werknemers toegekende remigratiebijdragen, doch
       ten hoogste tot een bedrag gelijk aan het totaal van de bruto-uitkeringen die op grond van de wet
-      in dat kalenderjaar waarin remigratiebijdragen zijn verstrekt, aan deze werknemers hadden moeten
+      in dat kalenderjaar therein remigratiebijdragen zijn verstrekt, aan deze werknemers hadden moeten
       worden betaald, indien zij werkloos waren gebleven en niet naar een bestemmingsland als bedoeld in
       [artikel 1, eerste lid, onderdeel e, van de Remigratiewet][ref3] waren vertrokken.
 
@@ -93,6 +93,49 @@ articles:
       - id: ref3
         bwb_id: BWBR0010424
         artikel: '1'
+    machine_readable:
+      untranslatables:
+        - construct: hypothetische bruto-uitkeringen
+          reason: De engine kan geen hypothetische berekeningen uitvoeren voor wat betaald zou zijn als werknemers werkloos waren gebleven
+          legal_text_excerpt: ten hoogste tot een bedrag gelijk aan het totaal van de bruto-uitkeringen die [...] hadden moeten worden betaald, indien zij werkloos waren gebleven
+          accepted: false
+      inputs:
+        - name: remigratiebijdragen_totaal
+          type: amount
+          type_spec:
+            unit: eurocent
+          description: Totaalbedrag van de remigratiebijdragen die door de Bank zijn toegekend aan werknemers
+          source:
+            regulation:
+              bwb_id: BWBR0011263
+        - name: bruto_uitkeringen_hypothetisch
+          type: amount
+          type_spec:
+            unit: eurocent
+          description: Hypothetisch totaal van bruto-uitkeringen die hadden moeten worden betaald als werknemers werkloos waren gebleven
+          source:
+            regulation:
+              bwb_id: BWBR0004045
+        - name: bestemmingsland
+          type: string
+          description: Bestemmingsland zoals bedoeld in Remigratiewet artikel 1, onderdeel e
+          source:
+            regulation:
+              bwb_id: BWBR0010424
+              artikel: '1'
+      outputs:
+        - name: vergoeding_bedrag
+          type: amount
+          type_spec:
+            unit: eurocent
+          description: De door UWV te vergoeden bedrag aan de Minister voor Grote Steden- en Integratiebeleid
+      actions:
+        - output: vergoeding_bedrag
+          value:
+            operation: MIN
+            values:
+              - $remigratiebijdragen_totaal
+              - $bruto_uitkeringen_hypothetisch
   - number: '3'
     text: |-
       Binnen twee maanden na afloop van enig kalenderjaar verstrekt de Bank aan het UWV een lijst met namen van
