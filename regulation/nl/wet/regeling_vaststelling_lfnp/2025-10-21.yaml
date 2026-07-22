@@ -205,11 +205,80 @@ articles:
         artikel: 2c
       - id: ref2
         bwb_id: BWBR0033460
+    machine_readable:
+      execution:
+        output:
+          - name: mag_plaatsen_in_vakgebied
+            type: boolean
+        parameters:
+          - name: vakgebied
+            type: string
+          - name: werkterrein
+            type: string
+            required: false
+          - name: functie
+            type: string
+            required: false
+        input:
+          - name: heeft_basisonly_opleiding
+            type: boolean
+            source:
+              regulation: Besluit algemene rechtspositie politie
+              output: heeft_artikel_2c_tweede_lid_opleiding
+        actions:
+          - output: mag_plaatsen_in_vakgebied
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_basisonly_opleiding
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $vakgebied
+                      value: "Intelligence"
+                    - operation: EQUALS
+                      subject: $vakgebied
+                      value: "Operationeel Specialismen"
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $vakgebied
+                          value: "Forensische Opsporing"
+                        - operation: NOT
+                          value:
+                            operation: EQUALS
+                            subject: $werkterrein
+                            value: "Speurhondengeleiding"
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $vakgebied
+                          value: "Tactische Opsporing"
+                        - operation: NOT
+                          value:
+                            operation: IN
+                            subject: $functie
+                            values: ["Senior Tactische Opsporing", "Operationeel Expert Tactische Opsporing"]
   - number: 3a.2
     text: |-
       De ambtenaar, bedoeld in het eerste lid, die is geplaatst in een functie als bedoeld in het eerste lid is niet
       bewapend.
     url: https://wetten.overheid.nl/BWBR0033460/2025-10-21#Artikel3a
+    machine_readable:
+      execution:
+        output:
+          - name: is_niet_bewapend
+            type: boolean
+        input:
+          - name: is_geplaatst_per_3a1
+            type: boolean
+            source:
+              output: mag_plaatsen_in_vakgebied
+        actions:
+          - output: is_niet_bewapend
+            value: $is_geplaatst_per_3a1
   - number: 3a.3
     text: |-
       De ambtenaar in opleiding, bedoeld in [artikel 1, eerste lid, van het Besluit algemene rechtspositie politie][ref1],
@@ -227,6 +296,33 @@ articles:
       - id: ref2
         bwb_id: BWBR0006516
         artikel: 2c
+    machine_readable:
+      execution:
+        output:
+          - name: is_niet_bewapend
+            type: boolean
+        input:
+          - name: is_ambtenaar_in_opleiding
+            type: boolean
+            source:
+              regulation: Besluit algemene rechtspositie politie
+              output: is_ambtenaar_in_opleiding
+          - name: heeft_basisonly_opleiding_voltooid
+            type: boolean
+            source:
+              regulation: Besluit algemene rechtspositie politie
+              output: heeft_artikel_2c_tweede_lid_opleiding
+        actions:
+          - output: is_niet_bewapend
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_ambtenaar_in_opleiding
+                  value: true
+                - operation: EQUALS
+                  subject: $heeft_basisonly_opleiding_voltooid
+                  value: true
   - number: 3b
     text: |-
       De volgende activiteiten uit de in [bijlage 3][ref1] opgenomen functiebeschrijvingen van de
@@ -245,6 +341,20 @@ articles:
       - id: ref2
         bwb_id: BWBR0006516
         artikel: 2c
+    machine_readable:
+      execution:
+        output:
+          - name: heeft_recht_op_gereserveerde_activiteiten
+            type: boolean
+        input:
+          - name: heeft_volle_opleiding
+            type: boolean
+            source:
+              regulation: Besluit algemene rechtspositie politie
+              output: heeft_artikel_2c_eerste_lid_opleiding
+        actions:
+          - output: heeft_recht_op_gereserveerde_activiteiten
+            value: $heeft_volle_opleiding
   - number: 3b.a
     text: de toepassing van dwangmiddelen in vooraf voorzienbare gevaarzettende situaties, en
     url: https://wetten.overheid.nl/BWBR0033460/2025-10-21#Artikel3b
@@ -255,7 +365,7 @@ articles:
     text: |-
       In het kader van het vaststellen van passende arbeid als bedoeld in
       [artikel 49b, eerste lid, van het Besluit algemene rechtspositie politie][ref1], stelt het bevoegd gezag zo nodig
-      een functie samen uit een of meerdere functies opgenomen in de bij deze regeling behorende [bijlage 3][ref2]. Bij
+      een functie samen uit een of meerdere functies opgenomen in de bij deze regeling behorende [bijlage	3][ref2]. Bij
       het samenstellen van deze functie wordt rekening gehouden met de resterende verdiencapaciteit van de desbetreffende
       ambtenaar.
 
