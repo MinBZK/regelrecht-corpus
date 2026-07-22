@@ -71,46 +71,186 @@ articles:
       [ref10]: https://wetten.overheid.nl/BWBR0005319#Artikel45
       [ref11]: https://wetten.overheid.nl/BWBR0005319#Artikel46
     url: https://wetten.overheid.nl/BWBR0005764/2002-01-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0005319
-        artikel: '11'
-      - id: ref2
-        bwb_id: BWBR0005319
-        artikel: '11'
-      - id: ref3
-        bwb_id: BWBR0005319
-        artikel: '17'
-      - id: ref4
-        bwb_id: BWBR0005319
-        artikel: '17'
-      - id: ref5
-        bwb_id: BWBR0005319
-        artikel: '18'
-      - id: ref6
-        bwb_id: BWBR0005319
-        artikel: '18'
-      - id: ref7
-        bwb_id: BWBR0005503
-        artikel: '16'
-      - id: ref8
-        bwb_id: BWBR0005319
-        artikel: '22'
-      - id: ref9
-        bwb_id: BWBR0005319
-        artikel: '41'
-      - id: ref10
-        bwb_id: BWBR0005319
-        artikel: '45'
-      - id: ref11
-        bwb_id: BWBR0005319
-        artikel: '46'
+    machine_readable:
+      execution:
+        parameters:
+          - name: type
+            type: string
+            required: true
+            description: Type van aanvraag (e.g., vergunning, wijziging_vergunning, ontheffing_vakbekwaamheid)
+          - name: articlenumber
+            type: string
+            required: false
+            description: Artikelnummer uit Wet vervoer binnenvaart of Besluit vervoer binnenvaart
+        output:
+          - name: vergoedingsbedrag
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: Vergoedingsbedrag voor de behandeling van de aanvraag
+        actions:
+          - output: vergoedingsbedrag
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '11'
+                  then: 29900
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: wijziging_vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '11'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '17'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: wijziging_vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '17'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '18'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: wijziging_vergunning
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '18'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: ontheffing_vakbekwaamheid
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '16'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: vergunningbewijs
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '22'
+                  then: 9000
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: inschrijving_eigen_vervoer
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '41'
+                  then: 29900
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: inschrijving_eigen_vervoer
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '45'
+                  then: 29900
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $type
+                        value: inschrijvingsbewijs
+                      - operation: EQUALS
+                        subject: $articlenumber
+                        value: '46'
+                  then: 9000
+                - when:
+                    operation: EQUALS
+                    subject: $type
+                    value: gewaarmerkt_afschrift
+                  then: 2200
+              default: 0
   - number: '2'
     text: De regeling treedt in werking met ingang van 1 januari 1993.
     url: https://wetten.overheid.nl/BWBR0005764/2002-01-01#Artikel2
+    machine_readable: null
   - number: '3'
     text: |-
       Deze regeling kan worden aangehaald als: Regeling vergoedingen binnenvaart.
 
       Deze regeling zal in de Staatscourant worden geplaatst.
     url: https://wetten.overheid.nl/BWBR0005764/2002-01-01#Artikel3
+    machine_readable: null
+references:
+  - id: ref1
+    bwb_id: BWBR0005319
+    artikel: '11'
+  - id: ref2
+    bwb_id: BWBR0005319
+    artikel: '11'
+  - id: ref3
+    bwb_id: BWBR0005319
+    artikel: '17'
+  - id: ref4
+    bwb_id: BWBR0005319
+    artikel: '17'
+  - id: ref5
+    bwb_id: BWBR0005319
+    artikel: '18'
+  - id: ref6
+    bwb_id: BWBR0005319
+    artikel: '18'
+  - id: ref7
+    bwb_id: BWBR0005503
+    artikel: '16'
+  - id: ref8
+    bwb_id: BWBR0005319
+    artikel: '22'
+  - id: ref9
+    bwb_id: BWBR0005319
+    artikel: '41'
+  - id: ref10
+    bwb_id: BWBR0005319
+    artikel: '45'
+  - id: ref11
+    bwb_id: BWBR0005319
+    artikel: '46'
