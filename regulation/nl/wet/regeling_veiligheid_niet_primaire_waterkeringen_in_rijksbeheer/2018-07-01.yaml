@@ -14,22 +14,54 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Bij de bepaling van het waterkerend vermogen van een in de bijlage bij deze regeling aangewezen andere dan primaire
-      waterkering in beheer bij het Rijk als bedoeld in [artikel 2.5 van de Waterwet][ref1], gaat de beheerder uit van de
-      in de bijlage bij deze regeling opgenomen hydraulische randvoorwaarden.
+   - number: '1'
+     text: |-
+       Bij de bepaling van het waterkerend vermogen van een in de bijlage bij deze regeling aangewezen andere dan primaire
+       waterkering in beheer bij het Rijk als bedoeld in [artikel 2.5 van de Waterwet][ref1], gaat de beheerder uit van de
+       in de bijlage bij deze regeling opgenomen hydraulische randvoorwaarden.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0025458#Artikel2.5
-    url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0025458
-        artikel: '2.5'
-  - number: '2'
-    text: 'Deze regeling wordt aangehaald als: Regeling veiligheid niet-primaire waterkeringen in rijksbeheer.'
-    url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel2
-  - number: '3'
-    text: Deze regeling treedt in werking met ingang van 1 oktober 2016.
-    url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel3
+       [ref1]: https://wetten.overheid.nl/BWBR0025458#Artikel2.5
+     url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel1
+     references:
+       - id: ref1
+         bwb_id: BWBR0025458
+         artikel: '2.5'
+     machine_readable:
+       open_terms:
+         - id: hydraulische_randvoorwaarden
+           type: object
+           required: true
+           delegated_to: minister
+           delegation_type: MINISTERIELE_REGELING
+           legal_basis: bijlage bij regeling_veiligheid_niet_primaire_waterkeringen_in_rijksbeheer
+           description: Hydraulische randvoorwaarden op basis waarvan het waterkerend vermogen wordt bepaald
+       execution:
+          parameters:
+            - name: waterkering_id
+              type: string
+              required: true
+              description: Identificatie van de waterkering waarvoor de bepaling wordt uitgevoerd
+          input:
+            - name: is_niet_primaire_waterkering_in_rijksbeheer
+              type: boolean
+              description: Of de waterkering een andere dan primaire waterkering in rijksbeheer is
+              source:
+                regulation: wet_waterwet
+                output: is_niet_primaire_waterkering_in_rijksbeheer
+                parameters:
+                  waterkering_id: $waterkering_id
+          output:
+            - name: hydraulische_randvoorwaarden
+              type: object
+              description: De hydraulische randvoorwaarden die moeten worden gebruikt voor de bepaling
+          actions:
+            - output: hydraulische_randvoorwaarden
+              value: $hydraulische_randvoorwaarden
+
+   - number: '2'
+     text: 'Deze regeling wordt aangehaald als: Regeling veiligheid niet-primaire waterkeringen in rijksbeheer.'
+     url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel2
+   - number: '3'
+     text: Deze regeling treedt in werking met ingang van 1 oktober 2016.
+     url: https://wetten.overheid.nl/BWBR0038529/2018-07-01#Artikel3
