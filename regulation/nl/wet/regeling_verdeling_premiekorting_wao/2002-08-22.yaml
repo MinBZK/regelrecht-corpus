@@ -36,6 +36,37 @@ articles:
       - id: ref2
         bwb_id: BWBR0002524
         artikel: 79b
+    machine_readable:
+      inputs:
+        - premiekorting
+        - basispremie
+        - gedifferentieerde_premie
+      outputs:
+        - toegekende_premiekorting_basispremie
+        - toegekende_premiekorting_gedifferentieerde_premie
+      logic:
+        - IF:
+            condition:
+              GREATER_THAN:
+                left: premiekorting
+                right: basispremie
+            then:
+              - SET:
+                  name: toegekende_premiekorting_basispremie
+                  value: basispremie
+              - SET:
+                  name: toegekende_premiekorting_gedifferentieerde_premie
+                  value:
+                    SUBTRACT:
+                      left: premiekorting
+                      right: basispremie
+            else:
+              - SET:
+                  name: toegekende_premiekorting_basispremie
+                  value: premiekorting
+              - SET:
+                  name: toegekende_premiekorting_gedifferentieerde_premie
+                  value: 0
   - number: '2'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
