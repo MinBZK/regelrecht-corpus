@@ -22,8 +22,6 @@ articles:
       In deze regeling wordt verstaan onder:
 
 
-
-
               *wet:*
 
 
@@ -60,9 +58,53 @@ articles:
       - id: ref2
         bwb_id: BWBR0003818
         artikel: '29'
+    machine_readable:
+      execution:
+        output:
+          - name: verboden_substanties_lijst
+            type: array
+            description: Lijst van verboden substanties volgens Artikel 2
+            items:
+              type: string
+          - name: is_verboden_substantie
+            type: boolean
+            description: Indicatie of een gegeven substantie verboden is volgens Artikel 2
+        parameters:
+          - name: substantie
+            type: string
+            description: De te controleren substantie
+        actions:
+          - output: verboden_substanties_lijst
+            value:
+              operation: LIST
+              items:
+                - "stilbenen"
+                - "stilbeenderivaten"
+                - "zouten en esters van stilbenen"
+                - "thyreostatica"
+                - "biotechnische somatotropines"
+          - output: is_verboden_substantie
+            value:
+              operation: IN
+              subject: $substantie
+              value: $verboden_substanties_lijst
   - number: '3'
     text: |-
       1 Deze regeling treedt in werking op 1 mei 1987.
 
       2 Deze regeling kan worden aangehaald als: Regeling verboden substanties voor houders van dieren.
     url: https://wetten.overheid.nl/BWBR0004151/1987-05-01#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: inwerkingtreding_datum
+            type: date
+            description: Datum waarop de regeling in werking treedt
+          - name: citeer_titel
+            type: string
+            description: Officiële citeertitel van de regeling
+        actions:
+          - output: inwerkingtreding_datum
+            value: "1987-05-01"
+          - output: citeer_titel
+            value: "Regeling verboden substanties voor houders van dieren"
