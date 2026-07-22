@@ -82,9 +82,73 @@ articles:
       - id: ref7
         bwb_id: BWBR0019466
         artikel: '15'
+    machine_readable:
+      untranslatables:
+        - construct: "aandacht besteden aan elementen"
+          reason: "Procedural reporting requirement without computable logic"
+          legal_text_excerpt: "besteden burgemeester en wethouders in ieder geval aandacht aan de volgende elementen"
+          accepted: false
+      execution:
+        output:
+          - name: verslag_elementen_municipality
+            type: object
+            type_spec:
+              properties:
+                leefomgevingskwaliteit_ruimtegebruik_ontwikkeling:
+                  type: string
+                uitvoering_bronmaatregelen:
+                  type: string
+                uitvoering_beperkende_compenserende_maatregelen:
+                  type: string
+                noodzaak_aanvullende_maatregelen_artikel_8:
+                  type: boolean
+                termijn_besluit_artikelen_2_3:
+                  type: string
+                doorwerking_besluit_artikelen_2_3:
+                  type: string
+                toezicht_afwijkende_milieukwaliteitsnorm:
+                  type: string
+                betrokkenheid_belanghebbenden:
+                  type: string
+        input:
+          - name: afwijkingsbesluit_uitvoering
+            type: string
+            description: "Context voor aanvullende maatregelen (artikel 8 van BWBR0019466)"
+          - name: besluit_artikelen_2_3
+            type: object
+            description: "Besluit verwijzend naar artikelen 2 en 3 van BWBR0019466"
+            source:
+              regulation: BWBR0019466
+              output: besluit_artikelen_2_3
+          - name: afwijkende_milieukwaliteitsnorm
+            type: string
+            description: "Afwijkende milieukwaliteitsnorm (artikel 15 van BWBR0019466)"
+            source:
+              regulation: BWBR0019466
+              output: afwijkende_milieukwaliteitsnorm
+        actions:
+          - output: leefomgevingskwaliteit_ruimtegebruik_ontwikkeling
+            value: $leefomgevingskwaliteit_ruimtegebruik_ontwikkeling
+          - output: uitvoering_bronmaatregelen
+            value: $uitvoering_bronmaatregelen
+          - output: uitvoering_beperkende_compenserende_maatregelen
+            value: $uitvoering_beperkende_compenserende_maatregelen
+          - output: noodzaak_aanvullende_maatregelen_artikel_8
+            value:
+              operation: EQUALS
+              subject: $afwijkingsbesluit_uitvoering
+              value: "aanvullende maatregelen nodig"
+          - output: termijn_besluit_artikelen_2_3
+            value: $besluit_artikelen_2_3.termijn
+          - output: doorwerking_besluit_artikelen_2_3
+            value: $besluit_artikelen_2_3.doorwerking
+          - output: toezicht_afwijkende_milieukwaliteitsnorm
+            value: $afwijkende_milieukwaliteitsnorm
+          - output: betrokkenheid_belanghebbenden
+            value: $betrokkenheid_belanghebbenden
   - number: '3'
     text: |-
-      In het verslag bedoeld in [artikel 17, vierde lid, van de wet][ref1] besteden gedeputeerde staten aandacht aan de
+      In het verslag bedoeld in [artikel 17, vierde lid, van de wet][ref1] besteden gledeputeerde staten aandacht aan de
       volgende elementen:
 
       a. voor zover de provincie organisatorische of procedurele voorzieningen heeft getroffen om gemeenten te
@@ -155,6 +219,76 @@ articles:
       - id: ref10
         bwb_id: BWBR0019466
         artikel: '3'
+    machine_readable:
+      untranslatables:
+        - construct: "aandacht besteden aan elementen"
+          reason: "Procedural reporting requirement without computable logic"
+          legal_text_excerpt: "besteden gedeputeerde staten aandacht aan de volgende elementen"
+          accepted: false
+      execution:
+        output:
+          - name: verslag_elementen_province
+            type: object
+            type_spec:
+              properties:
+                organisatorische_procedurele_voorzieningen:
+                  type: string
+                inhoudelijke_criteria_besluitvorming:
+                  type: string
+                procedurele_vorm_besluitvorming:
+                  type: string
+                functioneren_effecten_melding_artikel_11:
+                  type: string
+                aantal_besluiten_artikelen_2_3_in_behandeling:
+                  type: integer
+                strekking_besluiten_artikelen_2_3:
+                  type: string
+                koppeling_besluit_bestemmingsplan:
+                  type: string
+                aantal_besluiten_goedgekeurd_onthouden:
+                  type: integer
+                aantal_beroepen_resultaten:
+                  type: string
+                bijdrage_wet_beleid_zuinig_doelmatig_ruimtegebruik:
+                  type: string
+                invloed_nieuwe_ontwikkelingen_beleid:
+                  type: string
+        input:
+          - name: melding_artikel_11
+            type: string
+            description: "Melding bedoeld in artikel 11 van BWBR0019466"
+            source:
+              regulation: BWBR0019466
+              output: melding_artikel_11
+          - name: besluiten_artikelen_2_3
+            type: object
+            description: "Besluiten verwijzend naar artikelen 2 en 3 van BWBR0019466"
+            source:
+              regulation: BWBR0019466
+              output: besluiten_artikelen_2_3
+        actions:
+          - output: organisatorische_procedurele_voorzieningen
+            value: $organisatorische_procedurele_voorzieningen
+          - output: inhoudelijke_criteria_besluitvorming
+            value: $inhoudelijke_criteria_besluitvorming
+          - output: procedurele_vorm_besluitvorming
+            value: $procedurele_vorm_besluitvorming
+          - output: functioneren_effecten_melding_artikel_11
+            value: $melding_artikel_11
+          - output: aantal_besluiten_artikelen_2_3_in_behandeling
+            value: $besluiten_artikelen_2_3.aantal_in_behandeling
+          - output: strekking_besluiten_artikelen_2_3
+            value: $besluiten_artikelen_2_3.strekking
+          - output: koppeling_besluit_bestemmingsplan
+            value: $koppeling_besluit_bestemmingsplan
+          - output: aantal_besluiten_goedgekeurd_onthouden
+            value: $besluiten_artikelen_2_3.aantal_goedgekeurd_onthouden
+          - output: aantal_beroepen_resultaten
+            value: $aantal_beroepen_resultaten
+          - output: bijdrage_wet_beleid_zuinig_doelmatig_ruimtegebruik
+            value: $bijdrage_wet_beleid_zuinig_doelmatig_ruimtegebruik
+          - output: invloed_nieuwe_ontwikkelingen_beleid
+            value: $invloed_nieuwe_ontwikkelingen_beleid
   - number: '4'
     text: Deze regeling treedt in werking op het tijdstip waarop de Interimwet stad-en-milieubenadering in werking treedt.
     url: https://wetten.overheid.nl/BWBR0019470/2006-02-01#Artikel4
