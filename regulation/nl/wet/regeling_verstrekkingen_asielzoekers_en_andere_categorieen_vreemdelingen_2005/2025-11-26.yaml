@@ -91,30 +91,30 @@ articles:
         bwb_id: BWBR0011823
   - number: '2'
     text: |-
-      1 Deze regeling heeft uitsluitend betrekking op een asielzoeker en de daarmee gelijkgestelde categorieën, als
-      bedoeld in [artikel 3 derde en vierde lid][ref1] van deze regeling, die niet beschikt over voldoende middelen om in
-      de noodzakelijke kosten van het bestaan te voorzien, als bedoeld in de [Participatiewet][ref2].
+          1 Deze regeling heeft uitsluitend betrekking op een asielzoeker en de daarmee gelijkgestelde categorieën, als
+          bedoeld in [artikel 3 derde en vierde lid][ref1] van deze regeling, die niet beschikt over voldoende middelen om in
+          de noodzakelijke kosten van het bestaan te voorzien, als bedoeld in de [Participatiewet][ref2].
 
-      2 Het COA kan deze regeling tevens van toepassing verklaren op een asielzoeker die beschikt over voldoende middelen
-      om in de noodzakelijke kosten van het bestaan te voorzien, indien dringende redenen daartoe noodzaken.
+          2 Het COA kan deze regeling tevens van toepassing verklaren op een asielzoeker die beschikt over voldoende middelen
+          om in de noodzakelijke kosten van het bestaan te voorzien, indien dringende redenen daartoe noodzaken.
 
-      3 Het COA verstrekt aan de asielzoeker, bedoeld in [artikel 3][ref3], binnen een redelijke termijn van ten hoogste
-      vijftien dagen na de indiening van de asielaanvraag informatie over:
+          3 Het COA verstrekt aan de asielzoeker, bedoeld in [artikel 3][ref3], binnen een redelijke termijn van ten hoogste
+          vijftien dagen na de indiening van de asielaanvraag informatie over:
 
-      a. de geldende voordelen en de verplichtingen die hij moet nakomen in verband met de opvangvoorzieningen;
+          a. de geldende voordelen en de verplichtingen die hij moet nakomen in verband met de opvangvoorzieningen;
 
-      b. organisaties of groepen van personen die specifieke rechtsbijstand verlenen;
+          b. organisaties of groepen van personen die specifieke rechtsbijstand verlenen;
 
-      c. de opvangvoorzieningen, waaronder medische zorg.
+          c. de opvangvoorzieningen, waaronder medische zorg.
 
-      4 Het COA zorgt ervoor dat de in het derde lid bedoelde informatie schriftelijk wordt verstrekt in een taal die de
-      asielzoeker verstaat of waarvan redelijkerwijs kan worden aangenomen dat hij deze verstaat. In voorkomend geval kan
-      deze informatie tevens mondeling verstrekt worden.
+          4 Het COA zorgt ervoor dat de in het derde lid bedoelde informatie schriftelijk wordt verstrekt in een taal die de
+          asielzoeker verstaat of van welke redelijkerwijs kan worden aangenomen dat hij deze verstaat. In voorkomend geval kan
+          deze informatie tevens mondeling verstrekt worden.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0015703
-      [ref3]: https://wetten.overheid.nl/BWBR0017959#Artikel3
+          [ref1]: https://wetten.overheid.nl/BWBR0017959#Artikel3
+          [ref2]: https://wetten.overheid.nl/BWBR0015703
+          [ref3]: https://wetten.overheid.nl/BWBR0017959#Artikel3
     url: https://wetten.overheid.nl/BWBR0017959/2025-11-26#Artikel2
     references:
       - id: ref1
@@ -127,6 +127,66 @@ articles:
         bwb_id: BWBR0017959
         artikel: '3'
         hoofdstuk: II
+    machine_readable:
+          execution:
+            parameters:
+              - name: bsn
+                type: string
+                required: true
+              - name: dringende_redenen
+                type: boolean
+                required: false
+            input:
+              - name: is_asielzoeker
+                type: boolean
+                source:
+                  regulation: vreemdelingenwet_2000
+                  output: is_asielzoeker
+                  parameters:
+                    bsn: $bsn
+              - name: heeft_voldoende_middelen
+                type: boolean
+                source:
+                  regulation: participatiewet
+                  output: heeft_voldoende_middelen
+                  parameters:
+                    bsn: $bsn
+              - name: is_gelijkgestelde_categorie
+                type: boolean
+                source:
+                  regulation: regeling_verstrekkingen_asielzoekers_en_andere_categorieen_vreemdelingen_2005
+                  output: gelijkgestelde_categorie
+            output:
+              - name: heeft_recht_op_opvang
+                type: boolean
+            actions:
+              - output: heeft_recht_op_opvang
+                value:
+                  operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $is_asielzoeker
+                          value: true
+                        - operation: EQUALS
+                          subject: $heeft_voldoende_middelen
+                          value: false
+                        - operation: EQUALS
+                          subject: $is_gelijkgestelde_categorie
+                          value: true
+                    - operation: AND
+                      conditions:
+                        - operation: EQUALS
+                          subject: $is_asielzoeker
+                          value: true
+                        - operation: EQUALS
+                          subject: $heeft_voldoende_middelen
+                          value: true
+                        - operation: EQUALS
+                          subject: $dringende_redenen
+                          value: true
+
   - number: '3'
     text: |-
       1 Het COA draagt zorg voor de centrale opvang van asielzoekers door erin te voorzien dat hen opvang wordt geboden
