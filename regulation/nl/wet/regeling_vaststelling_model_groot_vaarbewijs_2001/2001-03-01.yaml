@@ -13,25 +13,86 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Het groot vaarbewijs voor de vaart op de rivieren, kanalen en meren, onderscheidenlijk voor de vaart op alle
-      binnenwateren wordt vastgesteld volgens het model opgenomen in de bij deze regeling behorende bijlage.
-    url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel1
-  - number: '2'
-    text: |-
-      Groot vaarbewijzen, afgegeven overeenkomstig de[ Regeling vaststelling model groot vaarbewijs][ref1] blijven geldig
-      met inachtneming van die regeling, totdat hun geldigheid is verstreken.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005635
-    url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0005635
-  - number: '3'
-    text: Deze regeling treedt in werking met ingang van 1 maart 2001.
-    url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel3
-  - number: '4'
-    text: 'Deze regeling wordt aangehaald als: Regeling vaststelling model groot vaarbewijs 2001.'
-    url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel4
+    - number: '1'
+      text: |-
+        Het groot vaarbewijs voor de vaart op de rivieren, kanalen en meren, onderscheidenlijk voor de vaart op alle
+        binnenwateren wordt vastgesteld volgens het model opgenomen in de bij deze regeling behorende bijlage.
+      url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel1
+      machine_readable:
+        open_terms:
+          - id: model_groot_vaarbewijs_annex
+            type: string
+            required: true
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+            legal_basis: Artikel 16, zevende lid, van de Binnenschepenwet
+        execution:
+          produces:
+            legal_character: TOETS
+          parameters:
+            - name: verstrekt_model
+              type: string
+              required: true
+              description: Het model van het groot vaarbewijs dat wordt beoordeeld
+          input:
+            - name: model_groot_vaarbewijs_annex
+              type: string
+              source:
+                output: model_groot_vaarbewijs_annex
+          output:
+            - name: model_groot_vaarbewijs_valide
+              type: boolean
+              description: Indiceert of het verstrekte model overeenkomt met het model in de bijlage
+          actions:
+            - output: model_groot_vaarbewijs_valide
+              value:
+                operation: EQUALS
+                subject: $verstrekt_model
+                value: $model_groot_vaarbewijs_annex
+    - number: '2'
+      text: |-
+        Groot vaarbewijs, afgegeven overeenkomstig de [Regeling vaststelling model groot vaarbewijs](https://wetten.overheid.nl/BWBR0005635), blijven geldig
+        met inachtneming van die regeling, totdat hun geldigheid is verstreken.
+      url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel2
+      machine_readable:
+        execution:
+          produces:
+            legal_character: TOETS
+          parameters:
+            - name: vaarbewijs_bwb_id
+              type: string
+              required: true
+              description: Het BWB-ID van de regeling onder welke het vaarbewijs is afgegeven
+            - name: vaarbewijs_geldig_tot
+              type: date
+              required: true
+              description: De geldigheidsdatum van het vaarbewijs
+            - name: vandaag
+              type: date
+              required: true
+              description: De huidige datum voor validatie
+            - name: oude_regeling_bwb_id
+              type: string
+              required: true
+              description: Het BWB-ID van de oude regeling (BWBR0005635)
+          output:
+            - name: groot_vaarbewijs_geldig_krachtens_oude_regeling
+              type: boolean
+              description: Indiceert of het vaarbewijs geldig blijft volgens Artikel 2
+          actions:
+            - output: groot_vaarbewijs_geldig_krachtens_oude_regeling
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $vaarbewijs_bwb_id
+                    value: $oude_regeling_bwb_id
+                  - operation: GREATER_THAN
+                    subject: $vaarbewijs_geldig_tot
+                    value: $vandaag
+    - number: '3'
+      text: Deze regeling treedt in werking met ingang van 1 maart 2001.
+      url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel3
+    - number: '4'
+      text: 'Deze regeling wordt aangehaald als: Regeling vaststelling model groot vaarbewijs 2001.'
+      url: https://wetten.overheid.nl/BWBR0012244/2001-03-01#Artikel4
