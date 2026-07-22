@@ -18,17 +18,66 @@ articles:
       Het klein vaarbewijs voor de vaart op de rivieren, kanalen en meren, onderscheidenlijk voor de vaart op alle
       binnenwateren wordt vastgesteld volgens het model opgenomen in de bij deze regeling behorende bijlage.
     url: https://wetten.overheid.nl/BWBR0012771/2001-09-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: model_klein_vaarbewijs_bepaald
+            type: boolean
+            description: Indicates that the small vessel certificate model is established by the appendix
+        actions:
+          - output: model_klein_vaarbewijs_bepaald
+            value: true
   - number: '2'
     text: |-
       Klein vaarbewijzen, afgegeven overeenkomstig de Regeling vaststelling model klein vaarbewijs, behouden hun
       geldigheid, totdat deze is verstreken.
     url: https://wetten.overheid.nl/BWBR0012771/2001-09-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: bestaande_vaarbewijzen_behouden_geldigheid
+            type: boolean
+            description: Indicates that existing small vessel certificates retain their validity until expiration
+        actions:
+          - output: bestaande_vaarbewijzen_behouden_geldigheid
+            value: true
   - number: '3'
     text: De Regeling vaststelling model klein vaarbewijs wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0012771/2001-09-01#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: vorige_regeling_ingetrokken
+            type: boolean
+            description: Indicates that the previous regulation (Regeling vaststelling model klein vaarbewijs) is withdrawn
+        actions:
+          - output: vorige_regeling_ingetrokken
+            value: true
   - number: '4'
     text: Deze regeling treedt in werking met ingang van 1 september 2001.
     url: https://wetten.overheid.nl/BWBR0012771/2001-09-01#Artikel4
+    machine_readable:
+      execution:
+        output:
+          - name: inwerkingtredingsdatum
+            type: date
+            description: The effective date of this regulation
+        actions:
+          - output: inwerkingtredingsdatum
+            value:
+              operation: DATE
+              year: 2001
+              month: 9
+              day: 1
   - number: '5'
     text: 'Deze regeling wordt aangehaald als: Regeling vaststelling model klein vaarbewijs 2001.'
     url: https://wetten.overheid.nl/BWBR0012771/2001-09-01#Artikel5
+    machine_readable:
+      execution:
+        output:
+          - name: citatie_titel
+            type: string
+            description: The official citation title of this regulation
+        actions:
+          - output: citatie_titel
+            value: Regeling vaststelling model klein vaarbewijs 2001
