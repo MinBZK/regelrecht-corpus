@@ -18,7 +18,7 @@ preamble:
 articles:
   - number: '1'
     text: |-
-      Voor de middenkaderopleidingen, opgenomen in [bijlage 1][ref1] bij deze regeling, kan door het bevoegd gezag een
+      Voor de middenkaderopleidingen, opgenomen in [bijlage 1][ref1] bij deze regeling, kan door het bevoegde gezag een
       studieduur worden vastgesteld van vier studiejaren.
 
 
@@ -27,9 +27,17 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0035212
+    machine_readable:
+      execution:
+        output:
+          - name: studieduur
+            type: number
+        actions:
+          - output: studieduur
+            value: 4
   - number: '3.1'
     text: |-
-      Deze regeling treedt in werking met ingang van 1 augustus 2014, met uitzondering van
+      Deze regeling treedt in werking met ingang van 1 augustus 2014, met uitzondering van
       [artikel 2, onderdeel B, sub 3][ref1].
 
 
@@ -39,10 +47,24 @@ articles:
       - id: ref1
         bwb_id: BWBR0035212
         artikel: '2'
+    machine_readable:
+      execution:
+        output:
+          - name: inwerkingtreding_datum
+            type: date
+          - name: uitzondering_artikel
+            type: string
+        actions:
+          - output: inwerkingtreding_datum
+            value:
+              operation: DATE
+              values: [2014, 8, 1]
+          - output: uitzondering_artikel
+            value: "artikel 2, onderdeel B, sub 3"
   - number: '3.2'
     text: |-
       [Artikel 2, onderdeel B, sub 3][ref1], treedt in werking de dag na de dagtekening van de Staatscourant waarin deze
-      regeling wordt geplaatst en werkt terug tot en met 1 augustus 2013.
+      regeling wordt geplaatst en werkt terug tot en met 1 augustus 2013.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0035212#Artikel2
@@ -51,6 +73,24 @@ articles:
       - id: ref1
         bwb_id: BWBR0035212
         artikel: '2'
+    machine_readable:
+      execution:
+        output:
+          - name: terugwerkende_kracht_datum
+            type: date
+        actions:
+          - output: terugwerkende_kracht_datum
+            value:
+              operation: DATE
+              values: [2013, 8, 1]
   - number: '4'
     text: 'Deze regeling wordt aangehaald als: Regeling vaststelling vierjarige beroepsopleidingen.'
     url: https://wetten.overheid.nl/BWBR0035212/2014-11-05#Artikel4
+    machine_readable:
+      execution:
+        output:
+          - name: regeling_naam
+            type: string
+        actions:
+          - output: regeling_naam
+            value: "Regeling vaststelling vierjarige beroepsopleidingen"
