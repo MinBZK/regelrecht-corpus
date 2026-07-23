@@ -135,6 +135,40 @@ articles:
       - id: ref2
         bwb_id: BWBR0008080
         artikel: '2'
+    machine_readable:
+      execution:
+        parameters:
+          - name: stof_id
+            type: string
+            required: true
+            description: Identificatie van de gevaarlijke stof
+        input:
+          - name: is_voorwaardelijk_toegelaten
+            type: boolean
+            source:
+              regulation: besluit_vervoer_gevaarlijke_stoffen
+              output: is_voorwaardelijk_toegelaten
+              parameters:
+                stof_id: $stof_id
+          - name: zijn_voorschriften_in_acht_genomen
+            type: boolean
+            source:
+              output: zijn_voorschriften_in_acht_genomen
+        output:
+          - name: zijn_handelingen_toegestaan
+            type: boolean
+            description: Geeft aan of de handelingen met de gevaarlijke stof zijn toegestaan
+        actions:
+          - output: zijn_handelingen_toegestaan
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_voorwaardelijk_toegelaten
+                  value: true
+                - operation: EQUALS
+                  subject: $zijn_voorschriften_in_acht_genomen
+                  value: true
   - number: '4'
     text: |-
       1 De door de bevoegde autoriteiten op basis van randnummer 1.5.1.1 van de ADR overeengekomen tijdelijke afwijkingen
@@ -143,9 +177,28 @@ articles:
       afwijkingen doet de Minister mededeling aan de Europese Commissie.
 
       2 De afwijkingen, bedoeld in het eerste lid, worden verleend zonder onderscheid naar nationaliteit of
-      vestigingsplaats van de verzender, de vervoerder of de ontvanger, hebben een looptijd van ten hoogste vijf jaar en
+      vestigingsplaats van de verzender, de vervoerder of de ontvanger, hebben een looptijd von ten hoogste vijf jaar en
       zijn niet hernieuwbaar.
     url: https://wetten.overheid.nl/BWBR0010054/2026-03-15#Artikel4
+    machine_readable:
+      execution:
+        output:
+          - name: max_looptijd_jaren
+            type: number
+            description: Maximale looptijd van tijdelijke afwijkingen in jaren
+          - name: is_hernieuwbaar
+            type: boolean
+            description: Geeft aan of de afwijking hernieuwbaar is
+          - name: zijn_afwijkingen_zonder_nationaliteit_onderscheid
+            type: boolean
+            description: Geeft aan of afwijkingen zonder onderscheid naar nationaliteit worden verleend
+        actions:
+          - output: max_looptijd_jaren
+            value: 5
+          - output: is_hernieuwbaar
+            value: false
+          - output: zijn_afwijkingen_zonder_nationaliteit_onderscheid
+            value: true
   - number: '5'
     text: |-
       [Bijlage 1][ref1] wordt bekendgemaakt op [https://www.rijksoverheid.nl/ministeries/ministerie-van-infrastructuur-
