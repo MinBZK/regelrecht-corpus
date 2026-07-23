@@ -23,11 +23,13 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   #   - €12 per uur × 32 uur per week × 52 weken
   #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
   #
-  # Peildatum 2026-05-11 (vandaag). De corpus pakt per wet de laatst-
-  # geldende versie (valid_from <= peildatum): Wtl 2025-01-01.yaml
-  # (LIV per 2025 afgeschaft), WW 2024-01-01.yaml (geen opvolger),
-  # Ziektewet/Wajong/WIA/Pwet 2025-01-01.yaml. Zie
-  # financieel_cv_sadee.feature voor uitleg over de LIV-afschaffing.
+  # Peildatum 2025-01-15 — BEWUST GEKOZEN. De engine pakt per wet de
+  # laatst-geldende versie (valid_from <= peildatum). In de centrale
+  # corpus bestaan nieuwere geharvestte versies (2026) zonder
+  # machine_readable; bij een peildatum in 2026 laadt de engine die en
+  # kan hij niets doorrekenen. 2025-01-15 ligt in het venster waarin
+  # onze gemodelleerde versies overal de laatst-geldende zijn.
+  # Kanttekening + drift-uitleg: zie financieel_cv_sadee.feature.
 
   # ────────────────────────────────────────────────────────────────────
   # NRP — Ziektewet artikel 29b
@@ -35,7 +37,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Werknemer-relevantie: openhartig kunnen zijn over gezondheid; zieke-
   # dagen belasten werkgever niet.
   Scenario: Koen krijgt no-risk polis als banenafspraak-werknemer met LKS
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                              | 999990101 |
       | is_wsw_werknemer                 | false     |
@@ -60,7 +62,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Wajong is niet aan de orde. Werknemer-relevantie: zekerheid dat werk-
   # gever niet via deze route minder dan WML mag betalen.
   Scenario: Koen heeft geen recht op loondispensatie — geen Wajong-status
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                                | 999990101 |
       | is_wsw_werknemer                                   | false     |
@@ -78,7 +80,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # dus zelf voorzieningen toekennen. Werknemer-relevantie: Koen kan
   # jobcoaching en werkplekaanpassing zelf aanvragen bij UWV.
   Scenario: Koen kan jobcoaching en werkplekaanpassing aanvragen via UWV
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                              | 999990101 |
       | heeft_structurele_functionele_beperking          | true      |
@@ -101,7 +103,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # heeft_recht_op_liv. Werknemer-relevantie: transparantie — Koen
   # weet dat dit voordeel niet (meer) bestaat.
   Scenario: LIV bestaat niet meer per 2025-01-01 — geen LIV voor werkgever Koen
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                          | 999990101 |
       | jaarloon_eurocent                            | 1996800   |
@@ -119,7 +121,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Werknemer-relevantie: transparantie — Koen weet welk bedrag werk-
   # gever ontvangt en gedurende hoe lang.
   Scenario: Werkgever ontvangt LKV-banenafspraak voor Koen — €1.680,64 per jaar
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                          | 999990101 |
       | verloonde_uren                               | 1664      |
@@ -144,7 +146,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # behoud van Pwet-uitkering — voor Pwet geldt een ander
   # re-integratie-traject via de gemeente.
   Scenario: Koen kan geen proefplaatsing met behoud van uitkering — geen WW
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                            | 999990101 |
       | heeft_recht_op_ww_uitkering                    | false     |
@@ -170,7 +172,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # NB: WML+VB-waarde 215500 is 2025-cijfer; voor exacte 2026-cijfers
   # moet deze input worden geüpdatet uit officiële bron.
   Scenario: Gemeente betaalt €862 per maand LKS aan werkgever van Koen
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                                | 999990101 |
       | behoort_tot_doelgroep_lks                          | true      |

@@ -16,12 +16,25 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   #   - €14,50 per uur × 32 uur per week × 52 weken
   #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
   #
-  # Peildatum 2026-05-11 (vandaag) voor alle scenarios. De corpus
-  # modelleert valid_from per wet-versie; elke wet blijft geldig totdat
-  # er een opvolger komt. Voor onze 7 wetten geldt vandaag:
-  #   - WW: 2024-01-01.yaml (geen opvolger → nog geldend)
-  #   - Wtl: 2025-01-01.yaml (opvolger van 2024; LIV per 2025 afgeschaft)
-  #   - Ziektewet, Wajong, WIA, Pwet: 2025-01-01.yaml (geen opvolger)
+  # Peildatum 2025-01-15 — BEWUST GEKOZEN, zie kanttekening.
+  #
+  # De engine pakt per wet de laatst-geldende versie (valid_from <=
+  # peildatum). In de CENTRALE corpus bestaan nieuwere, geharvestte
+  # versies van alle zeven wetten (Ziektewet/Wajong/WIA/Wtl/WW/Wfsv
+  # 2026-01-01, Pwet 2026-04-03) die nog GEEN machine_readable dragen.
+  # Bij een peildatum in 2026 zou de engine dus die lege versies laden
+  # en niets kunnen doorrekenen.
+  #
+  # 2025-01-15 ligt in het venster waarin onze gemodelleerde versies
+  # overal de laatst-geldende zijn (de eerstvolgende versie is Pwet
+  # 2025-02-04). Daarmee draaien de scenario's zowel lokaal als in het
+  # traject tegen de corpus die wij daadwerkelijk hebben gemodelleerd.
+  #
+  # KANTTEKENING voor de jurist: wij tonen dus de wet zoals die medio
+  # januari 2025 gold. Sindsdien is er drift — o.a. is LKV-categorie d
+  # (herplaatsen arbeidsgehandicapte) per 2026 geschrapt en is de
+  # LKS-doelgroep uitgebreid met Pwet 10d.2.c. Dat is een open punt,
+  # geen modelleerfout.
   #
   # LIV-afschaffing: Wtl 2025-01-01.yaml is via de harvester opgehaald
   # en aan de corpus toegevoegd; het bestand bevat geen hoofdstuk 3 meer
@@ -39,10 +52,10 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
 
   # ────────────────────────────────────────────────────────────────────
   # NRP — Ziektewet artikel 29b
-  # Sadee triggert lid 1 (Wajong-status) én lid 2.e (banenafspraak).
+  # Sadee triggert lid 2.a (Wajong-status) én lid 2.e (banenafspraak).
   # Lid 2 geeft duur -1 (onbeperkt) en wint van de 5-jaars termijn van lid 1.
   Scenario: Sadee krijgt no-risk polis als Wajonger op banenafspraakregister
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                              | 999990100 |
       | is_wsw_werknemer                 | false     |
@@ -66,7 +79,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # Werkgever heeft loondispensatie aangevraagd voor Sadee; UWV stelt
   # vast dat haar arbeidsprestatie < minimumloon is.
   Scenario: Sadee komt in aanmerking voor loondispensatie via Wajong art. 2:20
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                                | 999990100 |
       | is_wsw_werknemer                                   | false     |
@@ -85,7 +98,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # die loopt niet via WIA, maar via Wajong-eigen voorzieningen
   # (art. 2:22 e.v. — niet in deze slice gemodelleerd).
   Scenario: Sadee valt buiten WIA artikel 35 voor JC en WPA (lid 4.a Wajong)
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                              | 999990100 |
       | heeft_structurele_functionele_beperking          | true      |
@@ -108,7 +121,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # found"-error voor heeft_recht_op_liv. Werkgever-relevantie: de tool
   # moet ondernemers vertellen dat dit voordeel niet meer bestaat.
   Scenario: LIV bestaat niet meer per 2025-01-01 — output is afgeschaft
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                          | 999990100 |
       | jaarloon_eurocent                            | 2412800   |
@@ -127,7 +140,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # → b wint omdat het de hoogste berekende tegemoetkoming is, niet door
   # IF-volgorde maar door de hoogte-vergelijking.
   Scenario: Sadee krijgt LKV-arbeidsgehandicapt — hoogste tegemoetkoming wint (art. 4.1.3)
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                          | 999990100 |
       | verloonde_uren                               | 1664      |
@@ -151,7 +164,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # de orde. Werkgever moet weten: proefplaatsing met behoud van uitkering
   # is een WW-instrument, niet beschikbaar voor Wajongers.
   Scenario: Sadee mag geen proefplaatsing aangaan — geen WW-uitkering
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                            | 999990100 |
       | heeft_recht_op_ww_uitkering                    | false     |
@@ -170,7 +183,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # bijstand). LKS is een gemeente-instrument voor Pwet-doelgroep met
   # loonwaarde < 100%, dus niet van toepassing.
   Scenario: Sadee komt niet in aanmerking voor LKS — geen Pwet-doelgroep
-    Given the calculation date is "2026-05-11"
+    Given the calculation date is "2025-01-15"
     And the following parameters:
       | bsn                                                | 999990100 |
       | behoort_tot_doelgroep_lks                          | false     |
