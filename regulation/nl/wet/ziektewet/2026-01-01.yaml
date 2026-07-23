@@ -2219,6 +2219,267 @@ articles:
   - number: 29b.1
     text: 'De werknemer:'
     url: https://wetten.overheid.nl/BWBR0001888/2026-01-01#Artikel29b
+    machine_readable:
+      definitions:
+        duur_no_risk_polis_lid_1_jaren:
+          value: 5
+        duur_no_risk_polis_lid_4_jaren:
+          value: 5
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: is_wsw_werknemer
+            type: boolean
+            required: true
+            description: |-
+              Heeft werknemer arbeidsovereenkomst gesloten met werkgever
+              als bedoeld in artikel 7 Wet sociale werkvoorziening, of
+              had voorafgaand een Wsw-dienstbetrekking (lid 2 onderdeel
+              b en d). Niet via cross-law gemodelleerd: Wsw is buiten
+              scope van deze sessie.
+        input:
+          - name: is_wia_uitkeringsgerechtigd
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_wia_uitkeringsgerechtigd
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 1 onderdeel a: recht op uitkering Wet WIA voorafgaand
+                aan dienstbetrekking.
+          - name: is_wia_min_35_arbeidsongeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_wia_min_35_arbeidsongeschikt
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 1 onderdeel b: <35% arbeidsongeschikt op eerste dag na
+                wachttijd; voorwaarden 1° t/m 4° vervuld.
+          - name: heeft_voortgezet_wia_recht
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: heeft_voortgezet_wia_recht
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 4: WIA-uitkeringsgerechtigde wiens dienstbetrekking
+                wordt voortgezet — recht op ziekengeld vanaf eerste dag
+                ongeschiktheid, 5 jaar vanaf vaststelling.
+          - name: is_jonggehandicapt_schoolverlater
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+              output: is_jonggehandicapt_schoolverlater
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 1 onderdeel c en d: <18 of 18+ schoolverlater met
+                ziekte/gebrek-belemmering, binnen 5 jaar na afronding
+                onderwijs in dienst.
+          - name: is_wajong_gerechtigd
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+              output: is_wajong_gerechtigd
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 2 onderdeel a en c: recht (gehad) op
+                arbeidsongeschiktheidsuitkering of arbeidsondersteuning
+                op grond van Wajong.
+          - name: is_banenafspraak_doelgroep
+            type: boolean
+            source:
+              regulation: wet_financiering_sociale_verzekeringen
+              output: behoort_tot_doelgroepregister_banenafspraak
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 2 onderdeel e: opname in het doelgroepregister
+                banenafspraak. Kapstok is Wfsv artikel 38b (BWBR0017745):
+                dat artikel bepaalt wie arbeidsbeperkte is en dus in het
+                register hoort. De onderliggende grond (o.a. Pwet 7 lid
+                1.a / 10d) wordt daar als 38b.1.a beoordeeld.
+          - name: is_pwet_loonkostensubsidie
+            type: boolean
+            source:
+              regulation: participatiewet
+              output: is_pwet_loonkostensubsidie
+              parameters:
+                bsn: $bsn
+              description: 'Lid 2 onderdeel e (alternatief): LKS via Pwet 10d.'
+          - name: is_beschut_werk
+            type: boolean
+            source:
+              regulation: participatiewet
+              output: is_beschut_werk
+              parameters:
+                bsn: $bsn
+              description: 'Lid 2 onderdeel f: beschut werk (Pwet 10b).'
+        output:
+          - name: heeft_recht_op_no_risk_polis
+            type: boolean
+            description: |-
+              Werkgever heeft recht op de no-risk polis voor deze werknemer:
+              Ziektewet artikel 29b lid 1, 2 of 4 is van toepassing.
+          - name: voldoet_aan_lid_1
+            type: boolean
+            description: Doelgroep lid 1 (a, b, c of d).
+          - name: voldoet_aan_lid_2
+            type: boolean
+            description: Doelgroep lid 2 (a, b, c, d, e of f).
+          - name: voldoet_aan_lid_4
+            type: boolean
+            description: Lid 4 — voortzetting WIA-recht.
+          - name: duur_no_risk_polis_jaren
+            type: number
+            description: |-
+              Duur in jaren waarin werkgever recht heeft op no-risk polis.
+              Lid 1: 5 jaar vanaf indiensttreding. Lid 2: in beginsel
+              onbeperkt zolang dienstbetrekking voortduurt (lid 5 betreft
+              alleen ziekengeldhoogte). Lid 4: 5 jaar vanaf vaststelling
+              WIA-recht. Bij overlap geldt de langste termijn.
+        actions:
+          - output: voldoet_aan_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $is_wia_uitkeringsgerechtigd
+                - $is_wia_min_35_arbeidsongeschikt
+                - $is_jonggehandicapt_schoolverlater
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Lid 1 onderdelen a, b, c en d. Onderdeel a: WIA-uitkering;
+                  onderdeel b: <35% AO met voorwaarden; onderdeel c en d:
+                  jonggehandicapte schoolverlater (resp. <18 en 18+).
+          - output: voldoet_aan_lid_2
+            value:
+              operation: OR
+              conditions:
+                - $is_wajong_gerechtigd
+                - $is_wsw_werknemer
+                - $is_banenafspraak_doelgroep
+                - $is_pwet_loonkostensubsidie
+                - $is_beschut_werk
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '2'
+                explanation: |-
+                  Lid 2 onderdelen a t/m f. Wajong (a, c), Wsw (b, d),
+                  banenafspraak/LKS (e), beschut werk (f).
+          - output: voldoet_aan_lid_4
+            value: $heeft_voortgezet_wia_recht
+          - output: heeft_recht_op_no_risk_polis
+            value:
+              operation: OR
+              conditions:
+                - $voldoet_aan_lid_1
+                - $voldoet_aan_lid_2
+                - $voldoet_aan_lid_4
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                explanation: |-
+                  Recht op no-risk polis bestaat als de werknemer onder
+                  ten minste één van de doelgroepen lid 1, lid 2 of lid 4
+                  valt.
+          - output: duur_no_risk_polis_jaren
+            value:
+              operation: IF
+              cases:
+                - when: $voldoet_aan_lid_2
+                  then: -1
+                - when: $voldoet_aan_lid_1
+                  then: $duur_no_risk_polis_lid_1_jaren
+                - when: $voldoet_aan_lid_4
+                  then: $duur_no_risk_polis_lid_4_jaren
+              default: 0
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                explanation: |-
+                  Bij overlap geldt de langste termijn. Lid 2 (Wajong,
+                  Wsw, banenafspraak, beschut werk) kent geen maximum-duur
+                  en wint daarom altijd: gemodelleerd als sentinel -1
+                  ('onbeperkt'). Lid 1 (a t/m d): 5 jaar vanaf
+                  indiensttreding ("binnen vijf jaar na die dag"); lid 4:
+                  5 jaar na vaststelling WIA-recht. Default 0 = geen recht.
+      untranslatables:
+        - construct: vijfjaarstermijn bij onderbroken dienstverbanden
+          reason: |-
+            Lid 1 onderdeel b 4° en lid 1 onderdeel c/d formuleren de
+            vijfjaarstermijn als "binnen vijf jaar na die dag in
+            dienstbetrekking werkzaamheden gaat verrichten". Bij
+            onderbroken of opvolgende dienstverbanden binnen die termijn
+            is in de wettekst niet eenduidig of de termijn opnieuw begint,
+            doorloopt, of optelt. Vereist juridische interpretatie.
+          legal_text_excerpt: >-
+            binnen vijf jaar na die dag in dienstbetrekking werkzaamheden gaat
+            verrichten
+          accepted: true
+        - construct: lid 2-duur als 'onbeperkt zolang dienstbetrekking voortduurt'
+          reason: |-
+            Voor doelgroepen lid 2 (Wajong, Wsw, banenafspraak, beschut
+            werk) kent het artikel geen maximum-duur. De engine
+            modelleert dit als sentinel -1 ('onbeperkt'), zodat lid 2
+            ook bij overlap met lid 1 of lid 4 als langste termijn wint.
+            Downstream consumers moeten -1 als 'onbeperkt' interpreteren
+            (niet als negatieve looptijd).
+          accepted: true
+        - construct: samenloop met LKV, LKS en loondispensatie (stelsel-eigenschap)
+          reason: |-
+            Artikel 29b regelt zelf geen samenloop met LKV (Wet
+            tegemoetkomingen loondomein), LKS (Pwet 10d) of
+            loondispensatie (Wajong 2:20). De samenloop is een
+            eigenschap van het stelsel, geen regel binnen dit artikel.
+
+            Juristvalidatie (juni 2026) bevestigt dat cumulatie kan:
+            - No-riskpolis en LKV gaan altijd samen op. Beide hangen
+              aan dezelfde doelgroep-status (banenafspraakregister,
+              Wajong-status of Pwet-LKS-doelgroep). Wie de no-riskpolis
+              via lid 2 opent, opent via diezelfde status ook LKV; het
+              banenafspraakregister wordt uit één bron gelezen: de
+              kapstok Wfsv artikel 38b
+              (behoort_tot_doelgroepregister_banenafspraak), gebruikt
+              door zowel 29b lid 2.e als Wtl 2.10. De
+              tijdelijke samenloop binnen de WIA valt buiten deze
+              iteratie (volgende iteratie).
+            - LKS (Pwet 10d) of loondispensatie (Wajong 2:20) komen
+              hier bóvenop wanneer uit de loonwaardemeting blijkt dat de
+              werknemer niet zelfstandig het minimumloon kan verdienen.
+              Die voorwaarde is per regeling al een knock-out:
+              kan_minimumloon_niet_verdienen (LKS) respectievelijk
+              arbeidsprestatie_duidelijk_minder_dan_minimumloon (LD).
+          accepted: true
+        - construct: doelgroepverklaring-procedure — geen lagere regelgeving
+          reason: |-
+            De no-riskpolis kent geen gedelegeerde lagere regelgeving
+            (AMvB of ministeriële regeling) die de inhoudelijke
+            voorwaarden invult; daarom bevat dit artikel geen open_terms.
+            De doelgroep-vaststelling loopt via doelgroepverklaring of
+            registratie door UWV, gemeente of college (uitvoeringsbeleid).
+            Bevestigd bij juristvalidatie (juni 2026): onder de Ziektewet
+            is geen relevante lagere regelgeving rond de no-riskpolis
+            gevonden.
+          accepted: true
   - number: 29b.1.a
     text: |-
       die onmiddellijk voorafgaand aan een dienstbetrekking als bedoeld in [artikel 3][ref1], [4][ref2] of [5][ref3],
@@ -2555,6 +2816,13 @@ articles:
         artikel: '29'
         hoofdstuk: II
         afdeling: Tweede
+    machine_readable:
+      definitions: {}
+      execution:
+        parameters: []
+        input: []
+        output: []
+        actions: []
   - number: 29b.7
     text: |-
       Indien de werknemer, bedoeld in het tweede lid, werkzaam is op een arbeidsovereenkomst als bedoeld in
