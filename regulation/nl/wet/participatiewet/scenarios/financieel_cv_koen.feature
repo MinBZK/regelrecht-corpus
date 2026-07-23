@@ -44,7 +44,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # NB: WML+VB-waarde 215500 is 2025-cijfer; voor exacte 2026-cijfers
   # moet deze input worden geüpdatet uit officiële bron.
   Scenario: Gemeente betaalt €862 per maand LKS aan werkgever van Koen
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                                | 999990101 |
       | behoort_tot_doelgroep_lks                          | true      |

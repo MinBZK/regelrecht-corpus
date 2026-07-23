@@ -38,7 +38,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # dus zelf voorzieningen toekennen. Werknemer-relevantie: Koen kan
   # jobcoaching en werkplekaanpassing zelf aanvragen bij UWV.
   Scenario: Koen kan jobcoaching en werkplekaanpassing aanvragen via UWV
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                              | 999990101 |
       | heeft_structurele_functionele_beperking          | true      |

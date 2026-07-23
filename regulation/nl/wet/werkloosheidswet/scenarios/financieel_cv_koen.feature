@@ -39,7 +39,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # behoud van Pwet-uitkering — voor Pwet geldt een ander
   # re-integratie-traject via de gemeente.
   Scenario: Koen kan geen proefplaatsing met behoud van uitkering — geen WW
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                            | 999990101 |
       | heeft_recht_op_ww_uitkering                    | false     |

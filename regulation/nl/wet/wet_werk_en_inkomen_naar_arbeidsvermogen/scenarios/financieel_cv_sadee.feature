@@ -57,7 +57,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # die loopt niet via WIA, maar via Wajong-eigen voorzieningen
   # (art. 2:22 e.v. — niet in deze slice gemodelleerd).
   Scenario: Sadee valt buiten WIA artikel 35 voor JC en WPA (lid 4.a Wajong)
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                              | 999990100 |
       | heeft_structurele_functionele_beperking          | true      |

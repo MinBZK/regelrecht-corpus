@@ -56,7 +56,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # bijstand). LKS is een gemeente-instrument voor Pwet-doelgroep met
   # loonwaarde < 100%, dus niet van toepassing.
   Scenario: Sadee komt niet in aanmerking voor LKS — geen Pwet-doelgroep
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                                | 999990100 |
       | behoort_tot_doelgroep_lks                          | false     |

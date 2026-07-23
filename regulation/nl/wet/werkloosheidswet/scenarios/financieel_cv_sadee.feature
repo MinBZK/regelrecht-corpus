@@ -56,7 +56,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # de orde. Werkgever moet weten: proefplaatsing met behoud van uitkering
   # is een WW-instrument, niet beschikbaar voor Wajongers.
   Scenario: Sadee mag geen proefplaatsing aangaan — geen WW-uitkering
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                            | 999990100 |
       | heeft_recht_op_ww_uitkering                    | false     |

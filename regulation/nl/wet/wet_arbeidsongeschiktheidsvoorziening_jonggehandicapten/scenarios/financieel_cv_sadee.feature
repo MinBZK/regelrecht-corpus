@@ -55,7 +55,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # Werkgever heeft loondispensatie aangevraagd voor Sadee; UWV stelt
   # vast dat haar arbeidsprestatie < minimumloon is.
   Scenario: Sadee komt in aanmerking voor loondispensatie via Wajong art. 2:20
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                                | 999990100 |
       | is_wsw_werknemer                                   | false     |

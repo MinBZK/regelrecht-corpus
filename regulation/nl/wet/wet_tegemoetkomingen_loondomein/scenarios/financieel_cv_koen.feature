@@ -38,7 +38,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # heeft_recht_op_liv. Werknemer-relevantie: transparantie — Koen
   # weet dat dit voordeel niet (meer) bestaat.
   Scenario: LIV bestaat niet meer per 2025-01-01 — geen LIV voor werkgever Koen
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                          | 999990101 |
       | jaarloon_eurocent                            | 1996800   |
@@ -56,7 +56,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Werknemer-relevantie: transparantie — Koen weet welk bedrag werk-
   # gever ontvangt en gedurende hoe lang.
   Scenario: Werkgever ontvangt LKV-banenafspraak voor Koen — €1.680,64 per jaar
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                          | 999990101 |
       | verloonde_uren                               | 1664      |

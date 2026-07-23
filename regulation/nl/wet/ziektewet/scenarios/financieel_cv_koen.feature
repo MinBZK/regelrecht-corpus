@@ -37,7 +37,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Werknemer-relevantie: openhartig kunnen zijn over gezondheid; zieke-
   # dagen belasten werkgever niet.
   Scenario: Koen krijgt no-risk polis als banenafspraak-werknemer met LKS
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                              | 999990101 |
       | is_wsw_werknemer                 | false     |

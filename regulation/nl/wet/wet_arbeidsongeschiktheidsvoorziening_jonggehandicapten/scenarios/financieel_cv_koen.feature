@@ -37,7 +37,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Wajong is niet aan de orde. Werknemer-relevantie: zekerheid dat werk-
   # gever niet via deze route minder dan WML mag betalen.
   Scenario: Koen heeft geen recht op loondispensatie — geen Wajong-status
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                                | 999990101 |
       | is_wsw_werknemer                                   | false     |

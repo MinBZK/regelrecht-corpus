@@ -57,7 +57,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # found"-error voor heeft_recht_op_liv. Werkgever-relevantie: de tool
   # moet ondernemers vertellen dat dit voordeel niet meer bestaat.
   Scenario: LIV bestaat niet meer per 2025-01-01 — output is afgeschaft
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                          | 999990100 |
       | jaarloon_eurocent                            | 2412800   |
@@ -76,7 +76,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # → b wint omdat het de hoogste berekende tegemoetkoming is, niet door
   # IF-volgorde maar door de hoogte-vergelijking.
   Scenario: Sadee krijgt LKV-arbeidsgehandicapt — hoogste tegemoetkoming wint (art. 4.1.3)
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                                          | 999990100 |
       | verloonde_uren                               | 1664      |

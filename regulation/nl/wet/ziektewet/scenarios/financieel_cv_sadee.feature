@@ -55,7 +55,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # Sadee triggert lid 2.a (Wajong-status) én lid 2.e (banenafspraak).
   # Lid 2 geeft duur -1 (onbeperkt) en wint van de 5-jaars termijn van lid 1.
   Scenario: Sadee krijgt no-risk polis als Wajonger op banenafspraakregister
-    Given the calculation date is "2025-01-15"
+    Given the calculation date is "2026-06-01"
     And the following parameters:
       | bsn                              | 999990100 |
       | is_wsw_werknemer                 | false     |
