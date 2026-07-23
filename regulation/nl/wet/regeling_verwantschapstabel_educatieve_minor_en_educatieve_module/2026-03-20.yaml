@@ -51,6 +51,28 @@ articles:
       Deze regeling treedt in werking met ingang van de dag na de dagtekening van de Staatscourant waarin zij wordt
       geplaatst en werkt terug tot en met 1 augustus 2010.
     url: https://wetten.overheid.nl/BWBR0028148/2026-03-20#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: bekendmaking_datum
+            type: date
+            required: true
+            description: Datum van plaatsing in Staatscourant
+        output:
+          - name: ingang_datum
+            type: date
+            description: Datum waarop de regeling in werking treedt
+          - name: terugwerkende_kracht_datum
+            type: date
+            description: Datum waarnaar de regeling terugwerkt
+        actions:
+          - output: ingang_datum
+            value:
+              operation: DATE_ADD
+              date: $bekendmaking_datum
+              days: 1
+          - output: terugwerkende_kracht_datum
+            value: "2010-08-01"
   - number: '5'
     text: 'Deze regeling wordt aangehaald als: Regeling verwantschapstabel educatieve minor en educatieve module.'
     url: https://wetten.overheid.nl/BWBR0028148/2026-03-20#Artikel5
