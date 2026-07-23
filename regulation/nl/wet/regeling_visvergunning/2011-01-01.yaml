@@ -76,10 +76,10 @@ articles:
       en Innovatie.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004607
-      [ref2]: https://wetten.overheid.nl/BWBR0013342
-      [ref3]: https://wetten.overheid.nl/BWBR0009353
-      [ref4]: https://wetten.overheid.nl/BWBR0009353#Artikel4
+       [ref1]: https://wetten.overheid.nl/BWBR0004607
+       [ref2]: https://wetten.overheid.nl/BWBR0013342
+       [ref3]: https://wetten.overheid.nl/BWBR0009353
+       [ref4]: https://wetten.overheid.nl/BWBR0009353#Artikel4
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel1
     references:
       - id: ref1
@@ -90,29 +90,28 @@ articles:
         bwb_id: BWBR0009353
       - id: ref4
         bwb_id: BWBR0009353
-        artikel: '4'
   - number: '2'
     text: |-
-      1 Het is verboden zonder geldige visvergunning met een vissersvaartuig dan wel een vaartuig dat is geregistreerd
-      in een andere lidstaat dan Nederland, de visserij uit te oefenen op de bestanden, bedoeld in artikel 3, onderdeel
-      g, van [verordening nr. 2371/2002](32002R2371), tenzij het een vissersvaartuig betreft waarmee uitsluitend de
-      visserij, bedoeld in [artikel 1, vierde lid, onderdeel d, van de Visserijwet 1963][ref1] wordt uitgeoefend.
+       1 Het is verboden zonder geldige visvergunning met een vissersvaartuig dan wel een vaartuig dat is geregistreerd
+       in een andere lidstaat dan Nederland, de visserij uit te oefenen op de bestanden, bedoeld in artikel 3, onderdeel
+       g, van [verordening nr. 2371/2002](32002R2371), tenzij het een vissersvaartuig betreft waarmee uitsluitend de
+       visserij, bedoeld in [artikel 1, vierde lid, onderdeel d, van de Visserijwet 1963][ref1] wordt uitgeoefend.
 
-      2 Een visvergunning wordt op aanvraag door de minister verleend overeenkomstig [artikel 2a][ref2].
+       2 Een visvergunning wordt op aanvraag door de minister verleend overeenkomstig [artikel 2a][ref2].
 
-      3 De aanvraag tot inschrijving van een vaartuig in het visserijregister, bedoeld
-      in [artikel 6 van het Registratiebesluit][ref3], alsmede de mededeling, bedoeld in
-      [artikel 7, tweede lid, van het Registratiebesluit][ref4] wordt in voorkomend geval als een aanvraag tot verlening
-      van een visvergunning beschouwd.
+       3 De aanvraag tot inschrijving van een vaartuig in het visserijregister, bedoeld
+       in [artikel 6 van het Registratiebesluit][ref3], asmede de mededeling, bedoeld in
+       [artikel 7, tweede lid, van het Registratiebesluit][ref4] wordt in voorkomend geval als een aanvraag tot verlening
+       van een visvergunning beschouwd.
 
-      4 De ondernemer van een vissersvaartuig ten aanzien waarvan een visvergunning is verleend, of diens gemachtigde
-      heeft de visvergunning aan boord van het vissersvaartuig aanwezig.
+       4 De ondernemer van een vissersvaartuig ten aanzien van wie een visvergunning is verleend, of diens gemachtigde
+       heeft de visvergunning aan boord van het vissersvaartuig aanwezig.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002416#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0016244#Artikel2a
-      [ref3]: https://wetten.overheid.nl/BWBR0009353#Artikel6
-      [ref4]: https://wetten.overheid.nl/BWBR0009353#Artikel7
+       [ref1]: https://wetten.overheid.nl/BWBR0002416#Artikel1
+       [ref2]: https://wetten.overheid.nl/BWBR0016244#Artikel2a
+       [ref3]: https://wetten.overheid.nl/BWBR0009353#Artikel6
+        [ref4]: https://wetten.overheid.nl/BWBR0009353#Artikel7
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel2
     references:
       - id: ref1
@@ -127,6 +126,30 @@ articles:
       - id: ref4
         bwb_id: BWBR0009353
         artikel: '7'
+    machine_readable:
+      execution:
+          produces:
+            legal_character: TOETS
+            decision_type: ANDERE_HANDELING
+          output:
+            - name: mag_visserij_uit_oefenen
+              type: boolean
+          parameters:
+            - name: heeft_geldige_visvergunning
+              type: boolean
+            - name: valt_onder_uitzondering_visserijwet_1963_art1_lid5_onderdeel_d
+              type: boolean
+          actions:
+            - output: mag_visserij_uit_oefenen
+              value:
+                operation: OR
+                conditions:
+                  - operation: EQUALS
+                    subject: $heeft_geldige_visvergunning
+                    value: true
+                  - operation: EQUALS
+                    subject: $valt_onder_uitzondering_visserijwet_1963_art1_lid5_onderdeel_d
+                    value: true
   - number: 2a
     text: |-
       1 Een visvergunning wordt verleend indien:
@@ -310,6 +333,47 @@ articles:
       is dan het motorvermogen of de tonnage dat staat vermeld op de ten behoeve van dat vissersvaartuig verleende
       visvergunning.
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel5
+    references: []
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+          decision_type: ANDERE_HANDELING
+        output:
+          - name: mag_visserij_uitoefenen
+            type: boolean
+        parameters:
+          - name: motorvermogen_vaartuig
+            type: number
+          - name: tonnage_vaartuig
+            type: number
+          - name: motorvermogen_visvergunning
+            type: number
+          - name: tonnage_visvergunning
+            type: number
+        actions:
+          - output: motorvermogen_overschreden
+            value:
+              operation: GREATER_THAN
+              subject: $motorvermogen_vaartuig
+              value: $motorvermogen_visvergunning
+          - output: tonnage_overschreden
+            value:
+              operation: GREATER_THAN
+              subject: $tonnage_vaartuig
+              value: $tonnage_visvergunning
+          - output: mag_visserij_uitoefenen
+            value:
+              operation: NOT
+              value:
+                operation: OR
+                conditions:
+                  - operation: EQUALS
+                    subject: $motorvermogen_overschreden
+                    value: true
+                  - operation: EQUALS
+                    subject: $tonnage_overschreden
+                    value: true
   - number: '6'
     text: |-
       1 De visvergunning is niet geldig vanaf het tijdstip dat door de minister of een controleur wordt geconstateerd
@@ -349,6 +413,37 @@ articles:
       - id: ref2
         bwb_id: BWBR0016244
         artikel: '4'
+    machine_readable:
+       execution:
+          produces:
+            legal_character: TOETS
+            decision_type: ANDERE_HANDELING
+          output:
+            - name: is_visvergunning_geldig
+              type: boolean
+          parameters:
+            - name: motorvermogen_overschreden
+              type: boolean
+            - name: tonnage_overschreden
+              type: boolean
+            - name: afwijking_van_zegelplan
+              type: boolean
+          actions:
+            - output: is_visvergunning_geldig
+              value:
+                operation: NOT
+                value:
+                  operation: OR
+                  conditions:
+                  - operation: EQUALS
+                    subject: $motorvermogen_overschreden
+                    value: true
+                  - operation: EQUALS
+                    subject: $tonnage_overschreden
+                    value: true
+                  - operation: EQUALS
+                    subject: $afwijking_van_zegelplan
+                    value: true
   - number: '7'
     text: |-
       1 De minister kan op verzoek van een ondernemer de tonnage van een vissersvaartuig verhogen als bedoeld in
@@ -375,11 +470,10 @@ articles:
       een kopie van de meetbrief, bedoeld in [artikel 4 van de Meetbrievenwet 1981][ref1], die naar aanleiding van de
       verbouwing is afgegeven.
 
-      6 Na ontvangst van de meetbrief, bedoeld in het vijfde lid, stelt de minister het aantal ton, waarmee de tonnage
-      wordt verhoogd, vast.
+       6 Na ontvangst van de meetbrief, bedoeld in het vijfde lid, stelt de minister het aantal ton, waarmee de tonnage
+        wordt verhoogd, vast.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003378#Artikel4
+       [ref1]: https://wetten.overheid.nl/BWBR0003378#Artikel4
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel7
     references:
       - id: ref1
@@ -387,12 +481,85 @@ articles:
         artikel: '4'
   - number: '8'
     text: |-
-      1 Het is verboden met een vissersvaartuig de visserij uit te oefenen op de in het tweede lid genoemde soorten,
-      tenzij het vissersvaartuig behoort tot het segment MFL 1.
+       1 Het is verboden met een vissersvaartuig de visserij uit te oefenen op de in het tweede lid genoemde soorten,
+       tenzij het vissersvaartuig behoort tot het segment MFL 1.
 
-      2 De soorten, bedoeld in het eerste lid, zijn: haring, koolvis, makreel, schelvis, wijting, tong, schol, heek,
-      kabeljauw, sprot, zeeduivel, horsmakreel, blauwe wijting en kever.
+        2 De soorten, bedoeld in het eerste lid, zijn: haring, koolvis, makreel, schelvis, wijting, tong, schol, heek,
+        kabeljauw, sprot, zeeduivel, horsmakreel, blauwe wijting en kever.
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel8
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+          decision_type: ANDERE_HANDELING
+        output:
+          - name: mag_visserij_uitoefenen_op_soort
+            type: boolean
+        parameters:
+          - name: segment_vaartuig
+            type: string
+          - name: soort_vis
+            type: string
+        actions:
+          - output: is_beperkte_soort
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "haring"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "koolvis"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "makreel"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "schelvis"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "wijting"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "tong"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "schol"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "heek"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "kabeljauw"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "sprot"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "zeeduivel"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "horsmakreel"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "blauwe wijting"
+                - operation: EQUALS
+                  subject: $soort_vis
+                  value: "kever"
+          - output: mag_visserij_uitoefenen_op_soort
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value:
+                    operation: EQUALS
+                    subject: $is_beperkte_soort
+                    value: "true"
+                - operation: EQUALS
+                  subject: $segment_vaartuig
+                  value: "MFL1"
+    references: []
   - number: '9'
     text: |-
       1 De Regeling visserijlicentie wordt ingetrokken.
@@ -412,6 +579,8 @@ articles:
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel10
+    references: []
   - number: '11'
     text: 'Deze regeling wordt aangehaald als: Regeling visvergunning.'
     url: https://wetten.overheid.nl/BWBR0016244/2011-01-01#Artikel11
+    references: []
