@@ -44,6 +44,29 @@ articles:
 
       b. het verzenden van informatie aan de betrokken veteraan.
     url: https://wetten.overheid.nl/BWBR0019956/2006-06-21#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: veteranenregistratie_bestaat
+            type: boolean
+            description: Indicates whether the veteranenregistratie exists as mandated by law.
+          - name: locatie_veteranenregistratie
+            type: string
+            description: The location where the veteranenregistratie is processed.
+          - name: doel_veteranenregistratie
+            type: array
+            description: The purposes for which the veteranenregistratie is used.
+        actions:
+          - output: veteranenregistratie_bestaat
+            value: true
+          - output: locatie_veteranenregistratie
+            value: "DienstenCentrum Human Resources te Enschede"
+          - output: doel_veteranenregistratie
+            value:
+              operation: LIST
+              items:
+                - "het onderhouden van contacten met de betrokken veteraan"
+                - "het verzenden van informatie aan de betrokken veteraan"
   - number: '3'
     text: |-
       In de veteranenregistratie worden geen andere persoonsgegevens verwerkt dan:
@@ -56,6 +79,31 @@ articles:
       c. gegevens betreffende de functie waarin en de periode gedurende welke de veteraan deel uitmakend van of ten
       behoeve van de krijgsmacht werkzaam is geweest.
     url: https://wetten.overheid.nl/BWBR0019956/2006-06-21#Artikel3
+    machine_readable:
+      execution:
+        output:
+          - name: toegestane_persoonsgegevens
+            type: array
+            description: The allowed personal data fields in the veteranenregistratie.
+        actions:
+          - output: toegestane_persoonsgegevens
+            value:
+              operation: LIST
+              items:
+                - "naam"
+                - "voornamen"
+                - "voorletters"
+                - "rang"
+                - "titulatuur"
+                - "geslacht"
+                - "geboortedatum"
+                - "adres"
+                - "postcode"
+                - "woonplaats"
+                - "telefoonnummer"
+                - "soortgelijke voor communicatie benodigde gegevens"
+                - "administratienummer"
+                - "gegevens betreffende de functie waarin en de periode gedurende welke de veteraan deel uitmakend van of ten behoeve van de krijgsmacht werkzaam is geweest"
   - number: '4'
     text: |-
       De persoonsgegevens worden slechts verstrekt aan:
@@ -81,11 +129,68 @@ articles:
       - id: ref3
         bwb_id: BWBR0011468
         artikel: '9'
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_betrokken_bij_artikel2_activiteiten
+            type: boolean
+            description: Indicates if the recipient is involved in the activities described in Article 2, paragraph 3.
+            required: true
+          - name: voldoet_aan_wbp_artikel8_9
+            type: boolean
+            description: Indicates if the disclosure complies with Articles 8(a, c, d) and 9(3) of the Wet bescherming persoonsgegevens.
+            source:
+              regulation: wet_bescherming_persoonsgegevens
+              output: mag_verstrekken_artikel8_9
+        output:
+          - name: mag_persoonsgegevens_verstrekken
+            type: boolean
+            description: Indicates whether personal data can be disclosed to the recipient.
+        actions:
+          - output: mag_persoonsgegevens_verstrekken
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_betrokken_bij_artikel2_activiteiten
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_wbp_artikel8_9
+                  value: true
+        untranslatables:
+          - description: Dependency on Wet bescherming persoonsgegevens (BWBR0011468) for Articles 8(a, c, d) and 9(3).
+            type: dependency
   - number: '5'
     text: |-
       De persoonsgegevens van de veteraan worden uit de veteranenregistratie verwijderd op een daartoe strekkend verzoek
       van de veteraan of bij diens overlijden.
     url: https://wetten.overheid.nl/BWBR0019956/2006-06-21#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_verzoek_tot_verwijdering
+            type: boolean
+            description: Indicates if the veteran has requested deletion of their personal data.
+            required: true
+          - name: is_overleden
+            type: boolean
+            description: Indicates if the veteran is deceased.
+            required: true
+        output:
+          - name: persoonsgegevens_verwijderen_vereist
+            type: boolean
+            description: Indicates whether the veteran's personal data must be deleted from the registry.
+        actions:
+          - output: persoonsgegevens_verwijderen_vereist
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $heeft_verzoek_tot_verwijdering
+                  value: true
+                - operation: EQUALS
+                  subject: $is_overleden
+                  value: true
   - number: '6'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
