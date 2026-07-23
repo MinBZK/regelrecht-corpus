@@ -30,10 +30,52 @@ articles:
       2 Een runderverzamelcentrum dat door de Minister is erkend op grond van artikel 3.16 van de Regeling handel levende
       dieren en levende producten voldoet met ingang van 1 november 2001 aan de eis, bedoeld in artikel 9c, onderdeel s.
 
-      3 Van de afstandseis als bedoeld in artikel 9c, onderdeel b, van de Regeling betreffende het bijeenbrengen van
+      3 Van de afstandseis als bedoeld in artikel 9c, onderdelen b, van de Regeling betreffende het bijeenbrengen van
       dieren 2000 zijn vrijgesteld de runderverzamelcentra die op grond van artikel 3.16 van de Regeling handel levende
       en levende producten erkend zijn.
     url: https://wetten.overheid.nl/BWBR0012542/2001-11-01#ArtikelIV
+    machine_readable:
+      execution:
+        parameters:
+          - name: heeft_erkenning_3_16
+            type: boolean
+            required: true
+            description: Indicaat of het runderverzamelcentrum een erkenning heeft op grond van artikel 3.16 van de Regeling handel levende dieren en levende producten
+        output:
+          - name: erkenning_geldt_als_9b
+            type: boolean
+            description: De erkenning geldt als verleend op grond van artikel 9b van de Regeling betreffende het bijeenbrengen van dieren 2000
+          - name: voldoet_aan_eis_9c_s
+            type: boolean
+            description: Het runderverzamelcentrum voldoet aan de eis bedoeld in artikel 9c, onderdeel s
+          - name: vrijgesteld_van_afstandseis_9c_b
+            type: boolean
+            description: Het runderverzamelcentrum is vrijgesteld van de afstandseis bedoeld in artikel 9c, onderdeel b
+        actions:
+          - output: erkenning_geldt_als_9b
+            value:
+              operation: EQUALS
+              subject: $heeft_erkenning_3_16
+              value: true
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: IV, eerste lid
+          - output: voldoet_aan_eis_9c_s
+            value:
+              operation: EQUALS
+              subject: $heeft_erkenning_3_16
+              value: true
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: IV, tweede lid
+          - output: vrijgesteld_van_afstandseis_9c_b
+            value:
+              operation: EQUALS
+              subject: $heeft_erkenning_3_16
+              value: true
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: IV, derde lid
   - number: V
     text: |-
       1 Deze regeling wordt op 8 juni 2001 om 19.00 uur bekendgemaakt aan de media en treedt met uitzondering van artikel
@@ -43,3 +85,54 @@ articles:
       indien een runderverzamelcentrum op 1 november 2001 niet voldoet aan de eisen, bedoeld in artikel 9c, onderdelen e,
       q, r en s, de door de Minister verleende erkenning van rechtswege komt te vervallen.
     url: https://wetten.overheid.nl/BWBR0012542/2001-11-01#ArtikelV
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum
+            type: date
+            required: true
+            description: De datum waarop de regeling van toepassing is
+          - name: voldoet_aan_eisen_9c_eqrs
+            type: boolean
+            required: true
+            description: Of het runderverzamelcentrum voldoet aan de eisen bedoeld in artikel 9c, onderdelen e, q, r en s
+        output:
+          - name: regeling_in_werking
+            type: boolean
+            description: Of de regeling (met uitzondering van artikel 9c, onderdelen e, q, r, s) in werking is getreden
+          - name: artikel_9c_eqrs_in_werking
+            type: boolean
+            description: Of artikel 9c, onderdelen e, q, r, s in werking is getreden
+          - name: erkenning_vervallen
+            type: boolean
+            description: Of de erkenning van rechtswege is vervallen
+        actions:
+          - output: regeling_in_werking
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $datum
+              value: '2001-06-08T19:00:00'
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: V, eerste lid
+          - output: artikel_9c_eqrs_in_werking
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $datum
+              value: '2001-11-01'
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: V, tweede lid
+          - output: erkenning_vervallen
+            value:
+              operation: AND
+              subject:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $datum
+                  value: '2001-11-01'
+                - operation: EQUALS
+                  subject: $voldoet_aan_eisen_9c_eqrs
+                  value: false
+            legal_basis:
+              law: Regeling verzamelen van runderen
+              article: V, tweede lid
