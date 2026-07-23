@@ -23,12 +23,90 @@ articles:
       zaterdag in mei tot en met 31 mei.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003805#Artikel2
+       [ref1]: https://wetten.overheid.nl/BWBR0003805#Artikel2
     url: https://wetten.overheid.nl/BWBR0006591/1994-04-15#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0003805
         artikel: '2'
+    machine_readable:
+        execution:
+          parameters:
+            - name: jaar
+              type: number
+              required: true
+              description: Jaar waarvoor de vrijstelling werd berekend
+            - name: vissoort
+              type: string
+              required: false
+              description: Vissoort waarvoor de vrijstelling geldt
+            - name: datum
+              type: date
+              required: false
+              description: Datum om te controleren of de vrijstelling van toepassing is
+            - name: watertype
+              type: string
+              required: false
+              description: Type water waar op gevist wordt
+          output:
+            - name: vrijstelling_startdatum
+              type: date
+              description: Startdatum van de vrijstelling (laatste zaterdag in mei)
+            - name: vrijstelling_einddatum
+              type: date
+              description: Einddatum van de vrijstelling (31 mei)
+            - name: vrijstelling_van_toepassing
+              type: boolean
+              description: Of de vrijstelling van toepassing is voor de gegeven vissoort en datum
+          actions:
+            - output: mei_31
+              value:
+                operation: DATE
+                year: $jaar
+                month: 5
+                day: 31
+            - output: dag_van_de_week_mei_31
+              value:
+                operation: DAY_OF_WEEK
+                date: $mei_31
+            - output: dagen_terug
+              value:
+                operation: MODULO
+                value:
+                  operation: ADD
+                  values:
+                    - operation: SUBTRACT
+                      values:
+                        - $dag_van_de_week_mei_31
+                        - 5
+                    - 7
+                divisor: 7
+            - output: dagen_terug_negatief
+              value:
+                operation: NEGATE
+                value: $dagen_terug
+            - output: vrijstelling_startdatum
+              value:
+                operation: DATE_ADD
+                date: $mei_31
+                days: $dagen_terug_negatief
+            - output: vrijstelling_einddatum
+              value: $mei_31
+            - output: vrijstelling_van_toepassing
+              value:
+                operation: AND
+                conditions:
+                  - operation: IN
+                    subject: $vissoort
+                    values:
+                      - "baars"
+                      - "snoekbaars"
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum
+                    value: $vrijstelling_startdatum
+                  - operation: LESS_THAN_OR_EQUAL
+                    subject: $datum
+                    value: $vrijstelling_einddatum
   - number: '2'
     text: |-
       Het in [artikel 1][ref1] bepaalde is niet van toepassing op het vissen in het IJsselmeer.
@@ -40,8 +118,64 @@ articles:
       - id: ref1
         bwb_id: BWBR0006591
         artikel: '1'
+    machine_readable:
+        execution:
+          parameters:
+            - name: watertype
+              type: string
+              required: true
+              description: Type water waar op gevist wordt
+            - name: jaar
+              type: number
+              required: false
+              description: Jaar waarvoor de vrijstelling werd berekend
+            - name: vissoort
+              type: string
+              required: false
+              description: Vissoort waarvoor de vrijstelling geldt
+            - name: datum
+              type: date
+              required: false
+              description: Datum om te controleren of de vrijstelling van toepassing is
+          input:
+            - name: vrijstelling_van_toepassing_artikel_1
+              type: boolean
+              source:
+                output: vrijstelling_van_toepassing
+          output:
+            - name: vrijstelling_van_toepassing
+              type: boolean
+              description: Of de vrijstelling van toepassing is, rekening houdend met de IJsselmeer-uitzondering
+          actions:
+            - output: vrijstelling_van_toepassing
+              value:
+                operation: AND
+                conditions:
+                  - $vrijstelling_van_toepassing_artikel_1
+                  - operation: NOT
+                    value:
+                      operation: EQUALS
+                      subject: $watertype
+                      value: "IJsselmeer"
   - number: '3'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
       wordt geplaatst.
     url: https://wetten.overheid.nl/BWBR0006591/1994-04-15#Artikel3
+    machine_readable:
+        execution:
+          parameters:
+            - name: publicatiedatum
+              type: date
+              required: true
+              description: Datum van publicatie in de Staatscourant
+          output:
+            - name: inwerkingdatum
+              type: date
+              description: Datum waarop de regeling in werking treedt (publicatiedatum + 2 dagen)
+          actions:
+            - output: inwerkingdatum
+              value:
+                operation: DATE_ADD
+                date: $publicatiedatum
+                days: 2
