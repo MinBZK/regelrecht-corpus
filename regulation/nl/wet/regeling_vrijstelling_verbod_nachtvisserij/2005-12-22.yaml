@@ -20,26 +20,151 @@ articles:
       uur voor zonsopgang in de wateren die zijn vermeld in de bij deze regeling behorende bijlage in de periode van 1
       september tot en met 31 mei.
     url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel1
+    machine_readable:
+      execution:
+        open_terms:
+          - id: sunset_time
+            type: string
+            description: Tijdstip van zonsondergang voor de betrokken datum en locatie (ISO formaat HH:MM:SS)
+            source:
+              regulation: regeling_zonsopkomst_zonsondergang
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: sunrise_time
+            type: string
+            description: Tijdstip van zonsopgang voor de betrokken datum en locatie (ISO formaat HH:MM:SS)
+            source:
+              regulation: regeling_zonsopkomst_zonsondergang
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+          - id: bijlage_wateren
+            type: array
+            description: Lijst van wateren waar de vrijstelling geldt
+            source:
+              regulation: regeling_vrijstelling_verbod_nachtvisserij
+            delegated_to: minister
+            delegation_type: MINISTERIELE_REGELING
+            type_spec:
+              item_type: string
+        output:
+          - name: heeft_vrijstelling
+            type: boolean
+        input:
+          - name: current_year
+            type: number
+            description: Huidig jaar (dynamisch ingevuld door de oproeper)
+        parameters:
+          - name: current_date
+            type: date
+          - name: current_time
+            type: string
+          - name: water
+            type: string
+          - name: vissen_met_hengel
+            type: boolean
+        actions:
+          - output: next_year
+            value:
+              operation: ADD
+              values:
+                - $current_year
+                - 1
+          - output: sunset_plus_2
+            value:
+              operation: ADD
+              values:
+                - $sunset_time
+                - "02:00:00"
+          - output: sunrise_minus_1
+            value:
+              operation: SUBTRACT
+              values:
+                - $sunrise_time
+                - "01:00:00"
+          - output: start_september
+            value:
+              operation: DATE
+              values:
+                - $current_year
+                - 9
+                - 1
+          - output: end_december
+            value:
+              operation: DATE
+              values:
+                - $current_year
+                - 12
+                - 31
+          - output: start_january
+            value:
+              operation: DATE
+              values:
+                - $next_year
+                - 1
+                - 1
+          - output: end_may
+            value:
+              operation: DATE
+              values:
+                - $next_year
+                - 5
+                - 31
+          - output: heeft_vrijstelling
+            value:
+              operation: AND
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $current_time
+                      value: $sunset_plus_2
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $current_time
+                      value: $sunrise_minus_1
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: GREATER_THAN_OR_EQUAL
+                          subject: $current_date
+                          value: $start_september
+                        - operation: LESS_THAN_OR_EQUAL
+                          subject: $current_date
+                          value: $end_december
+                    - operation: AND
+                      conditions:
+                        - operation: GREATER_THAN_OR_EQUAL
+                          subject: $current_date
+                          value: $start_january
+                        - operation: LESS_THAN_OR_EQUAL
+                          subject: $current_date
+                          value: $end_may
+                - operation: EQUALS
+                  subject: $vissen_met_hengel
+                  value: true
+                - operation: IN
+                  subject: $water
+                  value: $bijlage_wateren
   - number: '2.1'
     text: |-
       De [Regeling vrijstelling verbod nachtvisserij][ref1] 1985/1986 (Stcrt. 1985, 236) wordt ingetrokken.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004024
-    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2
+    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2_1
     references:
       - id: ref1
         bwb_id: BWBR0004024
   - number: '2.2'
     text: De regeling treedt in werking op 1 september 1986.
-    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2
+    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2_2
   - number: '2.3'
     text: |-
       Deze regeling kan worden aangehaald als: [Regeling vrijstelling verbod nachtvisserij][ref1].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0004024
-    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2
+    url: https://wetten.overheid.nl/BWBR0004024/2005-12-22#Artikel2_3
     references:
       - id: ref1
         bwb_id: BWBR0004024
