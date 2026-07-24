@@ -28,6 +28,25 @@ articles:
       - id: ref1
         bwb_id: BWBR0003227
         artikel: '1'
+    machine_readable:
+      execution:
+        parameters: []
+        input:
+          - name: kaart_geluidhinder_artikel_1
+            type: string
+            description: De kaart bedoeld in artikel 1 van de Wet geluidhinder (BWBR0003227)
+            source:
+              regulation: wet_geluidhinder
+              output: zonekaart
+        output:
+          - name: zonekaart_spoorwegen
+            type: string
+            description: De vastgestelde zonekaart voor spoorwegen, overeenkomstig de bijlage bij deze regeling.
+        actions:
+          - output: zonekaart_spoorwegen
+            value:
+              operation: SET
+              value: $kaart_geluidhinder_artikel_1
   - number: '2'
     text: |-
       Deze regeling treedt in werking met ingang van de tweede dag na de dagtekening van de Staatscourant waarin zij
