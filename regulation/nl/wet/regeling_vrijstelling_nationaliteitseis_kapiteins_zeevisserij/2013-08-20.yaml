@@ -14,31 +14,95 @@ preamble:
     Besluit:
   url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#ArtikelAanhef
 articles:
-  - number: '1'
-    text: |-
-      Van het vereiste in [artikel 29, eerste lid, van de Wet zeevarenden][ref1] wordt vrijstelling verleend ten behoeve
-      van personen die de nationaliteit bezitten van een lidstaat van de Europese Unie, van een andere staat die partij
-      is bij de Overeenkomst inzake de Europese Economische Ruimte, dan wel van de Bondsstaat Zwitserland, en die als
-      kapitein op een Nederlands zeevissersvaartuig wordt aangesteld.
+   - number: '1'
+     text: |-
+       Van het vereiste in [artikel 29, eerste lid, van de Wet zeevarenden][ref1] wordt vrijstelling verleend ten behoeve
+       van personen die de nationaliteit bezitten van een lidstaat van de Europese Unie, van een andere staat die partij
+       is bij de Overeenkomst inzake de Europese Economische Ruimte, dan wel van de Bondsstaat Zwitserland, en die als
+       kapitein op een Nederlands zeevissersvaartuig wordt aangesteld.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel29
-    url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0009124
-        artikel: '29'
-  - number: '2'
-    text: |-
-      Deze regeling berust op [artikel 29, tweede lid, van de Wet zeevarenden][ref1].
+       [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel29
+     url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel1
+     references:
+       - id: ref1
+         bwb_id: BWBR0009124
+         artikel: '29'
+     machine_readable:
+       execution:
+         parameters:
+           - name: bsn
+             type: string
+             required: true
+             description: Burgerservicenummer van de kapitein
+         input:
+           - name: nationaliteit
+             type: string
+             source:
+               regulation: wet_basisregistratie_personen
+               output: nationaliteit
+               parameters:
+                 bsn: $bsn
+           - name: is_nederlands_zeevissersvaartuig
+             type: boolean
+             description: Indienen of de kapitein is aangesteld op een Nederlands zeevissersvaartuig
+         output:
+           - name: heeft_vrijstelling
+             type: boolean
+             description: Geeft aan of de kapitein vrijstelling heeft van de nationaliteitseis uit Wet zeevarenden artikel 29, eerste lid
+         actions:
+           - output: heeft_vrijstelling
+             value:
+               operation: AND
+               conditions:
+                 - operation: IN
+                   subject: $nationaliteit
+                   values:
+                     - "NLD"
+                     - "BEL"
+                     - "DEU"
+                     - "FRA"
+                     - "ITA"
+                     - "ESP"
+                     - "POL"
+                     - "ROU"
+                     - "BGR"
+                     - "CYP"
+                     - "CZE"
+                     - "DNK"
+                     - "EST"
+                     - "FIN"
+                     - "GRC"
+                     - "HUN"
+                     - "IRL"
+                     - "LVA"
+                     - "LTU"
+                     - "LUX"
+                     - "MLT"
+                     - "AUT"
+                     - "PRT"
+                     - "SWE"
+                     - "SLO"
+                     - "SVK"
+                     - "HRV"
+                     - "NOR"
+                     - "ISL"
+                     - "LIE"
+                     - "CHE"
+                 - operation: EQUALS
+                   subject: $is_nederlands_zeevissersvaartuig
+                   value: true
+   - number: '2'
+     text: |-
+       Deze regeling berust op [artikel 29, tweede lid, van de Wet zeevarenden][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel29
-    url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0009124
-        artikel: '29'
-  - number: '3'
-    text: 'Deze regeling wordt aangehaald als: Regeling vrijstelling nationaliteitseis kapiteins zeevisserij.'
-    url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel3
+       [ref1]: https://wetten.overheid.nl/BWBR0009124#Artikel29
+     url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel2
+     references:
+       - id: ref1
+         bwb_id: BWBR0009124
+         artikel: '29'
+   - number: '3'
+     text: 'Deze regeling wordt aangehaald als: Regeling vrijstelling nationaliteitseis kapiteins zeevisserij.'
+     url: https://wetten.overheid.nl/BWBR0015476/2013-08-20#Artikel3
