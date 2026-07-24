@@ -19,30 +19,17 @@ articles:
     text: |-
       In deze regeling wordt verstaan onder:
 
+        a. zeegebied:
 
+           gebied als bedoeld in [artikel 1 van het Besluit aanwijzing zeegebied en kustwateren 1970][ref1];
 
-            a
-            zeegebied:
+        b. bordennet:
 
-              gebied als bedoeld in [artikel 1 van het Besluit aanwijzing zeegebied en kustwateren 1970][ref1];
+           vistuig dat bestaat uit één net dat bij het vissen wordt opengehouden door twee aan het net verbonden visborden;
 
+        c. handzeef:
 
-
-            b
-            bordennet:
-
-              vistuig dat bestaat uit één net dat bij het vissen wordt opengehouden door twee aan het net verbonden
-      visborden;
-
-
-
-            c
-            handzeef:
-
-              zeef met een lengte en breedte van tenminste 80 cm respectievelijk 60 cm, in de lengterichting voorzien
-      van gladde draadvormige spijlen, die op gelijke hoogte en met een onderlinge afstand van tenminste 7 mm zijn
-      aangebracht.
-
+           zeef met een lengte en breedte van tenminste 80 cm respectievelijk 60 cm, in de lengterichting voorzien van gladde draadvormige spijlen, die op gelijke hoogte en met een onderlinge afstand van tenminste 7 mm zijn aangebracht.
 
       [ref1]: https://wetten.overheid.nl/BWBR0002703#Artikel1
     url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel1
@@ -61,18 +48,14 @@ articles:
       [artikel 7, eerste lid, van de Beschikking visserij, visserijzone, zeegebied en kustwateren][ref2] wordt
       vrijstelling verleend voor het vissen in de visserijzone en het zeegebied:
 
-        - met vaartuigen met een lengte kleiner dan 8 meter, voor zover het betreft de visserij met de boomkor of een
-      bordennet;
-        - met vaartuigen met een lengte over alles tussen de 8 en 10 meter, voor zover het betreft de visserij met een
-      bordennet.
+        - met vaartuigen met een lengte kleiner dan 8 meter, voor zover het betreft de visserij met de boomkor of een bordennet;
+        - met vaartuigen met een lengte over alles tussen de 8 en 10 meter, voor zover het betreft de visserij met een bordennet.
 
       3 Van het bepaalde in artikel 3, eerste lid, van de Regeling vangstbeperking wordt vrijstelling verleend in de
       visserijzone, het zeegebied en de Westerschelde, voor vaartuigen, andere dan vissersvaartuigen:
 
-        - met een lengte over alles kleiner dan 8 meter, voor zover het betreft het verbod om een boomkor aan boord te
-      hebben,
-        - met een lengte over alles kleiner dan 10 meter, voor zover het betreft het verbod om een bordennet aan boord
-      te hebben.
+        - met een lengte over alles kleiner dan 8 meter, voor zover het betreft het verbod om een boomkor aan boord te hebben,
+        - met een lengte over alles kleiner dan 10 meter, voor zover het betreft het verbod om een bordennet aan boord te hebben.
 
       4 De in het eerste lid bedoelde vrijstelling wordt slechts verleend voor vaartuigen met één boomkor met een
       maximale breedte van 150 cm, gemeten tussen de uiteinden van de constructie, zonder dat er voorzieningen zijn
@@ -86,35 +69,227 @@ articles:
 
       [ref1]: https://wetten.overheid.nl/BWBR0003144#Artikel6c
       [ref2]: https://wetten.overheid.nl/BWBR0003150#Artikel7
-    url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0003144
-        artikel: 6c
-      - id: ref2
-        bwb_id: BWBR0003150
-        artikel: '7'
+      url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel2
+      references:
+        - id: ref1
+          bwb_id: BWBR0003144
+          artikel: 6c
+        - id: ref2
+          bwb_id: BWBR0003150
+          artikel: '7'
+      machine_readable:
+        execution:
+          parameters:
+            - name: vessel_length
+              type: number
+              required: true
+              description: Lengte over alles van het vaartuig in meters
+            - name: water_type
+              type: string
+              required: true
+              description: Type water (visserijzone, zeegebied, Westerschelde)
+            - name: fishing_method
+              type: string
+              required: true
+              description: Gebruikte visserijmethode (boomkor, bordennet)
+            - name: boomkor_width
+              type: number
+              required: false
+              description: Breedte van de boomkor in cm
+            - name: bordennet_visborden_height
+              type: number
+              required: false
+              description: Hoogte van de visborden van het bordennet in cm
+            - name: bordennet_bovenpees_length
+              type: number
+              required: false
+              description: Lengte van de bovenpees van het bordennet in cm
+          output:
+            - name: is_exempt_boomkor_lid1
+              type: boolean
+              description: Vrijstelling voor boomkor volgens lid 1
+            - name: is_exempt_boomkor_or_bordennet_lid2
+              type: boolean
+              description: Vrijstelling voor boomkor of bordennet volgens lid 2
+            - name: is_exempt_carrying_lid3
+              type: boolean
+              description: Vrijstelling voor verbod om vistuig aan boord te hebben volgens lid 3
+            - name: is_boomkor_compliant
+              type: boolean
+              description: Boomkor voldoet aan technische eisen uit lid 4
+            - name: is_bordennet_compliant
+              type: boolean
+              description: Bordennet voldoet aan technische eisen uit lid 5
+          actions:
+          - output: is_exempt_boomkor_lid1
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $fishing_method
+                  value: boomkor
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $vessel_length
+                  value: 8
+                - operation: IN
+                  subject: $water_type
+                  values: [visserijzone, zeegebied, Westerschelde]
+          - output: is_exempt_boomkor_or_bordennet_lid2
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: LESS_THAN
+                      subject: $vessel_length
+                      value: 8
+                    - operation: IN
+                      subject: $fishing_method
+                      values: [boomkor, bordennet]
+                    - operation: IN
+                      subject: $water_type
+                      values: [visserijzone, zeegebied]
+                - operation: AND
+                  conditions:
+                    - operation: GREATER_THAN_OR_EQUAL
+                      subject: $vessel_length
+                      value: 8
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $vessel_length
+                      value: 10
+                    - operation: EQUALS
+                      subject: $fishing_method
+                      value: bordennet
+                    - operation: IN
+                      subject: $water_type
+                      values: [visserijzone, zeegebied]
+          - output: is_exempt_carrying_lid3
+            value:
+              operation: AND
+              conditions:
+                - operation: IN
+                  subject: $water_type
+                  values: [visserijzone, zeegebied, Westerschelde]
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - operation: LESS_THAN
+                          subject: $vessel_length
+                          value: 8
+                        - operation: EQUALS
+                          subject: $fishing_method
+                          value: boomkor
+                    - operation: AND
+                      conditions:
+                        - operation: LESS_THAN
+                          subject: $vessel_length
+                          value: 10
+                        - operation: EQUALS
+                          subject: $fishing_method
+                          value: bordennet
+          - output: is_boomkor_compliant
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $fishing_method
+                  value: boomkor
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $boomkor_width
+                  value: 150
+          - output: is_bordennet_compliant
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $fishing_method
+                  value: bordennet
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $bordennet_visborden_height
+                  value: 70
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $bordennet_bovenpees_length
+                   value: 225
   - number: '3'
-    text: |-
+    text: |
       Aan de in [artikel 2][ref1] bedoelde vrijstellingen worden de volgende voorschriften verbonden:
 
-      a. vissoorten als genoemd in de bijlagen 2, 3 en 4 bij de Regeling vangstbeperking met uitzondering van schar en
-      bot, gevangen in de bij die vissoorten genoemde wateren, dienen onmiddellijk na het ophalen ervan in hetzelfde
-      water te worden teruggezet;
+      a. vissoorten als genoemd in de bijlagen 2, 3 en 4 bij de Regeling vangstbeperking met uitzondering van schar en bot, gevangen in de bij die vissoorten genoemde wateren, dienen onmiddellijk na het ophalen ervan in hetzelfde water te worden teruggezet;
 
-      b. indien de visserij op garnalen wordt uitgeoefend, dient de vangst direct na aan boord te zijn gehaald, te worden
-      gesorteerd met behulp van een handzeef;
+      b. indien de visserij op garnalen wordt uitgeoefend, dient de vangst direct na aan boord te zijn gehaald, te worden gesorteerd met behulp van een handzeef;
 
-      c. het is verplicht een handzeef aan boord te hebben van het vaartuig waarmee de garnalenvisserij wordt
-      uitgeoefend.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0009012#Artikel2
+      c. het is verplicht een handzeef aan boord te hebben van het vaartuig waarmee de garnalenvisserij wordt uitgeoefend.
     url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel3
     references:
       - id: ref1
         bwb_id: BWBR0009012
         artikel: '2'
+    machine_readable:
+        execution:
+          parameters:
+            - name: caught_fish_species
+              type: string
+              required: false
+              description: Gevangen vissoort
+            - name: water_type
+              type: string
+              required: false
+              description: Water waar de vis is gevangen
+            - name: is_shrimp_fishing
+              type: boolean
+              required: false
+              description: Wordt er op garnalen gevist?
+            - name: has_handzeef
+              type: boolean
+              required: false
+              description: Is er een handzeef aan boord?
+          definitions:
+            REGELING_VANGSTBEPERKING_SPECIES:
+              value: []
+              description: Placeholder - Vissoorten uit bijlagen 2, 3 en 4 van Regeling vangstbeperking, met uitzondering van schar en bot
+              source:
+                regulation: Regeling vangstbeperking
+                articles: [Bijlage2, Bijlage3, Bijlage4]
+                note: Full species list not available in corpus
+          output:
+            - name: must_release_fish
+              type: boolean
+              description: Moeten gevangen vissoorten worden teruggezet volgens lid a?
+            - name: must_sort_with_handzeef
+              type: boolean
+              description: Moet de vangst worden gesorteerd met een handzeef volgens lid b?
+            - name: must_have_handzeef_onboard
+              type: boolean
+              description: Moet er een handzeef aan boord zijn volgens lid c?
+          actions:
+            - output: must_release_fish
+              value:
+                operation: AND
+                conditions:
+                  - operation: NOT
+                    value:
+                      operation: IN
+                      subject: $caught_fish_species
+                      values: $REGELING_VANGSTBEPERKING_SPECIES
+                  - operation: IN
+                    subject: $water_type
+                    values: [visserijzone, zeegebied, Westerschelde]
+            - output: must_sort_with_handzeef
+              value:
+                operation: EQUALS
+                subject: $is_shrimp_fishing
+                value: true
+            - output: must_have_handzeef_onboard
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $is_shrimp_fishing
+                    value: true
+                  - operation: EQUALS
+                    subject: $has_handzeef
+                    value: true
   - number: '4'
     text: De Regeling vrijstelling sleepnetvisserij wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel4
@@ -126,5 +301,6 @@ articles:
       Deze regeling zal met de toelichting in de Staatscourant worden geplaatst.
     url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel5
   - number: '6'
-    text: 'Deze regeling wordt aangehaald als: Regeling vrijstelling sleepnetvisserij.'
+    text: |-
+      Deze regeling wordt aangehaald als: Regeling vrijstelling sleepnetvisserij.
     url: https://wetten.overheid.nl/BWBR0009012/1999-07-22#Artikel6
