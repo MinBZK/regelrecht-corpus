@@ -26,6 +26,63 @@ articles:
       - id: ref1
         bwb_id: BWBR0004045
         artikel: 47a
+    machine_readable:
+      execution:
+        parameters:
+          - name: reiskosten_auto
+            type: amount
+            required: false
+            description: Vergoeding voor reiskosten per auto
+            type_spec:
+              unit: eurocent
+          - name: reiskosten_openbaar_vervoer
+            type: amount
+            required: false
+            description: Vergoeding voor reiskosten openbaar vervoer
+            type_spec:
+              unit: eurocent
+          - name: kilometervergoeding_auto_max
+            type: amount
+            required: true
+            description: Maximale kilometervergoeding voor auto (uit artikel 1.1.a)
+            type_spec:
+              unit: eurocent
+          - name: reiskosten_openbaar_vervoer_max
+            type: amount
+            required: true
+            description: Maximale reiskosten voor openbaar vervoer (uit artikel 1.1.b)
+            type_spec:
+              unit: eurocent
+        output:
+          - name: reiskosten_vergoeding_vrijgesteld
+            type: boolean
+            description: Geeft aan of de reiskostenvergoeding niet in mindering gebracht wordt op de werkloosheidsuitkering
+        actions:
+          - output: reiskosten_vergoeding_vrijgesteld
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $reiskosten_auto
+                      value: $kilometervergoeding_auto_max
+                    - operation: NOT
+                      value:
+                        operation: EQUALS
+                        subject: $reiskosten_auto
+                        value: null
+                - operation: AND
+                  conditions:
+                    - operation: LESS_THAN_OR_EQUAL
+                      subject: $reiskosten_openbaar_vervoer
+                      value: $reiskosten_openbaar_vervoer_max
+                    - operation: NOT
+                      value:
+                        operation: EQUALS
+                        subject: $reiskosten_openbaar_vervoer
+                        value: null
+
   - number: 1.1.a
     text: |-
       in geval van vervoer per auto het bedrag per afgelegde kilometer, genoemd in
@@ -38,9 +95,47 @@ articles:
       - id: ref1
         bwb_id: BWBR0002471
         artikel: 31a
+    machine_readable:
+      execution:
+        input:
+          - name: kilometervergoeding_auto_loonbelasting
+            type: amount
+            description: Kilometervergoeding per auto uit Wet op de loonbelasting 1964, Artikel 31a
+            source:
+              regulation: wet_op_de_loonbelasting_1964
+              output: kilometervergoeding_auto_31a_3
+        output:
+          - name: kilometervergoeding_auto_max
+            type: amount
+            description: Maximale kilometervergoeding voor auto
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: kilometervergoeding_auto_max
+            value: $kilometervergoeding_auto_loonbelasting
+
   - number: 1.1.b
     text: de werkelijk gemaakte reiskosten voor openbaar vervoer tweede klas.
     url: https://wetten.overheid.nl/BWBR0016067/2022-07-22#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: reiskosten_openbaar_verkeer_werkelijk
+            type: amount
+            required: true
+            description: Werkelijk gemaakte reiskosten voor openbaar vervoer tweede klass
+            type_spec:
+              unit: eurocent
+        output:
+          - name: reiskosten_openbaar_vervoer_max
+            type: amount
+            description: Maximale reiskosten voor openbaar vervoer tweede klass
+            type_spec:
+              unit: eurocent
+        actions:
+          - output: reiskosten_openbaar_vervoer_max
+            value: $reiskosten_openbaar_verkeer_werkelijk
+
   - number: '1.2'
     text: |-
       In afwijking van het eerste lid, onderdeel a, worden indien de werknemer, bedoeld in
@@ -60,6 +155,57 @@ articles:
       - id: ref2
         bwb_id: BWBR0019057
         artikel: '35'
+    machine_readable:
+      execution:
+        parameters:
+          - name: medische_indicatie_auto
+            type: boolean
+            required: true
+            description: Geeft aan of de werknemer op medische gronden is aangewezen op vervoer per auto
+          - name: reiskosten_auto
+            type: amount
+            required: true
+            description: Vergoeding voor reiskosten per auto
+            type_spec:
+              unit: eurocent
+        input:
+          - name: kilometervergoeding_auto_maximaal
+            type: amount
+            description: Kilometervergoeding voor auto in eigen bezit, vastgesteld door UWV
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: kilometervergoeding_auto_eigen_bezit
+          - name: kilometervergoeding_auto_standaard
+            type: amount
+            description: Standaard kilometervergoeding voor auto uit artikel 1.1.a
+            source:
+              regulation: regeling_vrijlating_vergoedingen_scholing_werkloosheidswet
+              output: kilometervergoeding_auto_max
+        output:
+          - name: maximale_kilometervergoeding_auto
+            type: amount
+            description: Maximale toepasselijke kilometervergoeding voor auto
+            type_spec:
+              unit: eurocent
+          - name: reiskosten_vergoeding_vrijgesteld_medisch
+            type: boolean
+            description: Geeft aan of de reiskostenvergoeding niet in mindering gebracht wordt op basis van medische indicatie
+        actions:
+          - output: maximale_kilometervergoeding_auto
+            value:
+              operation: IF
+              when:
+                operation: EQUALS
+                subject: $medische_indicatie_auto
+                value: true
+              then: $kilometervergoeding_auto_maximaal
+              else: $kilometervergoeding_auto_standaard
+          - output: reiskosten_vergoeding_vrijgesteld_medisch
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $reiskosten_auto
+              value: $maximale_kilometervergoeding_auto
+
   - number: 1a
     text: |-
       Deze regeling berust op [artikel 47a van de Werkloosheidswet][ref1].
@@ -71,6 +217,7 @@ articles:
       - id: ref1
         bwb_id: BWBR0004045
         artikel: 47a
+
   - number: '2'
     text: |-
       Deze regeling is van toepassing op de werkloze werknemer die op of na de dag van inwerkingtreding van deze regeling
@@ -83,6 +230,24 @@ articles:
       - id: ref1
         bwb_id: BWBR0004045
         artikel: 35a
+    machine_readable:
+      execution:
+        parameters:
+          - name: datum_start_opleiding
+            type: date
+            required: true
+            description: Datum waarop de werkloze werknemer begint met het volgen van opleiding of scholing
+        output:
+          - name: regeling_toepasselijk
+            type: boolean
+            description: Geeft aan of de regeling van toepassing is
+        actions:
+          - output: regeling_toepasselijk
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $datum_start_opleiding
+              value: "2022-07-22"
+
   - number: '3'
     text: |-
       De __REF000___________________________________________________________________________________________________________
@@ -94,9 +259,11 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0007525
+
   - number: '4'
     text: Deze regeling treedt in werking met ingang van 1 januari 2004.
     url: https://wetten.overheid.nl/BWBR0016067/2022-07-22#Artikel4
+
   - number: '5'
     text: 'Deze regeling wordt aangehaald als: Regeling vrijlating vergoedingen scholing Werkloosheidswet.'
     url: https://wetten.overheid.nl/BWBR0016067/2022-07-22#Artikel5
