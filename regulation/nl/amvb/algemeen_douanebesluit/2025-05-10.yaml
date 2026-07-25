@@ -118,15 +118,53 @@ articles:
 
       d. inzake het aanvullend onderzoek van goederen, ingeval de verschillen tussen de uitkomst van het
       gedeeltelijk onderzoek en de uitkomst van het aanvullend onderzoek, blijven binnen de spelingen, bedoeld in
-      [artikel 1:35 van de Algemene douanewet][ref1].
-
+       [artikel 1:35 van de Algemene douanewet][ref1].
 
       [ref1]: https://wetten.overheid.nl/BWBR0023746#Artikel135
-    url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel14
-    references:
-      - id: ref1
-        bwb_id: BWBR0023746
-        artikel: 1:35
+      url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel14
+      references:
+        - id: ref1
+          bwb_id: BWBR0023746
+          artikel: 1:35
+      machine_readable:
+        untranslatables:
+         - construct: "binnen de spelingen"
+           reason: "Tolerance-based calculations are not supported by the engine"
+           legal_text_excerpt: "indien de verschillen [...] binnen de spelingen [...] blijven"
+         - construct: "Douanewetboek van de Unie (Article 197)"
+           reason: "YAML file for Douanewetboek van de Unie is not available in the corpus"
+           legal_text_excerpt: "voor het doen vernietigen van goederen, bedoeld in artikel 197 van het Douanewetboek van de Unie"
+         - construct: "Uitvoeringsverordening Douanewetboek van de Unie (Articles 239(2), 240(2))"
+           reason: "YAML file for Uitvoeringsverordening Douanewetboek van de Unie is not available in the corpus"
+           legal_text_excerpt: "voor het ambtshalve onderzoek van de goederen, bedoeld in de artikelen 239, tweede lid, en 240, tweede lid"
+         - construct: "Algemene douanewet (Article 1:35)"
+           reason: "YAML file for BWBR0023746 is not available in the corpus"
+           legal_text_excerpt: "binnen de spelingen, bedoeld in artikel 1:35 van de Algemene douanewet"
+       execution:
+         output:
+           - name: kosten_verschuldigd
+             type: boolean
+         parameters:
+           - name: werkzaamheden_buiten_openingstijden
+             type: boolean
+           - name: locatie_is_aangewezen
+             type: boolean
+           - name: is_analyse_of_deskundigenverslag
+             type: boolean
+         actions:
+           - output: kosten_verschuldigd
+             value:
+               operation: OR
+               conditions:
+                 - operation: EQUALS
+                   subject: $werkzaamheden_buiten_openingstijden
+                   value: true
+                 - operation: EQUALS
+                   subject: $locatie_is_aangewezen
+                   value: false
+                 - operation: EQUALS
+                   subject: $is_analyse_of_deskundigenverslag
+                   value: true
   - number: 1:4a
     text: |-
       De overeenkomst, bedoeld in [artikel 1:23a, zesde lid, van de Algemene douanewet][ref1], niet zijnde een
@@ -147,17 +185,11 @@ articles:
       2°. de overdracht van de camerabeelden aan de inspecteur;
 
       c. de procedures bij wijzigingen in apparatuur, software of procedures die betrekking hebben op het verlenen van
-      toegang dan wel overdracht van de camerabeelden aan de inspecteur;
+       toegang dan wel overdracht van de camerabeelden aan de inspecteur;
 
-      d. op welke wijze uitvoering wordt gegeven aan [artikel 1:23g, tweede lid, van de Algemene douanewet][ref3];
+      d. op welke wijze uitvoering wordt gegeven aan artikel 1:23g, tweede lid, van de Algemene douanewet;
 
-      e. de medewerking aan de audit, bedoeld in [artikel 1:23g, vierde lid, van de Algemene douanewet][ref4].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
-      [ref2]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
-      [ref3]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
-      [ref4]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
+      e. de medewerking aan de audit, bedoeld in artikel 1:23g, vierde lid, van de Algemene douanewet.
     url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel14a
     references:
       - id: ref1
@@ -172,49 +204,58 @@ articles:
       - id: ref4
         bwb_id: BWBR0023746
         artikel: 1:23g
+    machine_readable:
+      untranslatables:
+        - construct: "Algemene douanewet (Article 1:23a, zesde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "De overeenkomst, bedoeld in artikel 1:23a, zesde lid, van de Algemene douanewet"
+        - construct: "Verordening (EU) 2016/679 (Article 28, derde lid)"
+          reason: "YAML file for Verordening (EU) 2016/679 is not available in the corpus"
+          legal_text_excerpt: "niet zijnde een overeenkomst als bedoeld in artikel 28, derde lid, van de Verordening (EU) 2016/679"
+        - construct: "Algemene douanewet (Article 1:23g, eerste lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "beveiligingsmaatregelen als bedoeld in artikel 1:23g, eerste lid, van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23g, tweede lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "uitvoering wordt gegeven aan artikel 1:23g, tweede lid, van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23g, vierde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+      legal_text_excerpt: "de audit, bedoeld in artikel 1:23g, vierde lid, van de Algemene douanewet"
   - number: 1:4b
     text: |-
       De inspecteur legt vast:
 
-      a. de tijdvakken waarin de camera’s waarbij persoonsgegevens kunnen worden verwerkt worden gebruikt voor de taken
-      en de doelen, bedoeld in de [artikelen 1:23a tot en met 1:23f van de Algemene douanewet][ref1];
+      a. de tijdvakken waarin de camera's waarbij persoonsgegevens kunnen worden verwerkt worden gebruikt voor de taken
+      en de doelen, bedoeld in de artikelen 1:23a tot en met 1:23f van de Algemene douanewet;
 
       b. de namen van de ambtenaren die de camerabeelden waarbij persoonsgegevens kunnen worden verwerkt inzien en het
       tijdvak, bedoeld in onderdeel a, waarin;
 
       c. het aantal gevallen en de aanleiding waarbij de persoonsgegevens zijn gebruikt voor het identificeren van
       natuurlijke personen voor de persoonlijke veiligheid van een ambtenaar of zijn directe omgeving, bedoeld in
-      [artikel 1:23a, derde lid, van de Algemene douanewet][ref2], en wat met die persoonsgegevens is gedaan;
+      artikel 1:23a, derde lid, van de Algemene douanewet, en wat met die persoonsgegevens is gedaan;
 
       d. de dringende gevallen waarvoor toestemming is gevraagd, bedoeld in
-      [artikel 1:23a, vierde lid, onderdeel d, van de Algemene douanewet][ref3], onder vermelding van de reden, waar de
-      camera’s op werden gericht dan wel in of op welke locaties deze werden ingezet en de resultaten van het gebruik van
-      die camera’s;
+      artikel 1:23a, vierde lid, onderdeel d, van de Algemene douanewet, onder vermelding van de reden, waar de
+      camera's op werden gericht dan wel in of op welke locaties deze werden ingezet en de resultaten van het gebruik van
+      die camera's;
 
-      e. welke beveiligingsmaatregelen als bedoeld in [artikel 1:23g, eerste lid, van de Algemene douanewet][ref4] zijn
+      e. welke beveiligingsmaatregelen als bedoeld in artikel 1:23g, eerste lid, van de Algemene douanewet zijn
       genomen;
 
-      f. welke ambtenaren zijn gemandateerd als bedoeld in [artikel 1:23g, eerste lid, van de Algemene douanewet][ref5];
+      f. welke ambtenaren zijn gemandateerd als bedoeld in artikel 1:23g, eerste lid, van de Algemene douanewet;
 
-      g. het tijdstip en de wijze van vernietiging van de persoonsgegevens die zijn verkregen met camera’s, bedoeld in
-      [artikel 1:23g, derde lid, van de Algemene douanewet][ref6];
+      g. het tijdstip en de wijze van vernietiging van de persoonsgegevens die zijn verkregen met camera's, bedoeld in
+      artikel 1:23g, derde lid, van de Algemene douanewet;
 
-      h. indien de persoonsgegevens die zijn verkregen met camera’s niet binnen vier weken nadat ze zijn verkregen zijn
+      h. indien de persoonsgegevens die zijn verkregen met camera's niet binnen vier weken nadat ze zijn verkregen zijn
       vernietigd, de reden waarom en een verwijzing naar het daarbij behorende dossier;
 
       i. indien ingevolge een bij of krachtens de wet bestaande verplichting de persoonsgegevens die zijn verkregen met
-      camera’s zijn verstrekt, aan wie deze zijn verstrekt onder vermelding van de grondslag daarvan;
+      camera's zijn verstrekt, aan wie deze zijn verstrekt onder vermelding van de grondslag daarvan;
 
       j. de eventuele inbreuken op de wet- en regelgeving, die zich hebben voorgedaan ten aanzien van het gebruik van
-      camera’s waarbij persoonsgegevens worden verwerkt.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
-      [ref2]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
-      [ref3]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
-      [ref4]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
-      [ref5]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
-      [ref6]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
+      camera's waarbij persoonsgegevens worden verwerkt.
     url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel14b
     references:
       - id: ref1
@@ -235,29 +276,41 @@ articles:
       - id: ref6
         bwb_id: BWBR0023746
         artikel: 1:23g
+    machine_readable:
+      untranslatables:
+        - construct: "Algemene douanewet (Articles 1:23a to 1:23f)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "de taken en de doelen, bedoeld in de artikelen 1:23a tot en met 1:23f van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23a, derde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "de persoonlijke veiligheid van een ambtenaar of zijn directe omgeving, bedoeld in artikel 1:23a, derde lid, van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23a, vierde lid, onderdeel d)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "de dringende gevallen waarvoor toestemming is gevraagd, bedoeld in artikel 1:23a, vierde lid, onderdeel d"
+        - construct: "Algemene douanewet (Article 1:23g, eerste lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "beveiligingsmaatregelen als bedoeld in artikel 1:23g, eerste lid, van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23g, derde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "het tijdstip en de wijze van vernietiging van de persoonsgegevens, bedoeld in artikel 1:23g, derde lid"
   - number: 1:4c
     text: |-
-      1 Het cameraplan, bedoeld in [artikel 1:23g, vijfde lid, van de Algemene douanewet][ref1], geeft inzicht in de
-      camera’s die de inspecteur gebruikt waarbij persoonsgegevens kunnen worden verwerkt en beschrijft:
+      1 Het cameraplan, bedoeld in artikel 1:23g, vijfde lid, van de Algemene douanewet, geeft inzicht in de
+      camera's die de inspecteur gebruikt waarbij persoonsgegevens kunnen worden verwerkt en beschrijft:
 
-      a. de locaties, bedoeld in [artikel 1:23a, vierde lid, onderdelen a en b, van de Algemene douanewet][ref2], waar
-      gebruik kan worden gemaakt van vaste camera’s;
+      a. de locaties, bedoeld in artikel 1:23a, vierde lid, onderdelen a en b, van de Algemene douanewet, waar
+      gebruiken kan worden gemaakt van vaste camera's;
 
-      b. het voorgenomen aantal te gebruiken vaste camera’s per locatie of gebied;
+      b. het voorgenomen aantal te gebruiken vaste camera's per locatie of gebied;
 
-      c. de locaties, bedoeld in [artikel 1:23a, vierde lid, onderdelen a en b, van de Algemene douanewet][ref3], waar en
-      de situaties waarin mobiele camera’s kunnen worden ingezet; en
+      c. de locaties, bedoeld in artikel 1:23a, vierde lid, onderdelen a en b, van de Algemene douanewet, waar en
+      de situaties waarin mobiele camera's kunnen worden ingezet; en
 
-      d. een onderbouwing voor de voorgenomen inzet van camera’s, tenzij de melding de effectiviteit van het beperken van
-      risico’s ernstig kan benadelen.
+      d. een onderbouwing voor de voorgenomen inzet van camera's, tenzij de melding de effectiviteit van het beperken van
+      risico's ernstig kan benadelen.
 
-      2 Het cameraplan ziet op zowel eigen camera’s als die van personen of instellingen die geen inspecteur of ontvanger
+      2 Het Cameraplan ziet op zowel eigen camera's als die van personen of instellingen die geen inspecteur of ontvanger
       zijn.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023746#Artikel123g
-      [ref2]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
-      [ref3]: https://wetten.overheid.nl/BWBR0023746#Artikel123a
     url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel14c
     references:
       - id: ref1
@@ -269,9 +322,17 @@ articles:
       - id: ref3
         bwb_id: BWBR0023746
         artikel: 1:23a
+    machine_readable:
+      untranslatables:
+        - construct: "Algemene douanewet (Article 1:23g, vijfde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "het cameraplan, bedoeld in artikel 1:23g, vijfde lid, van de Algemene douanewet"
+        - construct: "Algemene douanewet (Article 1:23a, vierde lid, onderdelen a en b)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "de locaties, bedoeld in artikel 1:23a, vierde lid, onderdelen a en b, van de Algemene douanewet"
   - number: 1:5
     text: |-
-      1 De ambtenaar, bedoeld in [artikel 1:28, zesde lid, van de Algemene douanewet][ref1], vermeldt in een schriftelijk
+      1 De ambtenaar, bedoeld in artikel 1:28, zesde lid, van de Algemene douanewet, vermeldt in een schriftelijk
       verslag de redenen voor het geven van de toestemming over te gaan tot gehele ontkleding dan wel het onderzoek van
       het onderlichaam.
 
@@ -283,7 +344,7 @@ articles:
 
       3 Op de besloten plaats waar de lijfsvisitatie plaatsvindt waarbij wordt overgegaan tot gehele ontkleding dan
       wel het onderzoek van het onderlichaam, wordt degene die de lijfsvisitatie uitvoert slechts vergezeld door de
-      ambtenaar, bedoeld in [artikel 1:28, zesde lid, van de Algemene douanewet][ref2]. Hiervan kan worden afgeweken
+      ambtenaar, bedoeld in artikel 1:28, zesde lid, van de Algemene douanewet. Hiervan kan worden afgeweken
       indien deze ambtenaar een redelijk vermoeden heeft dat de persoon die aan lijfsvisitatie wordt onderworpen een
       gevaar oplevert voor de veiligheid van zichzelf of van anderen.
 
@@ -293,10 +354,6 @@ articles:
 
       5 Bij regeling van Onze minister van Financiën kunnen nadere regels worden gesteld met betrekking tot de apparatuur
       waarmee door kleding van personen wordt gekeken en het gebruik daarvan.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0023746#Artikel128
-      [ref2]: https://wetten.overheid.nl/BWBR0023746#Artikel128
     url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel15
     references:
       - id: ref1
@@ -305,6 +362,11 @@ articles:
       - id: ref2
         bwb_id: BWBR0023746
         artikel: 1:28
+    machine_readable:
+      untranslatables:
+        - construct: "Algemene douanewet (Article 1:28, zesde lid)"
+          reason: "YAML file for BWBR0023746 is not available in the corpus"
+          legal_text_excerpt: "De ambtenaar, bedoeld in artikel 1:28, zesde lid, van de Algemene douanewet"
   - number: 1:6
     text: |-
       Voor de toepassing van deze afdeling wordt verstaan onder:
@@ -317,18 +379,20 @@ articles:
       c. *geweld*: elke dwangmatige kracht van meer dan geringe betekenis uitgeoefend op personen of goederen;
 
       d. *geweldsmiddel*: de wapens en uitrusting waarmee met overeenkomstige toepassing van
-      [artikel 3a, derde lid, van de Wet wapens en munitie][ref1] geweld kan worden uitgeoefend;
+      artikel 3a, derde lid, van de Wet wapens en munitie geweld kan worden uitgeoefend;
 
       e. *aanwenden van een geweldsmiddel*: het gebruiken van een geweldsmiddel, daaronder begrepen het dreigen met een
-      geweldsmiddel, waaronder niet wordt begrepen het uit voorzorg ter hand nemen van een vuurwapen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008804#Artikel3a
+      geweldsmiddel, waarbij niet wordt begrepen het uit voorzorg ter hand nemen van een vuurwapen.
     url: https://wetten.overheid.nl/BWBR0024235/2025-05-10#Artikel16
     references:
       - id: ref1
         bwb_id: BWBR0008804
         artikel: 3a
+    machine_readable:
+      untranslatables:
+        - construct: "Wet wapens en munitie (Article 3a, derde lid)"
+          reason: "YAML file for BWBR0008804 is not available in the corpus"
+          legal_text_excerpt: "met overeenkomstige toepassing van artikel 3a, derde lid, van de Wet wapens en munitie"
   - number: 1:7
     text: |-
       1 Indien een ambtenaar onder leiding van een ter plaatse aanwezige meerdere optreedt, oefent hij geen geweld uit
