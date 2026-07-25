@@ -44,6 +44,39 @@ articles:
 
       c. iemand alleen of samen met anderen, al dan niet in opdracht, een zeer uitzonderlijke prestatie heeft verricht.
     url: https://wetten.overheid.nl/BWBR0007391/2010-10-10#Artikel1
+    machine_readable:
+      execution:
+        parameters:
+          - name: voldoet_aan_criterium_1a
+            type: boolean
+            required: true
+            description: Heeft de persoon een verantwoordelijkheid gedragen of bekwaamheid getoond die aanmerkelijk groter is dan de samenleving mocht verwachten?
+          - name: voldoet_aan_criterium_1b
+            type: boolean
+            required: true
+            description: Heeft de persoon op uitstekende wijze werkzaamheden verricht WAARBIJ de samenleving in zeer belangrijke mate gebaat is EN de maatschappelijke waardering niet op andere wijze tot uitdrukking is gekomen?
+          - name: voldoet_aan_criterium_1c
+            type: boolean
+            required: true
+            description: Heeft de persoon een zeer uitzonderlijke prestatie verricht?
+        output:
+          - name: heeft_recht_op_nederlandse_leeuw
+            type: boolean
+            description: Geeft aan of de persoon in aanmerking komt voor de Orde van de Nederlandse Leeuw
+        actions:
+          - output: heeft_recht_op_nederlandse_leeuw
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $voldoet_aan_criterium_1a
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_criterium_1b
+                  value: true
+                - operation: EQUALS
+                  subject: $voldoet_aan_criterium_1c
+                  value: true
   - number: '2'
     text: |-
       1 De Orde van Oranje-Nassau strekt tot onderscheiding van personen wegens bijzondere verdiensten jegens de
