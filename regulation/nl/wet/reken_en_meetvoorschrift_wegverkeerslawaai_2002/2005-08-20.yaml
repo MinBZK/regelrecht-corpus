@@ -23,6 +23,32 @@ articles:
         - *categorie zv (zware motorvoertuigen):* gelede motorvoertuigen, alsmede motorvoertuigen die zijn voorzien van een
       dubbele achteras, met uitzondering van autobussen.
     url: https://wetten.overheid.nl/BWBR0013548/2005-08-20#Artikel1
+    machine_readable:
+      execution:
+        definitions:
+          - name: categorie_lv
+            description: lichte motorvoertuigen
+            type: enum
+            values:
+              - motorvoertuigen op drie of meer wielen
+            excludes:
+              - categorie_mv
+              - categorie_zv
+          - name: categorie_mv
+            description: middelzware motorvoertuigen
+            type: enum
+            values:
+              - gelede autobussen
+              - ongelede autobussen
+              - motorvoertuigen die ongeleed zijn en voorzien van een enkele achteras waarop vier banden zijn gemonteerd
+          - name: categorie_zv
+            description: zware motorvoertuigen
+            type: enum
+            values:
+              - gelede motorvoertuigen
+              - motorvoertuigen die zijn voorzien van een dubbele achteras
+            excludes:
+              - autobussen
   - number: '1.2'
     text: |-
       In deze regeling wordt verstaan onder: - *etmaalperiode:* gedeelte van een etmaal, waarover het equivalente
