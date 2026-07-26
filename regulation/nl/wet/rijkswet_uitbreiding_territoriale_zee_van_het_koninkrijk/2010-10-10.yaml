@@ -1,9 +1,9 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.2/schema/v0.5.2/schema.json
 $id: rijkswet_uitbreiding_territoriale_zee_van_het_koninkrijk
 regulatory_layer: WET
-publication_date: '2010-09-01'
-valid_from: '2010-10-10'
+publication_date: 2010-09-01
+valid_from: 2010-10-10
 bwb_id: BWBR0003749
 url: https://wetten.overheid.nl/BWBR0003749/2010-10-10
 preamble:
@@ -30,9 +30,61 @@ articles:
       Eustatius en Saba wordt uitgebreid tot twaalf zeemijlen, met inachtneming van regels te stellen bij algemene
       maatregel van rijksbestuur.
     url: https://wetten.overheid.nl/BWBR0003749/2010-10-10#Artikel1
+    machine_readable:
+      open_terms:
+        - id: regels_territoriale_zee
+          type: object
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: ALGEMENE_MAATREGEL_VAN_RIJKSBESTUUR
+          legal_basis: artikel 1 Rijkswet uitbreiding territoriale zee van het Koninkrijk
+      execution:
+        output:
+          - name: uitgebreide_territoriale_zee
+            type: object
+            description: De uitgebreide territoriale zee van het Koninkrijk
+          - name: afstand_zeemijlen
+            type: number
+            description: Afstand in zeemijlen
+        actions:
+          - output: afstand_zeemijlen
+            value: 12
+          - output: uitgebreide_territoriale_zee
+            value:
+              operation: OBJECT
+              values:
+                - name: locaties
+                  value:
+                    - Aruba
+                    - Curaçao
+                    - Sint Maarten
+                    - Bonaire
+                    - Sint Eustatius
+                    - Saba
+                - name: afstand
+                  value: $afstand_zeemijlen
   - number: '2'
     text: |-
       1 Deze rijkswet treedt in werking op een door Ons te bepalen tijdstip.
 
       2 Deze rijkswet wordt aangehaald als: Rijkswet uitbreiding territoriale zee van het Koninkrijk.
     url: https://wetten.overheid.nl/BWBR0003749/2010-10-10#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: inwerkingtredingsdatum
+            type: date
+            required: true
+            description: Datum van inwerkingtreding vastgesteld door koninklijk besluit
+        output:
+          - name: inwerkingtreding
+            type: date
+            description: Datum waarop deze rijkswet in werking treedt
+          - name: citatie_titel
+            type: string
+            description: Officiële citatie van deze rijkswet
+        actions:
+          - output: inwerkingtreding
+            value: $inwerkingtredingsdatum
+          - output: citatie_titel
+            value: Rijkswet uitbreiding territoriale zee van het Koninkrijk
