@@ -30,6 +30,13 @@ articles:
       Koninkrijk dat zich niet verder uitstrekt dan tweehonderd zeemijlen vanaf de basislijnen, vanaf welke de breedte
       van de territoriale zee wordt gemeten.
     url: https://wetten.overheid.nl/BWBR0010480/2023-01-01#Artikel1
+    machine_readable:
+      untranslatables:
+        - construct: "geografische afbakening (200 zeemijlen vanaf basislijnen)"
+          reason: "Engine does not support geospatial calculations (haversine distance). Baseline data is external and undefined in the law."
+          suggestion: "Add geospatial operations (e.g., HAVERSINE_DISTANCE) to the engine or delegate to an external service."
+          legal_text_excerpt: "niet verder uitstrekt dan tweehonderd zeemijlen vanaf de basislijnen"
+          accepted: false
   - number: '2'
     text: |-
       De buitengrens van de exclusieve economische zone wordt voor Nederland vastgesteld bij algemene maatregel van
