@@ -23,7 +23,7 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0028249/2010-10-10#ArtikelAanhef
 articles:
   - number: I
-    text: |-
+    text: |
       1 Curaçao en Sint Maarten hebben elk de hoedanigheid van land in het Koninkrijk.
 
       2 Bonaire, Sint Eustatius en Saba zijn onderdeel van het staatsbestel van Nederland.
@@ -31,14 +31,14 @@ articles:
       3 Het land de Nederlandse Antillen is opgeheven.
     url: https://wetten.overheid.nl/BWBR0028249/2010-10-10#ArtikelI
   - number: IV
-    text: |-
+    text: |
       1 Deze rijkswet treedt in werking met ingang van de dag na de datum van uitgifte van het Staatsblad waarin zij
       wordt geplaatst.
 
       2 In afwijking van het eerste lid, treden de [artikelen I][ref1] en [II][ref2] van deze rijkswet
       in werking op een bij koninklijk besluit te bepalen tijdstip, dat niet ligt voor het tijdstip
       van inwerkingtreding van de [Rijkswet financieel toezicht Curaçao en Sint Maarten][ref3],
-      de [Rijkswet Gemeenschappelijk Hof van Justitie][ref4], de
+      de [Rijkswet Gemeenschappelijke Hof van Justitie][ref4], de
       [Rijkswet openbare ministeries van Curaçao, van Sint Maarten en van Bonaire, Sint Eustatius en Saba][ref5],
       de [Rijkswet politie van Curaçao, van Sint Maarten en van Bonaire, Sint Eustatius en Saba][ref6] en de
       [Rijkswet Raad voor de rechtshandhaving][ref7], en dat voor de verschillende onderdelen van artikel I en II
@@ -70,6 +70,30 @@ articles:
         bwb_id: BWBR0028079
       - id: ref7
         bwb_id: BWBR0028075
+    machine_readable:
+      open_terms:
+        - id: inwerkingtreding_artikelen_I_en_II
+          type: date
+          required: true
+          delegated_to: kroon
+          delegation_type: KONINKLIJK_BESLUIT
+          legal_basis: artikel IV, lid 2
+      execution:
+        output:
+          - name: inwerkingtreding_rijkswet
+            type: date
+            description: Datum waarop de rijkswet in werking treedt (dag na publicatie in Staatsblad)
+          - name: inwerkingtreding_artikelen_I_en_II
+            type: date
+            description: Tijdstip waarop artikelen I en II in werking treden (bij koninklijk besluit)
+        actions:
+          - output: inwerkingtreding_rijkswet
+            value:
+              operation: DATE_ADD
+              date: $publication_date
+              days: 1
+          - output: inwerkingtreding_artikelen_I_en_II
+            value: $inwerkingtreding_artikelen_I_en_II
   - number: V
     text: |-
       Deze rijkswet wordt aangehaald als: Rijkswet wijziging Statuut in verband met de opheffing van de Nederlandse
