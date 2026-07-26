@@ -37,6 +37,39 @@ articles:
       5 Bij algemene maatregel van bestuur worden nadere regels gesteld ten aanzien van de taak, samenstelling,
       inrichting en werkwijze van het Kapittel.
     url: https://wetten.overheid.nl/BWBR0006597/2010-10-10#ArtikelIII
+    machine_readable:
+      definitions:
+        MIN_LEDEN: 3
+        MAX_LEDEN: 5
+      open_terms:
+        - id: nadere_regels_kapittel
+          type: object
+          required: false
+          delegated_to: minister
+          delegation_type: AMVB
+          legal_basis: "artikel III, lid 5, rijkswet_tot_wijziging_wet_instelling_van_de_orde_van_oranje_nassau_enz"
+      execution:
+        input:
+          - name: aantal_leden
+            type: number
+        output:
+          - name: kapittel_bestaat
+            type: boolean
+          - name: aantal_leden_tussen_3_en_5
+            type: boolean
+        actions:
+          - output: kapittel_bestaat
+            value: true
+          - output: aantal_leden_tussen_3_en_5
+            value:
+              operation: AND
+              conditions:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $aantal_leden
+                  value: $MIN_LEDEN
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $aantal_leden
+                  value: $MAX_LEDEN
   - number: IV
     text: |-
       1 De commissaris van de Koning adviseert Onze Minister wie het aangaat volgens een door de regering gegeven
@@ -81,6 +114,44 @@ articles:
       - id: ref4
         bwb_id: BWBR0006597
         artikel: I
+    machine_readable:
+      open_terms:
+        - id: inwerkingtreding_artikel_I
+          type: boolean
+          required: true
+          delegated_to: minister
+          delegation_type: WET
+          legal_basis: "artikel V, lid 2a, rijkswet_tot_wijziging_wet_instelling_van_de_orde_van_oranje_nassau_enz"
+        - id: inwerkingtreding_artikel_II
+          type: boolean
+          required: true
+          delegated_to: minister
+          delegation_type: WET
+          legal_basis: "artikel V, lid 1a, rijkswet_tot_wijziging_wet_instelling_van_de_orde_van_oranje_nassau_enz"
+      execution:
+        input:
+          - name: inwerkingtreding_artikel_I
+            type: boolean
+          - name: inwerkingtreding_artikel_II
+            type: boolean
+        output:
+          - name: benoemingen_broeders_gehandhaafd
+            type: boolean
+          - name: toelagen_gehandhaafd
+            type: boolean
+          - name: koninklijke_besluiten_eremedailles_gehandhaafd
+            type: boolean
+          - name: lint_mag_gedragen_worden
+            type: boolean
+        actions:
+          - output: benoemingen_broeders_gehandhaafd
+            value: $inwerkingtreding_artikel_II
+          - output: toelagen_gehandhaafd
+            value: $inwerkingtreding_artikel_II
+          - output: koninklijke_besluiten_eremedailles_gehandhaafd
+            value: $inwerkingtreding_artikel_I
+          - output: lint_mag_gedragen_worden
+            value: true
   - number: VI
     text: |-
       De tekst van de wet van 4 april 1892, houdende instelling van de Orde van Oranje-Nassau, en van de wet van 29
