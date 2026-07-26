@@ -34,7 +34,7 @@ articles:
       [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel14
       [ref2]: https://wetten.overheid.nl/BWBR0003738#Artikel6
       [ref3]: https://wetten.overheid.nl/BWBR0003738#Artikel8
-      [ref4]: https://wetten.overheid.nl/BWBR0003738#Artikel14
+       [ref4]: https://wetten.overheid.nl/BWBR0003738#Artikel14
     url: https://wetten.overheid.nl/BWBR0012089/2005-01-01#ArtikelII
     references:
       - id: ref1
@@ -49,6 +49,8 @@ articles:
       - id: ref4
         bwb_id: BWBR0003738
         artikel: '14'
+    void: true
+    void_reason: "Transitional provision - non-computable retroactive effect"
   - number: III
     text: |-
       De [artikelen 14, lid 2][ref1], en [16, tweede lid, onder a, b, c en d, van de Rijkswet op het Nederlanderschap][ref2]
@@ -69,22 +71,26 @@ articles:
         artikel: '16'
       - id: ref3
         bwb_id: BWBR0003738
+    void: true
+    void_reason: "Retroactive provision - non-computable"
   - number: IV
     text: |-
       De in [artikel 15, eerste lid, onder c][ref1], genoemde periode vangt niet eerder aan dan op het tijdstip van
       inwerkingtreding van deze Rijkswet.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel15
+        [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel15
     url: https://wetten.overheid.nl/BWBR0012089/2005-01-01#ArtikelIV
     references:
       - id: ref1
         bwb_id: BWBR0003738
         artikel: '15'
+    void: true
+    void_reason: "Procedural rule - non-computable"
   - number: V
     text: |-
       1 De meerderjarige die vóór het tijdstip van de inwerkingtreding van deze Rijkswet op grond van of, als
-      minderjarige, wegens [ artikel 15, aanhef en onder c, van de Rijkswet op het Nederlanderschap][ref1] zijn
+      minderjarige, ongeveer [ artikel 15, aanhef en onder c, van de Rijkswet op het Nederlanderschap][ref1] zijn
       Nederlanderschap heeft verloren, herkrijgt het Nederlanderschap door het afleggen van een daartoe strekkende
       schriftelijke verklaring binnen een termijn van twee jaar na de inwerkingtreding van deze Rijkswet. Deze
       herkrijging werkt terug tot het moment van verlies. [Artikel 6, tweede en vierde lid][ref2], zijn van
@@ -131,11 +137,103 @@ articles:
         artikel: '15'
       - id: ref7
         bwb_id: BWBR0005212
+    machine_readable:
+      paragraph_1:
+        inputs:
+          - id: loss_of_nationality_before_2005
+            type: boolean
+            description: Indicates if the person lost Dutch nationality before 2005-01-01 under BWBR0003738 Article 15c
+            source:
+              regulation: BWBR0003738
+              artikel: '15'
+          - id: declaration_submitted_date
+            type: date
+            description: Date of written declaration submission
+          - id: applicant_age
+            type: integer
+            description: Age of the applicant in years
+          - id: minors_in_declaration
+            type: list
+            description: List of minors included in the declaration
+            items:
+              type: object
+              properties:
+                age:
+                  type: integer
+                  description: Age of the minor in years
+                explicit_consent:
+                  type: boolean
+                  description: Explicit consent for minors aged 16 or older
+          - id: loss_of_nationality_date
+            type: date
+            description: Date when Dutch nationality was lost
+            source:
+              regulation: BWBR0003738
+              artikel: '15'
+        outputs:
+          - id: dutch_nationality_reacquired
+            type: boolean
+            description: Indicates if Dutch nationality is reacquired
+          - id: reacquisition_effective_date
+            type: date
+            description: Effective date of reacquisition (backdated to loss_of_nationality_date)
+        conditions:
+          - id: is_adult_or_minor_with_guardian
+            description: Applicant is an adult or a minor with a parent/guardian
+            expression: applicant_age >= 18
+          - id: declaration_submitted_within_deadline
+            description: Declaration submitted within 2 years of 2005-01-01
+            expression: declaration_submitted_date <= '2007-01-01'
+          - id: lost_nationality_under_article_15c
+            description: Lost nationality under BWBR0003738 Article 15c
+            expression: loss_of_nationality_before_2005 == true
+        logic:
+          - if:
+              - and:
+                  - is_adult_or_minor_with_guardian
+                  - declaration_submitted_within_deadline
+                  - lost_nationality_under_article_15c
+            then:
+              - set: dutch_nationality_reacquired = true
+              - set: reacquisition_effective_date = loss_of_nationality_date
+        untranslatables:
+          - id: retroactive_reacquisition
+            description: The reacquisition works back to the moment of loss (werkt terug tot het moment van verlies)
+            reasoning: The engine does not support retroactive date logic for nationality status
+      paragraph_2:
+        inputs:
+          - id: loss_under_article_15c_before_2005
+            type: boolean
+            description: Indicates if the person lost nationality under BWBR0003738 Article 15c before 2005-01-01
+            source:
+              regulation: BWBR0003738
+              artikel: '15'
+          - id: document_or_certificate_after_1990
+            type: boolean
+            description: Indicates if a nationality certificate or travel document was issued after 1990-01-01
+        outputs:
+          - id: nationality_not_lost
+            type: boolean
+            description: Indicates if the person is deemed not to have lost Dutch nationality
+        conditions:
+          - id: loss_under_article_15c
+            expression: loss_under_article_15c_before_2005 == true
+          - id: document_issued_after_1990
+            expression: document_or_certificate_after_1990 == true
+        logic:
+          - if:
+              - and:
+                  - loss_under_article_15c
+                  - document_issued_after_1990
+            then:
+              - set: nationality_not_lost = true
   - number: VI
     text: |-
       De Rijkswet van 14 november 1963, Stb. 467, houdende wijziging van de Wet op het Nederlanderschap en het
       ingezetenschap (Stb.1892, 268) in verband met het huwelijk wordt ingetrokken.
     url: https://wetten.overheid.nl/BWBR0012089/2005-01-01#ArtikelVI
+    void: true
+    void_reason: "Repeal provision - non-computable"
   - number: VII
     text: |-
       1 De artikelen van deze Rijkswet treden in werking op een bij koninklijk besluit te bepalen tijdstip, dat voor de
@@ -147,7 +245,7 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003738#Artikel8
-      [ref2]: https://wetten.overheid.nl/BWBR0012089#ArtikelI
+       [ref2]: https://wetten.overheid.nl/BWBR0012089#ArtikelI
     url: https://wetten.overheid.nl/BWBR0012089/2005-01-01#ArtikelVII
     references:
       - id: ref1
@@ -156,3 +254,5 @@ articles:
       - id: ref2
         bwb_id: BWBR0012089
         artikel: I
+    void: true
+    void_reason: "Entry into force - non-computable"
