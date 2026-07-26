@@ -30,14 +30,50 @@ articles:
       Koninkrijk dat zich niet verder uitstrekt dan 24 zeemijlen vanaf de basislijnen, vanwaar de breedte van de
       territoriale zee wordt gemeten.
     url: https://wetten.overheid.nl/BWBR0018265/2006-09-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: aansluitende_zone_bestaat
+            type: boolean
+            description: Geeft aan of er een aansluitende zone van het Koninkrijk is
+          - name: maximaal_afstand_zeemijlen
+            type: number
+            description: Maximale afstand van de aansluitende zone vanaf de basislijnen in zeemijlen
+        actions:
+          - output: aansluitende_zone_bestaat
+            value: true
+          - output: maximaal_afstand_zeemijlen
+            value: 24
   - number: '2'
     text: De buitengrens van de aansluitende zone wordt vastgesteld bij algemene maatregel van rijksbestuur.
     url: https://wetten.overheid.nl/BWBR0018265/2006-09-01#Artikel2
+    machine_readable:
+      execution:
+        output:
+          - name: buitengrens_vastgesteld
+            type: boolean
+            description: Geeft aan of de buitengrens van de aansluitende zone is vastgesteld
+        open_terms:
+          - id: buitengrens
+            type: string
+            description: De buitengrens van de aansluitende zone
+            delegated_to: rijksbestuur
+            delegation_type: ALGEMEENE_MAATREGELEN_VAN_RIJKSBESTUUR
+            legal_basis: Artikel 2 Rijkswet instelling aansluitende zone
+        actions:
+          - output: buitengrens_vastgesteld
+            value: true
   - number: '3'
     text: |-
       Deze rijkswet treedt in werking op een bij koninklijk besluit te bepalen tijdstip, dat voor elk van de landen van
       het Koninkrijk verschillend kan worden vastgesteld.
     url: https://wetten.overheid.nl/BWBR0018265/2006-09-01#Artikel3
+    machine_readable:
+      non_computable: true
+      reason: Procedural article regarding entry into force
   - number: '4'
     text: 'Deze rijkswet wordt aangehaald als: Rijkswet instelling aansluitende zone.'
     url: https://wetten.overheid.nl/BWBR0018265/2006-09-01#Artikel4
+    machine_readable:
+      non_computable: true
+      reason: Pure definition of citation title
