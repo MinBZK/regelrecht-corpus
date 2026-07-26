@@ -568,6 +568,22 @@ articles:
   - number: '17'
     text: De raad stelt, binnen een half jaar na zijn instelling, een bestuursreglement vast.
     url: https://wetten.overheid.nl/BWBR0017613/2022-05-01#Artikel17
+    machine_readable:
+       execution:
+        input:
+          - name: instelling_date
+            type: date
+            description: Datum van instelling van de raad
+        output:
+          - name: deadline_bestuursreglement
+            type: date
+            description: Deadline voor het vaststellen van het bestuursreglement (6 maanden na instelling)
+        actions:
+          - action: DATE_ADD
+            input:
+              date: $instelling_date
+              months: 6
+            output: deadline_bestuursreglement
   - number: 17a
     text: |-
       [Artikel 21 van de Kaderwet zelfstandige bestuursorganen][ref1] is niet van toepassing.
