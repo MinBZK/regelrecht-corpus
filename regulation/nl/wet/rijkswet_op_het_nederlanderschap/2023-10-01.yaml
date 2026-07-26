@@ -116,9 +116,9 @@ articles:
       medeverlening, of indien zowel het kind als zijn wettelijk vertegenwoordiger of de in dit lid bedoelde andere ouder
       bedenkingen hebben tegen de medeverkrijging of medeverlening, deelt het kind daarin niet.
 
-      5 De verklaring van verbondenheid wordt door minderjarigen van zestien jaar en ouder zelfstandig afgelegd. Tenzij
-      anders bepaald kunnen zij daarin niet worden vertegenwoordigd.
-    url: https://wetten.overheid.nl/BWBR0003738/2023-10-01#Artikel2
+       5 De verklaring van verbondenheid wordt door minderjarigen van zestien jaar en ouder zelfstandig afgelegd. Tenzij
+       anders bepaald kunnen zij daarin niet worden vertegenwoordigd.
+      url: https://wetten.overheid.nl/BWBR0003738/2023-10-01#Artikel2
   - number: '3'
     text: |-
       1 Nederlander is het kind waarvan ten tijde van zijn geboorte de vader of de moeder Nederlander is, alsmede het
@@ -131,8 +131,112 @@ articles:
 
       3 Nederlander is het kind van een vader of moeder die ten tijde van de geboorte van het kind zijn of haar
       hoofdverblijf heeft in Nederland, Aruba, Curaçao of Sint Maarten en die zelf geboren is als kind van een vader of
-      moeder die ten tijde van zijn of haar geboorte in een van die landen hoofdverblijf had, mits het kind ten tijde van
+      moeder die ten tijde van zijn of Haar geboorte in een van die landen hoofdverblijf had, mits het kind ten tijde van
       zijn geboorte zijn hoofdverblijf heeft in Nederland, Aruba, Curaçao of Sint Maarten.
+    machine_readable:
+       execution:
+          parameters:
+            - name: referentiedatum
+              type: date
+              required: true
+            - name: geboortedatum_kind
+              type: date
+              required: true
+            - name: geboorte_locatie
+              type: string
+              required: true
+          input:
+            - name: ouder_nederlander
+              type: boolean
+              source:
+                description: Moeder of vader is Nederlander op geboortedatum_kind
+            - name: ouder_overleden
+              type: boolean
+              source:
+                description: Ouder is overleden voor geboorte kind
+            - name: ouder_hoofdverblijf
+              type: string
+              source:
+                regulation: wet_basisregistratie_personen
+                output: hoofdverblijf
+                parameters:
+                  bsn: $bsn_ouder
+                  referentiedatum: $referentiedatum
+            - name: kind_hoofdverblijf
+              type: string
+              source:
+                regulation: wet_basisregistratie_personen
+                output: hoofdverblijf
+                parameters:
+                  bsn: $bsn_kind
+                  referentiedatum: $referentiedatum
+            - name: vreemde_nationaliteit_binnen_5_jaar
+              type: boolean
+              source:
+                description: Binnen 5 jaar na vondst kind blijkt vreemde nationaliteit
+          output:
+            - name: is_nederlander_door_geboorte
+              type: boolean
+          actions:
+            - output: is_nederlander_door_geboorte
+              value:
+                operation: IF
+                cases:
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: AND
+                        conditions:
+                          - operation: EQUALS
+                            subject: $ouder_nederlander
+                            value: true
+                          - operation: EQUALS
+                            subject: $ouder_overleden
+                            value: false
+                      - operation: AND
+                        conditions:
+                          - operation: EQUALS
+                            subject: $ouder_nederlander
+                            value: true
+                          - operation: EQUALS
+                            subject: $ouder_overleden
+                            value: true
+                    then: true
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $geboorte_locatie
+                        value:
+                          - "Nederland"
+                          - "Aruba"
+                          - "Curaçao"
+                          - "Sint Maarten"
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $vreemde_nationaliteit_binnen_5_jaar
+                          value: true
+                    then: true
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $ouder_hoofdverblijf
+                        value:
+                          - "Nederland"
+                          - "Aruba"
+                          - "Curaçao"
+                          - "Sint Maarten"
+                      - operation: IN
+                        subject: $kind_hoofdverblijf
+                        value:
+                          - "Nederland"
+                          - "Aruba"
+                          - "Curaçao"
+                          - "Sint Maarten"
+                    then: true
+                default: false
     url: https://wetten.overheid.nl/BWBR0003738/2023-10-01#Artikel3
   - number: '4'
     text: |-
