@@ -72,6 +72,68 @@ articles:
         bwb_id: BWBR0003296
         artikel: '4'
         afdeling: '2'
+    machine_readable:
+      execution:
+        input:
+          - name: purpose
+            type: string
+          - name: source_type
+            type: string
+          - name: scope
+            type: string
+        output:
+          - name: can_establish_via_AMvB
+            type: boolean
+          - name: can_establish_via_ministerial_decree
+            type: boolean
+        actions:
+          - output: can_establish_via_AMvB
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $purpose
+                        values:
+                          - international_peace
+                          - international_legal_order
+                          - counter_terrorism
+                      - operation: IN
+                        subject: $scope
+                        values:
+                          - goods_trade
+                          - services
+                          - financial_traffic
+                          - shipping
+                          - aviation
+                          - road_traffic
+                          - post
+                          - telecommunications
+                          - immigration
+                  then: true
+              default: false
+          - output: can_establish_via_ministerial_decree
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: IN
+                        subject: $source_type
+                        values:
+                          - treaty
+                          - binding_decision
+                      - operation: IN
+                        subject: $purpose
+                        values:
+                          - international_peace
+                          - international_legal_order
+                          - counter_terrorism
+                  then: true
+              default: false
   - number: '3'
     text: |-
       1 De in [artikel 2][ref1] bedoelde regels kunnen betreffen het goederen-, diensten- en financieel verkeer,
@@ -525,9 +587,51 @@ articles:
 
 
       3 In afwijking van het eerste en tweede lid kan de toezichthouder de hoogte van de bestuurlijke boete vaststellen
-      op ten hoogste twee keer het bedrag van het voordeel dat de overtreder door de overtreding heeft verkregen indien
-      diens voordeel groter is dan € 2 000 000.
-    url: https://wetten.overheid.nl/BWBR0003296/2025-03-01#Artikel10e
+       op ten hoogste twee keer het bedrag van het voordeel dat de overtreder door de overtreding heeft verkregen indien
+       diens voordeel groter is dan € 2 000 000.
+      url: https://wetten.overheid.nl/BWBR0003296/2025-03-01#Artikel10e
+    machine_readable:
+      execution:
+        input:
+          - name: base_fine
+            type: amount
+            type_spec: { unit: eurocent }
+          - name: is_repeat_offense
+            type: boolean
+          - name: years_since_last_offense
+            type: number
+          - name: profit
+            type: amount
+            type_spec: { unit: eurocent }
+        output:
+          - name: final_fine
+            type: amount
+            type_spec: { unit: eurocent }
+        actions:
+          - output: final_fine
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN
+                    subject: $profit
+                    value: 200000000
+                  then:
+                    operation: MULTIPLY
+                    values: [$profit, 2]
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $is_repeat_offense
+                        value: true
+                      - operation: LESS_THAN
+                        subject: $years_since_last_offense
+                        value: 5
+                  then:
+                    operation: MULTIPLY
+                    values: [$base_fine, 2]
+              default: $base_fine
   - number: 10f
     text: |-
       1 De bevoegdheden die Onze Minister van Financiën op grond van deze afdeling heeft, kunnen bij algemene maatregel
@@ -714,11 +818,11 @@ articles:
   - number: 14a
     text: |-
       Voor de toepassing van deze wet in de openbare lichamen Bonaire, Sint Eustatius en Saba gelden bindende besluiten,
-      vastgesteld in het kader van het Gemeenschappelijk Buitenlands en Veiligheidsbeleid van de Europese Unie, als
-      internationale verplichtingen in de zin van [artikel 2, tweede lid][ref1].
+       vastgesteld in het kader van het Gemeenschappelijk Buitenlands en Veiligheidsbeleid van de Europese Unie, als
+        internationale verplichtingen in de zin van [artikel 2, tweede lid][ref1].
 
+        [ref1]: https://wetten.overheid.nl/BWBR0003296#Artikel2
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003296#Artikel2
     url: https://wetten.overheid.nl/BWBR0003296/2025-03-01#Artikel14a
     references:
       - id: ref1
@@ -729,24 +833,48 @@ articles:
     text: |-
       Met de opsporing in de openbare lichamen Bonaire, Sint Eustatius en Saba van de in deze wet strafbaar gestelde
       feiten zijn belast, naast de in artikel 184 van het Wetboek van Strafvordering BES bedoelde ambtenaren, de daartoe
-      bij besluit van Onze Minister van Justitie in overeenstemming met Onze Minister aangewezen ambtenaren.
+       bij besluit van Onze Minister van Justitie in overeenstemming met Onze Minister aangewezen ambtenaren.
     url: https://wetten.overheid.nl/BWBR0003296/2025-03-01#Artikel14b
   - number: 14c
     text: |-
-      1 Overtredingen van voorschriften gesteld bij of krachtens de [artikelen 2][ref1] en [7][ref2] zijn misdrijven
-      voor zover zij opzettelijk zijn begaan. Voor zover deze gedragingen niet opzettelijk worden begaan, zijn zij
-      overtredingen.
+       1 Overtredingen van voorschriften gesteld bij of krachtens de [artikelen 2][ref1] en [7][ref2] zijn misdrijven
+       voor zover zij opzettelijk zijn begaan. Voor zover deze gedragingen niet opzettelijk worden begaan, zijn zij
+       overtredingen.
 
-      2 In geval van een misdrijf kan de rechter in de openbare lichamen Bonaire, Sint Eustatius en Saba een
-      gevangenisstraf van ten hoogste zes jaar of een geldboete van de vijfde categorie opleggen.
+       2 In geval van een misdrijf kan de rechter in de openbare lichamen Bonaire, Sint Eustatius en Saba een
+       gevangenisstraf van ten hoogste zes jaar of een geldboete van de vijfde categorie opleggen.
 
-      3 In geval van een overtreding kan de rechter in de openbare lichamen Bonaire, Sint Eustatius en Saba hechtenis van
-      ten hoogste een jaar of een geldboete van de vierde categorie opleggen.
+       3 In geval van een overtreding kan de rechter in de openbare lichamen Bonaire, Sint Eustatius en Saba hechtenis van
+       ten hoogste een jaar of een geldboete van de vierde categorie opleggen.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003296#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003296#Artikel7
+        [ref1]: https://wetten.overheid.nl/BWBR0003296#Artikel2
+        [ref2]: https://wetten.overheid.nl/BWBR0003296#Artikel7
     url: https://wetten.overheid.nl/BWBR0003296/2025-03-01#Artikel14c
+    machine_readable:
+      execution:
+        input:
+          - name: violation_type
+            type: string
+        output:
+          - name: punishment
+            type: string
+        actions:
+          - output: punishment
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $violation_type
+                    value: misdrijf
+                  then: gevangenisstraf van ten hoogste zes jaar of een geldboete van de vijfde categorie
+                - when:
+                    operation: EQUALS
+                    subject: $violation_type
+                    value: overtreding
+                  then: hechtenis van ten hoogste een jaar of een geldboete van de vierde categorie
+              default: onbekende straf
     references:
       - id: ref1
         bwb_id: BWBR0003296
