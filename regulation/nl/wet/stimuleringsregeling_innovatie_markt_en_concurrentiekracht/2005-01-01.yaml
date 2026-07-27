@@ -61,25 +61,68 @@ articles:
 
 
 
-      2 In deze regeling wordt mede verstaan onder visserij: aquicultuur.
+        2 In deze regeling wordt mede verstaan onder visserij: aquicultuur.
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel1
   - number: '2'
     text: |-
-      1 De minister kan ter stimulering van het innovatieve vermogen in de landbouw-, de visserij- of de bosbouwsector op
-      aanvraag subsidie verlenen voor innovatieprojecten die:
+       1 De minister kan ter stimulering van het innovatieve vermogen in de landbouw-, de visserij- of de bosbouwsector op
+       aanvraag subsidie verlenen voor innovatieprojecten die:
 
-      a. zijn gericht op de productie, de be- of verwerking van of de handel in producten uit de landbouw, de visserij of
-      de bosbouw in Nederland en
+       a. zijn gericht op de productie, de be- of verwerking van of de handel in producten uit de landbouw, de visserij of
+       de bosbouw in Nederland en
 
-      b. een duur van ten hoogste drie jaar hebben.
+       b. een duur van ten hoogste drie jaar hebben.
 
-      2 De subsidieverlening wordt geweigerd voor innovatieprojecten:
+       2 De subsidieverlening wordt geweigerd voor innovatieprojecten:
 
-      a. met de uitvoering waarvan een aanvang is gemaakt alvorens de ontvangst van de aanvraag schriftelijk aan de
-      aanvrager is bevestigd, of
+       a. met de uitvoering waarvan een aanvang is gemaakt alvorens de ontvangst van de aanvraag schriftelijk aan de
+       aanvrager is bevestigd, of
 
-      b. waarvan de subsidiabele kosten minder dan € 9.075,60 bedragen.
+        b. waarvan de subsidiabele kosten minder dan € 9.075,60 bedragen.
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel2
+    machine_readable:
+      execution:
+        parameters:
+          - name: project_sector
+            type: string
+            description: The sector of the project (must be landbouw, visserij, or bosbouw).
+          - name: project_duration_years
+            type: number
+            description: The duration of the project in years.
+          - name: start_date_confirmed
+            type: boolean
+            description: Whether the start date of the project is after the confirmation of the application.
+          - name: subsidizable_costs_eurocent
+            type: number
+            description: The total subsidizable costs of the project in eurocent.
+        output:
+          - name: is_eligible
+            type: boolean
+            description: Whether the project is eligible for subsidy based on sector and duration.
+          - name: is_rejected
+            type: boolean
+            description: Whether the project is rejected based on start date or cost threshold.
+        actions:
+          - output: is_eligible
+            value:
+              operation: AND
+              conditions:
+                - operation: IN
+                  subject: $project_sector
+                  values: ["landbouw", "visserij", "bosbouw"]
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $project_duration_years
+                  value: 3
+          - output: is_rejected
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $start_date_confirmed
+                  value: false
+                - operation: LESS_THAN
+                  subject: $subsidizable_costs_eurocent
+                  value: 907560
   - number: '3'
     text: |-
       1 De minister stelt ieder begrotingsjaar of per aanvraagperiode een subsidieplafond vast voor op grond van deze
@@ -106,12 +149,41 @@ articles:
       b. een geen rechtspersoonlijkheid bezittend samenwerkingsverband van ondernemers als bedoeld in onderdeel a die
       voor gezamenlijke rekening en risico een innovatieproject uitvoeren.
 
-      2 De subsidieverlening wordt geweigerd aan ondernemingen die zijn gericht op onderzoek, scholing, opleiding,
-      voorlichting, advies of begeleiding.
+       2 De subsidieverlening wordt geweigerd aan ondernemingen die zijn gericht op onderzoek, scholing, opleiding,
+       voorlichting, advies of begeleiding.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008493#Artikel2
+       [ref1]: https://wetten.overheid.nl/BWBR0008493#Artikel2
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: applicant_type
+            type: string
+            description: The type of applicant (e.g., ondernemer, samenwerkingsverband).
+          - name: is_research_oriented
+            type: boolean
+            description: Whether the applicant is focused on research, education, or similar activities.
+        output:
+          - name: is_eligible_applicant
+            type: boolean
+            description: Whether the applicant is eligible for subsidy based on type and focus.
+        actions:
+          - output: is_eligible_applicant
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $applicant_type
+                      value: ondernemer
+                    - operation: EQUALS
+                      subject: $applicant_type
+                      value: samenwerkingsverband
+                - operation: EQUALS
+                  subject: $is_research_oriented
+                  value: false
     references:
       - id: ref1
         bwb_id: BWBR0008493
@@ -161,18 +233,116 @@ articles:
       omzetbelasting niet kan verrekenen met door hem af te dragen omzetbelasting.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008493#Artikel11
-      [ref2]: https://wetten.overheid.nl/BWBR0008493#Artikel11
+       [ref1]: https://wetten.overheid.nl/BWBR0008493#Artikel11
+       [ref2]: https://wetten.overheid.nl/BWBR0008493#Artikel11
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0008493
-        artikel: '11'
-        paragraaf: '3'
-      - id: ref2
-        bwb_id: BWBR0008493
-        artikel: '11'
-        paragraaf: '3'
+    machine_readable:
+      execution:
+        parameters:
+          - name: employee_count
+            type: number
+            description: The number of employees of the applicant at the time of application.
+          - name: labor_hours
+            type: number
+            description: The number of hours worked on the project (for own labor).
+          - name: wage_costs_eurocent
+            type: number
+            description: Total wage costs for project personnel in eurocent.
+          - name: material_costs_eurocent
+            type: number
+            description: Total material costs in eurocent.
+          - name: equipment_costs_eurocent
+            type: number
+            description: Total costs for machines and equipment in eurocent.
+          - name: third_party_costs_eurocent
+            type: number
+            description: Total third-party costs (studies, research, etc.) in eurocent.
+          - name: travel_costs_eurocent
+            type: number
+            description: Total travel and accommodation costs in eurocent.
+        output:
+          - name: own_labor_costs_eurocent
+            type: number
+            description: Costs for own labor (€18.15/hour if employee_count < 10).
+          - name: equipment_costs_capped_eurocent
+            type: number
+            description: Equipment costs capped at 50% of historical purchase prices.
+          - name: travel_costs_capped_eurocent
+            type: number
+            description: Travel costs capped at 15% of wage costs.
+          - name: general_costs_surcharge_eurocent
+            type: number
+            description: 20% surcharge on wage costs if employee_count >= 10.
+          - name: subsidizable_costs_eurocent
+            type: number
+            description: "Total subsidizable costs in eurocent. UNTRANSLATABLE: Rounding to whole euros."
+        actions:
+          - output: own_labor_costs_eurocent
+            value:
+              operation: IF
+              condition:
+                operation: LESS_THAN
+                subject: $employee_count
+                value: 10
+              then:
+                operation: MULTIPLY
+                values:
+                  - subject: $labor_hours
+                  - value: 1815
+              else:
+                subject: $wage_costs_eurocent
+          - output: equipment_costs_capped_eurocent
+            value:
+              operation: MIN
+              values:
+                - subject: $equipment_costs_eurocent
+                - operation: MULTIPLY
+                  values:
+                    - subject: $equipment_costs_eurocent
+                    - value: 0.5
+          - output: travel_costs_capped_eurocent
+            value:
+              operation: MIN
+              values:
+                - subject: $travel_costs_eurocent
+                - operation: MULTIPLY
+                  values:
+                    - subject: $wage_costs_eurocent
+                    - value: 0.15
+          - output: general_costs_surcharge_eurocent
+            value:
+              operation: IF
+              condition:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $employee_count
+                value: 10
+              then:
+                operation: MULTIPLY
+                values:
+                  - subject: $wage_costs_eurocent
+                  - value: 0.2
+              else:
+                value: 0
+          - output: subsidizable_costs_eurocent
+            value:
+              operation: ADD
+              values:
+                - subject: $own_labor_costs_eurocent
+                - subject: $wage_costs_eurocent
+                - subject: $material_costs_eurocent
+                - subject: $equipment_costs_capped_eurocent
+                - subject: $third_party_costs_eurocent
+                - subject: $travel_costs_capped_eurocent
+                - subject: $general_costs_surcharge_eurocent
+        references:
+          - id: ref1
+            bwb_id: BWBR0008493
+            artikel: '11'
+            paragraaf: '3'
+          - id: ref2
+            bwb_id: BWBR0008493
+            artikel: '11'
+            paragraaf: '3'
   - number: '6'
     text: |-
       1 De subsidie bedraagt:
@@ -180,7 +350,7 @@ articles:
       a. 50% van de subsidiabele kosten voor het gedeelte tot en met € 907.560,43 en 25% voor het gedeelte boven €
       907.560,43; of
 
-      b. 25% van de subsidiabele kosten.
+      b. 25% van de subsidabile kosten.
 
       2 De subsidie bedraagt ten hoogste € 1.134.450,54.
 
@@ -188,6 +358,41 @@ articles:
       verstrekt, wordt slechts een zodanig bedrag aan subsidie verleend dat het totale subsidiebedrag niet meer bedraagt
       dan 75% van de subsidiabele kosten.
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel6
+    machine_readable:
+       execution:
+         parameters:
+           - name: subsidizable_costs_eurocent
+             type: number
+             description: The total subsidizable costs of the project in eurocent.
+         output:
+           - name: subsidy_amount_eurocent
+             type: number
+             description: The calculated subsidy amount in eurocent, based on tiered percentages and a maximum cap.
+         actions:
+           - output: subsidy_amount_eurocent
+             value:
+               operation: MIN
+               values:
+                 - operation: ADD
+                   values:
+                     - operation: MULTIPLY
+                       values:
+                         - operation: MIN
+                           values:
+                             - subject: $subsidizable_costs_eurocent
+                             - value: 90756043
+                         - value: 0.5
+                     - operation: MULTIPLY
+                       values:
+                         - operation: MAX
+                           values:
+                             - operation: SUBTRACT
+                               values:
+                                 - subject: $subsidizable_costs_eurocent
+                                 - value: 90756043
+                             - value: 0
+                         - value: 0.25
+                 - value: 113445054
   - number: '7'
     text: |-
       1 De minister kan per kalenderjaar één of meer aanvraagperioden vaststellen.
@@ -352,19 +557,89 @@ articles:
       [ref2]: https://wetten.overheid.nl/BWBR0008493#Artikel6
       [ref3]: https://wetten.overheid.nl/BWBR0008493#Artikel5
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel14
+    machine_readable:
+       execution:
+          parameters:
+            - name: project_duration_months
+              type: number
+              description: The duration of the project in months.
+            - name: project_location
+              type: string
+              description: The location where the project is executed (e.g., "Netherlands" or "Abroad").
+            - name: minister_approval_for_abroad
+              type: boolean
+              description: Whether the Minister has approved partial execution abroad.
+            - name: project_plan_abided
+              type: boolean
+              description: Whether the project is executed according to the approved project plan.
+            - name: project_plan_modifications_approved
+              type: boolean
+              description: Whether modifications to the project plan have been approved.
+            - name: is_knowledge_public
+              type: boolean
+              description: Whether knowledge and information obtained from the project are publicly disclosed.
+            - name: article_6_b_chosen
+              type: boolean
+              description: Whether Article 6, part b, was chosen in the subsidy application.
+            - name: cost_administration_adequate
+              type: boolean
+              description: Whether an adequate administration of project costs is maintained.
+            - name: interim_report_submitted
+              type: boolean
+              description: Whether an interim report has been submitted for projects longer than 12 months.
+          output:
+          - name: is_compliant_with_article_14
+            type: boolean
+            description: Whether the project execution complies with all requirements of Article 14.
+          actions:
+          - output: is_compliant_with_article_14
+            value:
+              operation: AND
+              values:
+              - operation: OR
+                values:
+                - subject: $project_plan_abided
+                - subject: $project_plan_modifications_approved
+              - operation: OR
+                values:
+                - operation: EQUAL
+                  subject: $project_location
+                  value: "Netherlands"
+                - subject: $minister_approval_for_abroad
+              - operation: LESS_THAN_OR_EQUAL
+                subject: $project_duration_months
+                value: 36
+              - operation: IF
+                condition:
+                  operation: GREATER_THAN
+                  subject: $project_duration_months
+                  value: 12
+                then:
+                  subject: $interim_report_submitted
+                else:
+                  value: true
+              - operation: IF
+                condition:
+                  operation: NOT
+                  subject: $article_6_b_chosen
+                then:
+                  subject: $is_knowledge_public
+                else:
+                  value: true
+              - subject: $cost_administration_adequate
     references:
-      - id: ref1
-        bwb_id: BWBR0008493
-        artikel: '2'
-        paragraaf: '2'
-      - id: ref2
-        bwb_id: BWBR0008493
-        artikel: '6'
-        paragraaf: '2'
-      - id: ref3
-        bwb_id: BWBR0008493
-        artikel: '5'
-        paragraaf: '2'
+       - id: ref1
+         bwb_id: BWBR0008493
+         artikel: '2'
+         paragraaf: '2'
+       - id: ref2
+         bwb_id: BWBR0008493
+         artikel: '6'
+         paragraaf: '2'
+       - id: ref3
+         bwb_id: BWBR0008493
+         artikel: '5'
+         paragraaf: '2'
   - number: '15'
     text: |-
       Als toezichthouders worden door de minister ambtenaren van het Ministerie van Landbouw, Natuur en Voedselkwaliteit
@@ -410,6 +685,45 @@ articles:
       3 De aanvraag tot de beschikking tot voorschotverlening gaat vergezeld van een overzicht van de
       liquiditeitsbehoefte.
     url: https://wetten.overheid.nl/BWBR0008493/2005-01-01#Artikel21
+    machine_readable:
+      execution:
+        parameters:
+          - name: max_subsidy_amount_eurocent
+            type: number
+            description: The maximum subsidy amount as determined by the subsidy grant decision, in eurocent.
+          - name: total_advance_payments_eurocent
+            type: number
+            description: The total amount of advance payments already granted, in eurocent.
+          - name: months_since_last_advance_request
+            type: number
+            description: The number of months since the last advance payment request.
+          - name: liquidity_needs_overview_provided
+            type: boolean
+            description: Whether an overview of liquidity needs is provided with the application.
+        output:
+          - name: is_eligible_for_advance_payment
+            type: boolean
+            description: Whether the applicant is eligible for an advance payment under Article 21.
+          - name: max_advance_payment_amount_eurocent
+            type: number
+            description: The maximum allowed advance payment amount, calculated as 80% of the max subsidy amount.
+        actions:
+          - output: max_advance_payment_amount_eurocent
+            value:
+              operation: MULTIPLY
+              subject: $max_subsidy_amount_eurocent
+              value: 0.8
+          - output: is_eligible_for_advance_payment
+            value:
+              operation: AND
+              values:
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $months_since_last_advance_request
+                  value: 6
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $total_advance_payments_eurocent
+                  value: $max_advance_payment_amount_eurocent
+                - subject: $liquidity_needs_overview_provided
   - number: '24'
     text: |-
       Indien toepassing wordt gegeven aan [artikel 4:57 van de Algemene wet bestuursrecht][ref1] of
