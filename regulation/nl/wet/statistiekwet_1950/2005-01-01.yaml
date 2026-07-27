@@ -33,11 +33,21 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0007632
+    machine_readable:
+      execution:
+        output:
+          - name: nadere_bepalingen_statistiek
+            type: object
+            description: Nadere bepalingen omtrent de aangiften voor de in-, uit-, en doorvoerstatistiek
+        actions:
+          - output: nadere_bepalingen_statistiek
+            value: $nadere_bepalingen_statistiek
   - number: '1.2'
     text: |-
       De nadere bepalingen betreffen onder meer de aangifte van soort, hoeveelheid en waarde, alsmede van land van
       herkomst en van bestemming der goederen.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel1
+    references: []
   - number: '2.1'
     text: |-
       De aangever is op vordering van de ambtenaar bij wie een aangifte als bedoeld in [artikel 1][ref1] wordt gedaan,
@@ -52,16 +62,137 @@ articles:
         bwb_id: BWBR0002064
         artikel: '1'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vordering_gedaan
+            type: boolean
+            required: true
+            description: Is er een vordering tot inzage gedaan door de ambtenaar?
+        output:
+          - name: is_inzage_verlenend_verplicht
+            type: boolean
+            description: Is de aangever verplicht inzage te verlenen van de vrachtbrieven?
+        actions:
+          - output: is_inzage_verlenend_verplicht
+            value:
+              operation: EQUALS
+              subject: $is_vordering_gedaan
+              value: true
   - number: '2.2'
     text: |-
       Hij aan wie inzage van de in het vorige lid bedoelde bescheiden wordt verzocht, wordt geacht die in zijn bezit te
       hebben, tenzij het tegendeel aannemelijk is.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel2
+    references: []
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_tegendeel_aannemelijk
+            type: boolean
+            required: true
+            description: Is het tegendeel aannemelijk dat de bescheiden niet in bezit zijn?
+        output:
+          - name: is_in_bezit
+            type: boolean
+            description: Wordt de persoon geacht de bescheiden in zijn bezit te hebben?
+        actions:
+          - output: is_in_bezit
+            value:
+              operation: NOT
+              value: $is_tegendeel_aannemelijk
   - number: '3'
     text: |-
       De ambtenaren van de rijksbelastingdienst, bevoegd inzake douane, zijn bevoegd de volgende goederen te onderzoeken
       en daarvan de hoeveelheid op te nemen:
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel3
+    references: []
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_binnengekomen_op_regelmatige_wijze
+            type: boolean
+            required: true
+            description: Zijn de goederen op regelmatige wijze binnengekomen?
+          - name: is_aangebracht_onder_geleide_communautair_douanevervoer
+            type: boolean
+            required: true
+            description: Zijn de goederen aangebracht onder geleide van een document voor communautair douanevervoer?
+          - name: estatus_vrijgegeven_douanebestemming
+            type: string
+            required: true
+            description: Status van vrijgave voor douanebestemmingen (a, d, f)
+          - name: is_communautair_goed
+            type: boolean
+            required: true
+            description: Betreft het communautaire goederen?
+          - name: is_aangegeven_voor_uitvoer
+            type: boolean
+            required: true
+            description: Zijn de goederen aangegeven voor de douaneregeling uitvoer?
+          - name: is_niet_communautair_goed
+            type: boolean
+            required: true
+            description: Betreft het niet-communautaire goederen?
+          - name: is_aangifte_tot_wederuitvoer_gedaan
+            type: boolean
+            required: true
+            description: Is er een aangifte tot wederuitvoer gedaan?
+        output:
+          - name: is_onderzoek_toegestaan
+            type: boolean
+            description: Zijn de ambtenaren bevoegd de goederen te onderzoeken?
+        actions:
+          - output: is_onderzoek_goederen_3a
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_binnengekomen_op_regelmatige_wijze
+                  value: true
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_aangebracht_onder_geleide_communautair_douanevervoer
+                      value: true
+                    - operation: EQUALS
+                      subject: $is_aangegeven_voor_uitvoer
+                      value: true
+                - operation: NOT
+                  value:
+                    operation: IN
+                    subject: $estatus_vrijgegeven_douanebestemming
+                    values: ["a", "d", "f"]
+          - output: is_onderzoek_goederen_3b
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_communautair_goed
+                      value: true
+                    - operation: EQUALS
+                      subject: $is_aangegeven_voor_uitvoer
+                      value: true
+                - operation: AND
+                  conditions:
+                    - operation: EQUALS
+                      subject: $is_niet_communautair_goed
+                      value: true
+                    - operation: EQUALS
+                      subject: $is_aangifte_tot_wederuitvoer_gedaan
+                      value: true
+          - output: is_onderzoek_toegestaan
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_onderzoek_goederen_3a
+                  value: true
+                - operation: EQUALS
+                  subject: $is_onderzoek_goederen_3b
+                  value: true
   - number: 3.a
     text: |-
       binnengekomen goederen welke op regelmatige wijze zijn aangebracht en aangegeven of op regelmatige wijze zijn
@@ -70,12 +201,14 @@ articles:
       het communautair douanewetboek (*PbEG* L 302) voor zover die goederen nog niet zijn vrijgegeven voor een van de
       douanebestemmingen als bedoeld in artikel 4, onderdeel 16, onder *a, d* of *f* van voornoemde verordening;
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel3
+    references: []
   - number: 3.b
     text: |-
-      communautaire goederen die zijn aangegeven voor de douaneregeling uitvoer en niet-communautaire goederen waarvoor,
+      communautaire goederen die zijn aangegeven voor de douaneregeling uitvoer en niet-communautarie goederen waarvoor,
       nadat zij onder de douaneregeling actieve veredeling dan wel tijdelijke invoer zijn geplaatst, een aangifte tot
       wederuitvoer is gedaan in de zin van de in onderdeel *a* genoemde verordening.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel3
+    references: []
   - number: '4.1'
     text: |-
       Hij die, voor zich zelf of voor een ander, een aangifte doet als bedoeld is bij [artikel 2][ref1], wordt gestraft
@@ -89,6 +222,46 @@ articles:
         bwb_id: BWBR0002064
         artikel: '2'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_aangifte_ongjuist_4_1_1
+            type: boolean
+            required: true
+            description: Is de soort, het land van herkomst, of het land van bestemming onjuist aangegeven?
+          - name: is_aangifte_ongjuist_4_1_2
+            type: boolean
+            required: true
+            description: Is de hoeveelheid of waarde meer dan 10% te hoog of te laag aangegeven?
+          - name: is_aangifte_ongjuist_4_1_3
+            type: boolean
+            required: true
+            description: Hebben de goederen kennelijk een buitenlandse bestemming zonder melding in de aangifte?
+          - name: is_aangifte_ongjuist_4_1_4
+            type: boolean
+            required: true
+            description: Zijn goederen ten onrechte aangegeven voor douaneregeling h zonder melding van eerdere vrije verkeer status?
+        output:
+          - name: is_geldboete_4_1_toepasselijk
+            type: boolean
+            description: Is een geldboete van de eerste categorie toepasselijk volgens Artikel 4.1?
+        actions:
+          - output: is_geldboete_4_1_toepasselijk
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_aangifte_ongjuist_4_1_1
+                  value: true
+                - operation: EQUALS
+                  subject: $is_aangifte_ongjuist_4_1_2
+                  value: true
+                - operation: EQUALS
+                  subject: $is_aangifte_ongjuist_4_1_3
+                  value: true
+                - operation: EQUALS
+                  subject: $is_aangifte_ongjuist_4_1_4
+                  value: true
   - number: 4.1.1°
     text: indien de soort, het land van herkomst of het land van bestemming van de goederen onjuist is aangegeven;
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel4
@@ -123,12 +296,46 @@ articles:
         bwb_id: BWBR0002064
         artikel: '2'
         hoofdstuk: I
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_verplichting_artikel_2_niet_nagekomen
+            type: boolean
+            required: true
+            description: Is de verplichting uit Artikel 2 niet nagekomen?
+        output:
+          - name: is_geldboete_4_2_toepasselijk
+            type: boolean
+            description: Is een geldboete van de eerste categorie toepasselijk volgens Artikel 4.2?
+        actions:
+          - output: is_geldboete_4_2_toepasselijk
+            value:
+              operation: EQUALS
+              subject: $is_verplichting_artikel_2_niet_nagekomen
+              value: true
   - number: '9'
     text: |-
-      Hij die voor goederen aangifte doet tot plaatsing onder het stelsel van douane-entrepots dan wel aangifte doet met
+      Hij die voor goederen aangifte doet tot plaatsing onder het stelsel van douane-entrepots dan wel aanvraag doet met
       het oog op de beëindiging van dat stelsel, wordt, indien de goederen niet overeenkomstig de aangifte hun bestemming
       volgen, gestraft met geldboete van de eerste categorie.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel9
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_goederen_niet_conform_aangifte
+            type: boolean
+            required: true
+            description: Volgen de goederen niet overeenkomstig de aangifte hun bestemming?
+        output:
+          - name: is_geldboete_9_toepasselijk
+            type: boolean
+            description: Is een geldboete van de eerste categorie toepasselijk volgens Artikel 9?
+        actions:
+          - output: is_geldboete_9_toepasselijk
+            value:
+              operation: EQUALS
+              subject: $is_goederen_niet_conform_aangifte
+              value: true
   - number: '10'
     text: |-
       De [artikelen 4][ref1] en [9][ref2] zijn niet van toepassing, indien het feit strafbaar is gesteld bij
@@ -151,16 +358,85 @@ articles:
         hoofdstuk: I
       - id: ref3
         bwb_id: BWBR0007632
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_feit_strafbaar_douanewet
+            type: boolean
+            required: true
+            description: Is het feit strafbaar gesteld volgens de Douanewet?
+          - name: is_administratieve_boete_belopen
+            type: boolean
+            required: true
+            description: Is ingevolge de Douanewet een administratieve boete belopen?
+        output:
+          - name: zijn_artikelen_4_en_9_niet_toepasselijk
+            type: boolean
+            description: Zijn Artikel 4 en 9 niet van toepassing volgens Artikel 10?
+        actions:
+          - output: zijn_artikelen_4_en_9_niet_toepasselijk
+            value:
+              operation: OR
+              conditions:
+                - operation: EQUALS
+                  subject: $is_feit_strafbaar_douanewet
+                  value: true
+                - operation: EQUALS
+                  subject: $is_administratieve_boete_belopen
+                  value: true
   - number: '12.1'
     text: |-
       Hij die bij de toepassing van dit hoofdstuk een vals of vervalst geschrift vertoont, doet vertonen, overlegt of
       doet overleggen, wordt gestraft met een geldboete van de tweede categorie.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel12
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vals_of_vervalst_geschrift_vertoond
+            type: boolean
+            required: true
+            description: Is een vals of vervalst geschrift vertoond, vertond, overlegd, of doen overleggen?
+        output:
+          - name: is_geldboete_12_1_toepasselijk
+            type: boolean
+            description: Is een geldboete van de tweede categorie toepasselijk volgens Artikel 12.1?
+        actions:
+          - output: is_geldboete_12_1_toepasselijk
+            value:
+              operation: EQUALS
+              subject: $is_vals_of_vervalst_geschrift_vertoond
+              value: true
   - number: '12.2'
     text: |-
       Indien de schuldige weet of redelijkerwijs moet vermoeden dat het geschrift vals of vervalst is, kan hij bovendien
       worden gestraft met een gevangenisstraf van ten hoogste een jaar of geldboete van de derde categorie.
     url: https://wetten.overheid.nl/BWBR0002064/2005-01-01#Artikel12
+    machine_readable:
+      execution:
+        parameters:
+          - name: is_vals_of_vervalst_geschrift_vertoond
+            type: boolean
+            required: true
+            description: Is een vals of vervalst geschrift vertoond?
+          - name: weet_of_moet_vermoeden_vals
+            type: boolean
+            required: true
+            description: Weet de schuldige of moet redelijkerwijs vermoeden dat het geschrift vals of vervalst is?
+        output:
+          - name: is_straf_12_2_toepasselijk
+            type: boolean
+            description: Is een gevangenisstraf of geldboete van de derde categorie toepasselijk volgens Artikel 12.2?
+        actions:
+          - output: is_straf_12_2_toepasselijk
+            value:
+              operation: AND
+              conditions:
+                - operation: EQUALS
+                  subject: $is_vals_of_vervalst_geschrift_vertoond
+                  value: true
+                - operation: EQUALS
+                  subject: $weet_of_moet_vermoeden_vals
+                  value: true
   - number: '12.3'
     text: |-
       Het bepaalde in de vorige leden van dit artikel is mede toepasselijk op ieder, die zich buiten Nederland aan het
@@ -199,6 +475,23 @@ articles:
       - id: ref6
         bwb_id: BWBR0002320
         artikel: 88b
+    machine_readable:
+      execution:
+        parameters:
+          - name: artikel_72_tot_88_awr_toepasselijk
+            type: boolean
+            required: true
+            description: Zijn de artikelen 72 tot en met 88 van de AWR (BWBR0002320) van toepassing?
+        output:
+          - name: zijn_artikelen_72_tot_88_awr_toepasselijk
+            type: boolean
+            description: Zijn de artikelen 72 tot en met 88 van de AWR overeenkomstig toepasselijk volgens Artikel 13?
+        actions:
+          - output: zijn_artikelen_72_tot_88_awr_toepasselijk
+            value:
+              operation: EQUALS
+              subject: $artikel_72_tot_88_awr_toepasselijk
+              value: true
   - number: '14'
     text: |-
       De ambtenaren van de rijksbelastingdienst, bevoegd inzake douane, bewaren het geheim omtrent hetgeen zij bij de
