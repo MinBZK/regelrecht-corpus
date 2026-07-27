@@ -220,7 +220,7 @@ articles:
     text: |-
       1 Het is een ieder verboden een veiligheidsfunctie uit te oefenen dan wel op de uitoefening van zodanige functie
       toezicht te houden terwijl hij verkeert onder zodanige invloed van een stof waarvan hij weet of redelijkerwijs moet
-      vermoeden dat het gebruik daarvan, al dan niet in combinatie met een andere stof, de vaardigheid tot het uitoefenen
+      vermoeden dat het gebruiken daarvan, al dan niet in combinatie met een andere stof, de vaardigheid tot het uitoefenen
       van die functie of tot het houden van toezicht op de uitoefening van die functie kan verminderen, dat hij niet tot
       het behoorlijk uitoefenen van die functie of tot het behoorlijk uitoefenen van toezicht op de uitoefening van die
       functie in staat moet worden geacht.
@@ -245,10 +245,41 @@ articles:
       lucht en daartoe volgens door die ambtenaar te geven aanwijzingen ademlucht te blazen in een door die ambtenaar
       aangewezen apparaat.
 
-      5 Dit artikel is niet van toepassing voorzover [artikel 8 van de Wegenverkeerswet 1994][ref3] van toepassing is.
+       5 Dit artikel is niet van toepassing voorzover [artikel 8 van de Wegenverkeerswet 1994][ref3] van toepassing is.
 
+      machine_readable:
+        execution:
+          parameters:
+            - name: adem_alcoholgehalte
+              type: number
+            - name: bloed_alcoholgehalte
+              type: number
+          output:
+            - name: mag_veiligheidsfunctie_uitoefenen
+              type: boolean
+          actions:
+            - output: adem_overschreden
+              value:
+                operation: GREATER_THAN
+                subject: $adem_alcoholgehalte
+                value: 220
+            - output: bloed_overschreden
+              value:
+                operation: GREATER_THAN
+                subject: $bloed_alcoholgehalte
+                value: 0.5
+            - output: alcohol_overschreden
+              value:
+                operation: OR
+                conditions:
+                  - $adem_overschreden
+                  - $bloed_overschreden
+            - output: mag_veiligheidsfunctie_uitoefenen
+              value:
+                operation: NOT
+                value: $alcohol_overschreden
 
-      [ref1]: https://wetten.overheid.nl/BWBR0015007#Artikel86
+       [ref1]: https://wetten.overheid.nl/BWBR0015007#Artikel86
       [ref2]: https://wetten.overheid.nl/BWBR0001903#Artikel141
       [ref3]: https://wetten.overheid.nl/BWBR0006622#Artikel8
     url: https://wetten.overheid.nl/BWBR0015007/2024-01-01#Artikel4
@@ -344,12 +375,17 @@ articles:
 
       c. het leiden van het verkeer over die infrastructuur.
 
-      2 Een concessie bevat een beschrijving van de werkzaamheden waarvoor de concessie wordt verleend.
+       2 Een concessie bevat een beschrijving van de werkzaamheden waarvoor de concessie wordt verleend.
 
-      3 Een concessie voldoet aan de eisen, opgenomen in artikel 30, tweede lid, van richtlijn 2012/34/EU.
+       3 Een concessie voldoet aan de eisen, opgenomen in artikel 30, tweede lid, van richtlijn 2012/34/EU.
 
-      4 Een concessie wordt niet verleend aan een spoorwegonderneming dan met inachtneming van artikel 7 bis van
-      [richtlijn 2012/34](32012L0034)/EU.
+       4 Een concessie wordt niet verleend aan een spoorwegonderneming dan met inachtneming van artikel 7 bis van
+       [richtlijn 2012/34](32012L0034)/EU.
+
+    machine_readable:
+      untranslatables:
+        - construct: "Procedural concession management logic (quality, capacity allocation fairness, traffic management)"
+          reason: "Cannot express multi-step administrative procedures with current operations (AND/OR only cover boolean logic)"
     url: https://wetten.overheid.nl/BWBR0015007/2024-01-01#Artikel16
   - number: 16a
     text: |-
