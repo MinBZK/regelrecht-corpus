@@ -55,27 +55,102 @@ articles:
   - number: '2'
     text: |-
       1. De ambtenaar die voor studiefaciliteiten in aanmerking wenst te komen dient de aanvraag daartoe in de regel
-      in voor de aanvang van de studie. Hij laat deze aanvraag vergezeld gaan van de voor de beoordeling door het hoofd
-      defensieonderdeel noodzakelijke gegevens en van een schatting van de te maken studiekosten.
-
-      2. Het hoofd defensieonderdeel kan, alvorens studiefaciliteiten te verlenen, een studieadvies of in bijzondere
-      gevallen – na overleg met de ambtenaar – een psychologisch advies inwinnen. Tenzij deze adviezen worden ingewonnen
-      op uitdrukkelijk verzoek van de ambtenaar, komen de daaraan verbonden kosten voor rekening van het Ministerie van
-      Defensie.
-
-      3. Studiefaciliteiten worden verleend voor een bepaalde termijn, die wordt afgeleid van de normaal te achten duur
-      van de studie. Het hoofd defensieonderdeel kan deze termijn verlengen.
-
-      4. Verleende studiefaciliteiten kunnen – al dan niet tijdelijk – worden ingetrokken indien het hoofd
-      defensieonderdeel op grond van de verkregen inlichtingen van oordeel is, dat de ambtenaar niet in die mate studeert
-      en/of vorderingen maakt dat hij in staat kan worden geacht de studie binnen de in het derde lid bedoelde termijn te
-      voltooien. De intrekking geschiedt niet indien de ambtenaar aannemelijk maakt, dat deze omstandigheid niet aan hem
-      zelf te wijten is.
-
-      5. Aan de ambtenaar, die krachtens een op hem van toepassing zijnde regeling aanspraak heeft op een verhoging
-      van zijn bezoldiging uitsluitend op grond van het voltooien van een studie, worden ter zake van die studie geen
-      studiefaciliteiten verleend.
     url: https://wetten.overheid.nl/BWBR0043998/2021-03-04#Artikel2
+    machine_readable:
+      untranslatables:
+        - construct: "niet in die mate studeert en/of vorderingen maakt"
+          reason: "Subjective assessment of study progress cannot be expressed as computable logic"
+          legal_text_excerpt: "indien het hoofd defensieonderdeel op grond van de verkregen inlichtingen van oordeel is, dat de ambtenaar niet in die mate studeert en/of vorderingen maakt"
+          accepted: false
+        - construct: "aannemelijk maakt, dat deze omstandigheid niet aan hem zelf te wijten is"
+          reason: "Subjective assessment of fault cannot be expressed as computable logic"
+          legal_text_excerpt: "De intrekking geschiedt niet indien de ambtenaar aannemelijk maakt, dat deze omstandigheid niet aan hem zelf te wijten is"
+          accepted: false
+      execution:
+          parameters:
+            - name: aanvraag_datum
+              type: date
+              description: "Datum waarop de aanvraag voor studiefaciliteiten wordt ingediend"
+            - name: studie_start_datum
+              type: date
+              description: "Datum waarop de studie start"
+            - name: normaal_studieduur_jaren
+              type: number
+              description: "Normale duur van de studie in jaren"
+            - name: studie_adviezen_op_verzoek_ambtenaar
+              type: boolean
+              description: "Indien waar, zijn de adviezen ingewonnen op uitdrukkelijk verzoek van de ambtenaar"
+            - name: heeft_recht_op_bezoldigingsverhoging
+              type: boolean
+              description: "Indien waar, heeft de ambtenaar recht op bezoldigingsverhoging uitsluitend op grond van het voltooien van de studie"
+            - name: termijn_verlengd
+              type: boolean
+              description: "Indien waar, is de termijn voor studiefaciliteiten verlengd door het hoofd defensieonderdeel"
+          input:
+            - name: hoofd_defensieonderdeel
+              type: object
+              description: "Referentie naar het hoofd defensieonderdeel als bedoeld in BWBR0006040, Artikel 3"
+              source:
+                regulation: BWBR0006040
+                output: hoofd_defensieonderdeel
+          output:
+            - name: aanvraag_valide
+              type: boolean
+              description: "Indien waar, is de aanvraag valide (ingediend voor de start van de studie)"
+            - name: adviezen_kosten_voor_rekening_mindef
+              type: boolean
+              description: "Indien waar, kommen de kosten van de adviezen voor rekening van het Ministerie van Defensie"
+            - name: studiefaciliteiten_verleend
+              type: boolean
+              description: "Indien waar, zijn studiefaciliteiten verleend"
+            - name: studiefaciliteiten_termijn
+              type: number
+              description: "De termijn waarvoor studiefaciliteiten worden verleend (in jaren)"
+            - name: studiefaciliteiten_uitgesloten
+              type: boolean
+              description: "Indien waar, zijn studiefaciliteiten uitgesloten op grond van lid 5"
+          actions:
+            - output: aanvraag_valide
+              value:
+                operation: LESS_THAN_OR_EQUAL
+                subject: $aanvraag_datum
+                value: $studie_start_datum
+            - output: adviezen_kosten_voor_rekening_mindef
+              value:
+                operation: NOT
+                value:
+                  operation: EQUALS
+                  subject: $studie_adviezen_op_verzoek_ambtenaar
+                  value: true
+            - output: studiefaciliteiten_termijn
+              value:
+                operation: IF
+                cases:
+                  - when:
+                      operation: EQUALS
+                      subject: $termijn_verlengd
+                      value: true
+                    then:
+                      operation: ADD
+                      values:
+                        - $normaal_studieduur_jaren
+                        - 1
+                default: $normaal_studieduur_jaren
+            - output: studiefaciliteiten_verleend
+              value:
+                operation: AND
+                conditions:
+                  - operation: EQUALS
+                    subject: $aanvraag_valide
+                    value: true
+                  - operation: EQUALS
+                    subject: $studiefaciliteiten_uitgesloten
+                    value: false
+            - output: studiefaciliteiten_uitgesloten
+              value:
+                operation: EQUALS
+                subject: $heeft_recht_op_bezoldigingsverhoging
+                value: true
   - number: '3'
     text: |-
       1. Tenzij het belang van een goede dienstuitoefening zich daartegen verzet, kan door het hoofd defensieonderdeel
