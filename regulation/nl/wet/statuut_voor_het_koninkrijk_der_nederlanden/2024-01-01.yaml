@@ -31,6 +31,22 @@ articles:
   - number: '1'
     text: Het Koninkrijk omvat de landen Nederland, Aruba, Curaçao en Sint Maarten.
     url: https://wetten.overheid.nl/BWBR0002154/2024-01-01#Artikel1
+    machine_readable:
+      execution:
+        output:
+          - name: koninkrijk_landen
+            type: array
+            type_spec:
+              item_type: string
+        actions:
+          - output: koninkrijk_landen
+            value:
+              operation: LIST
+              items:
+                - "Nederland"
+                - "Aruba"
+                - "Curaçao"
+                - "Sint Maarten"
   - number: 1a
     text: |-
       De Kroon van het Koninkrijk wordt erfelijk gedragen door Hare Majesteit Juliana, Prinses van Oranje-Nassau en bij
