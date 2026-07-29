@@ -1592,6 +1592,429 @@ articles:
         hoofdstuk: '3'
         paragraaf: 4a
         afdeling: '4'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon waarvan doelgroep-status wordt bepaald.
+          - name: is_uitgesloten_beschut_werk_pwet_10b
+            type: boolean
+            required: true
+            description: |-
+              Chapeau-uitsluiting: door college vastgesteld dat persoon
+              uitsluitend in beschutte omgeving onder aangepaste omstandigheden
+              mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
+              Bron: gemeente. Zo'n persoon is per definitie GEEN
+              arbeidsbeperkte in zin van 38b.1.
+          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
+              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
+              college) heeft vastgesteld dat persoon niet in staat is WML te
+              verdienen, OF college heeft loonwaarde < WML vastgesteld
+              conform Pwet 10d. Bron: UWV + gemeente.
+          - name: is_wsw_geindiceerd_of_oude_indicatie
+            type: boolean
+            required: true
+            description: |-
+              38b.1.b: geïndiceerd in zin van Wet sociale werkvoorziening,
+              of nog geldende indicatiebeschikking op grond van WSW art. 11
+              zoals dat luidde op 31-12-2014. Bron: UWV / SVB.
+          - name: heeft_wajong_arbeidsondersteuning_of_uitkering
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c: recht op arbeidsondersteuning of arbeidsongeschiktheids-
+              uitkering Wajong. Uitsluiting: persoon heeft duurzaam geen
+              mogelijkheden tot arbeidsparticipatie (Wajong 1a:1) — die
+              valt buiten 38b.1.c. Bron: UWV.
+          - name: heeft_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
+              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
+              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+          - name: voldoet_aan_amvb_indicatie_38b_1_d
+            type: boolean
+            required: true
+            description: |-
+              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
+              indicatie. Bron: UWV (uitvoering AMvB).
+              AMvB-implementatie is open_term — niet in deze YAML
+              gemodelleerd; engine ontvangt vlag van uitvoering.
+          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
+              vastgesteld dat persoon niet in staat is WML te verdienen.
+              Bron: UWV.
+          - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f overgangsrecht: persoon was op of na 1-1-2013 een
+              persoon als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong),
+              EN op 1-5-2015 niet langer zodanig persoon. Uitzondering:
+              voormalige Wajong-er die duurzaam geen mogelijkheden meer
+              heeft (Wajong 1a:1) valt buiten. Bron: UWV-historie.
+          - name: was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f uitsluiting: persoon valt onder onderdeel c-historie
+              (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
+              tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
+          - name: is_jonggehandicapt_uwv_oordeel_lid_2
+            type: boolean
+            required: true
+            description: |-
+              38b.2: UWV oordeelt dat persoon wegens ziekte/gebrek ontstaan
+              voor 18e levensjaar of als studerende (Wajong 1:4) belemmering
+              ondervindt, een voorziening ontvangt op grond van Pwet 10 of
+              WIA 35, en zonder die voorziening geen WML kan verdienen.
+              Bron: UWV-beoordeling (AMvB-regels per 38b.3). Wordt voor
+              toepassing van deze paragraaf MEDE als arbeidsbeperkte
+              beschouwd.
+          - name: datum_eerste_opname_doelgroepregister
+            type: date
+            required: true
+            description: |-
+              Datum van eerste opname in doelgroepregister banenafspraak
+              door UWV (datasource UWV). Wordt gebruikt voor afgeleide
+              outputs zoals LKV-banenafspraak-termijn (3 jaar vanaf
+              opname). Voor 38b.1 zelf niet rechtstreeks vereist; dient
+              als pass-through naar afnemers (Wtl, Ziektewet).
+          - name: was_arbeidsbeperkte_lid_1_of_2
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: persoon voldeed eerder aan een grond van
+              het eerste of tweede lid (was opgenomen als arbeidsbeperkte),
+              maar voldoet daar nu niet langer aan. Bron: UWV-historie /
+              registratie.
+          - name: registratie_nog_niet_geeindigd
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: de opname van de persoon in de registratie
+              van arbeidsbeperkten (artikel 38d lid 1) is nog niet
+              geëindigd. Bron: UWV-registratie.
+        output:
+          - name: behoort_tot_doelgroepregister_banenafspraak
+            type: boolean
+            description: |-
+              Kernoutput: voldoet persoon aan een van de gronden van
+              38b.1 (a t/m f), 38b.2 of de registratie-blijfgrond 38b.6,
+              en is hij niet uitgesloten op grond van chapeau (beschut werk
+              Pwet 10b). Bepaalt opname in doelgroepregister banenafspraak.
+          - name: voldoet_aan_grond_38b_1_a
+            type: boolean
+            description: 38b.1.a — Pwet LKS-traject + UWV-loonwaarde/WML-vaststelling.
+          - name: voldoet_aan_grond_38b_1_b
+            type: boolean
+            description: 38b.1.b — Wsw-indicatie.
+          - name: voldoet_aan_grond_38b_1_c
+            type: boolean
+            description: 38b.1.c — Wajong met arbeidsmogelijkheden.
+          - name: voldoet_aan_grond_38b_1_d
+            type: boolean
+            description: 38b.1.d — AMvB-indicatie.
+          - name: voldoet_aan_grond_38b_1_e
+            type: boolean
+            description: 38b.1.e — Pwet toeleiding + UWV WML-vaststelling op eigen verzoek.
+          - name: voldoet_aan_grond_38b_1_f
+            type: boolean
+            description: 38b.1.f — overgangsrecht (was b of c, nu niet meer).
+          - name: voldoet_aan_grond_38b_2
+            type: boolean
+            description: 38b.2 — UWV-oordeel jonggehandicapt met voorziening.
+          - name: voldoet_aan_grond_38b_6
+            type: boolean
+            description: 38b.6 — registratie-blijfgrond (was lid 1/2, registratie nog niet geëindigd).
+          - name: grond_opname_doelgroepregister
+            type: string
+            description: |-
+              Eerst-passende grond volgens IF-volgorde a → b → c → d → e
+              → f → lid 2. Enum: 'pwet_lks_uwv_loonwaarde' | 'wsw' |
+              'wajong' | 'amvb_38b_1_d' | 'pwet_uwv_wml_eigen_verzoek' |
+              'overgangsrecht_38b_1_f' | 'jonggehandicapt_uwv_oordeel' |
+              'geen'.
+          - name: datum_opname_doelgroepregister
+            type: date
+            description: |-
+              Datum waarop persoon is opgenomen in doelgroepregister
+              banenafspraak. Pass-through van invoer (UWV-bron).
+              Voor LKV-banenafspraak-periode (3 jaar vanaf opname,
+              Wtl 2.10-2.13).
+          - name: vaststelling_door
+            type: string
+            description: |-
+              Bevoegd gezag voor doelgroep-vaststelling 38b. Enum:
+              'UWV'. 38b.1.a, 38b.1.e en 38b.2 noemen expliciet UWV
+              als vaststeller; 38b.1.b (Wsw-indicatie) en 38b.1.c
+              (Wajong-recht) leunen op vaststellingen die UWV beheert
+              of administreert. AMvB-grond 38b.1.d wordt uitgevoerd
+              door UWV per 38d. Constant 'UWV'.
+          - name: verloonde_uren_definitie_actief
+            type: boolean
+            description: |-
+              38b.4 — definitie van 'verloonde uren' is van toepassing in
+              deze paragraaf en in artikel 122n. Pass-through TRUE; het
+              feitelijke aantal verloonde uren komt uit polisadministratie
+              SUWI 33 en loonaangifte (Wet LB 1964 28). Niet hier
+              gemodelleerd.
+        actions:
+          - output: voldoet_aan_grond_38b_1_a
+            value: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.a'
+              explanation: |-
+                Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, met
+                UWV-vaststelling 'kan WML niet verdienen' op verzoek van
+                het college, dan wel college-loonwaarde < WML.
+          - output: voldoet_aan_grond_38b_1_b
+            value: $is_wsw_geindiceerd_of_oude_indicatie
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.b'
+              explanation: |-
+                Wsw-indicatie of nog geldende oude indicatiebeschikking
+                (Wsw 11, situatie 31-12-2014).
+          - output: voldoet_aan_grond_38b_1_c
+            value:
+              operation: AND
+              conditions:
+                - $heeft_wajong_arbeidsondersteuning_of_uitkering
+                - operation: NOT
+                  value: $heeft_wajong_duurzaam_geen_mogelijkheden
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.c'
+              explanation: |-
+                Wajong-recht (arbeidsondersteuning of AO-uitkering),
+                tenzij persoon duurzaam geen mogelijkheden tot
+                arbeidsparticipatie heeft (Wajong 1a:1).
+          - output: voldoet_aan_grond_38b_1_d
+            value: $voldoet_aan_amvb_indicatie_38b_1_d
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.d'
+              explanation: |-
+                Voldoet aan bij of krachtens AMvB vastgestelde indicatie.
+                Concrete invulling AMvB valt buiten deze YAML.
+          - output: voldoet_aan_grond_38b_1_e
+            value: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.e'
+              explanation: |-
+                Pwet 7 lid 1.a-toeleiding + UWV-vaststelling op eigen
+                verzoek dat persoon WML niet kan verdienen.
+          - output: voldoet_aan_grond_38b_1_f
+            value:
+              operation: AND
+              conditions:
+                - $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+                - operation: NOT
+                  value: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.f'
+              explanation: |-
+                Overgangsrecht: was op/na 1-1-2013 persoon als bedoeld in
+                onderdeel b of c, en op 1-5-2015 niet langer; uitzondering
+                voor voormalige Wajong-er die nu duurzaam geen mogelijkheden
+                heeft (Wajong 1a:1).
+          - output: voldoet_aan_grond_38b_2
+            value: $is_jonggehandicapt_uwv_oordeel_lid_2
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '2'
+              explanation: |-
+                UWV-oordeel: belemmering door ziekte/gebrek ontstaan voor
+                18 jaar (of als studerende, Wajong 1:4), voorziening op
+                grond van Pwet 10 of WIA 35, en zonder voorziening geen
+                WML. Beoordelingsregels per AMvB (38b.3).
+          - output: voldoet_aan_grond_38b_6
+            value:
+              operation: AND
+              conditions:
+                - $was_arbeidsbeperkte_lid_1_of_2
+                - $registratie_nog_niet_geeindigd
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '6'
+              explanation: |-
+                Registratie-blijfgrond: wie niet langer aan lid 1 of 2
+                voldoet, wordt tevens als arbeidsbeperkte beschouwd zolang
+                zijn opname in de registratie van arbeidsbeperkten (artikel
+                38d lid 1) nog niet is geëindigd. De chapeau-uitsluiting
+                beschut werk (Pwet 10b lid 1) blijft gelden via de NOT-wrap
+                op de kernoutput.
+          - output: behoort_tot_doelgroepregister_banenafspraak
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $is_uitgesloten_beschut_werk_pwet_10b
+                - operation: OR
+                  conditions:
+                    - $voldoet_aan_grond_38b_1_a
+                    - $voldoet_aan_grond_38b_1_b
+                    - $voldoet_aan_grond_38b_1_c
+                    - $voldoet_aan_grond_38b_1_d
+                    - $voldoet_aan_grond_38b_1_e
+                    - $voldoet_aan_grond_38b_1_f
+                    - $voldoet_aan_grond_38b_2
+                    - $voldoet_aan_grond_38b_6
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1, 2, 6'
+              explanation: |-
+                Persoon is arbeidsbeperkte in zin van 38b (en hoort dus
+                in doelgroepregister banenafspraak, mits ook ingeschreven
+                door UWV per 38d) als hij voldoet aan minimaal één grond
+                van 38b lid 1 (a t/m f) of lid 2, EN niet onder de
+                chapeau-uitsluiting valt (uitsluitend beschut werk Pwet 10b).
+          - output: grond_opname_doelgroepregister
+            value:
+              operation: IF
+              cases:
+                - when: $voldoet_aan_grond_38b_1_a
+                  then: pwet_lks_uwv_loonwaarde
+                - when: $voldoet_aan_grond_38b_1_b
+                  then: wsw
+                - when: $voldoet_aan_grond_38b_1_c
+                  then: wajong
+                - when: $voldoet_aan_grond_38b_1_d
+                  then: amvb_38b_1_d
+                - when: $voldoet_aan_grond_38b_1_e
+                  then: pwet_uwv_wml_eigen_verzoek
+                - when: $voldoet_aan_grond_38b_1_f
+                  then: overgangsrecht_38b_1_f
+                - when: $voldoet_aan_grond_38b_2
+                  then: jonggehandicapt_uwv_oordeel
+              default: geen
+              legal_basis:
+                law: Wet financiering sociale verzekeringen
+                bwb_id: BWBR0017745
+                article: 38b
+                paragraph: '1, 2'
+                explanation: |-
+                  Eerst-passende grond volgens volgorde a → b → c → d → e
+                  → f → lid 2. Volgorde volgt de wettekst; bij samenloop
+                  primeert de eerder genoemde grond (modelleer-keuze).
+          - output: datum_opname_doelgroepregister
+            value: $datum_eerste_opname_doelgroepregister
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              explanation: |-
+                Pass-through. Datum opname in registratie wordt door UWV
+                bijgehouden (38d lid 1) en is geen rekenresultaat van
+                deze paragraaf zelf.
+          - output: vaststelling_door
+            value: UWV
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.a, 1.e, 2'
+              explanation: |-
+                UWV is de aangewezen vaststeller voor de doelgroep-
+                kenmerken in 38b. 38b.1.a: 'door het UWV is vastgesteld';
+                38b.1.e: 'door het UWV is of wordt vastgesteld';
+                38b.2: 'naar het oordeel van het UWV'. Voor 38b.1.b/c
+                berust de status op uitvoeringsadministraties die UWV
+                beheert. AMvB-uitvoering 38b.1.d gebeurt eveneens door UWV.
+          - output: verloonde_uren_definitie_actief
+            value: true
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '4'
+              explanation: |-
+                38b.4 definieert 'verloonde uren' voor deze paragraaf en
+                artikel 122n: uren waarover loon is betaald, opgenomen in
+                loonaangifte (Wet LB 1964 art. 28 lid 1) én in
+                polisadministratie (SUWI art. 33 lid 2). Geen rekenoutput
+                hier; afnemers gebruiken polisadministratie.
+      untranslatables:
+        - construct: 'AMvB-indicatie (38b.1.d) — verwijst naar nog op te stellen indicatie'
+          reason: |-
+            38b.1.d delegeert de inhoudelijke indicatie naar een AMvB
+            ('bij of krachtens algemene maatregel van bestuur vastgestelde
+            indicatie'). De feitelijke indicatie-criteria staan niet in
+            38b zelf en zijn dus niet uit dit artikel zelf afleidbaar.
+            Modelleer-keuze: parameter $voldoet_aan_amvb_indicatie_38b_1_d
+            (bron: UWV); ware modellering via open_terms/implements naar
+            de AMvB valt buiten deze iteratie (geen aparte AMvB-YAML).
+          accepted: true
+        - construct: 'AMvB-beoordelingsregels jonggehandicapt (38b.3)'
+          reason: |-
+            38b.3 delegeert beoordelingsregels voor het UWV-oordeel onder
+            38b.2 naar een AMvB. De engine ontvangt de uitkomst van die
+            beoordeling als vlag $is_jonggehandicapt_uwv_oordeel_lid_2;
+            de onderliggende beoordeling zelf wordt niet hier gemodelleerd.
+          accepted: true
+        - construct: 'definitie verloonde uren (38b.4) — alleen begripsbepaling'
+          reason: |-
+            38b.4 is een definitie-artikel: het verklaart wat 'verloonde
+            uren' betekent. Het levert zelf geen numeriek aantal verloonde
+            uren — dat komt uit polisadministratie. Output
+            verloonde_uren_definitie_actief is een pass-through TRUE die
+            aangeeft dat de definitie geldt; afnemende artikelen
+            (bv. Wtl 2.13 of Wfsv 122n) halen het feitelijke aantal uit
+            externe bron.
+          accepted: true
+        - construct: 'datum_opname_doelgroepregister als invoer (geen berekening)'
+          reason: |-
+            De opname-datum wordt door UWV vastgelegd in de registratie
+            (38d). 38b zelf bevat geen berekening van deze datum; de YAML
+            modelleert dit als pass-through-invoer. Voor LKV-banenafspraak-
+            periode (3 jaar) gebruiken afnemers de datum die UWV verstrekt.
+          accepted: true
+        - construct: 'chapeau-uitsluiting beschut werk (Pwet 10b lid 1)'
+          reason: |-
+            Het chapeau van 38b.1 sluit personen uit die door college zijn
+            vastgesteld als uitsluitend in beschutte omgeving onder
+            aangepaste omstandigheden. Deze vaststelling is een Pwet-
+            vaststelling (college). Cross-law via source.regulation naar
+            Pwet zou cleaner zijn; modelleer-keuze nu: parameter-vlag
+            $is_uitgesloten_beschut_werk_pwet_10b. Latere iteratie kan
+            naar Pwet 10b koppelen.
+          accepted: true
   - number: 38c
     text: |-
       Bij regeling van Onze Minister worden werkgevers voor de toepassing van deze paragraaf en [artikel 122n][ref1]
@@ -1919,6 +2342,222 @@ articles:
         hoofdstuk: '3'
         paragraaf: 4a
         afdeling: '4'
+    machine_readable:
+      definitions:
+        afronding_decimalen_quotumpercentage:
+          value: 2
+        afrondingsmethode_quotumpercentage:
+          value: naar_beneden
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: kalenderjaar_quotumtekort
+            type: number
+            required: true
+            description: |-
+              Kalenderjaar t waarover het quotumtekort (38g) wordt bepaald.
+              De vaststelling vindt plaats in t-1 (38f.1).
+        output:
+          - name: vaststelling_door
+            type: string
+            description: |-
+              Bevoegd gezag dat het quotumpercentage vaststelt. Vast op
+              'MINISTER_SZW'. 38f.1: 'Bij regeling van Onze Minister'.
+              Onze Minister = Minister van SZW (Wfsv art. 1 onderdeel a).
+          - name: instrument_vaststelling
+            type: string
+            description: |-
+              Instrument waarmee vaststelling plaatsvindt. Vast op
+              'MINISTERIELE_REGELING'. 38f.1: 'Bij regeling van Onze Minister'.
+          - name: kalenderjaar_vaststelling
+            type: number
+            description: |-
+              Kalenderjaar waarin het quotumpercentage moet worden
+              vastgesteld: t-1 ten opzichte van het kalenderjaar waarover
+              het quotumtekort wordt bepaald (38f.1: 'in het kalenderjaar
+              voorafgaand aan').
+          - name: beslissingstermijn_dagen
+            type: number
+            description: |-
+              Uiterste termijn (in dagen vanaf 1 januari van het jaar t)
+              waarbinnen vaststelling moet plaatsvinden. 38f.1 noemt geen
+              expliciete dag-termijn, alleen 'in het kalenderjaar
+              voorafgaand'. Modelleer-keuze: einde van kalenderjaar
+              t-1 = 365 dagen (uiterste moment binnen voorafgaand jaar).
+              Voor administratieve duidelijkheid; juridische termijn
+              blijft 'voor afloop kalenderjaar t-1'.
+          - name: afronding_decimalen
+            type: number
+            description: |-
+              Aantal decimalen waarop het quotumpercentage wordt afgerond.
+              38f.1 laatste volzin: 'twee cijfers achter de komma'.
+          - name: afrondingsmethode
+            type: string
+            description: |-
+              Methode van afronden. 38f.1: 'naar beneden afgerond'.
+              Vast op 'naar_beneden'.
+          - name: publicatieplicht_berekening
+            type: boolean
+            description: |-
+              Verplichting tot publicatie van de onderliggende berekeningen
+              (38f.1 tweede volzin: 'worden de berekeningen ... gepubliceerd').
+              Vast op TRUE.
+          - name: variabelen_amvb_38f_3
+            type: string
+            description: |-
+              Variabelen uit formule 38f.2 waarvoor 38f.3 nadere regels bij
+              AMvB delegeert: 'A,B,C,D,E,H' (en mogelijkheid om categorieën
+              werknemers van variabele D af te trekken). Comma-separated
+              omdat het engine-action-formaat geen array-literal kent.
+          - name: variabelen_amvb_38f_4
+            type: string
+            description: |-
+              Variabelen uit formule 38f.2 waarvoor 38f.4 nadere regels bij
+              AMvB delegeert, met voorhang-procedure (vier weken aan beide
+              kamers): 'F,G'. Comma-separated.
+        actions:
+          - output: vaststelling_door
+            value: MINISTER_SZW
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: |-
+                'Bij regeling van Onze Minister wordt ... vastgesteld'.
+                Onze Minister = Minister van SZW (Wfsv 1 onderdeel a).
+          - output: instrument_vaststelling
+            value: MINISTERIELE_REGELING
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: "'Bij regeling van Onze Minister' = ministeriële regeling."
+          - output: kalenderjaar_vaststelling
+            value:
+              operation: SUBTRACT
+              values:
+                - $kalenderjaar_quotumtekort
+                - 1
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: |-
+                '... in het kalenderjaar voorafgaand aan het kalenderjaar
+                waarover het quotumtekort ... wordt bepaald'.
+          - output: beslissingstermijn_dagen
+            value: 365
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: |-
+                38f.1 noemt 'in het kalenderjaar voorafgaand' zonder
+                expliciete dag-termijn. Modelleer-keuze: 365 dagen
+                (uiterste moment t-1). Schrikkeljaren niet apart
+                gemodelleerd; juridisch is de term het einde van t-1.
+          - output: afronding_decimalen
+            value: $afronding_decimalen_quotumpercentage
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: "'twee cijfers achter de komma'."
+          - output: afrondingsmethode
+            value: $afrondingsmethode_quotumpercentage
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: "'naar beneden afgerond'."
+          - output: publicatieplicht_berekening
+            value: true
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '1'
+              explanation: |-
+                Tweede volzin: 'Bij deze regeling worden de berekeningen
+                op grond van het tweede lid die tot dit percentage hebben
+                geleid, gepubliceerd.'
+          - output: variabelen_amvb_38f_3
+            value: A,B,C,D,E,H
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '3'
+              explanation: |-
+                'Bij of krachtens algemene maatregel van bestuur worden
+                nadere regels gesteld met betrekking tot de variabelen A
+                tot en met E en H van de formule, bedoeld in het tweede lid.'
+          - output: variabelen_amvb_38f_4
+            value: F,G
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38f
+              paragraph: '4'
+              explanation: |-
+                'Bij of krachtens algemene maatregel van bestuur worden
+                nadere regels gesteld met betrekking tot de variabelen F
+                en G van de formule, bedoeld in het tweede lid.' Met
+                voorhang-procedure (vier weken aan beide kamers).
+      untranslatables:
+        - construct: 'berekeningsformule quotumpercentage (38f.2 — variabelen A t/m H)'
+          reason: |-
+            38f.2 bevat de berekeningsformule met acht variabelen (A t/m H)
+            voor macro-vaststelling per sector (overheid/niet-overheid).
+            De feitelijke formule (in de wet aangeduid met 'overeenkomstig
+            de volgende formule:') is niet als algebraïsche expressie
+            opgenomen in de YAML-articles-array — alleen de variabel-
+            definities (38f.2.A t/m 38f.2.H). De formule zelf is in de
+            geconsolideerde wettekst typografisch weergegeven en niet
+            machine-leesbaar overgenomen in het corpus. Bovendien werken
+            de variabelen op macro-niveau (sector totaal aantal banen,
+            gemiddeld aantal verloonde uren) — geen persoon-scope.
+            Voor de banenafspraak-doelgroepregister-iteratie van het
+            financieel CV is deze berekening niet relevant; pas-toe-of-
+            leg-uit: niet gemodelleerd, expliciet als untranslatable
+            gemarkeerd.
+          legal_text_excerpt: 'De quotumpercentages worden berekend overeenkomstig de volgende formule:'
+          suggestion: |-
+            Latere iteratie: variabelen A-H modelleren als open_terms en
+            de AMvB (38f.3/38f.4) als implements-artikel, met de formule
+            als ADD/SUBTRACT/MULTIPLY/DIVIDE-keten zodra de formule
+            tekstueel in het corpus is opgenomen.
+          accepted: true
+        - construct: 'AMvB-delegatie variabelen A-E en H (38f.3)'
+          reason: |-
+            38f.3 delegeert nadere regels voor variabelen A-E en H naar
+            AMvB. Concrete getallen / categorieën zitten niet in deze
+            wet. Engine output variabelen_amvb_38f_3 is pass-through
+            van de delegatie-set.
+          accepted: true
+        - construct: 'AMvB-delegatie variabelen F en G met voorhang (38f.4)'
+          reason: |-
+            38f.4 delegeert variabelen F en G naar AMvB met voorhang-
+            procedure (vier weken aan beide kamers). Procedurele
+            voorhang-bewaking valt buiten engine-scope; alleen het feit
+            van delegatie is hier gemodelleerd.
+          accepted: true
+        - construct: 'beslissingstermijn als kalenderjaar t-1 ipv concrete dag-termijn'
+          reason: |-
+            38f.1 noemt geen dag-termijn maar 'in het kalenderjaar
+            voorafgaand'. Engine modelleert dit als 365 dagen
+            (uiterste moment binnen t-1). De juridisch bindende termijn
+            blijft 'voor afloop kalenderjaar t-1'; afnemers moeten
+            kalenderjaar_vaststelling i.c.m. eindjaar interpreteren.
+          accepted: true
   - number: 38g
     text: |-
       1 Ten behoeve van de vaststelling van de quotumheffing, bedoeld in [artikel 38h][ref1], wordt het quotumtekort per

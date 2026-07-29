@@ -139,6 +139,48 @@ articles:
       - id: ref10
         bwb_id: BWBR0003738
         artikel: '14'
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+          - name: is_pwet_loonkostensubsidie
+            type: boolean
+            required: true
+            description: |-
+              Wordt of werd loonkostensubsidie verstrekt op grond van
+              Pwet 10d. Bron: gemeente. Voor doelgroepbepaling
+              Ziektewet 29b lid 2 onderdeel e.
+          - name: is_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Verricht persoon arbeid in een dienstbetrekking als bedoeld
+              in Pwet 10b (beschut werk). Bron: gemeente. Voor doelgroepbepaling
+              Ziektewet 29b lid 2 onderdeel f.
+          - name: loonwaarde_lager_dan_minimumloon
+            type: boolean
+            required: true
+            description: |-
+              Is door UWV of college vastgesteld dat persoon niet in staat is
+              tot het verdienen van het wettelijk minimumloon. Bron: UWV
+              of college. Voor doelgroepbepaling Ziektewet 29b lid 2
+              onderdeel e en LKS-recht (Pwet 10d).
+        output:
+          - name: is_pwet_loonkostensubsidie
+            type: boolean
+          - name: is_beschut_werk
+            type: boolean
+          - name: loonwaarde_lager_dan_minimumloon
+            type: boolean
+        actions:
+          - output: is_pwet_loonkostensubsidie
+            value: $is_pwet_loonkostensubsidie
+          - output: is_beschut_werk
+            value: $is_beschut_werk
+          - output: loonwaarde_lager_dan_minimumloon
+            value: $loonwaarde_lager_dan_minimumloon
   - number: '2'
     text: |-
       In deze wet en de daarop berustende bepalingen wordt verstaan onder:
@@ -1515,6 +1557,207 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: behoort_tot_doelgroep_lks
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10c lid 1: college heeft vastgesteld dat persoon
+              tot de doelgroep loonkostensubsidie behoort.
+          - name: kan_minimumloon_niet_verdienen
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10d lid 2: college heeft vastgesteld dat persoon
+              met voltijdse arbeid niet in staat is tot het verdienen
+              van het wettelijk minimumloon.
+          - name: aanvraag_lks_ingediend_binnen_zes_maanden
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10d lid 2: aanvraag werkgever of werknemer is
+              binnen 6 maanden na begin dienstbetrekking ingediend.
+          - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10d lid 2: in 6 maanden voorafgaand aan
+              dienstbetrekking deelnam aan praktijkonderwijs / VSO /
+              entreeopleiding óf was persoon als bedoeld in artikel 7
+              lid 1 a.
+          - name: is_wsw_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10d lid 3: uitsluitingsgrond — dienstbetrekking
+              op grond van artikelen 2 of 7 Wsw.
+          - name: loonwaarde_eurocent_per_maand
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Vastgestelde loonwaarde van de persoon in eurocent per
+              maand. Voor lid 4 gebruikt om subsidie-hoogte te bepalen.
+              Bij beslissing zonder loonwaardevaststelling (lid 1 b)
+              kan deze nul zijn — dan geldt 50% eerste-6-mnd-regeling
+              (untranslatable).
+          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              WML + 8% vakantiebijslag (artikel 15 Wml) per maand,
+              afhankelijk van leeftijd en arbeidsduur. Bron: Wml.
+        output:
+          - name: heeft_recht_op_lks
+            type: boolean
+          - name: bruto_subsidie_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 4 — verschil tussen WML+VB en loonwaarde+VB,
+              vóór toepassing van de 70%-cap.
+          - name: maximum_subsidie_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: 'Lid 4 — 70% van WML+VB als bovengrens.'
+          - name: hoogte_lks_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 4 — bedrag exclusief werkgeverslastenvergoeding
+              (open_term).
+        actions:
+          - output: heeft_recht_op_lks
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_lks
+                - $kan_minimumloon_niet_verdienen
+                - $aanvraag_lks_ingediend_binnen_zes_maanden
+                - $voorafgaand_relevante_onderwijsroute_of_doelgroep
+                - operation: NOT
+                  value: $is_wsw_dienstbetrekking
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10d'
+                paragraph: '2'
+                explanation: |-
+                  Cumulatieve voorwaarden lid 2 + uitsluiting lid 3.
+          - output: bruto_subsidie_eurocent_per_maand
+            value:
+              operation: SUBTRACT
+              values:
+                - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+                - $loonwaarde_eurocent_per_maand
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10d'
+                paragraph: '4'
+                explanation: |-
+                  WML+VB − loonwaarde+VB. Hier wordt vakantiebijslag
+                  evenredig met loonwaarde meegenomen — wij ontvangen
+                  loonwaarde inclusief VB als één bedrag.
+          - output: maximum_subsidie_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+                    - 70
+                - 100
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10d'
+                paragraph: '4'
+                explanation: '70% van WML+VB als wettelijke bovengrens.'
+          - output: hoogte_lks_eurocent_per_maand
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_recht_op_lks
+                  then:
+                    operation: MAX
+                    values:
+                      - 0
+                      - operation: MIN
+                        values:
+                          - $bruto_subsidie_eurocent_per_maand
+                          - $maximum_subsidie_eurocent_per_maand
+              default: 0
+      open_terms:
+        - id: werkgeverslastenvergoeding_eurocent
+          type: amount
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 10d lid 4 Participatiewet
+          description: |-
+            Bij ministeriële regeling vastgestelde vergoeding voor
+            werkgeverslasten, bovenop de subsidie. Niet uitgewerkt
+            in deze YAML.
+          default:
+            actions:
+              - output: werkgeverslastenvergoeding_eurocent
+                value: 0
+      untranslatables:
+        - construct: '50%-regeling eerste zes maanden zonder loonwaardevaststelling (lid 5)'
+          reason: |-
+            Lid 5 introduceert een afwijkende hoogte (50% van WML+VB)
+            voor de eerste zes maanden indien geen loonwaarde is
+            vastgesteld (lid 1 b). Dit vereist een tijdgebonden split
+            van het subsidiebedrag binnen één dienstbetrekking, wat
+            met de huidige operatie-set niet faithful te modelleren is.
+          accepted: true
+        - construct: 'naar evenredigheid bij arbeidsduur < 36 uur (lid 4 zin 2)'
+          reason: |-
+            De subsidie wordt evenredig verminderd of vermeerderd bij
+            kortere of langere arbeidsduur dan 36 uur. Het bedrag dat
+            wij hier berekenen gaat uit van een normalisatie naar
+            36 uur en delegeert de evenredigheidstoepassing aan
+            de uitvoeringslaag.
+          accepted: true
+        - construct: 'jaarlijkse herziening loonkostensubsidie (lid 7)'
+          reason: |-
+            Het college stelt de hoogte ambtshalve opnieuw vast per
+            1 januari met toepassing van WML-ontwikkeling en
+            werkgeverslastenvergoeding. Dit is een runtime-proces
+            (jaarlijkse herrekening), geen statisch artikel-rekenwerk.
+          accepted: true
+        - construct: 'EU-woonplaatsverplaatsing (lid 10)'
+          reason: |-
+            Bij verhuizing naar EU/EER/Zwitserland blijft het
+            oorspronkelijke college bevoegd. Geen logische berekening,
+            wel een uitvoeringsregel.
+          accepted: true
+        - construct: 'samenloop met no-riskpolis en LKV'
+          reason: |-
+            LKS regelt zelf geen samenloop met de no-riskpolis
+            (Ziektewet 29b) of LKV (Wtl). Juristvalidatie (juni 2026):
+            LKS komt bóvenop no-risk + LKV wanneer de loonwaardemeting
+            uitwijst dat de werknemer niet zelfstandig het minimumloon
+            kan verdienen — in dit model de knock-out
+            kan_minimumloon_niet_verdienen (lid 2). Zie de uitgebreide
+            samenloop-notitie bij Ziektewet 29b.
+          accepted: true
   - number: 10d
     text: |-
       1 Indien een werkgever voornemens is een dienstbetrekking aan te gaan met een persoon die behoort tot de
