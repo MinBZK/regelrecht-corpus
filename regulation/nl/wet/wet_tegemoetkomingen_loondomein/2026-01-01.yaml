@@ -132,33 +132,26 @@ articles:
             type: number
             required: true
             description: Verloonde uren in kalenderjaar (loonaangifte).
-          - name: is_oudere_werknemer
-            type: boolean
-            required: true
-            description: |-
-              Categorie a (art. 2.2): werknemer ≥ 56 jaar bij begin
-              dienstbetrekking, voorafgaand met uitkering, doelgroep­
-              verklaring oudere werknemer afgegeven door UWV.
           - name: is_arbeidsgehandicapte_werknemer
             type: boolean
             required: true
             description: |-
-              Categorie b (art. 2.6): doelgroepverklaring arbeids­
+              Categorie a (art. 2.6): doelgroepverklaring arbeids­
               gehandicapte werknemer afgegeven door UWV (na re-integratie
               uit WIA / WAO / Wajong / WAZ etc.).
           - name: is_herplaatsen_arbeidsgehandicapte
             type: boolean
             required: true
             description: |-
-              Categorie d (art. 2.14): werknemer is na arbeidsongeschikt­
+              Categorie c (art. 2.14): werknemer is na arbeidsongeschikt­
               heid bij dezelfde werkgever herplaatst en voldoet aan
               voorwaarden art. 2.14.
           - name: heeft_pensioengerechtigde_leeftijd_bereikt
             type: boolean
             required: true
             description: |-
-              Uitsluitingsgrond voor alle vier categorieën
-              (art. 2.2 lid 2.a, 2.6 lid 3.a, 2.10 lid 2.a, 2.14 lid 2.a):
+              Uitsluitingsgrond voor alle drie categorieën
+              (art. 2.6 lid 3.a, 2.10 lid 2.a, 2.14 lid 2.a):
               werknemer heeft pensioengerechtigde leeftijd bereikt
               (artikel 7a lid 1 AOW).
           - name: heeft_loonaangifte_verzoek_ingediend
@@ -176,7 +169,7 @@ articles:
               parameters:
                 bsn: $bsn
               description: |-
-                Categorie c (art. 2.10): doelgroep banenafspraak en
+                Categorie b (art. 2.10): doelgroep banenafspraak en
                 scholingsbelemmerden. Eén bron van waarheid met de
                 no-riskpolis (Ziektewet 29b lid 2 onderdeel e): de
                 kapstok Wfsv artikel 38b (BWBR0017745), die het
@@ -186,13 +179,6 @@ articles:
         output:
           - name: heeft_recht_op_lkv
             type: boolean
-          - name: tegemoetkoming_oudere_eurocent
-            type: amount
-            type_spec:
-              unit: eurocent
-            description: |-
-              Berekende LKV oudere werknemer: MIN(€ 1,35 × verloonde uren,
-              € 2.600). 0 als geen recht of niet in deze categorie.
           - name: tegemoetkoming_arbeidsgehandicapte_eurocent
             type: amount
             type_spec:
@@ -241,44 +227,20 @@ articles:
                   value: $heeft_pensioengerechtigde_leeftijd_bereikt
                 - operation: OR
                   conditions:
-                    - $is_oudere_werknemer
                     - $is_arbeidsgehandicapte_werknemer
                     - $is_herplaatsen_arbeidsgehandicapte
                     - $is_doelgroep_banenafspraak
               legal_basis:
                 law: Wet tegemoetkomingen loondomein
                 bwb_id: BWBR0037522
-                article: '2.1, 2.2, 2.6, 2.10, 2.14'
+                article: '2.1, 2.6, 2.10, 2.14'
                 explanation: |-
-                  Verzoek (art. 2.1) + minstens één categorie (a/b/c/d)
-                  + niet pensioengerechtigd (art. 2.2 lid 2.a, 2.6 lid 3.a,
+                  Verzoek (art. 2.1) + minstens één categorie (a/b/c)
+                  + niet pensioengerechtigd (art. 2.6 lid 3.a,
                   2.10 lid 2.a, 2.14 lid 2.a).
           # Per categorie de berekende tegemoetkoming
           # MIN(uurbedrag × verloonde uren, jaarmaximum); 0 als de
           # werknemer geen recht heeft of niet in die categorie valt.
-          - output: tegemoetkoming_oudere_eurocent
-            value:
-              operation: IF
-              cases:
-                - when:
-                    operation: AND
-                    conditions:
-                      - $heeft_recht_op_lkv
-                      - $is_oudere_werknemer
-                  then:
-                    operation: MIN
-                    values:
-                      - operation: MULTIPLY
-                        values:
-                          - 135
-                          - $verloonde_uren
-                      - 260000
-              default: 0
-              legal_basis:
-                law: Wet tegemoetkomingen loondomein
-                bwb_id: BWBR0037522
-                article: '2.5'
-                explanation: '€ 1,35 per uur, max € 2.600 per jaar (art. 2.5).'
           - output: tegemoetkoming_arbeidsgehandicapte_eurocent
             value:
               operation: IF
@@ -354,7 +316,6 @@ articles:
             value:
               operation: MAX
               values:
-                - $tegemoetkoming_oudere_eurocent
                 - $tegemoetkoming_arbeidsgehandicapte_eurocent
                 - $tegemoetkoming_banenafspraak_eurocent
                 - $tegemoetkoming_herplaatsen_eurocent
@@ -368,22 +329,13 @@ articles:
                   tegemoetkoming voor de werknemer in het kalenderjaar.
           # Verstrekte categorie = die met de hoogste berekende
           # tegemoetkoming; bij gelijke hoogte de eerst in de wet genoemde
-          # (volgorde art. 2.1: oudere → arbeidsgehandicapt →
-          # banenafspraak → herplaatsing). De cases staan in die volgorde
+          # (volgorde art. 2.1: arbeidsgehandicapt → banenafspraak →
+          # herplaatsing). De cases staan in die volgorde
           # en matchen op gelijkheid met het maximum.
           - output: categorie_lkv
             value:
               operation: IF
               cases:
-                - when:
-                    operation: AND
-                    conditions:
-                      - $heeft_recht_op_lkv
-                      - $is_oudere_werknemer
-                      - operation: EQUALS
-                        subject: $tegemoetkoming_oudere_eurocent
-                        value: $hoogte_lkv_per_jaar_eurocent
-                  then: oudere_werknemer
                 - when:
                     operation: AND
                     conditions:
@@ -419,7 +371,7 @@ articles:
                 explanation: |-
                   Art. 4.1 lid 3: verstrekt wordt de categorie met de
                   hoogste berekende tegemoetkoming; bij gelijke hoogte de
-                  eerst in de wet genoemde (volgorde art. 2.1: oudere →
+                  eerst in de wet genoemde (volgorde art. 2.1:
                   arbeidsgehandicapt → banenafspraak → herplaatsing).
       untranslatables:
         - construct: 'doelgroepverklaring-vereiste binnen 3 maanden (art. 2.3, 2.6)'
