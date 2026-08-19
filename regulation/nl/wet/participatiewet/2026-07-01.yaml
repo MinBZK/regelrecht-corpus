@@ -1590,10 +1590,18 @@ articles:
             type: boolean
             required: true
             description: |-
-              Artikel 10d lid 2: in 6 maanden voorafgaand aan
-              dienstbetrekking deelnam aan praktijkonderwijs / VSO /
-              entreeopleiding óf was persoon als bedoeld in artikel 7
-              lid 1 a.
+              Artikel 10d lid 2, onderdelen a, b en c — één boolean over
+              de drie routes, omdat lid 2 ze als alternatieven opsomt:
+              a. in de 6 maanden voorafgaand aan de dienstbetrekking
+              deelnam aan praktijkonderwijs, voortgezet speciaal onderwijs
+              of de entreeopleiding;
+              b. persoon was als bedoeld in artikel 7 lid 1 a of
+              artikel 7a lid 1 a;
+              c. uit 's Rijks kas bekostigd onderwijs volgde zonder
+              startkwalificatie, voor zover het gaat om een persoon als
+              bedoeld in artikel 7a lid 3 die een leer-werktraject volgt.
+              Onderdeel c is per 2026 toegevoegd (versie-drift, bevestigd
+              in de juristvalidatie van 2026-07-23).
           - name: is_wsw_dienstbetrekking
             type: boolean
             required: true
@@ -1611,6 +1619,17 @@ articles:
               Bij beslissing zonder loonwaardevaststelling (lid 1 b)
               kan deze nul zijn — dan geldt 50% eerste-6-mnd-regeling
               (untranslatable).
+          - name: overeengekomen_arbeidsduur_uren_per_week
+            type: number
+            required: true
+            description: |-
+              Lid 4, tweede zin: de overeengekomen arbeidsduur per week.
+              De subsidie wordt naar evenredigheid verminderd of
+              vermeerderd als die afwijkt van 36 uren. De derde zin capt
+              deze waarde op de arbeidsduur die in overeenkomstige
+              dienstbetrekkingen als volledige dienstbetrekking geldt;
+              die sectornorm kent de engine niet (zie untranslatable),
+              dus de aanleveraar levert de reeds gecapte waarde.
           - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
             type: amount
             required: true
@@ -1634,13 +1653,21 @@ articles:
             type_spec:
               unit: eurocent
             description: 'Lid 4 — 70% van WML+VB als bovengrens.'
+          - name: hoogte_lks_voltijd_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 4, eerste zin — bedrag op de normbasis van 36 uren per
+              week, na toepassing van de 70%-cap en vóór de evenredige
+              vermindering of vermeerdering van de tweede zin.
           - name: hoogte_lks_eurocent_per_maand
             type: amount
             type_spec:
               unit: eurocent
             description: |-
-              Lid 4 — bedrag exclusief werkgeverslastenvergoeding
-              (open_term).
+              Lid 4 — bedrag na de evenredigheidscorrectie van de tweede
+              zin, exclusief werkgeverslastenvergoeding (open_term).
         actions:
           - output: heeft_recht_op_lks
             value:
@@ -1689,7 +1716,7 @@ articles:
                 article: '10d'
                 paragraph: '4'
                 explanation: '70% van WML+VB als wettelijke bovengrens.'
-          - output: hoogte_lks_eurocent_per_maand
+          - output: hoogte_lks_voltijd_eurocent_per_maand
             value:
               operation: IF
               cases:
@@ -1703,6 +1730,25 @@ articles:
                           - $bruto_subsidie_eurocent_per_maand
                           - $maximum_subsidie_eurocent_per_maand
               default: 0
+          - output: hoogte_lks_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $hoogte_lks_voltijd_eurocent_per_maand
+                    - $overeengekomen_arbeidsduur_uren_per_week
+                - 36
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10d'
+                paragraph: '4'
+                sentence: '2'
+                explanation: |-
+                  Tweede zin: de subsidie wordt naar evenredigheid
+                  verminderd of vermeerderd als de overeengekomen
+                  arbeidsduur korter of langer is dan 36 uren per week.
       open_terms:
         - id: werkgeverslastenvergoeding_eurocent
           type: amount
@@ -1727,13 +1773,26 @@ articles:
             van het subsidiebedrag binnen één dienstbetrekking, wat
             met de huidige operatie-set niet faithful te modelleren is.
           accepted: true
-        - construct: 'naar evenredigheid bij arbeidsduur < 36 uur (lid 4 zin 2)'
+        - construct: '"de in de sector gebruikelijke volledige dienstbetrekking" als plafond op de arbeidsduur (lid 4 zin 3)'
           reason: |-
-            De subsidie wordt evenredig verminderd of vermeerderd bij
-            kortere of langere arbeidsduur dan 36 uur. Het bedrag dat
-            wij hier berekenen gaat uit van een normalisatie naar
-            36 uur en delegeert de evenredigheidstoepassing aan
-            de uitvoeringslaag.
+            De evenredigheidscorrectie van de tweede zin is gemodelleerd
+            (zie hoogte_lks_eurocent_per_maand). De derde zin capt de
+            overeengekomen arbeidsduur echter op wat in overeenkomstige
+            dienstbetrekkingen als volledige dienstbetrekking geldt. Die
+            sectornorm staat in geen enkele bron die de engine kent; de
+            aanleveraar levert de reeds gecapte arbeidsduur aan.
+          legal_text_excerpt: |-
+            De overeengekomen arbeidsduur, bedoeld in de vorige zin, is
+            maximaal de arbeidsduur welke in overeenkomstige
+            dienstbetrekkingen in de regel geacht wordt een volledige
+            dienstbetrekking te zijn
+          accepted: true
+        - construct: 'afronding van het evenredig verminderde subsidiebedrag'
+          reason: |-
+            Lid 4 geeft geen afrondingsregel. Bij een arbeidsduur die niet
+            op 36 deelt levert de deling een bedrag met decimalen op; de
+            engine rekent exact en rondt niet. De presentatielaag beslist
+            op hoeveel eurocent wordt afgerond.
           accepted: true
         - construct: 'jaarlijkse herziening loonkostensubsidie (lid 7)'
           reason: |-
