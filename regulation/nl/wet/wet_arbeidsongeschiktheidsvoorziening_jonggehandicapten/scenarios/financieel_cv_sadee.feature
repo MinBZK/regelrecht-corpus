@@ -16,39 +16,23 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   #   - €14,50 per uur × 32 uur per week × 52 weken
   #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
   #
-  # Peildatum 2025-01-15 — BEWUST GEKOZEN, zie kanttekening.
+  # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
+  # versie (valid_from <= peildatum); de machine_readable hangt sinds de
+  # her-hang op v0.5.4 op de 2026-07-01-versies, dus die peildatum laadt
+  # precies de wetsversies die wij hebben gemodelleerd.
   #
-  # De engine pakt per wet de laatst-geldende versie (valid_from <=
-  # peildatum). In de CENTRALE corpus bestaan nieuwere, geharvestte
-  # versies van alle zeven wetten (Ziektewet/Wajong/WIA/Wtl/WW/Wfsv
-  # 2026-01-01, Pwet 2026-04-03) die nog GEEN machine_readable dragen.
-  # Bij een peildatum in 2026 zou de engine dus die lege versies laden
-  # en niets kunnen doorrekenen.
-  #
-  # 2025-01-15 ligt in het venster waarin onze gemodelleerde versies
-  # overal de laatst-geldende zijn (de eerstvolgende versie is Pwet
-  # 2025-02-04). Daarmee draaien de scenario's zowel lokaal als in het
-  # traject tegen de corpus die wij daadwerkelijk hebben gemodelleerd.
-  #
-  # KANTTEKENING voor de jurist: wij tonen dus de wet zoals die medio
-  # januari 2025 gold. Sindsdien is er drift — o.a. is LKV-categorie d
-  # (herplaatsen arbeidsgehandicapte) per 2026 geschrapt en is de
-  # LKS-doelgroep uitgebreid met Pwet 10d.2.c. Dat is een open punt,
-  # geen modelleerfout.
-  #
-  # LIV-afschaffing: Wtl 2025-01-01.yaml is via de harvester opgehaald
-  # en aan de corpus toegevoegd; het bestand bevat geen hoofdstuk 3 meer
-  # (LIV-artikelen 3.1.1 t/m 3.2.2 vervallen per Wet 36458). De engine
-  # geeft op peildatum 2025+ een "Output not found"-error voor
-  # heeft_recht_op_liv — wat we hier expliciet asserten.
+  # KANTTEKENING voor de jurist: LKV-categorie d (herplaatsen
+  # arbeidsgehandicapte) is per 2026 geschrapt en inmiddels ook uit ons
+  # model verwijderd. De uitbreiding van de LKS-doelgroep met
+  # Pwet 10d.2.c (leer-werktraject zonder startkwalificatie) is
+  # verwerkt in de Pwet-modellering.
   #
   # Niet in deze slice:
-  #   - Wajong-eigen voorzieningen (art. 2:22 e.v.) voor JC/WPA — Sadee
-  #     wordt uitgesloten van WIA art. 35 (lid 4.a) maar zou via Wajong
-  #     wel persoonlijke ondersteuning kunnen krijgen. Niet gemodelleerd.
-  #   - Cumulatieregel LIV ↔ LKV (Wtl 4.1.3). Beide engines geven
-  #     onafhankelijk "recht = true"; de samenloop moet in een
-  #     aggregator-laag worden uitgerekend (zie Scenario "Samenloop").
+  #   - Wajong-voorzieningen a en b van art. 2:22 lid 2 (vervoer,
+  #     intermediaire activiteiten) en de leefomstandigheden-voorziening
+  #     van lid 3. Onderdelen c en d — werkplekaanpassing en jobcoaching,
+  #     de tegenhanger van WIA art. 35 — zijn wel gemodelleerd; zie de
+  #     scenario's onderaan.
 
   # ────────────────────────────────────────────────────────────────────
   # LDP — Wajong artikel 2:20
@@ -67,17 +51,58 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
     And output "heeft_recht_op_loondispensatie" is true
     And output "beding_lagere_beloning_is_nietig" is true
 
-  # ────────────────────────────────────────────────────────────────────
-  # OPEN: Samenloop LIV ↔ LKV (Wtl artikel 4.1.3)
-  #
-  # De engine geeft per wet onafhankelijk "recht = true" voor zowel LIV
-  # (€815) als LKV-arbeidsgehandicapt (€5.075). De cumulatieregel
-  # Wtl 4.1.3 verbiedt dat beide tegelijk uitgekeerd worden in hetzelfde
-  # dienstverband-jaar. Voor Sadee betekent dit: kies LKV (hogere
-  # opbrengst, langere looptijd).
-  #
-  # Deze samenloop is NIET door één van de bovenstaande scenarios gedekt
-  # — een aggregator-laag die meerdere wetten orchestreert en cumulatie-
-  # regels uitvoert is een open ontwerpvraag. Wanneer die er is, komt
-  # hier een Scenario dat asserteert dat het Financieel CV de werkgever
-  # vertelt "u krijgt LKV; LIV vervalt omdat ze niet samen mogen".
+  # ───────────────────────────────────────────────────────────────────
+  # JC/WPA — Wajong artikel 2:22
+  # Tegenhanger van WIA artikel 35. Sadee valt via lid 4.a buiten de
+  # WIA-route; het recht bestaat wel, maar in deze wet. Zonder deze
+  # modellering toonde het Financieel CV "geen recht" waar in
+  # werkelijkheid een andere route geldt (juristvalidatie 2026-07-23,
+  # bevinding 2).
+  Scenario: Sadee komt via Wajong art. 2:22 in aanmerking voor jobcoaching en werkplekaanpassing
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                        | 999990100 |
+      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding   | true      |
+      | is_wsw_werknemer                           | false     |
+      | aanvraag_jobcoaching_ingediend             | true      |
+      | aanvraag_werkplekaanpassing_ingediend      | true      |
+    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    Then the execution succeeds
+    And output "voldoet_aan_basisvoorwaarden_lid_1" is true
+    And output "heeft_recht_op_jobcoaching" is true
+    And output "heeft_recht_op_werkplekaanpassing" is true
+
+  # Zonder aanvraag geen voorziening: lid 1 kent uitsluitend "op aanvraag"
+  # toe. Beide aanvragen staan los van elkaar — een aanvraag voor
+  # jobcoaching levert geen werkplekaanpassing op.
+  Scenario: Sadee vraagt alleen jobcoaching aan — geen werkplekaanpassing
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                        | 999990100 |
+      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding   | true      |
+      | is_wsw_werknemer                           | false     |
+      | aanvraag_jobcoaching_ingediend             | true      |
+      | aanvraag_werkplekaanpassing_ingediend      | false     |
+    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    Then the execution succeeds
+    And output "heeft_recht_op_jobcoaching" is true
+    And output "heeft_recht_op_werkplekaanpassing" is false
+
+  # Wsw-uitzondering uit lid 1: wie als Wsw-werknemer werkzaam is valt
+  # buiten de voorzieningen, ook met een aanvraag en Wajong-recht.
+  Scenario: Wsw-werknemer valt buiten Wajong art. 2:22
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                        | 999990100 |
+      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding   | true      |
+      | is_wsw_werknemer                           | true      |
+      | aanvraag_jobcoaching_ingediend             | true      |
+      | aanvraag_werkplekaanpassing_ingediend      | true      |
+    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    Then the execution succeeds
+    And output "voldoet_aan_basisvoorwaarden_lid_1" is false
+    And output "heeft_recht_op_jobcoaching" is false
+    And output "heeft_recht_op_werkplekaanpassing" is false

@@ -1839,6 +1839,169 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0008903
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de jonggehandicapte.
+          - name: heeft_recht_op_arbeidsondersteuning_wajong
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de voorziening staat open voor "de jonggehandicapte".
+              Doelgroepvaststelling loopt via artikel 1:1 (hoofdstuk 1A
+              nieuwe Wajong) dan wel hoofdstuk 2 oude Wajong. Bron:
+              UWV-doelgroepregister. Dit is dezelfde parameter waarop
+              WIA artikel 35 lid 4.a uitsluit: waar de WIA-route dichtgaat,
+              gaat deze open.
+          - name: heeft_arbeidsverhouding_of_voorbereiding
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: verricht arbeid in dienstbetrekking of gaat die
+              verrichten, volgt scholing of opleiding ter bevordering van
+              de inschakeling in het arbeidsproces of gaat die volgen, of
+              verricht arbeid op een proefplaats of gaat die verrichten.
+          - name: is_wsw_werknemer
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: uitsluitingsgrond — werkzaam of zal werkzaam zijn als
+              werknemer in de zin van de Wet sociale werkvoorziening.
+          - name: aanvraag_jobcoaching_ingediend
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 + 2.d: aanvraag bij UWV voor noodzakelijke persoonlijke
+              ondersteuning bij het verrichten van de opgedragen taken.
+              Lid 1 kent voorzieningen uitsluitend "op aanvraag" toe.
+          - name: aanvraag_werkplekaanpassing_ingediend
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 + 2.c: aanvraag voor meeneembare voorzieningen ten
+              behoeve van de inrichting van de arbeidsplaats, de productie-
+              en werkmethoden en de bij de arbeid te gebruiken hulpmiddelen.
+        output:
+          - name: voldoet_aan_basisvoorwaarden_lid_1
+            type: boolean
+            description: |-
+              Lid 1: jonggehandicapte + arbeid, scholing of proefplaats +
+              niet-Wsw, cumulatief.
+          - name: heeft_recht_op_jobcoaching
+            type: boolean
+            description: 'Lid 2 onderdeel d — persoonlijke ondersteuning.'
+          - name: heeft_recht_op_werkplekaanpassing
+            type: boolean
+            description: 'Lid 2 onderdeel c — meeneembare werkplek-voorzieningen.'
+        actions:
+          - output: voldoet_aan_basisvoorwaarden_lid_1
+            value:
+              operation: AND
+              conditions:
+                - $heeft_recht_op_arbeidsondersteuning_wajong
+                - $heeft_arbeidsverhouding_of_voorbereiding
+                - operation: NOT
+                  value: $is_wsw_werknemer
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:22'
+                paragraph: '1'
+                url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
+                explanation: |-
+                  Lid 1 noemt de doelgroep (jonggehandicapte), de
+                  arbeidsverhouding en de Wsw-uitzondering cumulatief.
+          - output: heeft_recht_op_jobcoaching
+            value:
+              operation: AND
+              conditions:
+                - $voldoet_aan_basisvoorwaarden_lid_1
+                - $aanvraag_jobcoaching_ingediend
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:22'
+                paragraph: '2'
+                sentence: 'd'
+                url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
+                explanation: |-
+                  Onderdeel d (limitatief in lid 2): noodzakelijke
+                  persoonlijke ondersteuning die een compensatie vormt
+                  voor de beperkingen van de jonggehandicapte. Spiegelt
+                  WIA artikel 35 lid 2.d.
+          - output: heeft_recht_op_werkplekaanpassing
+            value:
+              operation: AND
+              conditions:
+                - $voldoet_aan_basisvoorwaarden_lid_1
+                - $aanvraag_werkplekaanpassing_ingediend
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:22'
+                paragraph: '2'
+                sentence: 'c'
+                url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
+                explanation: |-
+                  Onderdeel c (limitatief in lid 2): meeneembare
+                  voorzieningen die in overwegende mate op het individu
+                  zijn afgestemd. Spiegelt WIA artikel 35 lid 2.c.
+      open_terms:
+        - id: nadere_regels_voorzieningen_artikel_2_22
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 2:22 lid 4 Wajong
+          description: |-
+            Lid 4 — bij of krachtens AMvB kunnen nadere regels worden
+            gesteld met betrekking tot dit artikel. Het Reïntegratiebesluit
+            (BWBR0018394) vult dit in; de koppeling loopt via het
+            implements-blok in dat besluit.
+          default:
+            actions:
+              - output: nadere_regels_voorzieningen_artikel_2_22
+                value: 'Reïntegratiebesluit'
+      untranslatables:
+        - construct: 'UWV "kan ... toekennen" — discretionaire bevoegdheid (lid 1)'
+          reason: |-
+            Lid 1 geeft UWV een bevoegdheid, geen gebonden beschikking.
+            De engine rekent daarom aanspraakvoorwaarden door en niet het
+            toekenningsbesluit zelf; de uitkomst luidt "komt in aanmerking",
+            niet "is toegekend".
+          legal_text_excerpt: 'kan aan de jonggehandicapte ... op aanvraag voorzieningen toekennen'
+          accepted: true
+        - construct: 'voorzieningen-criterium "in overwegende mate op het individu afgestemd" (lid 2.c)'
+          reason: |-
+            Of een meeneembare voorziening "in overwegende mate" op het
+            individu is afgestemd, is een UWV-beoordeling zonder meetbare
+            drempel. Gelijkluidend aan WIA artikel 35 lid 2.c.
+          legal_text_excerpt: 'die in overwegende mate op het individu van de jonggehandicapte ... zijn afgestemd'
+          accepted: true
+        - construct: 'voorzieningen-criterium "noodzakelijke persoonlijke ondersteuning" (lid 2.d)'
+          reason: |-
+            Onderdeel d vergt een oordeel of de ondersteuning noodzakelijk
+            is en of zij een compensatie vormt voor de beperkingen. Dat
+            oordeel ligt bij UWV; de engine ontvangt de aanvraag als
+            boolean. Gelijkluidend aan WIA artikel 35 lid 2.d.
+          legal_text_excerpt: 'noodzakelijke persoonlijke ondersteuning ... indien die ondersteuning een compensatie vormt voor zijn beperkingen'
+          accepted: true
+        - construct: 'onderdelen a en b van lid 2 (vervoer, intermediaire activiteiten) niet gemodelleerd'
+          reason: |-
+            Lid 2 is limitatief en kent vier onderdelen. Gemodelleerd zijn
+            c en d, omdat die de tegenhanger vormen van WIA artikel 35 en
+            in het Financieel CV worden getoond. Vervoersvoorzieningen (a),
+            intermediaire activiteiten (b) en de leefomstandigheden-
+            vervoersvoorziening van lid 3 zijn nog niet gemodelleerd; de
+            engine doet daar geen uitspraak over.
+          legal_text_excerpt: 'a. vervoersvoorzieningen ... b. intermediaire activiteiten'
+          accepted: true
   - number: 2:23
     text: >-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld op grond waarvan het
