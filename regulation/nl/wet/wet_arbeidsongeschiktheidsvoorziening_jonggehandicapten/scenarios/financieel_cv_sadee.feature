@@ -21,11 +21,14 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # her-hang op v0.5.4 op de 2026-07-01-versies, dus die peildatum laadt
   # precies de wetsversies die wij hebben gemodelleerd.
   #
-  # KANTTEKENING voor de jurist: LKV-categorie d (herplaatsen
-  # arbeidsgehandicapte) is per 2026 geschrapt en inmiddels ook uit ons
-  # model verwijderd. De uitbreiding van de LKS-doelgroep met
-  # Pwet 10d.2.c (leer-werktraject zonder startkwalificatie) is
-  # verwerkt in de Pwet-modellering.
+  # KANTTEKENING voor de jurist: de versie-drift uit de juristvalidatie
+  # is verwerkt. In Wtl artikel 2.1 is per 2026 het loonkostenvoordeel
+  # OUDERE WERKNEMER vervallen; de lijst telt nog drie categorieen
+  # (a arbeidsgehandicapte, b banenafspraak, c herplaatsen
+  # arbeidsgehandicapte). Herplaatsen is dus niet geschrapt maar
+  # opgeschoven van d naar c. De LKS-doelgroep is uitgebreid met
+  # Pwet 10d lid 2 onderdeel c (leer-werktraject zonder
+  # startkwalificatie).
   #
   # Niet in deze slice:
   #   - Wajong-voorzieningen a en b van art. 2:22 lid 2 (vervoer,
