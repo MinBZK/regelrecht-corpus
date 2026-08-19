@@ -23,13 +23,10 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   #   - €12 per uur × 32 uur per week × 52 weken
   #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
   #
-  # Peildatum 2025-01-15 — BEWUST GEKOZEN. De engine pakt per wet de
-  # laatst-geldende versie (valid_from <= peildatum). In de centrale
-  # corpus bestaan nieuwere geharvestte versies (2026) zonder
-  # machine_readable; bij een peildatum in 2026 laadt de engine die en
-  # kan hij niets doorrekenen. 2025-01-15 ligt in het venster waarin
-  # onze gemodelleerde versies overal de laatst-geldende zijn.
-  # Kanttekening + drift-uitleg: zie financieel_cv_sadee.feature.
+  # Peildatum 2026-07-01: de machine_readable hangt op de
+  # 2026-07-01-wetsversies, dus die peildatum laadt precies wat wij
+  # hebben gemodelleerd. Kanttekening + drift-uitleg: zie
+  # financieel_cv_sadee.feature.
 
   # ────────────────────────────────────────────────────────────────────
   # NRP — Ziektewet artikel 29b
