@@ -48,8 +48,14 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   #
   # is_arbeidsgehandicapte_werknemer staat op false en niet weggelaten, omdat
   # de categoriekeuze er expliciet op toetst. Zodra de herkomst van deze
-  # categorieen is belegd (nu zijn het kale parameters zonder bron), hoort dit
-  # een niet-waarde te worden in plaats van een gok.
+  # categorieen is belegd, hoort dit een niet-waarde te worden in plaats van
+  # een gok.
+  #
+  # De asymmetrie is hier het punt: is_doelgroep_banenafspraak is WEL belegd —
+  # het komt via een source uit Wfsv artikel 38b, met de toelichting dat dat de
+  # ene bron van waarheid is, gedeeld met de no-riskpolis. De categorieen
+  # arbeidsgehandicapt en herplaatsen zijn daarentegen kale parameters zonder
+  # bron. Juist daar ging het mis.
   Scenario: Sadee krijgt LKV-banenafspraak — Wajong valt in die categorie
     Given the calculation date is "2026-07-01"
     And the following parameters:
