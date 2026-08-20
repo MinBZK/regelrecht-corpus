@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: regeling_betaling_terugvordering_en_tenuitvoerlegging_van_boeten_en_onverschuldigde_betalingen
 regulatory_layer: WET
 publication_date: '2009-06-29'
@@ -17,316 +17,248 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In deze regeling wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-  - number: 1.a
     text: |-
-      WW: [Werkloosheidswet][ref1];
+      In deze regeling wordt verstaan onder:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004045
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-  - number: 1.b
-    text: |-
-      ZW: [Ziektewet][ref1];
+      a. WW: [Werkloosheidswet][ref1];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0001888
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0001888
-  - number: 1.c
-    text: |-
-      WAO: [Wet op de arbeidsongeschiktheidsverzekering][ref1];
+      b. ZW: [Ziektewet][ref2];
 
+      c. WAO: [Wet op de arbeidsongeschiktheidsverzekering][ref3];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0002524
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0002524
-  - number: 1.d
-    text: |-
-      WAZ: [Wet op de arbeidsongeschiktheidsverzekering zelfstandigen][ref1];
+      d. WAZ: [Wet op de arbeidsongeschiktheidsverzekering zelfstandigen][ref4];
 
+      e. WAZO: [Wet arbeid en zorg][ref5];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008656
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0008656
-  - number: 1.e
-    text: |-
-      WAZO: [Wet arbeid en zorg][ref1];
+      f. Wajong: [Wet arbeidsongeschiktheidsvoorziening jonggehandicapten][ref6],
 
+      g. Wet WIA: [Wet werk en inkomen naar arbeidsvermogen][ref7];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0013008
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0013008
-  - number: 1.f
-    text: |-
-      Wajong: [Wet arbeidsongeschiktheidsvoorziening jonggehandicapten][ref1],
+      h. TW: [Toeslagenwet][ref8];
 
+      i. schuldenaar: degene aan wie een boete is opgelegd of van wie een bedrag wordt teruggevorderd;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008657
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0008657
-  - number: 1.g
-    text: |-
-      Wet WIA: [Wet werk en inkomen naar arbeidsvermogen][ref1];
+      j. boete: een boete als bedoeld in het eerste lid van de [artikelen 27a van de WW][ref9], [45a van de ZW][ref10],
+      [29a van de WAO][ref11], [48 van de WAZ][ref12],[ 3:16][ref13] en [3:27 van de WAZO][ref14],
+      [40 van de Wajong][ref15] en [91 van de Wet WIA][ref16] en [14a van de TW][ref17];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0019057
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0019057
-  - number: 1.h
-    text: |-
-      TW: [Toeslagenwet][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004043
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004043
-  - number: 1.i
-    text: 'schuldenaar: degene aan wie een boete is opgelegd of van wie een bedrag wordt teruggevorderd;'
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-  - number: 1.j
-    text: |-
-      boete: een boete als bedoeld in het eerste lid van de [artikelen 27a van de WW][ref1], [45a van de ZW][ref2],
-      [29a van de WAO][ref3], [48 van de WAZ][ref4],[ 3:16][ref5] en [3:27 van de WAZO][ref6], [40 van de Wajong][ref7]
-      en [91 van de Wet WIA][ref8] en [14a van de TW][ref9];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel27a
-      [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel45a
-      [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel29a
-      [ref4]: https://wetten.overheid.nl/BWBR0008656#Artikel48
-      [ref5]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref6]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref7]: https://wetten.overheid.nl/BWBR0008657#Artikel40
-      [ref8]: https://wetten.overheid.nl/BWBR0019057#Artikel91
-      [ref9]: https://wetten.overheid.nl/BWBR0004043#Artikel14a
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-        artikel: 27a
-      - id: ref2
-        bwb_id: BWBR0001888
-        artikel: 45a
-      - id: ref3
-        bwb_id: BWBR0002524
-        artikel: 29a
-      - id: ref4
-        bwb_id: BWBR0008656
-        artikel: '48'
-      - id: ref5
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref6
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref7
-        bwb_id: BWBR0008657
-        artikel: '40'
-      - id: ref8
-        bwb_id: BWBR0019057
-        artikel: '91'
-      - id: ref9
-        bwb_id: BWBR0004043
-        artikel: 14a
-  - number: 1.k
-    text: |-
-      vordering: het bedrag dat wordt teruggevorderd op grond van de [artikelen 36 van de WW][ref1],
-      [33 van de ZW][ref2], [57 van de WAO][ref3], [63 van de WAZ][ref4], [3:16][ref5] en [3:27 van de WAZO][ref6],
-      [55 van de Wajong][ref7], [77 van de Wet WIA][ref8] of [20 van de TW][ref9] of het bedrag dat als boete is
+      k. vordering: het bedrag dat wordt teruggevorderd op grond van de [artikelen 36 van de WW][ref18],
+      [33 van de ZW][ref19], [57 van de WAO][ref20], [63 van de WAZ][ref21], [3:16][ref22] en [3:27 van de WAZO][ref23],
+      [55 van de Wajong][ref24], [77 van de Wet WIA][ref25] of [20 van de TW][ref26] of het bedrag dat als boete is
       opgelegd.
 
+      l. wettelijke rente en de kosten van invordering: de wettelijke rente en de op de invordering betrekking
+      hebbende kosten, bedoeld in het zesde lid van de [artikelen 27g van de WW][ref27], [45g van de ZW][ref28],
+      [29g van de WAO][ref29],[ 54 van de WAZ][ref30], [3:16][ref31] en [3:27 van de WAZO][ref32],
+      [46 van de Wajong][ref33], [96 van de Wet WIA][ref34] en [14g van de TW][ref35];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel36
-      [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel33
-      [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel57
-      [ref4]: https://wetten.overheid.nl/BWBR0008656#Artikel63
-      [ref5]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref6]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref7]: https://wetten.overheid.nl/BWBR0008657#Artikel55
-      [ref8]: https://wetten.overheid.nl/BWBR0019057#Artikel77
-      [ref9]: https://wetten.overheid.nl/BWBR0004043#Artikel20
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-        artikel: '36'
-      - id: ref2
-        bwb_id: BWBR0001888
-        artikel: '33'
-      - id: ref3
-        bwb_id: BWBR0002524
-        artikel: '57'
-      - id: ref4
-        bwb_id: BWBR0008656
-        artikel: '63'
-      - id: ref5
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref6
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref7
-        bwb_id: BWBR0008657
-        artikel: '55'
-      - id: ref8
-        bwb_id: BWBR0019057
-        artikel: '77'
-      - id: ref9
-        bwb_id: BWBR0004043
-        artikel: '20'
-  - number: 1.l
-    text: |-
-      wettelijke rente en de kosten van invordering: de wettelijke rente en de op de invordering betrekking
-      hebbende kosten, bedoeld in het zesde lid van de [artikelen 27g van de WW][ref1], [45g van de ZW][ref2],
-      [29g van de WAO][ref3],[ 54 van de WAZ][ref4], [3:16][ref5] en [3:27 van de WAZO][ref6], [46 van de Wajong][ref7],
-      [96 van de Wet WIA][ref8] en [14g van de TW][ref9];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel27g
-      [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel45g
-      [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel29g
-      [ref4]: https://wetten.overheid.nl/BWBR0008656#Artikel54
-      [ref5]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref6]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref7]: https://wetten.overheid.nl/BWBR0008657#Artikel46
-      [ref8]: https://wetten.overheid.nl/BWBR0019057#Artikel96
-      [ref9]: https://wetten.overheid.nl/BWBR0004043#Artikel14g
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0004045
-        artikel: 27g
-      - id: ref2
-        bwb_id: BWBR0001888
-        artikel: 45g
-      - id: ref3
-        bwb_id: BWBR0002524
-        artikel: 29g
-      - id: ref4
-        bwb_id: BWBR0008656
-        artikel: '54'
-      - id: ref5
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref6
-        bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref7
-        bwb_id: BWBR0008657
-        artikel: '46'
-      - id: ref8
-        bwb_id: BWBR0019057
-        artikel: '96'
-      - id: ref9
-        bwb_id: BWBR0004043
-        artikel: 14g
-  - number: 1.m
-    text: |-
-      aflossingscapaciteit: het deel van het inkomen van de schuldenaar dat met inachtneming van de beslagvrije voet,
-      bedoeld in de artikelen[ 475c tot en met 475e van het Wetboek van Burgerlijke Rechtsvordering][ref1], kan worden
+      m. aflossingscapaciteit: het deel van het inkomen van de schuldenaar dat met inachtneming van de beslagvrije voet,
+      bedoeld in de artikelen[ 475c tot en met 475e van het Wetboek van Burgerlijke Rechtsvordering][ref36], kan worden
       aangewend voor betaling of verrekening van de vordering;
 
+      n. vermogen: vermogensrechten, onroerende en roerende zaken, niet zijnde gebruikelijke huisraad, waarvan de
+      dagwaarde per zaak € 1 134 of meer bedraagt.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0001827#Artikel475c
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
-        bwb_id: BWBR0001827
-        artikel: 475c
-  - number: 1.n
-    text: |-
-      vermogen: vermogensrechten, onroerende en roerende zaken, niet zijnde gebruikelijke huisraad, waarvan de dagwaarde
-      per zaak € 1 134 of meer bedraagt.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-  - number: 1.o
-    text: |-
-      inlichtingenverplichting: de verplichting, bedoeld in de [artikelen 25 van de WW][ref1],[ 31, eerste lid][ref2],
-      en[ 49 van de ZW][ref3], [80 van de WAO][ref4], [70 van de WAZ][ref5], [3:16][ref6] en [3:27 van de WAZO][ref7],
-      [62 van de Wajong][ref8], [27 van de Wet WIA][ref9] en [12 van de TW][ref10];
+      o. inlichtingenverplichting: de verplichting, bedoeld in de
+      [artikelen 25 van de WW][ref37],[ 31, eerste lid][ref38], en[ 49 van de ZW][ref39], [80 van de WAO][ref40],
+      [70 van de WAZ][ref41], [3:16][ref42] en [3:27 van de WAZO][ref43], [62 van de Wajong][ref44],
+      [27 van de Wet WIA][ref45] en [12 van de TW][ref46];
+
+      p. bijstandsnorm: de voor de schuldenaar op grond van de in [Hoofdstuk 3, paragraaf 3.2][ref47]
+      en[ paragraaf 3.3, genoemde artikelen van de Wet werk en bijstand][ref48] geldende bijstandsnorm;
+
+      q. UWV: Uitvoeringsinstituut werknemersverzekeringen, genoemd in hoofdstuk 5 van de Wet structuur
+      uitvoeringsorganisatie werknemersverzekeringen;
+
+      r. aflossingstermijn: termijn waarbinnen de vordering wordt verrekend of betaald.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel25
-      [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel31
-      [ref3]: https://wetten.overheid.nl/BWBR0001888#Artikel49
-      [ref4]: https://wetten.overheid.nl/BWBR0002524#Artikel80
-      [ref5]: https://wetten.overheid.nl/BWBR0008656#Artikel70
-      [ref6]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref7]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref8]: https://wetten.overheid.nl/BWBR0008657#Artikel62
-      [ref9]: https://wetten.overheid.nl/BWBR0019057#Artikel27
-      [ref10]: https://wetten.overheid.nl/BWBR0004043#Artikel12
+      [ref1]: https://wetten.overheid.nl/BWBR0004045
+      [ref2]: https://wetten.overheid.nl/BWBR0001888
+      [ref3]: https://wetten.overheid.nl/BWBR0002524
+      [ref4]: https://wetten.overheid.nl/BWBR0008656
+      [ref5]: https://wetten.overheid.nl/BWBR0013008
+      [ref6]: https://wetten.overheid.nl/BWBR0008657
+      [ref7]: https://wetten.overheid.nl/BWBR0019057
+      [ref8]: https://wetten.overheid.nl/BWBR0004043
+      [ref9]: https://wetten.overheid.nl/BWBR0004045#Artikel27a
+      [ref10]: https://wetten.overheid.nl/BWBR0001888#Artikel45a
+      [ref11]: https://wetten.overheid.nl/BWBR0002524#Artikel29a
+      [ref12]: https://wetten.overheid.nl/BWBR0008656#Artikel48
+      [ref13]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref14]: https://wetten.overheid.nl/BWBR0013008#Artikel327
+      [ref15]: https://wetten.overheid.nl/BWBR0008657#Artikel40
+      [ref16]: https://wetten.overheid.nl/BWBR0019057#Artikel91
+      [ref17]: https://wetten.overheid.nl/BWBR0004043#Artikel14a
+      [ref18]: https://wetten.overheid.nl/BWBR0004045#Artikel36
+      [ref19]: https://wetten.overheid.nl/BWBR0001888#Artikel33
+      [ref20]: https://wetten.overheid.nl/BWBR0002524#Artikel57
+      [ref21]: https://wetten.overheid.nl/BWBR0008656#Artikel63
+      [ref22]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref23]: https://wetten.overheid.nl/BWBR0013008#Artikel327
+      [ref24]: https://wetten.overheid.nl/BWBR0008657#Artikel55
+      [ref25]: https://wetten.overheid.nl/BWBR0019057#Artikel77
+      [ref26]: https://wetten.overheid.nl/BWBR0004043#Artikel20
+      [ref27]: https://wetten.overheid.nl/BWBR0004045#Artikel27g
+      [ref28]: https://wetten.overheid.nl/BWBR0001888#Artikel45g
+      [ref29]: https://wetten.overheid.nl/BWBR0002524#Artikel29g
+      [ref30]: https://wetten.overheid.nl/BWBR0008656#Artikel54
+      [ref31]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref32]: https://wetten.overheid.nl/BWBR0013008#Artikel327
+      [ref33]: https://wetten.overheid.nl/BWBR0008657#Artikel46
+      [ref34]: https://wetten.overheid.nl/BWBR0019057#Artikel96
+      [ref35]: https://wetten.overheid.nl/BWBR0004043#Artikel14g
+      [ref36]: https://wetten.overheid.nl/BWBR0001827#Artikel475c
+      [ref37]: https://wetten.overheid.nl/BWBR0004045#Artikel25
+      [ref38]: https://wetten.overheid.nl/BWBR0001888#Artikel31
+      [ref39]: https://wetten.overheid.nl/BWBR0001888#Artikel49
+      [ref40]: https://wetten.overheid.nl/BWBR0002524#Artikel80
+      [ref41]: https://wetten.overheid.nl/BWBR0008656#Artikel70
+      [ref42]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref43]: https://wetten.overheid.nl/BWBR0013008#Artikel327
+      [ref44]: https://wetten.overheid.nl/BWBR0008657#Artikel62
+      [ref45]: https://wetten.overheid.nl/BWBR0019057#Artikel27
+      [ref46]: https://wetten.overheid.nl/BWBR0004043#Artikel12
+      [ref47]: https://wetten.overheid.nl/BWBR0015703#Paragraaf3.2
+      [ref48]: https://wetten.overheid.nl/BWBR0015703#Paragraaf3.3
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
     references:
       - id: ref1
         bwb_id: BWBR0004045
-        artikel: '25'
       - id: ref2
+        bwb_id: BWBR0001888
+      - id: ref3
+        bwb_id: BWBR0002524
+      - id: ref4
+        bwb_id: BWBR0008656
+      - id: ref5
+        bwb_id: BWBR0013008
+      - id: ref6
+        bwb_id: BWBR0008657
+      - id: ref7
+        bwb_id: BWBR0019057
+      - id: ref8
+        bwb_id: BWBR0004043
+      - id: ref9
+        bwb_id: BWBR0004045
+        artikel: 27a
+      - id: ref10
+        bwb_id: BWBR0001888
+        artikel: 45a
+      - id: ref11
+        bwb_id: BWBR0002524
+        artikel: 29a
+      - id: ref12
+        bwb_id: BWBR0008656
+        artikel: '48'
+      - id: ref13
+        bwb_id: BWBR0013008
+        artikel: 3:16
+      - id: ref14
+        bwb_id: BWBR0013008
+        artikel: 3:27
+      - id: ref15
+        bwb_id: BWBR0008657
+        artikel: '40'
+      - id: ref16
+        bwb_id: BWBR0019057
+        artikel: '91'
+      - id: ref17
+        bwb_id: BWBR0004043
+        artikel: 14a
+      - id: ref18
+        bwb_id: BWBR0004045
+        artikel: '36'
+      - id: ref19
+        bwb_id: BWBR0001888
+        artikel: '33'
+      - id: ref20
+        bwb_id: BWBR0002524
+        artikel: '57'
+      - id: ref21
+        bwb_id: BWBR0008656
+        artikel: '63'
+      - id: ref22
+        bwb_id: BWBR0013008
+        artikel: 3:16
+      - id: ref23
+        bwb_id: BWBR0013008
+        artikel: 3:27
+      - id: ref24
+        bwb_id: BWBR0008657
+        artikel: '55'
+      - id: ref25
+        bwb_id: BWBR0019057
+        artikel: '77'
+      - id: ref26
+        bwb_id: BWBR0004043
+        artikel: '20'
+      - id: ref27
+        bwb_id: BWBR0004045
+        artikel: 27g
+      - id: ref28
+        bwb_id: BWBR0001888
+        artikel: 45g
+      - id: ref29
+        bwb_id: BWBR0002524
+        artikel: 29g
+      - id: ref30
+        bwb_id: BWBR0008656
+        artikel: '54'
+      - id: ref31
+        bwb_id: BWBR0013008
+        artikel: 3:16
+      - id: ref32
+        bwb_id: BWBR0013008
+        artikel: 3:27
+      - id: ref33
+        bwb_id: BWBR0008657
+        artikel: '46'
+      - id: ref34
+        bwb_id: BWBR0019057
+        artikel: '96'
+      - id: ref35
+        bwb_id: BWBR0004043
+        artikel: 14g
+      - id: ref36
+        bwb_id: BWBR0001827
+        artikel: 475c
+      - id: ref37
+        bwb_id: BWBR0004045
+        artikel: '25'
+      - id: ref38
         bwb_id: BWBR0001888
         artikel: '31'
-      - id: ref3
+      - id: ref39
         bwb_id: BWBR0001888
         artikel: '49'
-      - id: ref4
+      - id: ref40
         bwb_id: BWBR0002524
         artikel: '80'
-      - id: ref5
+      - id: ref41
         bwb_id: BWBR0008656
         artikel: '70'
-      - id: ref6
+      - id: ref42
         bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref7
+        artikel: 3:16
+      - id: ref43
         bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref8
+        artikel: 3:27
+      - id: ref44
         bwb_id: BWBR0008657
         artikel: '62'
-      - id: ref9
+      - id: ref45
         bwb_id: BWBR0019057
         artikel: '27'
-      - id: ref10
+      - id: ref46
         bwb_id: BWBR0004043
         artikel: '12'
-  - number: 1.p
-    text: |-
-      bijstandsnorm: de voor de schuldenaar op grond van de in [Hoofdstuk 3, paragraaf 3.2][ref1]
-      en[ paragraaf 3.3, genoemde artikelen van de Wet werk en bijstand][ref2] geldende bijstandsnorm;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015703#Paragraaf3.2
-      [ref2]: https://wetten.overheid.nl/BWBR0015703#Paragraaf3.3
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-    references:
-      - id: ref1
+      - id: ref47
         bwb_id: BWBR0015703
         paragraaf: '3.2'
-      - id: ref2
+      - id: ref48
         bwb_id: BWBR0015703
         paragraaf: '3.3'
-  - number: 1.q
-    text: |-
-      UWV: Uitvoeringsinstituut werknemersverzekeringen, genoemd in hoofdstuk 5 van de Wet structuur
-      uitvoeringsorganisatie werknemersverzekeringen;
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
-  - number: 1.r
-    text: 'aflossingstermijn: termijn waarbinnen de vordering wordt verrekend of betaald.'
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel1
   - number: '2'
     text: |-
       Het UWV stelt de termijnen waarbinnen de vordering wordt verrekend of betaald vast met inachtneming van deze
@@ -336,172 +268,158 @@ articles:
     text: |-
       Als de schuldenaar recht heeft op een nabetaling van het UWV, de Sociale Verzekeringsbank of een college van
       burgemeester en wethouders dient de vordering terstond te worden voldaan door verrekening met de nabetaling.
+
       Vervolgens wordt de vordering voor zover mogelijk voldaan door verrekening met een lopende uitkering. Als dit niet
       mogelijk is vindt aflossing plaats door betaling in termijnen door de schuldenaar.
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel3
-  - number: '4.1'
+  - number: '4'
     text: |-
-      Indien de vordering tot en met € 52 bedraagt, stelt het UWV de wijze waarop en de termijnen waarbinnen deze
+      1 Indien de vordering tot en met € 52 bedraagt, stelt het UWV de wijze waarop en de termijnen waarbinnen deze
       vordering moet worden voldaan vast, zonder de schuldenaar in de gelegenheid te stellen een voorstel te doen inzake
       de voldoening van de vordering.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel4
-  - number: '4.2'
-    text: |-
-      Het UWV kan de termijnen van betaling of verrekening vaststellen conform een met redenen omkleed voorstel van de
+
+      2 Het UWV kan de termijnen van betaling of verrekening vaststellen conform een met redenen omkleed voorstel van de
       schuldenaar, mits volgens dit voorstel de gehele vordering binnen 12 maanden wordt voldaan en de schuldenaar dit
       voorstel heeft gedaan binnen 6 weken nadat hem daartoe de gelegenheid is geboden door het UWV.
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel4
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Onverminderd [artikel 4][ref1] stelt het UWV de aflossingstermijnen vast na overleg met de schuldenaar en met
+      1 Onverminderd [artikel 4][ref1] stelt het UWV de aflossingstermijnen vast na overleg met de schuldenaar en met
       inachtneming van dit artikel, tenzij:
 
+      a. het UWV de aflossingstermijnen heeft vastgesteld op voorstel van de schuldenaar, bedoeld in [artikel 4][ref2];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel4
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0008082
-        artikel: '4'
-        paragraaf: II
-  - number: 5.1.a
-    text: |-
-      het UWV de aflossingstermijnen heeft vastgesteld op voorstel van de schuldenaar, bedoeld in [artikel 4][ref1];
+      b. de vordering een boete betreft;
 
+      c. de onverschuldigde betaling het gevolg is van een gedraging waarvoor aan de schuldenaar een boete is opgelegd;
+      of
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel4
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-    references:
-      - id: ref1
-        bwb_id: BWBR0008082
-        artikel: '4'
-        paragraaf: II
-  - number: 5.1.b
-    text: de vordering een boete betreft;
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: 5.1.c
-    text: de onverschuldigde betaling het gevolg is van een gedraging waarvoor aan de schuldenaar een boete is opgelegd; of
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: 5.1.d
-    text: |-
-      de onverschuldigde betaling het gevolg is van een gedraging waarvan het UWV aangifte heeft gedaan of waarvan
+      d. de onverschuldigde betaling het gevolg is van een gedraging waarvan het UWV aangifte heeft gedaan of waarvan
       proces-verbaal is opgemaakt en ingezonden.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: '5.2'
-    text: |-
-      Onverminderd het bepaalde in [artikel 7][ref1] wordt de vordering geheel voldaan door middel van periodieke
+
+      2 Onverminderd het bepaalde in [artikel 7][ref3] wordt de vordering geheel voldaan door middel van periodieke
       betalingen of verrekeningen gedurende 36 maanden te rekenen vanaf de dag waarop het UWV aan de schuldenaar
       kennis heeft gegeven van de vaststelling van de termijnen. De aflossingstermijn is ter hoogte van de volledige
       aflossingscapaciteit hetgeen een betaling gedurende minder dan 36 maanden met zich mee kan brengen.
 
+      3 In afwijking van het tweede lid, tweede zin, wordt op verzoek van de schuldenaar ten minste
+      de halve aflossingscapaciteit toegepast onder de voorwaarde dat de vordering geheel wordt
+      voldaan gedurende 36 maanden te rekenen vanaf de dag dat het UWV aan de schuldenaar kennis heeft
+      gegeven van de termijnen. De schuldenaar wordt erop gewezen dat ambtshalve kwijtschelding als
+      bedoeld in de [artikelen 36, derde lid, van de WW][ref4], [33, derde lid, van de ZW][ref5],
+      [57, derde lid, van de WAO][ref6], [63, derde lid, van de WAZ][ref7],[ 55, derde lid, van de Wajong][ref8],
+      [20, derde lid, van de TW][ref9],[ 77, derde lid, van de Wet WIA][ref10], of [artikel 3:16][ref11],
+      [artikel 3:27 WAZO][ref12], niet mogelijk is.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel7
+      4 Indien de schuldenaar voorstelt om hogere periodieke betalingen te doen dan het bedrag, bedoeld in het tweede
+      lid, stelt het UWV de termijnen conform dit voorstel vast.
+
+      5 Indien de schuldenaar, bij aanwending van zijn volledige aflossingscapaciteit, de vordering niet binnen 36
+      maanden volledig zal kunnen voldoen, wendt hij zijn vermogen aan zodat een zodanig gedeelte van de vordering binnen
+      6 weken, nadat het UWV aan de schuldenaar kennis heeft gegeven van de vaststelling van de termijnen, wordt voldaan,
+      dat hij de resterende vordering binnen 36 maanden kan voldoen.
+
+      Indien echter de schuldenaar ten genoegen van het UWV zekerheid stelt voor aflossing van de gehele vordering binnen
+      36 maanden, nadat de vaststelling van de termijnen hem bekend is gemaakt, behoeft de schuldenaar zijn vermogen niet
+      aan te wenden.
+
+      6 De periodieke betaling of verrekening wordt gesteld op de volledige aflossingscapaciteit verminderd met 5 % van
+      de bijstandsnorm indien
+
+      a. de schuldenaar met aanwending van zijn volledige aflossingscapaciteit en vermogen niet in staat is de vordering
+      binnen 36 maanden te voldoen en
+
+      b. periodieke betaling of verrekening gedurende 60 maanden van het aldus verkregen bedrag leidt tot een grotere
+      aflossing dan betaling of verrekening gedurende 36 maanden van het op grond van het tweede en derde lid verkregen
+      bedrag.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel4
+      [ref2]: https://wetten.overheid.nl/BWBR0008082#Artikel4
+      [ref3]: https://wetten.overheid.nl/BWBR0008082#Artikel7
+      [ref4]: https://wetten.overheid.nl/BWBR0004045#Artikel36
+      [ref5]: https://wetten.overheid.nl/BWBR0001888#Artikel33
+      [ref6]: https://wetten.overheid.nl/BWBR0002524#Artikel57
+      [ref7]: https://wetten.overheid.nl/BWBR0008656#Artikel63
+      [ref8]: https://wetten.overheid.nl/BWBR0008657#Artikel55
+      [ref9]: https://wetten.overheid.nl/BWBR0004043#Artikel20
+      [ref10]: https://wetten.overheid.nl/BWBR0019057#Artikel77
+      [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref12]: https://wetten.overheid.nl/BWBR0013008#Artikel327
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
     references:
       - id: ref1
         bwb_id: BWBR0008082
+        artikel: '4'
+        paragraaf: II
+      - id: ref2
+        bwb_id: BWBR0008082
+        artikel: '4'
+        paragraaf: II
+      - id: ref3
+        bwb_id: BWBR0008082
         artikel: '7'
         paragraaf: II
-  - number: '5.3'
-    text: |-
-      In afwijking van het tweede lid, tweede zin, wordt op verzoek van de schuldenaar ten minste de
-      halve aflossingscapaciteit toegepast onder de voorwaarde dat de vordering geheel wordt voldaan
-      gedurende 36 maanden te rekenen vanaf de dag dat het UWV aan de schuldenaar kennis heeft
-      gegeven van de termijnen. De schuldenaar wordt erop gewezen dat ambtshalve kwijtschelding als
-      bedoeld in de [artikelen 36, derde lid, van de WW][ref1], [33, derde lid, van de ZW][ref2],
-      [57, derde lid, van de WAO][ref3], [63, derde lid, van de WAZ][ref4],[ 55, derde lid, van de Wajong][ref5],
-      [20, derde lid, van de TW][ref6],[ 77, derde lid, van de Wet WIA][ref7], of [artikel 3:16][ref8],
-      [artikel 3:27 WAZO][ref9], niet mogelijk is.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004045#Artikel36
-      [ref2]: https://wetten.overheid.nl/BWBR0001888#Artikel33
-      [ref3]: https://wetten.overheid.nl/BWBR0002524#Artikel57
-      [ref4]: https://wetten.overheid.nl/BWBR0008656#Artikel63
-      [ref5]: https://wetten.overheid.nl/BWBR0008657#Artikel55
-      [ref6]: https://wetten.overheid.nl/BWBR0004043#Artikel20
-      [ref7]: https://wetten.overheid.nl/BWBR0019057#Artikel77
-      [ref8]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref9]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0004045
         artikel: '36'
-      - id: ref2
+      - id: ref5
         bwb_id: BWBR0001888
         artikel: '33'
-      - id: ref3
+      - id: ref6
         bwb_id: BWBR0002524
         artikel: '57'
-      - id: ref4
+      - id: ref7
         bwb_id: BWBR0008656
         artikel: '63'
-      - id: ref5
+      - id: ref8
         bwb_id: BWBR0008657
         artikel: '55'
-      - id: ref6
+      - id: ref9
         bwb_id: BWBR0004043
         artikel: '20'
-      - id: ref7
+      - id: ref10
         bwb_id: BWBR0019057
         artikel: '77'
-      - id: ref8
+      - id: ref11
         bwb_id: BWBR0013008
-        artikel: '3'
-      - id: ref9
+        artikel: 3:16
+      - id: ref12
         bwb_id: BWBR0013008
-        artikel: '3'
-  - number: '5.4'
+        artikel: 3:27
+  - number: '6'
     text: |-
-      Indien de schuldenaar voorstelt om hogere periodieke betalingen te doen dan het bedrag, bedoeld in het tweede lid,
-      stelt het UWV de termijnen conform dit voorstel vast.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: '5.5'
-    text: |-
-      Indien de schuldenaar, bij aanwending van zijn volledige aflossingscapaciteit, de vordering niet binnen 36 maanden
-      volledig zal kunnen voldoen, wendt hij zijn vermogen aan zodat een zodanig gedeelte van de vordering binnen 6
-      weken, nadat het UWV aan de schuldenaar kennis heeft gegeven van de vaststelling van de termijnen, wordt voldaan,
-      dat hij de resterende vordering binnen 36 maanden kan voldoen. Indien echter de schuldenaar ten genoegen van
-      het UWV zekerheid stelt voor aflossing van de gehele vordering binnen 36 maanden, nadat de vaststelling van de
-      termijnen hem bekend is gemaakt, behoeft de schuldenaar zijn vermogen niet aan te wenden.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: '5.6'
-    text: |-
-      De periodieke betaling of verrekening wordt gesteld op de volledige aflossingscapaciteit verminderd met 5 % van de
-      bijstandsnorm indien
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: 5.6.a
-    text: |-
-      de schuldenaar met aanwending van zijn volledige aflossingscapaciteit en vermogen niet in staat is de vordering
-      binnen 36 maanden te voldoen en
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: 5.6.b
-    text: |-
-      periodieke betaling of verrekening gedurende 60 maanden van het aldus verkregen bedrag leidt tot een grotere
-      aflossing dan betaling of verrekening gedurende 36 maanden van het op grond van het tweede en derde lid verkregen
-      bedrag.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel5
-  - number: '6.1'
-    text: Dit artikel is van toepassing indien de vordering
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-  - number: 6.1.a
-    text: een boete betreft;
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-  - number: 6.1.b
-    text: |-
-      het gevolg is van het niet nakomen van de inlichtingenverplichting dan wel van een gedraging waarvan het UWV
+      1 Dit artikel is van toepassing indien de vordering
+
+      a. een boete betreft;
+
+      b. het gevolg is van het niet nakomen van de inlichtingenverplichting dan wel van een gedraging waarvan het UWV
       aangifte heeft gedaan of waarvan proces-verbaal is opgemaakt en ingezonden.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-  - number: '6.2'
-    text: |-
-      Het UWV stelt de aflossingstermijnen zodanig vast dat gebruik wordt gemaakt van de volledige aflossingscapaciteit
+
+      2 Het UWV stelt de aflossingstermijnen zodanig vast dat gebruik wordt gemaakt van de volledige aflossingscapaciteit
       van de schuldenaar, onverminderd het bepaalde in [artikel 7][ref1], tenzij het UWV de termijnen heeft vastgesteld
       conform het bepaalde in [artikel 4][ref2].
+
+      3 Indien de schuldenaar voorstelt om hogere betalingen te doen dan het bedrag ingevolge het tweede lid, stelt het
+      UWV de termijnen conform dit voorstel vast.
+
+      4 Indien de schuldenaar de vordering niet binnen 12 maanden volledig zal kunnen voldoen, wendt hij zijn vermogen
+      aan zodat een zodanig gedeelte van de vordering binnen 6 weken, nadat het UWV aan de schuldenaar kennis heeft
+      gegeven van de vaststelling van de termijnen, wordt voldaan, dat hij de resterende vordering binnen 12 maanden
+      kan voldoen.
+
+      Indien echter de schuldenaar ten genoegen van het UWV zekerheid stelt voor aflossing van de gehele vordering binnen
+      12 maanden, nadat de vaststelling van de termijnen hem bekend is gemaakt, behoeft de schuldenaar zijn vermogen niet
+      aan te wenden.
+
+      5 Onverminderd het bepaalde in [artikel 8][ref3] stelt het UWV de termijnen waarbinnen wordt verrekend of moet
+      worden betaald vast over een periode van meer dan 12 maanden indien de schuldenaar, ook na aanwending van zijn
+      vermogen, niet in staat is om de vordering binnen 12 maanden te voldoen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel7
       [ref2]: https://wetten.overheid.nl/BWBR0008082#Artikel4
+      [ref3]: https://wetten.overheid.nl/BWBR0008082#Artikel8
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
     references:
       - id: ref1
@@ -512,37 +430,13 @@ articles:
         bwb_id: BWBR0008082
         artikel: '4'
         paragraaf: II
-  - number: '6.3'
-    text: |-
-      Indien de schuldenaar voorstelt om hogere betalingen te doen dan het bedrag ingevolge het tweede lid, stelt het UWV
-      de termijnen conform dit voorstel vast.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-  - number: '6.4'
-    text: |-
-      Indien de schuldenaar de vordering niet binnen 12 maanden volledig zal kunnen voldoen, wendt hij zijn vermogen aan
-      zodat een zodanig gedeelte van de vordering binnen 6 weken, nadat het UWV aan de schuldenaar kennis heeft gegeven
-      van de vaststelling van de termijnen, wordt voldaan, dat hij de resterende vordering binnen 12 maanden kan voldoen.
-      Indien echter de schuldenaar ten genoegen van het UWV zekerheid stelt voor aflossing van de gehele vordering binnen
-      12 maanden, nadat de vaststelling van de termijnen hem bekend is gemaakt, behoeft de schuldenaar zijn vermogen niet
-      aan te wenden.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-  - number: '6.5'
-    text: |-
-      Onverminderd het bepaalde in [artikel 8][ref1] stelt het UWV de termijnen waarbinnen wordt verrekend of moet worden
-      betaald vast over een periode van meer dan 12 maanden indien de schuldenaar, ook na aanwending van zijn vermogen,
-      niet in staat is om de vordering binnen 12 maanden te voldoen.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008082#Artikel8
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel6
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0008082
         artikel: '8'
         paragraaf: II
-  - number: '7.1'
+  - number: '7'
     text: |-
-      Indien de schuldenaar een betalingsregeling heeft getroffen met één of meer derden die beschikken over een
+      1 Indien de schuldenaar een betalingsregeling heeft getroffen met één of meer derden die beschikken over een
       executoriale titel, kan het UWV rekening houden met deze betalingsregelingen bij de vaststelling van de termijn
       of termijnen waarbinnen wordt verrekend of betaald. Het bedrag van de verrekening of betaling wordt in elk geval
       niet gesteld op een lager bedrag dan het aandeel waarop het UWV aanspraak zou kunnen maken bij verrekening met
@@ -550,33 +444,30 @@ articles:
       periodieke betalingen, indien door deze derden beslag zou zijn gelegd. Het UWV is bevoegd om een schuldeiser, met
       wie de schuldenaar, tenminste één jaar voor de beslissing tot terugvordering is afgegeven, een betalingsregeling is
       overeengekomen, gelijk te stellen met een schuldeiser die in het bezit is van een executoriale titel.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: '7.2'
-    text: |-
-      In afwijking van het eerste lid wordt op de aflossingscapaciteit in mindering gebracht de betaalde bijdrage tot €
+
+      2 In afwijking van het eerste lid wordt op de aflossingscapaciteit in mindering gebracht de betaalde bijdrage tot €
       113 per persoon in
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: 7.2.a
-    text: levensonderhoud van de ex-echtgenoot;
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: 7.2.b
-    text: de kosten van verzorging en opvoeding van minderjarige kinderen die niet tot het huishouden behoren;
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: 7.2.c
-    text: levensonderhoud en studie van meerderjarige kinderen tot 27 jaar.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: '7.3'
-    text: |-
-      Indien het UWV zijn medewerking verleent aan een gerechtelijk of buitengerechtelijk akkoord ter sanering van de
+
+      a. levensonderhoud van de ex-echtgenoot;
+
+      b. de kosten van verzorging en opvoeding van minderjarige kinderen die niet tot het huishouden behoren;
+
+      c. levensonderhoud en studie van meerderjarige kinderen tot 27 jaar.
+
+      3 Indien het UWV zijn medewerking verleent aan een gerechtelijk of buitengerechtelijk akkoord ter sanering van de
       schulden van de schuldenaar kan, in afwijking van het eerste en tweede lid, worden ingestemd met een ander aandeel
       in de aflossingscapaciteit en het betrekken van vorderingen van andere schuldeisers in de vaststelling van dit
       aandeel, indien
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: 7.3.a
-    text: |-
-      de vordering van het UWV tenminste zal worden voldaan naar evenredigheid met vorderingen van schuldeisers met
+
+      a. de vordering van het UWV tenminste zal worden voldaan naar evenredigheid met vorderingen van schuldeisers met
       gelijke rang en het te ontvangen deel van de vordering van het UWV van tenminste dezelfde omvang is als kan worden
       verkregen indien een saneringsplan als bedoeld in [artikel 343 van de Faillissementswet][ref1] wordt vastgesteld en
+
+      b. het UWV noch in uitkeringspercentage noch in tempo van betaling wordt achtergesteld bij gelijkbevoorrechte
+      schuldeisers en
+
+      c. redelijkerwijs mag worden aangenomen dat de schuldenaar, afgezien van de daarvoor te vervullen formaliteiten, in
+      aanmerking zou komen voor de toepassing van de schuldsaneringsregeling natuurlijke personen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0001860#Artikel343
@@ -585,16 +476,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0001860
         artikel: '343'
-  - number: 7.3.b
-    text: |-
-      het UWV noch in uitkeringspercentage noch in tempo van betaling wordt achtergesteld bij gelijkbevoorrechte
-      schuldeisers en
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
-  - number: 7.3.c
-    text: |-
-      redelijkerwijs mag worden aangenomen dat de schuldenaar, afgezien van de daarvoor te vervullen formaliteiten, in
-      aanmerking zou komen voor de toepassing van de schuldsaneringsregeling natuurlijke personen.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel7
   - number: '8'
     text: |-
       Onverminderd het bepaalde in de [artikelen 5][ref1] en [7][ref2], wordt de periodieke betaling of verrekening
@@ -640,8 +521,8 @@ articles:
       [ref8]: https://wetten.overheid.nl/BWBR0019057#Artikel91
       [ref9]: https://wetten.overheid.nl/BWBR0008656#Artikel48
       [ref10]: https://wetten.overheid.nl/BWBR0008656#Artikel63
-      [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel3
-      [ref12]: https://wetten.overheid.nl/BWBR0013008#Artikel3
+      [ref11]: https://wetten.overheid.nl/BWBR0013008#Artikel316
+      [ref12]: https://wetten.overheid.nl/BWBR0013008#Artikel327
       [ref13]: https://wetten.overheid.nl/BWBR0008657#Artikel40
       [ref14]: https://wetten.overheid.nl/BWBR0008657#Artikel55
       [ref15]: https://wetten.overheid.nl/BWBR0004043#Artikel14a
@@ -680,10 +561,10 @@ articles:
         artikel: '63'
       - id: ref11
         bwb_id: BWBR0013008
-        artikel: '3'
+        artikel: 3:16
       - id: ref12
         bwb_id: BWBR0013008
-        artikel: '3'
+        artikel: 3:27
       - id: ref13
         bwb_id: BWBR0008657
         artikel: '40'
@@ -701,20 +582,16 @@ articles:
       Het UWV kan de vastgestelde aflossingstermijnen herzien wegens gewijzigde omstandigheden met inachtneming van deze
       regeling.
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel11
-  - number: '12.1'
+  - number: '12'
     text: |-
-      De wettelijke rente en de kosten van invordering zijn verschuldigd vanaf het tijdstip dat de termijn is verstreken
-      waarbinnen volgens het besluit van het UWV moest worden betaald.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel12
-  - number: '12.2'
-    text: 'De op de invordering betrekking hebbende kosten bedragen:'
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel12
-  - number: 12.2.a
-    text: 15 % van de resterende vordering, doch ten minste € 45 en ten hoogste € 681 alsmede
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel12
-  - number: 12.2.b
-    text: |-
-      de kosten van betekening en gerechtelijke tenuitvoerlegging, zoals vastgesteld bij of krachtens de
+      1 De wettelijke rente en de kosten van invordering zijn verschuldigd vanaf het tijdstip dat de termijn is
+      verstreken waarbinnen volgens het besluit van het UWV moest worden betaald.
+
+      2 De op de invordering betrekking hebbende kosten bedragen:
+
+      a. 15 % van de resterende vordering, doch ten minste € 45 en ten hoogste € 681 alsmede
+
+      b. de kosten van betekening en gerechtelijke tenuitvoerlegging, zoals vastgesteld bij of krachtens de
       [Wet tarieven in burgerlijke zaken][ref1].
 
 
@@ -723,20 +600,16 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0001852
-  - number: '13.1'
+  - number: '13'
     text: |-
-      Tenzij de schuldenaar een andere vordering aanwijst wordt een betaling die zou kunnen worden toegerekend aan twee
+      1 Tenzij de schuldenaar een andere vordering aanwijst wordt een betaling die zou kunnen worden toegerekend aan twee
       of meerdere vorderingen, op de eerste plaats toegerekend aan een verschuldigde boete.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel13
-  - number: '13.2'
-    text: |-
-      Zijn er vervolgens nog meerdere vorderingen waarop de toerekening zou kunnen plaatsvinden, dan wordt deze op
-      de eerste plaats toegerekend aan de oudste. Zijn de vorderingen even oud, dan geschiedt de toerekening naar
+
+      2 Zijn er vervolgens nog meerdere vorderingen waarop de toerekening zou kunnen plaatsvinden, dan wordt deze
+      op de eerste plaats toegerekend aan de oudste. Zijn de vorderingen even oud, dan geschiedt de toerekening naar
       evenredigheid.
-    url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel13
-  - number: '13.3'
-    text: |-
-      Betaling op een bepaalde vordering strekt eerst in mindering van de kosten, vervolgens de verschenen rente en
+
+      3 Betaling op een bepaalde vordering strekt eerst in mindering van de kosten, vervolgens de verschenen rente en
       tenslotte de hoofdsom en de lopende rente.
     url: https://wetten.overheid.nl/BWBR0008082/2007-07-01#Artikel13
   - number: '14'
