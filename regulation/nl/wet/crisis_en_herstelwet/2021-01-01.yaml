@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: crisis_en_herstelwet
 regulatory_layer: WET
 publication_date: '2012-06-05'
@@ -20,81 +20,61 @@ preamble:
     verstaan, gelijk Wij goedvinden en verstaan bij deze:
   url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#ArtikelAanhef
 articles:
-  - number: 1.1.1
+  - number: '1.1'
     text: |-
-      [Afdeling 2][ref1] is van toepassing op:
+      1 [Afdeling 2][ref1] is van toepassing op:
+
+      a. alle besluiten die krachtens enig wettelijk voorschrift zijn vereist voor de ontwikkeling of verwezenlijking van
+      de in [bijlage I][ref2] bij deze wet bedoelde categorieën ruimtelijke en infrastructurele projecten dan wel voor de
+      in [bijlage II][ref3] bij deze wet bedoelde ruimtelijke en infrastructurele projecten;
+
+      b. bestemmingsplannen als bedoeld in [artikel 2.3, eerste lid][ref4], alsmede de voor de uitvoering van de
+      projecten waarop die bestemmingsplannen betrekking hebben vereiste besluiten en de voor de uitvoering van
+      maatregelen of werken als bedoeld in artikel 2.3, tweede lid, onderdelen b en c, vereiste besluiten, en
+
+      c. projectuitvoeringsbesluiten als bedoeld in [artikel 2.10, eerste lid][ref5].
+
+      2 [Afdeling 3][ref6] is van toepassing op de in [bijlage II][ref7] bij deze wet bedoelde ruimtelijke en
+      infrastructurele projecten en op krachtens [artikel 2.18][ref8] aangewezen projecten.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027431#Hoofdstuk1
+      [ref2]: https://wetten.overheid.nl/BWBR0027431
+      [ref3]: https://wetten.overheid.nl/BWBR0027431
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.3
+      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2.10
+      [ref6]: https://wetten.overheid.nl/BWBR0027431#Hoofdstuk1
+      [ref7]: https://wetten.overheid.nl/BWBR0027431
+      [ref8]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.1
     references:
       - id: ref1
         bwb_id: BWBR0027431
         hoofdstuk: '1'
         afdeling: '2'
-  - number: 1.1.1.a
-    text: |-
-      alle besluiten die krachtens enig wettelijk voorschrift zijn vereist voor de ontwikkeling of verwezenlijking van de
-      in [bijlage I][ref1] bij deze wet bedoelde categorieën ruimtelijke en infrastructurele projecten dan wel voor de in
-      [bijlage II][ref2] bij deze wet bedoelde ruimtelijke en infrastructurele projecten;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431
-      [ref2]: https://wetten.overheid.nl/BWBR0027431
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-      - id: ref2
-        bwb_id: BWBR0027431
-  - number: 1.1.1.b
-    text: |-
-      bestemmingsplannen als bedoeld in [artikel 2.3, eerste lid][ref1], alsmede de voor de uitvoering van de projecten
-      waarop die bestemmingsplannen betrekking hebben vereiste besluiten en de voor de uitvoering van maatregelen of
-      werken als bedoeld in artikel 2.3, tweede lid, onderdelen b en c, vereiste besluiten, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '1'
-  - number: 1.1.1.c
-    text: |-
-      projectuitvoeringsbesluiten als bedoeld in [artikel 2.10, eerste lid][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-  - number: 1.1.2
-    text: |-
-      [Afdeling 3][ref1] is van toepassing op de in [bijlage II][ref2] bij deze wet bedoelde ruimtelijke en
-      infrastructurele projecten en op krachtens [artikel 2.18][ref3] aangewezen projecten.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Hoofdstuk1
-      [ref2]: https://wetten.overheid.nl/BWBR0027431
-      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.1
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        hoofdstuk: '1'
-        afdeling: '3'
       - id: ref2
         bwb_id: BWBR0027431
       - id: ref3
         bwb_id: BWBR0027431
-        artikel: '2'
+      - id: ref4
+        bwb_id: BWBR0027431
+        artikel: '2.3'
+        hoofdstuk: '2'
+        afdeling: '1'
+      - id: ref5
+        bwb_id: BWBR0027431
+        artikel: '2.10'
+        hoofdstuk: '2'
+        afdeling: '6'
+      - id: ref6
+        bwb_id: BWBR0027431
+        hoofdstuk: '1'
+        afdeling: '3'
+      - id: ref7
+        bwb_id: BWBR0027431
+      - id: ref8
+        bwb_id: BWBR0027431
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
   - number: '1.2'
@@ -119,12 +99,12 @@ articles:
       besluit ten grondslag zijn gelegd.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel3
+      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel39
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.3
     references:
       - id: ref1
         bwb_id: BWBR0005537
-        artikel: '3'
+        artikel: 3:9
   - number: '1.4'
     text: |-
       In afwijking van [artikel 8:1 van de Algemene wet bestuursrecht][ref1] kan een niet tot de centrale overheid
@@ -134,194 +114,168 @@ articles:
       tot dat bestuursorgaan of tot de rechtspersoon waartoe dat bestuursorgaan behoort.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel8
+      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel81
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.4
     references:
       - id: ref1
         bwb_id: BWBR0005537
-        artikel: '8'
-  - number: 1.6.1
+        artikel: 8:1
+  - number: '1.6'
     text: |-
-      De bestuursrechter behandelt het beroep met toepassing van [afdeling 8.2.3 van de Algemene wet bestuursrecht][ref1].
+      1 De bestuursrechter behandelt het beroep met toepassing van
+      [afdeling 8.2.3 van de Algemene wet bestuursrecht][ref1].
+
+      2 In afwijking van [artikel 6:6 van de Algemene wet bestuursrecht][ref2] is het beroep niet-ontvankelijk indien
+      niet is voldaan aan [artikel 6:5, eerste lid, onderdeel d, van die wet][ref3].
+
+      3 Indien de bestuursrechter het advies van de Stichting advisering bestuursrechtspraak inwint, brengt de Stichting
+      binnen twee maanden na het verzoek advies uit.
+
+      4 De bestuursrechter doet uitspraak binnen zes maanden na afloop van de beroepstermijn.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Afdeling8.2.3
+      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel66
+      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel65
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.6
     references:
       - id: ref1
         bwb_id: BWBR0005537
         afdeling: 8.2.3
-  - number: 1.6.2
-    text: |-
-      In afwijking van [artikel 6:6 van de Algemene wet bestuursrecht][ref1] is het beroep niet-ontvankelijk indien niet
-      is voldaan aan [artikel 6:5, eerste lid, onderdeel d, van die wet][ref2].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel6
-      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel6
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.6
-    references:
-      - id: ref1
-        bwb_id: BWBR0005537
-        artikel: '6'
       - id: ref2
         bwb_id: BWBR0005537
-        artikel: '6'
-  - number: 1.6.3
-    text: |-
-      Indien de bestuursrechter het advies van de Stichting advisering bestuursrechtspraak inwint, brengt de Stichting
-      binnen twee maanden na het verzoek advies uit.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.6
-  - number: 1.6.4
-    text: De bestuursrechter doet uitspraak binnen zes maanden na afloop van de beroepstermijn.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.6
+        artikel: 6:6
+      - id: ref3
+        bwb_id: BWBR0005537
+        artikel: 6:5
   - number: 1.6a
     text: Na afloop van de termijn voor het instellen van beroep kunnen geen beroepsgronden meer worden aangevoerd.
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.6a
-  - number: 1.7.1
+  - number: '1.7'
     text: |-
-      [Artikel 1.6, vierde lid][ref1], is niet van toepassing, indien [artikel 8:51a][ref2] of
+      1 [Artikel 1.6, vierde lid][ref1], is niet van toepassing, indien [artikel 8:51a][ref2] of
       [8:51d van de Algemene wet bestuursrecht][ref3] wordt toegepast.
 
+      2 In dat geval doet de bestuursrechter:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel8
-      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel8
+      a. binnen zes maanden na afloop van de beroepstermijn een tussenuitspraak, en
+
+      b. binnen zes maanden na de verzending van de tussenuitspraak een einduitspraak.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.6
+      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel851a
+      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel851d
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.7
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.6'
         hoofdstuk: '1'
         paragraaf: '2.4'
         afdeling: '2'
       - id: ref2
         bwb_id: BWBR0005537
-        artikel: '8'
+        artikel: 8:51a
       - id: ref3
         bwb_id: BWBR0005537
-        artikel: '8'
-  - number: 1.7.2
-    text: 'In dat geval doet de bestuursrechter:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.7
-  - number: 1.7.2.a
-    text: binnen zes maanden na afloop van de beroepstermijn een tussenuitspraak, en
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.7
-  - number: 1.7.2.b
-    text: binnen zes maanden na de verzending van de tussenuitspraak een einduitspraak.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.7
-  - number: 1.8.1
+        artikel: 8:51d
+  - number: '1.8'
     text: |-
-      [Artikel 1.6, vierde lid][ref1], is niet van toepassing, indien de bestuursrechter met toepassing van artikel 234
+      1 [Artikel 1.6, vierde lid][ref1], is niet van toepassing, indien de bestuursrechter met toepassing van artikel 234
       van het Verdrag tot oprichting van de Europese Gemeenschap prejudiciële vragen stelt.
 
+      2 In dat geval worden de vragen binnen zes maanden na afloop van de beroepstermijn bij tussenuitspraak gesteld.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
+      3 In de tussenuitspraak beslist de rechter zoveel mogelijk ook op de beroepsgronden die niet door de vragen worden
+      geraakt.
+
+      4 Tegen een tussenuitspraak van de rechtbank kan hoger beroep worden ingesteld tegelijk met het hoger beroep tegen
+      de einduitspraak.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.6
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.8
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.6'
         hoofdstuk: '1'
         paragraaf: '2.4'
         afdeling: '2'
-  - number: 1.8.2
-    text: In dat geval worden de vragen binnen zes maanden na afloop van de beroepstermijn bij tussenuitspraak gesteld.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.8
-  - number: 1.8.3
-    text: |-
-      In de tussenuitspraak beslist de rechter zoveel mogelijk ook op de beroepsgronden die niet door de vragen worden
-      geraakt.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.8
-  - number: 1.8.4
-    text: |-
-      Tegen een tussenuitspraak van de rechtbank kan hoger beroep worden ingesteld tegelijk met het hoger beroep tegen
-      de einduitspraak.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.8
   - number: 1.9a
     text: |-
       De [artikelen 1.6 tot en met 1.8][ref1] zijn van overeenkomstige toepassing in hoger beroep.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.6
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.9a
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.6'
         hoofdstuk: '1'
         paragraaf: '2.4'
         afdeling: '2'
-  - number: 1.10.1
+  - number: '1.10'
     text: |-
-      Indien een bestuursorgaan na vernietiging van een besluit door de bestuursrechter een nieuw besluit moet nemen, kan
-      het dat besluit baseren op de feiten waarop het vernietigde besluit berustte, behoudens voor zover de onjuistheid
-      of het onvoldoende vast staan van deze feiten een grond voor de vernietiging was.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.10
-  - number: 1.10.2
-    text: |-
-      Het eerste lid is van overeenkomstige toepassing indien een nieuw besluit wordt genomen ter uitvoering van een
+      1 Indien een bestuursorgaan na vernietiging van een besluit door de bestuursrechter een nieuw besluit moet
+      nemen, kan het dat besluit baseren op de feiten waarop het vernietigde besluit berustte, behoudens voor zover de
+      onjuistheid of het onvoldoende vast staan van deze feiten een grond voor de vernietiging was.
+
+      2 Het eerste lid is van overeenkomstige toepassing indien een nieuw besluit wordt genomen ter uitvoering van een
       tussenuitspraak als bedoeld in [artikel 8:80a van de Algemene wet bestuursrecht][ref1].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel8
+      [ref1]: https://wetten.overheid.nl/BWBR0005537#Artikel880a
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.10
     references:
       - id: ref1
         bwb_id: BWBR0005537
-        artikel: '8'
-  - number: 1.11.1
+        artikel: 8:80a
+  - number: '1.11'
     text: |-
-      Indien op grond van [artikel 7.2 van de Wet milieubeheer][ref1] een milieueffectrapport wordt opgesteld ten behoeve
-      van een besluit, is [artikel 7.23, eerste lid, aanhef en onder d, van die wet][ref2] niet van toepassing voor zover
-      het de locatie of het tracé van de activiteit betreft als er aan dat besluit een plan als bedoeld in artikel 7.2,
-      tweede lid, van de Wet milieubeheer ten grondslag ligt waarin een locatie of een tracé is aangewezen en voor dat
-      plan een milieueffectrapport is gemaakt waarin alternatieven voor die locatie of dat tracé zijn onderzocht.
+      1 Indien op grond van [artikel 7.2 van de Wet milieubeheer][ref1] een milieueffectrapport wordt opgesteld ten
+      behoeve van een besluit, is [artikel 7.23, eerste lid, aanhef en onder d, van die wet][ref2] niet van toepassing
+      voor zover het de locatie of het tracé van de activiteit betreft als er aan dat besluit een plan als bedoeld in
+      artikel 7.2, tweede lid, van de Wet milieubeheer ten grondslag ligt waarin een locatie of een tracé is aangewezen
+      en voor dat plan een milieueffectrapport is gemaakt waarin alternatieven voor die locatie of dat tracé zijn
+      onderzocht.
+
+      2 In afwijking van [artikel 7.32, vijfde lid, van de Wet milieubeheer][ref3] kan het bevoegd gezag de Commissie
+      voor de milieueffectrapportage, bedoeld in [artikel 2.17 van die wet][ref4], in de gelegenheid stellen advies uit
+      te brengen over het milieueffectrapport.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel7
+      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel7.2
+      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel7.23
+      [ref3]: https://wetten.overheid.nl/BWBR0003245#Artikel7.32
+      [ref4]: https://wetten.overheid.nl/BWBR0003245#Artikel2.17
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.11
     references:
       - id: ref1
         bwb_id: BWBR0003245
-        artikel: '7'
+        artikel: '7.2'
       - id: ref2
         bwb_id: BWBR0003245
-        artikel: '7'
-  - number: 1.11.2
-    text: |-
-      In afwijking van [artikel 7.32, vijfde lid, van de Wet milieubeheer][ref1] kan het bevoegd gezag de Commissie voor
-      de milieueffectrapportage, bedoeld in [artikel 2.17 van die wet][ref2], in de gelegenheid stellen advies uit te
-      brengen over het milieueffectrapport.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel7
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel1.11
-    references:
-      - id: ref1
+        artikel: '7.23'
+      - id: ref3
         bwb_id: BWBR0003245
-        artikel: '7'
-      - id: ref2
+        artikel: '7.32'
+      - id: ref4
         bwb_id: BWBR0003245
-        artikel: '2'
-  - number: 2.1.1
-    text: 'In deze afdeling en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.1
-  - number: 2.1.1.a
+        artikel: '2.17'
+  - number: '2.1'
     text: |-
-      *milieugebruiksruimte:* binnen een ontwikkelingsgebied aanwezige marge tussen de bestaande milieukwaliteit en de
+      1 In deze afdeling en de daarop berustende bepalingen wordt verstaan onder:
+
+      a. *milieugebruiksruimte:* binnen een ontwikkelingsgebied aanwezige marge tussen de bestaande milieukwaliteit en de
       voor dat gebied geldende milieukwaliteitsnormen, die kan worden benut voor milieubelastende activiteiten;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.1
-  - number: 2.1.1.b
-    text: |-
-      *milieukwaliteitsnorm:* bij wettelijk voorschrift gestelde norm ten aanzien van de kwaliteit van een onderdeel van
-      het milieu.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.1
-  - number: 2.1.2
-    text: |-
-      In deze afdeling en de daarop berustende bepalingen wordt onder bestemmingsplan mede verstaan: de bij het
+
+      b. *milieukwaliteitsnorm:* bij wettelijk voorschrift gestelde norm ten aanzien van de kwaliteit van een onderdeel
+      van het milieu.
+
+      2 In deze afdeling en de daarop berustende bepalingen wordt onder bestemmingsplan mede verstaan: de bij het
       bestemmingsplan behorende toelichting dan wel het exploitatieplan.
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.1
   - number: '2.2'
@@ -332,795 +286,555 @@ articles:
       tien jaar worden aangewezen als ontwikkelingsgebied, indien dat met het oog op het versterken van de duurzame
       ruimtelijke en economische ontwikkeling van dat gebied bijzonder aangewezen is.
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.2
-  - number: 2.3.1
+  - number: '2.3'
     text: |-
-      Een bestemmingsplan dat betrekking heeft op gronden die gelegen zijn binnen een aangewezen ontwikkelingsgebied
+      1 Een bestemmingsplan dat betrekking heeft op gronden die gelegen zijn binnen een aangewezen ontwikkelingsgebied
       als bedoeld in [artikel 2.2][ref1], is gericht op de optimalisering van de milieugebruiksruimte met het oog op het
       versterken van een duurzame ruimtelijke en economische ontwikkeling van dat gebied in samenhang met het tot stand
       brengen van een goede milieukwaliteit.
 
+      2 Tenzij bij algemene maatregel van bestuur anders is bepaald, bevat een bestemmingsplan als bedoeld in het eerste
+      lid:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      a. de voorgenomen maatregelen, projecten en werken ten behoeve van de optimalisering van de milieugebruiksruimte
+      binnen het ontwikkelingsgebied;
+
+      b. de noodzakelijke maatregelen, projecten en werken ter compensatie van het beslag op de milieugebruiksruimte door
+      de in het bestemmingsplan voorziene ruimtelijke ontwikkelingen;
+
+      c. zo nodig een fasering en koppeling bij de tenuitvoerlegging van de in de onderdelen a en b bedoelde maatregelen,
+      projecten en werken;
+
+      d. een raming van de kosten van uitvoering van het bestemmingsplan, een beschrijving van de wijze waarop daarin zal
+      worden voorzien, alsmede een beschrijving van de wijze waarop het bereiken van de met het bestemmingsplan beoogde
+      resultaten zal worden nagestreefd;
+
+      e. een overzicht van de tijdstippen waarop burgemeester en wethouders aan de gemeenteraad een rapportage uitbrengen
+      over de voortgang en de uitvoering van de in de onderdelen a en b bedoelde maatregelen, projecten en werken, die op
+      verzoek tevens wordt verstrekt aan Onze Minister van Binnenlandse Zaken en Koninkrijksrelaties.
+
+      3 Ten aanzien van een activiteit met betrekking tot een inrichting als bedoeld in
+      [artikel 2.1, eerste lid, onder e, van de Wet algemene bepalingen omgevingsrecht][ref2], die plaatsvindt binnen
+      het ontwikkelingsgebied, kan of kunnen in het belang van de optimalisering van de milieugebruiksruimte binnen het
+      ontwikkelingsgebied:
+
+      a. in het geval dat burgemeester en wethouders ingevolge
+      [artikel 2.4, eerste lid, van de Wet algemene bepalingen omgevingsrecht][ref3] het bevoegd gezag zijn:
+
+      1°. onverminderd [artikel 2.22, tweede lid, eerste volzin, van die wet][ref4] voorschriften worden verbonden aan de
+      omgevingsvergunning voor die activiteit;
+
+      2°. in afwijking van [artikel 2.31, tweede lid, onderdeel b][ref5], en met toepassing van
+      [paragraaf 3.4 van die wet][ref6] voorschriften van de omgevingsvergunning voor die activiteit worden gewijzigd,
+      waarbij de [artikelen 2.31a][ref7] en [4.2 van die wet][ref8] van overeenkomstige toepassing zijn;
+
+      b. in het geval dat ingevolge
+      [artikel 2.4, tweede, derde of vierde lid, van de Wet algemene bepalingen omgevingsrecht][ref9] een ander
+      bestuursorgaan het bevoegde gezag is:
+
+      1°. een omgevingsvergunning voor die activiteit niet worden verleend dan nadat burgemeester en wethouders hebben
+      verklaard dat zij daartegen geen bedenkingen hebben, waarbij geldt dat:
+
+      aa. de verklaring slechts kan worden geweigerd in het belang van de optimalisering van de milieugebruiksruimte
+      binnen het ontwikkelingsgebied;
+
+      bb. de [artikelen 2.27, tweede, vierde en vijfde lid][ref10], [3.11][ref11] en [4.2 van die wet][ref12] van
+      overeenkomstige toepassing zijn.
+
+      2°. burgemeester en wethouders het bevoegd gezag verzoeken voorschriften van de omgevingsvergunning voor die
+      activiteit te wijzigen, waarbij de [artikelen 2.29, derde lid][ref13], [2.31, eerste lid, onderdeel a][ref14], en
+      [2.31a][ref15] en [paragraaf 3.4 van die wet][ref16] van overeenkomstige toepassing zijn;
+
+      c. burgemeester en wethouders categorieën van gevallen aanwijzen waarin geen verklaring van geen bedenkingen als
+      bedoeld in onderdeel b, onder 1°, is vereist.
+
+      4 Voor zover ten aanzien van een activiteit met betrekking tot een inrichting die
+      plaatsvindt binnen het ontwikkelingsgebied geen omgevingsvergunning als bedoeld in
+      [artikel 2.1, eerste lid, aanhef en onder e, van de Wet algemene bepalingen omgevingsrecht][ref17] is vereist,
+      kunnen burgemeester en wethouders ambtshalve in het belang van de optimalisering van de milieugebruiksruimte
+      binnen het ontwikkelingsgebied voorschriften stellen, die afwijken van de voor die activiteit bij of krachtens
+      [artikel 8.40 van de Wet milieubeheer][ref18] gestelde regels.
+
+      5 Met de bevoegdheden, bedoeld in het derde en vierde lid, kunnen rechten, die worden ontleend aan voorschriften
+      in een omgevingsvergunning of aan regels gesteld krachtens [artikel 8.40 van de Wet milieubeheer][ref19], worden
+      gewijzigd ter optimalisering van de milieugebruiksruimte, voor zover van die rechten bij het in werking hebben van
+      een inrichting:
+
+      a. gedurende een periode van drie jaar onder normale bedrijfsomstandigheden geen gebruik is gemaakt of
+
+      b. naar redelijke verwachting, rekeninghoudend met de binnen afzienbare tijd te verwachten wijzigingen of
+      uitbreidingen van de inrichting of van de in de inrichting gebezigde werkwijzen, geen gebruik zal worden gemaakt.
+
+      6 Bij algemene maatregel van bestuur kunnen nadere regels worden gesteld, zo nodig per aangewezen
+      ontwikkelingsgebied, over de wijze waarop de optimalisering van de milieugebruiksruimte kan plaatsvinden.
+
+      7 Met inachtneming van desbetreffende bindende besluiten van de Raad van de Europese Unie, van het Europees
+      Parlement en de Raad gezamenlijk of van de Commissie van de Europese Gemeenschappen, kan het bestemmingsplan
+      bestemmingen aanwijzen, regels stellen of maatregelen en werken toestaan in afwijking van bij algemene maatregel
+      van bestuur aangegeven bepalingen bij of krachtens:
+
+      a. de [Wet natuurbescherming][ref20];
+
+      b. de [Ontgrondingenwet][ref21];
+
+      c. de [Wet algemene bepalingen omgevingsrecht][ref22], voor zover het betreft een omgevingsvergunning voor een
+      activiteit met betrekking tot een inrichting als bedoeld in [artikel 2.1, eerste lid, onder e, van die wet][ref23];
+
+      d. de [Wet ammoniak en veehouderij][ref24];
+
+      e. de [Wet bodembescherming][ref25];
+
+      f. de [Wet geluidhinder][ref26], met dien verstande dat die afwijking niet leidt tot een geluidsbelasting binnen
+      een woning met gesloten ramen, die hoger is dan 33 dB;
+
+      g. de [Wet geurhinder en veehouderij][ref27];
+
+      h. de [Wet inzake de luchtverontreiniging][ref28];
+
+      i. de [Wet milieubeheer][ref29] met uitzondering van [artikel 5.2b][ref30] en [titel 5.2][ref31],
+
+      met dien verstande dat uiterlijk tien jaar nadat het bestemmingsplan onherroepelijk is geworden alsnog wordt
+      voldaan aan de bij of krachtens de wet gestelde milieukwaliteitsnormen. Indien er na deze periode niet wordt
+      voldaan aan een milieukwaliteitsnorm geven burgemeester en wethouders aan op welke wijze alsnog aan die norm zal
+      worden voldaan. Bij algemene maatregel van bestuur kunnen regels worden gesteld over de maximale afwijking van
+      milieukwaliteitsnormen.
+
+      8 Het zevende lid is van overeenkomstige toepassing op besluiten die strekken ter uitvoering van het
+      bestemmingsplan.
+
+      9 Burgemeester en wethouders nemen in bij algemene maatregel van bestuur aangegeven categorieën
+      van gevallen geen besluit als bedoeld in het achtste lid dan nadat het bestuursorgaan dat
+      krachtens de betrokken wet bevoegd zou zijn te beslissen, heeft verklaard dat het daartegen
+      geen bedenkingen heeft. De [artikelen 2.27, tweede tot en met vijfde lid][ref32], en
+      [3.11 van de Wet algemene bepalingen omgevingsrecht][ref33] zijn van overeenkomstige toepassing.
+
+      10 Burgemeester en wethouders dragen zorg voor het uitvoeren van de maatregelen of werken, bedoeld in het tweede
+      lid, onderdelen a en b, binnen een in het bestemmingsplan te noemen termijn.
+
+      11 Werken opgenomen in het bestemmingsplan worden aangemerkt als openbare werken van algemeen nut in de zin van de
+      [Belemmeringenwet Privaatrecht][ref34].
+
+      12 Indien voor de uitvoering van werken als bedoeld in het tweede lid, onderdelen a en b,
+      toepassing van de [Belemmeringenwet Privaatrecht][ref35] noodzakelijk is, geldt in plaats van
+      [artikel 4 van die wet][ref36] dat de werking van een besluit als bedoeld in [artikel 2, vijfde lid][ref37], of
+      [artikel 3, tweede lid, van die wet][ref38] wordt opgeschort totdat de beroepstermijn is verstreken.
+
+      13 Voor zover een besluit als bedoeld in het achtste lid zijn grondslag vindt in een bestemmingsplan, kunnen de
+      gronden in beroep daarop geen betrekking hebben.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.2
+      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2.4
+      [ref4]: https://wetten.overheid.nl/BWBR0024779#Artikel2.22
+      [ref5]: https://wetten.overheid.nl/BWBR0024779#Artikel2.31
+      [ref6]: https://wetten.overheid.nl/BWBR0024779#Paragraaf3.4
+      [ref7]: https://wetten.overheid.nl/BWBR0024779#Artikel2.31a
+      [ref8]: https://wetten.overheid.nl/BWBR0024779#Artikel4.2
+      [ref9]: https://wetten.overheid.nl/BWBR0024779#Artikel2.4
+      [ref10]: https://wetten.overheid.nl/BWBR0024779#Artikel2.27
+      [ref11]: https://wetten.overheid.nl/BWBR0024779#Artikel3.11
+      [ref12]: https://wetten.overheid.nl/BWBR0024779#Artikel4.2
+      [ref13]: https://wetten.overheid.nl/BWBR0024779#Artikel2.29
+      [ref14]: https://wetten.overheid.nl/BWBR0024779#Artikel2.31
+      [ref15]: https://wetten.overheid.nl/BWBR0024779#Artikel2.31a
+      [ref16]: https://wetten.overheid.nl/BWBR0024779#Paragraaf3.4
+      [ref17]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref18]: https://wetten.overheid.nl/BWBR0003245#Artikel8.40
+      [ref19]: https://wetten.overheid.nl/BWBR0003245#Artikel8.40
+      [ref20]: https://wetten.overheid.nl/BWBR0037552
+      [ref21]: https://wetten.overheid.nl/BWBR0002505
+      [ref22]: https://wetten.overheid.nl/BWBR0024779
+      [ref23]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref24]: https://wetten.overheid.nl/BWBR0013402
+      [ref25]: https://wetten.overheid.nl/BWBR0003994
+      [ref26]: https://wetten.overheid.nl/BWBR0003227
+      [ref27]: https://wetten.overheid.nl/BWBR0020396
+      [ref28]: https://wetten.overheid.nl/BWBR0002731
+      [ref29]: https://wetten.overheid.nl/BWBR0003245
+      [ref30]: https://wetten.overheid.nl/BWBR0003245#Artikel5.2b
+      [ref31]: https://wetten.overheid.nl/BWBR0003245
+      [ref32]: https://wetten.overheid.nl/BWBR0024779#Artikel2.27
+      [ref33]: https://wetten.overheid.nl/BWBR0024779#Artikel3.11
+      [ref34]: https://wetten.overheid.nl/BWBR0001936
+      [ref35]: https://wetten.overheid.nl/BWBR0001936
+      [ref36]: https://wetten.overheid.nl/BWBR0001936#Artikel4
+      [ref37]: https://wetten.overheid.nl/BWBR0001936#Artikel2
+      [ref38]: https://wetten.overheid.nl/BWBR0001936#Artikel3
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 2.3.2
-    text: |-
-      Tenzij bij algemene maatregel van bestuur anders is bepaald, bevat een bestemmingsplan als bedoeld in het eerste
-      lid:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.2.a
-    text: |-
-      de voorgenomen maatregelen, projecten en werken ten behoeve van de optimalisering van de milieugebruiksruimte
-      binnen het ontwikkelingsgebied;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.2.b
-    text: |-
-      de noodzakelijke maatregelen, projecten en werken ter compensatie van het beslag op de milieugebruiksruimte door de
-      in het bestemmingsplan voorziene ruimtelijke ontwikkelingen;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.2.c
-    text: |-
-      zo nodig een fasering en koppeling bij de tenuitvoerlegging van de in de onderdelen a en b bedoelde maatregelen,
-      projecten en werken;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.2.d
-    text: |-
-      een raming van de kosten van uitvoering van het bestemmingsplan, een beschrijving van de wijze waarop daarin zal
-      worden voorzien, alsmede een beschrijving van de wijze waarop het bereiken van de met het bestemmingsplan beoogde
-      resultaten zal worden nagestreefd;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.2.e
-    text: |-
-      een overzicht van de tijdstippen waarop burgemeester en wethouders aan de gemeenteraad een rapportage uitbrengen
-      over de voortgang en de uitvoering van de in de onderdelen a en b bedoelde maatregelen, projecten en werken, die op
-      verzoek tevens wordt verstrekt aan Onze Minister van Binnenlandse Zaken en Koninkrijksrelaties.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.3
-    text: |-
-      Ten aanzien van een activiteit met betrekking tot een inrichting als bedoeld in
-      [artikel 2.1, eerste lid, onder e, van de Wet algemene bepalingen omgevingsrecht][ref1], die plaatsvindt binnen
-      het ontwikkelingsgebied, kan of kunnen in het belang van de optimalisering van de milieugebruiksruimte binnen het
-      ontwikkelingsgebied:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.3.3.a
-    text: |-
-      in het geval dat burgemeester en wethouders ingevolge
-      [artikel 2.4, eerste lid, van de Wet algemene bepalingen omgevingsrecht][ref1] het bevoegd gezag zijn:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.3.3.a.1°
-    text: |-
-      onverminderd [artikel 2.22, tweede lid, eerste volzin, van die wet][ref1] voorschriften worden verbonden aan de
-      omgevingsvergunning voor die activiteit;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.3.3.a.2°
-    text: |-
-      in afwijking van [artikel 2.31, tweede lid, onderdeel b][ref1], en met toepassing van
-      [paragraaf 3.4 van die wet][ref2] voorschriften van de omgevingsvergunning voor die activiteit worden gewijzigd,
-      waarbij de [artikelen 2.31a][ref3] en [4.2 van die wet][ref4] van overeenkomstige toepassing zijn;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Paragraaf3.4
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0024779#Artikel4
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
       - id: ref2
         bwb_id: BWBR0024779
-        paragraaf: '3.4'
+        artikel: '2.1'
       - id: ref3
         bwb_id: BWBR0024779
-        artikel: '2'
+        artikel: '2.4'
       - id: ref4
         bwb_id: BWBR0024779
-        artikel: '4'
-  - number: 2.3.3.b
-    text: |-
-      in het geval dat ingevolge
-      [artikel 2.4, tweede, derde of vierde lid, van de Wet algemene bepalingen omgevingsrecht][ref1] een ander
-      bestuursorgaan het bevoegde gezag is:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+        artikel: '2.22'
+      - id: ref5
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.3.3.b.1°
-    text: |-
-      een omgevingsvergunning voor die activiteit niet worden verleend dan nadat burgemeester en wethouders hebben
-      verklaard dat zij daartegen geen bedenkingen hebben, waarbij geldt dat:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.3.b.1°.aa
-    text: |-
-      de verklaring slechts kan worden geweigerd in het belang van de optimalisering van de milieugebruiksruimte binnen
-      het ontwikkelingsgebied;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.3.b.1°.bb
-    text: |-
-      de [artikelen 2.27, tweede, vierde en vijfde lid][ref1], [3.11][ref2] en [4.2 van die wet][ref3] van
-      overeenkomstige toepassing zijn.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel4
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0024779
-        artikel: '3'
-      - id: ref3
-        bwb_id: BWBR0024779
-        artikel: '4'
-  - number: 2.3.3.b.2°
-    text: |-
-      burgemeester en wethouders het bevoegd gezag verzoeken voorschriften van de omgevingsvergunning voor die activiteit
-      te wijzigen, waarbij de [artikelen 2.29, derde lid][ref1], [2.31, eerste lid, onderdeel a][ref2], en [2.31a][ref3]
-      en [paragraaf 3.4 van die wet][ref4] van overeenkomstige toepassing zijn;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0024779#Paragraaf3.4
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
-        bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref2
-        bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref3
-        bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref4
+        artikel: '2.31'
+      - id: ref6
         bwb_id: BWBR0024779
         paragraaf: '3.4'
-  - number: 2.3.3.c
-    text: |-
-      burgemeester en wethouders categorieën van gevallen aanwijzen waarin geen verklaring van geen bedenkingen als
-      bedoeld in onderdeel b, onder 1°, is vereist.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.4
-    text: |-
-      Voor zover ten aanzien van een activiteit met betrekking tot een inrichting die
-      plaatsvindt binnen het ontwikkelingsgebied geen omgevingsvergunning als bedoeld in
-      [artikel 2.1, eerste lid, aanhef en onder e, van de Wet algemene bepalingen omgevingsrecht][ref1] is vereist,
-      kunnen burgemeester en wethouders ambtshalve in het belang van de optimalisering van de milieugebruiksruimte
-      binnen het ontwikkelingsgebied voorschriften stellen, die afwijken van de voor die activiteit bij of krachtens
-      [artikel 8.40 van de Wet milieubeheer][ref2] gestelde regels.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel8
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref2
+        artikel: 2.31a
+      - id: ref8
+        bwb_id: BWBR0024779
+        artikel: '4.2'
+      - id: ref9
+        bwb_id: BWBR0024779
+        artikel: '2.4'
+      - id: ref10
+        bwb_id: BWBR0024779
+        artikel: '2.27'
+      - id: ref11
+        bwb_id: BWBR0024779
+        artikel: '3.11'
+      - id: ref12
+        bwb_id: BWBR0024779
+        artikel: '4.2'
+      - id: ref13
+        bwb_id: BWBR0024779
+        artikel: '2.29'
+      - id: ref14
+        bwb_id: BWBR0024779
+        artikel: '2.31'
+      - id: ref15
+        bwb_id: BWBR0024779
+        artikel: 2.31a
+      - id: ref16
+        bwb_id: BWBR0024779
+        paragraaf: '3.4'
+      - id: ref17
+        bwb_id: BWBR0024779
+        artikel: '2.1'
+      - id: ref18
         bwb_id: BWBR0003245
-        artikel: '8'
-  - number: 2.3.5
-    text: |-
-      Met de bevoegdheden, bedoeld in het derde en vierde lid, kunnen rechten, die worden ontleend aan voorschriften
-      in een omgevingsvergunning of aan regels gesteld krachtens [artikel 8.40 van de Wet milieubeheer][ref1], worden
-      gewijzigd ter optimalisering van de milieugebruiksruimte, voor zover van die rechten bij het in werking hebben van
-      een inrichting:
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245#Artikel8
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+        artikel: '8.40'
+      - id: ref19
         bwb_id: BWBR0003245
-        artikel: '8'
-  - number: 2.3.5.a
-    text: gedurende een periode van drie jaar onder normale bedrijfsomstandigheden geen gebruik is gemaakt of
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.5.b
-    text: |-
-      naar redelijke verwachting, rekeninghoudend met de binnen afzienbare tijd te verwachten wijzigingen of
-      uitbreidingen van de inrichting of van de in de inrichting gebezigde werkwijzen, geen gebruik zal worden gemaakt.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.6
-    text: |-
-      Bij algemene maatregel van bestuur kunnen nadere regels worden gesteld, zo nodig per aangewezen
-      ontwikkelingsgebied, over de wijze waarop de optimalisering van de milieugebruiksruimte kan plaatsvinden.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.7
-    text: |-
-      Met inachtneming van desbetreffende bindende besluiten van de Raad van de Europese Unie, van het Europees Parlement
-      en de Raad gezamenlijk of van de Commissie van de Europese Gemeenschappen, kan het bestemmingsplan bestemmingen
-      aanwijzen, regels stellen of maatregelen en werken toestaan in afwijking van bij algemene maatregel van bestuur
-      aangegeven bepalingen bij of krachtens:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.7.a
-    text: |-
-      de [Wet natuurbescherming][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0037552
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+        artikel: '8.40'
+      - id: ref20
         bwb_id: BWBR0037552
-  - number: 2.3.7.b
-    text: |-
-      de [Ontgrondingenwet][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002505
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref21
         bwb_id: BWBR0002505
-  - number: 2.3.7.c
-    text: |-
-      de [Wet algemene bepalingen omgevingsrecht][ref1], voor zover het betreft een omgevingsvergunning voor een
-      activiteit met betrekking tot een inrichting als bedoeld in [artikel 2.1, eerste lid, onder e, van die wet][ref2];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref22
         bwb_id: BWBR0024779
-      - id: ref2
+      - id: ref23
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.3.7.d
-    text: |-
-      de [Wet ammoniak en veehouderij][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0013402
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+        artikel: '2.1'
+      - id: ref24
         bwb_id: BWBR0013402
-  - number: 2.3.7.e
-    text: |-
-      de [Wet bodembescherming][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003994
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref25
         bwb_id: BWBR0003994
-  - number: 2.3.7.f
-    text: |-
-      de [Wet geluidhinder][ref1], met dien verstande dat die afwijking niet leidt tot een geluidsbelasting binnen een
-      woning met gesloten ramen, die hoger is dan 33 dB;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003227
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref26
         bwb_id: BWBR0003227
-  - number: 2.3.7.g
-    text: |-
-      de [Wet geurhinder en veehouderij][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020396
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref27
         bwb_id: BWBR0020396
-  - number: 2.3.7.h
-    text: |-
-      de [Wet inzake de luchtverontreiniging][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002731
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref28
         bwb_id: BWBR0002731
-  - number: 2.3.7.i
-    text: |-
-      de [Wet milieubeheer][ref1] met uitzondering van [artikel 5.2b][ref2] en [titel 5.2][ref3],
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0003245
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref29
         bwb_id: BWBR0003245
-      - id: ref2
+      - id: ref30
         bwb_id: BWBR0003245
-        artikel: '5'
-      - id: ref3
+        artikel: 5.2b
+      - id: ref31
         bwb_id: BWBR0003245
-  - number: 2.3.8
-    text: Het zevende lid is van overeenkomstige toepassing op besluiten die strekken ter uitvoering van het bestemmingsplan.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.9
-    text: |-
-      Burgemeester en wethouders nemen in bij algemene maatregel van bestuur aangegeven categorieën van
-      gevallen geen besluit als bedoeld in het achtste lid dan nadat het bestuursorgaan dat krachtens de
-      betrokken wet bevoegd zou zijn te beslissen, heeft verklaard dat het daartegen geen bedenkingen heeft. De
-      [artikelen 2.27, tweede tot en met vijfde lid][ref1], en [3.11 van de Wet algemene bepalingen omgevingsrecht][ref2]
-      zijn van overeenkomstige toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref32
         bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref2
+        artikel: '2.27'
+      - id: ref33
         bwb_id: BWBR0024779
-        artikel: '3'
-  - number: 2.3.10
-    text: |-
-      Burgemeester en wethouders dragen zorg voor het uitvoeren van de maatregelen of werken, bedoeld in het tweede lid,
-      onderdelen a en b, binnen een in het bestemmingsplan te noemen termijn.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-  - number: 2.3.11
-    text: |-
-      Werken opgenomen in het bestemmingsplan worden aangemerkt als openbare werken van algemeen nut in de zin van de
-      [Belemmeringenwet Privaatrecht][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001936
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+        artikel: '3.11'
+      - id: ref34
         bwb_id: BWBR0001936
-  - number: 2.3.12
-    text: |-
-      Indien voor de uitvoering van werken als bedoeld in het tweede lid, onderdelen a en b, toepassing van de
-      [Belemmeringenwet Privaatrecht][ref1] noodzakelijk is, geldt in plaats van [artikel 4 van die wet][ref2] dat de
-      werking van een besluit als bedoeld in [artikel 2, vijfde lid][ref3], of [artikel 3, tweede lid, van die wet][ref4]
-      wordt opgeschort totdat de beroepstermijn is verstreken.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0001936
-      [ref2]: https://wetten.overheid.nl/BWBR0001936#Artikel4
-      [ref3]: https://wetten.overheid.nl/BWBR0001936#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0001936#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
-    references:
-      - id: ref1
+      - id: ref35
         bwb_id: BWBR0001936
-      - id: ref2
+      - id: ref36
         bwb_id: BWBR0001936
         artikel: '4'
-      - id: ref3
+      - id: ref37
         bwb_id: BWBR0001936
         artikel: '2'
-      - id: ref4
+      - id: ref38
         bwb_id: BWBR0001936
         artikel: '3'
-  - number: 2.3.13
-    text: |-
-      Voor zover een besluit als bedoeld in het achtste lid zijn grondslag vindt in een bestemmingsplan, kunnen de
-      gronden in beroep daarop geen betrekking hebben.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3
   - number: 2.3a
     text: |-
       [Artikel 2.3][ref1] is van overeenkomstige toepassing op een provinciaal inpassingsplan dat betrekking heeft op
       gronden die gelegen zijn binnen een ontwikkelingsgebied als bedoeld in [artikel 2.2][ref2] met dien verstande dat:
 
+      a. in plaats van «bestemmingsplan» telkens wordt gelezen: inpassingsplan;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      b. in plaats van «burgemeester en wethouders» telkens wordt gelezen: gedeputeerde staten;
+
+      c. in het tweede lid in plaats van «de gemeenteraad» wordt gelezen: provinciale staten;
+
+      d. in het zesde lid in plaats van «Burgemeester en wethouders» wordt gelezen: Gedeputeerde staten;
+
+      e. in het tiende lid in plaats van «gemeente» wordt gelezen: provincie.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.3
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.2
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '1'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 2.3a.a
-    text: 'in plaats van «bestemmingsplan» telkens wordt gelezen: inpassingsplan;'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
-  - number: 2.3a.b
-    text: 'in plaats van «burgemeester en wethouders» telkens wordt gelezen: gedeputeerde staten;'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
-  - number: 2.3a.c
-    text: 'in het tweede lid in plaats van «de gemeenteraad» wordt gelezen: provinciale staten;'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
-  - number: 2.3a.d
-    text: 'in het zesde lid in plaats van «Burgemeester en wethouders» wordt gelezen: Gedeputeerde staten;'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
-  - number: 2.3a.e
-    text: 'in het tiende lid in plaats van «gemeente» wordt gelezen: provincie.'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.3a
-  - number: 2.4.1
+  - number: '2.4'
     text: |-
-      Bij algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
+      1 Bij algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
       Koninkrijksrelaties, in overeenstemming met Onze Minister of Onze Ministers wie het mede aangaat, kan, met
       inachtneming van internationaalrechtelijke verplichtingen, op verzoek van een bestuursorgaan, bij wege van
       experiment worden afgeweken van het bepaalde bij of krachtens:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.1.a
-    text: |-
-      de [Elektriciteitswet 1998][ref1] voor zover dat geen gevolgen heeft voor de opbrengst van de energiebelasting,
+
+      a. de [Elektriciteitswet 1998][ref1] voor zover dat geen gevolgen heeft voor de opbrengst van de energiebelasting,
       bedoeld in de [Wet belastingen op milieugrondslag][ref2];
+
+      b. [artikel 9.1, eerste lid, van de Erfgoedwet][ref3], voor zover het betreft [hoofdstuk II, paragraaf 2][ref4],
+      met uitzondering van [artikel 11, eerste lid, van de Monumentenwet 1988][ref5];
+
+      c. de [Gaswet][ref6], met dien verstande dat de taken die bij of krachtens die wet aan een netbeheerder zijn
+      opgedragen niet worden gewijzigd;
+
+      d. de [Huisvestingswet 2014][ref7];
+
+      e. de [Leegstandwet][ref8];
+
+      f. de [Warmtewet][ref9];
+
+      g. de [Waterwet][ref10], met uitzondering van [hoofdstuk 5][ref11], [artikel 6.5, aanhef en onder c][ref12], juncto
+      [paragraaf 2 van hoofdstuk 6][ref13];
+
+      h. de [Wet algemene bepalingen omgevingsrecht][ref14];
+
+      i. de [Wet ammoniak en veehouderij][ref15];
+
+      j. de [Wet bodembescherming][ref16];
+
+      k. de [Wet geluidhinder][ref17];
+
+      l. de [Wet geurhinder en veehouderij][ref18];
+
+      m. de [Wet inzake de luchtverontreiniging][ref19];
+
+      n. de [Wet milieubeheer][ref20] met uitzondering van [artikel 5.2b][ref21] en de
+      [artikelen 5.7 tot en met 5.15][ref22] en [5.17 tot en met 5.24][ref23], met dien verstande dat afwijkingen van
+      de [artikelen 5.6][ref24] en [5.16][ref25] geen gevolgen hebben voor de aanleg, het gebruik, de instandhouding, de
+      verbetering of de vernieuwing van wegen in beheer bij het Rijk;
+
+      o. de [Wet ruimtelijke ordening][ref26];
+
+      p. de [Woningwet][ref27].
+
+      2 Er kan uitsluitend toepassing worden gegeven aan het eerste lid indien het experiment bijdraagt aan duurzame
+      ontwikkeling en
+
+      a. het experiment bijdraagt aan innovatieve ontwikkelingen; of
+
+      b. uitvoering van het experiment bijdraagt aan het versterken van de economische structuur.
+
+      3 Bij de algemene maatregel van bestuur, bedoeld in het eerste lid, wordt bepaald:
+
+      a. welke afwijking of afwijkingen van de betrokken in het eerste lid genoemde wet of wetten is of zijn toegestaan;
+
+      b. de ten hoogste toegestane tijdsduur van die afwijking of afwijkingen, en
+
+      c. de wijze waarop wordt vastgesteld of een afwijking aan haar doel beantwoordt, en of de tijdsduur daarvan
+      aanpassing behoeft.
+
+      4 Bij algemene maatregel van bestuur, bedoeld in het eerste lid, kan worden bepaald:
+
+      a. aan welke eisen een verzoek voor een afwijking van de in het eerste lid genoemde wetten voldoet;
+
+      b. in welke situaties afwijkingen van de in het eerste lid genoemde wetten zijn toegestaan.
+
+      5 Bij regeling van Onze Minister van Binnenlandse Zaken en Koninkrijksrelaties, in overeenstemming met Onze
+      Minister of Onze Ministers wie het mede aangaat, kan het toepassingsbereik van in de algemene maatregel van bestuur
+      geregelde experimenten worden uitgebreid door daarvoor nieuwe gebieden en projecten aan te wijzen. Daarbij wordt de
+      ten hoogste toegestane tijdsduur van de afwijking of afwijkingen aangegeven.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0009755
       [ref2]: https://wetten.overheid.nl/BWBR0007168
+      [ref3]: https://wetten.overheid.nl/BWBR0037521#Artikel9.1
+      [ref4]: https://wetten.overheid.nl/BWBR0004471#Paragraaf2
+      [ref5]: https://wetten.overheid.nl/BWBR0004471#Artikel11
+      [ref6]: https://wetten.overheid.nl/BWBR0011440
+      [ref7]: https://wetten.overheid.nl/BWBR0035303
+      [ref8]: https://wetten.overheid.nl/BWBR0003403
+      [ref9]: https://wetten.overheid.nl/BWBR0033729
+      [ref10]: https://wetten.overheid.nl/BWBR0025458
+      [ref11]: https://wetten.overheid.nl/BWBR0025458#Hoofdstuk5
+      [ref12]: https://wetten.overheid.nl/BWBR0025458#Artikel6.5
+      [ref13]: https://wetten.overheid.nl/BWBR0025458#Paragraaf2
+      [ref14]: https://wetten.overheid.nl/BWBR0024779
+      [ref15]: https://wetten.overheid.nl/BWBR0013402
+      [ref16]: https://wetten.overheid.nl/BWBR0003994
+      [ref17]: https://wetten.overheid.nl/BWBR0003227
+      [ref18]: https://wetten.overheid.nl/BWBR0020396
+      [ref19]: https://wetten.overheid.nl/BWBR0002731
+      [ref20]: https://wetten.overheid.nl/BWBR0003245
+      [ref21]: https://wetten.overheid.nl/BWBR0003245#Artikel5.2b
+      [ref22]: https://wetten.overheid.nl/BWBR0003245#Artikel5.10
+      [ref23]: https://wetten.overheid.nl/BWBR0003245#Artikel5.17
+      [ref24]: https://wetten.overheid.nl/BWBR0003245#Artikel5.6
+      [ref25]: https://wetten.overheid.nl/BWBR0003245#Artikel5.16
+      [ref26]: https://wetten.overheid.nl/BWBR0020449
+      [ref27]: https://wetten.overheid.nl/BWBR0005181
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
     references:
       - id: ref1
         bwb_id: BWBR0009755
       - id: ref2
         bwb_id: BWBR0007168
-  - number: 2.4.1.b
-    text: |-
-      [artikel 9.1, eerste lid, van de Erfgoedwet][ref1], voor zover het betreft [hoofdstuk II, paragraaf 2][ref2], met
-      uitzondering van [artikel 11, eerste lid, van de Monumentenwet 1988][ref3];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0037521#Artikel9
-      [ref2]: https://wetten.overheid.nl/BWBR0004471#Paragraaf2
-      [ref3]: https://wetten.overheid.nl/BWBR0004471#Artikel11
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0037521
-        artikel: '9'
-      - id: ref2
+        artikel: '9.1'
+      - id: ref4
         bwb_id: BWBR0004471
         paragraaf: '2'
-      - id: ref3
+      - id: ref5
         bwb_id: BWBR0004471
         artikel: '11'
-  - number: 2.4.1.c
-    text: |-
-      de [Gaswet][ref1], met dien verstande dat de taken die bij of krachtens die wet aan een netbeheerder zijn
-      opgedragen niet worden gewijzigd;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0011440
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref6
         bwb_id: BWBR0011440
-  - number: 2.4.1.d
-    text: |-
-      de [Huisvestingswet 2014][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0035303
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref7
         bwb_id: BWBR0035303
-  - number: 2.4.1.e
-    text: |-
-      de [Leegstandwet][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003403
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref8
         bwb_id: BWBR0003403
-  - number: 2.4.1.f
-    text: |-
-      de [Warmtewet][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0033729
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref9
         bwb_id: BWBR0033729
-  - number: 2.4.1.g
-    text: |-
-      de [Waterwet][ref1], met uitzondering van [hoofdstuk 5][ref2], [artikel 6.5, aanhef en onder c][ref3], juncto
-      [paragraaf 2 van hoofdstuk 6][ref4];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0025458
-      [ref2]: https://wetten.overheid.nl/BWBR0025458#Hoofdstuk5
-      [ref3]: https://wetten.overheid.nl/BWBR0025458#Artikel6
-      [ref4]: https://wetten.overheid.nl/BWBR0025458#Paragraaf2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref10
         bwb_id: BWBR0025458
-      - id: ref2
+      - id: ref11
         bwb_id: BWBR0025458
         hoofdstuk: '5'
-      - id: ref3
+      - id: ref12
         bwb_id: BWBR0025458
-        artikel: '6'
-      - id: ref4
+        artikel: '6.5'
+      - id: ref13
         bwb_id: BWBR0025458
         paragraaf: '2'
-  - number: 2.4.1.h
-    text: |-
-      de [Wet algemene bepalingen omgevingsrecht][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0024779
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref14
         bwb_id: BWBR0024779
-  - number: 2.4.1.i
-    text: |-
-      de [Wet ammoniak en veehouderij][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0013402
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref15
         bwb_id: BWBR0013402
-  - number: 2.4.1.j
-    text: |-
-      de [Wet bodembescherming][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003994
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref16
         bwb_id: BWBR0003994
-  - number: 2.4.1.k
-    text: |-
-      de [Wet geluidhinder][ref1];
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003227
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref17
         bwb_id: BWBR0003227
-  - number: 2.4.1.l
-    text: |-
-      de [Wet geurhinder en veehouderij][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020396
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref18
         bwb_id: BWBR0020396
-  - number: 2.4.1.m
-    text: |-
-      de [Wet inzake de luchtverontreiniging][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002731
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref19
         bwb_id: BWBR0002731
-  - number: 2.4.1.n
-    text: |-
-      de [Wet milieubeheer][ref1] met uitzondering van [artikel 5.2b][ref2] en de [artikelen 5.7 tot en met 5.15][ref3]
-      en [5.17 tot en met 5.24][ref4], met dien verstande dat afwijkingen van de [artikelen 5.6][ref5] en [5.16][ref6]
-      geen gevolgen hebben voor de aanleg, het gebruik, de instandhouding, de verbetering of de vernieuwing van wegen in
-      beheer bij het Rijk;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003245
-      [ref2]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-      [ref3]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-      [ref4]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-      [ref5]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-      [ref6]: https://wetten.overheid.nl/BWBR0003245#Artikel5
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref20
         bwb_id: BWBR0003245
-      - id: ref2
+      - id: ref21
         bwb_id: BWBR0003245
-        artikel: '5'
-      - id: ref3
+        artikel: 5.2b
+      - id: ref22
         bwb_id: BWBR0003245
-        artikel: '5'
-      - id: ref4
+        artikel: '5.10'
+      - id: ref23
         bwb_id: BWBR0003245
-        artikel: '5'
-      - id: ref5
+        artikel: '5.17'
+      - id: ref24
         bwb_id: BWBR0003245
-        artikel: '5'
-      - id: ref6
+        artikel: '5.6'
+      - id: ref25
         bwb_id: BWBR0003245
-        artikel: '5'
-  - number: 2.4.1.o
-    text: |-
-      de [Wet ruimtelijke ordening][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020449
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+        artikel: '5.16'
+      - id: ref26
         bwb_id: BWBR0020449
-  - number: 2.4.1.p
-    text: |-
-      de [Woningwet][ref1].
-
-      [ref1]: https://wetten.overheid.nl/BWBR0005181
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-    references:
-      - id: ref1
+      - id: ref27
         bwb_id: BWBR0005181
-  - number: 2.4.2
-    text: |-
-      Er kan uitsluitend toepassing worden gegeven aan het eerste lid indien het experiment bijdraagt aan duurzame
-      ontwikkeling en
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.2.a
-    text: het experiment bijdraagt aan innovatieve ontwikkelingen; of
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.2.b
-    text: uitvoering van het experiment bijdraagt aan het versterken van de economische structuur.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.3
-    text: 'Bij de algemene maatregel van bestuur, bedoeld in het eerste lid, wordt bepaald:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.3.a
-    text: welke afwijking of afwijkingen van de betrokken in het eerste lid genoemde wet of wetten is of zijn toegestaan;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.3.b
-    text: de ten hoogste toegestane tijdsduur van die afwijking of afwijkingen, en
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.3.c
-    text: |-
-      de wijze waarop wordt vastgesteld of een afwijking aan haar doel beantwoordt, en of de tijdsduur daarvan aanpassing
-      behoeft.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.4
-    text: 'Bij algemene maatregel van bestuur, bedoeld in het eerste lid, kan worden bepaald:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.4.a
-    text: aan welke eisen een verzoek voor een afwijking van de in het eerste lid genoemde wetten voldoet;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.4.b
-    text: in welke situaties afwijkingen van de in het eerste lid genoemde wetten zijn toegestaan.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
-  - number: 2.4.5
-    text: |-
-      Bij regeling van Onze Minister van Binnenlandse Zaken en Koninkrijksrelaties, in overeenstemming met Onze Minister
-      of Onze Ministers wie het mede aangaat, kan het toepassingsbereik van in de algemene maatregel van bestuur
-      geregelde experimenten worden uitgebreid door daarvoor nieuwe gebieden en projecten aan te wijzen. Daarbij wordt de
-      ten hoogste toegestane tijdsduur van de afwijking of afwijkingen aangegeven.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.4
   - number: '2.7'
     text: '[vervallen]'
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.7
-  - number: 2.9.1
-    text: 'Deze afdeling is van toepassing op de uitvoering van:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.1.a
-    text: 'projecten die geheel of hoofdzakelijk voorzien in de bouw van ten minste 5 en ten hoogste:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.1.a.1°
-    text: 'in geval van twee ontsluitingswegen met een gelijkmatige verkeersverdeling: 2 000 nieuwe woningen, dan wel'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.1.a.2°
-    text: 'in geval van één ontsluitingsweg: 1 500 nieuwe woningen, alsmede'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.1.b
+  - number: '2.9'
     text: |-
-      bij algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
+      1 Deze afdeling is van toepassing op de uitvoering van:
+
+      a. projecten die geheel of hoofdzakelijk voorzien in de bouw van ten minste 5 en ten hoogste:
+
+      1°. in geval van twee ontsluitingswegen met een gelijkmatige verkeersverdeling: 2 000 nieuwe woningen, dan wel
+
+      2°. in geval van één ontsluitingsweg: 1 500 nieuwe woningen, alsmede
+
+      b. bij algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
       Koninkrijksrelaties, in overeenstemming met Onze Minister of Onze Ministers wie het mede aangaat, aangewezen
       categorieën andere projecten van maatschappelijke betekenis.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.2
-    text: |-
-      Projecten als bedoeld in het eerste lid, onderdeel a, die in elkaars nabijheid liggen of zullen zijn gelegen,
+
+      2 Projecten als bedoeld in het eerste lid, onderdeel a, die in elkaars nabijheid liggen of zullen zijn gelegen,
       vallen uitsluitend onder het toepassingsbereik van deze afdeling, indien de aantallen woningen in die projecten
       gezamenlijk onder het toepasselijke maximum aantal woningen als bedoeld in dat onderdeel blijven.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.3
-    text: 'Deze afdeling is niet van toepassing:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-  - number: 2.9.3.a
-    text: |-
-      op projecten als bedoeld in het eerste lid, die zijn aangewezen krachtens [artikel 2.18][ref1];
+
+      3 Deze afdeling is niet van toepassing:
+
+      a. op projecten als bedoeld in het eerste lid, die zijn aangewezen krachtens [artikel 2.18][ref1];
+
+      b. indien het project ziet op de bouw van woningen op minder dan 100 meter van een hoofdweg als bedoeld
+      in [artikel 1, eerste lid, van de Tracéwet][ref2], gemeten vanaf de as van die weg, of van een weg
+      die overeenkomstig een daartoe krachtens de [Wegenverkeerswet 1994](onbekend) aangewezen model is
+      aangeduid als route voor het vervoer van gevaarlijke stoffen dat niet is toegestaan door de krachtens
+      [artikel 3 van de Wet vervoer gevaarlijke stoffen][ref3] aangewezen tunnels, gemeten vanaf de as van die weg;
+
+      c. indien het project ziet op de bouw van woningen binnen 30 meter van een krachtens
+      [artikel 2 van de Spoorwegwet][ref4] aangewezen hoofdspoorweg, gemeten vanaf het hart van het buitenste spoor;
+
+      d. indien het project ziet op de bouw van woningen in of op rijkswateren of regionale wateren waaraan krachtens
+      de [artikelen 4.1][ref5] of [4.4 van de Waterwet][ref6] de functie vaarweg is toegekend en die geschikt zijn voor
+      gebruik door schepen met een laadvermogen van ten minste 400 ton.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0006147#Artikel1
+      [ref3]: https://wetten.overheid.nl/BWBR0007606#Artikel3
+      [ref4]: https://wetten.overheid.nl/BWBR0015007#Artikel2
+      [ref5]: https://wetten.overheid.nl/BWBR0025458#Artikel4.1
+      [ref6]: https://wetten.overheid.nl/BWBR0025458#Artikel4.4
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
-  - number: 2.9.3.b
-    text: |-
-      indien het project ziet op de bouw van woningen op minder dan 100 meter van een hoofdweg als bedoeld
-      in [artikel 1, eerste lid, van de Tracéwet][ref1], gemeten vanaf de as van die weg, of van een weg
-      die overeenkomstig een daartoe krachtens de [Wegenverkeerswet 1994](onbekend) aangewezen model is
-      aangeduid als route voor het vervoer van gevaarlijke stoffen dat niet is toegestaan door de krachtens
-      [artikel 3 van de Wet vervoer gevaarlijke stoffen][ref2] aangewezen tunnels, gemeten vanaf de as van die weg;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0006147#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0007606#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0006147
         artikel: '1'
-      - id: ref2
+      - id: ref3
         bwb_id: BWBR0007606
         artikel: '3'
-  - number: 2.9.3.c
-    text: |-
-      indien het project ziet op de bouw van woningen binnen 30 meter van een krachtens
-      [artikel 2 van de Spoorwegwet][ref1] aangewezen hoofdspoorweg, gemeten vanaf het hart van het buitenste spoor;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0015007#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0015007
         artikel: '2'
-  - number: 2.9.3.d
-    text: |-
-      indien het project ziet op de bouw van woningen in of op rijkswateren of regionale wateren waaraan krachtens de
-      [artikelen 4.1][ref1] of [4.4 van de Waterwet][ref2] de functie vaarweg is toegekend en die geschikt zijn voor
-      gebruik door schepen met een laadvermogen van ten minste 400 ton.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0025458#Artikel4
-      [ref2]: https://wetten.overheid.nl/BWBR0025458#Artikel4
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.9
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0025458
-        artikel: '4'
-      - id: ref2
+        artikel: '4.1'
+      - id: ref6
         bwb_id: BWBR0025458
-        artikel: '4'
-  - number: 2.10.1
+        artikel: '4.4'
+  - number: '2.10'
     text: |-
-      Op verzoek of ambtshalve kunnen burgemeester en wethouders ten aanzien van een project als bedoeld in
+      1 Op verzoek of ambtshalve kunnen burgemeester en wethouders ten aanzien van een project als bedoeld in
       [artikel 2.9, eerste lid][ref1], een projectuitvoeringsbesluit vaststellen, waaronder begrepen de vaststelling dat
       deze afdeling op het project van toepassing is. Burgemeester en wethouders kunnen het projectuitvoeringsbesluit
       ten aanzien van een project als bedoeld in artikel 2.9, eerste lid, onderdeel a, alleen vaststellen indien de
@@ -1130,213 +844,173 @@ articles:
       niet voor woningbouw zijn aangewezen, is de gemeenteraad bevoegd tot het nemen van het projectuitvoeringsbesluit
       voor een project als bedoeld in artikel 2.9, eerste lid, onderdeel a.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-      - id: ref2
-        bwb_id: BWBR0020449
-        artikel: '2'
-      - id: ref3
-        bwb_id: BWBR0020449
-        artikel: '3'
-  - number: 2.10.2
-    text: |-
-      Op de ontwikkeling en verwezenlijking van een project als bedoeld in [artikel 2.9, eerste lid][ref1], ten
+      2 Op de ontwikkeling en verwezenlijking van een project als bedoeld in [artikel 2.9, eerste lid][ref4], ten
       aanzien waarvan een projectuitvoeringsbesluit is vastgesteld, zijn de wettelijke voorschriften krachtens welke
       daarvoor een vergunning, ontheffing, vrijstelling of enig ander besluit is vereist, niet van toepassing, met
-      uitzondering van [paragraaf 5.1 van de Erfgoedwet][ref2], [artikel 6.5, onderdeel c, van de Waterwet][ref3]
-      en de [artikelen 4.1a][ref4] en [4.3a van de Wet ruimtelijke ordening][ref5]. Indien een besluit op grond van
-      [artikel 2.7][ref6] of [hoofdstuk 3 van de Wet natuurbescherming][ref7] is vereist, zijn de [artikelen 2.27][ref8]
-      en [2.28 van de Wet algemene bepalingen omgevingsrecht][ref9] van overeenkomstige toepassing, in die zin dat de
-      verklaring van geen bedenkingen door gedeputeerde staten wordt verleend.
+      uitzondering van [paragraaf 5.1 van de Erfgoedwet][ref5], [artikel 6.5, onderdeel c, van de Waterwet][ref6]
+      en de [artikelen 4.1a][ref7] en [4.3a van de Wet ruimtelijke ordening][ref8]. Indien een besluit op
+      grond van [artikel 2.7][ref9] of [hoofdstuk 3 van de Wet natuurbescherming][ref10] is vereist, zijn de
+      [artikelen 2.27][ref11] en [2.28 van de Wet algemene bepalingen omgevingsrecht][ref12] van overeenkomstige
+      toepassing, in die zin dat de verklaring van geen bedenkingen door gedeputeerde staten wordt verleend.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0037521#Paragraaf5.1
-      [ref3]: https://wetten.overheid.nl/BWBR0025458#Artikel6
-      [ref4]: https://wetten.overheid.nl/BWBR0020449#Artikel4
-      [ref5]: https://wetten.overheid.nl/BWBR0020449#Artikel4
-      [ref6]: https://wetten.overheid.nl/BWBR0037552#Artikel2
-      [ref7]: https://wetten.overheid.nl/BWBR0037552#Hoofdstuk3
-      [ref8]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref9]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-      - id: ref2
-        bwb_id: BWBR0037521
-        paragraaf: '5.1'
-      - id: ref3
-        bwb_id: BWBR0025458
-        artikel: '6'
-      - id: ref4
-        bwb_id: BWBR0020449
-        artikel: '4'
-      - id: ref5
-        bwb_id: BWBR0020449
-        artikel: '4'
-      - id: ref6
-        bwb_id: BWBR0037552
-        artikel: '2'
-      - id: ref7
-        bwb_id: BWBR0037552
-        hoofdstuk: '3'
-      - id: ref8
-        bwb_id: BWBR0024779
-        artikel: '2'
-      - id: ref9
-        bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.10.3
-    text: |-
-      Het projectuitvoeringsbesluit strekt ter gehele of gedeeltelijke vervanging van de besluiten die vereist zouden
+      3 Het projectuitvoeringsbesluit strekt ter gehele of gedeeltelijke vervanging van de besluiten die vereist zouden
       zijn geweest krachtens de in het tweede lid bedoelde wettelijke voorschriften.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.4
-    text: |-
-      Uit het projectuitvoeringsbesluit en de daarbij behorende toelichting blijkt welke gevolgen aan de uitvoering
+
+      4 Uit het projectuitvoeringsbesluit en de daarbij behorende toelichting blijkt welke gevolgen aan de uitvoering
       zijn verbonden en op welke wijze rekening is gehouden met de daarbij betrokken belangen, waaronder in elk geval
       de belangen ter bescherming waarvan de wettelijke voorschriften strekken die ingevolge het tweede lid niet van
-      toepassing zijn en, voor zover van toepassing, [hoofdstuk V, paragraaf 1, van de Monumentenwet 1988][ref1] zoals
-      van toepassing op grond van [artikel 9.1, eerste lid, van de Erfgoedwet][ref2].
+      toepassing zijn en, voor zover van toepassing, [hoofdstuk V, paragraaf 1, van de Monumentenwet 1988][ref13] zoals
+      van toepassing op grond van [artikel 9.1, eerste lid, van de Erfgoedwet][ref14].
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0004471#Paragraaf1
-      [ref2]: https://wetten.overheid.nl/BWBR0037521#Artikel9
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0004471
-        paragraaf: '1'
-      - id: ref2
-        bwb_id: BWBR0037521
-        artikel: '9'
-  - number: 2.10.5
-    text: |-
-      Bij een projectuitvoeringsbesluit worden de bij of krachtens wet of verordening vastgestelde toetsingskaders
+      5 Bij een projectuitvoeringsbesluit worden de bij of krachtens wet of verordening vastgestelde toetsingskaders
       toegepast en normen in acht genomen. Voor zover de wet of verordening afwijking van die toetsingskaders of normen
       toestaat, kan het projectuitvoeringsbesluit daarin voorzien.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.6
-    text: |-
-      Aan het projectuitvoeringsbesluit kunnen ter bescherming van de in het vierde lid bedoelde belangen voorschriften
+
+      6 Aan het projectuitvoeringsbesluit kunnen ter bescherming van de in het vierde lid bedoelde belangen voorschriften
       worden verbonden.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.7
-    text: |-
-      Indien een projectuitvoeringsbesluit er toe strekt een vergunning als
-      bedoeld in [artikel 11 van de Monumentenwet 1988][ref1] zoals van toepassing
-      op grond van [artikel 9.1, eerste lid, van de Erfgoedwet][ref2] of
-      [artikel 2.1, eerste lid, onderdeel f, van de Wet algemene bepalingen omgevingsrecht][ref3] te vervangen:
 
+      7 Indien een projectuitvoeringsbesluit er toe strekt een vergunning als
+      bedoeld in [artikel 11 van de Monumentenwet 1988][ref15] zoals van toepassing
+      op grond van [artikel 9.1, eerste lid, van de Erfgoedwet][ref16] of
+      [artikel 2.1, eerste lid, onderdeel f, van de Wet algemene bepalingen omgevingsrecht][ref17] te vervangen:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004471#Artikel11
-      [ref2]: https://wetten.overheid.nl/BWBR0037521#Artikel9
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0004471
-        artikel: '11'
-      - id: ref2
-        bwb_id: BWBR0037521
-        artikel: '9'
-      - id: ref3
-        bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.10.7.a
-    text: |-
-      leggen burgemeester en wethouders, indien het een archeologisch monument betreft als bedoeld in de
-      [Erfgoedwet][ref1] en in de gevallen waarin Onze Minister van Onderwijs, Cultuur en Wetenschap op grond van de
-      [Wet algemene bepalingen omgevingsrecht][ref2] adviseert, het voornemen tot een projectuitvoeringsbesluit voor
+      a. leggen burgemeester en wethouders, indien het een archeologisch monument betreft als bedoeld in de
+      [Erfgoedwet][ref18] en in de gevallen waarin Onze Minister van Onderwijs, Cultuur en Wetenschap op grond van de
+      [Wet algemene bepalingen omgevingsrecht][ref19] adviseert, het voornemen tot een projectuitvoeringsbesluit voor
       advies voor aan Onze Minister van Onderwijs, Cultuur en Wetenschap die binnen vier weken na ontvangst van de
-      gegevens, bedoeld in [artikel 3:7 van de Algemene wet bestuursrecht][ref3], advies uitbrengt, en
+      gegevens, bedoeld in [artikel 3:7 van de Algemene wet bestuursrecht][ref20], advies uitbrengt, en
 
+      b. zenden burgemeester en wethouders aan Onze Minister van Onderwijs, Cultuur en Wetenschap en, voorzover het
+      monument gelegen is buiten de bebouwde kom, aan gedeputeerde staten:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0037521
-      [ref2]: https://wetten.overheid.nl/BWBR0024779
-      [ref3]: https://wetten.overheid.nl/BWBR0005537#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0037521
-      - id: ref2
-        bwb_id: BWBR0024779
-      - id: ref3
-        bwb_id: BWBR0005537
-        artikel: '3'
-  - number: 2.10.7.b
-    text: |-
-      zenden burgemeester en wethouders aan Onze Minister van Onderwijs, Cultuur en Wetenschap en, voorzover het monument
-      gelegen is buiten de bebouwde kom, aan gedeputeerde staten:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.7.b.1°
-    text: het ontwerpbesluit, en
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.7.b.2°
-    text: onmiddellijk na de vaststelling een afschrift van het projectuitvoeringsbesluit.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-  - number: 2.10.8
-    text: |-
-      Indien een projectuitvoeringsbesluit betrekking heeft op een beschermd stads- of dorpsgezicht als bedoeld in
-      [artikel 1, onderdeel g, van de Monumentenwet 1988][ref1] zoals die wet luidde voor inwerkingtreding van de
-      [Erfgoedwet][ref2] zenden burgemeester en wethouders onmiddellijk na de vaststelling hiervan een afschrift aan Onze
-      Minister van Onderwijs, Cultuur en Wetenschap.
+      1°. het ontwerpbesluit, en
 
+      2°. onmiddellijk na de vaststelling een afschrift van het projectuitvoeringsbesluit.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004471#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0037521
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0004471
-        artikel: '1'
-      - id: ref2
-        bwb_id: BWBR0037521
-  - number: 2.10.9
-    text: |-
-      Het tweede lid en het vijfde lid, tweede volzin, zijn niet van toepassing op de wettelijke voorschriften
-      die zijn gesteld bij of krachtens de [Wet luchtvaart][ref1], de [Luchtvaartwet][ref2] en de
+      8 Indien een projectuitvoeringsbesluit betrekking heeft op een beschermd stads- of dorpsgezicht als bedoeld in
+      [artikel 1, onderdeel g, van de Monumentenwet 1988][ref21] zoals die wet luidde voor inwerkingtreding van de
+      [Erfgoedwet][ref22] zenden burgemeester en wethouders onmiddellijk na de vaststelling hiervan een afschrift aan
+      Onze Minister van Onderwijs, Cultuur en Wetenschap.
+
+      9 Het tweede lid en het vijfde lid, tweede volzin, zijn niet van toepassing op de wettelijke voorschriften
+      die zijn gesteld bij of krachtens de [Wet luchtvaart][ref23], de [Luchtvaartwet][ref24] en de
       __REF002___________________________________________________________________________________________________________
       ___________________________________________________________________________________________________________________
-      _______________________________________________________________________________ (Stb. 561)
+      ________________________________________________________________________________ (Stb. 561)
       omtrent ruimtelijke beperkingen in de omgeving van luchthavens in verband met geluidbelasting,
-      externe veiligheid en vliegveiligheid. Voor de toepassing van de [Wet luchtvaart][ref4] wordt het
-      projectuitvoeringsbesluit gelijkgesteld aan een omgevingsvergunning waarbij met toepassing van
-      [artikel 2.12, eerste lid, onder a, onder 3°, van de Wet algemene bepalingen omgevingsrecht][ref5] van het
+      externe veiligheid en vliegveiligheid. Voor de toepassing van de [Wet luchtvaart][ref26] wordt
+      het projectuitvoeringsbesluit gelijkgesteld aan een omgevingsvergunning waarbij met toepassing van
+      [artikel 2.12, eerste lid, onder a, onder 3°, van de Wet algemene bepalingen omgevingsrecht][ref27] van het
       bestemmingsplan wordt afgeweken.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0005555
-      [ref2]: https://wetten.overheid.nl/BWBR0002267
-      [ref3]: https://wetten.overheid.nl/BWBR0024928
-      [ref4]: https://wetten.overheid.nl/BWBR0005555
-      [ref5]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.9
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2.1
+      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel3.1
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.9
+      [ref5]: https://wetten.overheid.nl/BWBR0037521#Paragraaf5.1
+      [ref6]: https://wetten.overheid.nl/BWBR0025458#Artikel6.5
+      [ref7]: https://wetten.overheid.nl/BWBR0020449#Artikel4.1a
+      [ref8]: https://wetten.overheid.nl/BWBR0020449#Artikel4.3a
+      [ref9]: https://wetten.overheid.nl/BWBR0037552#Artikel2.7
+      [ref10]: https://wetten.overheid.nl/BWBR0037552#Hoofdstuk3
+      [ref11]: https://wetten.overheid.nl/BWBR0024779#Artikel2.27
+      [ref12]: https://wetten.overheid.nl/BWBR0024779#Artikel2.28
+      [ref13]: https://wetten.overheid.nl/BWBR0004471#Paragraaf1
+      [ref14]: https://wetten.overheid.nl/BWBR0037521#Artikel9.1
+      [ref15]: https://wetten.overheid.nl/BWBR0004471#Artikel11
+      [ref16]: https://wetten.overheid.nl/BWBR0037521#Artikel9.1
+      [ref17]: https://wetten.overheid.nl/BWBR0024779#Artikel2.1
+      [ref18]: https://wetten.overheid.nl/BWBR0037521
+      [ref19]: https://wetten.overheid.nl/BWBR0024779
+      [ref20]: https://wetten.overheid.nl/BWBR0005537#Artikel37
+      [ref21]: https://wetten.overheid.nl/BWBR0004471#Artikel1
+      [ref22]: https://wetten.overheid.nl/BWBR0037521
+      [ref23]: https://wetten.overheid.nl/BWBR0005555
+      [ref24]: https://wetten.overheid.nl/BWBR0002267
+      [ref25]: https://wetten.overheid.nl/BWBR0024928
+      [ref26]: https://wetten.overheid.nl/BWBR0005555
+      [ref27]: https://wetten.overheid.nl/BWBR0024779#Artikel2.12
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10
     references:
       - id: ref1
-        bwb_id: BWBR0005555
+        bwb_id: BWBR0027431
+        artikel: '2.9'
+        hoofdstuk: '2'
+        afdeling: '6'
       - id: ref2
-        bwb_id: BWBR0002267
+        bwb_id: BWBR0020449
+        artikel: '2.1'
       - id: ref3
-        bwb_id: BWBR0024928
+        bwb_id: BWBR0020449
+        artikel: '3.1'
       - id: ref4
-        bwb_id: BWBR0005555
+        bwb_id: BWBR0027431
+        artikel: '2.9'
+        hoofdstuk: '2'
+        afdeling: '6'
       - id: ref5
+        bwb_id: BWBR0037521
+        paragraaf: '5.1'
+      - id: ref6
+        bwb_id: BWBR0025458
+        artikel: '6.5'
+      - id: ref7
+        bwb_id: BWBR0020449
+        artikel: 4.1a
+      - id: ref8
+        bwb_id: BWBR0020449
+        artikel: 4.3a
+      - id: ref9
+        bwb_id: BWBR0037552
+        artikel: '2.7'
+      - id: ref10
+        bwb_id: BWBR0037552
+        hoofdstuk: '3'
+      - id: ref11
         bwb_id: BWBR0024779
-        artikel: '2'
+        artikel: '2.27'
+      - id: ref12
+        bwb_id: BWBR0024779
+        artikel: '2.28'
+      - id: ref13
+        bwb_id: BWBR0004471
+        paragraaf: '1'
+      - id: ref14
+        bwb_id: BWBR0037521
+        artikel: '9.1'
+      - id: ref15
+        bwb_id: BWBR0004471
+        artikel: '11'
+      - id: ref16
+        bwb_id: BWBR0037521
+        artikel: '9.1'
+      - id: ref17
+        bwb_id: BWBR0024779
+        artikel: '2.1'
+      - id: ref18
+        bwb_id: BWBR0037521
+      - id: ref19
+        bwb_id: BWBR0024779
+      - id: ref20
+        bwb_id: BWBR0005537
+        artikel: 3:7
+      - id: ref21
+        bwb_id: BWBR0004471
+        artikel: '1'
+      - id: ref22
+        bwb_id: BWBR0037521
+      - id: ref23
+        bwb_id: BWBR0005555
+      - id: ref24
+        bwb_id: BWBR0002267
+      - id: ref25
+        bwb_id: BWBR0024928
+      - id: ref26
+        bwb_id: BWBR0005555
+      - id: ref27
+        bwb_id: BWBR0024779
+        artikel: '2.12'
   - number: 2.10a
     text: |-
       Indien sprake is van provinciale belangen, kunnen provinciale staten ten behoeve van de verwezenlijking van een
@@ -1345,18 +1019,18 @@ articles:
       met dien verstande dat burgemeester en wethouders uitvoering geven aan het bepaalde in [artikel 2.17][ref2].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.9
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.17
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.10a
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.9'
         hoofdstuk: '2'
         afdeling: '6'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.17'
         hoofdstuk: '2'
         afdeling: '6'
   - number: '2.11'
@@ -1369,7 +1043,7 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005537#Afdeling3.4
-      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel3
+      [ref2]: https://wetten.overheid.nl/BWBR0005537#Artikel312
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.11
     references:
       - id: ref1
@@ -1377,7 +1051,7 @@ articles:
         afdeling: '3.4'
       - id: ref2
         bwb_id: BWBR0005537
-        artikel: '3'
+        artikel: 3:12
   - number: '2.12'
     text: |-
       Voor zover het projectuitvoeringsbesluit niet in overeenstemming is met het bestemmingsplan of een
@@ -1388,20 +1062,20 @@ articles:
       [2.28 van de Wet algemene bepalingen omgevingsrecht][ref3] zijn van overeenkomstige toepassing.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0024779#Artikel2.12
+      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2.27
+      [ref3]: https://wetten.overheid.nl/BWBR0024779#Artikel2.28
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.12
     references:
       - id: ref1
         bwb_id: BWBR0024779
-        artikel: '2'
+        artikel: '2.12'
       - id: ref2
         bwb_id: BWBR0024779
-        artikel: '2'
+        artikel: '2.27'
       - id: ref3
         bwb_id: BWBR0024779
-        artikel: '2'
+        artikel: '2.28'
   - number: '2.14'
     text: |-
       Een besluit als bedoeld in [artikel 2.10, eerste lid][ref1], treedt in werking daags na afloop van de
@@ -1409,68 +1083,53 @@ articles:
       Afdeling bestuursrechtspraak van de Raad van State op het beroep heeft beslist.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.10
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.14
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.10'
         hoofdstuk: '2'
         afdeling: '6'
   - number: '2.15'
     text: |-
       Van de [Wet ruimtelijke ordening][ref1] zijn van overeenkomstige toepassing:
 
+      a. [artikel 3.8, zesde lid][ref2];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020449
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.15
-    references:
-      - id: ref1
-        bwb_id: BWBR0020449
-  - number: 2.15.a
-    text: |-
-      [artikel 3.8, zesde lid][ref1];
+      b. [afdeling 6.1][ref3];
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.15
-    references:
-      - id: ref1
-        bwb_id: BWBR0020449
-        artikel: '3'
-  - number: 2.15.b
-    text: |-
-      [afdeling 6.1][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.1
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.15
-    references:
-      - id: ref1
-        bwb_id: BWBR0020449
-        afdeling: '6.1'
-  - number: 2.15.c
-    text: |-
-      [afdeling 6.4][ref1], met dien verstande dat voor aanvang van de bouw van bouwplannen als bedoeld in
-      [artikel 6.12, eerste lid, van die wet][ref2] een melding aan burgemeester en wethouders wordt gedaan en dat
-      burgemeester en wethouders een beschikking met de inhoud van [artikel 6.17 van die wet][ref3] geven bij de start
+      c. [afdeling 6.4][ref4], met dien verstande dat voor aanvang van de bouw van bouwplannen als bedoeld in
+      [artikel 6.12, eerste lid, van die wet][ref5] een melding aan burgemeester en wethouders wordt gedaan en dat
+      burgemeester en wethouders een beschikking met de inhoud van [artikel 6.17 van die wet][ref6] geven bij de start
       van de bouw, gericht aan een eigenaar van gronden waarop gebouwd wordt.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.4
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel6
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel6
+      [ref1]: https://wetten.overheid.nl/BWBR0020449
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel3.8
+      [ref3]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.1
+      [ref4]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.4
+      [ref5]: https://wetten.overheid.nl/BWBR0020449#Artikel6.12
+      [ref6]: https://wetten.overheid.nl/BWBR0020449#Artikel6.17
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.15
     references:
       - id: ref1
         bwb_id: BWBR0020449
-        afdeling: '6.4'
       - id: ref2
         bwb_id: BWBR0020449
-        artikel: '6'
+        artikel: '3.8'
       - id: ref3
         bwb_id: BWBR0020449
-        artikel: '6'
+        afdeling: '6.1'
+      - id: ref4
+        bwb_id: BWBR0020449
+        afdeling: '6.4'
+      - id: ref5
+        bwb_id: BWBR0020449
+        artikel: '6.12'
+      - id: ref6
+        bwb_id: BWBR0020449
+        artikel: '6.17'
   - number: '2.16'
     text: Het is verboden in strijd te handelen met een projectuitvoeringsbesluit of een daaraan verbonden voorschrift.
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.16
@@ -1485,286 +1144,220 @@ articles:
       in overeenstemming met Onze Minister of Onze Ministers wie het mede aangaat, aangewezen lokale en (boven)regionale
       projecten met nationale betekenis.
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.18
-  - number: 2.19.1
+  - number: '2.19'
     text: |-
-      Ten aanzien van een krachtens [artikel 2.18][ref1] aangewezen lokaal project
+      1 Ten aanzien van een krachtens [artikel 2.18][ref1] aangewezen lokaal project
       met nationale betekenis stelt de gemeenteraad een structuurvisie als bedoeld in
       [artikel 2.1, eerste of derde lid, van de Wet ruimtelijke ordening][ref2] vast.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0020449
-        artikel: '2'
-  - number: 2.19.2
-    text: |-
-      De structuurvisie, bedoeld in het eerste lid, bevat onverminderd het elders omtrent de inhoud van een
+      2 De structuurvisie, bedoeld in het eerste lid, bevat onverminderd het elders omtrent de inhoud van een
       structuurvisie bepaalde, tevens:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.a
-    text: een concretisering van de hoofdlijnen van de voorgenomen ontwikkeling van het betrokken gebied;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.b
-    text: |-
-      een beschrijving van de voorgestelde wijze van verwezenlijking van de voorgenomen ontwikkeling, bestaande uit in
+
+      a. een concretisering van de hoofdlijnen van de voorgenomen ontwikkeling van het betrokken gebied;
+
+      b. een beschrijving van de voorgestelde wijze van verwezenlijking van de voorgenomen ontwikkeling, bestaande uit in
       ieder geval de volgende onderdelen:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.b.1°
-    text: |-
-      een voorlopig overzicht van de voor de uitvoering van het project benodigde besluiten, alsmede het daarbij
+
+      1°. een voorlopig overzicht van de voor de uitvoering van het project benodigde besluiten, alsmede het daarbij
       voorgenomen tijdpad;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.b.2°
-    text: een financiële onderbouwing en een voorlopige opzet van de grondexploitatie;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.b.3°
-    text: |-
-      een analyse van de risico’s ten aanzien van verplichtingen tot het toekennen van een tegemoetkoming in schade als
-      bedoeld in [afdeling 6.1 van de Wet ruimtelijke ordening][ref1];
 
+      2°. een financiële onderbouwing en een voorlopige opzet van de grondexploitatie;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.1
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-    references:
-      - id: ref1
-        bwb_id: BWBR0020449
-        afdeling: '6.1'
-  - number: 2.19.2.b.4°
-    text: eventuele voornemens inzake verwerving van gronden;
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-  - number: 2.19.2.b.5°
-    text: |-
-      de vermelding dat ten aanzien van de voor de verwezenlijking van het project noodzakelijke besluiten ingevolge
-      [artikel 2.21][ref1] toepassing zal worden gegeven aan de gemeentelijke coördinatieregeling, bedoeld in
-      [paragraaf 3.6.1 van de Wet ruimtelijke ordening][ref2];
+      3°. een analyse van de risico’s ten aanzien van verplichtingen tot het toekennen van een tegemoetkoming in schade
+      als bedoeld in [afdeling 6.1 van de Wet ruimtelijke ordening][ref3];
 
+      4°. eventuele voornemens inzake verwerving van gronden;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.1
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0020449
-        paragraaf: 3.6.1
-  - number: 2.19.2.c
-    text: |-
-      een samenvatting van de uitkomsten van het overeenkomstig [artikel 2.20, eerste lid][ref1], gevoerde bestuurlijk
+      5°. de vermelding dat ten aanzien van de voor de verwezenlijking van het project noodzakelijke besluiten
+      ingevolge [artikel 2.21][ref4] toepassing zal worden gegeven aan de gemeentelijke coördinatieregeling, bedoeld in
+      [paragraaf 3.6.1 van de Wet ruimtelijke ordening][ref5];
+
+      c. een samenvatting van de uitkomsten van het overeenkomstig [artikel 2.20, eerste lid][ref6], gevoerde bestuurlijk
       overleg.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-  - number: 2.19.3
-    text: |-
-      Indien reeds een structuurvisie is vastgesteld, is het eerste lid niet van toepassing en wordt die structuurvisie
-      voor zover nodig aangevuld met de in het tweede lid genoemde onderdelen. [Artikel 2.20][ref1] is van
+      3 Indien reeds een structuurvisie is vastgesteld, is het eerste lid niet van toepassing en wordt die
+      structuurvisie voor zover nodig aangevuld met de in het tweede lid genoemde onderdelen. [Artikel 2.20][ref7] is van
       overeenkomstige toepassing.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2.1
+      [ref3]: https://wetten.overheid.nl/BWBR0020449#Afdeling6.1
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.21
+      [ref5]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.1
+      [ref6]: https://wetten.overheid.nl/BWBR0027431#Artikel2.20
+      [ref7]: https://wetten.overheid.nl/BWBR0027431#Artikel2.20
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
-  - number: 2.19a.1
+      - id: ref2
+        bwb_id: BWBR0020449
+        artikel: '2.1'
+      - id: ref3
+        bwb_id: BWBR0020449
+        afdeling: '6.1'
+      - id: ref4
+        bwb_id: BWBR0027431
+        artikel: '2.21'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref5
+        bwb_id: BWBR0020449
+        paragraaf: 3.6.1
+      - id: ref6
+        bwb_id: BWBR0027431
+        artikel: '2.20'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref7
+        bwb_id: BWBR0027431
+        artikel: '2.20'
+        hoofdstuk: '2'
+        afdeling: '7'
+  - number: 2.19a
     text: |-
-      Ten aanzien van een krachtens [artikel 2.18][ref1] aangewezen (boven)regionaal project
+      1 Ten aanzien van een krachtens [artikel 2.18][ref1] aangewezen (boven)regionaal project
       met nationale betekenis stellen provinciale staten een structuurvisie als bedoeld in
       [artikel 2.2, eerste of derde lid, van de Wet ruimtelijke ordening][ref2] vast.
 
+      2 Op projecten als bedoeld in het eerste lid is deze afdeling van overeenkomstige toepassing, met dien verstande
+      dat:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0020449
-        artikel: '2'
-  - number: 2.19a.2
-    text: 'Op projecten als bedoeld in het eerste lid is deze afdeling van overeenkomstige toepassing, met dien verstande dat:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-  - number: 2.19a.2.a
-    text: |-
-      in de [artikelen 2.19, tweede lid, onder b, onder 5°][ref1], en [2.21][ref2] in plaats van «de gemeentelijke
-      coördinatieregeling, bedoeld in [paragraaf 3.6.1 van de Wet ruimtelijke ordening][ref3]» wordt gelezen: de
-      provinciale coördinatieregeling, bedoeld in [paragraaf 3.6.2 van de Wet ruimtelijke ordening][ref4];
+      a. in de [artikelen 2.19, tweede lid, onder b, onder 5°][ref3], en [2.21][ref4] in plaats van «de gemeentelijke
+      coördinatieregeling, bedoeld in [paragraaf 3.6.1 van de Wet ruimtelijke ordening][ref5]» wordt gelezen: de
+      provinciale coördinatieregeling, bedoeld in [paragraaf 3.6.2 van de Wet ruimtelijke ordening][ref6];
 
+      b. in [artikel 2.20, eerste lid][ref7], in plaats van «die diensten van provincie en Rijk» wordt gelezen: die
+      diensten van Rijk;
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.1
-      [ref4]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref3
-        bwb_id: BWBR0020449
-        paragraaf: 3.6.1
-      - id: ref4
-        bwb_id: BWBR0020449
-        paragraaf: 3.6.2
-  - number: 2.19a.2.b
-    text: |-
-      in [artikel 2.20, eerste lid][ref1], in plaats van «die diensten van provincie en Rijk» wordt gelezen: die diensten
-      van Rijk;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-  - number: 2.19a.2.c
-    text: |-
-      in [artikel 2.20, derde lid][ref1], in plaats van «de eerstverantwoordelijke gemeente» wordt gelezen: de
+      c. in [artikel 2.20, derde lid][ref8], in plaats van «de eerstverantwoordelijke gemeente» wordt gelezen: de
       eerstverantwoordelijke provincie;
 
+      d. in [artikel 2.21][ref9] in plaats van «In afwijking van
+      [artikel 3.30, eerste lid, van de Wet ruimtelijke ordening][ref10]» wordt gelezen: In afwijking van
+      [artikel 3.33, eerste lid, van de Wet ruimtelijke ordening][ref11];
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-  - number: 2.19a.2.d
-    text: |-
-      in [artikel 2.21][ref1] in plaats van «In afwijking van
-      [artikel 3.30, eerste lid, van de Wet ruimtelijke ordening][ref2]» wordt gelezen: In afwijking van
-      [artikel 3.33, eerste lid, van de Wet ruimtelijke ordening][ref3];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0020449
-        artikel: '3'
-      - id: ref3
-        bwb_id: BWBR0020449
-        artikel: '3'
-  - number: 2.19a.2.e
-    text: |-
-      in [artikel 2.22][ref1] in plaats van «een gemeentelijke verordening» wordt gelezen: een provinciale of
+      e. in [artikel 2.22][ref12] in plaats van «een gemeentelijke verordening» wordt gelezen: een provinciale of
       gemeentelijke verordening;
 
+      f. in [artikel 2.23, eerste lid][ref13], in plaats van «[artikel 3.10][ref14]» wordt gelezen
+      «[artikel 3.27][ref15]», in plaats van «kan de gemeenteraad» wordt gelezen «kunnen provinciale staten» en in plaats
+      van «gemeentebestuur» wordt gelezen: provinciebestuur.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel2.2
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2.19
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.21
+      [ref5]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.1
+      [ref6]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.2
+      [ref7]: https://wetten.overheid.nl/BWBR0027431#Artikel2.20
+      [ref8]: https://wetten.overheid.nl/BWBR0027431#Artikel2.20
+      [ref9]: https://wetten.overheid.nl/BWBR0027431#Artikel2.21
+      [ref10]: https://wetten.overheid.nl/BWBR0020449#Artikel3.30
+      [ref11]: https://wetten.overheid.nl/BWBR0020449#Artikel3.33
+      [ref12]: https://wetten.overheid.nl/BWBR0027431#Artikel2.22
+      [ref13]: https://wetten.overheid.nl/BWBR0027431#Artikel2.23
+      [ref14]: https://wetten.overheid.nl/BWBR0020449#Artikel3.10
+      [ref15]: https://wetten.overheid.nl/BWBR0020449#Artikel3.27
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-  - number: 2.19a.2.f
-    text: |-
-      in [artikel 2.23, eerste lid][ref1], in plaats van «[artikel 3.10][ref2]» wordt gelezen «[artikel 3.27][ref3]», in
-      plaats van «kan de gemeenteraad» wordt gelezen «kunnen provinciale staten» en in plaats van «gemeentebestuur» wordt
-      gelezen: provinciebestuur.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-      [ref3]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.19a
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
       - id: ref2
         bwb_id: BWBR0020449
-        artikel: '3'
+        artikel: '2.2'
       - id: ref3
-        bwb_id: BWBR0020449
-        artikel: '3'
-  - number: 2.20.1
-    text: |-
-      Bij de voorbereiding van een structuurvisie als bedoeld in [artikel 2.19, eerste lid][ref1], plegen burgemeester en
-      wethouders overleg met de besturen van de betrokken gemeenten en waterschappen en met die diensten van provincie en
-      Rijk die betrokken zijn bij de zorg voor de ruimtelijke ordening of belast zijn met de behartiging van belangen die
-      in de structuurvisie in het geding zijn.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.20
-    references:
-      - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.19'
         hoofdstuk: '2'
         afdeling: '7'
-  - number: 2.20.2
+      - id: ref4
+        bwb_id: BWBR0027431
+        artikel: '2.21'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref5
+        bwb_id: BWBR0020449
+        paragraaf: 3.6.1
+      - id: ref6
+        bwb_id: BWBR0020449
+        paragraaf: 3.6.2
+      - id: ref7
+        bwb_id: BWBR0027431
+        artikel: '2.20'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref8
+        bwb_id: BWBR0027431
+        artikel: '2.20'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref9
+        bwb_id: BWBR0027431
+        artikel: '2.21'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref10
+        bwb_id: BWBR0020449
+        artikel: '3.30'
+      - id: ref11
+        bwb_id: BWBR0020449
+        artikel: '3.33'
+      - id: ref12
+        bwb_id: BWBR0027431
+        artikel: '2.22'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref13
+        bwb_id: BWBR0027431
+        artikel: '2.23'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref14
+        bwb_id: BWBR0020449
+        artikel: '3.10'
+      - id: ref15
+        bwb_id: BWBR0020449
+        artikel: '3.27'
+  - number: '2.20'
     text: |-
-      In afwijking van [hoofdstuk 2 van de Wet ruimtelijke ordening][ref1], worden, voor zover het overleg, bedoeld
+      1 Bij de voorbereiding van een structuurvisie als bedoeld in [artikel 2.19, eerste lid][ref1], plegen burgemeester
+      en wethouders overleg met de besturen van de betrokken gemeenten en waterschappen en met die diensten van provincie
+      en Rijk die betrokken zijn bij de zorg voor de ruimtelijke ordening of belast zijn met de behartiging van belangen
+      die in de structuurvisie in het geding zijn.
+
+      2 In afwijking van [hoofdstuk 2 van de Wet ruimtelijke ordening][ref2], worden, voor zover het overleg, bedoeld
       in het eerste lid, leidt tot vaststelling van een structuurvisie waarmee de bestuursorganen van de betrokken
       gemeenten, waterschappen, provincie en Rijk instemmen, aan die structuurvisie verklaringen gehecht houdende
       instemming van die bestuursorganen met de in de structuurvisie voorgestelde wijze van verwezenlijking van de
       voorgenomen ontwikkeling.
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Hoofdstuk2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.20
-    references:
-      - id: ref1
-        bwb_id: BWBR0020449
-        hoofdstuk: '2'
-  - number: 2.20.3
-    text: |-
-      Ter uitvoering van de in de structuurvisie voorgestelde wijze van verwezenlijking van de voorgenomen ontwikkeling
+      3 Ter uitvoering van de in de structuurvisie voorgestelde wijze van verwezenlijking van de voorgenomen ontwikkeling
       wordt ten behoeve van een goede begeleiding en tijdige afronding van het project een projectcommissie ingesteld.
       In de commissie zijn de betrokken bestuursorganen, bedoeld in het tweede lid, vertegenwoordigd. De commissie staat
       onder voorzitterschap van een bestuurder van de eerstverantwoordelijke gemeente.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.19
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Hoofdstuk2
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.20
+    references:
+      - id: ref1
+        bwb_id: BWBR0027431
+        artikel: '2.19'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref2
+        bwb_id: BWBR0020449
+        hoofdstuk: '2'
   - number: '2.21'
     text: |-
       In afwijking van [artikel 3.30, eerste lid, van de Wet ruimtelijke ordening][ref1] wordt ten aanzien van op
@@ -1773,17 +1366,17 @@ articles:
       [paragraaf 3.6.1 van de Wet ruimtelijke ordening][ref3].
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0020449#Artikel3
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0020449#Artikel3.30
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
       [ref3]: https://wetten.overheid.nl/BWBR0020449#Paragraaf3.6.1
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.21
     references:
       - id: ref1
         bwb_id: BWBR0020449
-        artikel: '3'
+        artikel: '3.30'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
       - id: ref3
@@ -1797,23 +1390,23 @@ articles:
       redenen buiten toepassing worden gelaten.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.21
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.22
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.21'
         hoofdstuk: '2'
         afdeling: '7'
-  - number: 2.23.1
+  - number: '2.23'
     text: |-
-      Indien voor de verwezenlijking van een krachtens [artikel 2.18][ref1]
+      1 Indien voor de verwezenlijking van een krachtens [artikel 2.18][ref1]
       aangewezen project een omgevingsvergunning waarbij met toepassing van
       [artikel 2.12, eerste lid, onder a, onder 3°, van de Wet algemene bepalingen omgevingsrecht][ref2] van het
       bestemmingsplan, het inpassingsplan of de beheersverordening wordt afgeweken, wordt verleend, kan de gemeenteraad
@@ -1822,100 +1415,75 @@ articles:
       inhouden dat financiële zekerheid wordt gesteld voor het nakomen van de ingevolge die vergunning verschuldigde
       rechten.
 
+      2 Indien toepassing wordt gegeven aan het eerste lid, wordt in ieder geval het bedrag aangegeven waarvoor de
+      zekerheid in stand moet worden gehouden.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2
+      3 Bij de vergunning kunnen voorschriften worden gesteld voor gevallen waarin aan de verplichting uitvoering wordt
+      gegeven door het sluiten en in stand houden van een verzekering. Daarbij wordt rekening gehouden met hetgeen
+      redelijkerwijs door verzekering kan worden gedekt.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref2]: https://wetten.overheid.nl/BWBR0024779#Artikel2.12
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.23
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
       - id: ref2
         bwb_id: BWBR0024779
-        artikel: '2'
-  - number: 2.23.2
+        artikel: '2.12'
+  - number: '5.1'
     text: |-
-      Indien toepassing wordt gegeven aan het eerste lid, wordt in ieder geval het bedrag aangegeven waarvoor de
-      zekerheid in stand moet worden gehouden.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.23
-  - number: 2.23.3
-    text: |-
-      Bij de vergunning kunnen voorschriften worden gesteld voor gevallen waarin aan de verplichting uitvoering wordt
-      gegeven door het sluiten en in stand houden van een verzekering. Daarbij wordt rekening gehouden met hetgeen
-      redelijkerwijs door verzekering kan worden gedekt.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel2.23
-  - number: 5.1.1
-    text: |-
-      Bij of krachtens algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
+      1 Bij of krachtens algemene maatregel van bestuur op de voordracht van Onze Minister van Binnenlandse Zaken en
       Koninkrijksrelaties, in overeenstemming met Onze Minister of Onze Ministers wie het mede aangaat, kunnen regels
       worden gegeven gericht op:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-  - number: 5.1.1.a
-    text: een versnelling van de ontwikkeling en verwezenlijking van ruimtelijke en infrastructurele projecten, en
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-  - number: 5.1.1.b
-    text: een goede uitvoering van deze wet.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-  - number: 5.1.2
-    text: |-
-      Het bij of krachtens de algemene maatregel van bestuur, bedoeld in het eerste lid, bepaalde is slechts van
+
+      a. een versnelling van de ontwikkeling en verwezenlijking van ruimtelijke en infrastructurele projecten, en
+
+      b. een goede uitvoering van deze wet.
+
+      2 Het bij of krachtens de algemene maatregel van bestuur, bedoeld in het eerste lid, bepaalde is slechts van
       toepassing op:
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-  - number: 5.1.2.a
-    text: |-
-      de projecten en categorieën van projecten, genoemd in de [bijlagen I][ref1] en [II][ref2] bij deze wet;
+
+      a. de projecten en categorieën van projecten, genoemd in de [bijlagen I][ref1] en [II][ref2] bij deze wet;
+
+      b. de projecten waar deze wet bij een algemene maatregel van bestuur krachtens [artikel 1.2][ref3] op van
+      toepassing is verklaard;
+
+      c. bestemmingsplannen als bedoeld in [artikel 2.3, eerste lid][ref4], alsmede de voor de uitvoering van de
+      projecten waarop die bestemmingsplannen betrekking hebben vereiste besluiten en de voor de uitvoering van
+      maatregelen of werken als bedoeld in artikel 2.3, tweede lid, onderdelen b en c, vereiste besluiten, en
+
+      d. projectuitvoeringsbesluiten als bedoeld in [artikel 2.10, eerste lid][ref5].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027431
       [ref2]: https://wetten.overheid.nl/BWBR0027431
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel1.2
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.3
+      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2.10
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
     references:
       - id: ref1
         bwb_id: BWBR0027431
       - id: ref2
         bwb_id: BWBR0027431
-  - number: 5.1.2.b
-    text: |-
-      de projecten waar deze wet bij een algemene maatregel van bestuur krachtens [artikel 1.2][ref1] op van toepassing
-      is verklaard;
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.2'
         hoofdstuk: '1'
         afdeling: '1'
-  - number: 5.1.2.c
-    text: |-
-      bestemmingsplannen als bedoeld in [artikel 2.3, eerste lid][ref1], alsmede de voor de uitvoering van de projecten
-      waarop die bestemmingsplannen betrekking hebben vereiste besluiten en de voor de uitvoering van maatregelen of
-      werken als bedoeld in artikel 2.3, tweede lid, onderdelen b en c, vereiste besluiten, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '1'
-  - number: 5.1.2.d
-    text: |-
-      projectuitvoeringsbesluiten als bedoeld in [artikel 2.10, eerste lid][ref1].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.1
-    references:
-      - id: ref1
+      - id: ref5
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.10'
         hoofdstuk: '2'
         afdeling: '6'
   - number: '5.2'
@@ -1927,33 +1495,33 @@ articles:
       beroep open.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.2
       [ref2]: https://wetten.overheid.nl/BWBR0027431
-      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2.2
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.3
+      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.2
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.2'
         hoofdstuk: '1'
         afdeling: '1'
       - id: ref2
         bwb_id: BWBR0027431
       - id: ref3
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
       - id: ref4
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.3'
         hoofdstuk: '2'
         afdeling: '1'
       - id: ref5
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
   - number: 5.2a
@@ -1966,97 +1534,90 @@ articles:
       bekendmaking wordt het ontwerp aan de beide kamers der Staten-Generaal overgelegd.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref6]: https://wetten.overheid.nl/BWBR0027431#Artikel5
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.2
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.2
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2.4
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.9
+      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref6]: https://wetten.overheid.nl/BWBR0027431#Artikel5.1
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.2a
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.2'
         hoofdstuk: '1'
         afdeling: '1'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.2'
         hoofdstuk: '2'
         afdeling: '1'
       - id: ref3
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.4'
         hoofdstuk: '2'
         afdeling: '2'
       - id: ref4
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.9'
         hoofdstuk: '2'
         afdeling: '6'
       - id: ref5
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.18'
         hoofdstuk: '2'
         afdeling: '7'
       - id: ref6
         bwb_id: BWBR0027431
-        artikel: '5'
+        artikel: '5.1'
         hoofdstuk: '5'
         afdeling: '1'
-  - number: 5.3.1
+  - number: '5.3'
     text: |-
-      De [artikelen 1.4][ref1] en [1.6 tot en met 1.9][ref2] zijn niet van toepassing indien beroep wordt ingesteld tegen
-      een besluit dat is bekendgemaakt voor het tijdstip van inwerkingtreding van deze wet, dan wel hoger beroep wordt
-      ingesteld tegen een uitspraak die voor dat tijdstip is bekendgemaakt.
+      1 De [artikelen 1.4][ref1] en [1.6 tot en met 1.9][ref2] zijn niet van toepassing indien beroep wordt ingesteld
+      tegen een besluit dat is bekendgemaakt voor het tijdstip van inwerkingtreding van deze wet, dan wel hoger beroep
+      wordt ingesteld tegen een uitspraak die voor dat tijdstip is bekendgemaakt.
+
+      2 De [artikelen 1.4][ref3] en [1.9][ref4] zijn voorts niet van toepassing, indien hoger beroep wordt ingesteld
+      tegen een uitspraak omtrent een besluit dat is bekendgemaakt voor het tijdstip van inwerkingtreding van deze wet.
 
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel1
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1.4
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel1.6
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel1.4
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel1.9
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.3
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.4'
         hoofdstuk: '1'
         paragraaf: '2.2'
         afdeling: '2'
       - id: ref2
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.6'
         hoofdstuk: '1'
         paragraaf: '2.4'
         afdeling: '2'
-  - number: 5.3.2
-    text: |-
-      De [artikelen 1.4][ref1] en [1.9][ref2] zijn voorts niet van toepassing, indien hoger beroep wordt ingesteld tegen
-      een uitspraak omtrent een besluit dat is bekendgemaakt voor het tijdstip van inwerkingtreding van deze wet.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel1
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.3
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.4'
         hoofdstuk: '1'
         paragraaf: '2.2'
         afdeling: '2'
-      - id: ref2
+      - id: ref4
         bwb_id: BWBR0027431
-        artikel: '1'
+        artikel: '1.9'
         hoofdstuk: '1'
         paragraaf: '2.4'
         afdeling: '2'
-  - number: 5.4.1
+  - number: '5.4'
     text: |-
-      Het recht zoals dat gold voor het tijdstip van inwerkingtreding van deze wet blijft van toepassing op een
+      1 Het recht zoals dat gold voor het tijdstip van inwerkingtreding van deze wet blijft van toepassing op een
       onteigeningsbesluit, waarvan het ontwerp ter inzage is gelegd voor dat tijdstip.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.4
-  - number: 5.4.2
-    text: |-
-      Een koninklijk besluit tot goedkeuring van een onteigeningsbesluit als bedoeld in
+
+      2 Een koninklijk besluit tot goedkeuring van een onteigeningsbesluit als bedoeld in
       [artikel 79 van de onteigeningswet][ref1], zoals dat luidde voor de inwerkingtreding van deze wet, wordt
       gelijkgesteld met een onteigeningsbesluit als bedoeld in [artikel 78 van de onteigeningswet][ref2].
 
@@ -2123,7 +1684,7 @@ articles:
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0027431#Hoofdstuk2
-      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel4
+      [ref2]: https://wetten.overheid.nl/BWBR0020449#Artikel4.3
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.8
     references:
       - id: ref1
@@ -2132,7 +1693,7 @@ articles:
         afdeling: '3'
       - id: ref2
         bwb_id: BWBR0020449
-        artikel: '4'
+        artikel: '4.3'
   - number: 5.9a
     text: |-
       Onze Minister van Justitie en Veiligheid zendt, in overeenstemming met Onze Minister van Binnenlandse Zaken en
@@ -2147,91 +1708,73 @@ articles:
       - id: ref1
         bwb_id: BWBR0027431
         hoofdstuk: '1'
-  - number: 5.10.1
-    text: Deze wet vervalt op een bij koninklijk besluit te bepalen tijdstip.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-  - number: 5.10.2
+  - number: '5.10'
     text: |-
-      Indien het eerste besluit ter uitvoering van een project waarop deze wet van toepassing was, is genomen voor
+      1 Deze wet vervalt op een bij koninklijk besluit te bepalen tijdstip.
+
+      2 Indien het eerste besluit ter uitvoering van een project waarop deze wet van toepassing was, is genomen voor
       het in het eerste lid bedoelde tijdstip blijft deze wet vanaf dat tijdstip van toepassing op latere besluiten of
       handelingen ter uitvoering van datzelfde project.
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-  - number: 5.10.3
-    text: 'Deze wet blijft vanaf het in het eerste lid bedoelde tijdstip van toepassing op:'
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-  - number: 5.10.3.a
-    text: |-
-      ontwikkelingsgebieden ten aanzien waarvan voor het in het eerste lid bedoelde tijdstip een gebiedsontwikkelingsplan
-      dan wel bestemmingsplan als bedoeld in [artikel 2.3][ref1] is vastgesteld;
 
+      3 Deze wet blijft vanaf het in het eerste lid bedoelde tijdstip van toepassing op:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '1'
-  - number: 5.10.3.b
-    text: |-
-      experimenten als bedoeld in [artikel 2.4][ref1] die voor het in het eerste lid bedoelde tijdstip zijn aangewezen
+      a. ontwikkelingsgebieden ten aanzien waarvan voor het in het eerste lid bedoelde tijdstip een
+      gebiedsontwikkelingsplan dan wel bestemmingsplan als bedoeld in [artikel 2.3][ref1] is vastgesteld;
+
+      b. experimenten als bedoeld in [artikel 2.4][ref2] die voor het in het eerste lid bedoelde tijdstip zijn aangewezen
       overeenkomstig dat artikel;
 
+      c. de uitvoering van projecten als bedoeld in [artikel 2.9, eerste lid][ref3], indien ten aanzien van dat project
+      voor het in het eerste lid bedoelde tijdstip een besluit als bedoeld in [artikel 2.10, eerste lid][ref4], is
+      genomen, en
 
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
+      d. de uitvoering van krachtens [artikel 2.18][ref5] aangewezen projecten, indien ten aanzien van die projecten voor
+      het in het eerste lid bedoelde tijdstip aan de structuurvisie, bedoeld in [artikel 2.19, eerste lid][ref6], de in
+      [artikel 2.20, tweede lid][ref7], bedoelde verklaringen zijn gehecht.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2.3
+      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2.4
+      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2.9
+      [ref4]: https://wetten.overheid.nl/BWBR0027431#Artikel2.10
+      [ref5]: https://wetten.overheid.nl/BWBR0027431#Artikel2.18
+      [ref6]: https://wetten.overheid.nl/BWBR0027431#Artikel2.19
+      [ref7]: https://wetten.overheid.nl/BWBR0027431#Artikel2.20
     url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
     references:
       - id: ref1
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.3'
+        hoofdstuk: '2'
+        afdeling: '1'
+      - id: ref2
+        bwb_id: BWBR0027431
+        artikel: '2.4'
         hoofdstuk: '2'
         afdeling: '2'
-  - number: 5.10.3.c
-    text: |-
-      de uitvoering van projecten als bedoeld in [artikel 2.9, eerste lid][ref1], indien ten aanzien van dat project voor
-      het in het eerste lid bedoelde tijdstip een besluit als bedoeld in [artikel 2.10, eerste lid][ref2], is genomen, en
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-      - id: ref2
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '6'
-  - number: 5.10.3.d
-    text: |-
-      de uitvoering van krachtens [artikel 2.18][ref1] aangewezen projecten, indien ten aanzien van die projecten voor
-      het in het eerste lid bedoelde tijdstip aan de structuurvisie, bedoeld in [artikel 2.19, eerste lid][ref2], de in
-      [artikel 2.20, tweede lid][ref3], bedoelde verklaringen zijn gehecht.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref2]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-      [ref3]: https://wetten.overheid.nl/BWBR0027431#Artikel2
-    url: https://wetten.overheid.nl/BWBR0027431/2021-01-01#Artikel5.10
-    references:
-      - id: ref1
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
-      - id: ref2
-        bwb_id: BWBR0027431
-        artikel: '2'
-        hoofdstuk: '2'
-        afdeling: '7'
       - id: ref3
         bwb_id: BWBR0027431
-        artikel: '2'
+        artikel: '2.9'
+        hoofdstuk: '2'
+        afdeling: '6'
+      - id: ref4
+        bwb_id: BWBR0027431
+        artikel: '2.10'
+        hoofdstuk: '2'
+        afdeling: '6'
+      - id: ref5
+        bwb_id: BWBR0027431
+        artikel: '2.18'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref6
+        bwb_id: BWBR0027431
+        artikel: '2.19'
+        hoofdstuk: '2'
+        afdeling: '7'
+      - id: ref7
+        bwb_id: BWBR0027431
+        artikel: '2.20'
         hoofdstuk: '2'
         afdeling: '7'
   - number: '5.11'

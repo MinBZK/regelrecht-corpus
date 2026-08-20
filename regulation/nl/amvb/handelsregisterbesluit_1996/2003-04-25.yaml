@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.3.1/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
 $id: handelsregisterbesluit_1996
 regulatory_layer: AMVB
 publication_date: '2007-05-01'
@@ -23,11 +23,23 @@ preamble:
   url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#ArtikelAanhef
 articles:
   - number: '1'
-    text: 'In dit besluit en de daarop berustende bepalingen wordt verstaan onder:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel1
-  - number: 1.a
     text: |-
-      wet: de [Handelsregisterwet 1996][ref1];
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+      a. wet: de [Handelsregisterwet 1996][ref1];
+
+      b. [verordening 2137/85](31985R2137): [verordening (EEG) nr. 2137/85](31985R2137) van de Raad van de Europese
+      Gemeenschappen van 25 juli 1985 tot instelling van Europese economische samenwerkingsverbanden (*PbEG* L 199/1);
+
+      c. [richtlijn 68/151/EEG](31968L0151): eerste richtlijn van de Raad van de Europese Gemeenschappen van 9
+      maart 1968, strekkende tot het coördineren van de waarborgen, welke in de Lid-Staten worden verlangd van de
+      vennootschappen in de zin van de tweede alinea van artikel 58 van het Verdrag, om de belangen te beschermen zowel
+      van de deelnemers in deze vennootschappen als van derden, zulks ten einde die waarborgen gelijkwaardig te maken
+      (*PbEG* L 065);
+
+      d. persoonlijke gegevens: de naam en voornamen, de geslachtsaanduiding, het woonadres met vermelding – zo mogelijk
+      – van de postcode, de datum, de plaats en – indien deze plaats is gelegen buiten Nederland – het land van geboorte,
+      alsmede de handtekening en – voor zover in gebruik – de elektronische handtekening van een natuurlijk persoon.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0007893
@@ -35,106 +47,73 @@ articles:
     references:
       - id: ref1
         bwb_id: BWBR0007893
-  - number: 1.b
-    text: |-
-      [verordening 2137/85](31985R2137): [verordening (EEG) nr. 2137/85](31985R2137) van de Raad van de Europese
-      Gemeenschappen van 25 juli 1985 tot instelling van Europese economische samenwerkingsverbanden (*PbEG* L 199/1);
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel1
-  - number: 1.c
-    text: |-
-      [richtlijn 68/151/EEG](31968L0151): eerste richtlijn van de Raad van de Europese Gemeenschappen van 9 maart 1968,
-      strekkende tot het coördineren van de waarborgen, welke in de Lid-Staten worden verlangd van de vennootschappen in
-      de zin van de tweede alinea van artikel 58 van het Verdrag, om de belangen te beschermen zowel van de deelnemers in
-      deze vennootschappen als van derden, zulks ten einde die waarborgen gelijkwaardig te maken (*PbEG* L 065);
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel1
-  - number: 1.d
-    text: |-
-      persoonlijke gegevens: de naam en voornamen, de geslachtsaanduiding, het woonadres met vermelding – zo mogelijk –
-      van de postcode, de datum, de plaats en – indien deze plaats is gelegen buiten Nederland – het land van geboorte,
-      alsmede de handtekening en – voor zover in gebruik – de elektronische handtekening van een natuurlijk persoon.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel1
   - number: '2'
     text: |-
       Voor de toepassing van [de wet][ref1] wordt onder onderneming niet verstaan een bedrijf waarmee niet wordt beoogd
       het maken van winst, welke behoort aan:
 
-
-      [ref1]: https://wetten.overheid.nl/BWBR0007893
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel2
-    references:
-      - id: ref1
-        bwb_id: BWBR0007893
-  - number: 2.a
-    text: |-
-      een kredietgever die deelneemt aan krediettransacties als bedoeld in [artikel 4, eerste lid, onder ][ref1]
+      a. een kredietgever die deelneemt aan krediettransacties als bedoeld in [artikel 4, eerste lid, onder ][ref2]
       en die zich uitsluitend ten doel stelt kredieten te verlenen ten behoeve van de leden van een vereniging of
       kerkgenootschap, dan wel ten bate van hen die in dienst van een werkgever werkzaam zijn of zijn geweest, of van
       hun betrekkingen;
 
+      b. een rechtspersoon die bij of krachtens de [Ziekenfondswet][ref3] is toegelaten om als ziekenfonds werkzaam te
+      zijn.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0004815#Artikel4
+
+      [ref1]: https://wetten.overheid.nl/BWBR0007893
+      [ref2]: https://wetten.overheid.nl/BWBR0004815#Artikel4
+      [ref3]: https://wetten.overheid.nl/BWBR0002460
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel2
     references:
       - id: ref1
+        bwb_id: BWBR0007893
+      - id: ref2
         bwb_id: BWBR0004815
         artikel: '4'
-  - number: 2.b
-    text: |-
-      een rechtspersoon die bij of krachtens de [Ziekenfondswet][ref1] is toegelaten om als ziekenfonds werkzaam te zijn.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002460
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel2
-    references:
-      - id: ref1
+      - id: ref3
         bwb_id: BWBR0002460
-  - number: '3.1'
+  - number: '3'
     text: |-
-      Voor het doen van de voorgeschreven opgaven ter inschrijving in het handelsregister wordt gebruik gemaakt van door
-      de Kamer vastgestelde formulieren die kosteloos verkrijgbaar zijn.
+      1 Voor het doen van de voorgeschreven opgaven ter inschrijving in het handelsregister wordt gebruik gemaakt van
+      door de Kamer vastgestelde formulieren die kosteloos verkrijgbaar zijn.
+
+      2 De Kamer kan ermee instemmen dat een opgave op andere wijze geschiedt dan in het eerste lid bepaald.
+
+      3 De Kamer kan nadere regels stellen over de wijze waarop de opgaven worden gedaan.
+
+      4 De Kamer verstrekt de belanghebbende op verzoek kosteloos een bevestiging van de opgave, met vermelding van de
+      dag waarop deze is gedaan.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel3
-  - number: '3.2'
-    text: De Kamer kan ermee instemmen dat een opgave op andere wijze geschiedt dan in het eerste lid bepaald.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel3
-  - number: '3.3'
-    text: De Kamer kan nadere regels stellen over de wijze waarop de opgaven worden gedaan.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel3
-  - number: '3.4'
+  - number: '4'
     text: |-
-      De Kamer verstrekt de belanghebbende op verzoek kosteloos een bevestiging van de opgave, met vermelding van de dag
-      waarop deze is gedaan.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel3
-  - number: '4.1'
-    text: |-
-      Indien de Kamer er niet van overtuigd is dat de opgave afkomstig is van iemand die tot het doen van de opgave
+      1 Indien de Kamer er niet van overtuigd is dat de opgave afkomstig is van iemand die tot het doen van de opgave
       verplicht of bevoegd is, kan zij weigeren de opgave in behandeling te nemen.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel4
-  - number: '4.2'
-    text: |-
-      Indien niet is voldaan aan enig wettelijk voorschrift voor het in behandeling nemen van de opgave of indien de
+
+      2 Indien niet is voldaan aan enig wettelijk voorschrift voor het in behandeling nemen van de opgave of indien de
       verstrekte gegevens en bescheiden onvoldoende zijn voor de beoordeling van de opgave, kan de Kamer weigeren de
       opgave in behandeling te nemen, mits de belanghebbende de gelegenheid heeft gehad deze binnen een door de Kamer
       gestelde termijn aan te vullen.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel4
-  - number: '5.1'
+  - number: '5'
     text: |-
-      Nadat de opgave in behandeling is genomen, onderzoekt de Kamer summierlijk of deze juist is. De Kamer kan daarbij
+      1 Nadat de opgave in behandeling is genomen, onderzoekt de Kamer summierlijk of deze juist is. De Kamer kan daarbij
       om nadere bewijsstukken van de vermelde gegevens vragen.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel5
-  - number: '5.2'
-    text: |-
-      Indien de Kamer van oordeel is dat de opgave niet juist is, geeft zij de belanghebbende in overweging de opgave
+
+      2 Indien de Kamer van oordeel is dat de opgave niet juist is, geeft zij de belanghebbende in overweging de opgave
       te wijzigen of in te trekken. Daartoe stelt zij de opgave onverwijld weer ter beschikking van de belanghebbende en
       geeft zij de aanwijzingen die zij in het belang van het handelsregister dienstig oordeelt.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel5
-  - number: '6.1'
-    text: Indien de Kamer van oordeel is dat de opgave juist is, gaat zij over tot inschrijving.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel6
-  - number: '6.2'
+  - number: '6'
     text: |-
-      De Kamer gaat eveneens over tot inschrijving, indien naar het oordeel van de Kamer, nadat toepassing is gegeven aan
-      [artikel 5, tweede lid][ref1], uit de nieuwe opgave blijkt dat de belanghebbende niet aan de gegeven aanwijzingen
-      heeft voldaan. In dat geval geeft de Kamer toepassing aan [artikel 23 van de wet][ref2].
+      1 Indien de Kamer van oordeel is dat de opgave juist is, gaat zij over tot inschrijving.
+
+      2 De Kamer gaat eveneens over tot inschrijving, indien naar het oordeel van de Kamer, nadat toepassing is
+      gegeven aan [artikel 5, tweede lid][ref1], uit de nieuwe opgave blijkt dat de belanghebbende niet aan de gegeven
+      aanwijzingen heeft voldaan. In dat geval geeft de Kamer toepassing aan [artikel 23 van de wet][ref2].
+
+      3 De Kamer verstrekt de belanghebbende op verzoek kosteloos een bevestiging van de inschrijving, met vermelding van
+      de dag waarop deze is geschied.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel5
@@ -148,19 +127,12 @@ articles:
       - id: ref2
         bwb_id: BWBR0007893
         artikel: '23'
-  - number: '6.3'
+  - number: '7'
     text: |-
-      De Kamer verstrekt de belanghebbende op verzoek kosteloos een bevestiging van de inschrijving, met vermelding van
-      de dag waarop deze is geschied.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel6
-  - number: '7.1'
-    text: |-
-      Een wijziging van hetgeen in het handelsregister is ingeschreven, wordt opgegeven met vermelding van de dag waarop
-      de wijziging is ingegaan.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel7
-  - number: '7.2'
-    text: |-
-      Een wijziging in de persoonlijke gegevens, voor zover betrekking hebbend op de wijziging van het woonadres binnen
+      1 Een wijziging van hetgeen in het handelsregister is ingeschreven, wordt opgegeven met vermelding van de dag
+      waarop de wijziging is ingegaan.
+
+      2 Een wijziging in de persoonlijke gegevens, voor zover betrekking hebbend op de wijziging van het woonadres binnen
       Nederland, behoeft niet te worden opgegeven.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel7
   - number: '8'
@@ -179,188 +151,145 @@ articles:
       - id: ref1
         bwb_id: BWBR0007893
         artikel: '23'
-  - number: '9.1'
-    text: 'Van iedere onderneming, hoofdvestiging en in Nederland gelegen nevenvestiging worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.a
-    text: de handelsnaam of -namen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.b
+  - number: '9'
     text: |-
-      het adres en – voor zover van toepassing – het correspondentie-adres met vermelding – zo mogelijk – van de postcode
-      alsmede dat van de gevolmachtigde handelsagenten die de onderneming in Nederland vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.c
-    text: het telefoonnummer alsmede – voor zover van toepassing – het faxnummer, het e-mailadres en het internetadres;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.d
-    text: een korte omschrijving van het uitgeoefende bedrijf of de uitgeoefende bedrijven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.e
-    text: het tijdstip van aanvang van de bedrijfsuitoefening;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: 9.1.f
-    text: het aantal werkzame personen.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: '9.2'
-    text: |-
-      Indien de hoofdvestiging buiten Nederland is gelegen, wordt tevens ingeschreven welke nevenvestiging wordt
+      1 Van iedere onderneming, hoofdvestiging en in Nederland gelegen nevenvestiging worden ingeschreven:
+
+      a. de handelsnaam of -namen;
+
+      b. het adres en – voor zover van toepassing – het correspondentie-adres met vermelding – zo mogelijk – van de
+      postcode alsmede dat van de gevolmachtigde handelsagenten die de onderneming in Nederland vertegenwoordigen;
+
+      c. het telefoonnummer alsmede – voor zover van toepassing – het faxnummer, het e-mailadres en het internetadres;
+
+      d. een korte omschrijving van het uitgeoefende bedrijf of de uitgeoefende bedrijven;
+
+      e. het tijdstip van aanvang van de bedrijfsuitoefening;
+
+      f. het aantal werkzame personen.
+
+      2 Indien de hoofdvestiging buiten Nederland is gelegen, wordt tevens ingeschreven welke nevenvestiging wordt
       aangemerkt als de hoofdnederzetting. Indien de onderneming in Nederland alleen door een of meer gevolmachtigde
       handelsagenten wordt vertegenwoordigd, wordt het adres van de daartoe aangewezen handelsagent aangemerkt als het
       adres van de hoofdnederzetting.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
-  - number: '9.3'
-    text: |-
-      Voor de toepassing van het eerste lid, onder *f*, worden onder werkzame personen verstaan de al dan niet in dienst
-      van de betrokken onderneming werkzame werknemers, de meewerkende eigenaren en de meewerkende gezinsleden van een
-      eigenaar, steeds voor zover zij doorgaans ten minste 15 uur per week werkzaam zijn. Wijzigingen in het aantal
+
+      3 Voor de toepassing van het eerste lid, onder *f*, worden onder werkzame personen verstaan de al dan niet in
+      dienst van de betrokken onderneming werkzame werknemers, de meewerkende eigenaren en de meewerkende gezinsleden van
+      een eigenaar, steeds voor zover zij doorgaans ten minste 15 uur per week werkzaam zijn. Wijzigingen in het aantal
       werkzame personen worden tenminste eenmaal per jaar opgegeven.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel9
   - number: '10'
-    text: 'Van een rechtspersoon waaraan geen onderneming toebehoort, worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel10
-  - number: 10.a
-    text: het adres dan wel correspondentie-adres met vermelding – zo mogelijk – van de postcode;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel10
-  - number: 10.b
-    text: het telefoonnummer alsmede – voor zover van toepassing – het faxnummer, het e-mailadres en het internetadres.
+    text: |-
+      Van een rechtspersoon waaraan geen onderneming toebehoort, worden ingeschreven:
+
+      a. het adres dan wel correspondentie-adres met vermelding – zo mogelijk – van de postcode;
+
+      b. het telefoonnummer alsmede – voor zover van toepassing – het faxnummer, het e-mailadres en het internetadres.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel10
   - number: '11'
     text: Indien een onderneming toebehoort aan een natuurlijke persoon, worden diens persoonlijke gegevens ingeschreven.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel11
   - number: '12'
-    text: 'Van een vennootschap onder firma worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel12
-  - number: 12.a
-    text: de naam van de vennootschap;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel12
-  - number: 12.b
-    text: het tijdstip van aanvang van de vennootschap en de duur waarvoor zij is aangegaan;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel12
-  - number: 12.c
     text: |-
-      de persoonlijke gegevens van de vennoten en ten aanzien van een na de aanvang van de vennootschap toegetreden
+      Van een vennootschap onder firma worden ingeschreven:
+
+      a. de naam van de vennootschap;
+
+      b. het tijdstip van aanvang van de vennootschap en de duur waarvoor zij is aangegaan;
+
+      c. de persoonlijke gegevens van de vennoten en ten aanzien van een na de aanvang van de vennootschap toegetreden
       vennoot tevens de dag van zijn toetreding;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel12
-  - number: 12.d
-    text: al hetgeen de overeenkomst bevat ter bepaling van de rechten van derden.
+
+      d. al hetgeen de overeenkomst bevat ter bepaling van de rechten van derden.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel12
   - number: '13'
-    text: 'Van een commanditaire vennootschap worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.a
-    text: de naam van de vennootschap;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.b
-    text: het tijdstip van aanvang van de vennootschap en de duur waarvoor zij is aangegaan;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.c
     text: |-
-      de persoonlijke gegevens van de vennoot of vennoten onder firma en ten aanzien van een na de aanvang van de
+      Van een commanditaire vennootschap worden ingeschreven:
+
+      a. de naam van de vennootschap;
+
+      b. het tijdstip van aanvang van de vennootschap en de duur waarvoor zij is aangegaan;
+
+      c. de persoonlijke gegevens van de vennoot of vennoten onder firma en ten aanzien van een na de aanvang van de
       vennootschap toegetreden vennoot onder firma tevens de dag van zijn toetreding;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.d
-    text: |-
-      voor zover het om twee of meer vennoten onder firma gaat, al hetgeen de overeenkomst bevat ter bepaling van de
+
+      d. voor zover het om twee of meer vennoten onder firma gaat, al hetgeen de overeenkomst bevat ter bepaling van de
       rechten van derden;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.e
-    text: het aantal van de commanditaire vennoten;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
-  - number: 13.f
-    text: het bedrag van de gelden en de waarde van de goederen die zij gezamenlijk hebben ingebracht.
+
+      e. het aantal van de commanditaire vennoten;
+
+      f. het bedrag van de gelden en de waarde van de goederen die zij gezamenlijk hebben ingebracht.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel13
   - number: '14'
-    text: 'Van een naamloze vennootschap of een besloten vennootschap met beperkte aansprakelijkheid worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.a
-    text: de naam van de vennootschap en haar zetel volgens de statuten;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.b
     text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de vennootschap als zodanig
-      in functie is getreden, alsmede of hij bevoegd is de vennootschap alleen of gezamenlijk handelend met een of meer
-      anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.c
-    text: |-
-      de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
+      Van een naamloze vennootschap of een besloten vennootschap met beperkte aansprakelijkheid worden ingeschreven:
+
+      a. de naam van de vennootschap en haar zetel volgens de statuten;
+
+      b. de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de vennootschap als
+      zodanig in functie is getreden, alsmede of hij bevoegd is de vennootschap alleen of gezamenlijk handelend met een
+      of meer anderen te vertegenwoordigen;
+
+      c. de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
       toekennen, alsmede de inhoud van de bevoegdheid;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.d
-    text: |-
-      het maatschappelijke kapitaal alsmede tenminste eenmaal per jaar het bedrag van het geplaatste kapitaal en van het
-      gestorte deel daarvan, onderverdeeld naar soort indien er verschillende soorten aandelen zijn;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.e
-    text: |-
-      indien niet-volgestorte aandelen zijn uitgegeven: de persoonlijke gegevens van de houders van zulke aandelen, met
-      vermelding tevens van het aandelenbezit van iedere houder en van het daarop gestorte bedrag; wijzigingen in deze
-      gegevens worden tenminste eenmaal per jaar opgegeven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.f
-    text: |-
-      indien het een beleggingsmaatschappij met veranderlijk kapitaal als bedoeld in [artikel 76][ref1] betreft, worden
-      wijzigingen van het ingeschreven kapitaal tenminste eenmaal per jaar opgegeven;
+
+      d. het maatschappelijke kapitaal alsmede tenminste eenmaal per jaar het bedrag van het geplaatste kapitaal en van
+      het gestorte deel daarvan, onderverdeeld naar soort indien er verschillende soorten aandelen zijn;
+
+      e. indien niet-volgestorte aandelen zijn uitgegeven: de persoonlijke gegevens van de houders van zulke aandelen,
+      met vermelding tevens van het aandelenbezit van iedere houder en van het daarop gestorte bedrag; wijzigingen in
+      deze gegevens worden tenminste eenmaal per jaar opgegeven;
+
+      f. indien het een beleggingsmaatschappij met veranderlijk kapitaal als bedoeld in [artikel 76][ref1] betreft,
+      worden wijzigingen van het ingeschreven kapitaal tenminste eenmaal per jaar opgegeven;
+
+      g. de persoonlijke gegevens van de houder van alle aandelen in het kapitaal van de vennootschap of van een
+      deelgenoot in een huwelijksgemeenschap dan wel gemeenschap van een geregistreerd partnerschap waartoe alle
+      aandelen in het kapitaal van de vennootschap behoren, de aandelen gehouden door de vennootschap of haar
+      dochtermaatschappijen niet meegeteld;
+
+      h. indien zulks het geval is, dat de statuten van de vennootschap
+      beantwoorden aan de [artikelen 158 tot en met 161][ref2] en [164][ref3] of de
+      [artikelen 268 tot en met 271 en 274 van boek 2 van het Burgerlijk Wetboek][ref4].
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003045#Artikel76a
+      [ref2]: https://wetten.overheid.nl/BWBR0003045#Artikel158
+      [ref3]: https://wetten.overheid.nl/BWBR0003045#Artikel164
+      [ref4]: https://wetten.overheid.nl/BWBR0003045#Artikel268
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
     references:
       - id: ref1
         bwb_id: BWBR0003045
         artikel: 76a
-  - number: 14.g
-    text: |-
-      de persoonlijke gegevens van de houder van alle aandelen in het kapitaal van de vennootschap of van een deelgenoot
-      in een huwelijksgemeenschap dan wel gemeenschap van een geregistreerd partnerschap waartoe alle aandelen in het
-      kapitaal van de vennootschap behoren, de aandelen gehouden door de vennootschap of haar dochtermaatschappijen niet
-      meegeteld;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-  - number: 14.h
-    text: |-
-      indien zulks het geval is, dat de statuten van de vennootschap beantwoorden
-      aan de [artikelen 158 tot en met 161][ref1] en [164][ref2] of de
-      [artikelen 268 tot en met 271 en 274 van boek 2 van het Burgerlijk Wetboek][ref3].
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0003045#Artikel158
-      [ref2]: https://wetten.overheid.nl/BWBR0003045#Artikel164
-      [ref3]: https://wetten.overheid.nl/BWBR0003045#Artikel268
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel14
-    references:
-      - id: ref1
-        bwb_id: BWBR0003045
-        artikel: '158'
       - id: ref2
         bwb_id: BWBR0003045
-        artikel: '164'
+        artikel: '158'
       - id: ref3
         bwb_id: BWBR0003045
+        artikel: '164'
+      - id: ref4
+        bwb_id: BWBR0003045
         artikel: '268'
-  - number: '15.1'
+  - number: '15'
     text: |-
-      Van een vereniging met volledige rechtsbevoegdheid, coöperatie en onderlinge waarborgmaatschappij worden
+      1 Van een vereniging met volledige rechtsbevoegdheid, coöperatie en onderlinge waarborgmaatschappij worden
       ingeschreven:
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel15
-  - number: 15.1.a
-    text: de naam van de vereniging en haar zetel volgens de statuten;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel15
-  - number: 15.1.b
-    text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de vereniging als zodanig
+
+      a. de naam van de vereniging en haar zetel volgens de statuten;
+
+      b. de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de vereniging als zodanig
       in functie is getreden, alsmede of hij bevoegd is de vereniging alleen of gezamenlijk handelend met een of meer
       anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel15
-  - number: 15.1.c
-    text: |-
-      de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
+
+      c. de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
       toekennen, alsmede de inhoud van de bevoegdheid;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel15
-  - number: 15.1.d
-    text: |-
-      indien zulks bij een coöperatie of onderlinge waarborgmaatschappij het geval is, dat de statuten van de vereniging
-      beantwoorden aan de [artikelen 63][ref1].
+
+      d. indien zulks bij een coöperatie of onderlinge waarborgmaatschappij het geval is, dat de statuten van de
+      vereniging beantwoorden aan de [artikelen 63][ref1].
+
+      2 Van een vereniging zonder volledige rechtsbevoegdheid kunnen worden ingeschreven de in het eerste lid, onder *a*
+      tot en met *c*, bedoelde gegevens.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0003045#Artikel63f
@@ -369,50 +298,38 @@ articles:
       - id: ref1
         bwb_id: BWBR0003045
         artikel: 63f
-  - number: '15.2'
-    text: |-
-      Van een vereniging zonder volledige rechtsbevoegdheid kunnen worden ingeschreven de in het eerste lid, onder *a*
-      tot en met *c*, bedoelde gegevens.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel15
   - number: '16'
-    text: 'Van een stichting worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel16
-  - number: 16.a
-    text: de naam van de stichting en haar zetel volgens de statuten;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel16
-  - number: 16.b
     text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de stichting als zodanig in
-      functie is getreden, alsmede of hij bevoegd is de stichting alleen of gezamenlijk handelend met een of meer anderen
-      te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel16
-  - number: 16.c
-    text: |-
-      de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
+      Van een stichting worden ingeschreven:
+
+      a. de naam van de stichting en haar zetel volgens de statuten;
+
+      b. de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij de stichting als zodanig
+      in functie is getreden, alsmede of hij bevoegd is de stichting alleen of gezamenlijk handelend met een of meer
+      anderen te vertegenwoordigen;
+
+      c. de persoonlijke gegevens van anderen dan de bestuurders aan wie de statuten bevoegdheid tot vertegenwoordiging
       toekennen, alsmede de inhoud van de bevoegdheid.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel16
-  - number: '17.1'
-    text: 'Van een Europees economisch samenwerkingsverband worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel17
-  - number: 17.1.a
-    text: de naam van het samenwerkingsverband;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel17
-  - number: 17.1.b
+  - number: '17'
     text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij het samenwerkingsverband als
-      zodanig in functie is getreden, alsmede of hij bevoegd is het samenwerkingsverband alleen of gezamenlijk handelend
-      met een of meer anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel17
-  - number: 17.1.c
-    text: |-
-      indien een beding is gemaakt als bedoeld in artikel 26, tweede lid, tweede alinea, van [verordening 2137/85]
+      1 Van een Europees economisch samenwerkingsverband worden ingeschreven:
+
+      a. de naam van het samenwerkingsverband;
+
+      b. de persoonlijke gegevens van iedere bestuurder en commissaris en de dag waarop hij bij het samenwerkingsverband
+      als zodanig in functie is getreden, alsmede of hij bevoegd is het samenwerkingsverband alleen of gezamenlijk
+      handelend met een of meer anderen te vertegenwoordigen;
+
+      c. indien een beding is gemaakt als bedoeld in artikel 26, tweede lid, tweede alinea, van [verordening 2137/85]
       (31985R2137): de inhoud van dat beding;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel17
-  - number: 17.1.d
-    text: |-
-      indien een bestuurder niet een natuurlijke persoon maar een rechtspersoon is: de persoonlijke gegevens van een
+
+      d. indien een bestuurder niet een natuurlijke persoon maar een rechtspersoon is: de persoonlijke gegevens van een
       ieder die als vertegenwoordiger in de zin van [artikel 19, tweede lid][ref1], van [verordening 2137/85](31985R2137)
       is aangewezen, en de dag waarop hij als vertegenwoordiger is aangewezen.
+
+      2 Bij het handelsregister wordt gedeponeerd een authentiek afschrift of een door een opgaveplichtige gewaarmerkt
+      afschrift van de oprichtingsovereenkomst. Dit afschrift is in het Nederlands, Duits, Engels of Frans gesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel19
@@ -423,69 +340,78 @@ articles:
         artikel: '19'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '17.2'
+  - number: '18'
     text: |-
-      Bij het handelsregister wordt gedeponeerd een authentiek afschrift of een door een opgaveplichtige gewaarmerkt
-      afschrift van de oprichtingsovereenkomst. Dit afschrift is in het Nederlands, Duits, Engels of Frans gesteld.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel17
-  - number: '18.1'
-    text: |-
-      Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten Nederland
-      gevestigde onderneming toebehoort aan een vennootschap als bedoeld in [richtlijn 68/151/EEG](31968L0151), opgericht
-      naar het recht van een andere staat dan Nederland die partij is bij de Overeenkomst betreffende de Europese
-      Economische Ruimte, zijn [de artikelen 12 tot en met 17][ref1] niet van toepassing.
+      1 Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten
+      Nederland gevestigde onderneming toebehoort aan een vennootschap als bedoeld in [richtlijn 68/151/EEG](31968L0151),
+      opgericht naar het recht van een andere staat dan Nederland die partij is bij de Overeenkomst betreffende de
+      Europese Economische Ruimte, zijn [de artikelen 12 tot en met 17][ref1] niet van toepassing.
 
+      2 Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel12
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-    references:
-      - id: ref1
-        bwb_id: BWBR0008920
-        artikel: '12'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-  - number: '18.2'
-    text: 'Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: 18.2.a
-    text: |-
-      de naam en de rechtsvorm van de vennootschap waaraan de onderneming of de hoofdnederzetting toebehoort, het
+      a. de naam en de rechtsvorm van de vennootschap waaraan de onderneming of de hoofdnederzetting toebehoort, het
       register waarin en het nummer waaronder die vennootschap is ingeschreven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: 18.2.b
-    text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris van de vennootschap en de dag waarop hij bij de
+
+      b. de persoonlijke gegevens van iedere bestuurder en commissaris van de vennootschap en de dag waarop hij bij de
       vennootschap als zodanig in functie is getreden, alsmede of hij bevoegd is de vennootschap alleen of gezamenlijk
       handelend met een of meer anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: 18.2.c
-    text: |-
-      de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
+
+      c. de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
       dergelijke gevolmachtigde, zijn functie en de dag waarop hij bij de onderneming of de hoofdnederzetting als zodanig
       in functie is getreden, alsmede de inhoud van zijn volmacht.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: '18.3'
-    text: |-
-      Bij het handelsregister wordt gedeponeerd een authentiek afschrift of een door een opgaveplichtige gewaarmerkt
+
+      3 Bij het handelsregister wordt gedeponeerd een authentiek afschrift of een door een opgaveplichtige gewaarmerkt
       afschrift van de oprichtingsakte van de vennootschap en van de statuten, indien deze in een afzonderlijke akte zijn
       opgenomen. Dit afschrift is in het Nederlands, Duits, Engels of Frans gesteld.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: '18.4'
-    text: |-
-      Bij het handelsregister wordt telkens het meest recente exemplaar van de boekhoudbescheiden van de vennootschap
+
+      4 Bij het handelsregister wordt telkens het meest recente exemplaar van de boekhoudbescheiden van de vennootschap
       gedeponeerd, voor zover en in de vorm waarin de vennootschap deze in het land van haar statutaire zetel openbaar
       moet maken. De boekhoudbescheiden zijn in het Nederlands, Duits, Engels of Frans gesteld.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
-  - number: '19.1'
-    text: |-
-      Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten Nederland
-      gevestigde onderneming toebehoort aan een vennootschap opgericht naar het recht van een staat die geen partij is
-      bij de Overeenkomst betreffende de Europese Economische Ruimte, met een rechtsvorm die vergelijkbaar is met een
-      vennootschap als bedoeld in [richtlijn 68/151/EEG](31968L0151), zijn [de artikelen 12 tot en met 17][ref1] niet
-      van toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel12
+    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel18
+    references:
+      - id: ref1
+        bwb_id: BWBR0008920
+        artikel: '12'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+  - number: '19'
+    text: |-
+      1 Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten
+      Nederland gevestigde onderneming toebehoort aan een vennootschap opgericht naar het recht van een staat die geen
+      partij is bij de Overeenkomst betreffende de Europese Economische Ruimte, met een rechtsvorm die vergelijkbaar is
+      met een vennootschap als bedoeld in [richtlijn 68/151/EEG](31968L0151), zijn [de artikelen 12 tot en met 17][ref1]
+      niet van toepassing.
+
+      2 Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:
+
+      a. de naam en de rechtsvorm van de vennootschap waaraan de onderneming of de hoofdnederzetting toebehoort, het
+      register waarin en het nummer waaronder die vennootschap is ingeschreven;
+
+      b. indien de hoofdvestiging van de onderneming buiten Nederland is gelegen, het adres van de hoofdvestiging van
+      de onderneming;
+
+      c. de persoonlijke gegevens van iedere bestuurder en commissaris van de vennootschap en de dag waarop hij bij de
+      vennootschap als zodanig in functie is getreden, alsmede of hij bevoegd is de vennootschap alleen of gezamenlijk
+      handelend met een of meer anderen te vertegenwoordigen;
+
+      d. de omvang van de bevoegdheid van iedere bestuurder en commissaris van de vennootschap;
+
+      e. de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
+      dergelijke gevolmachtigde, zijn functie en de dag waarop hij bij de onderneming of de hoofdnederzetting als zodanig
+      in functie is getreden, alsmede de inhoud van zijn volmacht;
+
+      f. het recht van het land waaronder de vennootschap valt;
+
+      g. tenminste eenmaal per jaar het bedrag van het geplaatste kapitaal van de vennootschap.
+
+      3 [Artikel 18, derde en vierde lid][ref2], is van toepassing.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel12
+      [ref2]: https://wetten.overheid.nl/BWBR0008920#Artikel18
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
     references:
       - id: ref1
@@ -493,64 +419,48 @@ articles:
         artikel: '12'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '19.2'
-    text: 'Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.a
-    text: |-
-      de naam en de rechtsvorm van de vennootschap waaraan de onderneming of de hoofdnederzetting toebehoort, het
-      register waarin en het nummer waaronder die vennootschap is ingeschreven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.b
-    text: |-
-      indien de hoofdvestiging van de onderneming buiten Nederland is gelegen, het adres van de hoofdvestiging van de
-      onderneming;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.c
-    text: |-
-      de persoonlijke gegevens van iedere bestuurder en commissaris van de vennootschap en de dag waarop hij bij de
-      vennootschap als zodanig in functie is getreden, alsmede of hij bevoegd is de vennootschap alleen of gezamenlijk
-      handelend met een of meer anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.d
-    text: de omvang van de bevoegdheid van iedere bestuurder en commissaris van de vennootschap;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.e
-    text: |-
-      de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
-      dergelijke gevolmachtigde, zijn functie en de dag waarop hij bij de onderneming of de hoofdnederzetting als zodanig
-      in functie is getreden, alsmede de inhoud van zijn volmacht;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.f
-    text: het recht van het land waaronder de vennootschap valt;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: 19.2.g
-    text: tenminste eenmaal per jaar het bedrag van het geplaatste kapitaal van de vennootschap.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-  - number: '19.3'
-    text: |-
-      [Artikel 18, derde en vierde lid][ref1], is van toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel19
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0008920
         artikel: '18'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '20.1'
+  - number: '20'
     text: |-
-      Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten Nederland
-      gevestigde onderneming toebehoort aan een vennootschap of rechtspersoon opgericht naar het recht van een ander
-      land dan Nederland, niet zijnde een vennootschap als bedoeld in [de artikelen 18][ref1] en [19][ref2], zijn
+      1 Indien een in Nederland gevestigde onderneming of een in Nederland gelegen nevenvestiging van een buiten
+      Nederland gevestigde onderneming toebehoort aan een vennootschap of rechtspersoon opgericht naar het recht van een
+      ander land dan Nederland, niet zijnde een vennootschap als bedoeld in [de artikelen 18][ref1] en [19][ref2], zijn
       [de artikelen 12 tot en met 17][ref3] niet van toepassing.
+
+      2 Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:
+
+      a. de naam en de rechtsvorm van de vennootschap of rechtspersoon waaraan de onderneming of hoofdnederzetting
+      toebehoort, het register waarin en het nummer waaronder die vennootschap of rechtspersoon is ingeschreven;
+
+      b. indien de hoofdvestiging van de onderneming buiten Nederland is gelegen, het adres van de hoofdvestiging van de
+      onderneming en hetgeen ingevolge de wetgeving van het desbetreffende land omtrent de onderneming in het register,
+      bedoeld onder *a*, wordt ingeschreven of op andere wijze wordt openbaar gemaakt;
+
+      c. de persoonlijke gegevens van iedere vennoot of bestuurder en commissaris van de vennootschap of rechtspersoon,
+      de dag waarop hij bij de vennootschap of rechtspersoon als zodanig in functie is getreden, alsmede of hij bevoegd
+      is de vennootschap of rechtspersoon alleen of gezamenlijk met een of meer anderen te vertegenwoordigen;
+
+      d. de omvang van de bevoegdheid van iedere vennoot of bestuurder en commissaris van de vennootschap of
+      rechtspersoon;
+
+      e. de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
+      dergelijke gevolmachtigde, zijn functie en de dag waarop hij bij de onderneming of de hoofdnederzetting als zodanig
+      in functie is getreden, alsmede de inhoud van zijn volmacht;
+
+      f. het recht van het land waaronder de vennootschap of rechtspersoon valt.
+
+      3 [Artikel 18][ref4], derde, voor zover het een rechtspersoon betreft, en vierde lid, is van overeenkomstige
+      toepassing.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
       [ref2]: https://wetten.overheid.nl/BWBR0008920#Artikel19
       [ref3]: https://wetten.overheid.nl/BWBR0008920#Artikel12
+      [ref4]: https://wetten.overheid.nl/BWBR0008920#Artikel18
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
     references:
       - id: ref1
@@ -568,71 +478,27 @@ articles:
         artikel: '12'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '20.2'
-    text: 'Van de in het eerste lid bedoelde onderneming of nevenvestiging worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.a
-    text: |-
-      de naam en de rechtsvorm van de vennootschap of rechtspersoon waaraan de onderneming of hoofdnederzetting
-      toebehoort, het register waarin en het nummer waaronder die vennootschap of rechtspersoon is ingeschreven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.b
-    text: |-
-      indien de hoofdvestiging van de onderneming buiten Nederland is gelegen, het adres van de hoofdvestiging van de
-      onderneming en hetgeen ingevolge de wetgeving van het desbetreffende land omtrent de onderneming in het register,
-      bedoeld onder *a*, wordt ingeschreven of op andere wijze wordt openbaar gemaakt;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.c
-    text: |-
-      de persoonlijke gegevens van iedere vennoot of bestuurder en commissaris van de vennootschap of rechtspersoon, de
-      dag waarop hij bij de vennootschap of rechtspersoon als zodanig in functie is getreden, alsmede of hij bevoegd is
-      de vennootschap of rechtspersoon alleen of gezamenlijk met een of meer anderen te vertegenwoordigen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.d
-    text: de omvang van de bevoegdheid van iedere vennoot of bestuurder en commissaris van de vennootschap of rechtspersoon;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.e
-    text: |-
-      de persoonlijke gegevens van de bij de onderneming of de hoofdnederzetting werkzame beheerder of een andere
-      dergelijke gevolmachtigde, zijn functie en de dag waarop hij bij de onderneming of de hoofdnederzetting als zodanig
-      in functie is getreden, alsmede de inhoud van zijn volmacht;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: 20.2.f
-    text: het recht van het land waaronder de vennootschap of rechtspersoon valt.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-  - number: '20.3'
-    text: |-
-      [Artikel 18][ref1], derde, voor zover het een rechtspersoon betreft, en vierde lid, is van overeenkomstige
-      toepassing.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel20
-    references:
-      - id: ref1
+      - id: ref4
         bwb_id: BWBR0008920
         artikel: '18'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '21.1'
+  - number: '21'
     text: |-
-      Heeft een onderneming gevolmachtigde handelsagenten die in Nederland werkzaam zijn, dan worden ingeschreven hun
+      1 Heeft een onderneming gevolmachtigde handelsagenten die in Nederland werkzaam zijn, dan worden ingeschreven hun
       persoonlijke gegevens en de inhoud van hun volmacht.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel21
-  - number: '21.2'
-    text: |-
-      Heeft een onderneming of rechtspersoon een of meer andere gevolmachtigden, dan kunnen ook deze ter inschrijving
+
+      2 Heeft een onderneming of rechtspersoon een of meer andere gevolmachtigden, dan kunnen ook deze ter inschrijving
       worden opgeven. Van deze gevolmachtigden worden ingeschreven hun persoonlijke gegevens en de inhoud van hun
       volmacht.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel21
   - number: '22'
-    text: 'Indien een in te schrijven persoon een vennootschap of rechtspersoon is, worden ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel22
-  - number: 22.a
-    text: de naam en het adres van de vennootschap of rechtspersoon;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel22
-  - number: 22.b
-    text: het register waarin en het nummer waaronder de vennootschap of rechtspersoon is ingeschreven.
+    text: |-
+      Indien een in te schrijven persoon een vennootschap of rechtspersoon is, worden ingeschreven:
+
+      a. de naam en het adres van de vennootschap of rechtspersoon;
+
+      b. het register waarin en het nummer waaronder de vennootschap of rechtspersoon is ingeschreven.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel22
   - number: '23'
     text: |-
@@ -642,11 +508,19 @@ articles:
       rechterlijke beschikking inzake de handlichting is openbaar gemaakt, of een authentiek afschrift van de beschikking
       met vermelding van de dagtekening van die *Staatscourant*.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel23
-  - number: '24.1'
+  - number: '24'
     text: |-
-      In geval van wijziging van de oprichtingsovereenkomst van een Europees economisch samenwerkingsverband en van
+      1 In geval van wijziging van de oprichtingsovereenkomst van een Europees economisch samenwerkingsverband en van
       de statuten van een rechtspersoon als bedoeld in [de artikelen 18][ref1], [19][ref2] en [20][ref3] wordt bij het
       handelsregister gedeponeerd:
+
+      a. een authentiek afschrift van de notariële akte die van de wijziging is opgemaakt of, indien van de wijziging
+      geen notariële akte is opgemaakt, een door een opgaveplichtige gewaarmerkt afschrift van de wijziging;
+
+      b. een doorlopende tekst van de oprichtingsovereenkomst en van de statuten zoals die tengevolge van de aangebrachte
+      wijziging luiden.
+
+      2 Deze bescheiden zijn in het Nederlands, Duits, Engels of Frans gesteld.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
@@ -669,48 +543,28 @@ articles:
         artikel: '20'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: 24.1.a
-    text: |-
-      een authentiek afschrift van de notariële akte die van de wijziging is opgemaakt of, indien van de wijziging geen
-      notariële akte is opgemaakt, een door een opgaveplichtige gewaarmerkt afschrift van de wijziging;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel24
-  - number: 24.1.b
-    text: |-
-      een doorlopende tekst van de oprichtingsovereenkomst en van de statuten zoals die tengevolge van de aangebrachte
-      wijziging luiden.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel24
-  - number: '24.2'
-    text: Deze bescheiden zijn in het Nederlands, Duits, Engels of Frans gesteld.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel24
   - number: '25'
     text: |-
       In geval van bewind van een onderneming of een aandeel in een vennootschap onder firma als bedoeld in
       [titel 19 van boek 1 van het Burgerlijk Wetboek][ref1], worden in het handelsregister ingeschreven:
 
+      a. de persoonlijke gegevens van de bewindvoerders en de dag waarop zij bewindvoerder zijn geworden;
+
+      b. de rechterlijke beslissingen inzake hun bevoegdheid als bedoeld in de
+      [artikelen 437, tweede lid, en 441, tweede lid, onder ][ref2];
+
+      c. de aanvang en het einde van het bewind.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0002656
+      [ref2]: https://wetten.overheid.nl/BWBR0002656#Artikel437
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel25
     references:
       - id: ref1
         bwb_id: BWBR0002656
-  - number: 25.a
-    text: de persoonlijke gegevens van de bewindvoerders en de dag waarop zij bewindvoerder zijn geworden;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel25
-  - number: 25.b
-    text: |-
-      de rechterlijke beslissingen inzake hun bevoegdheid als bedoeld in de
-      [artikelen 437, tweede lid, en 441, tweede lid, onder ][ref1];
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0002656#Artikel437
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel25
-    references:
-      - id: ref1
+      - id: ref2
         bwb_id: BWBR0002656
         artikel: '437'
-  - number: 25.c
-    text: de aanvang en het einde van het bewind.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel25
   - number: '26'
     text: |-
       In geval van curatele van degene die als eigenaar van een onderneming of als vennoot onder
@@ -725,38 +579,29 @@ articles:
       - id: ref1
         bwb_id: BWBR0002656
         artikel: '390'
-  - number: '27.1'
-    text: 'In het handelsregister wordt ingeschreven:'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: 27.1.a
+  - number: '27'
     text: |-
-      de rechterlijke uitspraak houdende faillietverklaring, verlening van surséance van betaling of het van
+      1 In het handelsregister wordt ingeschreven:
+
+      a. de rechterlijke uitspraak houdende faillietverklaring, verlening van surséance van betaling of het van
       toepassing verklaren van de schuldsaneringsregeling natuurlijke personen betreffende degene die als eigenaar
       van een onderneming of als vennoot onder firma in het handelsregister is ingeschreven of van een ingeschreven
       rechtspersoon;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: 27.1.b
-    text: de vernietiging van een zodanige uitspraak;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: 27.1.c
-    text: |-
-      het einde van het faillissement, de surséance van betaling of de toepassing van de schuldsaneringsregeling
+
+      b. de vernietiging van een zodanige uitspraak;
+
+      c. het einde van het faillissement, de surséance van betaling of de toepassing van de schuldsaneringsregeling
       natuurlijke personen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: 27.1.d
-    text: |-
-      in geval van faillietverklaring, verlening van surséance van betaling of het van toepassing verklaren van de
+
+      d. in geval van faillietverklaring, verlening van surséance van betaling of het van toepassing verklaren van de
       schuldsaneringsregeling natuurlijke personen: de naam en het adres van de rechter-commissaris, zo die is benoemd,
       en van de curator onderscheidenlijk de bewindvoerder.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: '27.2'
-    text: De opgave ter inschrijving wordt gedaan door de griffier van het betrokken rechtscollege.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel27
-  - number: '27.3'
-    text: |-
-      Indien het een uitspraak van een buitenlandse rechter betreft inzake een vennootschap of rechtspersoon als bedoeld
-      in [de artikelen 18][ref1], [19][ref2] en [20][ref3], wordt de opgave, in afwijking van het tweede lid, gedaan door
-      degene die op grond van [artikel 5][ref4] van de wet verplicht is opgave te doen.
+
+      2 De opgave ter inschrijving wordt gedaan door de griffier van het betrokken rechtscollege.
+
+      3 Indien het een uitspraak van een buitenlandse rechter betreft inzake een vennootschap of rechtspersoon als
+      bedoeld in [de artikelen 18][ref1], [19][ref2] en [20][ref3], wordt de opgave, in afwijking van het tweede lid,
+      gedaan door degene die op grond van [artikel 5][ref4] van de wet verplicht is opgave te doen.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
@@ -784,76 +629,34 @@ articles:
         bwb_id: BWBR0008920
         artikel: '5'
         hoofdstuk: '2'
-  - number: '28.1'
+  - number: '28'
     text: |-
-      De ontbinding van een vennootschap of rechtspersoon wordt ingeschreven, onder vermelding van het tijdstip van de
+      1 De ontbinding van een vennootschap of rechtspersoon wordt ingeschreven, onder vermelding van het tijdstip van de
       ontbinding, de persoonlijke gegevens en de bevoegdheid van ieder der vereffenaars alsmede het tijdstip waarop hij
       vereffenaar is geworden.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel28
-  - number: '28.2'
-    text: |-
-      Indien de ontbinding een vennootschap betreft als bedoeld in [artikel 18][ref1], worden mede ingeschreven de
+
+      2 Indien de ontbinding een vennootschap betreft als bedoeld in [artikel 18][ref1], worden mede ingeschreven de
       bevoegdheden van de vereffenaars, indien die in het land waar de vennootschap is gevestigd openbaar gemaakt moeten
       worden. Indien de ontbinding een vennootschap of rechtspersoon als bedoeld in [de artikelen 19][ref2] en [20][ref3]
       betreft, worden mede ingeschreven de bevoegdheden van de vereffenaars.
 
+      3 De afsluiting van de vereffening van een Europees economisch samenwerkingsverband dan wel van een vennootschap of
+      rechtspersoon als bedoeld in [de artikelen 18][ref4], [19][ref5] en [20][ref6], wordt ingeschreven.
 
-      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
-      [ref2]: https://wetten.overheid.nl/BWBR0008920#Artikel19
-      [ref3]: https://wetten.overheid.nl/BWBR0008920#Artikel20
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel28
-    references:
-      - id: ref1
-        bwb_id: BWBR0008920
-        artikel: '18'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-      - id: ref2
-        bwb_id: BWBR0008920
-        artikel: '19'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-      - id: ref3
-        bwb_id: BWBR0008920
-        artikel: '20'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-  - number: '28.3'
-    text: |-
-      De afsluiting van de vereffening van een Europees economisch samenwerkingsverband dan wel van een vennootschap of
-      rechtspersoon als bedoeld in [de artikelen 18][ref1], [19][ref2] en [20][ref3], wordt ingeschreven.
-
-
-      [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
-      [ref2]: https://wetten.overheid.nl/BWBR0008920#Artikel19
-      [ref3]: https://wetten.overheid.nl/BWBR0008920#Artikel20
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel28
-    references:
-      - id: ref1
-        bwb_id: BWBR0008920
-        artikel: '18'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-      - id: ref2
-        bwb_id: BWBR0008920
-        artikel: '19'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-      - id: ref3
-        bwb_id: BWBR0008920
-        artikel: '20'
-        hoofdstuk: '3'
-        paragraaf: '3.2'
-  - number: '28.4'
-    text: |-
-      Tot het doen van de opgave van de ontbinding van een vennootschap of rechtspersoon en van de afsluiting van de
+      4 Tot het doen van de opgave van de ontbinding van een vennootschap of rechtspersoon en van de afsluiting van de
       vereffening van een Europees economisch samenwerkingsverband of van een vennootschap of rechtspersoon als bedoeld
-      in [de artikelen 18][ref1], [19][ref2] en [20][ref3], is mede de vereffenaar verplicht.
+      in [de artikelen 18][ref7], [19][ref8] en [20][ref9], is mede de vereffenaar verplicht.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0008920#Artikel18
       [ref2]: https://wetten.overheid.nl/BWBR0008920#Artikel19
       [ref3]: https://wetten.overheid.nl/BWBR0008920#Artikel20
+      [ref4]: https://wetten.overheid.nl/BWBR0008920#Artikel18
+      [ref5]: https://wetten.overheid.nl/BWBR0008920#Artikel19
+      [ref6]: https://wetten.overheid.nl/BWBR0008920#Artikel20
+      [ref7]: https://wetten.overheid.nl/BWBR0008920#Artikel18
+      [ref8]: https://wetten.overheid.nl/BWBR0008920#Artikel19
+      [ref9]: https://wetten.overheid.nl/BWBR0008920#Artikel20
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel28
     references:
       - id: ref1
@@ -871,11 +674,44 @@ articles:
         artikel: '20'
         hoofdstuk: '3'
         paragraaf: '3.2'
-  - number: '29.1'
+      - id: ref4
+        bwb_id: BWBR0008920
+        artikel: '18'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+      - id: ref5
+        bwb_id: BWBR0008920
+        artikel: '19'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+      - id: ref6
+        bwb_id: BWBR0008920
+        artikel: '20'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+      - id: ref7
+        bwb_id: BWBR0008920
+        artikel: '18'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+      - id: ref8
+        bwb_id: BWBR0008920
+        artikel: '19'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+      - id: ref9
+        bwb_id: BWBR0008920
+        artikel: '20'
+        hoofdstuk: '3'
+        paragraaf: '3.2'
+  - number: '29'
     text: |-
-      Alle aankondigingen die ingevolge de [Wet toezicht kredietwezen 1992][ref1], de
+      1 Alle aankondigingen die ingevolge de [Wet toezicht kredietwezen 1992][ref1], de
       [Wet toezicht verzekeringsbedrijf 1993][ref2] en de [Wet toezicht natura-uitvaartverzekeringsbedrijf][ref3] in de
       *Staatscourant* worden opgenomen, worden tevens ingeschreven in het handelsregister.
+
+      2 De opgave ter inschrijving in het handelsregister geschiedt door degene die met de bekendmaking in de
+      *Staatscourant* belast is.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0005792
@@ -889,30 +725,20 @@ articles:
         bwb_id: BWBR0006509
       - id: ref3
         bwb_id: BWBR0007477
-  - number: '29.2'
-    text: |-
-      De opgave ter inschrijving in het handelsregister geschiedt door degene die met de bekendmaking in de
-      *Staatscourant* belast is.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel29
   - number: '30'
     text: |-
       Een Kamer is ambtshalve bevoegd tot het inschrijven van een wijziging van de volgende gegevens betreffende een
       onderneming, hoofdvestiging, in Nederland gelegen nevenvestiging of rechtspersoon:
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
-  - number: 30.a
-    text: het adres;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
-  - number: 30.b
-    text: de persoonlijke gegevens van een ingeschreven natuurlijk persoon;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
-  - number: 30.c
-    text: de omschrijving van het uitgeoefende bedrijf of de uitgeoefende bedrijven;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
-  - number: 30.d
-    text: het aantal werkzame personen;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
-  - number: 30.e
-    text: de opheffing.
+
+      a. het adres;
+
+      b. de persoonlijke gegevens van een ingeschreven natuurlijk persoon;
+
+      c. de omschrijving van het uitgeoefende bedrijf of de uitgeoefende bedrijven;
+
+      d. het aantal werkzame personen;
+
+      e. de opheffing.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel30
   - number: '31'
     text: |-
@@ -934,6 +760,15 @@ articles:
       en deurwaarders en de in [artikel 15, tweede lid, van de wet][ref1] genoemden, niet voor derden kenbaar voor zover
       wordt voldaan aan de volgende voorwaarden:
 
+      a. dit gegeven in het handelsregister niet voor derden kenbaar is met betrekking tot een andere onderneming of
+      rechtspersoon;
+
+      b. door het college van burgemeester en wethouders gevolg is gegeven aan het verzoek van betrokkene dit gegeven uit
+      de gemeentelijke basisadministratie niet aan derden te verstrekken;
+
+      c. betrokkene niet over een openbaar telefoonnummer en – voor zover van toepassing – niet over een openbaar
+      faxnummer beschikt.
+
 
       [ref1]: https://wetten.overheid.nl/BWBR0007893#Artikel15
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel32
@@ -941,21 +776,6 @@ articles:
       - id: ref1
         bwb_id: BWBR0007893
         artikel: '15'
-  - number: 32.a
-    text: |-
-      dit gegeven in het handelsregister niet voor derden kenbaar is met betrekking tot een andere onderneming of
-      rechtspersoon;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel32
-  - number: 32.b
-    text: |-
-      door het college van burgemeester en wethouders gevolg is gegeven aan het verzoek van betrokkene dit gegeven uit de
-      gemeentelijke basisadministratie niet aan derden te verstrekken;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel32
-  - number: 32.c
-    text: |-
-      betrokkene niet over een openbaar telefoonnummer en – voor zover van toepassing – niet over een openbaar faxnummer
-      beschikt.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel32
   - number: '33'
     text: |-
       [Artikel 17, eerste lid][ref1], van de wet is van toepassing op een vennootschap als bedoeld in
@@ -1019,92 +839,66 @@ articles:
     text: |-
       Voor het inzien van het handelsregister en de bescheiden die daarbij krachtens wettelijk voorschrift zijn
       gedeponeerd, worden de navolgende tarieven berekend:
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.a
-    text: 'voor het ten kantore van een Kamer inzien van papieren dossiers: € 4,70 per dossier;'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.b
-    text: |-
-      voor het ten kantore van een Kamer inzien van het elektronische bestand: € 2,80 per dossier vermeerderd met € 0,28
-      per tijdseenheid van 1 minuut of gedeelte daarvan;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.c
-    text: |-
-      voor het door middel van een on line-verbinding inzien van het elektronische bestand: € 45 per kalenderjaar voor
+
+      a. voor het ten kantore van een Kamer inzien van papieren dossiers: € 4,70 per dossier;
+
+      b. voor het ten kantore van een Kamer inzien van het elektronische bestand: € 2,80 per dossier vermeerderd met
+      € 0,28 per tijdseenheid van 1 minuut of gedeelte daarvan;
+
+      c. voor het door middel van een on line-verbinding inzien van het elektronische bestand: € 45 per kalenderjaar voor
       abonnementskosten, vermeerderd met € 2,05 per dossier en € 0,27 per tijdseenheid van 1 minuut of gedeelte daarvan
       dan wel de kosten voor computerverwerking per CPU-seconde;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.d
-    text: |-
-      voor het telefonisch vragen van inlichtingen over hetgeen in het handelsregister is ingeschreven of krachtens
+
+      d. voor het telefonisch vragen van inlichtingen over hetgeen in het handelsregister is ingeschreven of krachtens
       wettelijk voorschrift daarbij is gedeponeerd: € 0,70 per tijdseenheid van 1 minuut of gedeelte daarvan;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.e
-    text: |-
-      voor het door middel van internet raadplegen van uittreksels en concernrelaties uit het elektronisch bestand:
+
+      e. voor het door middel van internet raadplegen van uittreksels en concernrelaties uit het elektronisch bestand:
       € 2,50 per uittreksel en € 2,50 per geraadpleegd concern;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.f
-    text: |-
-      voor het door middel van een on line-verbinding inzien van jaarrekeningen uit het elektronisch bestand: naast de
+
+      f. voor het door middel van een on line-verbinding inzien van jaarrekeningen uit het elektronisch bestand: naast de
       onder c genoemde abonnementskosten, per boekjaar € 2,45 per jaarrekening, vermeerderd met € 0,27 per tijdseenheid
       van 1 minuut of gedeelte daarvan dan wel de kosten voor computerverwerking per CPU-seconde;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
-  - number: 36.g
-    text: |-
-      voor het door middel van internet raadplegen van jaarrekeningen uit het elektronisch bestand: per boekjaar € 2,90
-      per jaarrekening.
+
+      g. voor het door middel van internet raadplegen van jaarrekeningen uit het elektronisch bestand: per boekjaar
+      € 2,90 per jaarrekening.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel36
   - number: '37'
     text: |-
       Voor het verstrekken van een afschrift van of uittreksel uit hetgeen in het handelsregister is ingeschreven of
       krachtens wettelijk voorschrift daarbij is gedeponeerd, worden de volgende tarieven berekend:
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.a
-    text: 'voor fotokopieën: € 11 per gekopieerd dossier of gedeelte daarvan, ongeacht het aantal bladzijden;'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.b
-    text: |-
-      voor fotokopieën welke worden verstrekt tijdens of direct na het ten kantore van een Kamer inzien van papieren
+
+      a. voor fotokopieën: € 11 per gekopieerd dossier of gedeelte daarvan, ongeacht het aantal bladzijden;
+
+      b. voor fotokopieën welke worden verstrekt tijdens of direct na het ten kantore van een Kamer inzien van papieren
       dossiers: € 0,23 per bladzijde;
+
+      c. voor uittreksels: € 11 per uittreksel;
+
+      d. voor afdrukken welke worden verstrekt tijdens het ten kantore van een Kamer inzien van het elektronisch
+      bestand : € 0,23 per bladzijde;
+
+      e. voor een schriftelijke mededeling met betrekking tot hetgeen in het handelsregister is ingeschreven of daarbij
+      is gedeponeerd: € 4,70 per dossier;
+
+      f. voor het door middel van internet ontvangen van een elektronisch gewaarmerkt uittreksel: € 7,50 per uittreksel.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.c
-    text: 'voor uittreksels: € 11 per uittreksel;'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.d
+  - number: '38'
     text: |-
-      voor afdrukken welke worden verstrekt tijdens het ten kantore van een Kamer inzien van het elektronisch bestand :
-      € 0,23 per bladzijde;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.e
-    text: |-
-      voor een schriftelijke mededeling met betrekking tot hetgeen in het handelsregister is ingeschreven of daarbij is
-      gedeponeerd: € 4,70 per dossier;
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: 37.f
-    text: 'voor het door middel van internet ontvangen van een elektronisch gewaarmerkt uittreksel: € 7,50 per uittreksel.'
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel37
-  - number: '38.1'
-    text: |-
-      Voor het verstrekken van een overzicht van categorieën van in het handelsregister ingeschreven ondernemingen,
+      1 Voor het verstrekken van een overzicht van categorieën van in het handelsregister ingeschreven ondernemingen,
       nevenvestigingen van ondernemingen of rechtspersonen, welke per onderneming, nevenvestiging of rechtspersoon één of
       meer van de in het handelsregister met betrekking daartoe ingeschreven gegevens bevatten, wordt een tarief berekend
       van f 0,23 per onderneming, nevenvestiging of rechtspersoon, indien dit overzicht gegevens bevat omtrent de naam en
       het adres van de onderneming, nevenvestiging of rechtspersoon.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel38
-  - number: '38.2'
-    text: |-
-      Bevat het overzicht, bedoeld in het eerste lid, andere gegevens of mede andere gegevens dan de aldaar genoemde,
+
+      2 Bevat het overzicht, bedoeld in het eerste lid, andere gegevens of mede andere gegevens dan de aldaar genoemde,
       dan wordt het in het eerste lid bedoelde bedrag verhoogd met f 0,08 per extra gegeven. Bevat het overzicht mede
       de namen van degene aan wie een onderneming toebehoort, of, indien het betreft een rechtspersoon of een aan een
       rechtspersoon toebehorende onderneming, de namen van de bestuurders van de rechtspersoon, dan is in plaats van
       f 0,08, voor die gegevens f 0,11 per extra gegeven verschuldigd.
-    url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel38
-  - number: '38.3'
-    text: |-
-      Voor het verstrekken van een overzicht is ten minste f 210,– verschuldigd. Heeft het overzicht betrekking op in het
-      gebied van één Kamer ingeschreven ondernemingen, nevenvestigingen van ondernemingen of rechtspersonen, dan is ten
-      minste f 80,– verschuldigd.
+
+      3 Voor het verstrekken van een overzicht is ten minste f 210,– verschuldigd. Heeft het overzicht betrekking op in
+      het gebied van één Kamer ingeschreven ondernemingen, nevenvestigingen van ondernemingen of rechtspersonen, dan is
+      ten minste f 80,– verschuldigd.
     url: https://wetten.overheid.nl/BWBR0008920/2003-04-25#Artikel38
   - number: '54'
     text: |-
