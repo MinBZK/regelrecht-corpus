@@ -37,13 +37,25 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   #     de tegenhanger van WIA art. 35 — zijn gemodelleerd; de scenario's
   #     staan in het Wajong-bestand.
 
-  Scenario: Sadee krijgt LKV-arbeidsgehandicapt — hoogste tegemoetkoming wint (art. 4.1.3)
+  # Een Wajonger valt onder de categorie BANENAFSPRAAK, niet onder
+  # arbeidsgehandicapte werknemer. Dat laatste stond hier eerder wel, en gaf
+  # Sadee 5.075,20 euro per jaar in plaats van 1.680,64 — een verschil van
+  # 3.394,56. Gecorrigeerd na de reviewsessie; zie de opmerking bij de
+  # categorie-parameters hieronder.
+  #
+  # is_oudere_werknemer is weggelaten: die categorie is per 2026 vervallen en
+  # de wet van 2026 kent de parameter niet meer.
+  #
+  # is_arbeidsgehandicapte_werknemer staat op false en niet weggelaten, omdat
+  # de categoriekeuze er expliciet op toetst. Zodra de herkomst van deze
+  # categorieen is belegd (nu zijn het kale parameters zonder bron), hoort dit
+  # een niet-waarde te worden in plaats van een gok.
+  Scenario: Sadee krijgt LKV-banenafspraak — Wajong valt in die categorie
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                          | 999990100 |
       | verloonde_uren                               | 1664      |
-      | is_oudere_werknemer                          | false     |
-      | is_arbeidsgehandicapte_werknemer             | true      |
+      | is_arbeidsgehandicapte_werknemer             | false     |
       | is_herplaatsen_arbeidsgehandicapte           | false     |
       | is_doelgroep_banenafspraak                   | true      |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
@@ -51,7 +63,6 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
     When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
-    And output "categorie_lkv" equals "arbeidsgehandicapte_werknemer"
-    And output "tegemoetkoming_arbeidsgehandicapte_eurocent" equals 507520
+    And output "categorie_lkv" equals "banenafspraak"
     And output "tegemoetkoming_banenafspraak_eurocent" equals 168064
-    And output "hoogte_lkv_per_jaar_eurocent" equals 507520
+    And output "hoogte_lkv_per_jaar_eurocent" equals 168064

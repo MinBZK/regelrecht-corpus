@@ -33,7 +33,6 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
     And the following parameters:
       | bsn                                          | 999990101 |
       | verloonde_uren                               | 1664      |
-      | is_oudere_werknemer                          | false     |
       | is_arbeidsgehandicapte_werknemer             | false     |
       | is_herplaatsen_arbeidsgehandicapte           | false     |
       | is_doelgroep_banenafspraak                   | true      |
