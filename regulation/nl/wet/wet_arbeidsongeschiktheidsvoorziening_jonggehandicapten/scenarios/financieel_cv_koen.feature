@@ -36,11 +36,11 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   Scenario: Koen heeft geen recht op loondispensatie — geen Wajong-status
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990101 |
-      | is_wsw_werknemer                                   | false     |
-      | arbeidsprestatie_duidelijk_minder_dan_minimumloon  | true      |
-      | aanvraag_loondispensatie_ingediend                 | false     |
-      | heeft_recht_op_arbeidsondersteuning_wajong         | false     |
+      | bsn                                               | 999990101 |
+      | is_wsw_werknemer                                  | false     |
+      | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
+      | aanvraag_loondispensatie_ingediend                | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong        | false     |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is false

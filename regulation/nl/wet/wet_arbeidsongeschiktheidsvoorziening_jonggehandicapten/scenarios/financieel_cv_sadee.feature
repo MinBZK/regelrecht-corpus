@@ -44,11 +44,11 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   Scenario: Sadee komt in aanmerking voor loondispensatie via Wajong art. 2:20
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990100 |
-      | is_wsw_werknemer                                   | false     |
-      | arbeidsprestatie_duidelijk_minder_dan_minimumloon  | true      |
-      | aanvraag_loondispensatie_ingediend                 | true      |
-      | heeft_recht_op_arbeidsondersteuning_wajong         | true      |
+      | bsn                                               | 999990100 |
+      | is_wsw_werknemer                                  | false     |
+      | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
+      | aanvraag_loondispensatie_ingediend                | true      |
+      | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true

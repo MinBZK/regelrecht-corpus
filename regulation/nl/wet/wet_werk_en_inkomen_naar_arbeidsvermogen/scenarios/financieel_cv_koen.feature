@@ -37,14 +37,14 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   Scenario: Koen kan jobcoaching en werkplekaanpassing aanvragen via UWV
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                              | 999990101 |
-      | heeft_structurele_functionele_beperking          | true      |
-      | heeft_arbeidsverhouding_of_voorbereiding         | true      |
-      | is_wsw_werknemer                                 | false     |
-      | heeft_recht_op_arbeidsondersteuning_wajong       | false     |
-      | pwet_college_draagt_zorg_uitsluiting             | false     |
-      | aanvraag_jobcoaching_ingediend                   | true      |
-      | aanvraag_werkplekaanpassing_ingediend            | true      |
+      | bsn                                        | 999990101 |
+      | heeft_structurele_functionele_beperking    | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding   | true      |
+      | is_wsw_werknemer                           | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong | false     |
+      | pwet_college_draagt_zorg_uitsluiting       | false     |
+      | aanvraag_jobcoaching_ingediend             | true      |
+      | aanvraag_werkplekaanpassing_ingediend      | true      |
     When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is true

@@ -45,15 +45,15 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   Scenario: Sadee komt niet in aanmerking voor LKS — geen Pwet-doelgroep
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990100 |
-      | behoort_tot_doelgroep_lks                          | false     |
-      | kan_minimumloon_niet_verdienen                     | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden          | true      |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep  | true      |
-      | is_wsw_dienstbetrekking                            | false     |
-      | loonwaarde_eurocent_per_maand                      | 150850    |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-      | overeengekomen_arbeidsduur_uren_per_week           | 32        |
+      | bsn                                                 | 999990100 |
+      | behoort_tot_doelgroep_lks                           | false     |
+      | kan_minimumloon_niet_verdienen                      | true      |
+      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
+      | is_wsw_dienstbetrekking                             | false     |
+      | loonwaarde_eurocent_per_maand                       | 150850    |
+      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
+      | overeengekomen_arbeidsduur_uren_per_week            | 32        |
     When I evaluate "heeft_recht_op_lks" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is false

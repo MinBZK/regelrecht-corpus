@@ -46,14 +46,14 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   Scenario: Sadee valt buiten WIA artikel 35 voor JC en WPA (lid 4.a Wajong)
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                              | 999990100 |
-      | heeft_structurele_functionele_beperking          | true      |
-      | heeft_arbeidsverhouding_of_voorbereiding         | true      |
-      | is_wsw_werknemer                                 | false     |
-      | heeft_recht_op_arbeidsondersteuning_wajong       | true      |
-      | pwet_college_draagt_zorg_uitsluiting             | false     |
-      | aanvraag_jobcoaching_ingediend                   | true      |
-      | aanvraag_werkplekaanpassing_ingediend            | true      |
+      | bsn                                        | 999990100 |
+      | heeft_structurele_functionele_beperking    | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding   | true      |
+      | is_wsw_werknemer                           | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | pwet_college_draagt_zorg_uitsluiting       | false     |
+      | aanvraag_jobcoaching_ingediend             | true      |
+      | aanvraag_werkplekaanpassing_ingediend      | true      |
     When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false

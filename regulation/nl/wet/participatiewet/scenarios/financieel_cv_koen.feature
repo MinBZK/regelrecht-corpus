@@ -53,15 +53,15 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   Scenario: Gemeente betaalt €766,22 per maand LKS aan werkgever van Koen (32 uur)
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990101 |
-      | behoort_tot_doelgroep_lks                          | true      |
-      | kan_minimumloon_niet_verdienen                     | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden          | true      |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep  | true      |
-      | is_wsw_dienstbetrekking                            | false     |
-      | loonwaarde_eurocent_per_maand                      | 129300    |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-      | overeengekomen_arbeidsduur_uren_per_week           | 32        |
+      | bsn                                                 | 999990101 |
+      | behoort_tot_doelgroep_lks                           | true      |
+      | kan_minimumloon_niet_verdienen                      | true      |
+      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
+      | is_wsw_dienstbetrekking                             | false     |
+      | loonwaarde_eurocent_per_maand                       | 129300    |
+      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
+      | overeengekomen_arbeidsduur_uren_per_week            | 32        |
     When I evaluate "heeft_recht_op_lks" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is true
@@ -76,15 +76,15 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   Scenario: Bij 36 uur blijft de LKS gelijk aan het voltijdbedrag
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990101 |
-      | behoort_tot_doelgroep_lks                          | true      |
-      | kan_minimumloon_niet_verdienen                     | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden          | true      |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep  | true      |
-      | is_wsw_dienstbetrekking                            | false     |
-      | loonwaarde_eurocent_per_maand                      | 129300    |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-      | overeengekomen_arbeidsduur_uren_per_week           | 36        |
+      | bsn                                                 | 999990101 |
+      | behoort_tot_doelgroep_lks                           | true      |
+      | kan_minimumloon_niet_verdienen                      | true      |
+      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
+      | is_wsw_dienstbetrekking                             | false     |
+      | loonwaarde_eurocent_per_maand                       | 129300    |
+      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
+      | overeengekomen_arbeidsduur_uren_per_week            | 36        |
     When I evaluate "heeft_recht_op_lks" of "participatiewet"
     Then the execution succeeds
     And output "hoogte_lks_eurocent_per_maand" equals 86200
@@ -96,15 +96,15 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   Scenario: Bij 27 uur is de LKS drie kwart van het voltijdbedrag
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990101 |
-      | behoort_tot_doelgroep_lks                          | true      |
-      | kan_minimumloon_niet_verdienen                     | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden          | true      |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep  | true      |
-      | is_wsw_dienstbetrekking                            | false     |
-      | loonwaarde_eurocent_per_maand                      | 129300    |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-      | overeengekomen_arbeidsduur_uren_per_week           | 27        |
+      | bsn                                                 | 999990101 |
+      | behoort_tot_doelgroep_lks                           | true      |
+      | kan_minimumloon_niet_verdienen                      | true      |
+      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
+      | is_wsw_dienstbetrekking                             | false     |
+      | loonwaarde_eurocent_per_maand                       | 129300    |
+      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
+      | overeengekomen_arbeidsduur_uren_per_week            | 27        |
     When I evaluate "heeft_recht_op_lks" of "participatiewet"
     Then the execution succeeds
     And output "hoogte_lks_voltijd_eurocent_per_maand" equals 86200
