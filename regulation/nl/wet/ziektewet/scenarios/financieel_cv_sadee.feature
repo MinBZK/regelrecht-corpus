@@ -41,21 +41,39 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # NRP — Ziektewet artikel 29b
   # Sadee triggert lid 2.a (Wajong-status) én lid 2.e (banenafspraak).
   # Lid 2 geeft duur -1 (onbeperkt) en wint van de 5-jaars termijn van lid 1.
+  # Het doelgroepregister komt niet meer als losse parameter binnen: de
+  # engine leidt het af via Wfsv artikel 38b. Sadee komt daar binnen op
+  # grond van lid 1 onderdeel c — recht op arbeidsondersteuning Wajong,
+  # zonder de uitsluiting 'duurzaam geen mogelijkheden'. Alle andere
+  # gronden staan uit.
+
   Scenario: Sadee krijgt no-risk polis als Wajonger op banenafspraakregister
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                              | 999990100 |
-      | is_wsw_werknemer                 | false     |
-      | is_wia_uitkeringsgerechtigd      | false     |
-      | is_wia_min_35_arbeidsongeschikt  | false     |
-      | heeft_voortgezet_wia_recht       | false     |
-      | heeft_arbeidsbeperking_wia       | false     |
-      | is_wajong_gerechtigd             | true      |
-      | is_jonggehandicapt_schoolverlater | false    |
-      | is_banenafspraak_doelgroep       | true      |
-      | is_pwet_loonkostensubsidie       | false     |
-      | is_beschut_werk                  | false     |
-      | loonwaarde_lager_dan_minimumloon | true      |
+      | bsn                                                      | 999990100  |
+      | is_wsw_werknemer                                         | false      |
+      | is_wia_uitkeringsgerechtigd                              | false      |
+      | is_wia_min_35_arbeidsongeschikt                          | false      |
+      | heeft_voortgezet_wia_recht                               | false      |
+      | heeft_arbeidsbeperking_wia                               | false      |
+      | is_wajong_gerechtigd                                     | true       |
+      | is_jonggehandicapt_schoolverlater                        | false      |
+      | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling    | false      |
+      | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
+      | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
+      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
+      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
+      | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
+      | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
+      | was_arbeidsbeperkte_lid_1_of_2                           | false      |
+      | registratie_nog_niet_geeindigd                           | true       |
+      | is_pwet_loonkostensubsidie                               | false      |
+      | is_beschut_werk                                          | false      |
+      | loonwaarde_lager_dan_minimumloon                         | true       |
     When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is true

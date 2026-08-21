@@ -132,20 +132,6 @@ articles:
             type: number
             required: true
             description: Verloonde uren in kalenderjaar (loonaangifte).
-          - name: is_arbeidsgehandicapte_werknemer
-            type: boolean
-            required: true
-            description: |-
-              Categorie a (art. 2.6): doelgroepverklaring arbeids­
-              gehandicapte werknemer afgegeven door UWV (na re-integratie
-              uit WIA / WAO / Wajong / WAZ etc.).
-          - name: is_herplaatsen_arbeidsgehandicapte
-            type: boolean
-            required: true
-            description: |-
-              Categorie c (art. 2.14): werknemer is na arbeidsongeschikt­
-              heid bij dezelfde werkgever herplaatst en voldoet aan
-              voorwaarden art. 2.14.
           - name: heeft_pensioengerechtigde_leeftijd_bereikt
             type: boolean
             required: true
@@ -160,7 +146,243 @@ articles:
             description: |-
               Art. 2.1: werkgever heeft in de loonaangifte verzoek
               gedaan voor het loonkostenvoordeel.
+          # --- doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
+          - name: is_uitgesloten_beschut_werk_pwet_10b
+            type: boolean
+            required: true
+            description: |-
+              Chapeau-uitsluiting: door college vastgesteld dat persoon
+              uitsluitend in beschutte omgeving onder aangepaste omstandigheden
+              mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
+              Bron: gemeente. Zo'n persoon is per definitie GEEN
+              arbeidsbeperkte in zin van 38b.1.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
+              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
+              college) heeft vastgesteld dat persoon niet in staat is WML te
+              verdienen, OF college heeft loonwaarde < WML vastgesteld
+              conform Pwet 10d. Bron: UWV + gemeente.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_wsw_geindiceerd_of_oude_indicatie
+            type: boolean
+            required: true
+            description: |-
+              38b.1.b: geïndiceerd in zin van Wet sociale werkvoorziening,
+              of nog geldende indicatiebeschikking op grond van WSW art. 11
+              zoals dat luidde op 31-12-2014. Bron: UWV / SVB.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: heeft_wajong_arbeidsondersteuning_of_uitkering
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c: recht op arbeidsondersteuning of arbeidsongeschiktheids-
+              uitkering Wajong. Uitsluiting: persoon heeft duurzaam geen
+              mogelijkheden tot arbeidsparticipatie (Wajong 1a:1) — die
+              valt buiten 38b.1.c. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: heeft_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
+              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
+              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: voldoet_aan_amvb_indicatie_38b_1_d
+            type: boolean
+            required: true
+            description: |-
+              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
+              indicatie. Bron: UWV (uitvoering AMvB).
+              AMvB-implementatie is open_term — niet in deze YAML
+              gemodelleerd; engine ontvangt vlag van uitvoering.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
+              vastgesteld dat persoon niet in staat is WML te verdienen.
+              Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f overgangsrecht: persoon was op of na 1-1-2013 een
+              persoon als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong),
+              EN op 1-5-2015 niet langer zodanig persoon. Uitzondering:
+              voormalige Wajong-er die duurzaam geen mogelijkheden meer
+              heeft (Wajong 1a:1) valt buiten. Bron: UWV-historie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f uitsluiting: persoon valt onder onderdeel c-historie
+              (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
+              tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_jonggehandicapt_uwv_oordeel_lid_2
+            type: boolean
+            required: true
+            description: |-
+              38b.2: UWV oordeelt dat persoon wegens ziekte/gebrek ontstaan
+              voor 18e levensjaar of als studerende (Wajong 1:4) belemmering
+              ondervindt, een voorziening ontvangt op grond van Pwet 10 of
+              WIA 35, en zonder die voorziening geen WML kan verdienen.
+              Bron: UWV-beoordeling (AMvB-regels per 38b.3). Wordt voor
+              toepassing van deze paragraaf MEDE als arbeidsbeperkte
+              beschouwd.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: datum_eerste_opname_doelgroepregister
+            type: date
+            required: true
+            description: |-
+              Datum van eerste opname in doelgroepregister banenafspraak
+              door UWV (datasource UWV). Wordt gebruikt voor afgeleide
+              outputs zoals LKV-banenafspraak-termijn (3 jaar vanaf
+              opname). Voor 38b.1 zelf niet rechtstreeks vereist; dient
+              als pass-through naar afnemers (Wtl, Ziektewet).
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_arbeidsbeperkte_lid_1_of_2
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: persoon voldeed eerder aan een grond van
+              het eerste of tweede lid (was opgenomen als arbeidsbeperkte),
+              maar voldoet daar nu niet langer aan. Bron: UWV-historie /
+              registratie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: registratie_nog_niet_geeindigd
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: de opname van de persoon in de registratie
+              van arbeidsbeperkten (artikel 38d lid 1) is nog niet
+              geëindigd. Bron: UWV-registratie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          # --- doorgegeven aan artikel 2.6 en 2.14 (categorie-vaststelling) ---
+          - name: had_wia_recht_maand_voor_aanvang
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 1°: de werknemer had in de maand voorafgaand
+              aan de aanvang van de dienstbetrekking recht op een uitkering op grond
+              van de Wet WIA. Bron: UWV.
+          - name: was_rea_arbeidsgehandicapte_voor_2006
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 2°: de werknemer zou arbeidsgehandicapte zijn
+              geweest in de zin van artikel 2 Wet REA in verband met een WAO- of
+              WAZ-uitkering, en was dat voor 1 januari 2006 ook op grond van dat
+              artikel. Bron: UWV.
+          - name: was_in_dienst_bij_werkgever_binnen_zes_maanden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de werknemer is in de zes maanden voor de
+              indiensttreding op enig moment bij deze werkgever in dienstbetrekking
+              geweest. Anti-misbruikvoorwaarde; de tijdrekening zelf is niet
+              gemodelleerd. Bron: loonaangifteketen.
+          - name: heeft_geldige_doelgroepverklaring_2_7
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel c: de werknemer heeft een geldige doelgroepverklaring
+              als bedoeld in artikel 2.7 aan de werkgever verstrekt. Bron: UWV
+              (verklaring) en werkgever (verstrekking).
+          - name: valt_onder_uitzondering_lid_2
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de werknemer gaat binnen vijf jaar na afloop van de wachttijd
+              werken, is volgens arbeidskundig onderzoek minder dan 35%
+              arbeidsongeschikt en niet in staat tot arbeid bij zijn oude werkgever,
+              en voldoet aan de elf-wekenvoorwaarde van onderdeel b. Dan geldt de
+              voorwaarde van lid 1 onderdeel a niet.
+          - name: is_wsw_of_beschut_werk_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel b: het verzoek betreft een dienstbetrekking als bedoeld
+              in artikel 2 Wet sociale werkvoorziening of artikel 10b lid 1
+              Participatiewet.
+          - name: hervat_eigen_arbeid_of_andere_functie
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a, aanhef: de werknemer hervat zijn eigen arbeid geheel
+              of gedeeltelijk, of gaat een andere functie bij dezelfde werkgever
+              bekleden.
+          - name: heeft_of_krijgt_wia_recht_bij_hervatting
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 1°: de werknemer heeft op dat moment recht op
+              een WIA-uitkering, of krijgt dat recht na de hervatting. Lid 3 stelt
+              een gelijkwaardige uitkering uit een andere EU/EER-staat of Zwitserland
+              hiermee gelijk. Bron: UWV.
+          - name: heeft_geldige_doelgroepverklaring_2_15
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: geldige doelgroepverklaring als bedoeld in artikel
+              2.15, verstrekt aan de werkgever.
+          - name: periode_2_16_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: de periode van artikel 2.16 is voor deze werknemer
+              verstreken. Lid 4 telt onderbrekingen binnen die periode niet mee; die
+              samentelling is niet gemodelleerd.
         input:
+          - name: is_arbeidsgehandicapte_werknemer
+            type: boolean
+            source:
+              regulation: wet_tegemoetkomingen_loondomein
+              output: is_arbeidsgehandicapte_werknemer
+              parameters:
+                bsn: $bsn
+                had_wia_recht_maand_voor_aanvang: $had_wia_recht_maand_voor_aanvang
+                heeft_geldige_doelgroepverklaring_2_7: $heeft_geldige_doelgroepverklaring_2_7
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_wsw_of_beschut_werk_dienstbetrekking: $is_wsw_of_beschut_werk_dienstbetrekking
+                valt_onder_uitzondering_lid_2: $valt_onder_uitzondering_lid_2
+                was_in_dienst_bij_werkgever_binnen_zes_maanden: $was_in_dienst_bij_werkgever_binnen_zes_maanden
+                was_rea_arbeidsgehandicapte_voor_2006: $was_rea_arbeidsgehandicapte_voor_2006
+              description: |-
+                Categorie a (art. 2.6). Niet langer een kale parameter: artikel 2.6
+                noemt de voorwaarden — uitkeringsverleden in de maand voor aanvang,
+                geen dienstverband bij dezelfde werkgever in de zes maanden ervoor,
+                en een geldige doelgroepverklaring — en dit artikel neemt de uitkomst
+                daarvan over. Zo is aan de uitkomst te zien waarop de categorie-indeling
+                steunt, net als bij de banenafspraak via Wfsv artikel 38b.
+          - name: is_herplaatsen_arbeidsgehandicapte
+            type: boolean
+            source:
+              regulation: wet_tegemoetkomingen_loondomein
+              output: is_herplaatsen_arbeidsgehandicapte
+              parameters:
+                bsn: $bsn
+                heeft_geldige_doelgroepverklaring_2_15: $heeft_geldige_doelgroepverklaring_2_15
+                heeft_of_krijgt_wia_recht_bij_hervatting: $heeft_of_krijgt_wia_recht_bij_hervatting
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                hervat_eigen_arbeid_of_andere_functie: $hervat_eigen_arbeid_of_andere_functie
+                is_wsw_of_beschut_werk_dienstbetrekking: $is_wsw_of_beschut_werk_dienstbetrekking
+                periode_2_16_is_verstreken: $periode_2_16_is_verstreken
+                was_rea_arbeidsgehandicapte_voor_2006: $was_rea_arbeidsgehandicapte_voor_2006
+              description: |-
+                Categorie c (art. 2.14). Idem: de vaststelling komt uit artikel 2.14,
+                dat hervatting bij dezelfde werkgever koppelt aan een WIA-recht of het
+                REA-overgangsrecht, plus een geldige doelgroepverklaring.
           - name: is_doelgroep_banenafspraak
             type: boolean
             source:
@@ -168,6 +390,19 @@ articles:
               output: behoort_tot_doelgroepregister_banenafspraak
               parameters:
                 bsn: $bsn
+                is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
+                is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+                is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
+                heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
+                heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
+                voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
+                is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+                was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+                was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+                is_jonggehandicapt_uwv_oordeel_lid_2: $is_jonggehandicapt_uwv_oordeel_lid_2
+                datum_eerste_opname_doelgroepregister: $datum_eerste_opname_doelgroepregister
+                was_arbeidsbeperkte_lid_1_of_2: $was_arbeidsbeperkte_lid_1_of_2
+                registratie_nog_niet_geeindigd: $registratie_nog_niet_geeindigd
               description: |-
                 Categorie b (art. 2.10): doelgroep banenafspraak en
                 scholingsbelemmerden. Eén bron van waarheid met de
@@ -534,6 +769,169 @@ articles:
         artikel: '2.8'
         hoofdstuk: II
         paragraaf: '2.3'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: had_wia_recht_maand_voor_aanvang
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 1°: de werknemer had in de maand voorafgaand
+              aan de aanvang van de dienstbetrekking recht op een uitkering op grond
+              van de Wet WIA. Bron: UWV.
+          - name: was_rea_arbeidsgehandicapte_voor_2006
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 2°: de werknemer zou arbeidsgehandicapte zijn
+              geweest in de zin van artikel 2 Wet REA in verband met een WAO- of
+              WAZ-uitkering, en was dat voor 1 januari 2006 ook op grond van dat
+              artikel. Bron: UWV.
+          - name: was_in_dienst_bij_werkgever_binnen_zes_maanden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de werknemer is in de zes maanden voor de
+              indiensttreding op enig moment bij deze werkgever in dienstbetrekking
+              geweest. Anti-misbruikvoorwaarde; de tijdrekening zelf is niet
+              gemodelleerd. Bron: loonaangifteketen.
+          - name: heeft_geldige_doelgroepverklaring_2_7
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel c: de werknemer heeft een geldige doelgroepverklaring
+              als bedoeld in artikel 2.7 aan de werkgever verstrekt. Bron: UWV
+              (verklaring) en werkgever (verstrekking).
+          - name: valt_onder_uitzondering_lid_2
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de werknemer gaat binnen vijf jaar na afloop van de wachttijd
+              werken, is volgens arbeidskundig onderzoek minder dan 35%
+              arbeidsongeschikt en niet in staat tot arbeid bij zijn oude werkgever,
+              en voldoet aan de elf-wekenvoorwaarde van onderdeel b. Dan geldt de
+              voorwaarde van lid 1 onderdeel a niet.
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel a: uitsluiting bij het bereiken van de
+              pensioengerechtigde leeftijd (artikel 7a lid 1 AOW).
+          - name: is_wsw_of_beschut_werk_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel b: het verzoek betreft een dienstbetrekking als bedoeld
+              in artikel 2 Wet sociale werkvoorziening of artikel 10b lid 1
+              Participatiewet.
+        output:
+          - name: voldoet_aan_grond_2_6_lid_1_a
+            type: boolean
+            description: |-
+              Lid 1 onderdeel a: uitkeringsverleden in de maand voor aanvang, langs
+              onder 1 of onder 2. Lid 2 kan deze voorwaarde uitschakelen.
+          - name: voldoet_aan_grond_2_6_lid_1_b
+            type: boolean
+            description: |-
+              Lid 1 onderdeel b: geen dienstverband bij dezelfde werkgever in de zes
+              maanden ervoor.
+          - name: is_uitgesloten_2_6_lid_3
+            type: boolean
+            description: 'Lid 3: pensioengerechtigde leeftijd of Wsw/beschut werk.'
+          - name: is_arbeidsgehandicapte_werknemer
+            type: boolean
+            description: |-
+              Categorie a van artikel 2.1: de werknemer is arbeidsgehandicapte
+              werknemer in de zin van artikel 2.6. Dit is de vaststelling die artikel
+              2.1 gebruikt om het loonkostenvoordeel in te delen.
+        actions:
+          - output: voldoet_aan_grond_2_6_lid_1_a
+            value:
+              operation: OR
+              conditions:
+                - $had_wia_recht_maand_voor_aanvang
+                - $was_rea_arbeidsgehandicapte_voor_2006
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.6'
+              paragraph: '1'
+              explanation: |-
+                Onderdeel a kent twee ingangen: recht op WIA in de maand voor aanvang
+                (onder 1), of het REA-overgangsrecht van voor 2006 (onder 2). Een
+                ervan volstaat.
+          - output: voldoet_aan_grond_2_6_lid_1_b
+            value:
+              operation: NOT
+              value: $was_in_dienst_bij_werkgever_binnen_zes_maanden
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.6'
+              paragraph: '1'
+              explanation: |-
+                Onderdeel b is negatief geformuleerd: wie in de zes maanden ervoor al
+                bij deze werkgever werkte, valt af.
+          - output: is_uitgesloten_2_6_lid_3
+            value:
+              operation: OR
+              conditions:
+                - $heeft_pensioengerechtigde_leeftijd_bereikt
+                - $is_wsw_of_beschut_werk_dienstbetrekking
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.6'
+              paragraph: '3'
+              explanation: |-
+                Lid 3 somt de gevallen op waarin lid 1 niet of niet langer van
+                toepassing is.
+          - output: is_arbeidsgehandicapte_werknemer
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - $voldoet_aan_grond_2_6_lid_1_a
+                    - $valt_onder_uitzondering_lid_2
+                - $voldoet_aan_grond_2_6_lid_1_b
+                - $heeft_geldige_doelgroepverklaring_2_7
+                - operation: NOT
+                  value: $is_uitgesloten_2_6_lid_3
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.6'
+              paragraph: '1'
+              explanation: |-
+                Lid 1 vraagt onderdelen a, b en c cumulatief; lid 2 vervangt de eis van
+                onderdeel a voor de 35-minners; lid 3 sluit uit. De doelgroepverklaring
+                van onderdeel c is dus een harde eis: zonder verklaring geen categorie
+                a, ook met het juiste uitkeringsverleden.
+      untranslatables:
+        - construct: zes-maandentoets van lid 1 onderdeel b
+          reason: |-
+            Onderdeel b vraagt of de werknemer op enig moment in de zes maanden
+            voor indiensttreding bij deze werkgever in dienstbetrekking was. Die
+            tijdgebonden herhalingstoets over de loonaangifteketen is met de
+            huidige operatie-set niet faithful te modelleren; de engine ontvangt de
+            uitkomst als boolean.
+          accepted: true
+        - construct: vijfjaarsvenster en elf-wekenvoorwaarde van lid 2
+          reason: |-
+            Lid 2 combineert een vijfjaarstermijn na de wachttijd met vier
+            alternatieve startpunten, een arbeidskundig oordeel over de 35%-grens,
+            en een elf-wekenvoorwaarde met een tenzij-clausule. De termijnrekening
+            en het arbeidskundig oordeel zijn beide UWV-werk; de engine ontvangt
+            een boolean.
+          accepted: true
   - number: '2.7'
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen verstrekt uitsluitend aan degene die een dienstbetrekking
@@ -783,6 +1181,122 @@ articles:
         artikel: '2.16'
         hoofdstuk: II
         paragraaf: '2.5'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: hervat_eigen_arbeid_of_andere_functie
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a, aanhef: de werknemer hervat zijn eigen arbeid geheel
+              of gedeeltelijk, of gaat een andere functie bij dezelfde werkgever
+              bekleden.
+          - name: heeft_of_krijgt_wia_recht_bij_hervatting
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 1°: de werknemer heeft op dat moment recht op
+              een WIA-uitkering, of krijgt dat recht na de hervatting. Lid 3 stelt
+              een gelijkwaardige uitkering uit een andere EU/EER-staat of Zwitserland
+              hiermee gelijk. Bron: UWV.
+          - name: was_rea_arbeidsgehandicapte_voor_2006
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a onder 2°: REA-overgangsrecht, gelijk aan de route in
+              artikel 2.6.
+          - name: heeft_geldige_doelgroepverklaring_2_15
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: geldige doelgroepverklaring als bedoeld in artikel
+              2.15, verstrekt aan de werkgever.
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: 'Lid 2 onderdeel a: pensioengerechtigde leeftijd bereikt.'
+          - name: is_wsw_of_beschut_werk_dienstbetrekking
+            type: boolean
+            required: true
+            description: 'Lid 2 onderdeel b: Wsw- of beschut-werk-dienstbetrekking.'
+          - name: periode_2_16_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: de periode van artikel 2.16 is voor deze werknemer
+              verstreken. Lid 4 telt onderbrekingen binnen die periode niet mee; die
+              samentelling is niet gemodelleerd.
+        output:
+          - name: voldoet_aan_grond_2_14_lid_1_a
+            type: boolean
+            description: 'Lid 1 onderdeel a: hervatting en een van de twee uitkeringsroutes.'
+          - name: is_uitgesloten_2_14_lid_2
+            type: boolean
+            description: 'Lid 2: pensioenleeftijd, Wsw/beschut werk, of verstreken periode.'
+          - name: is_herplaatsen_arbeidsgehandicapte
+            type: boolean
+            description: |-
+              Categorie c van artikel 2.1: de werknemer is herplaatste
+              arbeidsgehandicapte werknemer in de zin van artikel 2.14.
+        actions:
+          - output: voldoet_aan_grond_2_14_lid_1_a
+            value:
+              operation: AND
+              conditions:
+                - $hervat_eigen_arbeid_of_andere_functie
+                - operation: OR
+                  conditions:
+                    - $heeft_of_krijgt_wia_recht_bij_hervatting
+                    - $was_rea_arbeidsgehandicapte_voor_2006
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.14'
+              paragraph: '1'
+              explanation: |-
+                Onderdeel a bindt de hervatting aan een uitkeringsroute: de hervatting
+                alleen is niet genoeg, en de uitkering zonder hervatting evenmin.
+          - output: is_uitgesloten_2_14_lid_2
+            value:
+              operation: OR
+              conditions:
+                - $heeft_pensioengerechtigde_leeftijd_bereikt
+                - $is_wsw_of_beschut_werk_dienstbetrekking
+                - $periode_2_16_is_verstreken
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.14'
+              paragraph: '2'
+          - output: is_herplaatsen_arbeidsgehandicapte
+            value:
+              operation: AND
+              conditions:
+                - $voldoet_aan_grond_2_14_lid_1_a
+                - $heeft_geldige_doelgroepverklaring_2_15
+                - operation: NOT
+                  value: $is_uitgesloten_2_14_lid_2
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.14'
+              paragraph: '1'
+      untranslatables:
+        - construct: onderbrekingen binnen de periode van artikel 2.16
+          reason: |-
+            Lid 4 bepaalt dat onderbrekingen van een dienstbetrekking tussen
+            dezelfde werkgever en werknemer binnen de periode van artikel 2.16 lid
+            1 geacht worden niet te hebben plaatsgevonden. Die samentelling over
+            dienstverbanden heen is niet met de huidige operatie-set uit te
+            drukken.
+          accepted: true
   - number: '2.15'
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen verstrekt uitsluitend aan degene die zijn eigen arbeid

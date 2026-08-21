@@ -56,16 +56,50 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # ene bron van waarheid is, gedeeld met de no-riskpolis. De categorieen
   # arbeidsgehandicapt en herplaatsen zijn daarentegen kale parameters zonder
   # bron. Juist daar ging het mis.
+  # Het doelgroepregister komt niet meer als losse parameter binnen: de
+  # engine leidt het af via Wfsv artikel 38b. Sadee komt daar binnen op
+  # grond van lid 1 onderdeel c — recht op arbeidsondersteuning Wajong,
+  # zonder de uitsluiting 'duurzaam geen mogelijkheden'. Alle andere
+  # gronden staan uit.
+
+  # De categorie-indeling is niet langer een vinkje. Artikel 2.1 haalt
+  # 'arbeidsgehandicapte werknemer' uit artikel 2.6 en 'herplaatsen' uit
+  # artikel 2.14, precies zoals het de banenafspraak uit Wfsv 38b haalt.
+  # Wat hieronder binnenkomt zijn de feiten die die artikelen nodig hebben.
+  # Voor deze persona staan ze alle tien uit: geen uitkeringsverleden in de
+  # maand vóór aanvang, geen hervatting bij dezelfde werkgever, en — de
+  # harde eis — geen doelgroepverklaring voor categorie a of c.
+
   Scenario: Sadee krijgt LKV-banenafspraak — Wajong valt in die categorie
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                          | 999990100 |
-      | verloonde_uren                               | 1664      |
-      | is_arbeidsgehandicapte_werknemer             | false     |
-      | is_herplaatsen_arbeidsgehandicapte           | false     |
-      | is_doelgroep_banenafspraak                   | true      |
-      | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
-      | heeft_loonaangifte_verzoek_ingediend         | true      |
+      | bsn                                                      | 999990100  |
+      | verloonde_uren                                           | 1664       |
+      | had_wia_recht_maand_voor_aanvang                         | false      |
+      | was_rea_arbeidsgehandicapte_voor_2006                    | false      |
+      | was_in_dienst_bij_werkgever_binnen_zes_maanden           | false      |
+      | heeft_geldige_doelgroepverklaring_2_7                    | false      |
+      | valt_onder_uitzondering_lid_2                            | false      |
+      | is_wsw_of_beschut_werk_dienstbetrekking                  | false      |
+      | hervat_eigen_arbeid_of_andere_functie                    | false      |
+      | heeft_of_krijgt_wia_recht_bij_hervatting                 | false      |
+      | heeft_geldige_doelgroepverklaring_2_15                   | false      |
+      | periode_2_16_is_verstreken                               | false      |
+      | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling    | false      |
+      | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
+      | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
+      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
+      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
+      | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
+      | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
+      | was_arbeidsbeperkte_lid_1_of_2                           | false      |
+      | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_pensioengerechtigde_leeftijd_bereikt               | false      |
+      | heeft_loonaangifte_verzoek_ingediend                     | true       |
     When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true

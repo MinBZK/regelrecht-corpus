@@ -2198,6 +2198,128 @@ articles:
               had voorafgaand een Wsw-dienstbetrekking (lid 2 onderdeel
               b en d). Niet via cross-law gemodelleerd: Wsw is buiten
               scope van deze sessie.
+          # --- doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
+          - name: is_uitgesloten_beschut_werk_pwet_10b
+            type: boolean
+            required: true
+            description: |-
+              Chapeau-uitsluiting: door college vastgesteld dat persoon
+              uitsluitend in beschutte omgeving onder aangepaste omstandigheden
+              mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
+              Bron: gemeente. Zo'n persoon is per definitie GEEN
+              arbeidsbeperkte in zin van 38b.1.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
+              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
+              college) heeft vastgesteld dat persoon niet in staat is WML te
+              verdienen, OF college heeft loonwaarde < WML vastgesteld
+              conform Pwet 10d. Bron: UWV + gemeente.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_wsw_geindiceerd_of_oude_indicatie
+            type: boolean
+            required: true
+            description: |-
+              38b.1.b: geïndiceerd in zin van Wet sociale werkvoorziening,
+              of nog geldende indicatiebeschikking op grond van WSW art. 11
+              zoals dat luidde op 31-12-2014. Bron: UWV / SVB.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: heeft_wajong_arbeidsondersteuning_of_uitkering
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c: recht op arbeidsondersteuning of arbeidsongeschiktheids-
+              uitkering Wajong. Uitsluiting: persoon heeft duurzaam geen
+              mogelijkheden tot arbeidsparticipatie (Wajong 1a:1) — die
+              valt buiten 38b.1.c. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: heeft_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
+              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
+              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: voldoet_aan_amvb_indicatie_38b_1_d
+            type: boolean
+            required: true
+            description: |-
+              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
+              indicatie. Bron: UWV (uitvoering AMvB).
+              AMvB-implementatie is open_term — niet in deze YAML
+              gemodelleerd; engine ontvangt vlag van uitvoering.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
+              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
+              vastgesteld dat persoon niet in staat is WML te verdienen.
+              Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f overgangsrecht: persoon was op of na 1-1-2013 een
+              persoon als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong),
+              EN op 1-5-2015 niet langer zodanig persoon. Uitzondering:
+              voormalige Wajong-er die duurzaam geen mogelijkheden meer
+              heeft (Wajong 1a:1) valt buiten. Bron: UWV-historie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+            type: boolean
+            required: true
+            description: |-
+              38b.1.f uitsluiting: persoon valt onder onderdeel c-historie
+              (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
+              tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: is_jonggehandicapt_uwv_oordeel_lid_2
+            type: boolean
+            required: true
+            description: |-
+              38b.2: UWV oordeelt dat persoon wegens ziekte/gebrek ontstaan
+              voor 18e levensjaar of als studerende (Wajong 1:4) belemmering
+              ondervindt, een voorziening ontvangt op grond van Pwet 10 of
+              WIA 35, en zonder die voorziening geen WML kan verdienen.
+              Bron: UWV-beoordeling (AMvB-regels per 38b.3). Wordt voor
+              toepassing van deze paragraaf MEDE als arbeidsbeperkte
+              beschouwd.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: datum_eerste_opname_doelgroepregister
+            type: date
+            required: true
+            description: |-
+              Datum van eerste opname in doelgroepregister banenafspraak
+              door UWV (datasource UWV). Wordt gebruikt voor afgeleide
+              outputs zoals LKV-banenafspraak-termijn (3 jaar vanaf
+              opname). Voor 38b.1 zelf niet rechtstreeks vereist; dient
+              als pass-through naar afnemers (Wtl, Ziektewet).
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: was_arbeidsbeperkte_lid_1_of_2
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: persoon voldeed eerder aan een grond van
+              het eerste of tweede lid (was opgenomen als arbeidsbeperkte),
+              maar voldoet daar nu niet langer aan. Bron: UWV-historie /
+              registratie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: registratie_nog_niet_geeindigd
+            type: boolean
+            required: true
+            description: |-
+              38b.6 blijfgrond: de opname van de persoon in de registratie
+              van arbeidsbeperkten (artikel 38d lid 1) is nog niet
+              geëindigd. Bron: UWV-registratie.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
         input:
           - name: is_wia_uitkeringsgerechtigd
             type: boolean
@@ -2259,6 +2381,19 @@ articles:
               output: behoort_tot_doelgroepregister_banenafspraak
               parameters:
                 bsn: $bsn
+                is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
+                is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+                is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
+                heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
+                heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
+                voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
+                is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+                was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+                was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+                is_jonggehandicapt_uwv_oordeel_lid_2: $is_jonggehandicapt_uwv_oordeel_lid_2
+                datum_eerste_opname_doelgroepregister: $datum_eerste_opname_doelgroepregister
+                was_arbeidsbeperkte_lid_1_of_2: $was_arbeidsbeperkte_lid_1_of_2
+                registratie_nog_niet_geeindigd: $registratie_nog_niet_geeindigd
               description: |-
                 Lid 2 onderdeel e: opname in het doelgroepregister
                 banenafspraak. Kapstok is Wfsv artikel 38b (BWBR0017745):
