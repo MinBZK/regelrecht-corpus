@@ -1,4 +1,4 @@
-Feature: Financieel CV — werkgever-perspectief, casus Sadee
+Feature: Financieel CV, werkgever-perspectief, casus Sadee
   Als werkgever (MKB)
   Wil ik weten welke financiële voordelen ik krijg als ik Sadee aanneem
   Zodat ik een onderbouwd besluit kan nemen over het dienstverband
@@ -42,7 +42,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # Sadee heeft geen WW-uitkering (komt uit Wajong), dus PP is niet aan
   # de orde. Werkgever moet weten: proefplaatsing met behoud van uitkering
   # is een WW-instrument, niet beschikbaar voor Wajongers.
-  Scenario: Sadee mag geen proefplaatsing aangaan — geen WW-uitkering
+  Scenario: Sadee mag geen proefplaatsing aangaan zonder WW-uitkering
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                            | 999990100 |

@@ -1,4 +1,4 @@
-Feature: Financieel CV — werkgever-perspectief, casus Sadee
+Feature: Financieel CV, werkgever-perspectief, casus Sadee
   Als werkgever (MKB)
   Wil ik weten welke financiële voordelen ik krijg als ik Sadee aanneem
   Zodat ik een onderbouwd besluit kan nemen over het dienstverband
@@ -70,7 +70,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # maand vóór aanvang, geen hervatting bij dezelfde werkgever, en — de
   # harde eis — geen doelgroepverklaring voor categorie a of c.
 
-  Scenario: Sadee krijgt LKV-banenafspraak — Wajong valt in die categorie
+  Scenario: Sadee krijgt LKV-banenafspraak, want Wajong valt in die categorie
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                                      | 999990100  |

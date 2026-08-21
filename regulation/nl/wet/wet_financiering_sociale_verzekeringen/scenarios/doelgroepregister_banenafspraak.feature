@@ -1,4 +1,4 @@
-Feature: Doelgroepregister banenafspraak — Wfsv artikel 38b
+Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
   Als UWV
   Wil ik per persoon kunnen vaststellen of hij tot de doelgroep
   banenafspraak behoort en op welke grond
@@ -127,7 +127,7 @@ Feature: Doelgroepregister banenafspraak — Wfsv artikel 38b
   # De overige gronden — elk apart, zodat geen tak ongetest blijft
   # ────────────────────────────────────────────────────────────────────
 
-  Scenario Outline: Elke afzonderlijke grond opent het register — <grond>
+  Scenario Outline: Elke afzonderlijke grond opent het register: <grond>
     Given the following parameters:
       | bsn                                                      | 999990102  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |

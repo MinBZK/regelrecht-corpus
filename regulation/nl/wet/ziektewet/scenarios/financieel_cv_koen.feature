@@ -1,4 +1,4 @@
-Feature: Financieel CV — werknemer-perspectief, casus Koen
+Feature: Financieel CV, werknemer-perspectief, casus Koen
   Als werknemer (Pwet-doelgroep, banenafspraak)
   Wil ik weten welke voorzieningen en voordelen mijn nieuwe dienstverband
   meebrengt

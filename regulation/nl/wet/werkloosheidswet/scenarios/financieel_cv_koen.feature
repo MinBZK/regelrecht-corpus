@@ -1,4 +1,4 @@
-Feature: Financieel CV — werknemer-perspectief, casus Koen
+Feature: Financieel CV, werknemer-perspectief, casus Koen
   Als werknemer (Pwet-doelgroep, banenafspraak)
   Wil ik weten welke voorzieningen en voordelen mijn nieuwe dienstverband
   meebrengt
@@ -35,7 +35,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # relevantie: Koen kan geen onbetaalde proefplaatsing aangaan met
   # behoud van Pwet-uitkering — voor Pwet geldt een ander
   # re-integratie-traject via de gemeente.
-  Scenario: Koen kan geen proefplaatsing met behoud van uitkering — geen WW
+  Scenario: Koen kan geen proefplaatsing met behoud van uitkering aangaan zonder WW
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                            | 999990101 |

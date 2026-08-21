@@ -1,4 +1,4 @@
-Feature: Financieel CV — werkgever-perspectief, casus Sadee
+Feature: Financieel CV, werkgever-perspectief, casus Sadee
   Als werkgever (MKB)
   Wil ik weten welke financiële voordelen ik krijg als ik Sadee aanneem
   Zodat ik een onderbouwd besluit kan nemen over het dienstverband

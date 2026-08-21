@@ -1,4 +1,4 @@
-Feature: Financieel CV — werkgever-perspectief, casus Sadee
+Feature: Financieel CV, werkgever-perspectief, casus Sadee
   Als werkgever (MKB)
   Wil ik weten welke financiële voordelen ik krijg als ik Sadee aanneem
   Zodat ik een onderbouwd besluit kan nemen over het dienstverband
@@ -79,7 +79,7 @@ Feature: Financieel CV — werkgever-perspectief, casus Sadee
   # Zonder aanvraag geen voorziening: lid 1 kent uitsluitend "op aanvraag"
   # toe. Beide aanvragen staan los van elkaar — een aanvraag voor
   # jobcoaching levert geen werkplekaanpassing op.
-  Scenario: Sadee vraagt alleen jobcoaching aan — geen werkplekaanpassing
+  Scenario: Sadee vraagt alleen jobcoaching aan en krijgt geen werkplekaanpassing
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |

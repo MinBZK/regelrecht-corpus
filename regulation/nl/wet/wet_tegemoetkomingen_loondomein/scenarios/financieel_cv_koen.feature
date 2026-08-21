@@ -1,4 +1,4 @@
-Feature: Financieel CV — werknemer-perspectief, casus Koen
+Feature: Financieel CV, werknemer-perspectief, casus Koen
   Als werknemer (Pwet-doelgroep, banenafspraak)
   Wil ik weten welke voorzieningen en voordelen mijn nieuwe dienstverband
   meebrengt
@@ -42,7 +42,7 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # maand vóór aanvang, geen hervatting bij dezelfde werkgever, en — de
   # harde eis — geen doelgroepverklaring voor categorie a of c.
 
-  Scenario: Werkgever ontvangt LKV-banenafspraak voor Koen — €1.680,64 per jaar
+  Scenario: Werkgever ontvangt €1.680,64 per jaar LKV-banenafspraak voor Koen
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                                      | 999990101  |
