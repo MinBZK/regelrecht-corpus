@@ -150,6 +150,29 @@ articles:
           gelet_op: |-
             Dit besluit berust op artikel 2:22, vierde lid, van de Wet
             arbeidsongeschiktheidsvoorziening jonggehandicapten.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        output:
+          - name: nadere_regels_voorzieningen_artikel_35
+            type: string
+            description: |-
+              Invulling van de open term van WIA artikel 35 lid 5. Artikel 1a
+              somt de grondslagen op waarop dit besluit berust; artikel 35,
+              vijfde lid, van de Wet WIA is er daar een van. De waarde
+              benoemt de regeling die de nadere regels stelt, zodat de
+              WIA-kant kan zien welke lagere regelgeving hier geldt.
+          - name: nadere_regels_voorzieningen_artikel_2_22
+            type: string
+            description: |-
+              Invulling van de open term van Wajong artikel 2:22 lid 4, langs
+              dezelfde grondslag-opsomming in artikel 1a.
+        actions:
+          - output: nadere_regels_voorzieningen_artikel_35
+            value: Reïntegratiebesluit
+          - output: nadere_regels_voorzieningen_artikel_2_22
+            value: Reïntegratiebesluit
   - number: '2'
     text: |-
       1 Een subsidie als bedoeld in [artikel 36 van de Wet WIA][ref1] of een voorziening als bedoeld in
