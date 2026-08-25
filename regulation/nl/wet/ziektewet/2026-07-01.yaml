@@ -2180,6 +2180,12 @@ articles:
           value: 5
         duur_no_risk_polis_lid_4_jaren:
           value: 5
+        termijn_na_onderwijs_jaren:
+          value: 5
+        termijn_na_wachttijd_jaren:
+          value: 5
+        grens_arbeidsongeschiktheid_lid_1_b_procent:
+          value: 35
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -2189,26 +2195,207 @@ articles:
             type: string
             required: true
             description: BSN van de werknemer.
+          - name: geboortedatum
+            type: date
+            required: true
+            description: |-
+              Lid 1 onderdeel c en d: jonger dan achttien, respectievelijk
+              achttien of ouder. Bron: BRP.
+          - name: datum_aanvang_dienstbetrekking
+            type: date
+            required: true
+            description: |-
+              Aanvang van de dienstbetrekking (artikel 3, 4 of 5) waarvoor
+              de no-riskpolis wordt getoetst. Gebruikt voor de
+              vijfjaarstermijnen van lid 1 onderdeel b onder 4° en
+              onderdeel c en d. Bron: werkgever / polisadministratie.
+          # --- lid 1 onderdeel a en lid 4: doorgegeven aan Wet WIA (artikel 47, 54, 23, 5) ---
+          - name: is_verzekerde_wia
+            type: boolean
+            required: true
+            description: 'Verzekerde voor de Wet WIA (artikel 7-9 Wet WIA). Bron: UWV.'
+          - name: is_ziek_geworden_wia
+            type: boolean
+            required: true
+            description: |-
+              De werknemer is wegens ziekte uitgevallen zodat een
+              WIA-wachttijd is gaan lopen. Bron: UWV.
+          - name: eerste_dag_wachttijd_wia
+            type: date
+            required: false
+            description: |-
+              Eerste dag van de WIA-wachttijd (artikel 23 lid 2 Wet WIA).
+              Alleen vereist als de werknemer ziek is geworden. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Resterende verdiencapaciteit als percentage van het
+              maatmaninkomen (artikel 4 en 5 Wet WIA). 100 voor wie
+              niet is beoordeeld. Bron: UWV-beoordeling.
+          - name: is_medisch_duurzaam_wia
+            type: boolean
+            required: true
+            description: 'Duurzaamheid (artikel 4 lid 2 en 3 Wet WIA). Bron: verzekeringsarts UWV.'
+          - name: heeft_recht_op_uitkering_hoofdstuk_6_of_7
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel a onder 1°. Bron: UWV.'
+          - name: ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel a onder 2°. Bron: UWV.'
+          - name: loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel b. Bron: werkgever / UWV.'
+          - name: periode_zonder_ziekengeld_29_lid_11_loopt_nog
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel c. Bron: UWV.'
+          - name: is_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel d. Bron: Justid/UWV.'
+          - name: onttrekt_zich_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel e. Bron: Justid/UWV.'
+          - name: woont_niet_in_nederland
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel f. Bron: BRP.'
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel g. Bron: BRP / SVB.'
+          - name: is_overleden
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel h. Bron: BRP.'
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: 'Wet WIA artikel 43 onderdeel i. Bron: UWV.'
+          # --- lid 1 onderdeel b: eigen voorwaarden 2° tot en met 4° ---
+          - name: arbeidskundig_onderzoek_verricht
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b, aanhef: in een arbeidskundig onderzoek is
+              de mate van arbeidsongeschiktheid op de eerste dag na de
+              wachttijd vastgesteld. Bron: UWV.
+          - name: geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b onder 2°: op de eerste dag van elf weken
+              voorafgaand aan het einde van de wachttijd geen
+              dienstbetrekking meer, of geen dienstbetrekking met een
+              andere werkgever dan de eigen werkgever (tenzij die al op de
+              eerste dag van de wachttijd bestond). Bron: UWV /
+              polisadministratie.
+          - name: niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b onder 3°: niet in staat tot het verrichten
+              van eigen of andere passende arbeid bij de eigen werkgever.
+              Bron: arbeidskundig onderzoek UWV.
+          # --- lid 1 onderdeel c en d ---
+          - name: heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel c en d: ondervindt of ondervond in verband
+              met ziekte of gebrek een belemmering bij het volgen van
+              onderwijs. Bron: UWV-vaststelling.
+          - name: datum_afronding_onderwijs
+            type: date
+            required: false
+            description: |-
+              Lid 1 onderdeel c en d: datum waarop het onderwijs is
+              afgerond; de dienstbetrekking moet binnen vijf jaar daarna
+              zijn aangevangen. Alleen vereist bij een belemmering bij het
+              onderwijs. Bron: onderwijsinstelling / DUO. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          # --- lid 2 onderdeel a en c: doorgegeven aan Wajong artikel 2:15 ---
+          - name: aanvraag_arbeidsondersteuning_wajong_ingediend
+            type: boolean
+            required: true
+            description: 'Wajong 2:15 lid 1, aanhef: arbeidsondersteuning is aangevraagd. Bron: UWV.'
+          - name: is_jonggehandicapte_hoofdstuk_2_wajong
+            type: boolean
+            required: true
+            description: 'Jonggehandicapte in de zin van Wajong 2:3. Bron: UWV-beoordeling.'
+          - name: niet_in_staat_meer_dan_75_procent_maatmaninkomen
+            type: boolean
+            required: true
+            description: 'Wajong 2:15 lid 1 onderdeel a. Bron: UWV-beoordeling.'
+          - name: is_uitsluitingsgrond_2_11_wajong_van_toepassing
+            type: boolean
+            required: true
+            description: 'Wajong 2:15 lid 1 onderdeel b (artikel 2:11). Bron: UWV.'
+          - name: datum_aanvraag_arbeidsondersteuning_wajong
+            type: date
+            required: false
+            description: |-
+              Datum van de aanvraag om arbeidsondersteuning (Wajong 2:15
+              lid 1 onderdeel d en lid 2). Alleen vereist als een
+              aanvraag is ingediend. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+            type: boolean
+            required: true
+            description: 'Wajong 2:15 lid 3 onderdeel a. Bron: UWV-beoordeling.'
+          - name: recht_op_arbeidsondersteuning_herleeft_2_17
+            type: boolean
+            required: true
+            description: 'Wajong 2:15 lid 3 onderdeel b en lid 5 (artikel 2:17). Bron: UWV.'
+          - name: had_of_heeft_wajong_arbeidsongeschiktheidsuitkering
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel a: recht had of heeft gehad op een
+              arbeidsongeschiktheidsuitkering op grond van de Wajong
+              (hoofdstuk 1a of 3), dan wel in het verleden recht op
+              arbeidsondersteuning. Die hoofdstukken en de historie zijn
+              niet gemodelleerd; het huidige recht op arbeidsondersteuning
+              wordt wél afgeleid (Wajong 2:15). Bron: UWV-historie.
+          - name: dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: de dienstbetrekking is aangevangen voordat
+              de werknemer achttien werd en dus voordat zijn Wajong-recht
+              ontstond. Bron: UWV / werkgever.
+          # --- lid 2 onderdeel b en d: Wsw ---
           - name: is_wsw_werknemer
             type: boolean
             required: true
             description: |-
-              Heeft werknemer arbeidsovereenkomst gesloten met werkgever
-              als bedoeld in artikel 7 Wet sociale werkvoorziening, of
-              had voorafgaand een Wsw-dienstbetrekking (lid 2 onderdeel
-              b en d). Niet via cross-law gemodelleerd: Wsw is buiten
-              scope van deze sessie.
-          # --- doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
+              Lid 2 onderdeel b: heeft een arbeidsovereenkomst gesloten
+              met een werkgever als bedoeld in artikel 7 Wet sociale
+              werkvoorziening. Bron: gemeente. Niet via cross-law
+              gemodelleerd: Wsw is buiten scope.
+          - name: had_wsw_dienstbetrekking_of_indicatie_voorafgaand
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: had onmiddellijk voorafgaand aan de
+              dienstbetrekking een Wsw-dienstbetrekking (artikel 2 Wsw),
+              een aangewezen dienstbetrekking (Wfsv 38f lid 5) of een nog
+              geldende Wsw-indicatiebeschikking (artikel 11 Wsw, oud).
+              Bron: gemeente / UWV.
+          # --- lid 2 onderdeel e: doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
           - name: is_uitgesloten_beschut_werk_pwet_10b
             type: boolean
             required: true
             description: |-
-              Chapeau-uitsluiting: door college vastgesteld dat persoon
-              uitsluitend in beschutte omgeving onder aangepaste omstandigheden
+              Het college heeft vastgesteld dat de persoon uitsluitend in
+              een beschutte omgeving onder aangepaste omstandigheden
               mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
-              Bron: gemeente. Zo'n persoon is per definitie GEEN
-              arbeidsbeperkte in zin van 38b.1.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+              Bron: gemeente. Sluit uit van het doelgroepregister (Wfsv 38b,
+              aanhef) en is tegelijk de grond voor beschut werk (lid 2
+              onderdeel f, via Pwet 10b).
           - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
             type: boolean
             required: true
@@ -2320,60 +2507,154 @@ articles:
               van arbeidsbeperkten (artikel 38d lid 1) is nog niet
               geëindigd. Bron: UWV-registratie.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          # --- lid 2 onderdeel e (alternatief): doorgegeven aan Participatiewet artikel 10c/10d (loonkostensubsidie) ---
+          - name: behoort_tot_doelgroep_lks
+            type: boolean
+            required: true
+            description: 'Pwet 10c lid 1: college heeft vastgesteld dat persoon tot de doelgroep loonkostensubsidie behoort.'
+          - name: kan_minimumloon_niet_verdienen
+            type: boolean
+            required: true
+            description: 'Pwet 10d lid 2: met voltijdse arbeid niet in staat het wettelijk minimumloon te verdienen.'
+          - name: aanvraag_lks_ingediend_binnen_zes_maanden
+            type: boolean
+            required: true
+            description: 'Pwet 10d lid 2: aanvraag binnen zes maanden na begin dienstbetrekking.'
+          - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
+            type: boolean
+            required: true
+            description: 'Pwet 10d lid 2 onderdelen a, b en c.'
+          - name: is_wsw_dienstbetrekking
+            type: boolean
+            required: true
+            description: 'Pwet 10d lid 3: uitsluitingsgrond Wsw-dienstbetrekking.'
+          - name: loonwaarde_eurocent_per_maand
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: 'Pwet 10d lid 4: vastgestelde loonwaarde per maand.'
+          - name: overeengekomen_arbeidsduur_uren_per_week
+            type: number
+            required: true
+            description: 'Pwet 10d lid 4 tweede zin: overeengekomen arbeidsduur per week.'
+          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: 'WML + 8% vakantiebijslag per maand (Pwet 10d lid 4).'
+          # --- lid 2 onderdeel f: doorgegeven aan Participatiewet artikel 10b (beschut werk) ---
+          - name: behoort_tot_doelgroep_10b_lid_1
+            type: boolean
+            required: true
+            description: 'Pwet 10b lid 1: persoon uit de doelgroep van de voorziening beschut werk.'
+          - name: heeft_dienstbetrekking_beschut_werk
+            type: boolean
+            required: true
+            description: 'Pwet 10b lid 1, slot: dienstbetrekking in een beschutte omgeving.'
+          # --- lid 4 ---
+          - name: dienstbetrekking_voortgezet_na_vaststelling_wia_recht
+            type: boolean
+            required: true
+            description: |-
+              Lid 4: de dienstbetrekking bij de werkgever is voortgezet
+              nadat het recht op WIA-uitkering is vastgesteld. Bron:
+              werkgever / UWV.
         input:
-          - name: is_wia_uitkeringsgerechtigd
+          - name: heeft_recht_op_iva_uitkering
             type: boolean
             source:
               regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
-              output: is_wia_uitkeringsgerechtigd
+              output: heeft_recht_op_iva_uitkering
               parameters:
                 bsn: $bsn
+                is_verzekerde_wia: $is_verzekerde_wia
+                is_ziek_geworden: $is_ziek_geworden_wia
+                eerste_dag_wachttijd: $eerste_dag_wachttijd_wia
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam_wia
+                heeft_recht_op_uitkering_hoofdstuk_6_of_7: $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap: $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                loondoorbetalings_of_ziekengeldtijdvak_loopt_nog: $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                periode_zonder_ziekengeld_29_lid_11_loopt_nog: $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                is_rechtens_vrijheid_ontnomen: $is_rechtens_vrijheid_ontnomen
+                onttrekt_zich_aan_vrijheidsstraf: $onttrekt_zich_aan_vrijheidsstraf
+                woont_niet_in_nederland: $woont_niet_in_nederland
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_overleden: $is_overleden
+                is_uitreiziger: $is_uitreiziger
               description: |-
-                Lid 1 onderdeel a: recht op uitkering Wet WIA voorafgaand
-                aan dienstbetrekking.
-          - name: is_wia_min_35_arbeidsongeschikt
+                Lid 1 onderdeel a en lid 4: recht op een
+                arbeidsongeschiktheidsuitkering (IVA, Wet WIA artikel 47).
+          - name: heeft_recht_op_wga_uitkering
             type: boolean
             source:
               regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
-              output: is_wia_min_35_arbeidsongeschikt
+              output: heeft_recht_op_wga_uitkering
               parameters:
                 bsn: $bsn
+                is_verzekerde_wia: $is_verzekerde_wia
+                is_ziek_geworden: $is_ziek_geworden_wia
+                eerste_dag_wachttijd: $eerste_dag_wachttijd_wia
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam_wia
+                heeft_recht_op_uitkering_hoofdstuk_6_of_7: $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap: $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                loondoorbetalings_of_ziekengeldtijdvak_loopt_nog: $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                periode_zonder_ziekengeld_29_lid_11_loopt_nog: $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                is_rechtens_vrijheid_ontnomen: $is_rechtens_vrijheid_ontnomen
+                onttrekt_zich_aan_vrijheidsstraf: $onttrekt_zich_aan_vrijheidsstraf
+                woont_niet_in_nederland: $woont_niet_in_nederland
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_overleden: $is_overleden
+                is_uitreiziger: $is_uitreiziger
               description: |-
-                Lid 1 onderdeel b: <35% arbeidsongeschikt op eerste dag na
-                wachttijd; voorwaarden 1° t/m 4° vervuld.
-          - name: heeft_voortgezet_wia_recht
-            type: boolean
+                Lid 1 onderdeel a en lid 4: recht op een WGA-uitkering
+                (Wet WIA artikel 54).
+          - name: arbeidsongeschiktheidspercentage
+            type: number
             source:
               regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
-              output: heeft_voortgezet_wia_recht
+              output: arbeidsongeschiktheidspercentage
               parameters:
                 bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam_wia
               description: |-
-                Lid 4: WIA-uitkeringsgerechtigde wiens dienstbetrekking
-                wordt voortgezet — recht op ziekengeld vanaf eerste dag
-                ongeschiktheid, 5 jaar vanaf vaststelling.
-          - name: is_jonggehandicapt_schoolverlater
+                Lid 1 onderdeel b onder 1°: de mate van
+                arbeidsongeschiktheid volgens de Wet WIA (artikel 5).
+          - name: wachttijd_einddatum_wia
+            type: date
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: wachttijd_einddatum
+              parameters:
+                bsn: $bsn
+                is_ziek_geworden: $is_ziek_geworden_wia
+                eerste_dag_wachttijd: $eerste_dag_wachttijd_wia
+              description: |-
+                Lid 1 onderdeel b: de eerste dag na afloop van de
+                wachttijd van artikel 23 Wet WIA; de vijfjaarstermijn van
+                onderdeel b onder 4° loopt vanaf die dag.
+          - name: heeft_recht_op_arbeidsondersteuning_wajong
             type: boolean
             source:
               regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
-              output: is_jonggehandicapt_schoolverlater
+              output: heeft_recht_op_arbeidsondersteuning
               parameters:
                 bsn: $bsn
+                aanvraag_arbeidsondersteuning_ingediend: $aanvraag_arbeidsondersteuning_wajong_ingediend
+                is_jonggehandicapte_hoofdstuk_2: $is_jonggehandicapte_hoofdstuk_2_wajong
+                niet_in_staat_meer_dan_75_procent_maatmaninkomen: $niet_in_staat_meer_dan_75_procent_maatmaninkomen
+                is_uitsluitingsgrond_2_11_van_toepassing: $is_uitsluitingsgrond_2_11_wajong_van_toepassing
+                geboortedatum: $geboortedatum
+                datum_aanvraag_arbeidsondersteuning: $datum_aanvraag_arbeidsondersteuning_wajong
+                is_volledig_en_duurzaam_arbeidsongeschikt: $is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+                recht_herleeft_op_grond_van_2_17: $recht_op_arbeidsondersteuning_herleeft_2_17
               description: |-
-                Lid 1 onderdeel c en d: <18 of 18+ schoolverlater met
-                ziekte/gebrek-belemmering, binnen 5 jaar na afronding
-                onderwijs in dienst.
-          - name: is_wajong_gerechtigd
-            type: boolean
-            source:
-              regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
-              output: is_wajong_gerechtigd
-              parameters:
-                bsn: $bsn
-              description: |-
-                Lid 2 onderdeel a en c: recht (gehad) op
-                arbeidsongeschiktheidsuitkering of arbeidsondersteuning
-                op grond van Wajong.
+                Lid 2 onderdeel a: recht op arbeidsondersteuning op grond
+                van de Wajong (artikel 2:15).
           - name: is_banenafspraak_doelgroep
             type: boolean
             source:
@@ -2400,37 +2681,78 @@ articles:
                 dat artikel bepaalt wie arbeidsbeperkte is en dus in het
                 register hoort. De onderliggende grond (o.a. Pwet 7 lid
                 1.a / 10d) wordt daar als 38b.1.a beoordeeld.
-          - name: is_pwet_loonkostensubsidie
+          - name: heeft_recht_op_lks
             type: boolean
             source:
               regulation: participatiewet
-              output: is_pwet_loonkostensubsidie
+              output: heeft_recht_op_lks
               parameters:
                 bsn: $bsn
-              description: 'Lid 2 onderdeel e (alternatief): LKS via Pwet 10d.'
-          - name: is_beschut_werk
+                behoort_tot_doelgroep_lks: $behoort_tot_doelgroep_lks
+                kan_minimumloon_niet_verdienen: $kan_minimumloon_niet_verdienen
+                aanvraag_lks_ingediend_binnen_zes_maanden: $aanvraag_lks_ingediend_binnen_zes_maanden
+                voorafgaand_relevante_onderwijsroute_of_doelgroep: $voorafgaand_relevante_onderwijsroute_of_doelgroep
+                is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
+                loonwaarde_eurocent_per_maand: $loonwaarde_eurocent_per_maand
+                overeengekomen_arbeidsduur_uren_per_week: $overeengekomen_arbeidsduur_uren_per_week
+                minimumloon_plus_vakantiebijslag_eurocent_per_maand: $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+              description: |-
+                Lid 2 onderdeel e (alternatief): ten behoeve van de
+                werknemer wordt loonkostensubsidie verstrekt op grond van
+                Pwet 10d lid 2. De voorwaarde dat de werknemer het
+                minimumloon niet kan verdienen zit in dat recht besloten.
+          - name: verricht_arbeid_in_beschut_werk
             type: boolean
             source:
               regulation: participatiewet
-              output: is_beschut_werk
+              output: verricht_arbeid_in_beschut_werk
               parameters:
                 bsn: $bsn
-              description: 'Lid 2 onderdeel f: beschut werk (Pwet 10b).'
+                behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
+                college_heeft_vastgesteld_uitsluitend_beschut_werk: $is_uitgesloten_beschut_werk_pwet_10b
+                heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
+              description: |-
+                Lid 2 onderdeel f: arbeid in een dienstbetrekking als
+                bedoeld in Pwet 10b lid 1 (beschut werk).
         output:
-          - name: heeft_recht_op_no_risk_polis
+          - name: heeft_recht_op_wia_uitkering
             type: boolean
-            description: |-
-              Werkgever heeft recht op de no-risk polis voor deze werknemer:
-              Ziektewet artikel 29b lid 1, 2 of 4 is van toepassing.
+            description: 'Recht op een uitkering op grond van de Wet WIA (IVA of WGA).'
+          - name: voldoet_aan_lid_1_a
+            type: boolean
+            description: 'Lid 1 onderdeel a: WIA-uitkeringsgerechtigd.'
+          - name: voldoet_aan_lid_1_b
+            type: boolean
+            description: 'Lid 1 onderdeel b: minder dan 35% arbeidsongeschikt met voorwaarden 1° tot en met 4°.'
+          - name: voldoet_aan_lid_1_c
+            type: boolean
+            description: 'Lid 1 onderdeel c: jonger dan achttien, belemmering bij onderwijs, binnen vijf jaar aan het werk.'
+          - name: voldoet_aan_lid_1_d
+            type: boolean
+            description: 'Lid 1 onderdeel d: achttien of ouder, geen Wajong-gerechtigde (lid 2 onderdeel a), belemmering bij onderwijs, binnen vijf jaar aan het werk.'
           - name: voldoet_aan_lid_1
             type: boolean
-            description: Doelgroep lid 1 (a, b, c of d).
+            description: 'Doelgroep lid 1 (a, b, c of d), met inachtneming van lid 3.'
+          - name: voldoet_aan_lid_2_a
+            type: boolean
+            description: 'Lid 2 onderdeel a: recht (gehad) op Wajong-uitkering of -arbeidsondersteuning.'
+          - name: voldoet_aan_lid_2_e
+            type: boolean
+            description: 'Lid 2 onderdeel e: doelgroepregister banenafspraak of loonkostensubsidie.'
+          - name: voldoet_aan_lid_2_f
+            type: boolean
+            description: 'Lid 2 onderdeel f: beschut werk, niet zijnde onderdeel e.'
           - name: voldoet_aan_lid_2
             type: boolean
             description: Doelgroep lid 2 (a, b, c, d, e of f).
           - name: voldoet_aan_lid_4
             type: boolean
-            description: Lid 4 — voortzetting WIA-recht.
+            description: Lid 4 — voortzetting dienstbetrekking na vaststelling WIA-recht.
+          - name: heeft_recht_op_no_risk_polis
+            type: boolean
+            description: |-
+              Werkgever heeft recht op de no-risk polis voor deze werknemer:
+              Ziektewet artikel 29b lid 1, 2 of 4 is van toepassing.
           - name: duur_no_risk_polis_jaren
             type: number
             description: |-
@@ -2440,31 +2762,218 @@ articles:
               alleen ziekengeldhoogte). Lid 4: 5 jaar vanaf vaststelling
               WIA-recht. Bij overlap geldt de langste termijn.
         actions:
-          - output: voldoet_aan_lid_1
+          - output: heeft_recht_op_wia_uitkering
             value:
               operation: OR
               conditions:
-                - $is_wia_uitkeringsgerechtigd
-                - $is_wia_min_35_arbeidsongeschikt
-                - $is_jonggehandicapt_schoolverlater
+                - $heeft_recht_op_iva_uitkering
+                - $heeft_recht_op_wga_uitkering
               legal_basis:
                 law: Ziektewet
                 bwb_id: BWBR0001888
                 article: 29b
                 paragraph: '1'
                 explanation: |-
-                  Lid 1 onderdelen a, b, c en d. Onderdeel a: WIA-uitkering;
-                  onderdeel b: <35% AO met voorwaarden; onderdeel c en d:
-                  jonggehandicapte schoolverlater (resp. <18 en 18+).
+                  "Een uitkering op grond van de Wet werk en inkomen naar
+                  arbeidsvermogen": IVA (artikel 47) of WGA (artikel 54).
+          - output: voldoet_aan_lid_1_a
+            value: $heeft_recht_op_wia_uitkering
+          - output: voldoet_aan_lid_1_b
+            value:
+              operation: IF
+              cases:
+                - when: $is_ziek_geworden_wia
+                  then:
+                    operation: AND
+                    conditions:
+                      - $arbeidskundig_onderzoek_verricht
+                      - operation: LESS_THAN
+                        subject: $arbeidsongeschiktheidspercentage
+                        value: $grens_arbeidsongeschiktheid_lid_1_b_procent
+                      - $geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+                      - $niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value: $wachttijd_einddatum_wia
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value:
+                          operation: DATE_ADD
+                          date: $wachttijd_einddatum_wia
+                          years: $termijn_na_wachttijd_jaren
+              default: false
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel b: in een arbeidskundig onderzoek vastgesteld
+                  dat de werknemer op de eerste dag na de WIA-wachttijd
+                  1° minder dan 35% arbeidsongeschikt is, 2° geen
+                  dienstbetrekking elders had, 3° niet in staat is tot
+                  eigen of passende arbeid bij de eigen werkgever, en
+                  4° binnen vijf jaar na die dag in dienstbetrekking gaat
+                  werken. Zonder ziekte is er geen wachttijd en geldt
+                  onderdeel b niet.
+          - output: voldoet_aan_lid_2_a
+            value:
+              operation: OR
+              conditions:
+                - $heeft_recht_op_arbeidsondersteuning_wajong
+                - $had_of_heeft_wajong_arbeidsongeschiktheidsuitkering
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '2'
+                explanation: |-
+                  Onderdeel a: recht had of heeft gehad op een
+                  arbeidsongeschiktheidsuitkering of arbeidsondersteuning
+                  op grond van de Wajong. Het huidige recht op
+                  arbeidsondersteuning wordt afgeleid uit Wajong 2:15; de
+                  uitkering (hoofdstuk 1a en 3) en de historie komen als
+                  aangeleverd feit binnen.
+          - output: voldoet_aan_lid_1_c
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: LESS_THAN
+                        subject:
+                          operation: AGE
+                          date_of_birth: $geboortedatum
+                          reference_date: $referencedate.iso
+                        value: 18
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value: $datum_afronding_onderwijs
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value:
+                          operation: DATE_ADD
+                          date: $datum_afronding_onderwijs
+                          years: $termijn_na_onderwijs_jaren
+              default: false
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel c: jonger dan achttien, in verband met ziekte
+                  of gebrek een belemmering bij het volgen van onderwijs,
+                  en binnen vijf jaar na afronding van dat onderwijs in
+                  dienstbetrekking aan het werk.
+          - output: voldoet_aan_lid_1_d
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek
+                  then:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject:
+                          operation: AGE
+                          date_of_birth: $geboortedatum
+                          reference_date: $referencedate.iso
+                        value: 18
+                      - operation: NOT
+                        value: $voldoet_aan_lid_2_a
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value: $datum_afronding_onderwijs
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $datum_aanvang_dienstbetrekking
+                        value:
+                          operation: DATE_ADD
+                          date: $datum_afronding_onderwijs
+                          years: $termijn_na_onderwijs_jaren
+              default: false
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel d: achttien of ouder, geen werknemer als
+                  bedoeld in lid 2 onderdeel a (Wajong), belemmering bij
+                  onderwijs door ziekte of gebrek, en binnen vijf jaar na
+                  afronding van het onderwijs in dienstbetrekking aan het
+                  werk.
+          - output: voldoet_aan_lid_2_e
+            value:
+              operation: OR
+              conditions:
+                - $is_banenafspraak_doelgroep
+                - $heeft_recht_op_lks
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '2'
+                explanation: |-
+                  Onderdeel e: toegeleid naar werk met een vaststelling
+                  dat de werknemer het minimumloon niet kan verdienen
+                  (arbeidsbeperkte, Wfsv 38b), dan wel loonkostensubsidie
+                  op grond van Pwet 10d lid 2.
+          - output: voldoet_aan_lid_2_f
+            value:
+              operation: AND
+              conditions:
+                - $verricht_arbeid_in_beschut_werk
+                - operation: NOT
+                  value: $voldoet_aan_lid_2_e
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '2'
+                explanation: |-
+                  Onderdeel f: arbeid in beschut werk (Pwet 10b lid 1),
+                  niet zijnde een werknemer als bedoeld in onderdeel e.
+          - output: voldoet_aan_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $voldoet_aan_lid_1_a
+                - $voldoet_aan_lid_1_b
+                - operation: AND
+                  conditions:
+                    - operation: OR
+                      conditions:
+                        - $voldoet_aan_lid_1_c
+                        - $voldoet_aan_lid_1_d
+                    - operation: NOT
+                      value:
+                        operation: OR
+                        conditions:
+                          - $had_wsw_dienstbetrekking_of_indicatie_voorafgaand
+                          - $voldoet_aan_lid_2_e
+                          - $voldoet_aan_lid_2_f
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Lid 1 onderdelen a, b, c en d. Lid 3: onderdelen c en d
+                  gelden niet voor de werknemer van lid 2 onderdelen d, e
+                  en f.
           - output: voldoet_aan_lid_2
             value:
               operation: OR
               conditions:
-                - $is_wajong_gerechtigd
+                - $voldoet_aan_lid_2_a
                 - $is_wsw_werknemer
-                - $is_banenafspraak_doelgroep
-                - $is_pwet_loonkostensubsidie
-                - $is_beschut_werk
+                - $dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht
+                - $had_wsw_dienstbetrekking_of_indicatie_voorafgaand
+                - $voldoet_aan_lid_2_e
+                - $voldoet_aan_lid_2_f
               legal_basis:
                 law: Ziektewet
                 bwb_id: BWBR0001888
@@ -2474,7 +2983,20 @@ articles:
                   Lid 2 onderdelen a t/m f. Wajong (a, c), Wsw (b, d),
                   banenafspraak/LKS (e), beschut werk (f).
           - output: voldoet_aan_lid_4
-            value: $heeft_voortgezet_wia_recht
+            value:
+              operation: AND
+              conditions:
+                - $heeft_recht_op_wia_uitkering
+                - $dienstbetrekking_voortgezet_na_vaststelling_wia_recht
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '4'
+                explanation: |-
+                  Recht op een WIA-uitkering én voortzetting van de
+                  dienstbetrekking bij de eigen werkgever nadat dat recht
+                  is vastgesteld.
           - output: heeft_recht_op_no_risk_polis
             value:
               operation: OR
@@ -2513,17 +3035,35 @@ articles:
                   indiensttreding ("binnen vijf jaar na die dag"); lid 4:
                   5 jaar na vaststelling WIA-recht. Default 0 = geen recht.
       untranslatables:
+        - construct: '"onmiddellijk voorafgaand aan de dienstbetrekking" (lid 1 onderdeel a) en "voorafgaand aan" (lid 2 onderdeel a)'
+          reason: |-
+            Onderdeel a van lid 1 en lid 2 eisen dat het WIA- respectievelijk
+            Wajong-recht bestond vóór de dienstbetrekking. De engine stelt
+            dat recht vast op de peildatum; de volgorde in de tijd tussen
+            het ontstaan van het recht en de aanvang van de dienstbetrekking
+            wordt niet getoetst.
+          accepted: true
         - construct: vijfjaarstermijn bij onderbroken dienstverbanden
           reason: |-
             Lid 1 onderdeel b 4° en lid 1 onderdeel c/d formuleren de
             vijfjaarstermijn als "binnen vijf jaar na die dag in
-            dienstbetrekking werkzaamheden gaat verrichten". Bij
-            onderbroken of opvolgende dienstverbanden binnen die termijn
-            is in de wettekst niet eenduidig of de termijn opnieuw begint,
-            doorloopt, of optelt. Vereist juridische interpretatie.
+            dienstbetrekking werkzaamheden gaat verrichten". De termijn is
+            gemodelleerd voor de dienstbetrekking waarvoor wordt getoetst
+            (datum_aanvang_dienstbetrekking). Bij onderbroken of opvolgende
+            dienstverbanden binnen die termijn is in de wettekst niet
+            eenduidig of de termijn opnieuw begint, doorloopt, of optelt.
+            Vereist juridische interpretatie.
           legal_text_excerpt: >-
             binnen vijf jaar na die dag in dienstbetrekking werkzaamheden gaat
             verrichten
+          accepted: true
+        - construct: ontstaansmoment van het recht op ziekengeld (lid 2, slot)
+          reason: |-
+            Voor de werknemer van onderdeel c ontstaat het recht op
+            ziekengeld niet eerder dan het Wajong-recht; voor onderdeel e
+            niet eerder dan het moment waarop hij arbeidsbeperkte wordt
+            (Wfsv 38b). Dit artikel stelt vast óf recht bestaat op de
+            peildatum; het ontstaansmoment wordt niet berekend.
           accepted: true
         - construct: lid 2-duur als 'onbeperkt zolang dienstbetrekking voortduurt'
           reason: |-

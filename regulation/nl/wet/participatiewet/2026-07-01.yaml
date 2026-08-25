@@ -139,48 +139,6 @@ articles:
       - id: ref10
         bwb_id: BWBR0003738
         artikel: '14'
-    machine_readable:
-      execution:
-        parameters:
-          - name: bsn
-            type: string
-            required: true
-          - name: is_pwet_loonkostensubsidie
-            type: boolean
-            required: true
-            description: |-
-              Wordt of werd loonkostensubsidie verstrekt op grond van
-              Pwet 10d. Bron: gemeente. Voor doelgroepbepaling
-              Ziektewet 29b lid 2 onderdeel e.
-          - name: is_beschut_werk
-            type: boolean
-            required: true
-            description: |-
-              Verricht persoon arbeid in een dienstbetrekking als bedoeld
-              in Pwet 10b (beschut werk). Bron: gemeente. Voor doelgroepbepaling
-              Ziektewet 29b lid 2 onderdeel f.
-          - name: loonwaarde_lager_dan_minimumloon
-            type: boolean
-            required: true
-            description: |-
-              Is door UWV of college vastgesteld dat persoon niet in staat is
-              tot het verdienen van het wettelijk minimumloon. Bron: UWV
-              of college. Voor doelgroepbepaling Ziektewet 29b lid 2
-              onderdeel e en LKS-recht (Pwet 10d).
-        output:
-          - name: is_pwet_loonkostensubsidie
-            type: boolean
-          - name: is_beschut_werk
-            type: boolean
-          - name: loonwaarde_lager_dan_minimumloon
-            type: boolean
-        actions:
-          - output: is_pwet_loonkostensubsidie
-            value: $is_pwet_loonkostensubsidie
-          - output: is_beschut_werk
-            value: $is_beschut_werk
-          - output: loonwaarde_lager_dan_minimumloon
-            value: $loonwaarde_lager_dan_minimumloon
   - number: '2'
     text: |-
       In deze wet en de daarop berustende bepalingen wordt verstaan onder:
@@ -1509,6 +1467,87 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_10b_lid_1
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: persoon als bedoeld in artikel 7 lid 1 onderdeel a
+              of 7a lid 1 onderdeel a, dan wel een persoon met een
+              uitkering op grond van WW, IOW, WAZ, Wajong, WIA, WAO,
+              Ziektewet of Wamil, dan wel met recht op
+              arbeidsondersteuning (Wajong 2:15). Bron: gemeente / UWV.
+          - name: college_heeft_vastgesteld_uitsluitend_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: het college heeft vastgesteld dat de persoon
+              uitsluitend in een beschutte omgeving onder aangepaste
+              omstandigheden mogelijkheden tot arbeidsparticipatie heeft.
+              Het college beslist op advies van UWV (lid 2 en 3). Bron:
+              college van B&W. Dezelfde vaststelling sluit de persoon uit
+              van het doelgroepregister banenafspraak (Wfsv 38b, aanhef).
+          - name: heeft_dienstbetrekking_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, slot: de persoon verricht werkzaamheden in een
+              dienstbetrekking in een beschutte omgeving onder aangepaste
+              omstandigheden. Bron: gemeente / werkgever.
+        output:
+          - name: is_uitsluitend_aangewezen_op_beschut_werk
+            type: boolean
+            description: 'Lid 1: de vaststelling van het college.'
+          - name: verricht_arbeid_in_beschut_werk
+            type: boolean
+            description: |-
+              Verricht arbeid in een dienstbetrekking als bedoeld in lid 1
+              (de grond voor o.a. Ziektewet 29b lid 2 onderdeel f).
+        actions:
+          - output: is_uitsluitend_aangewezen_op_beschut_werk
+            value: $college_heeft_vastgesteld_uitsluitend_beschut_werk
+          - output: verricht_arbeid_in_beschut_werk
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_10b_lid_1
+                - $college_heeft_vastgesteld_uitsluitend_beschut_werk
+                - $heeft_dienstbetrekking_beschut_werk
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 10b
+                paragraph: '1'
+                explanation: |-
+                  Een voorziening beschut werk veronderstelt een persoon
+                  uit de doelgroep van lid 1, de vaststelling van het
+                  college én een dienstbetrekking in een beschutte
+                  omgeving.
+      untranslatables:
+        - construct: UWV-advies en AMvB-criteria voor de vaststelling (lid 2 en 3)
+          reason: |-
+            Of iemand uitsluitend in een beschutte omgeving mogelijkheden
+            tot arbeidsparticipatie heeft, stelt UWV vast op grond van bij
+            AMvB gestelde regels en adviseert daarover aan het college.
+            Dat arbeidskundige oordeel wordt niet gemodelleerd; de engine
+            ontvangt de vaststelling van het college.
+          accepted: true
+        - construct: aantal te realiseren dienstbetrekkingen (lid 4 tot en met 6)
+          reason: |-
+            De verplichting van het college vervalt zodra het per
+            ministeriële regeling of verordening bepaalde aantal
+            dienstbetrekkingen is gerealiseerd. Dat is een gemeentelijk
+            quotum, geen kenmerk van de persoon.
+          accepted: true
   - number: 10c
     text: |-
       1 Het college kan:

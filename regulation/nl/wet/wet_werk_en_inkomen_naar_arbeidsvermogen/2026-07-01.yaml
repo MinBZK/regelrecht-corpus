@@ -232,60 +232,6 @@ articles:
       - id: ref33
         bwb_id: BWBR0011353
         paragraaf: 3.2.5
-    machine_readable:
-      execution:
-        parameters:
-          - name: bsn
-            type: string
-            required: true
-          - name: is_wia_uitkeringsgerechtigd
-            type: boolean
-            required: true
-            description: |-
-              Heeft persoon recht op WIA-uitkering (IVA of WGA) op de peildatum.
-              Bron: UWV. Voor doelgroepbepaling Ziektewet 29b lid 1 onderdeel a
-              en lid 4. Hangt af van: arbeidsongeschiktheidspercentage,
-              wachttijd (104 weken), passende arbeid (artikel 23 Wet WIA).
-          - name: is_wia_min_35_arbeidsongeschikt
-            type: boolean
-            required: true
-            description: |-
-              Was persoon op de eerste dag na de wachttijd minder dan 35%
-              arbeidsongeschikt EN voldoet aan voorwaarden van Ziektewet
-              29b lid 1 onderdeel b (geen andere dienstbetrekking, niet in
-              staat tot eigen werk, binnen 5 jaar werkzaamheden gaat
-              verrichten). Bron: UWV-arbeidsdeskundig onderzoek.
-          - name: heeft_voortgezet_wia_recht
-            type: boolean
-            required: true
-            description: |-
-              Heeft persoon recht op WIA-uitkering en wordt dienstbetrekking
-              voortgezet (Ziektewet 29b lid 4). Bron: UWV.
-          - name: heeft_arbeidsbeperking_wia
-            type: boolean
-            required: true
-            description: |-
-              Heeft persoon een arbeidsbeperking op grond van de WIA waarvoor
-              voorzieningen of jobcoaching nodig zijn (artikelen 35-36).
-              Bron: UWV-beoordeling.
-        output:
-          - name: is_wia_uitkeringsgerechtigd
-            type: boolean
-          - name: is_wia_min_35_arbeidsongeschikt
-            type: boolean
-          - name: heeft_voortgezet_wia_recht
-            type: boolean
-          - name: heeft_arbeidsbeperking_wia
-            type: boolean
-        actions:
-          - output: is_wia_uitkeringsgerechtigd
-            value: $is_wia_uitkeringsgerechtigd
-          - output: is_wia_min_35_arbeidsongeschikt
-            value: $is_wia_min_35_arbeidsongeschikt
-          - output: heeft_voortgezet_wia_recht
-            value: $heeft_voortgezet_wia_recht
-          - output: heeft_arbeidsbeperking_wia
-            value: $heeft_arbeidsbeperking_wia
   - number: 1a
     text: >-
       1 Onder arbeidsuur wordt in deze wet verstaan:
@@ -387,12 +333,150 @@ articles:
       3 Onder duurzaam wordt mede verstaan een medische situatie waarbij op lange termijn een geringe kans op herstel
       bestaat.
     url: https://wetten.overheid.nl/BWBR0019057/2026-07-01#Artikel4
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Het percentage van het maatmaninkomen per uur dat de
+              verzekerde met arbeid nog kan verdienen (resterende
+              verdiencapaciteit), zoals vastgesteld in het
+              verzekeringsgeneeskundig en arbeidskundig onderzoek van UWV.
+              Bron: UWV-beoordeling. Het arbeidsongeschiktheidspercentage
+              is 100 minus deze waarde.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 en 3: de medische situatie is stabiel of verslechterend,
+              dan wel kent op lange termijn slechts een geringe kans op
+              herstel. Bron: verzekeringsarts UWV.
+        output:
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt
+            type: boolean
+            description: |-
+              Lid 1: duurzaam slechts in staat om met arbeid ten hoogste
+              20% van het maatmaninkomen per uur te verdienen.
+        actions:
+          - output: is_volledig_en_duurzaam_arbeidsongeschikt
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $verdiencapaciteit_percentage_maatmaninkomen
+                  value: 20
+                - $is_medisch_duurzaam
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '4'
+                paragraph: '1'
+                explanation: |-
+                  Volledig: ten hoogste 20% van het maatmaninkomen kunnen
+                  verdienen. Duurzaam: de medische situatie van lid 2 of
+                  lid 3.
+      untranslatables:
+        - construct: rechtstreeks en objectief medisch vast te stellen gevolg van ziekte of gebrek
+          reason: |-
+            Of de beperking een rechtstreeks en objectief medisch vast te
+            stellen gevolg is van ziekte, gebrek, zwangerschap of
+            bevalling, is een verzekeringsgeneeskundig oordeel. De engine
+            ontvangt de uitkomst van dat oordeel als de resterende
+            verdiencapaciteit en de duurzaamheid; het oordeel zelf wordt
+            niet gemodelleerd.
+          legal_text_excerpt: >-
+            als rechtstreeks en objectief medisch vast te stellen gevolg van
+            ziekte, gebrek, zwangerschap of bevalling
+          accepted: true
   - number: '5'
     text: >-
       Gedeeltelijk arbeidsgeschikt is hij die als rechtstreeks en objectief medisch vast te stellen gevolg van
       ziekte, gebrek, zwangerschap of bevalling slechts in staat is met arbeid ten hoogste 65% te verdienen van het
       maatmaninkomen per uur, doch die niet volledig en duurzaam arbeidsongeschikt is.
     url: https://wetten.overheid.nl/BWBR0019057/2026-07-01#Artikel5
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Resterende verdiencapaciteit als percentage van het
+              maatmaninkomen per uur. Bron: UWV-beoordeling. Zie artikel 4.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: |-
+              Duurzaamheid van de medische situatie (artikel 4 lid 2 en 3).
+              Bron: verzekeringsarts UWV.
+        input:
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_volledig_en_duurzaam_arbeidsongeschikt
+              parameters:
+                bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+              description: |-
+                Artikel 4: wie volledig en duurzaam arbeidsongeschikt is,
+                is niet gedeeltelijk arbeidsgeschikt.
+        output:
+          - name: arbeidsongeschiktheidspercentage
+            type: number
+            description: |-
+              Mate van arbeidsongeschiktheid: 100 minus de resterende
+              verdiencapaciteit. Gebruikt door o.a. Ziektewet 29b lid 1
+              onderdeel b (minder dan 35% arbeidsongeschikt).
+          - name: is_gedeeltelijk_arbeidsgeschikt
+            type: boolean
+            description: |-
+              Ten hoogste 65% van het maatmaninkomen kunnen verdienen
+              (dus ten minste 35% arbeidsongeschikt), en niet volledig en
+              duurzaam arbeidsongeschikt.
+        actions:
+          - output: arbeidsongeschiktheidspercentage
+            value:
+              operation: SUBTRACT
+              values:
+                - 100
+                - $verdiencapaciteit_percentage_maatmaninkomen
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '5'
+                explanation: |-
+                  De wet drukt arbeidsongeschiktheid uit als wat iemand
+                  nog kan verdienen ten opzichte van het maatmaninkomen;
+                  het arbeidsongeschiktheidspercentage is het complement.
+          - output: is_gedeeltelijk_arbeidsgeschikt
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $verdiencapaciteit_percentage_maatmaninkomen
+                  value: 65
+                - operation: NOT
+                  value: $is_volledig_en_duurzaam_arbeidsongeschikt
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '5'
+                explanation: |-
+                  Slechts in staat ten hoogste 65% van het maatmaninkomen
+                  te verdienen, doch niet volledig en duurzaam
+                  arbeidsongeschikt (artikel 4).
   - number: '6'
     text: |-
       1 De beoordeling of iemand volledig en duurzaam arbeidsongeschikt of gedeeltelijk arbeidsgeschikt is, wordt
@@ -1426,6 +1510,108 @@ articles:
         artikel: '66'
         hoofdstuk: '8'
         paragraaf: '8.1'
+    machine_readable:
+      definitions:
+        wachttijd_weken:
+          value: 104
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: is_ziek_geworden
+            type: boolean
+            required: true
+            description: |-
+              De verzekerde is wegens ziekte uitgevallen (artikel 47 en 54:
+              "de verzekerde die ziek wordt"). Zonder ziekmelding is er geen
+              wachttijd. Bron: werkgever / UWV.
+          - name: eerste_dag_wachttijd
+            type: date
+            required: false
+            description: |-
+              Lid 2: de eerste werkdag waarop wegens ziekte niet is gewerkt
+              of het werken is gestaakt. Alleen vereist als de verzekerde
+              ziek is geworden. Bron: ziekmelding werkgever / UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+        output:
+          - name: wachttijd_einddatum
+            type: date
+            description: |-
+              De eerste dag na afloop van de wachttijd van 104 weken
+              (zonder samentelling, verkorting of verlenging).
+          - name: wachttijd_doorlopen
+            type: boolean
+            description: |-
+              Lid 1: de wachttijd van 104 weken is op de peildatum
+              verstreken.
+        actions:
+          - output: wachttijd_einddatum
+            value:
+              operation: IF
+              cases:
+                - when: $is_ziek_geworden
+                  then:
+                    operation: DATE_ADD
+                    date: $eerste_dag_wachttijd
+                    weeks: $wachttijd_weken
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '23'
+                paragraph: '1'
+                explanation: |-
+                  104 weken gerekend vanaf de eerste dag van de wachttijd
+                  (lid 2). Aanspraak ontstaat op de eerste dag daarna.
+          - output: wachttijd_doorlopen
+            value:
+              operation: IF
+              cases:
+                - when: $is_ziek_geworden
+                  then:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $referencedate.iso
+                    value: $wachttijd_einddatum
+              default: false
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '23'
+                paragraph: '1'
+                explanation: |-
+                  De peildatum ligt op of na de eerste dag na afloop van
+                  de wachttijd. Wie niet ziek is geworden, heeft geen
+                  wachttijd doorlopen.
+      untranslatables:
+        - construct: samentelling van perioden (lid 3, 4 en 5)
+          reason: |-
+            Perioden met recht op ziekengeld worden samengeteld als zij
+            elkaar met een onderbreking van minder dan vier weken opvolgen
+            of aansluiten op een zwangerschaps- of bevallingsuitkering;
+            perioden zonder recht op ziekengeld (artikel 19aa Ziektewet)
+            tellen niet mee. Dat vergt een reeks ziekteperioden als
+            invoer, die de engine niet kent. Gemodelleerd is de
+            ononderbroken wachttijd vanaf de eerste ziektedag; de
+            aanleveraar levert de eerste dag van de (samengetelde)
+            wachttijd aan.
+          legal_text_excerpt: >-
+            worden in aanmerking genomen en worden samengeteld, indien zij
+            elkaar met een onderbreking van minder dan vier weken opvolgen
+          accepted: true
+        - construct: verkorte wachttijd op aanvraag (lid 6)
+          reason: |-
+            UWV kan op aanvraag een verkorte wachttijd vaststellen als de
+            verzekerde volledig en duurzaam arbeidsongeschikt is. Dat is
+            een beschikking op aanvraag, geen rekenregel; de aanleveraar
+            levert in dat geval de door UWV vastgestelde einddatum niet
+            aan en dit artikel rekent met 104 weken.
+          accepted: true
+        - construct: verlenging van de wachttijd (artikel 24, 25 en 26)
+          reason: |-
+            De wachttijd kan worden verlengd bij een loonsanctie of op
+            gezamenlijk verzoek van werkgever en werknemer. Die artikelen
+            zijn niet gemodelleerd.
+          accepted: true
   - number: '24'
     text: |-
       1 Na afloop van de wachttijd wordt het tijdvak, gedurende welke de verzekerde jegens zijn werkgever recht heeft op
@@ -2790,6 +2976,112 @@ articles:
       - id: ref10
         bwb_id: BWBR0002221
         artikel: 7a
+    machine_readable:
+      execution:
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: heeft_recht_op_uitkering_hoofdstuk_6_of_7
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel a onder 1°: er bestaat al recht op een
+              IVA-uitkering (hoofdstuk 6) of WGA-uitkering (hoofdstuk 7).
+              Bron: UWV.
+          - name: ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel a onder 2°: uitkering op grond van hoofdstuk 3,
+              afdeling 2, paragraaf 1 Wet arbeid en zorg als gevolg van
+              artikel 3:6 lid 1 onderdeel b onder 2° van die wet. Bron: UWV.
+          - name: loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel b: het tijdvak van loondoorbetaling (BW 7:629 lid
+              11), bezoldiging (Ziektewet 76a lid 6) of ziekengeld
+              (Ziektewet 29 lid 10) is nog niet geëindigd, tenzij dit
+              uitsluitend uit een andere dienstbetrekking wordt genoten.
+              Bron: werkgever / UWV.
+          - name: periode_zonder_ziekengeld_29_lid_11_loopt_nog
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel c: de periode waarin op grond van Ziektewet 29
+              lid 11 geen ziekengeld wordt uitgekeerd is nog niet
+              geëindigd. Bron: UWV.
+          - name: is_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: 'Onderdeel d: rechtens zijn vrijheid ontnomen. Bron: Justid/UWV.'
+          - name: onttrekt_zich_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel e: onttrekt zich aan de tenuitvoerlegging van een
+              vrijheidsstraf of vrijheidsbenemende maatregel. Bron: Justid/UWV.
+          - name: woont_niet_in_nederland
+            type: boolean
+            required: true
+            description: 'Onderdeel f: woont niet in Nederland. Bron: BRP.'
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: |-
+              Onderdeel g: heeft de pensioengerechtigde leeftijd (AOW
+              artikel 7a lid 1) bereikt. Bron: BRP / SVB.
+          - name: is_overleden
+            type: boolean
+            required: true
+            description: 'Onderdeel h: overlijden van de verzekerde. Bron: BRP.'
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: 'Onderdeel i: is een uitreiziger. Bron: UWV / AIVD-melding.'
+        output:
+          - name: is_uitsluitingsgrond_van_toepassing
+            type: boolean
+            description: |-
+              Ten minste één van de uitsluitingsgronden a tot en met i
+              doet zich voor.
+        actions:
+          - output: is_uitsluitingsgrond_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                - $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                - $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                - $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                - $is_rechtens_vrijheid_ontnomen
+                - $onttrekt_zich_aan_vrijheidsstraf
+                - $woont_niet_in_nederland
+                - $heeft_pensioengerechtigde_leeftijd_bereikt
+                - $is_overleden
+                - $is_uitreiziger
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '43'
+                explanation: |-
+                  De uitsluitingsgronden a tot en met i zijn alternatief:
+                  één is genoeg om het recht op uitkering uit te sluiten
+                  (artikel 47 en 54, onderdeel c).
+      untranslatables:
+        - construct: uitzondering "andere dienstbetrekking" in onderdeel b
+          reason: |-
+            Onderdeel b geldt niet als het loon of de bezoldiging
+            uitsluitend wordt genoten uit een andere dienstbetrekking dan
+            die van artikel 23 lid 2. Dat vergt de dienstbetrekking per
+            loonstroom als invoer; de aanleveraar past die uitzondering
+            toe en levert het netto-oordeel aan.
+          legal_text_excerpt: >-
+            tenzij dit loon of deze bezoldiging uitsluitend wordt genoten uit
+            hoofde van een andere dienstbetrekking
+          accepted: true
   - number: '44'
     text: |-
       1 [Artikel 43, onderdeel d][ref1], is niet van toepassing op:
@@ -2899,6 +3191,161 @@ articles:
         bwb_id: BWBR0019057
         artikel: '43'
         hoofdstuk: '5'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: is_verzekerde_wia
+            type: boolean
+            required: true
+            description: |-
+              Verzekerde in de zin van artikel 7 tot en met 9 (werknemer
+              in de zin van de Ziektewet, dan wel vrijwillig verzekerd).
+              Bron: polisadministratie UWV. Artikel 7-9 zijn niet
+              gemodelleerd.
+          - name: is_ziek_geworden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, aanhef: "de verzekerde die ziek wordt". Bron:
+              ziekmelding werkgever / UWV.
+          - name: eerste_dag_wachttijd
+            type: date
+            required: false
+            description: |-
+              Eerste dag van de wachttijd (artikel 23 lid 2). Alleen
+              vereist als de verzekerde ziek is geworden. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Resterende verdiencapaciteit als percentage van het
+              maatmaninkomen (artikel 4). Bron: UWV-beoordeling.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: 'Duurzaamheid (artikel 4 lid 2 en 3). Bron: verzekeringsarts UWV.'
+          # --- doorgegeven aan artikel 43 (uitsluitingsgronden) ---
+          - name: heeft_recht_op_uitkering_hoofdstuk_6_of_7
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 1°. Bron: UWV.'
+          - name: ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 2°. Bron: UWV.'
+          - name: loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel b. Bron: werkgever / UWV.'
+          - name: periode_zonder_ziekengeld_29_lid_11_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel c. Bron: UWV.'
+          - name: is_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel d. Bron: Justid/UWV.'
+          - name: onttrekt_zich_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel e. Bron: Justid/UWV.'
+          - name: woont_niet_in_nederland
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel f. Bron: BRP.'
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel g. Bron: BRP / SVB.'
+          - name: is_overleden
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel h. Bron: BRP.'
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel i. Bron: UWV.'
+        input:
+          - name: wachttijd_doorlopen
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: wachttijd_doorlopen
+              parameters:
+                bsn: $bsn
+                is_ziek_geworden: $is_ziek_geworden
+                eerste_dag_wachttijd: $eerste_dag_wachttijd
+              description: 'Lid 1 onderdeel a: de wachttijd van artikel 23 is doorlopen.'
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_volledig_en_duurzaam_arbeidsongeschikt
+              parameters:
+                bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+              description: 'Lid 1 onderdeel b: volledig en duurzaam arbeidsongeschikt (artikel 4).'
+          - name: is_uitsluitingsgrond_van_toepassing
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_uitsluitingsgrond_van_toepassing
+              parameters:
+                bsn: $bsn
+                heeft_recht_op_uitkering_hoofdstuk_6_of_7: $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap: $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                loondoorbetalings_of_ziekengeldtijdvak_loopt_nog: $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                periode_zonder_ziekengeld_29_lid_11_loopt_nog: $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                is_rechtens_vrijheid_ontnomen: $is_rechtens_vrijheid_ontnomen
+                onttrekt_zich_aan_vrijheidsstraf: $onttrekt_zich_aan_vrijheidsstraf
+                woont_niet_in_nederland: $woont_niet_in_nederland
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_overleden: $is_overleden
+                is_uitreiziger: $is_uitreiziger
+              description: 'Lid 1 onderdeel c: geen uitsluitingsgrond van artikel 43.'
+        output:
+          - name: heeft_recht_op_iva_uitkering
+            type: boolean
+            description: |-
+              Lid 1: recht op een arbeidsongeschiktheidsuitkering
+              (IVA) voor de verzekerde die ziek wordt.
+        actions:
+          - output: heeft_recht_op_iva_uitkering
+            value:
+              operation: AND
+              conditions:
+                - $is_verzekerde_wia
+                - $is_ziek_geworden
+                - $wachttijd_doorlopen
+                - $is_volledig_en_duurzaam_arbeidsongeschikt
+                - operation: NOT
+                  value: $is_uitsluitingsgrond_van_toepassing
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '47'
+                paragraph: '1'
+                explanation: |-
+                  Cumulatief: verzekerde die ziek wordt, wachttijd
+                  doorlopen (a), volledig en duurzaam arbeidsongeschikt
+                  (b), geen uitsluitingsgrond (c).
+      untranslatables:
+        - construct: ingangsdatum van het recht (lid 2)
+          reason: |-
+            Het recht ontstaat niet eerder dan de eerste dag na afloop
+            van de wachttijd, of later als op die dag de
+            uitsluitingsgrond van artikel 43 onderdeel b nog geldt. Dit
+            artikel stelt vast óf op de peildatum recht bestaat; de
+            precieze ingangsdatum wordt niet berekend.
+          accepted: true
   - number: '48'
     text: |-
       1 Indien op de dag, bedoeld in [artikel 47, tweede lid][ref1], geen recht op een arbeidsongeschiktheidsuitkering
@@ -3154,6 +3601,163 @@ articles:
         artikel: '58'
         hoofdstuk: '7'
         paragraaf: '7.1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de verzekerde.
+          - name: is_verzekerde_wia
+            type: boolean
+            required: true
+            description: |-
+              Verzekerde in de zin van artikel 7 tot en met 9. Bron:
+              polisadministratie UWV.
+          - name: is_ziek_geworden
+            type: boolean
+            required: true
+            description: 'Lid 1, aanhef: "de verzekerde die ziek wordt". Bron: ziekmelding.'
+          - name: eerste_dag_wachttijd
+            type: date
+            required: false
+            description: |-
+              Eerste dag van de wachttijd (artikel 23 lid 2). Alleen
+              vereist als de verzekerde ziek is geworden. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Resterende verdiencapaciteit als percentage van het
+              maatmaninkomen (artikel 4 en 5). Bron: UWV-beoordeling.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: 'Duurzaamheid (artikel 4 lid 2 en 3). Bron: verzekeringsarts UWV.'
+          # --- doorgegeven aan artikel 43 (uitsluitingsgronden) ---
+          - name: heeft_recht_op_uitkering_hoofdstuk_6_of_7
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 1°. Bron: UWV.'
+          - name: ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 2°. Bron: UWV.'
+          - name: loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel b. Bron: werkgever / UWV.'
+          - name: periode_zonder_ziekengeld_29_lid_11_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel c. Bron: UWV.'
+          - name: is_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel d. Bron: Justid/UWV.'
+          - name: onttrekt_zich_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel e. Bron: Justid/UWV.'
+          - name: woont_niet_in_nederland
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel f. Bron: BRP.'
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel g. Bron: BRP / SVB.'
+          - name: is_overleden
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel h. Bron: BRP.'
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel i. Bron: UWV.'
+        input:
+          - name: wachttijd_doorlopen
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: wachttijd_doorlopen
+              parameters:
+                bsn: $bsn
+                is_ziek_geworden: $is_ziek_geworden
+                eerste_dag_wachttijd: $eerste_dag_wachttijd
+              description: 'Lid 1 onderdeel a: de wachttijd van artikel 23 is doorlopen.'
+          - name: is_gedeeltelijk_arbeidsgeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_gedeeltelijk_arbeidsgeschikt
+              parameters:
+                bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+              description: 'Lid 1 onderdeel b: gedeeltelijk arbeidsgeschikt (artikel 5).'
+          - name: is_uitsluitingsgrond_van_toepassing
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_uitsluitingsgrond_van_toepassing
+              parameters:
+                bsn: $bsn
+                heeft_recht_op_uitkering_hoofdstuk_6_of_7: $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap: $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                loondoorbetalings_of_ziekengeldtijdvak_loopt_nog: $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                periode_zonder_ziekengeld_29_lid_11_loopt_nog: $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                is_rechtens_vrijheid_ontnomen: $is_rechtens_vrijheid_ontnomen
+                onttrekt_zich_aan_vrijheidsstraf: $onttrekt_zich_aan_vrijheidsstraf
+                woont_niet_in_nederland: $woont_niet_in_nederland
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_overleden: $is_overleden
+                is_uitreiziger: $is_uitreiziger
+              description: 'Lid 1 onderdeel c: geen uitsluitingsgrond van artikel 43.'
+        output:
+          - name: heeft_recht_op_wga_uitkering
+            type: boolean
+            description: 'Lid 1: recht op een WGA-uitkering voor de verzekerde die ziek wordt.'
+        actions:
+          - output: heeft_recht_op_wga_uitkering
+            value:
+              operation: AND
+              conditions:
+                - $is_verzekerde_wia
+                - $is_ziek_geworden
+                - $wachttijd_doorlopen
+                - $is_gedeeltelijk_arbeidsgeschikt
+                - operation: NOT
+                  value: $is_uitsluitingsgrond_van_toepassing
+              legal_basis:
+                law: Wet werk en inkomen naar arbeidsvermogen
+                bwb_id: BWBR0019057
+                article: '54'
+                paragraph: '1'
+                explanation: |-
+                  Cumulatief: verzekerde die ziek wordt, wachttijd
+                  doorlopen (a), gedeeltelijk arbeidsgeschikt (b), geen
+                  uitsluitingsgrond (c).
+      untranslatables:
+        - construct: ingangsdatum van het recht (lid 2)
+          reason: |-
+            Het recht ontstaat niet eerder dan de eerste dag na afloop
+            van de wachttijd, of later als de uitsluitingsgrond van
+            artikel 43 onderdeel b dan nog geldt. Dit artikel stelt vast
+            óf op de peildatum recht bestaat; de ingangsdatum wordt niet
+            berekend.
+          accepted: true
+        - construct: samenstelling van de WGA-uitkering (lid 3 en 4)
+          reason: |-
+            Of de uitkering loongerelateerd, loonaanvullend of een
+            vervolguitkering is, hangt af van de referte-eis van artikel
+            58 en het verloop in de tijd. Voor de vraag óf recht bestaat
+            (de vraag die Ziektewet 29b stelt) is dat niet nodig; de
+            hoogte en samenstelling zijn niet gemodelleerd.
+          accepted: true
   - number: '55'
     text: |-
       1 Indien op de dag, bedoeld in [artikel 54, tweede lid][ref1], geen recht op een WGA-uitkering is ontstaan,
