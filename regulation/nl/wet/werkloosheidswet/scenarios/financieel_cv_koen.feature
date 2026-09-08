@@ -30,11 +30,22 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
 
   # ────────────────────────────────────────────────────────────────────
   # PP — WW artikel 76a
-  # Koen heeft geen WW-uitkering (komt uit Pwet). PP met behoud van
-  # uitkering is een WW-instrument en niet van toepassing. Werknemer-
-  # relevantie: Koen kan geen onbetaalde proefplaatsing aangaan met
-  # behoud van Pwet-uitkering — voor Pwet geldt een ander
-  # re-integratie-traject via de gemeente.
+  # Koen heeft geen WW-uitkering (komt uit Pwet), dus deze route is niet
+  # van toepassing.
+  #
+  # GECORRIGEERD 2026-09-02 na juristfeedback: hier stond dat
+  # proefplaatsing "een WW-instrument" is en dat voor de Pwet "een ander
+  # re-integratie-traject" geldt. Dat is onjuist — proefplaatsing staat
+  # in vier wetten, met verschillende kaders:
+  #
+  #   WW art. 76a       — 6 maanden, WW-uitkering loopt door
+  #   Wet WIA art. 37   — 6 maanden, sollicitatieplicht opgeschort
+  #   Wajong art. 2:24  — 6 maanden, arbeidsondersteuning loopt door
+  #   Pwet art. 8a.2.d  — 2 maanden, verlengbaar met maximaal 4
+  #
+  # Werknemer-relevantie: Koen kan wél op een proefplaats, maar via de
+  # gemeente en in beginsel twee maanden in plaats van zes. Zie
+  # participatiewet/scenarios/proefplaatsing.feature.
   Scenario: Koen kan geen proefplaatsing met behoud van uitkering aangaan zonder WW
     Given the calculation date is "2026-07-01"
     And the following parameters:

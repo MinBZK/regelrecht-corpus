@@ -956,6 +956,175 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      definitions:
+        max_duur_proefplaatsing_maanden:
+          value: 2
+        max_duur_verlenging_proefplaatsing_maanden:
+          value: 4
+        max_totale_duur_proefplaatsing_maanden:
+          value: 6
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_artikel_7_lid_1_a
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: persoon als bedoeld in artikel 7 lid 1
+              onderdeel a — de groep waarvoor het college de
+              ondersteuning bij arbeidsinschakeling verzorgt.
+          - name: ontvangt_algemene_bijstand
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d stelt de proefplaatsing uitsluitend open
+              voor wie algemene bijstand ontvangt.
+          - name: college_verleent_toestemming_proefplaatsing
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: het college verleent toestemming onder
+              de voorwaarden die de gemeenteraad bij verordening heeft
+              vastgesteld (zie open_terms).
+        output:
+          - name: gemeenteraad_moet_verordening_vaststellen
+            type: boolean
+            description: |-
+              Lid 1: de verordeningsplicht zelf is onvoorwaardelijk —
+              "de gemeenteraad stelt bij verordening regels".
+          - name: mag_proefplaatsing_aangaan
+            type: boolean
+            description: |-
+              Lid 2 onderdeel d: persoon mag op een proefplaats
+              werkzaamheden verrichten met behoud van algemene bijstand.
+          - name: max_duur_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: 'Lid 2 onderdeel d: twee maanden.'
+          - name: max_duur_verlenging_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: 'Lid 2 onderdeel d: verlenging met maximaal vier maanden.'
+          - name: max_totale_duur_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: |-
+              Twee maanden plus de maximale verlenging van vier maanden.
+              Alleen bij volledige verlenging komt de Participatiewet uit
+              op dezelfde zes maanden als WW artikel 76a, Wet WIA artikel
+              37 en Wajong artikel 2:24; zonder verlenging is de
+              gemeentelijke proefplaatsing een derde daarvan.
+        actions:
+          - output: gemeenteraad_moet_verordening_vaststellen
+            value: true
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: 8a
+              paragraph: '1'
+              explanation: |-
+                Lid 1 is dwingend geformuleerd; de gemeenteraad heeft
+                geen ruimte om de verordening achterwege te laten, wel om
+                de inhoud te bepalen.
+          - output: mag_proefplaatsing_aangaan
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_artikel_7_lid_1_a
+                - $ontvangt_algemene_bijstand
+                - $college_verleent_toestemming_proefplaatsing
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 8a
+                paragraph: '2'
+                sentence: 'd'
+                explanation: |-
+                  De wet noemt de doelgroep, de bijstandseis en de
+                  toestemming van het college; de voorwaarden waaronder
+                  het college die toestemming verleent staan in de
+                  gemeentelijke verordening.
+          - output: max_duur_proefplaatsing_maanden
+            value: $max_duur_proefplaatsing_maanden
+          - output: max_duur_verlenging_proefplaatsing_maanden
+            value: $max_duur_verlenging_proefplaatsing_maanden
+          - output: max_totale_duur_proefplaatsing_maanden
+            value: $max_totale_duur_proefplaatsing_maanden
+      open_terms:
+        - id: voorwaarden_toestemming_proefplaatsing_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel d Participatiewet
+          description: |-
+            Lid 2 onderdeel d verplicht de gemeenteraad vast te leggen
+            "onder welke voorwaarden" het college toestemming verleent.
+            Die voorwaarden verschillen per gemeente en zitten niet in
+            dit corpus. De maximumtermijnen staan wel in de wet en zijn
+            hierboven als constanten gemodelleerd.
+          default:
+            actions:
+              - output: voorwaarden_toestemming_proefplaatsing_verordening
+                value: 'geen verordening geladen'
+        - id: verdeling_voorzieningen_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel a Participatiewet
+          description: |-
+            Lid 2 onderdeel a draagt de gemeenteraad op te bepalen welke
+            personen en werkgevers voor welke voorzieningen in aanmerking
+            komen en hoe die evenwichtig worden verdeeld, rekening
+            houdend met onder meer de doelgroep loonkostensubsidie,
+            beschut werk en andere structurele functionele beperkingen.
+          default:
+            actions:
+              - output: verdeling_voorzieningen_verordening
+                value: 'geen verordening geladen'
+        - id: persoonlijke_ondersteuning_duur_en_kwaliteit_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel e Participatiewet
+          description: |-
+            Lid 2 onderdeel e draagt de gemeenteraad op de duur en
+            intensiteit van de persoonlijke ondersteuning vast te leggen,
+            de wijze waarop die zowel in natura als via subsidie kan
+            worden gerealiseerd, en de kwaliteitseisen aan de begeleider.
+          default:
+            actions:
+              - output: persoonlijke_ondersteuning_duur_en_kwaliteit_verordening
+                value: 'geen verordening geladen'
+      untranslatables:
+        - construct: 'de verordening zelf'
+          reason: |-
+            Artikel 8a is een opdracht aan 342 gemeenteraden, geen
+            rekenregel. Wat modelleerbaar is, is de opdracht (lid 1),
+            de doelgroep en de maximumtermijnen (lid 2 d); wat de
+            gemeente vaststelt is per gemeente verschillend en zit niet
+            in dit corpus. Voor het Financieel CV betekent dit dat de
+            route bestaat maar de uitkomst gemeentelijk is.
+          legal_text_excerpt: 'De gemeenteraad stelt bij verordening regels met betrekking tot'
+          accepted: true
+        - construct: '"evenwichtig over deze personen worden verdeeld" (lid 2 a)'
+          reason: |-
+            Een verdelingsnorm gericht tot de gemeenteraad, zonder
+            meetbare maatstaf en zonder individueel toetsbaar gevolg.
+          legal_text_excerpt: 'evenwichtig over deze personen worden verdeeld'
+          accepted: true
   - number: 8b
     text: >-
       De gemeenteraad stelt in het kader van het financiële beheer bij verordening regels voor de bestrijding van het
