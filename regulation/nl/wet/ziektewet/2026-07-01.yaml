@@ -2428,9 +2428,22 @@ articles:
             type: boolean
             required: true
             description: |-
-              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
-              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
-              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+              38b.1.c: vastgesteld op grond van Wajong 1a:1 lid 1, 2:4 lid 1
+              of 3:8a lid 1 dat persoon duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft. Sluit grond 38b.1.c NIET absoluut
+              uit: zo iemand telt wel mee zodra hij arbeid verricht in een
+              dienstbetrekking. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: verricht_arbeid_in_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c slotzin: wie duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft wordt "slechts aangemerkt als
+              arbeidsbeperkte indien die persoon arbeid verricht in een
+              dienstbetrekking". Alleen van belang wanneer
+              heeft_wajong_duurzaam_geen_mogelijkheden waar is.
+              Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
           - name: voldoet_aan_amvb_indicatie_38b_1_d
             type: boolean
@@ -2667,6 +2680,7 @@ articles:
                 is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
+                verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
                 voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
                 is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01

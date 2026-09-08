@@ -69,6 +69,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |
@@ -140,6 +141,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |
@@ -205,6 +207,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |
@@ -274,6 +277,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |
@@ -343,6 +347,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |
@@ -412,6 +417,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_geindiceerd_of_oude_indicatie                        | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering              | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                    | false      |
+      | verricht_arbeid_in_dienstbetrekking                         | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                          | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek    | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01        | false      |

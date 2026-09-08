@@ -189,9 +189,22 @@ articles:
             type: boolean
             required: true
             description: |-
-              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
-              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
-              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+              38b.1.c: vastgesteld op grond van Wajong 1a:1 lid 1, 2:4 lid 1
+              of 3:8a lid 1 dat persoon duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft. Sluit grond 38b.1.c NIET absoluut
+              uit: zo iemand telt wel mee zodra hij arbeid verricht in een
+              dienstbetrekking. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: verricht_arbeid_in_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c slotzin: wie duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft wordt "slechts aangemerkt als
+              arbeidsbeperkte indien die persoon arbeid verricht in een
+              dienstbetrekking". Alleen van belang wanneer
+              heeft_wajong_duurzaam_geen_mogelijkheden waar is.
+              Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
           - name: voldoet_aan_amvb_indicatie_38b_1_d
             type: boolean
@@ -336,6 +349,14 @@ articles:
             description: |-
               Lid 1 onderdeel b: geldige doelgroepverklaring als bedoeld in artikel
               2.15, verstrekt aan de werkgever.
+
+              Blijft hier een harde eis, anders dan bij de banenafspraak.
+              Juristvalidatie (september 2026): bij de banenafspraak kon de
+              doelgroepverklaring vervallen omdat het doelgroepregister
+              gekoppeld kan worden aan de polisadministratie, en daarmee aan
+              de loonaangifte — het feit is dan al bekend. Voor de WIA bestaat
+              die koppeling (nog) niet, dus blijft de verklaring nodig. Het
+              verschil is uitvoeringstechnisch, niet inhoudelijk.
           - name: periode_2_16_is_verstreken
             type: boolean
             required: true
@@ -395,6 +416,7 @@ articles:
                 is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
+                verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
                 voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
                 is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
@@ -615,6 +637,11 @@ articles:
             maanden na aanvang dienstbetrekking moet zijn aangevraagd.
             Deze procedure-toets staat los van de inhoudelijke
             voorwaarden en valt onder uitvoeringsbeleid.
+
+            Juristvalidatie (september 2026): niet als invoer in de
+            berekening opnemen — de gebruiker zou die informatie zelf
+            moeten aanleveren. Blijft accepted; hoort thuis als
+            disclaimer in de uiteindelijke tool.
           accepted: true
         - construct: 'aanvang dienstbetrekking-toets — 12-maanden uitsluiting'
           reason: |-
@@ -623,12 +650,20 @@ articles:
             werkgever in dienst waren (anti-misbruik). Deze tijdgebonden
             herhalingstoets is niet faithful te modelleren met de
             huidige operatie-set.
+
+            Juristvalidatie (september 2026): niet als invoer in de
+            berekening opnemen — de gebruiker zou die informatie zelf
+            moeten aanleveren. Blijft accepted; hoort thuis als
+            disclaimer in de uiteindelijke tool.
           accepted: true
         - construct: 'samenloop met no-riskpolis, LKS en loondispensatie'
           reason: |-
             Voor categorie c (banenafspraak) was er tot 2024 samenloop
             mogelijk met LKS; sinds 2025 is de banenafspraak-LKV
-            structureel gemaakt en is de doelgroepverklaring afgeschaft.
+            structureel gemaakt en is de doelgroepverklaring afgeschaft
+            (mogelijk geworden door de koppeling doelgroepregister ↔
+            polisadministratie; voor de WIA bestaat die koppeling nog niet,
+            zie heeft_geldige_doelgroepverklaring_2_15).
             Cumulatieregels staan niet in deze artikelen.
 
             Juristvalidatie (juni 2026): LKV en de no-riskpolis
@@ -639,6 +674,12 @@ articles:
             loondispensatie (Wajong 2:20) komen daar bóvenop bij
             loonwaarde < minimumloon. Zie de uitgebreide samenloop-
             notitie bij Ziektewet 29b.
+
+            Juristvalidatie (september 2026): niet als invoer in de
+            berekening opnemen — de gebruiker zou die informatie zelf
+            moeten aanleveren. Blijft accepted; hoort thuis als
+            disclaimer in de uiteindelijke tool.
+
           accepted: true
   - number: '2.6'
     text: |-

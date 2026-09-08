@@ -45,6 +45,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -80,6 +81,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -99,9 +101,11 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
     And output "datum_opname_doelgroepregister" equals "2023-09-12"
 
   # Twin van het vorige scenario: precies één as verschilt. Wie duurzaam
-  # geen mogelijkheden tot arbeidsparticipatie heeft, valt buiten
-  # onderdeel c — en zonder andere grond dus buiten het register.
-  Scenario: Wajong met duurzaam geen mogelijkheden valt buiten onderdeel c
+  # geen mogelijkheden tot arbeidsparticipatie heeft valt buiten onderdeel
+  # c zolang hij niet werkt — en zonder andere grond dus buiten het
+  # register. De slotzin van onderdeel c is geen uitsluiting maar een
+  # voorwaardelijke insluiting; het scenario hieronder zet die aan.
+  Scenario: Wajong met duurzaam geen mogelijkheden en zonder werk valt buiten onderdeel c
     Given the following parameters:
       | bsn                                                      | 999990100  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
@@ -109,6 +113,66 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
+      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
+      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
+      | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
+      | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
+      | was_arbeidsbeperkte_lid_1_of_2                           | false      |
+      | registratie_nog_niet_geeindigd                           | true       |
+    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    Then the execution succeeds
+    And output "voldoet_aan_grond_38b_1_c" is false
+    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "grond_opname_doelgroepregister" equals "geen"
+
+  # Derde as: dezelfde persoon, nu met een dienstbetrekking. Onderdeel c
+  # sluit wie duurzaam geen mogelijkheden tot arbeidsparticipatie heeft
+  # niet uit, maar merkt hem "slechts aan als arbeidsbeperkte indien die
+  # persoon arbeid verricht in een dienstbetrekking". Werkt hij, dan telt
+  # hij dus wel mee voor de banenafspraak.
+  #
+  # Tot 2026-09-08 modelleerde de YAML de slotzin als een absolute
+  # uitsluiting (AND NOT duurzaam_geen_mogelijkheden). Gecorrigeerd na
+  # juristfeedback ronde 3.
+  Scenario: Wajong met duurzaam geen mogelijkheden telt wel mee zodra hij werkt
+    Given the following parameters:
+      | bsn                                                      | 999990100  |
+      | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling    | false      |
+      | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
+      | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
+      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
+      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
+      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
+      | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
+      | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
+      | was_arbeidsbeperkte_lid_1_of_2                           | false      |
+      | registratie_nog_niet_geeindigd                           | true       |
+    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    Then the execution succeeds
+    And output "voldoet_aan_grond_38b_1_c" is true
+    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "grond_opname_doelgroepregister" equals "wajong"
+    And output "datum_opname_doelgroepregister" equals "2023-09-12"
+
+  # Tegenproef op de nieuwe as: zonder Wajong-recht opent een
+  # dienstbetrekking op zichzelf niets. De slotzin werkt alleen binnen
+  # onderdeel c, niet als zelfstandige grond.
+  Scenario: Een dienstbetrekking alleen opent onderdeel c niet
+    Given the following parameters:
+      | bsn                                                      | 999990100  |
+      | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling    | false      |
+      | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
+      | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -135,6 +199,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | <b>        |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | <c>        |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | <d>        |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | <e>        |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | <f>        |
@@ -167,6 +232,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | true       |
@@ -196,6 +262,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -227,6 +294,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -256,6 +324,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
@@ -281,6 +350,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
       | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
