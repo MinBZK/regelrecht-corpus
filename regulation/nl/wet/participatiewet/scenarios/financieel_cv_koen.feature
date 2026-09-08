@@ -120,3 +120,76 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   #
   # Wanneer de aggregator er is, komt hier een Scenario dat asserteert
   # of LKS en LKV-banenafspraak tegelijk uitgekeerd mogen worden.
+
+  # ────────────────────────────────────────────────────────────────────
+  # JC + WPA — Participatiewet artikel 10 lid 1
+  # Toegevoegd 2026-09-02 naar aanleiding van de juristfeedback op de
+  # doorloop: Wet WIA art. 35 lid 4.b sluit Koen uit, maar het recht op
+  # jobcoaching en werkplekaanpassing bestaat wél — via de gemeente.
+  # Art. 10 lid 1 geeft de aanspraak op ondersteuning bij arbeids-
+  # inschakeling en op de noodzakelijk geachte voorziening, waaronder
+  # persoonlijke ondersteuning bij het verrichten van de opgedragen
+  # taken. Dat laatste is de gemeentelijke tegenhanger van WIA
+  # art. 35 lid 2 onderdeel d.
+  #
+  # LET OP bij het lezen van de uitkomst: de aanspraak staat in de wet,
+  # maar art. 10 lid 1 verleent haar "overeenkomstig de verordening,
+  # bedoeld in artikel 8a". Vorm, duur en intensiteit zijn dus
+  # gemeentelijk. Wat de engine hier zegt is: de route bestaat en Koen
+  # zit in de doelgroep — niet welk bedrag of welke jobcoach.
+  Scenario: Koen heeft via Pwet art. 10 aanspraak op persoonlijke ondersteuning en voorziening
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                            | 999990101 |
+      | ontvangt_algemene_bijstand                     | true      |
+      | is_wia_uitstromer_artikel_34a_35_36            | false     |
+      | heeft_nabestaandenuitkering_anw                | false     |
+      | is_niet_uitkeringsgerechtigde                  | false     |
+      | valt_onder_lid_2_wegens_voorziening            | false     |
+      | college_acht_voorziening_noodzakelijk          | true      |
+      | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
+      | aanvraag_ingediend                             | true      |
+    When I evaluate "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" of "participatiewet"
+    Then the execution succeeds
+    And output "behoort_tot_doelgroep_artikel_10" is true
+    And output "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" is true
+    And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is true
+    And output "heeft_aanspraak_op_voorziening_arbeidsinschakeling" is true
+
+  # ────────────────────────────────────────────────────────────────────
+  # Begeleiding op de werkplek — Participatiewet artikel 10da
+  # Dit is de enige harde aanspraak in de gemeentelijke keten: één zin,
+  # geen verordeningsvoorbehoud, geen delegatie. Koen behoort tot de
+  # doelgroep loonkostensubsidie (zie het LKS-scenario hierboven), dus
+  # de aanspraak staat vast — anders dan bij art. 10 lid 1, waar de
+  # gemeente de voorwaarden bepaalt.
+  Scenario: Koen heeft als LKS-doelgroep een harde aanspraak op begeleiding op de werkplek
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                       | 999990101 |
+      | behoort_tot_doelgroep_lks | true      |
+    When I evaluate "heeft_aanspraak_op_begeleiding_op_de_werkplek" of "participatiewet"
+    Then the execution succeeds
+    And output "heeft_aanspraak_op_begeleiding_op_de_werkplek" is true
+
+  # ────────────────────────────────────────────────────────────────────
+  # PP — Participatiewet artikel 8a lid 2 onderdeel d
+  # Corrigeert de aanname in het WW-scenario dat proefplaatsing een
+  # WW-instrument is. Koen kan wel degelijk op een proefplaats, maar via
+  # de gemeente en met een kortere termijn: twee maanden, met verlenging
+  # tot maximaal zes. Waar WW art. 76a, Wet WIA art. 37 en Wajong
+  # art. 2:24 meteen zes maanden geven, begint de Participatiewet op een
+  # derde daarvan.
+  Scenario: Koen kan via Pwet art. 8a op proefplaats met behoud van bijstand
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                        | 999990101 |
+      | behoort_tot_doelgroep_artikel_7_lid_1_a    | true      |
+      | ontvangt_algemene_bijstand                 | true      |
+      | college_verleent_toestemming_proefplaatsing | true     |
+    When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
+    Then the execution succeeds
+    And output "mag_proefplaatsing_aangaan" is true
+    And output "max_duur_proefplaatsing_maanden" equals 2
+    And output "max_duur_verlenging_proefplaatsing_maanden" equals 4
+    And output "max_totale_duur_proefplaatsing_maanden" equals 6
