@@ -1,4 +1,4 @@
-Feature: Financieel CV — werknemer-perspectief, casus Koen
+Feature: Financieel CV, werknemer-perspectief, casus Koen
   Als werknemer (Pwet-doelgroep, banenafspraak)
   Wil ik weten welke voorzieningen en voordelen mijn nieuwe dienstverband
   meebrengt
@@ -33,14 +33,14 @@ Feature: Financieel CV — werknemer-perspectief, casus Koen
   # Koen heeft geen Wajong-status (komt uit Pwet) → loondispensatie via
   # Wajong is niet aan de orde. Werknemer-relevantie: zekerheid dat werk-
   # gever niet via deze route minder dan WML mag betalen.
-  Scenario: Koen heeft geen recht op loondispensatie — geen Wajong-status
+  Scenario: Koen heeft geen recht op loondispensatie, want geen Wajong-status
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                                | 999990101 |
-      | is_wsw_werknemer                                   | false     |
-      | arbeidsprestatie_duidelijk_minder_dan_minimumloon  | true      |
-      | aanvraag_loondispensatie_ingediend                 | false     |
-      | heeft_recht_op_arbeidsondersteuning_wajong         | false     |
+      | bsn                                               | 999990101 |
+      | is_wsw_werknemer                                  | false     |
+      | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
+      | aanvraag_loondispensatie_ingediend                | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong        | false     |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is false

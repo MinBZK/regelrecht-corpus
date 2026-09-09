@@ -139,48 +139,6 @@ articles:
       - id: ref10
         bwb_id: BWBR0003738
         artikel: '14'
-    machine_readable:
-      execution:
-        parameters:
-          - name: bsn
-            type: string
-            required: true
-          - name: is_pwet_loonkostensubsidie
-            type: boolean
-            required: true
-            description: |-
-              Wordt of werd loonkostensubsidie verstrekt op grond van
-              Pwet 10d. Bron: gemeente. Voor doelgroepbepaling
-              Ziektewet 29b lid 2 onderdeel e.
-          - name: is_beschut_werk
-            type: boolean
-            required: true
-            description: |-
-              Verricht persoon arbeid in een dienstbetrekking als bedoeld
-              in Pwet 10b (beschut werk). Bron: gemeente. Voor doelgroepbepaling
-              Ziektewet 29b lid 2 onderdeel f.
-          - name: loonwaarde_lager_dan_minimumloon
-            type: boolean
-            required: true
-            description: |-
-              Is door UWV of college vastgesteld dat persoon niet in staat is
-              tot het verdienen van het wettelijk minimumloon. Bron: UWV
-              of college. Voor doelgroepbepaling Ziektewet 29b lid 2
-              onderdeel e en LKS-recht (Pwet 10d).
-        output:
-          - name: is_pwet_loonkostensubsidie
-            type: boolean
-          - name: is_beschut_werk
-            type: boolean
-          - name: loonwaarde_lager_dan_minimumloon
-            type: boolean
-        actions:
-          - output: is_pwet_loonkostensubsidie
-            value: $is_pwet_loonkostensubsidie
-          - output: is_beschut_werk
-            value: $is_beschut_werk
-          - output: loonwaarde_lager_dan_minimumloon
-            value: $loonwaarde_lager_dan_minimumloon
   - number: '2'
     text: |-
       In deze wet en de daarop berustende bepalingen wordt verstaan onder:
@@ -998,6 +956,175 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      definitions:
+        max_duur_proefplaatsing_maanden:
+          value: 2
+        max_duur_verlenging_proefplaatsing_maanden:
+          value: 4
+        max_totale_duur_proefplaatsing_maanden:
+          value: 6
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_artikel_7_lid_1_a
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: persoon als bedoeld in artikel 7 lid 1
+              onderdeel a — de groep waarvoor het college de
+              ondersteuning bij arbeidsinschakeling verzorgt.
+          - name: ontvangt_algemene_bijstand
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d stelt de proefplaatsing uitsluitend open
+              voor wie algemene bijstand ontvangt.
+          - name: college_verleent_toestemming_proefplaatsing
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: het college verleent toestemming onder
+              de voorwaarden die de gemeenteraad bij verordening heeft
+              vastgesteld (zie open_terms).
+        output:
+          - name: gemeenteraad_moet_verordening_vaststellen
+            type: boolean
+            description: |-
+              Lid 1: de verordeningsplicht zelf is onvoorwaardelijk —
+              "de gemeenteraad stelt bij verordening regels".
+          - name: mag_proefplaatsing_aangaan
+            type: boolean
+            description: |-
+              Lid 2 onderdeel d: persoon mag op een proefplaats
+              werkzaamheden verrichten met behoud van algemene bijstand.
+          - name: max_duur_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: 'Lid 2 onderdeel d: twee maanden.'
+          - name: max_duur_verlenging_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: 'Lid 2 onderdeel d: verlenging met maximaal vier maanden.'
+          - name: max_totale_duur_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: |-
+              Twee maanden plus de maximale verlenging van vier maanden.
+              Alleen bij volledige verlenging komt de Participatiewet uit
+              op dezelfde zes maanden als WW artikel 76a, Wet WIA artikel
+              37 en Wajong artikel 2:24; zonder verlenging is de
+              gemeentelijke proefplaatsing een derde daarvan.
+        actions:
+          - output: gemeenteraad_moet_verordening_vaststellen
+            value: true
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: 8a
+              paragraph: '1'
+              explanation: |-
+                Lid 1 is dwingend geformuleerd; de gemeenteraad heeft
+                geen ruimte om de verordening achterwege te laten, wel om
+                de inhoud te bepalen.
+          - output: mag_proefplaatsing_aangaan
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_artikel_7_lid_1_a
+                - $ontvangt_algemene_bijstand
+                - $college_verleent_toestemming_proefplaatsing
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 8a
+                paragraph: '2'
+                sentence: 'd'
+                explanation: |-
+                  De wet noemt de doelgroep, de bijstandseis en de
+                  toestemming van het college; de voorwaarden waaronder
+                  het college die toestemming verleent staan in de
+                  gemeentelijke verordening.
+          - output: max_duur_proefplaatsing_maanden
+            value: $max_duur_proefplaatsing_maanden
+          - output: max_duur_verlenging_proefplaatsing_maanden
+            value: $max_duur_verlenging_proefplaatsing_maanden
+          - output: max_totale_duur_proefplaatsing_maanden
+            value: $max_totale_duur_proefplaatsing_maanden
+      open_terms:
+        - id: voorwaarden_toestemming_proefplaatsing_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel d Participatiewet
+          description: |-
+            Lid 2 onderdeel d verplicht de gemeenteraad vast te leggen
+            "onder welke voorwaarden" het college toestemming verleent.
+            Die voorwaarden verschillen per gemeente en zitten niet in
+            dit corpus. De maximumtermijnen staan wel in de wet en zijn
+            hierboven als constanten gemodelleerd.
+          default:
+            actions:
+              - output: voorwaarden_toestemming_proefplaatsing_verordening
+                value: 'geen verordening geladen'
+        - id: verdeling_voorzieningen_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel a Participatiewet
+          description: |-
+            Lid 2 onderdeel a draagt de gemeenteraad op te bepalen welke
+            personen en werkgevers voor welke voorzieningen in aanmerking
+            komen en hoe die evenwichtig worden verdeeld, rekening
+            houdend met onder meer de doelgroep loonkostensubsidie,
+            beschut werk en andere structurele functionele beperkingen.
+          default:
+            actions:
+              - output: verdeling_voorzieningen_verordening
+                value: 'geen verordening geladen'
+        - id: persoonlijke_ondersteuning_duur_en_kwaliteit_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 2 onderdeel e Participatiewet
+          description: |-
+            Lid 2 onderdeel e draagt de gemeenteraad op de duur en
+            intensiteit van de persoonlijke ondersteuning vast te leggen,
+            de wijze waarop die zowel in natura als via subsidie kan
+            worden gerealiseerd, en de kwaliteitseisen aan de begeleider.
+          default:
+            actions:
+              - output: persoonlijke_ondersteuning_duur_en_kwaliteit_verordening
+                value: 'geen verordening geladen'
+      untranslatables:
+        - construct: 'de verordening zelf'
+          reason: |-
+            Artikel 8a is een opdracht aan 342 gemeenteraden, geen
+            rekenregel. Wat modelleerbaar is, is de opdracht (lid 1),
+            de doelgroep en de maximumtermijnen (lid 2 d); wat de
+            gemeente vaststelt is per gemeente verschillend en zit niet
+            in dit corpus. Voor het Financieel CV betekent dit dat de
+            route bestaat maar de uitkomst gemeentelijk is.
+          legal_text_excerpt: 'De gemeenteraad stelt bij verordening regels met betrekking tot'
+          accepted: true
+        - construct: '"evenwichtig over deze personen worden verdeeld" (lid 2 a)'
+          reason: |-
+            Een verdelingsnorm gericht tot de gemeenteraad, zonder
+            meetbare maatstaf en zonder individueel toetsbaar gevolg.
+          legal_text_excerpt: 'evenwichtig over deze personen worden verdeeld'
+          accepted: true
   - number: 8b
     text: >-
       De gemeenteraad stelt in het kader van het financiële beheer bij verordening regels voor de bestrijding van het
@@ -1315,6 +1442,219 @@ articles:
         artikel: '40'
         hoofdstuk: '5'
         paragraaf: '5.1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: ontvangt_algemene_bijstand
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, eerste categorie: persoon ontvangt algemene
+              bijstand. Bron: gemeente.
+          - name: is_wia_uitstromer_artikel_34a_35_36
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, tweede categorie: persoon als bedoeld in Wet WIA
+              artikel 34a lid 5 b, 35 lid 4 b of 36 lid 3 b, tot het
+              moment dat twee aaneengesloten jaren ten minste het
+              minimumloon is verdiend. De tijdgebonden toets is
+              samengevat als boolean (zie untranslatable).
+          - name: heeft_nabestaandenuitkering_anw
+            type: boolean
+            required: true
+            description: 'Lid 1, derde categorie: nabestaandenuitkering Anw.'
+          - name: is_niet_uitkeringsgerechtigde
+            type: boolean
+            required: true
+            description: 'Lid 1, vierde categorie: niet-uitkeringsgerechtigde.'
+          - name: valt_onder_lid_2_wegens_voorziening
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: persoon behoort door een voorziening gericht op
+              arbeidsinschakeling niet meer tot een van de groepen van
+              lid 1; lid 1 is dan van overeenkomstige toepassing.
+          - name: college_acht_voorziening_noodzakelijk
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de voorziening moet naar het oordeel van het college
+              noodzakelijk zijn. Discretionair (zie untranslatable);
+              lid 4 verplicht het college tot onderzoek.
+          - name: kan_taken_niet_verrichten_zonder_ondersteuning
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, slotzin: persoonlijke ondersteuning bestaat alleen
+              indien de persoon zonder die ondersteuning niet in staat
+              zou zijn de opgedragen taken te verrichten.
+          - name: aanvraag_ingediend
+            type: boolean
+            required: true
+            description: |-
+              Lid 5: de persoon of de werkgever heeft bij het college een
+              aanvraag ingediend om gevolg te geven aan de aanspraak.
+        output:
+          - name: behoort_tot_doelgroep_artikel_10
+            type: boolean
+            description: |-
+              Lid 1 en 2: persoon valt in een van de opgesomde
+              categorieen.
+          - name: heeft_aanspraak_op_ondersteuning_arbeidsinschakeling
+            type: boolean
+            description: |-
+              Lid 1: aanspraak op ondersteuning bij arbeidsinschakeling,
+              overeenkomstig de verordening van artikel 8a.
+          - name: heeft_aanspraak_op_persoonlijke_ondersteuning
+            type: boolean
+            description: |-
+              Lid 1, slotzin: persoonlijke ondersteuning bij het
+              verrichten van de opgedragen taken — de gemeentelijke
+              tegenhanger van jobcoaching uit Wet WIA artikel 35 lid 2 d.
+          - name: heeft_aanspraak_op_voorziening_arbeidsinschakeling
+            type: boolean
+            description: |-
+              Lid 1: de naar het oordeel van het college noodzakelijk
+              geachte voorziening gericht op arbeidsinschakeling —
+              omvat de werkplekaanpassingen die artikel 10e lid 2 c
+              opsomt.
+        actions:
+          - output: behoort_tot_doelgroep_artikel_10
+            value:
+              operation: OR
+              conditions:
+                - $ontvangt_algemene_bijstand
+                - $is_wia_uitstromer_artikel_34a_35_36
+                - $heeft_nabestaandenuitkering_anw
+                - $is_niet_uitkeringsgerechtigde
+                - $valt_onder_lid_2_wegens_voorziening
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10'
+                paragraph: '1'
+                explanation: |-
+                  Lid 1 somt de categorieen limitatief op; lid 2 breidt
+                  uit naar personen die juist door een voorziening buiten
+                  die categorieen zijn geraakt.
+          - output: heeft_aanspraak_op_ondersteuning_arbeidsinschakeling
+            value: $behoort_tot_doelgroep_artikel_10
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10'
+              paragraph: '1'
+              explanation: |-
+                De aanspraak zelf staat in de wet; de verordening van
+                artikel 8a bepaalt de voorwaarden en de vorm, niet of de
+                aanspraak bestaat.
+          - output: heeft_aanspraak_op_persoonlijke_ondersteuning
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_artikel_10
+                - $kan_taken_niet_verrichten_zonder_ondersteuning
+                - $aanvraag_ingediend
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10'
+                paragraph: '1'
+                explanation: |-
+                  Slotzin lid 1 stelt de noodzakelijkheidseis aan de
+                  persoonlijke ondersteuning; lid 5 regelt de aanvraag.
+          - output: heeft_aanspraak_op_voorziening_arbeidsinschakeling
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_artikel_10
+                - $college_acht_voorziening_noodzakelijk
+                - $aanvraag_ingediend
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: '10'
+                paragraph: '1'
+                explanation: |-
+                  De voorziening is er alleen als het college haar
+                  noodzakelijk acht (lid 1), na onderzoek (lid 4), op
+                  aanvraag (lid 5).
+      open_terms:
+        - id: voorwaarden_voorzieningen_verordening
+          type: string
+          required: false
+          delegated_to: gemeenteraad
+          delegation_type: VERORDENING
+          legal_basis: artikel 8a lid 1 onderdeel a en lid 2 onderdeel a Participatiewet
+          description: |-
+            Lid 1 verleent de aanspraak "overeenkomstig de verordening,
+            bedoeld in artikel 8a". Welke voorzieningen er zijn, onder
+            welke voorwaarden en hoe zij evenwichtig worden verdeeld,
+            legt elke gemeenteraad zelf vast. Die verordeningen zitten
+            niet in dit corpus; de aanspraak uit de wet blijft staan.
+          default:
+            actions:
+              - output: voorwaarden_voorzieningen_verordening
+                value: 'geen verordening geladen'
+        - id: nadere_regels_persoonlijke_ondersteuning_amvb
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 2 Participatiewet
+          description: |-
+            Artikel 10e lid 2 laat toe dat bij of krachtens AMvB regels
+            worden gesteld over de persoonlijke ondersteuning en over de
+            vervoers-, intermediaire en meeneembare voorzieningen.
+          default:
+            actions:
+              - output: nadere_regels_persoonlijke_ondersteuning_amvb
+                value: 'geen'
+      untranslatables:
+        - construct: '"overeenkomstig de verordening, bedoeld in artikel 8a"'
+          reason: |-
+            De inhoudelijke voorwaarden staan in 342 gemeentelijke
+            verordeningen, die geen van alle in dit corpus zitten. Wij
+            modelleren de wettelijke aanspraak; of een concrete
+            voorziening wordt toegekend hangt af van lokaal recht.
+            Voor het Financieel CV betekent dit: de route bestaat, het
+            bedrag en de vorm zijn gemeentelijk.
+          legal_text_excerpt: 'overeenkomstig de verordening, bedoeld in artikel 8a'
+          accepted: true
+        - construct: '"naar het oordeel van het college noodzakelijk geachte voorziening"'
+          reason: |-
+            Lid 1 laat de noodzakelijkheid aan het college; lid 4 schrijft
+            onderzoek voor maar geeft geen toetsbare drempel. De engine
+            ontvangt de uitkomst als boolean parameter.
+          legal_text_excerpt: 'de naar het oordeel van het college noodzakelijk geachte voorziening'
+          accepted: true
+        - construct: 'tweejaarstermijn in de WIA-uitstroomcategorie (lid 1)'
+          reason: |-
+            Dezelfde samengestelde tijds- en geldcomponent als in Wet WIA
+            artikel 35 lid 4 b: twee aaneengesloten jaren minimumloon
+            zonder loonkostensubsidie. Met de huidige operatieset niet
+            faithful te modelleren; samengevat als een enkele boolean.
+          legal_text_excerpt: |-
+            tot het moment dat het inkomen uit arbeid in dienstbetrekking
+            gedurende twee aaneengesloten jaren ten minste het minimumloon
+            ... bedraagt
+          accepted: true
+        - construct: 'onderzoeksplicht en besluitvorming (lid 4)'
+          reason: |-
+            Lid 4 verplicht het college tot onderzoek naar noodzaak, mate
+            en duur van de voorziening en tot een besluit met inachtneming
+            van de resultaten. Dat is een procedurele norm, geen
+            rekenregel.
+          legal_text_excerpt: 'verricht het college onderzoek en neemt een besluit met inachtneming van de resultaten van het onderzoek'
+          accepted: true
   - number: 10a
     text: |-
       1 Het college kan ter uitvoering van [artikel 7, eerste lid, onderdeel a][ref1], degene die algemene bijstand
@@ -1509,6 +1849,87 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_10b_lid_1
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: persoon als bedoeld in artikel 7 lid 1 onderdeel a
+              of 7a lid 1 onderdeel a, dan wel een persoon met een
+              uitkering op grond van WW, IOW, WAZ, Wajong, WIA, WAO,
+              Ziektewet of Wamil, dan wel met recht op
+              arbeidsondersteuning (Wajong 2:15). Bron: gemeente / UWV.
+          - name: college_heeft_vastgesteld_uitsluitend_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: het college heeft vastgesteld dat de persoon
+              uitsluitend in een beschutte omgeving onder aangepaste
+              omstandigheden mogelijkheden tot arbeidsparticipatie heeft.
+              Het college beslist op advies van UWV (lid 2 en 3). Bron:
+              college van B&W. Dezelfde vaststelling sluit de persoon uit
+              van het doelgroepregister banenafspraak (Wfsv 38b, aanhef).
+          - name: heeft_dienstbetrekking_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, slot: de persoon verricht werkzaamheden in een
+              dienstbetrekking in een beschutte omgeving onder aangepaste
+              omstandigheden. Bron: gemeente / werkgever.
+        output:
+          - name: is_uitsluitend_aangewezen_op_beschut_werk
+            type: boolean
+            description: 'Lid 1: de vaststelling van het college.'
+          - name: verricht_arbeid_in_beschut_werk
+            type: boolean
+            description: |-
+              Verricht arbeid in een dienstbetrekking als bedoeld in lid 1
+              (de grond voor o.a. Ziektewet 29b lid 2 onderdeel f).
+        actions:
+          - output: is_uitsluitend_aangewezen_op_beschut_werk
+            value: $college_heeft_vastgesteld_uitsluitend_beschut_werk
+          - output: verricht_arbeid_in_beschut_werk
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_10b_lid_1
+                - $college_heeft_vastgesteld_uitsluitend_beschut_werk
+                - $heeft_dienstbetrekking_beschut_werk
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 10b
+                paragraph: '1'
+                explanation: |-
+                  Een voorziening beschut werk veronderstelt een persoon
+                  uit de doelgroep van lid 1, de vaststelling van het
+                  college én een dienstbetrekking in een beschutte
+                  omgeving.
+      untranslatables:
+        - construct: UWV-advies en AMvB-criteria voor de vaststelling (lid 2 en 3)
+          reason: |-
+            Of iemand uitsluitend in een beschutte omgeving mogelijkheden
+            tot arbeidsparticipatie heeft, stelt UWV vast op grond van bij
+            AMvB gestelde regels en adviseert daarover aan het college.
+            Dat arbeidskundige oordeel wordt niet gemodelleerd; de engine
+            ontvangt de vaststelling van het college.
+          accepted: true
+        - construct: aantal te realiseren dienstbetrekkingen (lid 4 tot en met 6)
+          reason: |-
+            De verplichting van het college vervalt zodra het per
+            ministeriële regeling of verordening bepaalde aantal
+            dienstbetrekkingen is gerealiseerd. Dat is een gemeentelijk
+            quotum, geen kenmerk van de persoon.
+          accepted: true
   - number: 10c
     text: |-
       1 Het college kan:
@@ -1986,6 +2407,53 @@ articles:
   - number: 10da
     text: Personen die behoren tot de doelgroep loonkostensubsidie hebben aanspraak op begeleiding op de werkplek.
     url: https://wetten.overheid.nl/BWBR0015703/2026-07-01#Artikel10da
+    machine_readable:
+      execution:
+        produces:
+          legal_character: TOETS
+          decision_type: GEEN_BESLUIT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_lks
+            type: boolean
+            required: true
+            description: |-
+              Persoon behoort tot de doelgroep loonkostensubsidie,
+              bedoeld in artikel 6 lid 1 onderdeel e juncto artikel 10c.
+              Bron: gemeente (doelgroepbepaling).
+        output:
+          - name: heeft_aanspraak_op_begeleiding_op_de_werkplek
+            type: boolean
+            description: |-
+              Aanspraak op begeleiding op de werkplek voor wie tot de
+              doelgroep loonkostensubsidie behoort.
+        actions:
+          - output: heeft_aanspraak_op_begeleiding_op_de_werkplek
+            value: $behoort_tot_doelgroep_lks
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: 10da
+              explanation: |-
+                Het artikel bestaat uit een enkele zin zonder voorbehoud,
+                zonder verordeningsgrondslag en zonder delegatie: wie tot
+                de doelgroep loonkostensubsidie behoort heeft aanspraak.
+                Dit is binnen de gemeentelijke voorzieningen de enige
+                harde aanspraak — artikel 10 lid 1 en artikel 8a laten de
+                voorwaarden aan de gemeenteraad, dit artikel niet.
+      untranslatables:
+        - construct: '"begeleiding op de werkplek" is niet gedefinieerd'
+          reason: |-
+            De wet omschrijft de inhoud van de begeleiding niet en
+            verwijst er ook niet voor door. De verhouding tot de
+            persoonlijke ondersteuning van artikel 10 lid 1 en tot de
+            kwaliteitseisen van artikel 10e lid 2 a volgt uit de
+            uitvoeringspraktijk, niet uit de tekst.
+          legal_text_excerpt: 'hebben aanspraak op begeleiding op de werkplek'
+          accepted: true
   - number: 10e
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld met betrekking tot
@@ -2079,6 +2547,80 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      open_terms:
+        - id: regels_doelgroep_lks_en_loonwaarde_amvb
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 1 Participatiewet
+          description: |-
+            Lid 1 — bij of krachtens AMvB kunnen regels worden gesteld
+            over artikel 6 ten aanzien van de doelgroep loonkostensubsidie,
+            de loonwaarde en de wijze waarop die wordt vastgesteld. Het
+            Besluit loonkostensubsidie Participatiewet vult dit in.
+          default:
+            actions:
+              - output: regels_doelgroep_lks_en_loonwaarde_amvb
+                value: 'Besluit loonkostensubsidie Participatiewet'
+        - id: regels_persoonlijke_ondersteuning_amvb
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 2 onderdeel a Participatiewet
+          description: |-
+            Lid 2 onderdeel a — regels over de persoonlijke ondersteuning
+            bij het verrichten van de opgedragen taken, bedoeld in artikel
+            10 lid 1, waaronder de kwaliteitseisen aan de begeleider van
+            artikel 10 lid 3 onderdeel a en de borging daarvan.
+          default:
+            actions:
+              - output: regels_persoonlijke_ondersteuning_amvb
+                value: 'geen'
+        - id: regels_voortgezette_ondersteuning_overgangen_amvb
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 2 onderdeel b Participatiewet
+          description: |-
+            Lid 2 onderdeel b — regels over integrale en voortgezette
+            persoonlijke ondersteuning bij de overgang van onderwijs naar
+            werk, werk naar onderwijs en werk naar werk, voor personen als
+            bedoeld in artikel 7 lid 1 a, 7a lid 1 of 10d lid 2.
+          default:
+            actions:
+              - output: regels_voortgezette_ondersteuning_overgangen_amvb
+                value: 'geen'
+        - id: regels_vervoer_intermediair_meeneembaar_amvb
+          type: string
+          required: false
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 2 onderdeel c Participatiewet
+          description: |-
+            Lid 2 onderdeel c — regels over de voorzieningen van artikel
+            10 lid 1 die bestaan uit een vervoersvoorziening, een
+            noodzakelijke intermediaire activiteit bij een motorische
+            beperking, en een meeneembare voorziening voor de inrichting
+            van de werkplek, de opleidingslocatie of de proefplaats. Dit
+            is de gemeentelijke tegenhanger van de limitatieve opsomming
+            in Wet WIA artikel 35 lid 2.
+          default:
+            actions:
+              - output: regels_vervoer_intermediair_meeneembaar_amvb
+                value: 'geen'
+      untranslatables:
+        - construct: 'kan-bepaling zonder ingevulde AMvB'
+          reason: |-
+            Alle drie de leden zijn kan-bepalingen: er hoeft geen AMvB te
+            zijn. Zolang die er niet is verandert artikel 10e niets aan de
+            aanspraak uit artikel 10 lid 1. Het artikel is daarom
+            uitsluitend als open_terms gemodelleerd, zonder execution.
+          legal_text_excerpt: 'Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld'
+          accepted: true
   - number: 10g
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen heeft tot taak personen als bedoeld in de

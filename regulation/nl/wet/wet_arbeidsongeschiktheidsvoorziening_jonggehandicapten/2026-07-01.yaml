@@ -253,38 +253,6 @@ articles:
         bwb_id: BWBR0034925
       - id: ref27
         bwb_id: BWBR0002368
-    machine_readable:
-      execution:
-        parameters:
-          - name: bsn
-            type: string
-            required: true
-          - name: is_wajong_gerechtigd
-            type: boolean
-            required: true
-            description: |-
-              Heeft of had persoon recht op arbeidsongeschiktheidsuitkering
-              of arbeidsondersteuning op grond van Wajong (zowel oude als
-              nieuwe Wajong). Bron: UWV. Voor doelgroepbepaling
-              Ziektewet 29b lid 2 onderdeel a en c.
-          - name: is_jonggehandicapt_schoolverlater
-            type: boolean
-            required: true
-            description: |-
-              Heeft persoon onder 18 of 18+ vanwege ziekte/gebrek belemmering
-              ondervonden bij volgen onderwijs en gaat binnen 5 jaar arbeid
-              in dienstbetrekking verrichten. Bron: UWV-vaststelling.
-              Voor doelgroepbepaling Ziektewet 29b lid 1 onderdeel c en d.
-        output:
-          - name: is_wajong_gerechtigd
-            type: boolean
-          - name: is_jonggehandicapt_schoolverlater
-            type: boolean
-        actions:
-          - output: is_wajong_gerechtigd
-            value: $is_wajong_gerechtigd
-          - output: is_jonggehandicapt_schoolverlater
-            value: $is_jonggehandicapt_schoolverlater
   - number: 1:2
     text: >-
       1 Ingezetene in de zin van deze wet en de daarop berustende bepalingen is de natuurlijke persoon, die in Nederland
@@ -1475,6 +1443,229 @@ articles:
         bwb_id: BWBR0008657
         artikel: 8:10
         hoofdstuk: '8'
+    machine_readable:
+      definitions:
+        inwerkingtreding_wet_stb_2009_580:
+          value: '2010-01-01'
+        inwerkingtreding_invoeringswet_participatiewet_artikel_iii_b:
+          value: '2015-01-01'
+        wachttermijn_na_aanvraag_weken:
+          value: 16
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de aanvrager.
+          - name: aanvraag_arbeidsondersteuning_ingediend
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, aanhef: het recht bestaat "op aanvraag". Zonder
+              aanvraag is er geen recht en geen ingangsdatum. Bron: UWV.
+          - name: is_jonggehandicapte_hoofdstuk_2
+            type: boolean
+            required: true
+            description: |-
+              Jonggehandicapte in de zin van artikel 2:3: op de dag van
+              zeventien worden (of daarna, na ten minste zes maanden
+              studeren) gedurende 52 weken niet in staat meer dan 75% van
+              het maatmaninkomen te verdienen, zonder uitzicht op herstel
+              binnen een jaar. Bron: UWV-beoordeling (artikel 2:3 is niet
+              gemodelleerd; zie untranslatable).
+          - name: niet_in_staat_meer_dan_75_procent_maatmaninkomen
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a: sinds de dag waarop hij jonggehandicapte
+              werd niet in staat gebleven meer dan 75% van het
+              maatmaninkomen te verdienen. Bron: UWV-beoordeling.
+          - name: is_uitsluitingsgrond_2_11_van_toepassing
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: een uitsluitingsgrond van artikel 2:11
+              (o.a. detentie, niet in Nederland wonen) is van toepassing.
+              Bron: UWV. Artikel 2:11 is niet gemodelleerd.
+          - name: geboortedatum
+            type: date
+            required: true
+            description: 'Lid 1 onderdeel c: voor de leeftijdstoets van achttien jaar. Bron: BRP.'
+          - name: datum_aanvraag_arbeidsondersteuning
+            type: date
+            required: false
+            description: |-
+              Datum waarop de aanvraag om arbeidsondersteuning is ingediend.
+              Lid 1 onderdeel d toetst deze aan de inwerkingtreding van de
+              Wet van 3 december 2009 (Stb. 2009, 580); lid 2 rekent er
+              zestien weken bij. Alleen vereist als een aanvraag is
+              ingediend. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel a: bij volledige en duurzame
+              arbeidsongeschiktheid ontstaat het recht op de dag van de
+              aanvraag. Bron: UWV-beoordeling.
+          - name: recht_herleeft_op_grond_van_2_17
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel b en lid 5: het recht herleeft op grond van
+              artikel 2:17 (na eerdere beëindiging). Bron: UWV. Artikel
+              2:17 is niet gemodelleerd.
+        output:
+          - name: voldoet_aan_voorwaarden_lid_1
+            type: boolean
+            description: 'Lid 1 onderdelen a tot en met d, cumulatief, voor een jonggehandicapte.'
+          - name: ingangsdatum_recht_op_arbeidsondersteuning
+            type: date
+            description: |-
+              Lid 2: zestien weken na de aanvraag; lid 3: de dag van de
+              aanvraag bij volledige en duurzame arbeidsongeschiktheid of
+              bij herleving.
+          - name: recht_kan_nog_ontstaan
+            type: boolean
+            description: |-
+              Lid 4 en 5: een recht dat zou ingaan op of na 1 januari 2015
+              (inwerkingtreding artikel III onderdeel B Invoeringswet
+              Participatiewet) ontstaat niet meer, behalve bij herleving
+              op grond van artikel 2:17.
+          - name: heeft_recht_op_arbeidsondersteuning
+            type: boolean
+            description: |-
+              Op de peildatum bestaat recht op arbeidsondersteuning op
+              grond van hoofdstuk 2 van de Wajong.
+        actions:
+          - output: voldoet_aan_voorwaarden_lid_1
+            value:
+              operation: IF
+              cases:
+                - when: $aanvraag_arbeidsondersteuning_ingediend
+                  then:
+                    operation: AND
+                    conditions:
+                      - $is_jonggehandicapte_hoofdstuk_2
+                      - $niet_in_staat_meer_dan_75_procent_maatmaninkomen
+                      - operation: NOT
+                        value: $is_uitsluitingsgrond_2_11_van_toepassing
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject:
+                          operation: AGE
+                          date_of_birth: $geboortedatum
+                          reference_date: $referencedate.iso
+                        value: 18
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $datum_aanvraag_arbeidsondersteuning
+                        value: $inwerkingtreding_wet_stb_2009_580
+              default: false
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:15'
+                paragraph: '1'
+                explanation: |-
+                  a. niet meer dan 75% van het maatmaninkomen kunnen
+                  verdienen; b. geen uitsluitingsgrond 2:11; c. achttien
+                  jaar of ouder op de peildatum; d. aanvraag op of na
+                  1 januari 2010, de inwerkingtreding van Stb. 2009, 580.
+          - output: ingangsdatum_recht_op_arbeidsondersteuning
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value: $aanvraag_arbeidsondersteuning_ingediend
+                  then: null
+                - when:
+                    operation: OR
+                    conditions:
+                      - $is_volledig_en_duurzaam_arbeidsongeschikt
+                      - $recht_herleeft_op_grond_van_2_17
+                  then: $datum_aanvraag_arbeidsondersteuning
+              default:
+                operation: DATE_ADD
+                date: $datum_aanvraag_arbeidsondersteuning
+                weeks: $wachttermijn_na_aanvraag_weken
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:15'
+                paragraph: '2'
+                explanation: |-
+                  Lid 2: niet eerder dan zestien weken na de aanvraag.
+                  Lid 3: op de dag van de aanvraag bij volledige en
+                  duurzame arbeidsongeschiktheid (a) of herleving (b).
+          - output: recht_kan_nog_ontstaan
+            value:
+              operation: IF
+              cases:
+                - when: $aanvraag_arbeidsondersteuning_ingediend
+                  then:
+                    operation: OR
+                    conditions:
+                      - operation: LESS_THAN
+                        subject: $ingangsdatum_recht_op_arbeidsondersteuning
+                        value: $inwerkingtreding_invoeringswet_participatiewet_artikel_iii_b
+                      - $recht_herleeft_op_grond_van_2_17
+              default: false
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:15'
+                paragraph: '4'
+                explanation: |-
+                  Lid 4: geen nieuw recht dat ingaat op of na 1 januari
+                  2015 (Invoeringswet Participatiewet, artikel III
+                  onderdeel B). Lid 5: herleving op grond van 2:17 blijft
+                  mogelijk.
+          - output: heeft_recht_op_arbeidsondersteuning
+            value:
+              operation: IF
+              cases:
+                - when: $aanvraag_arbeidsondersteuning_ingediend
+                  then:
+                    operation: AND
+                    conditions:
+                      - $voldoet_aan_voorwaarden_lid_1
+                      - $recht_kan_nog_ontstaan
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $referencedate.iso
+                        value: $ingangsdatum_recht_op_arbeidsondersteuning
+              default: false
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:15'
+                explanation: |-
+                  Recht bestaat als aan lid 1 is voldaan, het recht nog
+                  kon ontstaan (lid 4 en 5) en de ingangsdatum (lid 2 en
+                  3) op de peildatum is bereikt.
+      untranslatables:
+        - construct: jonggehandicapte in de zin van artikel 2:3
+          reason: |-
+            Artikel 2:3 vergt een beoordeling over een tijdvak van 52
+            weken rond de zeventiende verjaardag, de verwachting van
+            herstel binnen een jaar en (onderdeel b) zes maanden
+            studeren in het voorafgaande jaar. Dat is een
+            verzekeringsgeneeskundig en arbeidskundig oordeel over een
+            periode; de engine ontvangt de uitkomst als
+            is_jonggehandicapte_hoofdstuk_2.
+          legal_text_excerpt: >-
+            gedurende 52 weken niet in staat is geweest met arbeid meer dan
+            75% van het maatmaninkomen te verdienen, terwijl niet aannemelijk
+            is dat hij binnen een jaar volledig zal herstellen
+          accepted: true
+        - construct: ontstaan op grond van artikel 8:10 lid 4 (lid 5)
+          reason: |-
+            Lid 5 laat het recht ook ontstaan op grond van artikel 8:10
+            lid 4 (overgangsrecht). Dat artikel is niet gemodelleerd; de
+            route via herleving (2:17) is als aangeleverd feit
+            opgenomen, de route via 8:10 niet.
+          accepted: true
   - number: 2:16
     text: |-
       1 Het recht op arbeidsondersteuning op grond van dit hoofdstuk eindigt:
@@ -2065,6 +2256,151 @@ articles:
 
       5 Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot de uitvoering van dit artikel.
     url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel224
+    machine_readable:
+      definitions:
+        max_duur_proefplaatsing_maanden:
+          value: 6
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de jonggehandicapte.
+          - name: heeft_recht_op_arbeidsondersteuning
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de jonggehandicapte heeft recht op arbeidsondersteuning
+              op grond van deze wet. Bron: UWV.
+          - name: in_staat_tot_werkzaamheden
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel a: werkzaamheden waartoe de jonggehandicapte
+              met zijn krachten en bekwaamheden in staat is. Bron:
+              UWV-oordeel (typisch arbeidskundig).
+          - name: aansprakelijkheidsverzekering_aanwezig
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel b: de werkgever bij wie de proefplaatsing
+              geschiedt heeft een aansprakelijkheidsverzekering ten
+              behoeve van de jonggehandicapte afgesloten.
+          - name: niet_eerder_proefplaatsing_zelfde_werkgever
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel c: de jonggehandicapte heeft de
+              werkzaamheden niet reeds eerder onbeloond op een proefplaats
+              bij deze werkgever of diens rechtsvoorganger verricht.
+          - name: reeel_uitzicht_op_dienstbetrekking_zes_maanden
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel d: naar het oordeel van het UWV is er reeel
+              uitzicht op een aansluitende dienstbetrekking van dezelfde
+              of grotere omvang voor ten minste 6 maanden.
+        output:
+          - name: voldoet_aan_lid_3_voorwaarden
+            type: boolean
+            description: 'Cumulatieve toets lid 3 onderdelen a, b, c en d.'
+          - name: mag_proefplaatsing_aangaan
+            type: boolean
+            description: |-
+              UWV mag op grond van lid 1 toestemming verlenen — de
+              jonggehandicapte heeft recht op arbeidsondersteuning en de
+              werkzaamheden voldoen aan lid 3.
+          - name: max_duur_proefplaatsing_maanden
+            type: number
+            type_spec:
+              unit: months
+            description: |-
+              Maximale duur uit lid 1 (zes maanden) — gelijk aan WW
+              artikel 76a en Wet WIA artikel 37, en drie keer zo lang als
+              de onverlengde proefplaatsing van Participatiewet artikel 8a
+              lid 2 onderdeel d.
+          - name: arbeidsondersteuning_blijft_bestaan
+            type: boolean
+            description: |-
+              Lid 2: gedurende de proefplaatsing wordt het recht op
+              arbeidsondersteuning en de inkomensvoorziening niet
+              beeindigd.
+        actions:
+          - output: voldoet_aan_lid_3_voorwaarden
+            value:
+              operation: AND
+              conditions:
+                - $in_staat_tot_werkzaamheden
+                - $aansprakelijkheidsverzekering_aanwezig
+                - $niet_eerder_proefplaatsing_zelfde_werkgever
+                - $reeel_uitzicht_op_dienstbetrekking_zes_maanden
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:24'
+                paragraph: '3'
+                explanation: |-
+                  Lid 3 onderdelen a tot en met d zijn cumulatief, in
+                  dezelfde bewoordingen als WW artikel 76a lid 3 en Wet
+                  WIA artikel 37 lid 2.
+          - output: mag_proefplaatsing_aangaan
+            value:
+              operation: AND
+              conditions:
+                - $heeft_recht_op_arbeidsondersteuning
+                - $voldoet_aan_lid_3_voorwaarden
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:24'
+                paragraph: '1'
+                explanation: |-
+                  Lid 1 vereist recht op arbeidsondersteuning; lid 3 stelt
+                  de voorwaarden aan de werkzaamheden zelf.
+          - output: max_duur_proefplaatsing_maanden
+            value: $max_duur_proefplaatsing_maanden
+          - output: arbeidsondersteuning_blijft_bestaan
+            value: $mag_proefplaatsing_aangaan
+      open_terms:
+        - id: nadere_regels_uitvoering_proefplaatsing_wajong
+          type: string
+          required: false
+          delegated_to: minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 2:24 lid 5 Wet Wajong
+          description: |-
+            Lid 5 — bij ministeriele regeling kunnen nadere regels worden
+            gesteld over de uitvoering van dit artikel. Artikel 2:27 voegt
+            daar een grondslag voor regels over de aanvraag van de
+            toestemming aan toe. Geen actuele regeling bekend.
+          default:
+            actions:
+              - output: nadere_regels_uitvoering_proefplaatsing_wajong
+                value: 'geen'
+      untranslatables:
+        - construct: onderbreking wegens ziekte
+          reason: |-
+            Lid 4 laat de onderbrekingsperiode buiten beschouwing voor de
+            zes-maandentermijn. Dit vereist day-by-day boekhouding van
+            werk- versus ziektedagen en is met de huidige operatieset niet
+            faithful modelleerbaar; in een runtime context loopt dit via
+            UWV-uitvoering. Gelijk aan de untranslatable bij WW artikel
+            76a lid 4.
+          legal_text_excerpt: |-
+            Indien de werkzaamheden, bedoeld in het eerste lid, wegens
+            ziekte worden onderbroken, wordt deze periode voor de
+            toepassing van dat lid buiten beschouwing gelaten.
+          accepted: true
+        - construct: "oordeelvorming UWV ('reeel uitzicht')"
+          reason: |-
+            Lid 3 onderdeel d is discretionair ("naar het oordeel van het
+            Uitvoeringsinstituut werknemersverzekeringen"). De engine
+            ontvangt de uitkomst als boolean parameter.
+          legal_text_excerpt: 'naar het oordeel van het Uitvoeringsinstituut werknemersverzekeringen, een reeël uitzicht'
+          accepted: true
   - number: 2:27
     text: |-
       Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot de aanvraag van voorzieningen,

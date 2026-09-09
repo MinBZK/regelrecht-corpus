@@ -1639,9 +1639,21 @@ articles:
             type: boolean
             required: true
             description: |-
-              38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
-              dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
-              heeft. Sluit grond 38b.1.c uit. Bron: UWV.
+              38b.1.c: vastgesteld op grond van Wajong 1a:1 lid 1, 2:4 lid 1
+              of 3:8a lid 1 dat persoon duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft. Sluit grond 38b.1.c NIET absoluut
+              uit: zo iemand telt wel mee zodra hij arbeid verricht in een
+              dienstbetrekking. Bron: UWV.
+          - name: verricht_arbeid_in_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              38b.1.c slotzin: wie duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft wordt "slechts aangemerkt als
+              arbeidsbeperkte indien die persoon arbeid verricht in een
+              dienstbetrekking". Alleen van belang wanneer
+              heeft_wajong_duurzaam_geen_mogelijkheden waar is.
+              Bron: polisadministratie / loonaangifte.
           - name: voldoet_aan_amvb_indicatie_38b_1_d
             type: boolean
             required: true
@@ -1800,17 +1812,24 @@ articles:
               operation: AND
               conditions:
                 - $heeft_wajong_arbeidsondersteuning_of_uitkering
-                - operation: NOT
-                  value: $heeft_wajong_duurzaam_geen_mogelijkheden
+                - operation: OR
+                  conditions:
+                    - operation: NOT
+                      value: $heeft_wajong_duurzaam_geen_mogelijkheden
+                    - $verricht_arbeid_in_dienstbetrekking
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1.c'
               explanation: |-
-                Wajong-recht (arbeidsondersteuning of AO-uitkering),
-                tenzij persoon duurzaam geen mogelijkheden tot
-                arbeidsparticipatie heeft (Wajong 1a:1).
+                Wajong-recht (arbeidsondersteuning of AO-uitkering). Wie
+                duurzaam geen mogelijkheden tot arbeidsparticipatie heeft
+                (Wajong 1a:1 lid 1, 2:4 lid 1 of 3:8a lid 1) wordt niet
+                uitgesloten, maar "slechts aangemerkt als arbeidsbeperkte
+                indien die persoon arbeid verricht in een dienstbetrekking".
+                De slotzin van onderdeel c is dus een voorwaardelijke
+                insluiting, geen uitsluiting.
           - output: voldoet_aan_grond_38b_1_d
             value: $voldoet_aan_amvb_indicatie_38b_1_d
             legal_basis:
