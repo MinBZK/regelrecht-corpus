@@ -1,0 +1,71 @@
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: regelrecht-verantwoording (demonstratie van de werkstroom)
+    created: '2026-09-09'
+    workflow: open
+    target:
+      source: regelrecht://algemene_wet_bestuursrecht
+      selector:
+        type: TextQuoteSelector
+        exact: wegens bijzondere omstandigheden onevenredig zijn
+        prefix: 'zou hebben die '
+        suffix: ' in verhouding tot de met de beleidsregel'
+    body:
+      - type: TextualBody
+        purpose: questioning
+        value: >-
+          Kunnen "bijzondere omstandigheden" ook omstandigheden zijn die de opsteller van de
+          beleidsregel al heeft verdisconteerd, of alleen omstandigheden die daarbuiten vallen?
+      - type: TextualBody
+        purpose: assessing
+        value: >-
+          Ook verdisconteerde omstandigheden kunnen bijzonder zijn, als de gevolgen in het
+          concrete geval onevenredig uitpakken.
+      - type: TextualBody
+        purpose: commenting
+        value: >-
+          grond: rechtspraak — de Afdeling heeft de eerdere lijn (alleen niet-verdisconteerde
+          omstandigheden) verlaten; de tekst van 4:84 zelf beperkt "bijzondere" niet tot
+          niet-verdisconteerd.
+      - type: TextualBody
+        purpose: commenting
+        value: >-
+          alternatief: alleen niet-verdisconteerde omstandigheden zijn bijzonder — gevolg:
+          strenger voor de belanghebbende; een beleidsregel die een groep bewust hard raakt
+          zou dan nooit gepasseerd kunnen worden.
+      - type: TextualBody
+        purpose: tagging
+        value: needs-uitvoeringsbeleid
+      - type: TextualBody
+        purpose: tagging
+        value: stand:tijdelijk_vastgesteld
+      - type: TextualBody
+        purpose: tagging
+        value: bevoegd:jurist
+      - type: TextualBody
+        purpose: tagging
+        value: uiterlijk:mijlpaal-1
+      - type: TextualBody
+        purpose: tagging
+        value: voorstel_van:mens
+  - type: Annotation
+    motivation: replying
+    creator: jurist (demonstratie — asynchrone uitspraak)
+    created: '2026-09-09'
+    target:
+      source: regelrecht://algemene_wet_bestuursrecht
+      selector:
+        type: TextQuoteSelector
+        exact: wegens bijzondere omstandigheden onevenredig zijn
+        prefix: 'zou hebben die '
+        suffix: ' in verhouding tot de met de beleidsregel'
+    body:
+      - type: TextualBody
+        purpose: tagging
+        value: verdict:bekrachtigd
+      - type: TextualBody
+        purpose: commenting
+        value: >-
+          reden: de lezing volgt de huidige lijn van de Afdeling en de tekst van 4:84 geeft
+          geen aanleiding tot de engere lezing.
