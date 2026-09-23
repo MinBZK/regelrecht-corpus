@@ -1601,15 +1601,29 @@ articles:
             type: string
             required: true
             description: BSN van de persoon waarvan doelgroep-status wordt bepaald.
-          - name: is_uitgesloten_beschut_werk_pwet_10b
+          - name: behoort_tot_doelgroep_10b_lid_1
             type: boolean
             required: true
             description: |-
-              Chapeau-uitsluiting: door college vastgesteld dat persoon
-              uitsluitend in beschutte omgeving onder aangepaste omstandigheden
-              mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
-              Bron: gemeente. Zo'n persoon is per definitie GEEN
-              arbeidsbeperkte in zin van 38b.1.
+              Doorgegeven aan Participatiewet 10b: persoon als bedoeld in
+              artikel 7 lid 1 onderdeel a of 7a lid 1 onderdeel a, dan wel
+              uitkeringsgerechtigde als bedoeld in 10b lid 1.
+              Bron: gemeente.
+          - name: college_heeft_vastgesteld_uitsluitend_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Doorgegeven aan Participatiewet 10b lid 1: het college heeft
+              vastgesteld dat de persoon uitsluitend in een beschutte omgeving
+              onder aangepaste omstandigheden mogelijkheden tot
+              arbeidsparticipatie heeft. Bron: gemeente.
+          - name: heeft_dienstbetrekking_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Doorgegeven aan Participatiewet 10b: de persoon verricht
+              werkzaamheden in een dienstbetrekking in een beschutte omgeving.
+              Bron: gemeente.
           - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
             type: boolean
             required: true
@@ -1721,6 +1735,22 @@ articles:
               38b.6 blijfgrond: de opname van de persoon in de registratie
               van arbeidsbeperkten (artikel 38d lid 1) is nog niet
               geëindigd. Bron: UWV-registratie.
+        input:
+          - name: is_uitgesloten_beschut_werk_pwet_10b
+            type: boolean
+            source:
+              regulation: participatiewet
+              output: is_uitsluitend_aangewezen_op_beschut_werk
+              parameters:
+                bsn: $bsn
+                behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
+                college_heeft_vastgesteld_uitsluitend_beschut_werk: $college_heeft_vastgesteld_uitsluitend_beschut_werk
+                heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
+              description: |-
+                Chapeau 38b lid 1 en lid 6: uitgesloten is wie door het college
+                is aangewezen op uitsluitend beschut werk (Participatiewet 10b
+                lid 1). De vaststelling komt uit de bronwet in plaats van als
+                losse parameter.
         output:
           - name: behoort_tot_doelgroepregister_banenafspraak
             type: boolean
