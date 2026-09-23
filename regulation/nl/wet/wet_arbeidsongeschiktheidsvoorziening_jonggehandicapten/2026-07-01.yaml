@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
 regulatory_layer: WET
 publication_date: '2020-12-04'
@@ -1527,6 +1527,7 @@ articles:
               Lid 2: zestien weken na de aanvraag; lid 3: de dag van de
               aanvraag bij volledige en duurzame arbeidsongeschiktheid of
               bij herleving.
+            nullable: true
           - name: recht_kan_nog_ontstaan
             type: boolean
             description: |-
@@ -1603,7 +1604,15 @@ articles:
             value:
               operation: IF
               cases:
-                - when: $aanvraag_arbeidsondersteuning_ingediend
+                - when:
+                    operation: AND
+                    conditions:
+                      - $aanvraag_arbeidsondersteuning_ingediend
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $ingangsdatum_recht_op_arbeidsondersteuning
+                          value: null
                   then:
                     operation: OR
                     conditions:
@@ -1626,7 +1635,15 @@ articles:
             value:
               operation: IF
               cases:
-                - when: $aanvraag_arbeidsondersteuning_ingediend
+                - when:
+                    operation: AND
+                    conditions:
+                      - $aanvraag_arbeidsondersteuning_ingediend
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $ingangsdatum_recht_op_arbeidsondersteuning
+                          value: null
                   then:
                     operation: AND
                     conditions:
@@ -1644,28 +1661,14 @@ articles:
                   Recht bestaat als aan lid 1 is voldaan, het recht nog
                   kon ontstaan (lid 4 en 5) en de ingangsdatum (lid 2 en
                   3) op de peildatum is bereikt.
-      untranslatables:
-        - construct: jonggehandicapte in de zin van artikel 2:3
-          reason: |-
-            Artikel 2:3 vergt een beoordeling over een tijdvak van 52
-            weken rond de zeventiende verjaardag, de verwachting van
-            herstel binnen een jaar en (onderdeel b) zes maanden
-            studeren in het voorafgaande jaar. Dat is een
-            verzekeringsgeneeskundig en arbeidskundig oordeel over een
-            periode; de engine ontvangt de uitkomst als
-            is_jonggehandicapte_hoofdstuk_2.
-          legal_text_excerpt: >-
-            gedurende 52 weken niet in staat is geweest met arbeid meer dan
-            75% van het maatmaninkomen te verdienen, terwijl niet aannemelijk
-            is dat hij binnen een jaar volledig zal herstellen
-          accepted: true
-        - construct: ontstaan op grond van artikel 8:10 lid 4 (lid 5)
-          reason: |-
-            Lid 5 laat het recht ook ontstaan op grond van artikel 8:10
-            lid 4 (overgangsrecht). Dat artikel is niet gemodelleerd; de
-            route via herleving (2:17) is als aangeleverd feit
-            opgenomen, de route via 8:10 niet.
-          accepted: true
+      open_terms:
+        - id: jonggehandicapte_artikel_2_3
+          description: >-
+            Of de persoon jonggehandicapte is in de zin van artikel 2:3, beoordeeld
+            over een tijdvak van 52 weken.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:3
   - number: 2:16
     text: |-
       1 Het recht op arbeidsondersteuning op grond van dit hoofdstuk eindigt:
@@ -1962,35 +1965,29 @@ articles:
             actions:
               - output: dispensatiepercentage
                 value: 0
-      untranslatables:
-        - construct: 'duidelijk minder dan minimumloon-equivalent'
-          reason: |-
-            Lid 1 stelt dat de arbeidsprestatie "duidelijk minder" moet
-            zijn dan de prestatie die het minimumloon rechtvaardigt.
-            "Duidelijk minder" is discretionair (UWV-arbeidskundig
-            oordeel), geen meetbare drempel. De engine ontvangt de
-            uitkomst als boolean parameter.
-          legal_text_excerpt: 'duidelijk minder is dan de arbeidsprestatie die een geldelijke beloning van het minimumloon rechtvaardigt'
-          accepted: true
-        - construct: 'vermindering naar evenredigheid'
-          reason: |-
-            Lid 1 schrijft voor dat UWV de beloning "naar evenredigheid"
-            vermindert. Het concrete percentage is uitvoeringsbeleid van
-            UWV (zie open_term dispensatiepercentage), niet uit de wet
-            af te leiden. Vandaar als open_term gemodelleerd; het artikel
-            zelf produceert geen hoogte-output.
-          legal_text_excerpt: 'vermindert het Uitvoeringsinstituut werknemersverzekeringen ... de hoogte van de aanspraak op een geldelijke beloning voor de verrichte arbeid naar evenredigheid'
-          accepted: true
-        - construct: 'samenloop met no-riskpolis en LKV'
-          reason: |-
-            Loondispensatie regelt zelf geen samenloop met de
-            no-riskpolis (Ziektewet 29b) of LKV (Wtl). Juristvalidatie
-            (juni 2026): loondispensatie komt — als Wajong-variant van
-            de loonwaarde-aanvulling — bóvenop no-risk + LKV wanneer de
-            arbeidsprestatie duidelijk minder is dan het minimumloon
-            (knock-out arbeidsprestatie_duidelijk_minder_dan_minimumloon,
-            lid 1). Zie de uitgebreide samenloop-notitie bij
-            Ziektewet 29b.
+        - id: duidelijk_minder_dan_minimumloon
+          description: >-
+            Of de arbeidsprestatie duidelijk minder is dan de prestatie die een
+            beloning van het minimumloon rechtvaardigt.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:20 lid 1
+      markings:
+        - about: >-
+            de samenloop met de no-riskpolis en het loonkostenvoordeel
+          reason: >-
+            Samenloop is een regel over regelingen heen. Het formaat kent alleen
+            regels binnen een artikel en verdringing tussen twee regelingen via
+            overrides, en heeft geen vorm voor een regel die boven het stelsel staat.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een stelselregel die de uitkomsten van meerdere regelingen
+            tegen elkaar afzet.
+          target: []
+          legal_text_excerpt: >-
+            vermindert het Uitvoeringsinstituut werknemersverzekeringen op verzoek van
+            de betrokken werkgever of werknemer de hoogte van de aanspraak op een
+            geldelijke beloning voor de verrichte arbeid naar evenredigheid
           accepted: true
   - number: 2:22
     text: |-
@@ -2159,40 +2156,27 @@ articles:
             actions:
               - output: nadere_regels_voorzieningen_artikel_2_22
                 value: 'Reïntegratiebesluit'
-      untranslatables:
-        - construct: 'UWV "kan ... toekennen" — discretionaire bevoegdheid (lid 1)'
-          reason: |-
-            Lid 1 geeft UWV een bevoegdheid, geen gebonden beschikking.
-            De engine rekent daarom aanspraakvoorwaarden door en niet het
-            toekenningsbesluit zelf; de uitkomst luidt "komt in aanmerking",
-            niet "is toegekend".
-          legal_text_excerpt: 'kan aan de jonggehandicapte ... op aanvraag voorzieningen toekennen'
-          accepted: true
-        - construct: 'voorzieningen-criterium "in overwegende mate op het individu afgestemd" (lid 2.c)'
-          reason: |-
-            Of een meeneembare voorziening "in overwegende mate" op het
-            individu is afgestemd, is een UWV-beoordeling zonder meetbare
-            drempel. Gelijkluidend aan WIA artikel 35 lid 2.c.
-          legal_text_excerpt: 'die in overwegende mate op het individu van de jonggehandicapte ... zijn afgestemd'
-          accepted: true
-        - construct: 'voorzieningen-criterium "noodzakelijke persoonlijke ondersteuning" (lid 2.d)'
-          reason: |-
-            Onderdeel d vergt een oordeel of de ondersteuning noodzakelijk
-            is en of zij een compensatie vormt voor de beperkingen. Dat
-            oordeel ligt bij UWV; de engine ontvangt de aanvraag als
-            boolean. Gelijkluidend aan WIA artikel 35 lid 2.d.
-          legal_text_excerpt: 'noodzakelijke persoonlijke ondersteuning ... indien die ondersteuning een compensatie vormt voor zijn beperkingen'
-          accepted: true
-        - construct: 'onderdelen a en b van lid 2 (vervoer, intermediaire activiteiten) niet gemodelleerd'
-          reason: |-
-            Lid 2 is limitatief en kent vier onderdelen. Gemodelleerd zijn
-            c en d, omdat die de tegenhanger vormen van WIA artikel 35 en
-            in het Financieel CV worden getoond. Vervoersvoorzieningen (a),
-            intermediaire activiteiten (b) en de leefomstandigheden-
-            vervoersvoorziening van lid 3 zijn nog niet gemodelleerd; de
-            engine doet daar geen uitspraak over.
-          legal_text_excerpt: 'a. vervoersvoorzieningen ... b. intermediaire activiteiten'
-          accepted: true
+        - id: toekenning_voorziening_bevoegdheid
+          description: >-
+            Of het UWV de aangevraagde voorziening toekent; lid 1 geeft een
+            bevoegdheid en geen gebonden beschikking.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:22 lid 1
+        - id: in_overwegende_mate_op_individu_afgestemd
+          description: >-
+            Of een meeneembare voorziening in overwegende mate op het individu is
+            afgestemd.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:22 lid 2 onderdeel c
+        - id: noodzakelijke_persoonlijke_ondersteuning
+          description: >-
+            Of de persoonlijke ondersteuning noodzakelijk is en een compensatie vormt
+            voor de beperkingen.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:22 lid 2 onderdeel d
   - number: 2:23
     text: >-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld op grond waarvan het
@@ -2380,26 +2364,29 @@ articles:
             actions:
               - output: nadere_regels_uitvoering_proefplaatsing_wajong
                 value: 'geen'
-      untranslatables:
-        - construct: onderbreking wegens ziekte
-          reason: |-
-            Lid 4 laat de onderbrekingsperiode buiten beschouwing voor de
-            zes-maandentermijn. Dit vereist day-by-day boekhouding van
-            werk- versus ziektedagen en is met de huidige operatieset niet
-            faithful modelleerbaar; in een runtime context loopt dit via
-            UWV-uitvoering. Gelijk aan de untranslatable bij WW artikel
-            76a lid 4.
-          legal_text_excerpt: |-
-            Indien de werkzaamheden, bedoeld in het eerste lid, wegens
-            ziekte worden onderbroken, wordt deze periode voor de
-            toepassing van dat lid buiten beschouwing gelaten.
-          accepted: true
-        - construct: "oordeelvorming UWV ('reeel uitzicht')"
-          reason: |-
-            Lid 3 onderdeel d is discretionair ("naar het oordeel van het
-            Uitvoeringsinstituut werknemersverzekeringen"). De engine
-            ontvangt de uitkomst als boolean parameter.
-          legal_text_excerpt: 'naar het oordeel van het Uitvoeringsinstituut werknemersverzekeringen, een reeël uitzicht'
+        - id: reeel_uitzicht_op_dienstbetrekking
+          description: >-
+            Of er een reeel uitzicht is op een aansluitende dienstbetrekking van ten
+            minste zes maanden.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Wajong artikel 2:24 lid 3 onderdeel d
+      markings:
+        - about: >-
+            de onderbreking wegens ziekte die buiten beschouwing blijft voor de zes-
+            maandentermijn
+          reason: >-
+            Het formaat kent geen kalender van werk- tegenover ziektedagen, en kan een
+            termijn daarom niet opschorten voor de duur van een onderbreking.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een termijn wordt opgeschort zolang een andere regeling
+            loopt.
+          target: []
+          legal_text_excerpt: >-
+            Indien de werkzaamheden, bedoeld in het eerste lid, wegens ziekte worden
+            onderbroken, wordt deze periode voor de toepassing van dat lid buiten
+            beschouwing gelaten.
           accepted: true
   - number: 2:27
     text: |-

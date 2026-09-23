@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: werkloosheidswet
 regulatory_layer: WET
 publication_date: '2019-10-31'
@@ -4324,28 +4324,29 @@ articles:
             actions:
               - output: nadere_regels_uitvoering_proefplaatsing
                 value: 'geen'
-      untranslatables:
-        - construct: onderbreking wegens ziekte
-          reason: |-
-            Lid 4 stelt dat ziekteperiode binnen de proefplaatsing buiten
-            beschouwing wordt gelaten voor het berekenen van de
-            zes-maanden-termijn. Dit vereist samenloop met de
-            Ziektewet-uitkering en day-by-day boekhouding van werk- vs
-            ziekte-dagen, wat met de huidige operatieset niet faithfully
-            modelleerbaar is. In een runtime context loopt dit via
-            UWV-uitvoering.
-          legal_text_excerpt: |-
-            Indien de werkzaamheden, bedoeld in het eerste lid, wegens
-            ziekte worden onderbroken, wordt de periode waarin een
-            uitkering bij ziekte wordt ontvangen, voor de toepassing
-            van dat lid buiten beschouwing gelaten.
-          accepted: true
-        - construct: oordeelvorming UWV ('reëel uitzicht')
-          reason: |-
-            Lid 3 onderdeel d is discretionair ("naar het oordeel van
-            het UWV"). De engine ontvangt de uitkomst als boolean
-            parameter; de inhoudelijke afweging is niet machine-leesbaar.
-          legal_text_excerpt: 'naar het oordeel van het UWV, een reëel uitzicht'
+        - id: reeel_uitzicht_op_dienstbetrekking
+          description: >-
+            Of er een reeel uitzicht is op een aansluitende dienstbetrekking van ten
+            minste zes maanden.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Werkloosheidswet artikel 76a lid 3 onderdeel d
+      markings:
+        - about: >-
+            de periode waarin een uitkering bij ziekte wordt ontvangen, die buiten
+            beschouwing blijft voor de zes-maandentermijn
+          reason: >-
+            Het formaat kent geen kalender van werk- tegenover ziektedagen, en kan een
+            termijn daarom niet opschorten voor de duur van een andere uitkering.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een termijn wordt opgeschort zolang een andere regeling
+            loopt.
+          target: []
+          legal_text_excerpt: >-
+            Indien de werkzaamheden, bedoeld in het eerste lid, wegens ziekte worden
+            onderbroken, wordt de periode waarin een uitkering bij ziekte wordt
+            ontvangen, voor de toepassing van dat lid buiten beschouwing gelaten.
           accepted: true
   - number: 77a
     text: |-

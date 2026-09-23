@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: ziektewet
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -2639,6 +2639,7 @@ articles:
                 arbeidsongeschiktheid volgens de Wet WIA (artikel 5).
           - name: wachttijd_einddatum_wia
             type: date
+            nullable: true
             source:
               regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
               output: wachttijd_einddatum
@@ -2796,7 +2797,15 @@ articles:
             value:
               operation: IF
               cases:
-                - when: $is_ziek_geworden_wia
+                - when:
+                    operation: AND
+                    conditions:
+                      - $is_ziek_geworden_wia
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $wachttijd_einddatum_wia
+                          value: null
                   then:
                     operation: AND
                     conditions:
@@ -3048,82 +3057,77 @@ articles:
                   ('onbeperkt'). Lid 1 (a t/m d): 5 jaar vanaf
                   indiensttreding ("binnen vijf jaar na die dag"); lid 4:
                   5 jaar na vaststelling WIA-recht. Default 0 = geen recht.
-      untranslatables:
-        - construct: '"onmiddellijk voorafgaand aan de dienstbetrekking" (lid 1 onderdeel a) en "voorafgaand aan" (lid 2 onderdeel a)'
-          reason: |-
-            Onderdeel a van lid 1 en lid 2 eisen dat het WIA- respectievelijk
-            Wajong-recht bestond vóór de dienstbetrekking. De engine stelt
-            dat recht vast op de peildatum; de volgorde in de tijd tussen
-            het ontstaan van het recht en de aanvang van de dienstbetrekking
-            wordt niet getoetst.
-          accepted: true
-        - construct: vijfjaarstermijn bij onderbroken dienstverbanden
-          reason: |-
-            Lid 1 onderdeel b 4° en lid 1 onderdeel c/d formuleren de
-            vijfjaarstermijn als "binnen vijf jaar na die dag in
-            dienstbetrekking werkzaamheden gaat verrichten". De termijn is
-            gemodelleerd voor de dienstbetrekking waarvoor wordt getoetst
-            (datum_aanvang_dienstbetrekking). Bij onderbroken of opvolgende
-            dienstverbanden binnen die termijn is in de wettekst niet
-            eenduidig of de termijn opnieuw begint, doorloopt, of optelt.
-            Vereist juridische interpretatie.
+      markings:
+        - about: >-
+            de eis dat het recht bestond onmiddellijk voorafgaand aan de
+            dienstbetrekking
+          reason: >-
+            Het formaat stelt rechten vast op de peildatum en legt geen volgorde in de
+            tijd vast tussen het ontstaan van een recht en de aanvang van een
+            dienstbetrekking.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin de volgorde van twee gebeurtenissen in de tijd kan worden
+            getoetst.
+          target: []
           legal_text_excerpt: >-
-            binnen vijf jaar na die dag in dienstbetrekking werkzaamheden gaat
-            verrichten
+            die onmiddellijk voorafgaand aan een dienstbetrekking als bedoeld in
+            artikel 3, 4 of 5, recht had op een uitkering op grond van de Wet werk en
+            inkomen naar arbeidsvermogen
           accepted: true
-        - construct: ontstaansmoment van het recht op ziekengeld (lid 2, slot)
-          reason: |-
-            Voor de werknemer van onderdeel c ontstaat het recht op
-            ziekengeld niet eerder dan het Wajong-recht; voor onderdeel e
-            niet eerder dan het moment waarop hij arbeidsbeperkte wordt
-            (Wfsv 38b). Dit artikel stelt vast óf recht bestaat op de
-            peildatum; het ontstaansmoment wordt niet berekend.
+        - about: >-
+            het ontstaansmoment van het recht op ziekengeld in de slotzin van lid 2
+          reason: >-
+            Het formaat beantwoordt of op de peildatum recht bestaat en berekent geen
+            ingangsdatum die van het ontstaan van een ander recht afhangt.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin de ingangsdatum van een recht uit het ontstaansmoment van
+            een ander recht volgt.
+          target: []
+          legal_text_excerpt: >-
+            ontstaat niet eerder dan zijn recht op een arbeidsongeschiktheidsuitkering
+            of arbeidsondersteuning
           accepted: true
-        - construct: lid 2-duur als 'onbeperkt zolang dienstbetrekking voortduurt'
-          reason: |-
-            Voor doelgroepen lid 2 (Wajong, Wsw, banenafspraak, beschut
-            werk) kent het artikel geen maximum-duur. De engine
-            modelleert dit als sentinel -1 ('onbeperkt'), zodat lid 2
-            ook bij overlap met lid 1 of lid 4 als langste termijn wint.
-            Downstream consumers moeten -1 als 'onbeperkt' interpreteren
-            (niet als negatieve looptijd).
+        - about: >-
+            de duur van lid 2, die geen maximum kent zolang de dienstbetrekking
+            voortduurt
+          reason: >-
+            Het formaat drukt een duur uit als een getal in jaren en kent geen waarde
+            voor onbepaalde duur, zodat hier de sentinel -1 wordt gebruikt.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een duur onbepaald kan zijn, zodat de sentinel -1 vervalt.
+          target: []
+          legal_text_excerpt: >-
+            heeft vanaf de eerste dag van zijn ongeschiktheid tot werken recht op
+            ziekengeld over perioden van ongeschiktheid tot werken wegens ziekte die
+            zijn aangevangen na aanvang van de dienstbetrekking
           accepted: true
-        - construct: samenloop met LKV, LKS en loondispensatie (stelsel-eigenschap)
-          reason: |-
-            Artikel 29b regelt zelf geen samenloop met LKV (Wet
-            tegemoetkomingen loondomein), LKS (Pwet 10d) of
-            loondispensatie (Wajong 2:20). De samenloop is een
-            eigenschap van het stelsel, geen regel binnen dit artikel.
-
-            Juristvalidatie (juni 2026) bevestigt dat cumulatie kan:
-            - No-riskpolis en LKV gaan altijd samen op. Beide hangen
-              aan dezelfde doelgroep-status (banenafspraakregister,
-              Wajong-status of Pwet-LKS-doelgroep). Wie de no-riskpolis
-              via lid 2 opent, opent via diezelfde status ook LKV; het
-              banenafspraakregister wordt uit één bron gelezen: de
-              kapstok Wfsv artikel 38b
-              (behoort_tot_doelgroepregister_banenafspraak), gebruikt
-              door zowel 29b lid 2.e als Wtl 2.10. De
-              tijdelijke samenloop binnen de WIA valt buiten deze
-              iteratie (volgende iteratie).
-            - LKS (Pwet 10d) of loondispensatie (Wajong 2:20) komen
-              hier bóvenop wanneer uit de loonwaardemeting blijkt dat de
-              werknemer niet zelfstandig het minimumloon kan verdienen.
-              Die voorwaarde is per regeling al een knock-out:
-              kan_minimumloon_niet_verdienen (LKS) respectievelijk
-              arbeidsprestatie_duidelijk_minder_dan_minimumloon (LD).
+        - about: >-
+            de samenloop met het loonkostenvoordeel, de loonkostensubsidie en de
+            loondispensatie
+          reason: >-
+            De Ziektewet zegt het zelf: de samenloop is een eigenschap van het stelsel
+            en geen regel binnen dit artikel. Het formaat kent alleen regels binnen
+            een artikel en verdringing via overrides.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een stelselregel die de uitkomsten van meerdere regelingen
+            tegen elkaar afzet.
+          target: []
+          legal_text_excerpt: >-
+            heeft vanaf de eerste dag van zijn ongeschiktheid tot werken recht op
+            ziekengeld
           accepted: true
-        - construct: doelgroepverklaring-procedure — geen lagere regelgeving
-          reason: |-
-            De no-riskpolis kent geen gedelegeerde lagere regelgeving
-            (AMvB of ministeriële regeling) die de inhoudelijke
-            voorwaarden invult; daarom bevat dit artikel geen open_terms.
-            De doelgroep-vaststelling loopt via doelgroepverklaring of
-            registratie door UWV, gemeente of college (uitvoeringsbeleid).
-            Bevestigd bij juristvalidatie (juni 2026): onder de Ziektewet
-            is geen relevante lagere regelgeving rond de no-riskpolis
-            gevonden.
-          accepted: true
+      open_terms:
+        - id: vijfjaarstermijn_bij_opvolgende_dienstverbanden
+          description: >-
+            Of de vijfjaarstermijn bij een opvolgende dienstbetrekking opnieuw begint,
+            doorloopt of optelt.
+          type: boolean
+          required: true
+          decided_per_case_by: het UWV, op grond van Ziektewet artikel 29b lid 1
   - number: 29c
     text: |-
       Indien ten aanzien van een werknemer als bedoeld in de [artikelen 29b][ref1] en [90][ref2] van deze wet bij aanvang

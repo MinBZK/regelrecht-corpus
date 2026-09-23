@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: participatiewet
 regulatory_layer: WET
 publication_date: '2025-10-29'
@@ -1065,7 +1065,7 @@ articles:
           type: string
           required: false
           delegated_to: gemeenteraad
-          delegation_type: VERORDENING
+          delegation_type: GEMEENTELIJKE_VERORDENING
           legal_basis: artikel 8a lid 2 onderdeel d Participatiewet
           description: |-
             Lid 2 onderdeel d verplicht de gemeenteraad vast te leggen
@@ -1081,7 +1081,7 @@ articles:
           type: string
           required: false
           delegated_to: gemeenteraad
-          delegation_type: VERORDENING
+          delegation_type: GEMEENTELIJKE_VERORDENING
           legal_basis: artikel 8a lid 2 onderdeel a Participatiewet
           description: |-
             Lid 2 onderdeel a draagt de gemeenteraad op te bepalen welke
@@ -1097,7 +1097,7 @@ articles:
           type: string
           required: false
           delegated_to: gemeenteraad
-          delegation_type: VERORDENING
+          delegation_type: GEMEENTELIJKE_VERORDENING
           legal_basis: artikel 8a lid 2 onderdeel e Participatiewet
           description: |-
             Lid 2 onderdeel e draagt de gemeenteraad op de duur en
@@ -1108,23 +1108,14 @@ articles:
             actions:
               - output: persoonlijke_ondersteuning_duur_en_kwaliteit_verordening
                 value: 'geen verordening geladen'
-      untranslatables:
-        - construct: 'de verordening zelf'
-          reason: |-
-            Artikel 8a is een opdracht aan 342 gemeenteraden, geen
-            rekenregel. Wat modelleerbaar is, is de opdracht (lid 1),
-            de doelgroep en de maximumtermijnen (lid 2 d); wat de
-            gemeente vaststelt is per gemeente verschillend en zit niet
-            in dit corpus. Voor het Financieel CV betekent dit dat de
-            route bestaat maar de uitkomst gemeentelijk is.
-          legal_text_excerpt: 'De gemeenteraad stelt bij verordening regels met betrekking tot'
-          accepted: true
-        - construct: '"evenwichtig over deze personen worden verdeeld" (lid 2 a)'
-          reason: |-
-            Een verdelingsnorm gericht tot de gemeenteraad, zonder
-            meetbare maatstaf en zonder individueel toetsbaar gevolg.
-          legal_text_excerpt: 'evenwichtig over deze personen worden verdeeld'
-          accepted: true
+        - id: evenwichtige_verdeling_voorzieningen
+          description: >-
+            Of de voorzieningen evenwichtig over de personen zijn verdeeld. Het
+            artikel geeft geen maatstaf.
+          type: boolean
+          required: true
+          delegated_to: gemeenteraad
+          delegation_type: GEMEENTELIJKE_VERORDENING
   - number: 8b
     text: >-
       De gemeenteraad stelt in het kader van het financiële beheer bij verordening regels voor de bestrijding van het
@@ -1592,7 +1583,7 @@ articles:
           type: string
           required: false
           delegated_to: gemeenteraad
-          delegation_type: VERORDENING
+          delegation_type: GEMEENTELIJKE_VERORDENING
           legal_basis: artikel 8a lid 1 onderdeel a en lid 2 onderdeel a Participatiewet
           description: |-
             Lid 1 verleent de aanspraak "overeenkomstig de verordening,
@@ -1618,42 +1609,29 @@ articles:
             actions:
               - output: nadere_regels_persoonlijke_ondersteuning_amvb
                 value: 'geen'
-      untranslatables:
-        - construct: '"overeenkomstig de verordening, bedoeld in artikel 8a"'
-          reason: |-
-            De inhoudelijke voorwaarden staan in 342 gemeentelijke
-            verordeningen, die geen van alle in dit corpus zitten. Wij
-            modelleren de wettelijke aanspraak; of een concrete
-            voorziening wordt toegekend hangt af van lokaal recht.
-            Voor het Financieel CV betekent dit: de route bestaat, het
-            bedrag en de vorm zijn gemeentelijk.
-          legal_text_excerpt: 'overeenkomstig de verordening, bedoeld in artikel 8a'
-          accepted: true
-        - construct: '"naar het oordeel van het college noodzakelijk geachte voorziening"'
-          reason: |-
-            Lid 1 laat de noodzakelijkheid aan het college; lid 4 schrijft
-            onderzoek voor maar geeft geen toetsbare drempel. De engine
-            ontvangt de uitkomst als boolean parameter.
-          legal_text_excerpt: 'de naar het oordeel van het college noodzakelijk geachte voorziening'
-          accepted: true
-        - construct: 'tweejaarstermijn in de WIA-uitstroomcategorie (lid 1)'
-          reason: |-
-            Dezelfde samengestelde tijds- en geldcomponent als in Wet WIA
-            artikel 35 lid 4 b: twee aaneengesloten jaren minimumloon
-            zonder loonkostensubsidie. Met de huidige operatieset niet
-            faithful te modelleren; samengevat als een enkele boolean.
-          legal_text_excerpt: |-
-            tot het moment dat het inkomen uit arbeid in dienstbetrekking
-            gedurende twee aaneengesloten jaren ten minste het minimumloon
-            ... bedraagt
-          accepted: true
-        - construct: 'onderzoeksplicht en besluitvorming (lid 4)'
-          reason: |-
-            Lid 4 verplicht het college tot onderzoek naar noodzaak, mate
-            en duur van de voorziening en tot een besluit met inachtneming
-            van de resultaten. Dat is een procedurele norm, geen
-            rekenregel.
-          legal_text_excerpt: 'verricht het college onderzoek en neemt een besluit met inachtneming van de resultaten van het onderzoek'
+        - id: noodzakelijk_geachte_voorziening
+          description: Of de voorziening gericht op arbeidsinschakeling noodzakelijk is.
+          type: boolean
+          required: true
+          decided_per_case_by: >-
+            het college van burgemeester en wethouders, op grond van Participatiewet
+            artikel 10 lid 1 en lid 4
+      markings:
+        - about: >-
+            de uitsluiting tot het moment dat het inkomen twee aaneengesloten jaren
+            ten minste het minimumloon bedraagt
+          reason: >-
+            Zelfde vorm als Wet WIA artikel 35 lid 4 onderdeel b: het formaat toetst
+            een bedrag op de peildatum en niet het verloop ervan over twee
+            aaneengesloten jaren.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over het verloop van een bedrag gedurende
+            een aaneengesloten periode kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            tot het moment dat het inkomen uit arbeid in dienstbetrekking gedurende
+            twee aaneengesloten jaren ten minste het minimumloon ... bedraagt
           accepted: true
   - number: 10a
     text: |-
@@ -1914,22 +1892,23 @@ articles:
                   uit de doelgroep van lid 1, de vaststelling van het
                   college én een dienstbetrekking in een beschutte
                   omgeving.
-      untranslatables:
-        - construct: UWV-advies en AMvB-criteria voor de vaststelling (lid 2 en 3)
-          reason: |-
-            Of iemand uitsluitend in een beschutte omgeving mogelijkheden
-            tot arbeidsparticipatie heeft, stelt UWV vast op grond van bij
-            AMvB gestelde regels en adviseert daarover aan het college.
-            Dat arbeidskundige oordeel wordt niet gemodelleerd; de engine
-            ontvangt de vaststelling van het college.
-          accepted: true
-        - construct: aantal te realiseren dienstbetrekkingen (lid 4 tot en met 6)
-          reason: |-
-            De verplichting van het college vervalt zodra het per
-            ministeriële regeling of verordening bepaalde aantal
-            dienstbetrekkingen is gerealiseerd. Dat is een gemeentelijk
-            quotum, geen kenmerk van de persoon.
-          accepted: true
+      open_terms:
+        - id: criteria_vaststelling_beschut_werk
+          description: >-
+            De regels waarnaar het UWV de werkzaamheden voor de vaststelling van
+            artikel 10b lid 1 verricht en het college adviseert.
+          type: boolean
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: AMVB
+        - id: aantal_te_realiseren_dienstbetrekkingen
+          description: >-
+            Het aantal dienstbetrekkingen beschut werk dat het college ten minste
+            realiseert.
+          type: number
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
   - number: 10c
     text: |-
       1 Het college kan:
@@ -2185,58 +2164,63 @@ articles:
             actions:
               - output: werkgeverslastenvergoeding_eurocent
                 value: 0
-      untranslatables:
-        - construct: '50%-regeling eerste zes maanden zonder loonwaardevaststelling (lid 5)'
-          reason: |-
-            Lid 5 introduceert een afwijkende hoogte (50% van WML+VB)
-            voor de eerste zes maanden indien geen loonwaarde is
-            vastgesteld (lid 1 b). Dit vereist een tijdgebonden split
-            van het subsidiebedrag binnen één dienstbetrekking, wat
-            met de huidige operatie-set niet faithful te modelleren is.
+        - id: gebruikelijke_volledige_dienstbetrekking_uren
+          description: >-
+            De arbeidsduur die in overeenkomstige dienstbetrekkingen in de regel als
+            volledige dienstbetrekking geldt. Het artikel wijst geen bron of invuller
+            aan.
+          type: number
+          required: true
+          decided_per_case_by: >-
+            het college van burgemeester en wethouders, op grond van Participatiewet
+            artikel 10d lid 4
+      markings:
+        - about: >-
+            de afwijkende hoogte van 50% van het minimumloon over de eerste zes
+            maanden wanneer geen loonwaarde is vastgesteld
+          reason: >-
+            Het formaat levert per artikel een bedrag op de peildatum en kent geen
+            bedrag dat binnen een dienstbetrekking op een moment van hoogte verandert.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een bedrag in de tijd wordt opgedeeld binnen een lopende
+            rechtsverhouding.
+          target: []
+          legal_text_excerpt: >-
+            bedraagt gedurende een periode van maximaal de eerste zes maanden van de
+            dienstbetrekking 50 procent van het totale bedrag van het wettelijk
+            minimumloon
           accepted: true
-        - construct: '"de in de sector gebruikelijke volledige dienstbetrekking" als plafond op de arbeidsduur (lid 4 zin 3)'
-          reason: |-
-            De evenredigheidscorrectie van de tweede zin is gemodelleerd
-            (zie hoogte_lks_eurocent_per_maand). De derde zin capt de
-            overeengekomen arbeidsduur echter op wat in overeenkomstige
-            dienstbetrekkingen als volledige dienstbetrekking geldt. Die
-            sectornorm staat in geen enkele bron die de engine kent; de
-            aanleveraar levert de reeds gecapte arbeidsduur aan.
-          legal_text_excerpt: |-
-            De overeengekomen arbeidsduur, bedoeld in de vorige zin, is
-            maximaal de arbeidsduur welke in overeenkomstige
-            dienstbetrekkingen in de regel geacht wordt een volledige
-            dienstbetrekking te zijn
+        - about: >-
+            de ambtshalve herziening van de hoogte per 1 januari
+          reason: >-
+            Het formaat rekent een artikel uit op een peildatum en kent geen
+            herrekening die zichzelf jaarlijks opnieuw uitvoert op een eerder genomen
+            besluit.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een periodieke herrekening van een eerder vastgestelde
+            beschikking.
+          target: []
+          legal_text_excerpt: >-
+            Het college stelt na aanvang van de dienstbetrekking de hoogte van de
+            loonkostensubsidie ambtshalve opnieuw vast met ingang van 1 januari van
+            het kalenderjaar
           accepted: true
-        - construct: 'afronding van het evenredig verminderde subsidiebedrag'
-          reason: |-
-            Lid 4 geeft geen afrondingsregel. Bij een arbeidsduur die niet
-            op 36 deelt levert de deling een bedrag met decimalen op; de
-            engine rekent exact en rondt niet. De presentatielaag beslist
-            op hoeveel eurocent wordt afgerond.
-          accepted: true
-        - construct: 'jaarlijkse herziening loonkostensubsidie (lid 7)'
-          reason: |-
-            Het college stelt de hoogte ambtshalve opnieuw vast per
-            1 januari met toepassing van WML-ontwikkeling en
-            werkgeverslastenvergoeding. Dit is een runtime-proces
-            (jaarlijkse herrekening), geen statisch artikel-rekenwerk.
-          accepted: true
-        - construct: 'EU-woonplaatsverplaatsing (lid 10)'
-          reason: |-
-            Bij verhuizing naar EU/EER/Zwitserland blijft het
-            oorspronkelijke college bevoegd. Geen logische berekening,
-            wel een uitvoeringsregel.
-          accepted: true
-        - construct: 'samenloop met no-riskpolis en LKV'
-          reason: |-
-            LKS regelt zelf geen samenloop met de no-riskpolis
-            (Ziektewet 29b) of LKV (Wtl). Juristvalidatie (juni 2026):
-            LKS komt bóvenop no-risk + LKV wanneer de loonwaardemeting
-            uitwijst dat de werknemer niet zelfstandig het minimumloon
-            kan verdienen — in dit model de knock-out
-            kan_minimumloon_niet_verdienen (lid 2). Zie de uitgebreide
-            samenloop-notitie bij Ziektewet 29b.
+        - about: >-
+            de samenloop met de no-riskpolis en het loonkostenvoordeel
+          reason: >-
+            Samenloop is een regel over regelingen heen. Het formaat kent alleen
+            regels binnen een artikel en verdringing tussen twee regelingen via
+            overrides, en heeft geen vorm voor een regel die boven het stelsel staat.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een stelselregel die de uitkomsten van meerdere regelingen
+            tegen elkaar afzet.
+          target: []
+          legal_text_excerpt: >-
+            verleent het college ambtshalve dan wel op aanvraag van de werkgever of
+            die persoon loonkostensubsidie aan de werkgever
           accepted: true
   - number: 10d
     text: |-
@@ -2444,16 +2428,16 @@ articles:
                 Dit is binnen de gemeentelijke voorzieningen de enige
                 harde aanspraak — artikel 10 lid 1 en artikel 8a laten de
                 voorwaarden aan de gemeenteraad, dit artikel niet.
-      untranslatables:
-        - construct: '"begeleiding op de werkplek" is niet gedefinieerd'
-          reason: |-
-            De wet omschrijft de inhoud van de begeleiding niet en
-            verwijst er ook niet voor door. De verhouding tot de
-            persoonlijke ondersteuning van artikel 10 lid 1 en tot de
-            kwaliteitseisen van artikel 10e lid 2 a volgt uit de
-            uitvoeringspraktijk, niet uit de tekst.
-          legal_text_excerpt: 'hebben aanspraak op begeleiding op de werkplek'
-          accepted: true
+      open_terms:
+        - id: begeleiding_op_de_werkplek
+          description: >-
+            Wat begeleiding op de werkplek inhoudt. Het artikel omschrijft het niet en
+            verwijst er niet voor door.
+          type: string
+          required: true
+          decided_per_case_by: >-
+            het college van burgemeester en wethouders, op grond van Participatiewet
+            artikel 10da
   - number: 10e
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld met betrekking tot
@@ -2612,15 +2596,6 @@ articles:
             actions:
               - output: regels_vervoer_intermediair_meeneembaar_amvb
                 value: 'geen'
-      untranslatables:
-        - construct: 'kan-bepaling zonder ingevulde AMvB'
-          reason: |-
-            Alle drie de leden zijn kan-bepalingen: er hoeft geen AMvB te
-            zijn. Zolang die er niet is verandert artikel 10e niets aan de
-            aanspraak uit artikel 10 lid 1. Het artikel is daarom
-            uitsluitend als open_terms gemodelleerd, zonder execution.
-          legal_text_excerpt: 'Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld'
-          accepted: true
   - number: 10g
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen heeft tot taak personen als bedoeld in de

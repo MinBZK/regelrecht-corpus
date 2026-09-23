@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: wet_tegemoetkomingen_loondomein
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -630,56 +630,39 @@ articles:
                   hoogste berekende tegemoetkoming; bij gelijke hoogte de
                   eerst in de wet genoemde (volgorde art. 2.1:
                   arbeidsgehandicapt → banenafspraak → herplaatsing).
-      untranslatables:
-        - construct: 'doelgroepverklaring-vereiste binnen 3 maanden (art. 2.3, 2.6)'
-          reason: |-
-            Het LKV vereist een doelgroepverklaring die binnen drie
-            maanden na aanvang dienstbetrekking moet zijn aangevraagd.
-            Deze procedure-toets staat los van de inhoudelijke
-            voorwaarden en valt onder uitvoeringsbeleid.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
+      markings:
+        - about: >-
+            de uitsluiting van de werknemer die in de zes maanden voor de
+            indiensttreding al bij dezelfde werkgever in dienst was
+          reason: >-
+            Het formaat kent een toets op de peildatum en geen toets over een
+            terugkijkvenster op een reeks eerdere dienstverbanden. De uitkomst komt
+            daarom als boolean binnen.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over een reeks eerdere dienstbetrekkingen
+            binnen een venster kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            niet op enig moment in de periode van zes maanden voorafgaand aan de datum
+            van indiensttreding in dienstbetrekking bij de werkgever is geweest
           accepted: true
-        - construct: 'aanvang dienstbetrekking-toets — 12-maanden uitsluiting'
-          reason: |-
-            Categorieën a en b sluiten werknemers uit die in de
-            6 maanden voorafgaand aan dienstbetrekking al bij dezelfde
-            werkgever in dienst waren (anti-misbruik). Deze tijdgebonden
-            herhalingstoets is niet faithful te modelleren met de
-            huidige operatie-set.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
-          accepted: true
-        - construct: 'samenloop met no-riskpolis, LKS en loondispensatie'
-          reason: |-
-            Voor categorie c (banenafspraak) was er tot 2024 samenloop
-            mogelijk met LKS; sinds 2025 is de banenafspraak-LKV
-            structureel gemaakt en is de doelgroepverklaring afgeschaft
-            (mogelijk geworden door de koppeling doelgroepregister ↔
-            polisadministratie; voor de WIA bestaat die koppeling nog niet,
-            zie heeft_geldige_doelgroepverklaring_2_15).
-            Cumulatieregels staan niet in deze artikelen.
-
-            Juristvalidatie (juni 2026): LKV en de no-riskpolis
-            (Ziektewet 29b) gaan altijd samen op — beide hangen aan
-            dezelfde doelgroep-status, via één bron: de kapstok
-            (is_doelgroep_banenafspraak ← Wfsv 38b
-            behoort_tot_doelgroepregister_banenafspraak). LKS (Pwet 10d) of
-            loondispensatie (Wajong 2:20) komen daar bóvenop bij
-            loonwaarde < minimumloon. Zie de uitgebreide samenloop-
-            notitie bij Ziektewet 29b.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
-
+        - about: >-
+            de samenloop met de no-riskpolis, de loonkostensubsidie en de
+            loondispensatie
+          reason: >-
+            Samenloop is een regel over regelingen heen. Het formaat kent alleen
+            regels binnen een artikel en verdringing tussen twee regelingen via
+            overrides, en heeft geen vorm voor een regel die boven het stelsel staat.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een stelselregel die de uitkomsten van meerdere regelingen
+            tegen elkaar afzet, met de voorrangsregel van Wtl artikel 4.1 lid 3 als
+            eerste toepassing.
+          target: []
+          legal_text_excerpt: >-
+            Een werkgever kan in de loonaangifte een verzoek doen voor de volgende
+            tegemoetkomingen
           accepted: true
   - number: '2.6'
     text: |-
@@ -956,22 +939,35 @@ articles:
                 onderdeel a voor de 35-minners; lid 3 sluit uit. De doelgroepverklaring
                 van onderdeel c is dus een harde eis: zonder verklaring geen categorie
                 a, ook met het juiste uitkeringsverleden.
-      untranslatables:
-        - construct: zes-maandentoets van lid 1 onderdeel b
-          reason: |-
-            Onderdeel b vraagt of de werknemer op enig moment in de zes maanden
-            voor indiensttreding bij deze werkgever in dienstbetrekking was. Die
-            tijdgebonden herhalingstoets over de loonaangifteketen is met de
-            huidige operatie-set niet faithful te modelleren; de engine ontvangt de
-            uitkomst als boolean.
+      markings:
+        - about: >-
+            de toets of de werknemer op enig moment in de zes maanden voor de
+            indiensttreding bij deze werkgever in dienstbetrekking was
+          reason: >-
+            Zelfde vorm als de uitsluiting in artikel 2.1: het formaat kent geen toets
+            over een terugkijkvenster op de loonaangifteketen.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over een reeks eerdere dienstbetrekkingen
+            binnen een venster kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            niet op enig moment in de periode van zes maanden voorafgaand aan de datum
+            van indiensttreding in dienstbetrekking bij de werkgever is geweest
           accepted: true
-        - construct: vijfjaarsvenster en elf-wekenvoorwaarde van lid 2
-          reason: |-
-            Lid 2 combineert een vijfjaarstermijn na de wachttijd met vier
-            alternatieve startpunten, een arbeidskundig oordeel over de 35%-grens,
-            en een elf-wekenvoorwaarde met een tenzij-clausule. De termijnrekening
-            en het arbeidskundig oordeel zijn beide UWV-werk; de engine ontvangt
-            een boolean.
+        - about: >-
+            het vijfjaarsvenster met vier alternatieve startpunten en de elf-
+            wekenvoorwaarde met tenzij-clausule van lid 2
+          reason: >-
+            Het formaat kan een termijn vanaf een van vier alternatieve startpunten
+            niet uitdrukken, en evenmin een voorwaarde met een uitzondering die van
+            een eerdere dienstbetrekking afhangt.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een termijn met alternatieve startpunten, en een
+            uitzonderingsclausule binnen een voorwaarde.
+          target: []
+          legal_text_excerpt: binnen vijf jaar na de eerste dag na afloop van de wachttijd
           accepted: true
   - number: '2.7'
     text: |-
@@ -1329,14 +1325,23 @@ articles:
               bwb_id: BWBR0037522
               article: '2.14'
               paragraph: '1'
-      untranslatables:
-        - construct: onderbrekingen binnen de periode van artikel 2.16
-          reason: |-
-            Lid 4 bepaalt dat onderbrekingen van een dienstbetrekking tussen
-            dezelfde werkgever en werknemer binnen de periode van artikel 2.16 lid
-            1 geacht worden niet te hebben plaatsgevonden. Die samentelling over
-            dienstverbanden heen is niet met de huidige operatie-set uit te
-            drukken.
+      markings:
+        - about: >-
+            onderbrekingen die geacht worden niet te hebben plaatsgevonden binnen de
+            periode van artikel 2.16
+          reason: >-
+            Het formaat rekent over een dienstbetrekking en kent geen samentelling van
+            meerdere dienstbetrekkingen tussen dezelfde werkgever en werknemer tot een
+            doorlopende periode.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin meerdere dienstbetrekkingen tot een doorlopende periode
+            worden samengeteld.
+          target: []
+          legal_text_excerpt: >-
+            worden onderbrekingen van een dienstbetrekking tussen dezelfde werkgever
+            en werknemer binnen de periode, bedoeld in artikel 2.16, eerste lid,
+            geacht niet te hebben plaatsgevonden
           accepted: true
   - number: '2.15'
     text: |-

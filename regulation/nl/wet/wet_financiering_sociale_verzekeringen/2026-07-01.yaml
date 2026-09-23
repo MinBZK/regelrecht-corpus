@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: wet_financiering_sociale_verzekeringen
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -1766,8 +1766,10 @@ articles:
             description: |-
               Datum waarop persoon is opgenomen in doelgroepregister
               banenafspraak. Pass-through van invoer (UWV-bron).
-              Voor LKV-banenafspraak-periode (3 jaar vanaf opname,
-              Wtl 2.10-2.13).
+              Gebruikt door het loonkostenvoordeel doelgroep
+              banenafspraak (Wtl 2.10 tot en met 2.13), dat loopt
+              zolang de dienstbetrekking en de voorwaarden bestaan
+              (Wtl 2.12); een vaste termijn kent dat artikel niet.
           - name: vaststelling_door
             type: string
             description: |-
@@ -1989,51 +1991,21 @@ articles:
                 loonaangifte (Wet LB 1964 art. 28 lid 1) én in
                 polisadministratie (SUWI art. 33 lid 2). Geen rekenoutput
                 hier; afnemers gebruiken polisadministratie.
-      untranslatables:
-        - construct: 'AMvB-indicatie (38b.1.d) — verwijst naar nog op te stellen indicatie'
-          reason: |-
-            38b.1.d delegeert de inhoudelijke indicatie naar een AMvB
-            ('bij of krachtens algemene maatregel van bestuur vastgestelde
-            indicatie'). De feitelijke indicatie-criteria staan niet in
-            38b zelf en zijn dus niet uit dit artikel zelf afleidbaar.
-            Modelleer-keuze: parameter $voldoet_aan_amvb_indicatie_38b_1_d
-            (bron: UWV); ware modellering via open_terms/implements naar
-            de AMvB valt buiten deze iteratie (geen aparte AMvB-YAML).
-          accepted: true
-        - construct: 'AMvB-beoordelingsregels jonggehandicapt (38b.3)'
-          reason: |-
-            38b.3 delegeert beoordelingsregels voor het UWV-oordeel onder
-            38b.2 naar een AMvB. De engine ontvangt de uitkomst van die
-            beoordeling als vlag $is_jonggehandicapt_uwv_oordeel_lid_2;
-            de onderliggende beoordeling zelf wordt niet hier gemodelleerd.
-          accepted: true
-        - construct: 'definitie verloonde uren (38b.4) — alleen begripsbepaling'
-          reason: |-
-            38b.4 is een definitie-artikel: het verklaart wat 'verloonde
-            uren' betekent. Het levert zelf geen numeriek aantal verloonde
-            uren — dat komt uit polisadministratie. Output
-            verloonde_uren_definitie_actief is een pass-through TRUE die
-            aangeeft dat de definitie geldt; afnemende artikelen
-            (bv. Wtl 2.13 of Wfsv 122n) halen het feitelijke aantal uit
-            externe bron.
-          accepted: true
-        - construct: 'datum_opname_doelgroepregister als invoer (geen berekening)'
-          reason: |-
-            De opname-datum wordt door UWV vastgelegd in de registratie
-            (38d). 38b zelf bevat geen berekening van deze datum; de YAML
-            modelleert dit als pass-through-invoer. Voor LKV-banenafspraak-
-            periode (3 jaar) gebruiken afnemers de datum die UWV verstrekt.
-          accepted: true
-        - construct: 'chapeau-uitsluiting beschut werk (Pwet 10b lid 1)'
-          reason: |-
-            Het chapeau van 38b.1 sluit personen uit die door college zijn
-            vastgesteld als uitsluitend in beschutte omgeving onder
-            aangepaste omstandigheden. Deze vaststelling is een Pwet-
-            vaststelling (college). Cross-law via source.regulation naar
-            Pwet zou cleaner zijn; modelleer-keuze nu: parameter-vlag
-            $is_uitgesloten_beschut_werk_pwet_10b. Latere iteratie kan
-            naar Pwet 10b koppelen.
-          accepted: true
+      open_terms:
+        - id: amvb_indicatie_38b_1_d
+          description: >-
+            De indicatie die de arbeidsbeperkte van artikel 38b lid 1 onderdeel d
+            aanwijst.
+          type: boolean
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: AMVB
+        - id: beoordelingsregels_jonggehandicapt_38b_2
+          description: De regels waarnaar het UWV het oordeel van artikel 38b lid 2 velt.
+          type: boolean
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: AMVB
   - number: 38c
     text: |-
       Bij regeling van Onze Minister worden werkgevers voor de toepassing van deze paragraaf en [artikel 122n][ref1]
@@ -2531,52 +2503,40 @@ articles:
                 nadere regels gesteld met betrekking tot de variabelen F
                 en G van de formule, bedoeld in het tweede lid.' Met
                 voorhang-procedure (vier weken aan beide kamers).
-      untranslatables:
-        - construct: 'berekeningsformule quotumpercentage (38f.2 — variabelen A t/m H)'
-          reason: |-
-            38f.2 bevat de berekeningsformule met acht variabelen (A t/m H)
-            voor macro-vaststelling per sector (overheid/niet-overheid).
-            De feitelijke formule (in de wet aangeduid met 'overeenkomstig
-            de volgende formule:') is niet als algebraïsche expressie
-            opgenomen in de YAML-articles-array — alleen de variabel-
-            definities (38f.2.A t/m 38f.2.H). De formule zelf is in de
-            geconsolideerde wettekst typografisch weergegeven en niet
-            machine-leesbaar overgenomen in het corpus. Bovendien werken
-            de variabelen op macro-niveau (sector totaal aantal banen,
-            gemiddeld aantal verloonde uren) — geen persoon-scope.
-            Voor de banenafspraak-doelgroepregister-iteratie van het
-            financieel CV is deze berekening niet relevant; pas-toe-of-
-            leg-uit: niet gemodelleerd, expliciet als untranslatable
-            gemarkeerd.
-          legal_text_excerpt: 'De quotumpercentages worden berekend overeenkomstig de volgende formule:'
-          suggestion: |-
-            Latere iteratie: variabelen A-H modelleren als open_terms en
-            de AMvB (38f.3/38f.4) als implements-artikel, met de formule
-            als ADD/SUBTRACT/MULTIPLY/DIVIDE-keten zodra de formule
-            tekstueel in het corpus is opgenomen.
+      markings:
+        - about: >-
+            de termijn 'in het kalenderjaar voorafgaand aan het kalenderjaar waarover
+            het quotumtekort wordt bepaald'
+          reason: >-
+            De motor rekent met dagen en met een datum als geheel, en kent geen
+            kalenderjaar als zelfstandige waarde. De termijn is daarom benaderd met
+            365 dagen, terwijl de bindende termijn het einde van kalenderjaar t-1 is.
+          resolution: operation
+          resolved_by: >-
+            Een YEAR-bewerking die het jaardeel van een datum oplevert, zodat een
+            termijn op een kalenderjaar kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            in het kalenderjaar voorafgaand aan het kalenderjaar waarover het
+            quotumtekort
           accepted: true
-        - construct: 'AMvB-delegatie variabelen A-E en H (38f.3)'
-          reason: |-
-            38f.3 delegeert nadere regels voor variabelen A-E en H naar
-            AMvB. Concrete getallen / categorieën zitten niet in deze
-            wet. Engine output variabelen_amvb_38f_3 is pass-through
-            van de delegatie-set.
-          accepted: true
-        - construct: 'AMvB-delegatie variabelen F en G met voorhang (38f.4)'
-          reason: |-
-            38f.4 delegeert variabelen F en G naar AMvB met voorhang-
-            procedure (vier weken aan beide kamers). Procedurele
-            voorhang-bewaking valt buiten engine-scope; alleen het feit
-            van delegatie is hier gemodelleerd.
-          accepted: true
-        - construct: 'beslissingstermijn als kalenderjaar t-1 ipv concrete dag-termijn'
-          reason: |-
-            38f.1 noemt geen dag-termijn maar 'in het kalenderjaar
-            voorafgaand'. Engine modelleert dit als 365 dagen
-            (uiterste moment binnen t-1). De juridisch bindende termijn
-            blijft 'voor afloop kalenderjaar t-1'; afnemers moeten
-            kalenderjaar_vaststelling i.c.m. eindjaar interpreteren.
-          accepted: true
+      open_terms:
+        - id: quotumvariabelen_a_tot_e_en_h
+          description: >-
+            Nadere regels voor de variabelen A tot en met E en H van de
+            berekeningsformule van artikel 38f lid 2.
+          type: number
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: AMVB
+        - id: quotumvariabelen_f_en_g
+          description: >-
+            Nadere regels voor de variabelen F en G van de berekeningsformule van
+            artikel 38f lid 2, vast te stellen na voorhang bij beide kamers.
+          type: number
+          required: true
+          delegated_to: Onze Minister
+          delegation_type: AMVB
   - number: 38g
     text: |-
       1 Ten behoeve van de vaststelling van de quotumheffing, bedoeld in [artikel 38h][ref1], wordt het quotumtekort per
