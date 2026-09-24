@@ -73,6 +73,15 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_pensioengerechtigde_leeftijd_bereikt               | false      |
       | heeft_loonaangifte_verzoek_ingediend                     | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | verloonde_uren_voorwaarden_2_6 | 1664 |
+      | verloonde_uren_voorwaarden_2_10 | 1664 |
+      | verloonde_uren_voorwaarden_2_14 | 1664 |
+      | verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling | false |
+      | periode_2_12_is_verstreken | false |
+      | periode_2_8_is_verstreken | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true

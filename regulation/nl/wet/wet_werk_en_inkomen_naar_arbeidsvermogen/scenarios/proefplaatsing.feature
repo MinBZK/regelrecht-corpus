@@ -26,6 +26,9 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
+      | heeft_recht_op_wga_uitkering | true |
+      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
+      | is_medisch_duurzaam | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_voorwaarden" is true
@@ -45,6 +48,9 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
+      | heeft_recht_op_wga_uitkering | true |
+      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
+      | is_medisch_duurzaam | false |
     When I evaluate "sollicitatieplicht_opgeschort" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "sollicitatieplicht_opgeschort" is true
@@ -62,6 +68,9 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
+      | heeft_recht_op_wga_uitkering | false |
+      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
+      | is_medisch_duurzaam | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
@@ -79,6 +88,9 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | false     |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
+      | heeft_recht_op_wga_uitkering | true |
+      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
+      | is_medisch_duurzaam | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_voorwaarden" is false

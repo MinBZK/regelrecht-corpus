@@ -1700,6 +1700,12 @@ articles:
               38b.1.f uitsluiting: persoon valt onder onderdeel c-historie
               (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
               tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
+          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10b lid 6. Doorgegeven aan de Participatiewet.
           - name: heeft_wia_uitkering_hoofdstuk_6
             type: boolean
             required: true
@@ -1755,6 +1761,7 @@ articles:
               regulation: participatiewet
               output: is_uitsluitend_aangewezen_op_beschut_werk
               parameters:
+                aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
                 bsn: $bsn
                 behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
                 college_heeft_vastgesteld_uitsluitend_beschut_werk: $college_heeft_vastgesteld_uitsluitend_beschut_werk

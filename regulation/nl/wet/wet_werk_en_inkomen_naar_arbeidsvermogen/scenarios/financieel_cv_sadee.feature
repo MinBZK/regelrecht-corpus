@@ -54,8 +54,10 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | pwet_college_draagt_zorg_uitsluiting       | false     |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
     When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false
-    And output "heeft_recht_op_jobcoaching" is false
-    And output "heeft_recht_op_werkplekaanpassing" is false
+    And output "mag_jobcoaching_toekennen" is false
+    And output "mag_werkplekaanpassing_toekennen" is false

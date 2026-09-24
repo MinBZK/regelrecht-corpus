@@ -17,6 +17,7 @@ Feature: Participatiewet, beschut werk (artikel 10b)
       | behoort_tot_doelgroep_10b_lid_1                  | true      |
       | college_heeft_vastgesteld_uitsluitend_beschut_werk | true    |
       | heeft_dienstbetrekking_beschut_werk              | true      |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "verricht_arbeid_in_beschut_werk" of "participatiewet"
     Then the execution succeeds
     And output "is_uitsluitend_aangewezen_op_beschut_werk" is true
@@ -29,6 +30,7 @@ Feature: Participatiewet, beschut werk (artikel 10b)
       | behoort_tot_doelgroep_10b_lid_1                  | true      |
       | college_heeft_vastgesteld_uitsluitend_beschut_werk | false   |
       | heeft_dienstbetrekking_beschut_werk              | true      |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "verricht_arbeid_in_beschut_werk" of "participatiewet"
     Then the execution succeeds
     And output "verricht_arbeid_in_beschut_werk" is false

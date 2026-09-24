@@ -54,6 +54,11 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | loonwaarde_eurocent_per_maand                       | 150850    |
       | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
       | overeengekomen_arbeidsduur_uren_per_week            | 32        |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
+      | dienstbetrekking_is_tot_stand_gekomen | false |
+      | college_heeft_loonwaarde_vastgesteld | false |
+      | vaststelling_loonwaarde_blijft_achterwege | false |
+      | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate "heeft_recht_op_lks" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is false

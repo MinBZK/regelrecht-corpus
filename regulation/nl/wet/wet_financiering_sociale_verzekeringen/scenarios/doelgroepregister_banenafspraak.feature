@@ -54,6 +54,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2025-11-03 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -90,6 +93,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
@@ -122,6 +128,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -154,6 +163,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is true
@@ -181,6 +193,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -208,6 +223,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2024-05-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is true
@@ -241,6 +259,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2014-02-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_f" is false
@@ -271,18 +292,21 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
       | was_arbeidsbeperkte_lid_1_of_2                           | true       |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
     And output "voldoet_aan_grond_38b_2" is false
     And output "voldoet_aan_grond_38b_6" is true
     And output "is_arbeidsbeperkte" is true
-    # NB: grond_opname_doelgroepregister kent geen tak voor lid 6, dus valt
-    # hier terug op de default. Iemand staat dan wél in het register terwijl
-    # het veld dat de grond benoemt "geen" zegt. Dat is een gat in de
-    # modellering van dit ene veld, niet in de registratie zelf — vastgelegd
-    # zodat het zichtbaar blijft in plaats van te verdwijnen.
-    And output "grond_opname_doelgroepregister" equals "geen"
+    # Lid 6 heeft sinds de fideliteitsaudit een eigen tak in
+    # grond_opname_doelgroepregister. Daarvoor viel dit geval terug op de
+    # default, zodat iemand wél arbeidsbeperkte was terwijl het veld dat de
+    # grond benoemt "geen" zei — twee uitkomsten van hetzelfde artikel die
+    # elkaar tegenspraken.
+    And output "grond_opname_doelgroepregister" equals "blijfgrond_38b_6"
 
   # Twin: dezelfde persoon, maar zijn registratie is beëindigd. Lid 6
   # vraagt om beide voorwaarden tegelijk.
@@ -303,6 +327,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
       | was_arbeidsbeperkte_lid_1_of_2                           | true       |
       | registratie_nog_niet_geeindigd                           | false      |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_6" is false
@@ -333,6 +360,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2025-01-06 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -359,6 +389,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2026-01-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is false

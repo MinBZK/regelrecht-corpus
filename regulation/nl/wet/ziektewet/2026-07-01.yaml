@@ -2339,6 +2339,13 @@ articles:
             type: boolean
             required: true
             description: 'Wajong 2:15 lid 1 onderdeel b (artikel 2:11). Bron: UWV.'
+          - name: datum_voldaan_aan_lid_1
+            type: date
+            required: true
+            description: |-
+              Wajong 2:15 lid 2: de dag waarop aan alle voorwaarden van
+              lid 1 wordt voldaan, ten vroegste het achttiende jaar.
+              Doorgegeven aan de Wajong.
           - name: datum_aanvraag_arbeidsondersteuning_wajong
             type: date
             required: false
@@ -2390,6 +2397,37 @@ articles:
               geldende Wsw-indicatiebeschikking (artikel 11 Wsw, oud).
               Bron: gemeente / UWV.
           # --- lid 2 onderdeel e: doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
+          - name: werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10d lid 1, aanhef. Doorgegeven aan de Participatiewet.
+          - name: dienstbetrekking_is_tot_stand_gekomen
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10d lid 1 onderdelen a en b, slot. Doorgegeven aan de
+              Participatiewet.
+          - name: college_heeft_loonwaarde_vastgesteld
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10d lid 1 onderdeel a. Doorgegeven aan de Participatiewet.
+          - name: vaststelling_loonwaarde_blijft_achterwege
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10d lid 1 onderdeel b. Doorgegeven aan de Participatiewet.
+          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10b lid 6. Doorgegeven aan de Participatiewet.
           - name: is_uitgesloten_beschut_werk_pwet_10b
             type: boolean
             required: true
@@ -2607,7 +2645,7 @@ articles:
           - name: einddatum_tijdvak_lid_1_b
             type: date
             nullable: true
-            required: false
+            required: true
             description: |-
               Lid 1 onderdeel b noemt zes tijdvakken waarvan de eerste dag
               erna telt: de wachttijd van artikel 23 Wet WIA, de tijdvakken
@@ -2630,7 +2668,7 @@ articles:
           - name: wsw_subsidiebedrag_per_werkdag_eurocent
             type: amount
             nullable: true
-            required: false
+            required: true
             type_spec:
               unit: eurocent
             description: |-
@@ -2729,6 +2767,7 @@ articles:
                 is_uitsluitingsgrond_2_11_van_toepassing: $is_uitsluitingsgrond_2_11_wajong_van_toepassing
                 geboortedatum: $geboortedatum
                 datum_aanvraag_arbeidsondersteuning: $datum_aanvraag_arbeidsondersteuning_wajong
+                datum_voldaan_aan_lid_1: $datum_voldaan_aan_lid_1
                 is_volledig_en_duurzaam_arbeidsongeschikt_wajong: $is_volledig_en_duurzaam_arbeidsongeschikt_wajong
                 recht_herleeft_op_grond_van_2_17: $recht_op_arbeidsondersteuning_herleeft_2_17
               description: |-
@@ -2778,6 +2817,11 @@ articles:
                 loonwaarde_eurocent_per_maand: $loonwaarde_eurocent_per_maand
                 overeengekomen_arbeidsduur_uren_per_week: $overeengekomen_arbeidsduur_uren_per_week
                 minimumloon_plus_vakantiebijslag_eurocent_per_maand: $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+                werkgever_is_voornemens_dienstbetrekking_aan_te_gaan: $werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
+                dienstbetrekking_is_tot_stand_gekomen: $dienstbetrekking_is_tot_stand_gekomen
+                college_heeft_loonwaarde_vastgesteld: $college_heeft_loonwaarde_vastgesteld
+                vaststelling_loonwaarde_blijft_achterwege: $vaststelling_loonwaarde_blijft_achterwege
+                datum_aanvang_dienstbetrekking: $datum_aanvang_dienstbetrekking
               description: |-
                 Lid 2 onderdeel e (alternatief): ten behoeve van de
                 werknemer wordt loonkostensubsidie verstrekt op grond van
@@ -2796,6 +2840,7 @@ articles:
                 behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
                 college_heeft_vastgesteld_uitsluitend_beschut_werk: $is_uitgesloten_beschut_werk_pwet_10b
                 heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
+                aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
               description: |-
                 Lid 2 onderdeel f: arbeid in een dienstbetrekking als
                 bedoeld in Pwet 10b lid 1 (beschut werk).

@@ -65,11 +65,13 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | false     |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
     When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
@@ -83,11 +85,13 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | false     |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | false     |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | false |
     When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "mag_jobcoaching_toekennen" is true
@@ -99,11 +103,13 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | true      |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
     When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is false

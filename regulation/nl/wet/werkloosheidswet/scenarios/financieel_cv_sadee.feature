@@ -51,7 +51,10 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "werkloosheidswet"
+      | uitkeringsduur_hoofdstuk_ii_is_verstreken | false |
+      | dagen_ziekte_onderbreking_proefplaatsing | 0 |
+      | datum_aanvang_proefplaatsing | null |
+    When I evaluate "uwv_mag_toestemming_verlenen" of "werkloosheidswet"
     Then the execution succeeds
-    And output "mag_proefplaatsing_aangaan" is false
+    And output "uwv_mag_toestemming_verlenen" is false
     And output "ww_uitkering_blijft_bestaan" is false
