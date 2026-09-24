@@ -1517,6 +1517,13 @@ articles:
               geachte voorziening gericht op arbeidsinschakeling —
               omvat de werkplekaanpassingen die artikel 10e lid 2 c
               opsomt.
+          - name: aanvraag_tot_gevolggeving_ingediend
+            type: boolean
+            description: |-
+              Lid 5: de persoon of de werkgever heeft bij het college een
+              aanvraag ingediend om gevolg te geven aan de aanspraak van
+              lid 1. De aanvraag is de weg naar effectuering; zij bepaalt
+              niet of de aanspraak bestaat.
         actions:
           - output: behoort_tot_doelgroep_artikel_10
             value:
@@ -1553,31 +1560,46 @@ articles:
               conditions:
                 - $behoort_tot_doelgroep_artikel_10
                 - $kan_taken_niet_verrichten_zonder_ondersteuning
-                - $aanvraag_ingediend
               legal_basis:
                 law: Participatiewet
                 bwb_id: BWBR0015703
                 article: '10'
                 paragraph: '1'
                 explanation: |-
-                  Slotzin lid 1 stelt de noodzakelijkheidseis aan de
-                  persoonlijke ondersteuning; lid 5 regelt de aanvraag.
+                  De slotzin van lid 1 stelt de noodzakelijkheidseis aan
+                  de persoonlijke ondersteuning. Lid 1 kent de aanspraak
+                  onvoorwaardelijk toe; de aanvraag van lid 5 is de weg om
+                  daaraan gevolg te geven en staat daarom niet in deze
+                  voorwaarde.
           - output: heeft_aanspraak_op_voorziening_arbeidsinschakeling
             value:
               operation: AND
               conditions:
                 - $behoort_tot_doelgroep_artikel_10
                 - $college_acht_voorziening_noodzakelijk
-                - $aanvraag_ingediend
               legal_basis:
                 law: Participatiewet
                 bwb_id: BWBR0015703
                 article: '10'
                 paragraph: '1'
                 explanation: |-
-                  De voorziening is er alleen als het college haar
-                  noodzakelijk acht (lid 1), na onderzoek (lid 4), op
-                  aanvraag (lid 5).
+                  De voorziening is er als het college haar noodzakelijk
+                  acht (lid 1), na onderzoek (lid 4). De aanvraag van
+                  lid 5 effectueert de aanspraak en is geen voorwaarde
+                  voor het ontstaan ervan.
+          - output: aanvraag_tot_gevolggeving_ingediend
+            value: $aanvraag_ingediend
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10'
+              paragraph: '5'
+              explanation: |-
+                "Een persoon als bedoeld in het eerste of tweede lid, of
+                een werkgever, kan bij het college een aanvraag indienen
+                om gevolg te geven aan de aanspraak, bedoeld in het eerste
+                lid." De aanspraak bestaat op grond van lid 1; lid 5
+                regelt hoe daaraan gevolg wordt gegeven.
       open_terms:
         - id: voorwaarden_voorzieningen_verordening
           type: string
@@ -1863,10 +1885,34 @@ articles:
               Lid 1, slot: de persoon verricht werkzaamheden in een
               dienstbetrekking in een beschutte omgeving onder aangepaste
               omstandigheden. Bron: gemeente / werkgever.
+          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+            type: boolean
+            nullable: true
+            required: false
+            description: |-
+              Lid 6: het college heeft het aantal dienstbetrekkingen
+              bereikt dat op grond van lid 4 (ministeriële regeling) of
+              lid 5 (verordening) voor deze gemeente geldt. Zolang dat
+              niet is aangeleverd, wordt aangenomen dat het quotum niet
+              is gerealiseerd en de plicht van lid 1 dus bestaat.
+              Bron: gemeente.
         output:
           - name: is_uitsluitend_aangewezen_op_beschut_werk
             type: boolean
             description: 'Lid 1: de vaststelling van het college.'
+          - name: college_moet_voorziening_beschut_werk_aanbieden
+            type: boolean
+            description: |-
+              Lid 1: het college biedt de voorziening beschut werk aan —
+              een gebonden plicht, niet een kan-bepaling. Lid 6 laat die
+              plicht vervallen zodra het aantal dienstbetrekkingen van
+              lid 4 of lid 5 is gerealiseerd.
+          - name: plicht_vervallen_wegens_gerealiseerd_aantal
+            type: boolean
+            description: |-
+              Lid 6: het eerste lid is niet van toepassing als het aantal
+              dienstbetrekkingen, bedoeld in het vierde of vijfde lid,
+              door het college is gerealiseerd.
           - name: verricht_arbeid_in_beschut_werk
             type: boolean
             description: |-
@@ -1875,6 +1921,44 @@ articles:
         actions:
           - output: is_uitsluitend_aangewezen_op_beschut_werk
             value: $college_heeft_vastgesteld_uitsluitend_beschut_werk
+          - output: plicht_vervallen_wegens_gerealiseerd_aantal
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+                    value: null
+                  then: false
+              default: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 10b
+                paragraph: '6'
+                explanation: |-
+                  "Het eerste lid is niet van toepassing indien het aantal
+                  dienstbetrekkingen, bedoeld in het vierde of het vijfde
+                  lid, door het college is gerealiseerd."
+          - output: college_moet_voorziening_beschut_werk_aanbieden
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_10b_lid_1
+                - $college_heeft_vastgesteld_uitsluitend_beschut_werk
+                - operation: NOT
+                  value: $plicht_vervallen_wegens_gerealiseerd_aantal
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 10b
+                paragraph: '1'
+                explanation: |-
+                  "Het college biedt ... ambtshalve of op verzoek een
+                  voorziening beschut werk aan." Gebonden: de wet schrijft
+                  het aanbod voor zodra de persoon tot de kring van lid 1
+                  behoort en het college de vaststelling heeft gedaan.
+                  Lid 6 is de enige uitzondering.
           - output: verricht_arbeid_in_beschut_werk
             value:
               operation: AND
@@ -1957,6 +2041,109 @@ articles:
         artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
+    machine_readable:
+      definitions:
+        aanvraagtermijn_lid_2_maanden:
+          value: 12
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: is_persoon_artikel_7_lid_1_a_of_7a
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a: persoon als bedoeld in artikel 7 lid 1
+              onderdeel a, of artikel 7a lid 1 onderdeel a of lid 3.
+              Bron: gemeente.
+          - name: is_persoon_kring_ambtshalve_vaststelling
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: persoon als bedoeld in artikel 7 lid 1
+              onderdeel a onder 1, 2, 3, 5 of 6, artikel 7a lid 1
+              onderdeel a of lid 3, of artikel 10d lid 2. Bron: gemeente.
+          - name: datum_vorige_aanvraag_doelgroepvaststelling
+            type: date
+            nullable: true
+            required: false
+            description: |-
+              Lid 2: datum waarop de vorige aanvraag als bedoeld in lid 1
+              onderdeel a is ingediend. Zonder eerdere aanvraag is deze
+              afwezig. Bron: gemeente.
+        output:
+          - name: mag_op_aanvraag_vaststellen
+            type: boolean
+            description: |-
+              Lid 1 onderdeel a: het college is bevoegd op schriftelijke
+              aanvraag vast te stellen of de persoon tot de doelgroep
+              loonkostensubsidie behoort. Een bevoegdheid, geen recht:
+              de wet zegt "kan".
+          - name: mag_ambtshalve_vaststellen
+            type: boolean
+            description: |-
+              Lid 1 onderdeel b: het college is bevoegd die vaststelling
+              ambtshalve te doen.
+          - name: aanvraag_is_toegestaan_lid_2
+            type: boolean
+            description: |-
+              Lid 2: een aanvraag als bedoeld in lid 1 onderdeel a kan
+              slechts eenmaal per twaalf maanden worden ingediend.
+        actions:
+          - output: mag_op_aanvraag_vaststellen
+            value: $is_persoon_artikel_7_lid_1_a_of_7a
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: 10c
+              paragraph: '1'
+              explanation: |-
+                "Het college kan op schriftelijke aanvraag van een persoon
+                als bedoeld in de artikelen 7, eerste lid, onderdeel a, of
+                7a, eerste lid, onderdeel a, of derde lid, vaststellen of
+                die persoon tot de doelgroep loonkostensubsidie behoort."
+                Een kan-bepaling: het model geeft de bevoegdheid weer, niet
+                een aanspraak van de aanvrager.
+          - output: mag_ambtshalve_vaststellen
+            value: $is_persoon_kring_ambtshalve_vaststelling
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: 10c
+              paragraph: '1'
+              explanation: |-
+                Onderdeel b: dezelfde bevoegdheid, ambtshalve, voor een
+                ruimere kring van personen.
+          - output: aanvraag_is_toegestaan_lid_2
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_vorige_aanvraag_doelgroepvaststelling
+                    value: null
+                  then: true
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $referencedate.iso
+                value:
+                  operation: DATE_ADD
+                  date: $datum_vorige_aanvraag_doelgroepvaststelling
+                  months: $aanvraagtermijn_lid_2_maanden
+              legal_basis:
+                law: Participatiewet
+                bwb_id: BWBR0015703
+                article: 10c
+                paragraph: '2'
+                explanation: |-
+                  "Een aanvraag als bedoeld in het eerste lid, onderdeel a,
+                  kan slechts eenmaal per twaalf maanden worden ingediend."
+                  Zonder eerdere aanvraag staat de weg open.
   - number: 10d
     text: |-
       1 Indien een werkgever voornemens is een dienstbetrekking aan te gaan met een persoon die behoort tot de
