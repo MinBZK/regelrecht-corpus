@@ -2186,6 +2186,10 @@ articles:
           value: 5
         grens_arbeidsongeschiktheid_lid_1_b_procent:
           value: 35
+        percentage_ziekengeld_lid_5:
+          value: 70
+        datum_ingang_lid_2_onderdeel_e:
+          value: '2015-01-01'
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -2574,6 +2578,52 @@ articles:
               Lid 4: de dienstbetrekking bij de werkgever is voortgezet
               nadat het recht op WIA-uitkering is vastgesteld. Bron:
               werkgever / UWV.
+          # --- lid 8: de uitsluiting die het hele artikel opzij zet ---
+          - name: verricht_arbeid_in_wsw_dienstbetrekking_artikel_2
+            type: boolean
+            required: true
+            description: |-
+              Lid 8: de werknemer is werkzaam in een dienstbetrekking in
+              de zin van artikel 2 van de Wet sociale werkvoorziening.
+              Onderscheiden van lid 2 onderdeel b, dat over een
+              arbeidsovereenkomst met een werkgever als bedoeld in
+              artikel 7 Wsw gaat. Bron: gemeente / Wsw-bedrijf.
+          # --- lid 1 onderdeel b: het maatgevende tijdvak ---
+          - name: einddatum_tijdvak_lid_1_b
+            type: date
+            nullable: true
+            required: false
+            description: |-
+              Lid 1 onderdeel b noemt zes tijdvakken waarvan de eerste dag
+              erna telt: de wachttijd van artikel 23 Wet WIA, de tijdvakken
+              van artikel 24 lid 1, 25 lid 9 en 26 lid 2 tweede zin van die
+              wet, het tijdvak van artikel 629 lid 11 onderdeel a van
+              Boek 7 BW, en de tijdvakken van artikel 29 lid 10 onderdeel a
+              en artikel 76a lid 6 onderdeel a van deze wet. Dit is de
+              einddatum van het tijdvak dat voor deze werknemer geldt.
+              Ontbreekt de waarde, dan valt het model terug op de
+              WIA-wachttijd. Bron: UWV.
+          # --- lid 5, 6 en 7: de hoogte van het ziekengeld ---
+          - name: dagloon_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 5: het dagloon van de verzekerde, waarover het
+              ziekengeld wordt berekend. Bron: UWV (Dagloonbesluit).
+          - name: wsw_subsidiebedrag_per_werkdag_eurocent
+            type: amount
+            nullable: true
+            required: false
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 7: het aan de werkgever verstrekte subsidiebedrag,
+              bedoeld in artikel 7 van de Wet sociale werkvoorziening,
+              herleid naar werkdagen. Vermindert het dagloon voor de
+              werknemer van lid 2 met een Wsw-arbeidsovereenkomst.
+              Bron: gemeente / Wsw-bedrijf.
         input:
           - name: heeft_recht_op_iva_uitkering
             type: boolean
@@ -2700,7 +2750,7 @@ articles:
             type: boolean
             source:
               regulation: participatiewet
-              output: heeft_recht_op_lks
+              output: heeft_recht_op_lks_lid_2
               parameters:
                 bsn: $bsn
                 behoort_tot_doelgroep_lks: $behoort_tot_doelgroep_lks
@@ -2714,8 +2764,11 @@ articles:
               description: |-
                 Lid 2 onderdeel e (alternatief): ten behoeve van de
                 werknemer wordt loonkostensubsidie verstrekt op grond van
-                Pwet 10d lid 2. De voorwaarde dat de werknemer het
-                minimumloon niet kan verdienen zit in dat recht besloten.
+                Pwet 10d lid 2. De letter noemt uitdrukkelijk het tweede
+                lid, dus wordt de uitkomst van dat lid gelezen en niet het
+                samengestelde recht van artikel 10d. De voorwaarde dat de
+                werknemer het minimumloon niet kan verdienen zit in dat
+                recht besloten.
           - name: verricht_arbeid_in_beschut_werk
             type: boolean
             source:
@@ -2768,6 +2821,34 @@ articles:
             description: |-
               Werkgever heeft recht op de no-risk polis voor deze werknemer:
               Ziektewet artikel 29b lid 1, 2 of 4 is van toepassing.
+          - name: is_uitgesloten_lid_8
+            type: boolean
+            description: |-
+              Lid 8: dit artikel is niet van toepassing als de werknemer
+              werkzaam is in een dienstbetrekking in de zin van artikel 2
+              van de Wet sociale werkvoorziening.
+          - name: peildatum_lid_1_b
+            type: date
+            nullable: true
+            description: |-
+              Lid 1 onderdeel b: de eerste dag na afloop van het voor deze
+              werknemer geldende tijdvak. De wet noemt zes tijdvakken als
+              alternatieven; de WIA-wachttijd is er daar één van.
+          - name: dagloon_voor_ziekengeld_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 7: het dagloon van lid 5, voor de werknemer van lid 2 met
+              een Wsw-arbeidsovereenkomst verminderd met het naar werkdagen
+              herleide subsidiebedrag.
+          - name: ziekengeld_per_dag_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 5: 70 procent van het dagloon. Nul als er geen recht op
+              de no-riskpolis bestaat.
           - name: duur_no_risk_polis_jaren
             type: number
             description: |-
@@ -2793,19 +2874,48 @@ articles:
                   arbeidsvermogen": IVA (artikel 47) of WGA (artikel 54).
           - output: voldoet_aan_lid_1_a
             value: $heeft_recht_op_wia_uitkering
+          - output: peildatum_lid_1_b
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value:
+                      operation: EQUALS
+                      subject: $einddatum_tijdvak_lid_1_b
+                      value: null
+                  then: $einddatum_tijdvak_lid_1_b
+                - when: $is_ziek_geworden_wia
+                  then: $wachttijd_einddatum_wia
+              default: null
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel b rekent vanaf "de eerste dag na afloop van de
+                  wachttijd, bedoeld in artikel 23 van de Wet werk en
+                  inkomen naar arbeidsvermogen of van het tijdvak, bedoeld
+                  in artikel 24, eerste lid, 25, negende lid, of 26, tweede
+                  lid, tweede zin, van die wet of na afloop van het
+                  tijdvak, bedoeld in artikel 629, elfde lid, onderdeel a,
+                  van Boek 7 van het Burgerlijk Wetboek dan wel van het
+                  tijdvak, bedoeld in artikel 29, tiende lid, onderdeel a,
+                  of artikel 76a, zesde lid, onderdeel a". Zes
+                  alternatieven; wordt het geldende tijdvak aangeleverd,
+                  dan telt dat, anders valt het model terug op de
+                  WIA-wachttijd.
           - output: voldoet_aan_lid_1_b
             value:
               operation: IF
               cases:
                 - when:
-                    operation: AND
-                    conditions:
-                      - $is_ziek_geworden_wia
-                      - operation: NOT
-                        value:
-                          operation: EQUALS
-                          subject: $wachttijd_einddatum_wia
-                          value: null
+                    operation: EQUALS
+                    subject: $peildatum_lid_1_b
+                    value: null
+                  then: false
+                - when: true
                   then:
                     operation: AND
                     conditions:
@@ -2817,12 +2927,12 @@ articles:
                       - $niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever
                       - operation: GREATER_THAN_OR_EQUAL
                         subject: $datum_aanvang_dienstbetrekking
-                        value: $wachttijd_einddatum_wia
+                        value: $peildatum_lid_1_b
                       - operation: LESS_THAN_OR_EQUAL
                         subject: $datum_aanvang_dienstbetrekking
                         value:
                           operation: DATE_ADD
-                          date: $wachttijd_einddatum_wia
+                          date: $peildatum_lid_1_b
                           years: $termijn_na_wachttijd_jaren
               default: false
               legal_basis:
@@ -2930,10 +3040,15 @@ articles:
                   werk.
           - output: voldoet_aan_lid_2_e
             value:
-              operation: OR
+              operation: AND
               conditions:
-                - $is_banenafspraak_doelgroep
-                - $heeft_recht_op_lks
+                - operation: GREATER_THAN_OR_EQUAL
+                  subject: $datum_aanvang_dienstbetrekking
+                  value: $datum_ingang_lid_2_onderdeel_e
+                - operation: OR
+                  conditions:
+                    - $is_banenafspraak_doelgroep
+                    - $heeft_recht_op_lks
               legal_basis:
                 law: Ziektewet
                 bwb_id: BWBR0001888
@@ -3020,13 +3135,29 @@ articles:
                   Recht op een WIA-uitkering én voortzetting van de
                   dienstbetrekking bij de eigen werkgever nadat dat recht
                   is vastgesteld.
+          - output: is_uitgesloten_lid_8
+            value: $verricht_arbeid_in_wsw_dienstbetrekking_artikel_2
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '8'
+              explanation: |-
+                "Dit artikel is niet van toepassing indien de werknemer
+                werkzaam is in een dienstbetrekking in de zin van artikel 2
+                van de Wet sociale werkvoorziening." De uitsluiting geldt
+                voor het hele artikel, dus ook voor lid 2 en lid 4.
           - output: heeft_recht_op_no_risk_polis
             value:
-              operation: OR
+              operation: AND
               conditions:
-                - $voldoet_aan_lid_1
-                - $voldoet_aan_lid_2
-                - $voldoet_aan_lid_4
+                - operation: OR
+                  conditions:
+                    - $voldoet_aan_lid_1
+                    - $voldoet_aan_lid_2
+                    - $voldoet_aan_lid_4
+                - operation: NOT
+                  value: $is_uitgesloten_lid_8
               legal_basis:
                 law: Ziektewet
                 bwb_id: BWBR0001888
@@ -3034,11 +3165,70 @@ articles:
                 explanation: |-
                   Recht op no-risk polis bestaat als de werknemer onder
                   ten minste één van de doelgroepen lid 1, lid 2 of lid 4
-                  valt.
+                  valt, tenzij lid 8 het artikel buiten toepassing laat.
+          - output: dagloon_voor_ziekengeld_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $wsw_subsidiebedrag_per_werkdag_eurocent
+                    value: null
+                  then: $dagloon_eurocent
+                - when:
+                    operation: AND
+                    conditions:
+                      - $voldoet_aan_lid_2
+                      - $is_wsw_werknemer
+                  then:
+                    operation: MAX
+                    values:
+                      - 0
+                      - operation: SUBTRACT
+                        values:
+                          - $dagloon_eurocent
+                          - $wsw_subsidiebedrag_per_werkdag_eurocent
+              default: $dagloon_eurocent
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '7'
+                explanation: |-
+                  "Indien de werknemer, bedoeld in het tweede lid,
+                  werkzaam is op een arbeidsovereenkomst als bedoeld in
+                  artikel 7 van de Wet sociale werkvoorziening, wordt het
+                  dagloon, bedoeld in het vijfde en zesde lid, verminderd
+                  met het, naar werkdagen herleide, aan de werkgever
+                  verstrekte subsidiebedrag."
+          - output: ziekengeld_per_dag_eurocent
+            value:
+              operation: IF
+              cases:
+                - when: $heeft_recht_op_no_risk_polis
+                  then:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $dagloon_voor_ziekengeld_eurocent
+                          - $percentage_ziekengeld_lid_5
+                      - 100
+              default: 0
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '5'
+                explanation: |-
+                  "Het ziekengeld, bedoeld in het eerste, tweede en vierde
+                  lid, bedraagt 70% van het dagloon van de verzekerde."
           - output: duur_no_risk_polis_jaren
             value:
               operation: IF
               cases:
+                - when: $is_uitgesloten_lid_8
+                  then: 0
                 - when: $voldoet_aan_lid_2
                   then: -1
                 - when: $voldoet_aan_lid_1
