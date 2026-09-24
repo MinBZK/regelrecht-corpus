@@ -54,7 +54,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2025-11-03 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
     And output "voldoet_aan_grond_38b_1_b" is false
@@ -64,7 +64,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
     And output "voldoet_aan_grond_38b_1_f" is false
     And output "voldoet_aan_grond_38b_2" is false
     And output "voldoet_aan_grond_38b_6" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "pwet_lks_uwv_loonwaarde"
     And output "datum_opname_doelgroepregister" equals "2025-11-03"
     And output "vaststelling_door" equals "UWV"
@@ -90,13 +90,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
     And output "voldoet_aan_grond_38b_1_c" is true
     And output "voldoet_aan_grond_38b_2" is false
     And output "voldoet_aan_grond_38b_6" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "wajong"
     And output "datum_opname_doelgroepregister" equals "2023-09-12"
 
@@ -122,10 +122,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
     And output "grond_opname_doelgroepregister" equals "geen"
 
   # Derde as: dezelfde persoon, nu met een dienstbetrekking. Onderdeel c
@@ -154,10 +154,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is true
-    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "wajong"
     And output "datum_opname_doelgroepregister" equals "2023-09-12"
 
@@ -181,10 +181,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
     And output "grond_opname_doelgroepregister" equals "geen"
 
   # ────────────────────────────────────────────────────────────────────
@@ -208,9 +208,9 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2024-05-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
-    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "<opnamegrond>"
 
     Examples:
@@ -241,10 +241,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2014-02-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_f" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
 
   # ────────────────────────────────────────────────────────────────────
   # Lid 6 — de blijfgrond
@@ -271,12 +271,12 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
       | was_arbeidsbeperkte_lid_1_of_2                           | true       |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
     And output "voldoet_aan_grond_38b_2" is false
     And output "voldoet_aan_grond_38b_6" is true
-    And output "behoort_tot_doelgroepregister_banenafspraak" is true
+    And output "is_arbeidsbeperkte" is true
     # NB: grond_opname_doelgroepregister kent geen tak voor lid 6, dus valt
     # hier terug op de default. Iemand staat dan wél in het register terwijl
     # het veld dat de grond benoemt "geen" zegt. Dat is een gat in de
@@ -303,10 +303,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
       | was_arbeidsbeperkte_lid_1_of_2                           | true       |
       | registratie_nog_niet_geeindigd                           | false      |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_6" is false
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
 
   # ────────────────────────────────────────────────────────────────────
   # De chapeau-uitsluiting
@@ -333,10 +333,10 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2025-01-06 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
     # De grond geldt, de chapeau wint. Het veld dat de grond benoemt kijkt
     # niet naar de chapeau en noemt hem alsnog — zelfde gat als bij lid 6.
     And output "grond_opname_doelgroepregister" equals "pwet_lks_uwv_loonwaarde"
@@ -359,8 +359,8 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | datum_eerste_opname_doelgroepregister                    | 2026-01-01 |
       | was_arbeidsbeperkte_lid_1_of_2                           | false      |
       | registratie_nog_niet_geeindigd                           | true       |
-    When I evaluate "behoort_tot_doelgroepregister_banenafspraak" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
-    And output "behoort_tot_doelgroepregister_banenafspraak" is false
+    And output "is_arbeidsbeperkte" is false
     And output "grond_opname_doelgroepregister" equals "geen"
     And output "verloonde_uren_definitie_actief" is true

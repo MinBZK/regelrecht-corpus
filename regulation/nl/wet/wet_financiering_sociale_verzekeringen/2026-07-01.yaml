@@ -1700,6 +1700,19 @@ articles:
               38b.1.f uitsluiting: persoon valt onder onderdeel c-historie
               (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
               tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
+          - name: heeft_wia_uitkering_hoofdstuk_6
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: recht op een arbeidsongeschiktheidsuitkering als
+              bedoeld in hoofdstuk 6 van de Wet WIA (de WGA). Bron: UWV.
+          - name: experiment_instrument_82a_suwi_ingezet
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: voor deze persoon is op grond van artikel 82a lid 1
+              van de Wet SUWI bij wijze van experiment het instrument van
+              Wajong 2:20 of 3:63 (loondispensatie) ingezet. Bron: UWV.
           - name: is_jonggehandicapt_uwv_oordeel_lid_2
             type: boolean
             required: true
@@ -1752,13 +1765,13 @@ articles:
                 lid 1). De vaststelling komt uit de bronwet in plaats van als
                 losse parameter.
         output:
-          - name: behoort_tot_doelgroepregister_banenafspraak
+          - name: is_arbeidsbeperkte
             type: boolean
             description: |-
-              Kernoutput: voldoet persoon aan een van de gronden van
-              38b.1 (a t/m f), 38b.2 of de registratie-blijfgrond 38b.6,
-              en is hij niet uitgesloten op grond van chapeau (beschut werk
-              Pwet 10b). Bepaalt opname in doelgroepregister banenafspraak.
+              Kernoutput: de persoon is arbeidsbeperkte in de zin van
+              artikel 38b — op grond van lid 1 (a tot en met g), lid 2 of
+              de blijfgrond van lid 6. Artikel 38b omschrijft het begrip;
+              de registratie zelf is artikel 38d.
           - name: voldoet_aan_grond_38b_1_a
             type: boolean
             description: 38b.1.a — Pwet LKS-traject + UWV-loonwaarde/WML-vaststelling.
@@ -1777,6 +1790,12 @@ articles:
           - name: voldoet_aan_grond_38b_1_f
             type: boolean
             description: 38b.1.f — overgangsrecht (was b of c, nu niet meer).
+          - name: voldoet_aan_grond_38b_1_g
+            type: boolean
+            description: |-
+              38b.1.g — WGA-uitkering (hoofdstuk 6 Wet WIA) met het bij
+              wijze van experiment ingezette instrument van Wajong 2:20
+              of 3:63, op grond van artikel 82a lid 1 Wet SUWI.
           - name: voldoet_aan_grond_38b_2
             type: boolean
             description: 38b.2 — UWV-oordeel jonggehandicapt met voorziening.
@@ -1787,10 +1806,13 @@ articles:
             type: string
             description: |-
               Eerst-passende grond volgens IF-volgorde a → b → c → d → e
-              → f → lid 2. Enum: 'pwet_lks_uwv_loonwaarde' | 'wsw' |
-              'wajong' | 'amvb_38b_1_d' | 'pwet_uwv_wml_eigen_verzoek' |
-              'overgangsrecht_38b_1_f' | 'jonggehandicapt_uwv_oordeel' |
-              'geen'.
+              → f → g → lid 2 → lid 6. Enum: 'pwet_lks_uwv_loonwaarde' |
+              'wsw' | 'wajong' | 'amvb_38b_1_d' |
+              'pwet_uwv_wml_eigen_verzoek' | 'overgangsrecht_38b_1_f' |
+              'wga_met_experiment_38b_1_g' | 'jonggehandicapt_uwv_oordeel' |
+              'blijfgrond_38b_6' | 'geen'. Of lid 1 een rangorde tussen de
+              onderdelen kent, staat niet in de wet; dit is een
+              modelleerkeuze en ligt voor bij de juristvalidatie.
           - name: datum_opname_doelgroepregister
             type: date
             description: |-
@@ -1899,6 +1921,26 @@ articles:
                 onderdeel b of c, en op 1-5-2015 niet langer; uitzondering
                 voor voormalige Wajong-er die nu duurzaam geen mogelijkheden
                 heeft (Wajong 1a:1).
+          - output: voldoet_aan_grond_38b_1_g
+            value:
+              operation: AND
+              conditions:
+                - $heeft_wia_uitkering_hoofdstuk_6
+                - $experiment_instrument_82a_suwi_ingezet
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.g'
+              explanation: |-
+                "die recht heeft op een arbeidsongeschiktheidsuitkering
+                als bedoeld in Hoofdstuk 6 van de Wet werk en inkomen naar
+                arbeidsvermogen en voor wie op grond van artikel 82a,
+                eerste lid, van de Wet structuur uitvoeringsorganisatie
+                werk en inkomen bij wijze van experiment het instrument,
+                bedoeld in de artikelen 2:20 en 3:63 van de Wet
+                arbeidsongeschiktheidsvoorziening jonggehandicapten, is
+                ingezet."
           - output: voldoet_aan_grond_38b_2
             value: $is_jonggehandicapt_uwv_oordeel_lid_2
             legal_basis:
@@ -1929,33 +1971,37 @@ articles:
                 38d lid 1) nog niet is geëindigd. De chapeau-uitsluiting
                 beschut werk (Pwet 10b lid 1) blijft gelden via de NOT-wrap
                 op de kernoutput.
-          - output: behoort_tot_doelgroepregister_banenafspraak
+          - output: is_arbeidsbeperkte
             value:
-              operation: AND
+              operation: OR
               conditions:
-                - operation: NOT
-                  value: $is_uitgesloten_beschut_werk_pwet_10b
-                - operation: OR
+                - operation: AND
                   conditions:
-                    - $voldoet_aan_grond_38b_1_a
-                    - $voldoet_aan_grond_38b_1_b
-                    - $voldoet_aan_grond_38b_1_c
-                    - $voldoet_aan_grond_38b_1_d
-                    - $voldoet_aan_grond_38b_1_e
-                    - $voldoet_aan_grond_38b_1_f
-                    - $voldoet_aan_grond_38b_2
-                    - $voldoet_aan_grond_38b_6
+                    - operation: NOT
+                      value: $is_uitgesloten_beschut_werk_pwet_10b
+                    - operation: OR
+                      conditions:
+                        - $voldoet_aan_grond_38b_1_a
+                        - $voldoet_aan_grond_38b_1_b
+                        - $voldoet_aan_grond_38b_1_c
+                        - $voldoet_aan_grond_38b_1_d
+                        - $voldoet_aan_grond_38b_1_e
+                        - $voldoet_aan_grond_38b_1_f
+                        - $voldoet_aan_grond_38b_1_g
+                        - $voldoet_aan_grond_38b_6
+                - $voldoet_aan_grond_38b_2
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1, 2, 6'
               explanation: |-
-                Persoon is arbeidsbeperkte in zin van 38b (en hoort dus
-                in doelgroepregister banenafspraak, mits ook ingeschreven
-                door UWV per 38d) als hij voldoet aan minimaal één grond
-                van 38b lid 1 (a t/m f) of lid 2, EN niet onder de
-                chapeau-uitsluiting valt (uitsluitend beschut werk Pwet 10b).
+                De aanhef van lid 1 zondert de persoon uit van wie het
+                college heeft vastgesteld dat hij uitsluitend in een
+                beschutte omgeving mogelijkheden tot arbeidsparticipatie
+                heeft. Lid 6 herhaalt die uitzondering woordelijk; lid 2
+                kent haar niet. De uitsluiting werkt daarom over lid 1 en
+                lid 6 en niet over lid 2.
           - output: grond_opname_doelgroepregister
             value:
               operation: IF
@@ -1972,8 +2018,12 @@ articles:
                   then: pwet_uwv_wml_eigen_verzoek
                 - when: $voldoet_aan_grond_38b_1_f
                   then: overgangsrecht_38b_1_f
+                - when: $voldoet_aan_grond_38b_1_g
+                  then: wga_met_experiment_38b_1_g
                 - when: $voldoet_aan_grond_38b_2
                   then: jonggehandicapt_uwv_oordeel
+                - when: $voldoet_aan_grond_38b_6
+                  then: blijfgrond_38b_6
               default: geen
               legal_basis:
                 law: Wet financiering sociale verzekeringen
