@@ -131,7 +131,62 @@ articles:
           - name: verloonde_uren
             type: number
             required: true
-            description: Verloonde uren in kalenderjaar (loonaangifte).
+            description: |-
+              Verloonde uren in het kalenderjaar (loonaangifte, Wfsv 38b
+              lid 4). Grondslag voor de jaarmaxima; niet voor de
+              vermenigvuldiging per categorie — daarvoor tellen alleen de
+              uren binnen de periode waarin aan de voorwaarden is voldaan.
+          - name: verloonde_uren_voorwaarden_2_6
+            type: number
+            required: true
+            description: |-
+              Artikel 2.9: "€ 3,05 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.6". Alleen
+              de uren binnen de periode van artikel 2.8 waarin aan die
+              voorwaarden is voldaan, verlengd met het deel van het
+              aangiftetijdvak waarin die periode begint of eindigt
+              (artikel 2.8 lid 2). Bron: polisadministratie.
+          - name: verloonde_uren_voorwaarden_2_10
+            type: number
+            required: true
+            description: |-
+              Artikel 2.13: "€ 1,01 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.10". Alleen
+              de uren binnen de periode van artikel 2.12, verlengd met het
+              deel van het aangiftetijdvak waarin die periode begint of
+              eindigt (artikel 2.12 lid 2). Bron: polisadministratie.
+          - name: verloonde_uren_voorwaarden_2_14
+            type: number
+            required: true
+            description: |-
+              Artikel 2.17: "€ 3,05 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.14". Alleen
+              de uren binnen de periode van artikel 2.16, verlengd met het
+              deel van het aangiftetijdvak waarin die periode begint of
+              eindigt (artikel 2.16 lid 2). Bron: polisadministratie.
+          - name: verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.10 lid 2 onderdeel b: de werknemer verricht arbeid
+              in een dienstbetrekking als bedoeld in artikel 2 van de Wet
+              sociale werkvoorziening en wordt daarbij niet ter beschikking
+              gesteld aan een andere werkgever. Bron: gemeente / werkgever.
+          - name: periode_2_12_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.10 lid 3: het recht eindigt als de periode van
+              artikel 2.12 of artikel 6.2 lid 1 is verstreken. Bron: UWV.
+          - name: periode_2_8_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.6 lid 3 onderdeel c: het eerste lid is niet langer
+              van toepassing als de periode van artikel 2.8 — ten hoogste
+              drie aaneengesloten jaren vanaf de aanvang van de eerste
+              dienstbetrekking waarbij aan de voorwaarden is voldaan —
+              voor deze werknemer is verstreken. Bron: UWV.
           - name: heeft_pensioengerechtigde_leeftijd_bereikt
             type: boolean
             required: true
@@ -242,6 +297,20 @@ articles:
               (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
               tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: heeft_wia_uitkering_hoofdstuk_6
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: recht op een arbeidsongeschiktheidsuitkering als
+              bedoeld in hoofdstuk 6 van de Wet WIA. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b.
+          - name: experiment_instrument_82a_suwi_ingezet
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: bij wijze van experiment is het instrument van
+              Wajong 2:20 of 3:63 ingezet, op grond van artikel 82a lid 1
+              Wet SUWI. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: is_jonggehandicapt_uwv_oordeel_lid_2
             type: boolean
             required: true
@@ -421,6 +490,8 @@ articles:
                 is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+                heeft_wia_uitkering_hoofdstuk_6: $heeft_wia_uitkering_hoofdstuk_6
+                experiment_instrument_82a_suwi_ingezet: $experiment_instrument_82a_suwi_ingezet
                 is_jonggehandicapt_uwv_oordeel_lid_2: $is_jonggehandicapt_uwv_oordeel_lid_2
                 datum_eerste_opname_doelgroepregister: $datum_eerste_opname_doelgroepregister
                 was_arbeidsbeperkte_lid_1_of_2: $was_arbeidsbeperkte_lid_1_of_2
@@ -467,6 +538,17 @@ articles:
             description: |-
               Totale LKV = hoogste van de per-categorie berekende
               tegemoetkomingen (art. 4.1 lid 3 anti-cumulatie).
+          - name: is_uitgesloten_2_10_lid_2_of_3
+            type: boolean
+            description: |-
+              Artikel 2.10 lid 2 onderdeel b en lid 3: Wsw-arbeid in de zin
+              van artikel 2 zonder terbeschikkingstelling, of het
+              verstrijken van de periode van artikel 2.12.
+          - name: voldoet_aan_voorwaarden_2_10
+            type: boolean
+            description: |-
+              Artikel 2.10: arbeidsbeperkte in de zin van Wfsv 38b, en niet
+              uitgesloten door lid 2 of lid 3.
           - name: categorie_lkv
             type: string
             description: |-
@@ -475,6 +557,39 @@ articles:
               genoemde (art. 4.1 lid 3, volgorde art. 2.1). 'geen' als
               geen recht.
         actions:
+          - output: is_uitgesloten_2_10_lid_2_of_3
+            value:
+              operation: OR
+              conditions:
+                - $verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling
+                - $periode_2_12_is_verstreken
+              legal_basis:
+                law: Wet tegemoetkomingen loondomein
+                bwb_id: BWBR0037522
+                article: '2.10'
+                paragraph: '2, 3'
+                explanation: |-
+                  Lid 2 onderdeel b sluit uit voor zover de werknemer arbeid
+                  verricht in een dienstbetrekking als bedoeld in artikel 2
+                  van de Wet sociale werkvoorziening zonder ter beschikking
+                  te worden gesteld aan een andere werkgever. Lid 3 laat het
+                  recht eindigen als de periode van artikel 2.12 of
+                  artikel 6.2 lid 1 is verstreken.
+          - output: voldoet_aan_voorwaarden_2_10
+            value:
+              operation: AND
+              conditions:
+                - $is_doelgroep_banenafspraak
+                - operation: NOT
+                  value: $is_uitgesloten_2_10_lid_2_of_3
+              legal_basis:
+                law: Wet tegemoetkomingen loondomein
+                bwb_id: BWBR0037522
+                article: '2.10'
+                explanation: |-
+                  Lid 1 verbindt het recht aan de hoedanigheid van
+                  arbeidsbeperkte in de zin van Wfsv artikel 38b; lid 2 en
+                  lid 3 nemen die weer weg.
           - output: heeft_recht_op_lkv
             value:
               operation: AND
@@ -484,9 +599,13 @@ articles:
                   value: $heeft_pensioengerechtigde_leeftijd_bereikt
                 - operation: OR
                   conditions:
-                    - $is_arbeidsgehandicapte_werknemer
+                    - operation: AND
+                      conditions:
+                        - $is_arbeidsgehandicapte_werknemer
+                        - operation: NOT
+                          value: $periode_2_8_is_verstreken
                     - $is_herplaatsen_arbeidsgehandicapte
-                    - $is_doelgroep_banenafspraak
+                    - $voldoet_aan_voorwaarden_2_10
               legal_basis:
                 law: Wet tegemoetkomingen loondomein
                 bwb_id: BWBR0037522
@@ -507,13 +626,15 @@ articles:
                     conditions:
                       - $heeft_recht_op_lkv
                       - $is_arbeidsgehandicapte_werknemer
+                      - operation: NOT
+                        value: $periode_2_8_is_verstreken
                   then:
                     operation: MIN
                     values:
                       - operation: MULTIPLY
                         values:
                           - 305
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_6
                       - 600000
               default: 0
               legal_basis:
@@ -529,14 +650,14 @@ articles:
                     operation: AND
                     conditions:
                       - $heeft_recht_op_lkv
-                      - $is_doelgroep_banenafspraak
+                      - $voldoet_aan_voorwaarden_2_10
                   then:
                     operation: MIN
                     values:
                       - operation: MULTIPLY
                         values:
                           - 101
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_10
                       - 200000
               default: 0
               legal_basis:
@@ -559,7 +680,7 @@ articles:
                       - operation: MULTIPLY
                         values:
                           - 305
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_14
                       - 600000
               default: 0
               legal_basis:
@@ -598,6 +719,8 @@ articles:
                     conditions:
                       - $heeft_recht_op_lkv
                       - $is_arbeidsgehandicapte_werknemer
+                      - operation: NOT
+                        value: $periode_2_8_is_verstreken
                       - operation: EQUALS
                         subject: $tegemoetkoming_arbeidsgehandicapte_eurocent
                         value: $hoogte_lkv_per_jaar_eurocent
@@ -606,7 +729,7 @@ articles:
                     operation: AND
                     conditions:
                       - $heeft_recht_op_lkv
-                      - $is_doelgroep_banenafspraak
+                      - $voldoet_aan_voorwaarden_2_10
                       - operation: EQUALS
                         subject: $tegemoetkoming_banenafspraak_eurocent
                         value: $hoogte_lkv_per_jaar_eurocent
