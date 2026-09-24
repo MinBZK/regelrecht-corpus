@@ -2472,6 +2472,25 @@ articles:
               gesloten jaren minimumloon verdient zonder LKS. De volledige
               tijdgebonden toets is in deze YAML samengevat als één
               boolean (zie untranslatable).
+          - name: ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: de persoonlijke ondersteuning bij het
+              verrichten van de opgedragen taken is noodzakelijk en vormt
+              een compensatie voor de beperkingen van de persoon. Lid 2
+              opent met "worden uitsluitend verstaan" en is daarmee een
+              limitatieve, inhoudelijke afbakening. Bron: UWV-beoordeling.
+          - name: voorziening_is_meeneembaar_en_individueel_afgestemd
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: het gaat om een meeneembare voorziening
+              ten behoeve van de inrichting van de arbeidsplaats, de
+              productie- en werkmethoden, de inrichting van de
+              opleidingsplaats of de proefplaats of de te gebruiken
+              hulpmiddelen, die in overwegende mate op het individu is
+              afgestemd. Bron: UWV-beoordeling.
           - name: aanvraag_jobcoaching_ingediend
             type: boolean
             required: true
@@ -2497,12 +2516,19 @@ articles:
             description: |-
               Lid 1: structurele functionele beperking + arbeidsverhouding
               + niet-Wsw cumulatief.
-          - name: heeft_recht_op_jobcoaching
+          - name: mag_jobcoaching_toekennen
             type: boolean
-            description: 'Lid 2 onderdeel d — persoonlijke ondersteuning.'
-          - name: heeft_recht_op_werkplekaanpassing
+            description: |-
+              Lid 1 en lid 2 onderdeel d: het UWV is bevoegd de
+              persoonlijke ondersteuning op aanvraag toe te kennen. De wet
+              zegt "kan toekennen"; er ontstaat geen aanspraak van de
+              aanvrager.
+          - name: mag_werkplekaanpassing_toekennen
             type: boolean
-            description: 'Lid 2 onderdeel c — meeneembare werkplek-voorzieningen.'
+            description: |-
+              Lid 1 en lid 2 onderdeel c: het UWV is bevoegd de
+              meeneembare voorziening op aanvraag toe te kennen. Ook hier
+              een kan-bepaling.
         actions:
           - output: artikel_35_van_toepassing
             value:
@@ -2534,13 +2560,14 @@ articles:
                 bwb_id: BWBR0019057
                 article: '35'
                 paragraph: '1'
-          - output: heeft_recht_op_jobcoaching
+          - output: mag_jobcoaching_toekennen
             value:
               operation: AND
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
                 - $aanvraag_jobcoaching_ingediend
+                - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
                 bwb_id: BWBR0019057
@@ -2548,16 +2575,20 @@ articles:
                 paragraph: '2'
                 sentence: 'd'
                 explanation: |-
-                  Onderdeel d (limitatief in lid 2): noodzakelijke
-                  persoonlijke ondersteuning als compensatie voor
-                  beperkingen.
-          - output: heeft_recht_op_werkplekaanpassing
+                  Lid 1 kent het UWV de bevoegdheid toe ("kan ... op
+                  aanvraag voorzieningen toekennen"). Lid 2 opent met
+                  "worden uitsluitend verstaan" en eist in onderdeel d dat
+                  de ondersteuning noodzakelijk is en een compensatie vormt
+                  voor de beperkingen; die toets staat hier naast de
+                  aanvraag.
+          - output: mag_werkplekaanpassing_toekennen
             value:
               operation: AND
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
                 - $aanvraag_werkplekaanpassing_ingediend
+                - $voorziening_is_meeneembaar_en_individueel_afgestemd
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
                 bwb_id: BWBR0019057
@@ -2565,9 +2596,10 @@ articles:
                 paragraph: '2'
                 sentence: 'c'
                 explanation: |-
-                  Onderdeel c (limitatief in lid 2): meeneembare
-                  voorzieningen voor inrichting arbeidsplaats,
-                  productie- en werkmethoden, hulpmiddelen.
+                  Lid 1 is een kan-bepaling. Onderdeel c eist dat de
+                  voorziening meeneembaar is en in overwegende mate op het
+                  individu is afgestemd; die toets staat hier naast de
+                  aanvraag.
       open_terms:
         - id: nadere_regels_voorzieningen_artikel_35
           type: string
@@ -2797,12 +2829,28 @@ articles:
             type: string
             required: true
             description: BSN van de gedeeltelijk arbeidsgeschikte.
-          - name: heeft_recht_op_wia_uitkering
+          - name: heeft_recht_op_wga_uitkering
             type: boolean
             required: true
             description: |-
-              Lid 1: de gedeeltelijk arbeidsgeschikte heeft recht op een
-              uitkering op grond van deze wet. Bron: UWV.
+              Lid 1: recht op een uitkering op grond van deze wet. Artikel 5
+              omschrijft de gedeeltelijk arbeidsgeschikte als degene die
+              "niet volledig en duurzaam arbeidsongeschikt is", zodat de
+              IVA-uitkering van artikel 47 hier buiten valt en alleen de
+              WGA-uitkering van artikel 54 overblijft. Bron: UWV.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Artikel 5: resterende verdiencapaciteit als percentage van
+              het maatmaninkomen. Doorgegeven aan artikel 5. Bron: UWV.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: |-
+              Artikel 4 lid 2 en 3: duurzaamheid van de
+              arbeidsongeschiktheid. Doorgegeven aan artikel 5. Bron:
+              verzekeringsarts UWV.
           - name: in_staat_tot_werkzaamheden
             type: boolean
             required: true
@@ -2832,6 +2880,22 @@ articles:
               eigenrisicodrager is er reeel uitzicht op een aansluitende
               dienstbetrekking van dezelfde of grotere omvang voor ten
               minste 6 maanden.
+        input:
+          - name: is_gedeeltelijk_arbeidsgeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_gedeeltelijk_arbeidsgeschikt
+              parameters:
+                bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+              description: |-
+                Lid 1 richt zich tot de gedeeltelijk arbeidsgeschikte.
+                Artikel 5 bepaalt wie dat is; artikel 47 lid 1 onderdeel b
+                sluit daarop aan met "hij is volledig en duurzaam
+                arbeidsongeschikt", zodat de IVA-gerechtigde hier niet
+                onder valt.
         output:
           - name: voldoet_aan_lid_2_voorwaarden
             type: boolean
@@ -2877,7 +2941,8 @@ articles:
             value:
               operation: AND
               conditions:
-                - $heeft_recht_op_wia_uitkering
+                - $is_gedeeltelijk_arbeidsgeschikt
+                - $heeft_recht_op_wga_uitkering
                 - $voldoet_aan_lid_2_voorwaarden
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
@@ -2885,9 +2950,13 @@ articles:
                 article: '37'
                 paragraph: '1'
                 explanation: |-
-                  Lid 1 vereist recht op een WIA-uitkering; lid 2 stelt de
-                  voorwaarden aan de werkzaamheden zelf. Zowel UWV als de
-                  eigenrisicodrager kan de toestemming verlenen.
+                  Lid 1 richt zich uitsluitend tot "de gedeeltelijk
+                  arbeidsgeschikte die recht heeft op een uitkering op
+                  grond van deze wet". Artikel 5 sluit de volledig en
+                  duurzaam arbeidsongeschikte uit, dus de IVA-gerechtigde
+                  van artikel 47 valt hier buiten. Lid 2 stelt de
+                  voorwaarden aan de werkzaamheden zelf. Zowel het UWV als
+                  de eigenrisicodrager kan de toestemming verlenen.
           - output: max_duur_proefplaatsing_maanden
             value: $max_duur_proefplaatsing_maanden
           - output: sollicitatieplicht_opgeschort
