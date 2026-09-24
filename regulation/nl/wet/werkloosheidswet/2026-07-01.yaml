@@ -4244,6 +4244,30 @@ articles:
               Lid 3 onderdeel c: werknemer heeft de werkzaamheden niet
               reeds eerder onbeloond op een proefplaats bij deze
               werkgever (of diens rechtsvoorganger) verricht.
+          - name: uitkeringsduur_hoofdstuk_ii_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Lid 2, "onverminderd artikel 20, eerste lid, aanhef en
+              onderdeel b": het recht op uitkering eindigt zodra de
+              uitkeringsduur is verstreken. De proefplaatsing houdt dat
+              einde niet tegen. Bron: UWV.
+          - name: datum_aanvang_proefplaatsing
+            type: date
+            nullable: true
+            required: false
+            description: |-
+              Lid 1: de dag waarop de onbeloonde werkzaamheden op de
+              proefplaats aanvangen. Grondslag voor de zes-maandentermijn.
+              Bron: UWV / werkgever.
+          - name: dagen_ziekte_onderbreking_proefplaatsing
+            type: number
+            required: true
+            description: |-
+              Lid 4: het aantal dagen waarover tijdens de proefplaatsing
+              een uitkering bij ziekte is ontvangen. Die periode blijft
+              voor de zes-maandentermijn buiten beschouwing en verlengt de
+              einddatum met hetzelfde aantal dagen. Bron: UWV.
           - name: reeel_uitzicht_op_dienstbetrekking_zes_maanden
             type: boolean
             required: true
@@ -4256,22 +4280,30 @@ articles:
             type: boolean
             description: |-
               Cumulatieve toets lid 3 onderdelen a, b, c en d.
-          - name: mag_proefplaatsing_aangaan
+          - name: uwv_mag_toestemming_verlenen
             type: boolean
             description: |-
-              UWV mag op grond van lid 1 toestemming verlenen — werknemer
-              heeft WW-recht en de werkzaamheden voldoen aan lid 3.
+              Lid 1: het UWV kan toestemming verlenen. De bevoegdheid ligt
+              bij het UWV; de werknemer ontleent aan dit lid geen aanspraak.
           - name: max_duur_proefplaatsing_maanden
             type: number
             type_spec:
               unit: months
             description: |-
               Maximale duur uit lid 1 (zes kalendermaanden).
+          - name: einddatum_proefplaatsing
+            type: date
+            nullable: true
+            description: |-
+              Lid 1 en lid 4: zes maanden na aanvang, verlengd met de
+              dagen waarover tijdens de proefplaatsing een uitkering bij
+              ziekte is ontvangen.
           - name: ww_uitkering_blijft_bestaan
             type: boolean
             description: |-
-              Lid 2: gedurende de proefplaatsing blijft het WW-recht
-              bestaan, onverminderd artikel 20 lid 1 onderdeel b.
+              Lid 2: gedurende de periode waarover toestemming is verleend
+              blijft het recht op uitkering bestaan, onverminderd artikel 20
+              lid 1 aanhef en onderdeel b.
         actions:
           - output: voldoet_aan_lid_3_voorwaarden
             value:
@@ -4290,7 +4322,7 @@ articles:
                   Lid 3 onderdelen a t/m d zijn cumulatief: alle vier
                   moeten gelden anders kwalificeert de proefplaatsing
                   niet als onbeloonde arbeid.
-          - output: mag_proefplaatsing_aangaan
+          - output: uwv_mag_toestemming_verlenen
             value:
               operation: AND
               conditions:
@@ -4306,8 +4338,51 @@ articles:
                   voorwaarden aan de werkzaamheden zelf.
           - output: max_duur_proefplaatsing_maanden
             value: $max_duur_proefplaatsing_maanden
+          - output: einddatum_proefplaatsing
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_aanvang_proefplaatsing
+                    value: null
+                  then: null
+              default:
+                operation: DATE_ADD
+                date:
+                  operation: DATE_ADD
+                  date: $datum_aanvang_proefplaatsing
+                  months: $max_duur_proefplaatsing_maanden
+                days: $dagen_ziekte_onderbreking_proefplaatsing
+              legal_basis:
+                law: Werkloosheidswet
+                bwb_id: BWBR0004045
+                article: 76a
+                paragraph: '1, 4'
+                explanation: |-
+                  Lid 1 begrenst de proefplaatsing op zes maanden. Lid 4
+                  laat de periode waarin een uitkering bij ziekte wordt
+                  ontvangen voor de toepassing van dat lid buiten
+                  beschouwing, zodat de einddatum met dat aantal dagen
+                  opschuift.
           - output: ww_uitkering_blijft_bestaan
-            value: $mag_proefplaatsing_aangaan
+            value:
+              operation: AND
+              conditions:
+                - $uwv_mag_toestemming_verlenen
+                - operation: NOT
+                  value: $uitkeringsduur_hoofdstuk_ii_is_verstreken
+              legal_basis:
+                law: Werkloosheidswet
+                bwb_id: BWBR0004045
+                article: 76a
+                paragraph: '2'
+                explanation: |-
+                  Lid 2 laat het recht op uitkering bestaan gedurende de
+                  periode waarover toestemming is verleend, "onverminderd
+                  artikel 20, eerste lid, aanhef en onderdeel b". Die
+                  clausule hield het model niet tegen, zodat de uitkering
+                  ook doorliep nadat de uitkeringsduur was verstreken.
       open_terms:
         - id: nadere_regels_uitvoering_proefplaatsing
           type: string
@@ -4331,23 +4406,6 @@ articles:
           type: boolean
           required: false
           decided_per_case_by: het UWV, op grond van Werkloosheidswet artikel 76a lid 3 onderdeel d
-      markings:
-        - about: >-
-            de periode waarin een uitkering bij ziekte wordt ontvangen, die buiten
-            beschouwing blijft voor de zes-maandentermijn
-          reason: >-
-            Het formaat kent geen kalender van werk- tegenover ziektedagen, en kan een
-            termijn daarom niet opschorten voor de duur van een andere uitkering.
-          resolution: model
-          resolved_by: >-
-            Een vorm waarin een termijn wordt opgeschort zolang een andere regeling
-            loopt.
-          target: []
-          legal_text_excerpt: >-
-            Indien de werkzaamheden, bedoeld in het eerste lid, wegens ziekte worden
-            onderbroken, wordt de periode waarin een uitkering bij ziekte wordt
-            ontvangen, voor de toepassing van dat lid buiten beschouwing gelaten.
-          accepted: true
   - number: 77a
     text: |-
       1 Het UWV kan een werknemer toestemming verlenen om gedurende 6 kalendermaanden werkzaamheden in de uitoefening van

@@ -136,43 +136,6 @@ articles:
       - id: ref13
         bwb_id: BWBR0008656
         artikel: 67b
-    machine_readable:
-      implements:
-        - law: wet_werk_en_inkomen_naar_arbeidsvermogen
-          article: '35'
-          open_term: nadere_regels_voorzieningen_artikel_35
-          gelet_op: |-
-            Dit besluit berust op artikel 35, vijfde lid, van de Wet werk
-            en inkomen naar arbeidsvermogen.
-        - law: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
-          article: '2:22'
-          open_term: nadere_regels_voorzieningen_artikel_2_22
-          gelet_op: |-
-            Dit besluit berust op artikel 2:22, vierde lid, van de Wet
-            arbeidsongeschiktheidsvoorziening jonggehandicapten.
-      execution:
-        produces:
-          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
-          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
-        output:
-          - name: nadere_regels_voorzieningen_artikel_35
-            type: string
-            description: |-
-              Invulling van de open term van WIA artikel 35 lid 5. Artikel 1a
-              somt de grondslagen op waarop dit besluit berust; artikel 35,
-              vijfde lid, van de Wet WIA is er daar een van. De waarde
-              benoemt de regeling die de nadere regels stelt, zodat de
-              WIA-kant kan zien welke lagere regelgeving hier geldt.
-          - name: nadere_regels_voorzieningen_artikel_2_22
-            type: string
-            description: |-
-              Invulling van de open term van Wajong artikel 2:22 lid 4, langs
-              dezelfde grondslag-opsomming in artikel 1a.
-        actions:
-          - output: nadere_regels_voorzieningen_artikel_35
-            value: Reïntegratiebesluit
-          - output: nadere_regels_voorzieningen_artikel_2_22
-            value: Reïntegratiebesluit
   - number: '2'
     text: |-
       1 Een subsidie als bedoeld in [artikel 36 van de Wet WIA][ref1] of een voorziening als bedoeld in
@@ -299,6 +262,44 @@ articles:
       - id: ref4
         bwb_id: BWBR0008657
         artikel: 2:23
+    machine_readable:
+      implements:
+        - law: wet_werk_en_inkomen_naar_arbeidsvermogen
+          article: '35'
+          open_term: nadere_regels_voorzieningen_artikel_35
+          gelet_op: |-
+            Dit besluit berust op artikel 35, vijfde lid, van de Wet werk
+            en inkomen naar arbeidsvermogen (artikel 1a). De nadere regel
+            zelf staat in artikel 4 van dit besluit.
+        - law: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+          article: '2:22'
+          open_term: nadere_regels_voorzieningen_artikel_2_22
+          gelet_op: |-
+            Dit besluit berust op artikel 2:22, vierde lid, van de Wet
+            arbeidsongeschiktheidsvoorziening jonggehandicapten (artikel
+            1a). De nadere regel zelf staat in artikel 4 van dit besluit.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        output:
+          - name: nadere_regels_voorzieningen_artikel_35
+            type: string
+            description: |-
+              Invulling van de open term van WIA artikel 35 lid 5. De nadere
+              regel staat in dit artikel: de voorziening wordt slechts
+              verleend indien zij in overwegende mate op het individu is
+              gericht.
+          - name: nadere_regels_voorzieningen_artikel_2_22
+            type: string
+            description: |-
+              Invulling van de open term van Wajong artikel 2:22 lid 4, langs
+              dezelfde regel van dit artikel.
+        actions:
+          - output: nadere_regels_voorzieningen_artikel_35
+            value: 'Reintegratiebesluit artikel 4: de voorziening wordt slechts verleend indien zij in overwegende mate op het individu is gericht'
+          - output: nadere_regels_voorzieningen_artikel_2_22
+            value: 'Reintegratiebesluit artikel 4: de voorziening wordt slechts verleend indien zij in overwegende mate op het individu is gericht'
   - number: '5'
     text: |-
       1 Vervoersvoorzieningen als bedoeld in [artikel 10h, tweede lid, onderdeel a, van de Participatiewet][ref1],

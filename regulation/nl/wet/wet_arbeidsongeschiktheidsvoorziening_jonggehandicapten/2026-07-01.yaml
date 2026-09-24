@@ -1503,13 +1503,25 @@ articles:
               Wet van 3 december 2009 (Stb. 2009, 580); lid 2 rekent er
               zestien weken bij. Alleen vereist als een aanvraag is
               ingediend. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
-          - name: is_volledig_en_duurzaam_arbeidsongeschikt
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
             type: boolean
             required: true
             description: |-
               Lid 3 onderdeel a: bij volledige en duurzame
               arbeidsongeschiktheid ontstaat het recht op de dag van de
-              aanvraag. Bron: UWV-beoordeling.
+              aanvraag. De Wajong omschrijft dat begrip in artikel 2:4 lid 1
+              als "duurzaam geen mogelijkheden tot arbeidsparticipatie
+              hebben"; dat is een andere maatstaf dan Wet WIA artikel 4,
+              die uitgaat van ten hoogste 20 procent van het maatmaninkomen.
+              De naam draagt daarom het achtervoegsel _wajong, net als in de
+              Ziektewet. Bron: UWV-beoordeling.
+          - name: datum_voldaan_aan_lid_1
+            type: date
+            required: true
+            description: |-
+              Lid 2: de dag waarop aan alle voorwaarden van lid 1 wordt
+              voldaan. Ten vroegste de dag waarop de jonggehandicapte
+              achttien jaar wordt (lid 1 onderdeel c). Bron: UWV.
           - name: recht_herleeft_op_grond_van_2_17
             type: boolean
             required: true
@@ -1584,22 +1596,47 @@ articles:
                 - when:
                     operation: OR
                     conditions:
-                      - $is_volledig_en_duurzaam_arbeidsongeschikt
+                      - $is_volledig_en_duurzaam_arbeidsongeschikt_wajong
                       - $recht_herleeft_op_grond_van_2_17
-                  then: $datum_aanvraag_arbeidsondersteuning
+                  then:
+                    operation: IF
+                    cases:
+                      - when:
+                          operation: GREATER_THAN
+                          subject: $datum_voldaan_aan_lid_1
+                          value: $datum_aanvraag_arbeidsondersteuning
+                        then: $datum_voldaan_aan_lid_1
+                    default: $datum_aanvraag_arbeidsondersteuning
               default:
-                operation: DATE_ADD
-                date: $datum_aanvraag_arbeidsondersteuning
-                weeks: $wachttermijn_na_aanvraag_weken
+                operation: IF
+                cases:
+                  - when:
+                      operation: GREATER_THAN
+                      subject: $datum_voldaan_aan_lid_1
+                      value:
+                        operation: DATE_ADD
+                        date: $datum_aanvraag_arbeidsondersteuning
+                        weeks: $wachttermijn_na_aanvraag_weken
+                    then: $datum_voldaan_aan_lid_1
+                default:
+                  operation: DATE_ADD
+                  date: $datum_aanvraag_arbeidsondersteuning
+                  weeks: $wachttermijn_na_aanvraag_weken
               legal_basis:
                 law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
                 bwb_id: BWBR0008657
                 article: '2:15'
                 paragraph: '2'
                 explanation: |-
-                  Lid 2: niet eerder dan zestien weken na de aanvraag.
-                  Lid 3: op de dag van de aanvraag bij volledige en
-                  duurzame arbeidsongeschiktheid (a) of herleving (b).
+                  Lid 2: het recht ontstaat "op de dag dat aan de
+                  voorwaarden, bedoeld in het eerste lid, wordt voldaan doch
+                  niet eerder dan zestien weken na de aanvraag". Beide
+                  momenten tellen, dus geldt het laatste van de twee; het
+                  lid-1-moment ontbrak eerder, waardoor een ingangsdatum
+                  vóór het achttiende jaar kon ontstaan. Lid 3 zet de
+                  zestien weken opzij bij volledige en duurzame
+                  arbeidsongeschiktheid (a) of herleving (b), maar niet het
+                  lid-1-moment.
           - output: recht_kan_nog_ontstaan
             value:
               operation: IF
@@ -2037,16 +2074,29 @@ articles:
             type: string
             required: true
             description: BSN van de jonggehandicapte.
-          - name: heeft_recht_op_arbeidsondersteuning_wajong
+          - name: is_jonggehandicapte
             type: boolean
             required: true
             description: |-
-              Lid 1: de voorziening staat open voor "de jonggehandicapte".
-              Doelgroepvaststelling loopt via artikel 1:1 (hoofdstuk 1A
-              nieuwe Wajong) dan wel hoofdstuk 2 oude Wajong. Bron:
-              UWV-doelgroepregister. Dit is dezelfde parameter waarop
-              WIA artikel 35 lid 4.a uitsluit: waar de WIA-route dichtgaat,
-              gaat deze open.
+              Lid 1 richt zich tot "de jonggehandicapte" en niet tot degene
+              die recht heeft op arbeidsondersteuning. Doelgroepvaststelling
+              loopt via artikel 1:1 (hoofdstuk 1A nieuwe Wajong) dan wel
+              hoofdstuk 2 oude Wajong. Bron: UWV.
+          - name: ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: de persoonlijke ondersteuning bij de
+              opgedragen taken is noodzakelijk en vormt een compensatie
+              voor de beperkingen. Lid 2 opent met "worden uitsluitend
+              verstaan". Bron: UWV-beoordeling.
+          - name: voorziening_is_meeneembaar_en_individueel_afgestemd
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: meeneembare voorziening die in overwegende
+              mate op het individu van de jonggehandicapte is afgestemd.
+              Bron: UWV-beoordeling.
           - name: heeft_arbeidsverhouding_of_voorbereiding
             type: boolean
             required: true
@@ -2081,10 +2131,10 @@ articles:
             description: |-
               Lid 1: jonggehandicapte + arbeid, scholing of proefplaats +
               niet-Wsw, cumulatief.
-          - name: heeft_recht_op_jobcoaching
+          - name: mag_jobcoaching_toekennen
             type: boolean
             description: 'Lid 2 onderdeel d — persoonlijke ondersteuning.'
-          - name: heeft_recht_op_werkplekaanpassing
+          - name: mag_werkplekaanpassing_toekennen
             type: boolean
             description: 'Lid 2 onderdeel c — meeneembare werkplek-voorzieningen.'
         actions:
@@ -2092,7 +2142,7 @@ articles:
             value:
               operation: AND
               conditions:
-                - $heeft_recht_op_arbeidsondersteuning_wajong
+                - $is_jonggehandicapte
                 - $heeft_arbeidsverhouding_of_voorbereiding
                 - operation: NOT
                   value: $is_wsw_werknemer
@@ -2103,14 +2153,17 @@ articles:
                 paragraph: '1'
                 url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
                 explanation: |-
-                  Lid 1 noemt de doelgroep (jonggehandicapte), de
-                  arbeidsverhouding en de Wsw-uitzondering cumulatief.
-          - output: heeft_recht_op_jobcoaching
+                  Lid 1 noemt de doelgroep (de jonggehandicapte), de
+                  arbeidsverhouding en de Wsw-uitzondering cumulatief. De
+                  letter eist geen recht op arbeidsondersteuning; die
+                  voorwaarde stond hier eerder ten onrechte bij.
+          - output: mag_jobcoaching_toekennen
             value:
               operation: AND
               conditions:
                 - $voldoet_aan_basisvoorwaarden_lid_1
                 - $aanvraag_jobcoaching_ingediend
+                - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
               legal_basis:
                 law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
                 bwb_id: BWBR0008657
@@ -2119,16 +2172,17 @@ articles:
                 sentence: 'd'
                 url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
                 explanation: |-
-                  Onderdeel d (limitatief in lid 2): noodzakelijke
-                  persoonlijke ondersteuning die een compensatie vormt
-                  voor de beperkingen van de jonggehandicapte. Spiegelt
-                  WIA artikel 35 lid 2.d.
-          - output: heeft_recht_op_werkplekaanpassing
+                  Lid 1 is een kan-bepaling: het UWV is bevoegd, de
+                  jonggehandicapte krijgt geen aanspraak. Onderdeel d eist
+                  dat de ondersteuning noodzakelijk is en een compensatie
+                  vormt voor de beperkingen. Spiegelt WIA 35 lid 2 d.
+          - output: mag_werkplekaanpassing_toekennen
             value:
               operation: AND
               conditions:
                 - $voldoet_aan_basisvoorwaarden_lid_1
                 - $aanvraag_werkplekaanpassing_ingediend
+                - $voorziening_is_meeneembaar_en_individueel_afgestemd
               legal_basis:
                 law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
                 bwb_id: BWBR0008657
@@ -2137,9 +2191,9 @@ articles:
                 sentence: 'c'
                 url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel222
                 explanation: |-
-                  Onderdeel c (limitatief in lid 2): meeneembare
-                  voorzieningen die in overwegende mate op het individu
-                  zijn afgestemd. Spiegelt WIA artikel 35 lid 2.c.
+                  Lid 1 is een kan-bepaling. Onderdeel c eist dat de
+                  voorziening meeneembaar is en in overwegende mate op het
+                  individu is afgestemd. Spiegelt WIA 35 lid 2 c.
       open_terms:
         - id: nadere_regels_voorzieningen_artikel_2_22
           type: string
