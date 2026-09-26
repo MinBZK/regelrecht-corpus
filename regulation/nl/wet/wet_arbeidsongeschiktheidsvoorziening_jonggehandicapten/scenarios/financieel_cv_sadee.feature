@@ -49,6 +49,11 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
       | aanvraag_loondispensatie_ingediend                | true      |
       | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
+      | gebruikelijke_beloning_per_uur_eurocent | 1450 |
+      | gerechtvaardigde_beloning_per_uur_eurocent | 1000 |
+      | verwachte_duur_verminderde_prestatie_maanden | 12 |
+      | vastgesteld_dispensatiepercentage | 70 |
+      | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true

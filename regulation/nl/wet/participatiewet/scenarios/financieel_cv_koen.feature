@@ -164,6 +164,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
+      | behoort_tot_doelgroep_lks | true |
     When I evaluate "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
@@ -207,6 +208,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | behoort_tot_doelgroep_artikel_7_lid_1_a    | true      |
       | ontvangt_algemene_bijstand                 | true      |
       | college_verleent_toestemming_proefplaatsing | true     |
+      | behoort_tot_doelgroep_lks | true |
     When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is true

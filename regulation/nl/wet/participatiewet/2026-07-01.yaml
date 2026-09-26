@@ -1487,12 +1487,34 @@ articles:
               Lid 1, slotzin: persoonlijke ondersteuning bestaat alleen
               indien de persoon zonder die ondersteuning niet in staat
               zou zijn de opgedragen taken te verrichten.
+          - name: behoort_tot_doelgroep_lks
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10da: behoort tot de doelgroep loonkostensubsidie.
+              Doorgegeven aan artikel 10da, dat de aanspraak op begeleiding
+              op de werkplek toekent. Bron: gemeente.
           - name: aanvraag_ingediend
             type: boolean
             required: true
             description: |-
               Lid 5: de persoon of de werkgever heeft bij het college een
               aanvraag ingediend om gevolg te geven aan de aanspraak.
+        input:
+          - name: heeft_aanspraak_op_begeleiding_op_de_werkplek
+            type: boolean
+            source:
+              regulation: participatiewet
+              output: heeft_aanspraak_op_begeleiding_op_de_werkplek
+              parameters:
+                bsn: $bsn
+                behoort_tot_doelgroep_lks: $behoort_tot_doelgroep_lks
+              description: |-
+                Artikel 10da kent de doelgroep loonkostensubsidie aanspraak
+                toe op begeleiding op de werkplek. Bij de juristvalidatie van
+                24 september 2026 is vastgesteld dat dat dezelfde voorziening
+                is als de persoonlijke ondersteuning van lid 1, zodat die
+                aanspraak hier naast de noodzakelijkheidstoets staat.
         output:
           - name: behoort_tot_doelgroep_artikel_10
             type: boolean
@@ -1556,10 +1578,13 @@ articles:
                 aanspraak bestaat.
           - output: heeft_aanspraak_op_persoonlijke_ondersteuning
             value:
-              operation: AND
+              operation: OR
               conditions:
-                - $behoort_tot_doelgroep_artikel_10
-                - $kan_taken_niet_verrichten_zonder_ondersteuning
+                - operation: AND
+                  conditions:
+                    - $behoort_tot_doelgroep_artikel_10
+                    - $kan_taken_niet_verrichten_zonder_ondersteuning
+                - $heeft_aanspraak_op_begeleiding_op_de_werkplek
               legal_basis:
                 law: Participatiewet
                 bwb_id: BWBR0015703
@@ -1571,6 +1596,12 @@ articles:
                   onvoorwaardelijk toe; de aanvraag van lid 5 is de weg om
                   daaraan gevolg te geven en staat daarom niet in deze
                   voorwaarde.
+                  Daarnaast bestaat de aanspraak langs artikel 10da. Bij de
+                  juristvalidatie van 24 september 2026 is vastgesteld dat
+                  begeleiding op de werkplek dezelfde voorziening is en dat
+                  iedereen met loonkostensubsidie er recht op heeft. Die
+                  route kent de noodzakelijkheidseis niet, en zet haar voor
+                  de doelgroep loonkostensubsidie dus opzij.
           - output: heeft_aanspraak_op_voorziening_arbeidsinschakeling
             value:
               operation: AND
@@ -2915,16 +2946,12 @@ articles:
                 Dit is binnen de gemeentelijke voorzieningen de enige
                 harde aanspraak — artikel 10 lid 1 en artikel 8a laten de
                 voorwaarden aan de gemeenteraad, dit artikel niet.
-      open_terms:
-        - id: begeleiding_op_de_werkplek
-          description: >-
-            Wat begeleiding op de werkplek inhoudt. Het artikel omschrijft het niet en
-            verwijst er niet voor door.
-          type: string
-          required: false
-          decided_per_case_by: >-
-            het college van burgemeester en wethouders, op grond van Participatiewet
-            artikel 10da
+                Bij de juristvalidatie van 24 september 2026 is vastgesteld
+                dat begeleiding op de werkplek dezelfde voorziening is als
+                de persoonlijke ondersteuning van artikel 10 lid 1. Wat
+                eerder een open term was, is daarmee beantwoord: de inhoud
+                staat in artikel 10, en dit artikel kent haar toe zonder de
+                noodzakelijkheidstoets die daar geldt.
   - number: 10e
     text: |-
       1 Bij of krachtens algemene maatregel van bestuur kunnen regels worden gesteld met betrekking tot
