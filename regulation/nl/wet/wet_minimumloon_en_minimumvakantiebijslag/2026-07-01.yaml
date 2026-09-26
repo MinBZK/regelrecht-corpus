@@ -446,17 +446,34 @@ articles:
           legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
           description: |-
             Het bedrag van lid 1 onderdeel b wordt op grond van artikel 14
-            telkens per 1 januari en per 1 juli door de minister herzien. Lid 2
-            bepaalt dat de herziene bedragen in de plaats komen van de bedragen
-            in de wettekst. De herzieningsregeling zit niet in dit corpus;
-            zolang die ontbreekt valt het model terug op het bedrag uit de
-            wettekst, en dat is aantoonbaar verouderd — wetten.overheid.nl
-            vermeldt bij artikel 8 een redactionele noot met het geldende
-            bedrag, dat per 1 juli 2026 ruim veertig procent hoger ligt.
+            telkens per 1 januari en per 1 juli door de minister herzien, en
+            lid 2 bepaalt dat de herziene bedragen in de plaats komen van de
+            bedragen in de wettekst. De wettekst noemt nog € 1.653,60.
+
+            De herziening die op de peildatum van dit bestand geldt is de
+            Regeling van de Minister van Sociale Zaken en Werkgelegenheid van
+            28 april 2026, nr. 2026-0000107275, tot indexatie van het wettelijk
+            minimumloon (Staatscourant 2026, 16505), die het referentiemaandloon
+            met ingang van 1 juli 2026 vaststelt op € 2.337,00.
+
+            Die regeling staat niet als eigen regeling in het corpus en kan daar
+            ook niet met de harvester in komen: zij heeft geen BWB-nummer maar
+            is een bekendmaking in de Staatscourant. De waarde staat daarom in
+            de default, met de regeling als vindplaats. Bij de volgende
+            indexatie per 1 januari 2027 hoort een nieuwe corpusversie van deze
+            wet, niet een wijziging van deze.
           default:
             actions:
               - output: herzien_minimumloon_per_maand_eurocent
-                value: 165360
+                value: 233700
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 juli 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2026-16505.html
+                  explanation: |-
+                    Referentiemaandloon € 2.337,00 met ingang van 1 juli 2026,
+                    vastgesteld op grond van artikel 14 lid 2 en 10 van de Wet
+                    minimumloon en minimumvakantiebijslag.
         - id: herzien_minimumloon_per_uur_eurocent
           type: amount
           required: false
@@ -465,11 +482,22 @@ articles:
           legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
           description: |-
             Het uurbedrag van lid 1 onderdeel a, na herziening op grond van
-            artikel 14. Zelfde voorbehoud als bij het maandbedrag.
+            artikel 14. De wettekst noemt nog € 10,60; de regeling van 28 april
+            2026 stelt het minimumuurloon per 1 juli 2026 vast op € 14,99 voor
+            personen van eenentwintig jaar en ouder. De lagere uurbedragen voor
+            jongere werknemers volgen uit artikel 8 lid 3 en een afzonderlijke
+            algemene maatregel van bestuur, en zijn hier niet gemodelleerd.
           default:
             actions:
               - output: herzien_minimumloon_per_uur_eurocent
-                value: 1060
+                value: 1499
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 juli 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2026-16505.html
+                  explanation: |-
+                    Minimumuurloon € 14,99 met ingang van 1 juli 2026 voor
+                    personen van eenentwintig jaar en ouder.
   - number: '9'
     text: >-
       De uitbetaling van het loon aan werknemers, wier dienstbetrekking niet op een arbeidsovereenkomst berust,
