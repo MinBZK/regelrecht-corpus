@@ -85,7 +85,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |
@@ -169,7 +168,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | true |
@@ -247,7 +245,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |
@@ -329,7 +326,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |
@@ -411,7 +407,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |
@@ -493,7 +488,6 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_eurocent_per_maand | 215500 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500 |
       | behoort_tot_doelgroep_10b_lid_1 | true |
       | heeft_dienstbetrekking_beschut_werk | true |
       | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |

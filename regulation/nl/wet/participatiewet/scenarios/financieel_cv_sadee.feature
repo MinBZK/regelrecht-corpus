@@ -52,7 +52,6 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_eurocent_per_maand                       | 150850    |
-      | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500    |
       | overeengekomen_arbeidsduur_uren_per_week            | 32        |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |

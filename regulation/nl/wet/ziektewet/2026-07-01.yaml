@@ -2608,12 +2608,6 @@ articles:
             type: number
             required: true
             description: 'Pwet 10d lid 4 tweede zin: overeengekomen arbeidsduur per week.'
-          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
-            type: amount
-            required: true
-            type_spec:
-              unit: eurocent
-            description: 'WML + 8% vakantiebijslag per maand (Pwet 10d lid 4).'
           # --- lid 2 onderdeel f: doorgegeven aan Participatiewet artikel 10b (beschut werk) ---
           - name: behoort_tot_doelgroep_10b_lid_1
             type: boolean
@@ -2816,7 +2810,6 @@ articles:
                 is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
                 loonwaarde_eurocent_per_maand: $loonwaarde_eurocent_per_maand
                 overeengekomen_arbeidsduur_uren_per_week: $overeengekomen_arbeidsduur_uren_per_week
-                minimumloon_plus_vakantiebijslag_eurocent_per_maand: $minimumloon_plus_vakantiebijslag_eurocent_per_maand
                 werkgever_is_voornemens_dienstbetrekking_aan_te_gaan: $werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
                 dienstbetrekking_is_tot_stand_gekomen: $dienstbetrekking_is_tot_stand_gekomen
                 college_heeft_loonwaarde_vastgesteld: $college_heeft_loonwaarde_vastgesteld

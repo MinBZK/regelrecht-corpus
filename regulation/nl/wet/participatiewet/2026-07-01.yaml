@@ -2423,14 +2423,6 @@ articles:
               dienstbetrekkingen als volledige dienstbetrekking geldt;
               die sectornorm kent de engine niet (zie untranslatable),
               dus de aanleveraar levert de reeds gecapte waarde.
-          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
-            type: amount
-            required: true
-            type_spec:
-              unit: eurocent
-            description: |-
-              WML + 8% vakantiebijslag (artikel 15 Wml) per maand,
-              afhankelijk van leeftijd en arbeidsduur. Bron: Wml.
           # --- lid 1: de twee routes waarlangs het college subsidie verleent ---
           - name: werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
             type: boolean
@@ -2473,6 +2465,22 @@ articles:
               Aanvang van de dienstbetrekking. Lid 5, eerste zin, begrenst
               de 50%-regel tot maximaal de eerste zes maanden daarvan.
               Bron: werkgever / polisadministratie.
+        input:
+          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            type: amount
+            source:
+              regulation: wet_minimumloon_en_minimumvakantiebijslag
+              output: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 4 en lid 5 rekenen met "het wettelijk minimumloon
+                vermeerderd met de aanspraak op vakantiebijslag op grond van
+                artikel 15 van de Wet minimumloon en minimumvakantiebijslag".
+                Die som komt sinds 26 september 2026 uit die wet zelf, in
+                plaats van als aangeleverd bedrag: artikel 8 lid 1 onderdeel b
+                met de herziening van artikel 14, plus de acht procent van
+                artikel 15.
         output:
           - name: is_uitgesloten_lid_3
             type: boolean

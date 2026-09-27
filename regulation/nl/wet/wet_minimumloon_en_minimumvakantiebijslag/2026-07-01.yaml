@@ -991,14 +991,17 @@ articles:
             description: BSN van de werknemer.
           - name: loon_ten_laste_van_werkgever_eurocent_per_maand
             type: amount
-            required: true
+            nullable: true
+            required: false
             type_spec:
               unit: eurocent
             description: |-
               Lid 1: het ten laste van de werkgever komende loon per maand,
               vermeerderd met de uitkeringen waarop de werknemer tijdens de
               dienstbetrekking aanspraak heeft. Bron: werkgever /
-              polisadministratie.
+              polisadministratie. Alleen nodig voor de vakantiebijslag over een
+              individueel loon; de som van minimumloon plus vakantiebijslag,
+              waarnaar andere wetten verwijzen, hangt er niet van af.
         input:
           - name: minimumloon_per_maand_eurocent
             type: amount
@@ -1056,10 +1059,18 @@ articles:
                 van een maand.
           - output: grondslag_vakantiebijslag_eurocent_per_maand
             value:
-              operation: MIN
-              values:
-                - $loon_ten_laste_van_werkgever_eurocent_per_maand
-                - $bovengrens_vakantiebijslag_eurocent_per_maand
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $loon_ten_laste_van_werkgever_eurocent_per_maand
+                    value: null
+                  then: 0
+              default:
+                operation: MIN
+                values:
+                  - $loon_ten_laste_van_werkgever_eurocent_per_maand
+                  - $bovengrens_vakantiebijslag_eurocent_per_maand
             legal_basis:
               law: Wet minimumloon en minimumvakantiebijslag
               bwb_id: BWBR0002638
