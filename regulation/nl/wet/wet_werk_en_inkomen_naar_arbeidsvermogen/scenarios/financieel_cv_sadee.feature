@@ -56,6 +56,8 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
+      | kosten_voorziening_eurocent | 250000 |
+      | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |
     When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false

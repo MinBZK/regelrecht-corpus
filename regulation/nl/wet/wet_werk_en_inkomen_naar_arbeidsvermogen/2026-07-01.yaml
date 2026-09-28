@@ -2491,6 +2491,25 @@ articles:
               opleidingsplaats of de proefplaats of de te gebruiken
               hulpmiddelen, die in overwegende mate op het individu is
               afgestemd. Bron: UWV-beoordeling.
+          - name: kosten_voorziening_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De kosten van de gevraagde voorziening. Reintegratiebesluit
+              artikel 3 lid 3 verklaart de drempel van lid 1 van overeenkomstige
+              toepassing op de verlening van voorzieningen als bedoeld in dit
+              artikel. Bron: werkgever.
+          - name: gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De gezamenlijke waarde van de voorzieningen waarvoor in hetzelfde
+              kalenderjaar subsidie is aangevraagd. Reintegratiebesluit artikel 3
+              lid 2. Bron: UWV.
           - name: aanvraag_jobcoaching_ingediend
             type: boolean
             required: true
@@ -2505,6 +2524,22 @@ articles:
               Lid 1 + 2.c: aanvraag voor meeneembare voorzieningen voor
               inrichting arbeidsplaats / productie- en werkmethoden /
               hulpmiddelen, in overwegende mate op individu afgestemd.
+        input:
+          - name: kosten_onder_het_drempelbedrag
+            type: boolean
+            source:
+              regulation: reintegratiebesluit
+              output: subsidie_wordt_niet_verstrekt
+              parameters:
+                bsn: $bsn
+                kosten_voorziening_eurocent: $kosten_voorziening_eurocent
+                gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent: $gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+              description: |-
+                Reintegratiebesluit artikel 3 lid 1 stelt een drempel van 1,85
+                maal het minimumloon per maand, gedeeld door 21,75, en lid 3
+                verklaart die van overeenkomstige toepassing op de verlening van
+                voorzieningen als bedoeld in dit artikel. Liggen de kosten
+                daaronder, dan wordt de voorziening niet verleend.
         output:
           - name: artikel_35_van_toepassing
             type: boolean
@@ -2566,6 +2601,8 @@ articles:
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
+                - operation: NOT
+                  value: $kosten_onder_het_drempelbedrag
                 - $aanvraag_jobcoaching_ingediend
                 - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
               legal_basis:
@@ -2587,6 +2624,8 @@ articles:
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
+                - operation: NOT
+                  value: $kosten_onder_het_drempelbedrag
                 - $aanvraag_werkplekaanpassing_ingediend
                 - $voorziening_is_meeneembaar_en_individueel_afgestemd
               legal_basis:
