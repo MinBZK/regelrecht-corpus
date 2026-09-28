@@ -237,6 +237,159 @@ articles:
       - id: ref8
         bwb_id: BWBR0008657
         artikel: 2:23
+    machine_readable:
+      definitions:
+        drempelfactor:
+          value: 1.85
+        deler_werkdagen_per_maand:
+          value: 21.75
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer om wie het gaat.
+          - name: kosten_voorziening_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1: de kosten, bedoeld in artikel 36 van de Wet WIA, van de
+              voorziening waarvoor subsidie wordt gevraagd. Bron: werkgever.
+          - name: gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 2: de gezamenlijke waarde van de voorzieningen waarvoor in
+              hetzelfde kalenderjaar subsidie is aangevraagd. Bron: UWV.
+        output:
+          - name: drempelbedrag_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1: 1,85 maal het minimumloon van artikel 8 lid 1 onderdeel b
+              van de Wet minimumloon, zoals dat luidde op 1 januari van het
+              kalenderjaar waarin de kosten zijn gemaakt, gedeeld door 21,75.
+          - name: subsidie_wordt_niet_verstrekt
+            type: boolean
+            description: |-
+              Lid 1: liggen de kosten onder het drempelbedrag, dan wordt geen
+              subsidie verstrekt.
+          - name: mag_subsidie_ter_hoogte_van_gezamenlijke_waarde_verstrekken
+            type: boolean
+            description: |-
+              Lid 2: overschrijdt de gezamenlijke waarde van de voorzieningen in
+              een kalenderjaar het drempelbedrag, dan kan het UWV subsidie
+              verstrekken ter hoogte van die gezamenlijke waarde. Een
+              bevoegdheid, geen aanspraak.
+        actions:
+          - output: drempelbedrag_eurocent
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $minimumloon_per_maand_op_een_januari_eurocent
+                    - $drempelfactor
+                - $deler_werkdagen_per_maand
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019057
+              article: '3'
+              paragraph: '1'
+              explanation: |-
+                "minder bedragen dan 1,85 maal het minimumloon, bedoeld in
+                artikel 8, eerste lid, onderdeel b, van de Wet minimumloon en
+                minimumvakantiebijslag, zoals dat artikel luidde op 1 januari
+                van het kalenderjaar waarin de kosten zijn gemaakt, gedeeld
+                door 21,75."
+          - output: subsidie_wordt_niet_verstrekt
+            value:
+              operation: LESS_THAN
+              subject: $kosten_voorziening_eurocent
+              value: $drempelbedrag_eurocent
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019057
+              article: '3'
+              paragraph: '1'
+              explanation: |-
+                "wordt niet verstrekt indien de kosten ... minder bedragen dan"
+                het drempelbedrag. Lid 3 verklaart dit artikel van
+                overeenkomstige toepassing op de verlening van voorzieningen
+                als bedoeld in Participatiewet 10h, Wet WIA 34a lid 1 en 35, en
+                Wajong 2:23 lid 1.
+          - output: mag_subsidie_ter_hoogte_van_gezamenlijke_waarde_verstrekken
+            value:
+              operation: GREATER_THAN
+              subject: $gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+              value: $drempelbedrag_eurocent
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019057
+              article: '3'
+              paragraph: '2'
+              explanation: |-
+                "kan het UWV de werkgever subsidie verstrekken ter hoogte van
+                die gezamenlijke waarde" — een kan-bepaling.
+      open_terms:
+        - id: minimumloon_per_maand_op_een_januari_eurocent
+          type: amount
+          required: false
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
+          description: |-
+            Het bedrag van artikel 8 lid 1 onderdeel b van de Wet minimumloon,
+            zoals dat luidde op 1 januari van het kalenderjaar waarin de kosten
+            zijn gemaakt. Dat is niet het bedrag dat op de peildatum geldt: de
+            minister herziet het per 1 januari en per 1 juli, en dit artikel
+            bevriest de verwijzing op de januari-stand.
+
+            Voor het kalenderjaar 2026 is dat € 2.294,40, vastgesteld bij de
+            regeling van de Minister van Sociale Zaken en Werkgelegenheid van
+            1 oktober 2025 tot indexatie van het wettelijk minimumloon per
+            1 januari 2026, Staatscourant 2025 nummer 34131. Per 1 juli 2026
+            staat het bedrag op € 2.337,00; voor dit drempelbedrag telt de
+            januari-stand.
+          default:
+            actions:
+              - output: minimumloon_per_maand_op_een_januari_eurocent
+                value: 229440
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 januari 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2025-34131.html
+                  explanation: |-
+                    Referentiemaandloon € 2.294,40 met ingang van 1 januari
+                    2026, vastgesteld op grond van artikel 14 van de Wet
+                    minimumloon en minimumvakantiebijslag.
+      markings:
+        - about: >-
+            de verwijzing naar het minimumloon zoals dat luidde op 1 januari van het
+            kalenderjaar waarin de kosten zijn gemaakt
+          reason: >-
+            Het formaat selecteert versies van een aangehaalde regeling op een enkele
+            globale peildatum en kan een verwijzing niet op een andere datum laten
+            oplossen. Deze bepaling vraagt juist dat: de januari-stand, ook wanneer op
+            een latere peildatum wordt gerekend.
+          resolution: model
+          resolved_by: >-
+            De datumbewuste verwijzing van RFC-020 (as_of), waarmee een verwijzing op
+            een eigen datum wordt opgelost in plaats van op de rekendatum. Die RFC
+            heeft de status concept.
+          target: []
+          legal_text_excerpt: >-
+            zoals dat artikel luidde op 1 januari van het kalenderjaar waarin de kosten
+            zijn gemaakt
+          accepted: true
   - number: '4'
     text: |-
       Een voorziening als bedoeld in [artikel 10h van de Participatiewet][ref1], de [artikelen 34a, eerste lid][ref2], en
