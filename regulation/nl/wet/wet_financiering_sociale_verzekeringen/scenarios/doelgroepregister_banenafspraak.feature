@@ -46,7 +46,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -57,6 +56,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -85,7 +91,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -96,6 +101,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
@@ -120,7 +132,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -131,6 +142,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | true |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -155,7 +173,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | true       |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -166,6 +183,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | true |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is true
@@ -185,7 +209,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | true       |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -196,6 +219,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | true |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -204,6 +234,11 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
 
   # ────────────────────────────────────────────────────────────────────
   # De overige gronden — elk apart, zodat geen tak ongetest blijft
+  #
+  # Onderdeel d wordt sinds 2026-09-28 niet meer als kale vlag aangeleverd
+  # maar gevuld door Besluit Wfsv artikel 2.24: wie uit het praktijkonderwijs
+  # of het voortgezet speciaal onderwijs komt en zich schriftelijk bij het UWV
+  # meldt. De kolom d zet daarom die twee feiten, niet één parameter.
   # ────────────────────────────────────────────────────────────────────
 
   Scenario Outline: Elke afzonderlijke grond opent het register: <grond>
@@ -215,7 +250,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | <c>        |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | <d>        |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | <e>        |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | <f>        |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -226,6 +260,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | <d> |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | <d> |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | <lid2> |
+      | verzoek_van_college_of_eigen_aanvraag | <lid2> |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is true
@@ -251,7 +292,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | true       |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | true       |
@@ -262,6 +302,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_f" is false
@@ -284,7 +331,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -295,6 +341,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
@@ -319,7 +372,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -330,6 +382,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_6" is false
@@ -352,7 +411,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -363,6 +421,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -381,7 +446,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -392,6 +456,13 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is false

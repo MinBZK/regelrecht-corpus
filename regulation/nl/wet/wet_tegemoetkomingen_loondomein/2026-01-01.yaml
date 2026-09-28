@@ -261,15 +261,6 @@ articles:
               heeft_wajong_duurzaam_geen_mogelijkheden waar is.
               Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
-          - name: voldoet_aan_amvb_indicatie_38b_1_d
-            type: boolean
-            required: true
-            description: |-
-              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
-              indicatie. Bron: UWV (uitvoering AMvB).
-              AMvB-implementatie is open_term — niet in deze YAML
-              gemodelleerd; engine ontvangt vlag van uitvoering.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
           - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
             type: boolean
             required: true
@@ -297,6 +288,48 @@ articles:
               (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
               tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: komt_uit_voortgezet_speciaal_onderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel a: doelgroep voortgezet speciaal onderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: komt_uit_praktijkonderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel b: doelgroep praktijkonderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_zich_schriftelijk_gemeld_bij_uwv
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1, aanhef: schriftelijke melding bij het UWV.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 3: uitsluiting bij duurzaam geen mogelijkheden tot arbeidsparticipatie.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: ontvangt_voorziening_wia_35_lid_2
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 1 onderdeel a: voorziening als bedoeld in Wet WIA 35 lid 2.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
+          - name: ontvangt_voorziening_pwet_10
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 1 onderdeel b: voorziening op grond van Participatiewet 10.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
+          - name: verzoek_van_college_of_eigen_aanvraag
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 2: de vaststelling vindt plaats op verzoek van het college of op eigen aanvraag.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
           - name: heeft_wia_uitkering_hoofdstuk_6
             type: boolean
             required: true
@@ -486,10 +519,16 @@ articles:
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
-                voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
                 is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+                komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs
+                komt_uit_praktijkonderwijs: $komt_uit_praktijkonderwijs
+                heeft_zich_schriftelijk_gemeld_bij_uwv: $heeft_zich_schriftelijk_gemeld_bij_uwv
+                heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie: $heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+                ontvangt_voorziening_wia_35_lid_2: $ontvangt_voorziening_wia_35_lid_2
+                ontvangt_voorziening_pwet_10: $ontvangt_voorziening_pwet_10
+                verzoek_van_college_of_eigen_aanvraag: $verzoek_van_college_of_eigen_aanvraag
                 heeft_wia_uitkering_hoofdstuk_6: $heeft_wia_uitkering_hoofdstuk_6
                 experiment_instrument_82a_suwi_ingezet: $experiment_instrument_82a_suwi_ingezet
                 is_jonggehandicapt_uwv_oordeel_lid_2: $is_jonggehandicapt_uwv_oordeel_lid_2

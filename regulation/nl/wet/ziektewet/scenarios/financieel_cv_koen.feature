@@ -102,7 +102,6 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | voldoet_aan_amvb_indicatie_38b_1_d | false |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
@@ -132,6 +131,13 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
       | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is false
