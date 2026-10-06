@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
 $id: wet_werk_en_inkomen_naar_arbeidsvermogen
 regulatory_layer: WET
 publication_date: '2019-04-12'
@@ -381,19 +381,14 @@ articles:
                   Volledig: ten hoogste 20% van het maatmaninkomen kunnen
                   verdienen. Duurzaam: de medische situatie van lid 2 of
                   lid 3.
-      untranslatables:
-        - construct: rechtstreeks en objectief medisch vast te stellen gevolg van ziekte of gebrek
-          reason: |-
-            Of de beperking een rechtstreeks en objectief medisch vast te
-            stellen gevolg is van ziekte, gebrek, zwangerschap of
-            bevalling, is een verzekeringsgeneeskundig oordeel. De engine
-            ontvangt de uitkomst van dat oordeel als de resterende
-            verdiencapaciteit en de duurzaamheid; het oordeel zelf wordt
-            niet gemodelleerd.
-          legal_text_excerpt: >-
-            als rechtstreeks en objectief medisch vast te stellen gevolg van
-            ziekte, gebrek, zwangerschap of bevalling
-          accepted: true
+      open_terms:
+        - id: objectief_medisch_vast_te_stellen_gevolg
+          description: >-
+            Of de beperking een rechtstreeks en objectief medisch vast te stellen
+            gevolg is van ziekte, gebrek, zwangerschap of bevalling.
+          type: boolean
+          required: false
+          decided_per_case_by: de verzekeringsarts van het UWV, op grond van Wet WIA artikel 4 lid 1
   - number: '5'
     text: >-
       Gedeeltelijk arbeidsgeschikt is hij die als rechtstreeks en objectief medisch vast te stellen gevolg van
@@ -1540,6 +1535,7 @@ articles:
             description: |-
               De eerste dag na afloop van de wachttijd van 104 weken
               (zonder samentelling, verkorting of verlenging).
+            nullable: true
           - name: wachttijd_doorlopen
             type: boolean
             description: |-
@@ -1567,7 +1563,15 @@ articles:
             value:
               operation: IF
               cases:
-                - when: $is_ziek_geworden
+                - when:
+                    operation: AND
+                    conditions:
+                      - $is_ziek_geworden
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $wachttijd_einddatum
+                          value: null
                   then:
                     operation: GREATER_THAN_OR_EQUAL
                     subject: $referencedate.iso
@@ -1582,35 +1586,20 @@ articles:
                   De peildatum ligt op of na de eerste dag na afloop van
                   de wachttijd. Wie niet ziek is geworden, heeft geen
                   wachttijd doorlopen.
-      untranslatables:
-        - construct: samentelling van perioden (lid 3, 4 en 5)
-          reason: |-
-            Perioden met recht op ziekengeld worden samengeteld als zij
-            elkaar met een onderbreking van minder dan vier weken opvolgen
-            of aansluiten op een zwangerschaps- of bevallingsuitkering;
-            perioden zonder recht op ziekengeld (artikel 19aa Ziektewet)
-            tellen niet mee. Dat vergt een reeks ziekteperioden als
-            invoer, die de engine niet kent. Gemodelleerd is de
-            ononderbroken wachttijd vanaf de eerste ziektedag; de
-            aanleveraar levert de eerste dag van de (samengetelde)
-            wachttijd aan.
+      markings:
+        - about: >-
+            de samentelling van perioden met recht op ziekengeld (lid 3, 4 en 5)
+          reason: >-
+            Het formaat rekent met een enkele begindatum en kent geen reeks
+            ziekteperioden waarover met een onderbrekingsregel wordt samengeteld.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een reeks perioden met een samentelregel op de onderbreking
+            ertussen.
+          target: []
           legal_text_excerpt: >-
-            worden in aanmerking genomen en worden samengeteld, indien zij
-            elkaar met een onderbreking van minder dan vier weken opvolgen
-          accepted: true
-        - construct: verkorte wachttijd op aanvraag (lid 6)
-          reason: |-
-            UWV kan op aanvraag een verkorte wachttijd vaststellen als de
-            verzekerde volledig en duurzaam arbeidsongeschikt is. Dat is
-            een beschikking op aanvraag, geen rekenregel; de aanleveraar
-            levert in dat geval de door UWV vastgestelde einddatum niet
-            aan en dit artikel rekent met 104 weken.
-          accepted: true
-        - construct: verlenging van de wachttijd (artikel 24, 25 en 26)
-          reason: |-
-            De wachttijd kan worden verlengd bij een loonsanctie of op
-            gezamenlijk verzoek van werkgever en werknemer. Die artikelen
-            zijn niet gemodelleerd.
+            worden in aanmerking genomen en worden samengeteld, indien zij elkaar met
+            een onderbreking van minder dan vier weken opvolgen
           accepted: true
   - number: '24'
     text: |-
@@ -2483,6 +2472,44 @@ articles:
               gesloten jaren minimumloon verdient zonder LKS. De volledige
               tijdgebonden toets is in deze YAML samengevat als één
               boolean (zie untranslatable).
+          - name: ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel d: de persoonlijke ondersteuning bij het
+              verrichten van de opgedragen taken is noodzakelijk en vormt
+              een compensatie voor de beperkingen van de persoon. Lid 2
+              opent met "worden uitsluitend verstaan" en is daarmee een
+              limitatieve, inhoudelijke afbakening. Bron: UWV-beoordeling.
+          - name: voorziening_is_meeneembaar_en_individueel_afgestemd
+            type: boolean
+            required: true
+            description: |-
+              Lid 2 onderdeel c: het gaat om een meeneembare voorziening
+              ten behoeve van de inrichting van de arbeidsplaats, de
+              productie- en werkmethoden, de inrichting van de
+              opleidingsplaats of de proefplaats of de te gebruiken
+              hulpmiddelen, die in overwegende mate op het individu is
+              afgestemd. Bron: UWV-beoordeling.
+          - name: kosten_voorziening_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De kosten van de gevraagde voorziening. Reintegratiebesluit
+              artikel 3 lid 3 verklaart de drempel van lid 1 van overeenkomstige
+              toepassing op de verlening van voorzieningen als bedoeld in dit
+              artikel. Bron: werkgever.
+          - name: gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De gezamenlijke waarde van de voorzieningen waarvoor in hetzelfde
+              kalenderjaar subsidie is aangevraagd. Reintegratiebesluit artikel 3
+              lid 2. Bron: UWV.
           - name: aanvraag_jobcoaching_ingediend
             type: boolean
             required: true
@@ -2497,6 +2524,22 @@ articles:
               Lid 1 + 2.c: aanvraag voor meeneembare voorzieningen voor
               inrichting arbeidsplaats / productie- en werkmethoden /
               hulpmiddelen, in overwegende mate op individu afgestemd.
+        input:
+          - name: kosten_onder_het_drempelbedrag
+            type: boolean
+            source:
+              regulation: reintegratiebesluit
+              output: subsidie_wordt_niet_verstrekt
+              parameters:
+                bsn: $bsn
+                kosten_voorziening_eurocent: $kosten_voorziening_eurocent
+                gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent: $gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+              description: |-
+                Reintegratiebesluit artikel 3 lid 1 stelt een drempel van 1,85
+                maal het minimumloon per maand, gedeeld door 21,75, en lid 3
+                verklaart die van overeenkomstige toepassing op de verlening van
+                voorzieningen als bedoeld in dit artikel. Liggen de kosten
+                daaronder, dan wordt de voorziening niet verleend.
         output:
           - name: artikel_35_van_toepassing
             type: boolean
@@ -2508,12 +2551,19 @@ articles:
             description: |-
               Lid 1: structurele functionele beperking + arbeidsverhouding
               + niet-Wsw cumulatief.
-          - name: heeft_recht_op_jobcoaching
+          - name: mag_jobcoaching_toekennen
             type: boolean
-            description: 'Lid 2 onderdeel d — persoonlijke ondersteuning.'
-          - name: heeft_recht_op_werkplekaanpassing
+            description: |-
+              Lid 1 en lid 2 onderdeel d: het UWV is bevoegd de
+              persoonlijke ondersteuning op aanvraag toe te kennen. De wet
+              zegt "kan toekennen"; er ontstaat geen aanspraak van de
+              aanvrager.
+          - name: mag_werkplekaanpassing_toekennen
             type: boolean
-            description: 'Lid 2 onderdeel c — meeneembare werkplek-voorzieningen.'
+            description: |-
+              Lid 1 en lid 2 onderdeel c: het UWV is bevoegd de
+              meeneembare voorziening op aanvraag toe te kennen. Ook hier
+              een kan-bepaling.
         actions:
           - output: artikel_35_van_toepassing
             value:
@@ -2545,13 +2595,16 @@ articles:
                 bwb_id: BWBR0019057
                 article: '35'
                 paragraph: '1'
-          - output: heeft_recht_op_jobcoaching
+          - output: mag_jobcoaching_toekennen
             value:
               operation: AND
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
+                - operation: NOT
+                  value: $kosten_onder_het_drempelbedrag
                 - $aanvraag_jobcoaching_ingediend
+                - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
                 bwb_id: BWBR0019057
@@ -2559,16 +2612,22 @@ articles:
                 paragraph: '2'
                 sentence: 'd'
                 explanation: |-
-                  Onderdeel d (limitatief in lid 2): noodzakelijke
-                  persoonlijke ondersteuning als compensatie voor
-                  beperkingen.
-          - output: heeft_recht_op_werkplekaanpassing
+                  Lid 1 kent het UWV de bevoegdheid toe ("kan ... op
+                  aanvraag voorzieningen toekennen"). Lid 2 opent met
+                  "worden uitsluitend verstaan" en eist in onderdeel d dat
+                  de ondersteuning noodzakelijk is en een compensatie vormt
+                  voor de beperkingen; die toets staat hier naast de
+                  aanvraag.
+          - output: mag_werkplekaanpassing_toekennen
             value:
               operation: AND
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
+                - operation: NOT
+                  value: $kosten_onder_het_drempelbedrag
                 - $aanvraag_werkplekaanpassing_ingediend
+                - $voorziening_is_meeneembaar_en_individueel_afgestemd
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
                 bwb_id: BWBR0019057
@@ -2576,9 +2635,10 @@ articles:
                 paragraph: '2'
                 sentence: 'c'
                 explanation: |-
-                  Onderdeel c (limitatief in lid 2): meeneembare
-                  voorzieningen voor inrichting arbeidsplaats,
-                  productie- en werkmethoden, hulpmiddelen.
+                  Lid 1 is een kan-bepaling. Onderdeel c eist dat de
+                  voorziening meeneembaar is en in overwegende mate op het
+                  individu is afgestemd; die toets staat hier naast de
+                  aanvraag.
       open_terms:
         - id: nadere_regels_voorzieningen_artikel_35
           type: string
@@ -2595,43 +2655,43 @@ articles:
             actions:
               - output: nadere_regels_voorzieningen_artikel_35
                 value: 'Reïntegratiebesluit'
-      untranslatables:
-        - construct: '"structurele functionele beperking" — UWV-discretie'
-          reason: |-
-            Lid 1 vereist een UWV-oordeel over de aard van de beperking.
-            "Structureel functioneel" is geen meetbare drempel; UWV-arts
-            beoordeelt op basis van Schattingsbesluit. De engine ontvangt
-            de uitkomst als boolean parameter.
-          legal_text_excerpt: 'naar het oordeel van het UWV structurele functionele beperking'
-          accepted: true
-        - construct: 'lid 4 onderdeel b — Pwet 7.1.a college-ondersteuning t/m 2 jaar minimumloon zonder LKS'
-          reason: |-
-            Lid 4.b sluit personen uit die ondersteuning krijgen van
-            college b&w t/m het moment dat zij 2 aaneengesloten jaren
-            ten minste minimumloon verdienen zonder LKS. Deze samen­
-            gestelde tijds- en geldcomponent is met de huidige operatie-
-            set niet faithful te modelleren — wij vragen om een enkele
-            boolean en delegeren de tijdgebonden toets aan UWV.
-          legal_text_excerpt: |-
-            tot het moment dat het inkomen uit de arbeid in
-            dienstbetrekking gedurende twee aaneengesloten jaren ten
-            minste het minimumloon ... bedraagt en ten behoeve van die
-            persoon in die twee jaren geen loonkostensubsidie ... is verleend
-          accepted: true
-        - construct: 'voorzieningen-criterium "in overwegende mate op individu afgestemd" (lid 2.c)'
-          reason: |-
-            Onderdeel c definieert WPA als meeneembare voorzieningen
-            "die in overwegende mate op het individu van de persoon
-            zijn afgestemd". Of een voorziening "in overwegende mate"
-            individueel is, is een UWV-beoordeling.
-          legal_text_excerpt: 'die in overwegende mate op het individu van de persoon ... zijn afgestemd'
-          accepted: true
-        - construct: 'noodzakelijkheid + compensatie voor beperkingen (lid 2.d)'
-          reason: |-
-            Onderdeel d vereist dat de persoonlijke ondersteuning
-            "noodzakelijk" is en "een compensatie vormt voor zijn
-            beperkingen". UWV-discretionair.
-          legal_text_excerpt: 'noodzakelijke persoonlijke ondersteuning ... indien die ondersteuning een compensatie vormt voor zijn beperkingen'
+        - id: structurele_functionele_beperking
+          description: Of de persoon een structurele functionele beperking heeft.
+          type: boolean
+          required: false
+          decided_per_case_by: het UWV, op grond van Wet WIA artikel 35 lid 1
+        - id: in_overwegende_mate_op_individu_afgestemd
+          description: >-
+            Of een meeneembare voorziening in overwegende mate op het individu is
+            afgestemd.
+          type: boolean
+          required: false
+          decided_per_case_by: het UWV, op grond van Wet WIA artikel 35 lid 2 onderdeel c
+        - id: noodzakelijke_persoonlijke_ondersteuning
+          description: >-
+            Of de persoonlijke ondersteuning noodzakelijk is en een compensatie vormt
+            voor de beperkingen.
+          type: boolean
+          required: false
+          decided_per_case_by: het UWV, op grond van Wet WIA artikel 35 lid 2 onderdeel d
+      markings:
+        - about: >-
+            de uitsluiting tot het moment dat het inkomen twee aaneengesloten jaren
+            ten minste het minimumloon bedraagt zonder loonkostensubsidie
+          reason: >-
+            Het formaat kent geen voorwaarde die een bedrag en een aaneengesloten duur
+            combineert: het toetst een waarde op de peildatum, niet het verloop van
+            die waarde over twee jaar.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over het verloop van een bedrag gedurende
+            een aaneengesloten periode kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            tot het moment dat het inkomen uit de arbeid in dienstbetrekking gedurende
+            twee aaneengesloten jaren ten minste het minimumloon ... bedraagt en ten
+            behoeve van die persoon in die twee jaren geen loonkostensubsidie ... is
+            verleend
           accepted: true
   - number: '36'
     text: |-
@@ -2808,12 +2868,28 @@ articles:
             type: string
             required: true
             description: BSN van de gedeeltelijk arbeidsgeschikte.
-          - name: heeft_recht_op_wia_uitkering
+          - name: heeft_recht_op_wga_uitkering
             type: boolean
             required: true
             description: |-
-              Lid 1: de gedeeltelijk arbeidsgeschikte heeft recht op een
-              uitkering op grond van deze wet. Bron: UWV.
+              Lid 1: recht op een uitkering op grond van deze wet. Artikel 5
+              omschrijft de gedeeltelijk arbeidsgeschikte als degene die
+              "niet volledig en duurzaam arbeidsongeschikt is", zodat de
+              IVA-uitkering van artikel 47 hier buiten valt en alleen de
+              WGA-uitkering van artikel 54 overblijft. Bron: UWV.
+          - name: verdiencapaciteit_percentage_maatmaninkomen
+            type: number
+            required: true
+            description: |-
+              Artikel 5: resterende verdiencapaciteit als percentage van
+              het maatmaninkomen. Doorgegeven aan artikel 5. Bron: UWV.
+          - name: is_medisch_duurzaam
+            type: boolean
+            required: true
+            description: |-
+              Artikel 4 lid 2 en 3: duurzaamheid van de
+              arbeidsongeschiktheid. Doorgegeven aan artikel 5. Bron:
+              verzekeringsarts UWV.
           - name: in_staat_tot_werkzaamheden
             type: boolean
             required: true
@@ -2843,6 +2919,22 @@ articles:
               eigenrisicodrager is er reeel uitzicht op een aansluitende
               dienstbetrekking van dezelfde of grotere omvang voor ten
               minste 6 maanden.
+        input:
+          - name: is_gedeeltelijk_arbeidsgeschikt
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: is_gedeeltelijk_arbeidsgeschikt
+              parameters:
+                bsn: $bsn
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+              description: |-
+                Lid 1 richt zich tot de gedeeltelijk arbeidsgeschikte.
+                Artikel 5 bepaalt wie dat is; artikel 47 lid 1 onderdeel b
+                sluit daarop aan met "hij is volledig en duurzaam
+                arbeidsongeschikt", zodat de IVA-gerechtigde hier niet
+                onder valt.
         output:
           - name: voldoet_aan_lid_2_voorwaarden
             type: boolean
@@ -2888,7 +2980,8 @@ articles:
             value:
               operation: AND
               conditions:
-                - $heeft_recht_op_wia_uitkering
+                - $is_gedeeltelijk_arbeidsgeschikt
+                - $heeft_recht_op_wga_uitkering
                 - $voldoet_aan_lid_2_voorwaarden
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
@@ -2896,9 +2989,13 @@ articles:
                 article: '37'
                 paragraph: '1'
                 explanation: |-
-                  Lid 1 vereist recht op een WIA-uitkering; lid 2 stelt de
-                  voorwaarden aan de werkzaamheden zelf. Zowel UWV als de
-                  eigenrisicodrager kan de toestemming verlenen.
+                  Lid 1 richt zich uitsluitend tot "de gedeeltelijk
+                  arbeidsgeschikte die recht heeft op een uitkering op
+                  grond van deze wet". Artikel 5 sluit de volledig en
+                  duurzaam arbeidsongeschikte uit, dus de IVA-gerechtigde
+                  van artikel 47 valt hier buiten. Lid 2 stelt de
+                  voorwaarden aan de werkzaamheden zelf. Zowel het UWV als
+                  de eigenrisicodrager kan de toestemming verlenen.
           - output: max_duur_proefplaatsing_maanden
             value: $max_duur_proefplaatsing_maanden
           - output: sollicitatieplicht_opgeschort
@@ -2918,27 +3015,31 @@ articles:
             actions:
               - output: nadere_regels_uitvoering_proefplaatsing_wia
                 value: 'geen'
-      untranslatables:
-        - construct: onderbreking wegens ziekte
-          reason: |-
-            Lid 3 laat de periode waarin een ziekte-uitkering wordt
-            ontvangen buiten beschouwing voor de zes-maandentermijn. Dit
-            vereist samenloop met de Ziektewet en day-by-day boekhouding
-            van werk- versus ziektedagen; met de huidige operatieset niet
-            faithful modelleerbaar. Gelijk aan de untranslatable bij WW
-            artikel 76a lid 4.
-          legal_text_excerpt: |-
-            wordt de periode waarin een uitkering bij ziekte wordt
-            ontvangen, voor de toepassing van dat lid buiten beschouwing
-            gelaten
-          accepted: true
-        - construct: "oordeelvorming UWV of eigenrisicodrager ('reeel uitzicht')"
-          reason: |-
-            Lid 2 onderdeel d is discretionair en belegt het oordeel bij
-            twee verschillende partijen — UWV of de eigenrisicodrager —
-            zonder criterium om te bepalen wie oordeelt. De engine
-            ontvangt de uitkomst als een enkele boolean parameter.
-          legal_text_excerpt: 'naar het oordeel van het UWV of de eigenrisicodrager, een reëel uitzicht'
+        - id: reeel_uitzicht_op_dienstbetrekking
+          description: >-
+            Of er een reeel uitzicht is op een aansluitende dienstbetrekking van ten
+            minste zes maanden. Het artikel belegt dit bij het UWV of de
+            eigenrisicodrager zonder criterium wie oordeelt.
+          type: boolean
+          required: false
+          decided_per_case_by: >-
+            het UWV of de eigenrisicodrager, op grond van Wet WIA artikel 37 lid 2
+            onderdeel d
+      markings:
+        - about: >-
+            de periode waarin een uitkering bij ziekte wordt ontvangen, die buiten
+            beschouwing blijft voor de zes-maandentermijn
+          reason: >-
+            Het formaat kent geen kalender van werk- tegenover ziektedagen, en kan een
+            termijn daarom niet opschorten voor de duur van een andere uitkering.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een termijn wordt opgeschort zolang een andere regeling
+            loopt.
+          target: []
+          legal_text_excerpt: >-
+            wordt de periode waarin een uitkering bij ziekte wordt ontvangen, voor de
+            toepassing van dat lid buiten beschouwing gelaten
           accepted: true
   - number: 37b
     text: |-
@@ -3215,17 +3316,20 @@ articles:
                   De uitsluitingsgronden a tot en met i zijn alternatief:
                   één is genoeg om het recht op uitkering uit te sluiten
                   (artikel 47 en 54, onderdeel c).
-      untranslatables:
-        - construct: uitzondering "andere dienstbetrekking" in onderdeel b
-          reason: |-
-            Onderdeel b geldt niet als het loon of de bezoldiging
-            uitsluitend wordt genoten uit een andere dienstbetrekking dan
-            die van artikel 23 lid 2. Dat vergt de dienstbetrekking per
-            loonstroom als invoer; de aanleveraar past die uitzondering
-            toe en levert het netto-oordeel aan.
+      markings:
+        - about: >-
+            de uitzondering wanneer het loon uitsluitend uit een andere
+            dienstbetrekking wordt genoten
+          reason: >-
+            Het formaat ontvangt het loon als een waarde en kent de dienstbetrekking
+            waaruit het stamt niet, zodat het onderscheid tussen twee loonstromen niet
+            te maken is.
+          resolution: model
+          resolved_by: Een vorm waarin loon per dienstbetrekking wordt onderscheiden.
+          target: []
           legal_text_excerpt: >-
-            tenzij dit loon of deze bezoldiging uitsluitend wordt genoten uit
-            hoofde van een andere dienstbetrekking
+            tenzij dit loon of deze bezoldiging uitsluitend wordt genoten uit hoofde
+            van een andere dienstbetrekking
           accepted: true
   - number: '44'
     text: |-
@@ -3482,15 +3586,6 @@ articles:
                   Cumulatief: verzekerde die ziek wordt, wachttijd
                   doorlopen (a), volledig en duurzaam arbeidsongeschikt
                   (b), geen uitsluitingsgrond (c).
-      untranslatables:
-        - construct: ingangsdatum van het recht (lid 2)
-          reason: |-
-            Het recht ontstaat niet eerder dan de eerste dag na afloop
-            van de wachttijd, of later als op die dag de
-            uitsluitingsgrond van artikel 43 onderdeel b nog geldt. Dit
-            artikel stelt vast óf op de peildatum recht bestaat; de
-            precieze ingangsdatum wordt niet berekend.
-          accepted: true
   - number: '48'
     text: |-
       1 Indien op de dag, bedoeld in [artikel 47, tweede lid][ref1], geen recht op een arbeidsongeschiktheidsuitkering
@@ -3886,23 +3981,6 @@ articles:
                   Cumulatief: verzekerde die ziek wordt, wachttijd
                   doorlopen (a), gedeeltelijk arbeidsgeschikt (b), geen
                   uitsluitingsgrond (c).
-      untranslatables:
-        - construct: ingangsdatum van het recht (lid 2)
-          reason: |-
-            Het recht ontstaat niet eerder dan de eerste dag na afloop
-            van de wachttijd, of later als de uitsluitingsgrond van
-            artikel 43 onderdeel b dan nog geldt. Dit artikel stelt vast
-            óf op de peildatum recht bestaat; de ingangsdatum wordt niet
-            berekend.
-          accepted: true
-        - construct: samenstelling van de WGA-uitkering (lid 3 en 4)
-          reason: |-
-            Of de uitkering loongerelateerd, loonaanvullend of een
-            vervolguitkering is, hangt af van de referte-eis van artikel
-            58 en het verloop in de tijd. Voor de vraag óf recht bestaat
-            (de vraag die Ziektewet 29b stelt) is dat niet nodig; de
-            hoogte en samenstelling zijn niet gemodelleerd.
-          accepted: true
   - number: '55'
     text: |-
       1 Indien op de dag, bedoeld in [artikel 54, tweede lid][ref1], geen recht op een WGA-uitkering is ontstaan,
@@ -4951,11 +5029,10 @@ articles:
       3 Indien de persoon die recht heeft op een uitkering op grond van deze wet in een accommodatie als
       bedoeld in [artikel 1:1, eerste lid, onderdeel b, van de Wet verplichte geestelijke gezondheidszorg][ref6]
       of in een accommodatie als bedoeld in
-      __REF001___________________________________________________________________________________________________________
-      ____________ is opgenomen en het UWV, van de desbetreffende accommodatie of van het college van burgemeester en
-      wethouders van de gemeente die de opnamekosten betaalt, het verzoek ontvangt om de uitkering aan die accommodatie
-      of die gemeente uit te betalen, is het UWV bevoegd dat verzoek zonder het stellen van andere voorwaarden in te
-      willigen.
+      [artikel 1, eerste lid, onderdeel b, van de Wet zorg en dwang psychogeriatrische en verstandelijk gehandicapte cliënten][ref7]
+      is opgenomen en het UWV, van de desbetreffende accommodatie of van het college van burgemeester en wethouders van
+      de gemeente die de opnamekosten betaalt, het verzoek ontvangt om de uitkering aan die accommodatie of die gemeente
+      uit te betalen, is het UWV bevoegd dat verzoek zonder het stellen van andere voorwaarden in te willigen.
 
       4 Indien het eerste of tweede lid toepassing vindt, heeft de in het derde lid bedoelde bevoegdheid betrekking op
       het gedeelte van de uitkering dat niet aan de in het eerste of tweede lid genoemde instantie wordt uitbetaald.
@@ -5571,11 +5648,10 @@ articles:
       [artikel 40, tweede lid, van de Wet financiering sociale verzekeringen][ref10];
 
       b. de kosten die rechtstreeks verband houden met de uitvoering van
-      __REF000___________________________________________________________________________________________________________
-      ___________ en verhaalt het deze kosten op de werkgever, bedoeld in de eerste zin, of de bank of verzekeraar,
-      bedoeld in [artikel 40, tweede lid, van de Wet financiering sociale verzekeringen][ref12]. Bij ministeriële
-      regeling kunnen regels worden gesteld met betrekking tot de soort en de omvang van de kosten, bedoeld in de eerste
-      zin.
+      [artikel 30a, eerste lid, juncto derde lid, onderdeel c, van de Wet structuur uitvoeringsorganisatie werk en inkomen][ref11]
+      en verhaalt het deze kosten op de werkgever, bedoeld in de eerste zin, of de bank of verzekeraar, bedoeld in
+      [artikel 40, tweede lid, van de Wet financiering sociale verzekeringen][ref12]. Bij ministeriële regeling kunnen
+      regels worden gesteld met betrekking tot de soort en de omvang van de kosten, bedoeld in de eerste zin.
 
       5 In de situatie, bedoeld in [artikel 82, vierde lid][ref13], berust de betaling van de uitkering bij het UWV.
       Het UWV verhaalt op de eigenrisicodrager de uitkering, bedoeld in de vorige zin, alsmede de op grond van enige
@@ -6792,10 +6868,9 @@ articles:
     text: |-
       1 Een vrijwillige verzekering op grond van de
       [Wet op de arbeidsongeschiktheidsverzekering][ref1] die op het tijdstip waarop
-      __REF001___________________________________________________________________________________________________________
-      ____ in werking treden, op grond van
-      [artikel 83b, onderdeel d, van de Wet op de arbeidsongeschiktheidsverzekering][ref3] wordt beëindigd, wordt
-      aangemerkt als een vrijwillige verzekering op grond van [artikel 18][ref4].
+      [artikel 1.1, onderdelen DD en GG, van de Wet Invoering en financiering Wet werk en inkomen naar arbeidsvermogen][ref2]
+      in werking treden, op grond van [artikel 83b, onderdeel d, van de Wet op de arbeidsongeschiktheidsverzekering][ref3]
+      wordt beëindigd, wordt aangemerkt als een vrijwillige verzekering op grond van [artikel 18][ref4].
 
       2 Indien het eerste lid toepassing vindt, wordt op verzoek van de vrijwillig verzekerde de hoogte van het
       dagloon op grond waarvan de uitkering van de vrijwillige verzekering wordt berekend, gewijzigd dan wel wordt de

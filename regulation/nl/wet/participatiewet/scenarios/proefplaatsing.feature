@@ -28,6 +28,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | true      |
       | college_verleent_toestemming_proefplaatsing | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is true
@@ -42,6 +43,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | true      |
       | college_verleent_toestemming_proefplaatsing | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "max_duur_proefplaatsing_maanden" of "participatiewet"
     Then the execution succeeds
     And output "max_duur_proefplaatsing_maanden" equals 2
@@ -59,6 +61,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | false     |
       | college_verleent_toestemming_proefplaatsing | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
@@ -74,6 +77,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | true      |
       | college_verleent_toestemming_proefplaatsing | false     |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
@@ -88,6 +92,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | true      |
       | college_verleent_toestemming_proefplaatsing | false     |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "gemeenteraad_moet_verordening_vaststellen" of "participatiewet"
     Then the execution succeeds
     And output "gemeenteraad_moet_verordening_vaststellen" is true

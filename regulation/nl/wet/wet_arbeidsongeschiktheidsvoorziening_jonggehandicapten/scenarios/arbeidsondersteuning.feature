@@ -28,8 +28,9 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2014-06-02 |
-      | is_volledig_en_duurzaam_arbeidsongeschikt        | false      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | false      |
+      | datum_voldaan_aan_lid_1 | 2014-06-02 |
     When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_voorwaarden_lid_1" is true
@@ -47,8 +48,9 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 1900-01-01 |
-      | is_volledig_en_duurzaam_arbeidsongeschikt        | false      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | false      |
+      | datum_voldaan_aan_lid_1 | 1900-01-01 |
     When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_arbeidsondersteuning" is false
@@ -63,8 +65,9 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2014-10-06 |
-      | is_volledig_en_duurzaam_arbeidsongeschikt        | false      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | false      |
+      | datum_voldaan_aan_lid_1 | 2014-10-06 |
     When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_voorwaarden_lid_1" is true
@@ -82,8 +85,9 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2025-03-03 |
-      | is_volledig_en_duurzaam_arbeidsongeschikt        | false      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | true       |
+      | datum_voldaan_aan_lid_1 | 2025-03-03 |
     When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "ingangsdatum_recht_op_arbeidsondersteuning" equals "2025-03-03"
@@ -100,8 +104,9 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 2009-01-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2026-03-02 |
-      | is_volledig_en_duurzaam_arbeidsongeschikt        | false      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | true       |
+      | datum_voldaan_aan_lid_1 | 2026-03-02 |
     When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "recht_kan_nog_ontstaan" is true

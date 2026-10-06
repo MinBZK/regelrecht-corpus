@@ -1,7 +1,7 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
 $id: besluit_loondispensatie_wajong
-regulatory_layer: WET
+regulatory_layer: AMVB
 publication_date: '2010-08-18'
 valid_from: '2010-08-19'
 bwb_id: BWBR0020119
@@ -30,11 +30,142 @@ articles:
       - id: ref2
         bwb_id: BWBR0008657
         artikel: 3:63
+    machine_readable:
+      implements:
+        - law: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+          article: '2:20'
+          open_term: duidelijk_minder_dan_minimumloon
+          gelet_op: |-
+            Artikel 2:20 lid 1 van de Wajong noemt geen regeling die de maatstaf
+            "duidelijk minder" invult. Dit besluit doet dat wel, en bindt het UWV
+            aan een ondergrens. De open term draagt daarom
+            decided_per_case_by en niet delegated_to; de invulling komt hier
+            langs de band van de regeling en niet langs een delegatiegrondslag.
+      definitions:
+        drempel_percentage_lager:
+          value: 25
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: gerechtvaardigde_beloning_per_uur_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De geldelijke beloning per gewerkt uur die de arbeidsprestatie
+              van deze werknemer rechtvaardigt. Bron: arbeidsdeskundig
+              onderzoek van het UWV.
+          - name: gebruikelijke_beloning_per_uur_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              De beloning per uur die voor dezelfde arbeid gebruikelijk is.
+              Bron: arbeidsdeskundig onderzoek van het UWV.
+        output:
+          - name: drempelbeloning_per_uur_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              De gebruikelijke beloning verminderd met 25 procent. Ligt de
+              gerechtvaardigde beloning daar op of onder, dan is de
+              arbeidsprestatie duidelijk verminderd.
+          - name: duidelijk_minder_dan_minimumloon
+            type: boolean
+            description: |-
+              De invulling van de open term van Wajong 2:20 lid 1: een
+              duidelijk verminderde arbeidsprestatie wordt slechts aangenomen
+              bij ten minste 25 procent lager.
+        actions:
+          - output: drempelbeloning_per_uur_eurocent
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $gebruikelijke_beloning_per_uur_eurocent
+                    - operation: SUBTRACT
+                      values:
+                        - 100
+                        - $drempel_percentage_lager
+                - 100
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '1'
+              explanation: |-
+                "ten minste 25% lager ligt dan de beloning die voor dezelfde
+                arbeid gebruikelijk is". De drempel is de gebruikelijke
+                beloning maal 75 procent.
+          - output: duidelijk_minder_dan_minimumloon
+            value:
+              operation: LESS_THAN_OR_EQUAL
+              subject: $gerechtvaardigde_beloning_per_uur_eurocent
+              value: $drempelbeloning_per_uur_eurocent
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '1'
+              explanation: |-
+                "wordt slechts aangenomen indien" — een limitatieve
+                ondergrens. Binnen die ruimte blijft het oordeel van het UWV
+                individueel; bij de juristvalidatie van 24 september 2026 is
+                bevestigd dat bij loondispensatie altijd een individuele
+                beoordeling plaatsvindt.
   - number: '2'
     text: |-
       Loondispensatie wordt slechts verleend indien naar verwachting gedurende ten minste zes maanden sprake zal zijn van
       een duidelijk verminderde arbeidsprestatie.
     url: https://wetten.overheid.nl/BWBR0020119/2010-08-19#Artikel2
+    machine_readable:
+      definitions:
+        minimumduur_verwachting_maanden:
+          value: 6
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: verwachte_duur_verminderde_prestatie_maanden
+            type: number
+            required: true
+            description: |-
+              Het aantal maanden waarin naar verwachting sprake zal zijn van
+              een duidelijk verminderde arbeidsprestatie. Bron: UWV.
+        output:
+          - name: voldoet_aan_zesmaandeneis
+            type: boolean
+            description: |-
+              Loondispensatie wordt slechts verleend indien naar verwachting
+              gedurende ten minste zes maanden sprake zal zijn van een
+              duidelijk verminderde arbeidsprestatie.
+        actions:
+          - output: voldoet_aan_zesmaandeneis
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $verwachte_duur_verminderde_prestatie_maanden
+              value: $minimumduur_verwachting_maanden
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '2'
+              explanation: |-
+                "slechts verleend indien naar verwachting gedurende ten minste
+                zes maanden". Een zelfstandige voorwaarde naast de drempel van
+                artikel 1; Wajong 2:20 noemt haar niet.
   - number: '3'
     text: |-
       Bij het verlenen van loondispensatie wordt de aanspraak van de werknemer op een geldelijke beloning voor
@@ -69,6 +200,70 @@ articles:
       - id: ref1
         bwb_id: BWBR0008657
         artikel: 2:15
+    machine_readable:
+      definitions:
+        eindleeftijd_loondispensatie_jaren:
+          value: 18
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: geboortedatum
+            type: date
+            required: true
+            description: 'Geboortedatum van de werknemer. Bron: BRP.'
+          - name: heeft_recht_op_arbeidsondersteuning_wajong
+            type: boolean
+            required: true
+            description: |-
+              Aan de werknemer is arbeidsondersteuning als bedoeld in Wajong
+              artikel 2:15 toegekend. Dat houdt de loondispensatie in stand na
+              het achttiende jaar. Bron: UWV.
+        output:
+          - name: is_jonger_dan_achttien
+            type: boolean
+            description: 'De werknemer is op de peildatum jonger dan achttien jaar.'
+          - name: loondispensatie_eindigt_bij_achttien
+            type: boolean
+            description: |-
+              Voor de werknemer jonger dan achttien wordt de loondispensatie
+              steeds verleend met de bepaling dat zij eindigt bij het bereiken
+              van de leeftijd van achttien jaar, tenzij arbeidsondersteuning is
+              toegekend.
+        actions:
+          - output: is_jonger_dan_achttien
+            value:
+              operation: LESS_THAN
+              subject:
+                operation: AGE
+                date_of_birth: $geboortedatum
+                reference_date: $referencedate.iso
+              value: $eindleeftijd_loondispensatie_jaren
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '6'
+          - output: loondispensatie_eindigt_bij_achttien
+            value:
+              operation: AND
+              conditions:
+                - $is_jonger_dan_achttien
+                - operation: NOT
+                  value: $heeft_recht_op_arbeidsondersteuning_wajong
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '6'
+              explanation: |-
+                "wordt loondispensatie steeds verleend met de bepaling dat deze
+                eindigt bij het bereiken van de leeftijd van 18 jaar, tenzij aan
+                die werknemer arbeidsondersteuning als bedoeld in artikel 2:15
+                van de Wet Wajong wordt toegekend."
   - number: '7'
     text: |-
       Het Besluit loondispensatie Wet Rea wordt ingetrokken, doch blijft van toepassing op loondispensatie die vóór 29

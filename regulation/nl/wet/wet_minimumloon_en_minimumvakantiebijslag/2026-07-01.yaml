@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
 $id: wet_minimumloon_en_minimumvakantiebijslag
 regulatory_layer: WET
 publication_date: '2017-03-28'
@@ -33,8 +33,8 @@ articles:
 
       2 Voor de toepassing van het bij of krachtens deze wet bepaalde worden onder collectieve
       arbeidsovereenkomst mede verstaan bepalingen van een collectieve arbeidsovereenkomst, welke krachtens
-      __REF000___________________________________________________________________________________________________________
-      _______________________ (*Stb.* 1937, 801) algemeen verbindend zijn verklaard.
+      [artikel 2 van de Wet op het algemeen verbindend en het onverbindend verklaren van bepalingen van collectieve arbeidsovereenkomsten][ref3]
+      (*Stb.* 1937, 801) algemeen verbindend zijn verklaard.
 
 
       [ref1]: https://wetten.overheid.nl/BWBR0002698#Artikel5
@@ -380,6 +380,124 @@ articles:
       - id: ref10
         bwb_id: BWBR0007625
         artikel: 7.2.2
+    machine_readable:
+      definitions:
+        normwerkweek_uren:
+          value: 36
+      execution:
+        produces:
+          legal_character: RECHTSPOSITIE
+          decision_type: GEEN_BESLUIT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+        output:
+          - name: minimumloon_per_uur_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 onderdeel a, met inachtneming van lid 2: het per uur
+              geldende minimumloon, na een herziening op grond van artikel 14.
+          - name: minimumloon_per_maand_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 onderdeel b, met inachtneming van lid 2: het bedrag per
+              uitbetalingstermijn van een maand voor wetten die voor de
+              berekening van uitkeringen of tegemoetkomingen naar deze wet
+              verwijzen.
+        actions:
+          - output: minimumloon_per_uur_eurocent
+            value: $herzien_minimumloon_per_uur_eurocent
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '8'
+              paragraph: '1'
+              sentence: 'a'
+              explanation: |-
+                "voor de toepassing van deze wet: per uur € 10,60". Lid 2
+                bepaalt dat waar naar dit bedrag wordt verwezen, de op grond
+                van artikel 14 laatstelijk in de plaats gestelde bedragen
+                worden aangemerkt. De uitkomst is daarom de herziene waarde en
+                niet het bedrag uit de wettekst.
+          - output: minimumloon_per_maand_eurocent
+            value: $herzien_minimumloon_per_maand_eurocent
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '8'
+              paragraph: '1'
+              sentence: 'b'
+              explanation: |-
+                "over elke uitbetalingstermijn van een maand € 1.653,60",
+                met inachtneming van lid 2. Dit is het bedrag waarnaar
+                Participatiewet 10d en Reintegratiebesluit 3 verwijzen.
+      open_terms:
+        - id: herzien_minimumloon_per_maand_eurocent
+          type: amount
+          required: false
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
+          description: |-
+            Het bedrag van lid 1 onderdeel b wordt op grond van artikel 14
+            telkens per 1 januari en per 1 juli door de minister herzien, en
+            lid 2 bepaalt dat de herziene bedragen in de plaats komen van de
+            bedragen in de wettekst. De wettekst noemt nog € 1.653,60.
+
+            De herziening die op de peildatum van dit bestand geldt is de
+            Regeling van de Minister van Sociale Zaken en Werkgelegenheid van
+            28 april 2026, nr. 2026-0000107275, tot indexatie van het wettelijk
+            minimumloon (Staatscourant 2026, 16505), die het referentiemaandloon
+            met ingang van 1 juli 2026 vaststelt op € 2.337,00.
+
+            Die regeling staat niet als eigen regeling in het corpus en kan daar
+            ook niet met de harvester in komen: zij heeft geen BWB-nummer maar
+            is een bekendmaking in de Staatscourant. De waarde staat daarom in
+            de default, met de regeling als vindplaats. Bij de volgende
+            indexatie per 1 januari 2027 hoort een nieuwe corpusversie van deze
+            wet, niet een wijziging van deze.
+          default:
+            actions:
+              - output: herzien_minimumloon_per_maand_eurocent
+                value: 233700
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 juli 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2026-16505.html
+                  explanation: |-
+                    Referentiemaandloon € 2.337,00 met ingang van 1 juli 2026,
+                    vastgesteld op grond van artikel 14 lid 2 en 10 van de Wet
+                    minimumloon en minimumvakantiebijslag.
+        - id: herzien_minimumloon_per_uur_eurocent
+          type: amount
+          required: false
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
+          description: |-
+            Het uurbedrag van lid 1 onderdeel a, na herziening op grond van
+            artikel 14. De wettekst noemt nog € 10,60; de regeling van 28 april
+            2026 stelt het minimumuurloon per 1 juli 2026 vast op € 14,99 voor
+            personen van eenentwintig jaar en ouder. De lagere uurbedragen voor
+            jongere werknemers volgen uit artikel 8 lid 3 en een afzonderlijke
+            algemene maatregel van bestuur, en zijn hier niet gemodelleerd.
+          default:
+            actions:
+              - output: herzien_minimumloon_per_uur_eurocent
+                value: 1499
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 juli 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2026-16505.html
+                  explanation: |-
+                    Minimumuurloon € 14,99 met ingang van 1 juli 2026 voor
+                    personen van eenentwintig jaar en ouder.
   - number: '9'
     text: >-
       De uitbetaling van het loon aan werknemers, wier dienstbetrekking niet op een arbeidsovereenkomst berust,
@@ -669,6 +787,8 @@ articles:
       artikel 8, eerste lid, onder a, herzien overeenkomstig de volgende formule, waarbij het resultaat naar boven wordt
       afgerond op een veelvoud van € 0,01:
 
+      [formule niet in tekst beschikbaar]
+
       waarbij:
 
       A = het herziene minimummaandloon overeenkomstig het eerste tot en met zesde lid.
@@ -856,6 +976,153 @@ articles:
         bwb_id: BWBR0002638
         artikel: '16'
         hoofdstuk: III
+    machine_readable:
+      definitions:
+        vakantiebijslag_percentage:
+          value: 8
+        drievoud_factor:
+          value: 3
+      execution:
+        produces:
+          legal_character: RECHTSPOSITIE
+          decision_type: GEEN_BESLUIT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: loon_ten_laste_van_werkgever_eurocent_per_maand
+            type: amount
+            nullable: true
+            required: false
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1: het ten laste van de werkgever komende loon per maand,
+              vermeerderd met de uitkeringen waarop de werknemer tijdens de
+              dienstbetrekking aanspraak heeft. Bron: werkgever /
+              polisadministratie. Alleen nodig voor de vakantiebijslag over een
+              individueel loon; de som van minimumloon plus vakantiebijslag,
+              waarnaar andere wetten verwijzen, hangt er niet van af.
+        input:
+          - name: minimumloon_per_maand_eurocent
+            type: amount
+            source:
+              regulation: wet_minimumloon_en_minimumvakantiebijslag
+              output: minimumloon_per_maand_eurocent
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 2 rekent de bovengrens af tegen het drievoud van het bedrag
+                van artikel 8 lid 1 onderdeel b.
+        output:
+          - name: bovengrens_vakantiebijslag_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 en 2: het bedrag waarmee de som van loon en uitkeringen het
+              drievoud van het minimumloon overschrijdt blijft buiten
+              beschouwing.
+          - name: grondslag_vakantiebijslag_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: 'Het loon na toepassing van de bovengrens van lid 2.'
+          - name: vakantiebijslag_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1: ten minste 8 procent van de grondslag.
+          - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Het minimumloon per maand vermeerderd met de vakantiebijslag
+              daarover. Dit is de grootheid waarnaar Participatiewet 10d lid 4
+              en lid 5 verwijzen.
+        actions:
+          - output: bovengrens_vakantiebijslag_eurocent_per_maand
+            value:
+              operation: MULTIPLY
+              values:
+                - $minimumloon_per_maand_eurocent
+                - $drievoud_factor
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '15'
+              paragraph: '2'
+              explanation: |-
+                "het drievoud van het in artikel 8, eerste lid, onder b,
+                genoemde bedrag van het minimumloon", per uitbetalingstermijn
+                van een maand.
+          - output: grondslag_vakantiebijslag_eurocent_per_maand
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $loon_ten_laste_van_werkgever_eurocent_per_maand
+                    value: null
+                  then: 0
+              default:
+                operation: MIN
+                values:
+                  - $loon_ten_laste_van_werkgever_eurocent_per_maand
+                  - $bovengrens_vakantiebijslag_eurocent_per_maand
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '15'
+              paragraph: '1'
+              explanation: |-
+                "met dien verstande, dat het bedrag waarmede de som van dit
+                loon en deze uitkeringen het drievoud van het minimumloon
+                overschrijdt buiten beschouwing blijft."
+          - output: vakantiebijslag_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $grondslag_vakantiebijslag_eurocent_per_maand
+                    - $vakantiebijslag_percentage
+                - 100
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '15'
+              paragraph: '1'
+              explanation: |-
+                "recht op een vakantiebijslag ten minste tot een bedrag van 8%
+                van zijn ten laste van de werkgever komende loon". Acht procent
+                is een minimum; een hogere aanspraak uit de arbeidsovereenkomst
+                of cao blijft buiten dit model.
+          - output: minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $minimumloon_per_maand_eurocent
+                    - operation: ADD
+                      values:
+                        - 100
+                        - $vakantiebijslag_percentage
+                - 100
+            legal_basis:
+              law: Wet minimumloon en minimumvakantiebijslag
+              bwb_id: BWBR0002638
+              article: '15'
+              paragraph: '1'
+              explanation: |-
+                Het minimumloon per maand plus acht procent vakantiebijslag
+                daarover. Participatiewet 10d lid 4 en lid 5 rekenen met deze
+                som; de Ziektewet gebruikt haar in artikel 29b lid 2 onderdeel e
+                langs de loonkostensubsidie.
   - number: '16'
     text: |-
       1 Behoudens het bij het tweede, derde en vierde lid bepaalde kan bij publiekrechtelijke regeling of collectieve

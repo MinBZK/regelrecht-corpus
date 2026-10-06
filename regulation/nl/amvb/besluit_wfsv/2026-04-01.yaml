@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
 $id: besluit_wfsv
 regulatory_layer: AMVB
 publication_date: '2019-06-28'
@@ -364,6 +364,8 @@ articles:
 
       5 Bij de berekening van de gedifferentieerde premie voor de middelgrote werkgever wordt een gewogen gemiddelde
       toegepast van de sectorale en individuele premies volgens de formule:
+
+      [formule niet in tekst beschikbaar]
 
       waarbij:
 
@@ -1568,6 +1570,153 @@ articles:
       - id: ref9
         bwb_id: BWBR0015703
         artikel: 10b
+    machine_readable:
+      implements:
+        - law: wet_financiering_sociale_verzekeringen
+          article: 38b
+          open_term: amvb_indicatie_38b_1_d
+          gelet_op: |-
+            Artikel 38b lid 1 onderdeel d van de Wfsv wijst een "bij of krachtens
+            algemene maatregel van bestuur vastgestelde indicatie" aan zonder die
+            te omschrijven. Dit artikel wijst de personen aan die aan die
+            indicatie voldoen.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: komt_uit_voortgezet_speciaal_onderwijs
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a: de persoon heeft deel uitgemaakt van de
+              doelgroep van het voortgezet speciaal onderwijs, bedoeld in
+              artikel 2 van de Wet op de expertisecentra. Bron: school / DUO.
+          - name: komt_uit_praktijkonderwijs
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de persoon heeft deel uitgemaakt van de
+              doelgroep van een school voor praktijkonderwijs, bedoeld in
+              artikel 2.8 van de Wet voortgezet onderwijs 2020. Bron: school /
+              DUO.
+          - name: heeft_zich_schriftelijk_gemeld_bij_uwv
+            type: boolean
+            required: true
+            description: |-
+              Lid 1, aanhef: de persoon meldt zich schriftelijk bij het UWV om
+              opgenomen te worden in de registratie van arbeidsbeperkten. Dit is
+              de enige grond van artikel 38b waar een melding volstaat en geen
+              beoordeling van het arbeidsvermogen nodig is. Bron: UWV.
+          - name: heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+            type: boolean
+            required: true
+            description: |-
+              Lid 3: uitsluiting voor wie duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft als bedoeld in Wajong artikel 1a:1.
+              Bron: UWV.
+          - name: is_uitgesloten_beschut_werk_pwet_10b
+            type: boolean
+            required: true
+            description: |-
+              Lid 3: uitsluiting voor wie door het college is aangewezen op
+              uitsluitend beschut werk, Participatiewet 10b lid 1. Dezelfde
+              uitzondering staat in de aanhef van Wfsv 38b lid 1; dit artikel
+              herhaalt haar. De naam volgt die van de aanroepende wet, zodat
+              beide dezelfde uit de Participatiewet opgehaalde vaststelling
+              lezen in plaats van twee losse aanleveringen.
+        output:
+          - name: behoort_tot_onderwijsdoelgroep_lid_1
+            type: boolean
+            description: |-
+              Lid 1: de persoon komt uit het voortgezet speciaal onderwijs of
+              uit het praktijkonderwijs.
+          - name: is_uitgesloten_lid_3
+            type: boolean
+            description: |-
+              Lid 3: het eerste en tweede lid zijn niet van toepassing bij
+              duurzaam geen mogelijkheden tot arbeidsparticipatie of bij een
+              aanwijzing op uitsluitend beschut werk.
+          - name: amvb_indicatie_38b_1_d
+            type: boolean
+            description: |-
+              De invulling van de open term van Wfsv 38b lid 1 onderdeel d: de
+              persoon voldoet aan de vastgestelde indicatie.
+        actions:
+          - output: behoort_tot_onderwijsdoelgroep_lid_1
+            value:
+              operation: OR
+              conditions:
+                - $komt_uit_voortgezet_speciaal_onderwijs
+                - $komt_uit_praktijkonderwijs
+            legal_basis:
+              law: Besluit Wfsv
+              bwb_id: BWBR0019070
+              article: '2.24'
+              paragraph: '1'
+              explanation: |-
+                Onderdeel a wijst het voortgezet speciaal onderwijs aan,
+                onderdeel b het praktijkonderwijs. Twee alternatieven.
+          - output: is_uitgesloten_lid_3
+            value:
+              operation: OR
+              conditions:
+                - $heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+                - $is_uitgesloten_beschut_werk_pwet_10b
+            legal_basis:
+              law: Besluit Wfsv
+              bwb_id: BWBR0019070
+              article: '2.24'
+              paragraph: '3'
+              explanation: |-
+                "Het eerste en tweede lid zijn niet van toepassing indien die
+                persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
+                heeft ... of indien het een persoon betreft van wie door het
+                college van burgemeester en wethouders is vastgesteld dat hij
+                uitsluitend in een beschutte omgeving ... mogelijkheden tot
+                arbeidsparticipatie heeft."
+          - output: amvb_indicatie_38b_1_d
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_onderwijsdoelgroep_lid_1
+                - $heeft_zich_schriftelijk_gemeld_bij_uwv
+                - operation: NOT
+                  value: $is_uitgesloten_lid_3
+            legal_basis:
+              law: Besluit Wfsv
+              bwb_id: BWBR0019070
+              article: '2.24'
+              paragraph: '1, 3'
+              explanation: |-
+                "wordt aangewezen nadat hij zich daartoe schriftelijk meldt bij
+                UWV om opgenomen te worden in de registratie van
+                arbeidsbeperkten". De melding is constitutief; er is geen
+                beoordeling van het arbeidsvermogen. Bij de juristvalidatie van
+                24 september 2026 is dat als het kenmerkende van deze grond
+                aangewezen.
+      markings:
+        - about: >-
+            het overgangsrecht van lid 2 en van artikel 2.25, dat groepen aanwijst op
+            grond van gebeurtenissen tussen 10 september 2014 en 17 juli 2015
+          reason: >-
+            Het formaat kan deze voorwaarden uitdrukken, maar het dossier reikt niet tot
+            de aanvraaggeschiedenis van 2014 en 2015. De aanwijzing is daarom buiten de
+            scope gelaten en niet vanwege een tekort van het formaat.
+          resolution: model
+          resolved_by: >-
+            Een uitbreiding van de scope naar het overgangsrecht, met de
+            aanvraagmomenten en beoordelingsuitkomsten uit die periode als invoer.
+          target: []
+          legal_text_excerpt: >-
+            wordt aangewezen de persoon die deel heeft uitgemaakt van de doelgroep van
+            een school voor praktijkonderwijs ... en voor 28 oktober 2016 een verzoek
+            ter beoordeling van het arbeidsvermogen door UWV heeft ingediend
+          accepted: true
   - number: '2.25'
     text: |-
       1 Als een persoon die voldoet aan een vastgestelde indicatie als bedoeld in
@@ -1756,6 +1905,97 @@ articles:
       - id: ref4
         bwb_id: BWBR0017745
         artikel: 38b
+    machine_readable:
+      implements:
+        - law: wet_financiering_sociale_verzekeringen
+          article: 38b
+          open_term: beoordelingsregels_jonggehandicapt_38b_2
+          gelet_op: |-
+            Artikel 38b lid 3 van de Wfsv bepaalt dat bij of krachtens algemene
+            maatregel van bestuur regels worden gesteld over de beoordeling door
+            het UWV of iemand arbeidsbeperkte is in de zin van lid 2. Dit artikel
+            omschrijft wat onder een voorziening in de zin van lid 2 wordt
+            verstaan en op wiens verzoek de vaststelling plaatsvindt.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: ontvangt_voorziening_wia_35_lid_2
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a: de persoon ontvangt een vervoersvoorziening, een
+              intermediaire activiteit, een meeneembare voorziening of
+              noodzakelijke persoonlijke ondersteuning als bedoeld in Wet WIA
+              artikel 35 lid 2. Bron: UWV.
+          - name: ontvangt_voorziening_pwet_10
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de persoon ontvangt een voorziening die het
+              college noodzakelijk acht voor de arbeidsinschakeling en heeft
+              verstrekt op grond van Participatiewet artikel 10. Bron: gemeente.
+          - name: verzoek_van_college_of_eigen_aanvraag
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de vaststelling door het UWV vindt plaats op verzoek van het
+              college van burgemeester en wethouders dan wel op aanvraag van
+              betrokkene zelf. Zonder een van beide komt de vaststelling niet tot
+              stand. Bron: UWV.
+        output:
+          - name: ontvangt_voorziening_in_de_zin_van_lid_2
+            type: boolean
+            description: |-
+              Lid 1: de voorziening die artikel 38b lid 2 van de Wfsv bedoelt, is
+              een voorziening op grond van Wet WIA 35 lid 2 of op grond van
+              Participatiewet 10.
+          - name: beoordelingsregels_jonggehandicapt_38b_2
+            type: boolean
+            description: |-
+              De invulling van de open term van Wfsv 38b: aan de regels voor de
+              beoordeling van lid 2 is voldaan wanneer de persoon zo'n
+              voorziening ontvangt en de vaststelling op verzoek van het college
+              of op eigen aanvraag plaatsvindt.
+        actions:
+          - output: ontvangt_voorziening_in_de_zin_van_lid_2
+            value:
+              operation: OR
+              conditions:
+                - $ontvangt_voorziening_wia_35_lid_2
+                - $ontvangt_voorziening_pwet_10
+            legal_basis:
+              law: Besluit Wfsv
+              bwb_id: BWBR0019070
+              article: '2.26'
+              paragraph: '1'
+              explanation: |-
+                "Onder een voorziening als bedoeld in artikel 38b, tweede lid,
+                van de Wfsv, wordt verstaan" — een limitatieve opsomming van twee
+                onderdelen.
+          - output: beoordelingsregels_jonggehandicapt_38b_2
+            value:
+              operation: AND
+              conditions:
+                - $ontvangt_voorziening_in_de_zin_van_lid_2
+                - $verzoek_van_college_of_eigen_aanvraag
+            legal_basis:
+              law: Besluit Wfsv
+              bwb_id: BWBR0019070
+              article: '2.26'
+              paragraph: '1, 2'
+              explanation: |-
+                Lid 1 bepaalt wat een voorziening is, lid 2 op wiens verzoek de
+                vaststelling plaatsvindt. Samen vullen zij de regels waarnaar
+                artikel 38b lid 3 verwijst, voor zover die de voorziening en de
+                aanvraagroute betreffen. Het inhoudelijke oordeel van het UWV —
+                belemmering door ziekte of gebrek, en zonder die voorziening geen
+                minimumloon kunnen verdienen — blijft een beoordeling per geval.
   - number: '2.27'
     text: |-
       1 In dit hoofdstuk wordt verstaan onder:
