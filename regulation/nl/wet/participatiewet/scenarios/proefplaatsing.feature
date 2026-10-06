@@ -44,7 +44,7 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
       | ontvangt_algemene_bijstand                  | true      |
       | college_verleent_toestemming_proefplaatsing | true      |
       | behoort_tot_doelgroep_lks | false |
-    When I evaluate "max_duur_proefplaatsing_maanden" of "participatiewet"
+    When I evaluate outputs "max_duur_proefplaatsing_maanden, max_duur_verlenging_proefplaatsing_maanden, max_totale_duur_proefplaatsing_maanden" of "participatiewet"
     Then the execution succeeds
     And output "max_duur_proefplaatsing_maanden" equals 2
     And output "max_duur_verlenging_proefplaatsing_maanden" equals 4

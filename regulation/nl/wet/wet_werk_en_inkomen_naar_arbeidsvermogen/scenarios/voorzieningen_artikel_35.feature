@@ -38,7 +38,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 250000    |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 250000    |
-    When I evaluate "mag_werkplekaanpassing_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_werkplekaanpassing_toekennen, artikel_35_van_toepassing, voldoet_aan_basisvoorwaarden_lid_1, mag_jobcoaching_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is true
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
@@ -62,7 +62,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 15000     |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 15000     |
-    When I evaluate "mag_werkplekaanpassing_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_werkplekaanpassing_toekennen, artikel_35_van_toepassing, voldoet_aan_basisvoorwaarden_lid_1, mag_jobcoaching_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is true
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
@@ -108,7 +108,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | false     |
       | kosten_voorziening_eurocent                               | 250000    |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 250000    |
-    When I evaluate "mag_werkplekaanpassing_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_werkplekaanpassing_toekennen, mag_jobcoaching_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "mag_jobcoaching_toekennen" is true
     And output "mag_werkplekaanpassing_toekennen" is false

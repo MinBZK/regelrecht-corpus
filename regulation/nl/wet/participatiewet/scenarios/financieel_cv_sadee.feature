@@ -58,7 +58,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | college_heeft_loonwaarde_vastgesteld | false |
       | vaststelling_loonwaarde_blijft_achterwege | false |
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is false
     And output "hoogte_lks_voltijd_eurocent_per_maand" equals 0

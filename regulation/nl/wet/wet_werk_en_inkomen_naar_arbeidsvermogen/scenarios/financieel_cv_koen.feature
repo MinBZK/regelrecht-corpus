@@ -65,7 +65,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
       | kosten_voorziening_eurocent | 250000 |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |
-    When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "artikel_35_van_toepassing, mag_jobcoaching_toekennen, mag_werkplekaanpassing_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false
     And output "mag_jobcoaching_toekennen" is false
@@ -90,7 +90,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
       | kosten_voorziening_eurocent | 250000 |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |
-    When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "artikel_35_van_toepassing, mag_jobcoaching_toekennen, mag_werkplekaanpassing_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is true
     And output "mag_jobcoaching_toekennen" is true

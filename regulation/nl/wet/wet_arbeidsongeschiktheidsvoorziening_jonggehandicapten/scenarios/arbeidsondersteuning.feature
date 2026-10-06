@@ -31,7 +31,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | false      |
       | datum_voldaan_aan_lid_1 | 2014-06-02 |
-    When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_arbeidsondersteuning, voldoet_aan_voorwaarden_lid_1, ingangsdatum_recht_op_arbeidsondersteuning, recht_kan_nog_ontstaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_voorwaarden_lid_1" is true
     And output "ingangsdatum_recht_op_arbeidsondersteuning" equals "2014-09-22"
@@ -68,7 +68,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | false      |
       | datum_voldaan_aan_lid_1 | 2014-10-06 |
-    When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_arbeidsondersteuning, voldoet_aan_voorwaarden_lid_1, ingangsdatum_recht_op_arbeidsondersteuning, recht_kan_nog_ontstaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_voorwaarden_lid_1" is true
     And output "ingangsdatum_recht_op_arbeidsondersteuning" equals "2015-01-26"
@@ -88,7 +88,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | true       |
       | datum_voldaan_aan_lid_1 | 2025-03-03 |
-    When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_arbeidsondersteuning, ingangsdatum_recht_op_arbeidsondersteuning, recht_kan_nog_ontstaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "ingangsdatum_recht_op_arbeidsondersteuning" equals "2025-03-03"
     And output "recht_kan_nog_ontstaan" is true
@@ -107,7 +107,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong        | false      |
       | recht_herleeft_op_grond_van_2_17                 | true       |
       | datum_voldaan_aan_lid_1 | 2026-03-02 |
-    When I evaluate "heeft_recht_op_arbeidsondersteuning" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_arbeidsondersteuning, recht_kan_nog_ontstaan, voldoet_aan_voorwaarden_lid_1" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "recht_kan_nog_ontstaan" is true
     And output "voldoet_aan_voorwaarden_lid_1" is false

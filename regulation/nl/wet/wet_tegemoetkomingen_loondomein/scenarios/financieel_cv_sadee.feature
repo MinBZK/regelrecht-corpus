@@ -116,7 +116,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, tegemoetkoming_banenafspraak_eurocent, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
     And output "categorie_lkv" equals "banenafspraak"
