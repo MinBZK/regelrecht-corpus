@@ -17,7 +17,7 @@ Feature: Loondispensatie (Wajong artikel 2:20)
       | arbeidsprestatie_duidelijk_minder_dan_minimumloon  | true      |
       | aanvraag_loondispensatie_ingediend                 | true      |
       | heeft_recht_op_arbeidsondersteuning_wajong         | true      |
-    When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true
     And output "beding_lagere_beloning_is_nietig" is true

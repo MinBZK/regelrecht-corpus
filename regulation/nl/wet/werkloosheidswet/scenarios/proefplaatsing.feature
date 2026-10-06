@@ -18,7 +18,7 @@ Feature: Proefplaatsing (Werkloosheidswet artikel 76a)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "werkloosheidswet"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_3_voorwaarden, max_duur_proefplaatsing_maanden, ww_uitkering_blijft_bestaan" of "werkloosheidswet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is true
     And output "voldoet_aan_lid_3_voorwaarden" is true
@@ -33,7 +33,7 @@ Feature: Proefplaatsing (Werkloosheidswet artikel 76a)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "werkloosheidswet"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, ww_uitkering_blijft_bestaan" of "werkloosheidswet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
     And output "ww_uitkering_blijft_bestaan" is false
@@ -48,7 +48,7 @@ Feature: Proefplaatsing (Werkloosheidswet artikel 76a)
       | aansprakelijkheidsverzekering_aanwezig         | false     |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "werkloosheidswet"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_3_voorwaarden" of "werkloosheidswet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
     And output "voldoet_aan_lid_3_voorwaarden" is false

@@ -34,7 +34,7 @@ Feature: No-risk polis — scenarios uit Memorie van Toelichting
       | is_pwet_loonkostensubsidie       | true      |
       | is_beschut_werk                  | false     |
       | loonwaarde_lager_dan_minimumloon | true      |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_2" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is true
     And output "voldoet_aan_lid_2" is true
@@ -59,7 +59,7 @@ Feature: No-risk polis — scenarios uit Memorie van Toelichting
       | is_pwet_loonkostensubsidie       | false     |
       | is_beschut_werk                  | false     |
       | loonwaarde_lager_dan_minimumloon | false     |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_4, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is true
     And output "voldoet_aan_lid_4" is true

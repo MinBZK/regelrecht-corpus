@@ -27,7 +27,7 @@ Feature: No-risk polis (Ziektewet artikel 29b)
       | is_pwet_loonkostensubsidie        | false     |
       | is_beschut_werk                   | false     |
       | loonwaarde_lager_dan_minimumloon  | false     |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is true
     And output "duur_no_risk_polis_jaren" equals 5
@@ -46,7 +46,7 @@ Feature: No-risk polis (Ziektewet artikel 29b)
       | is_pwet_loonkostensubsidie        | false     |
       | is_beschut_werk                   | false     |
       | loonwaarde_lager_dan_minimumloon  | false     |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is false
     And output "duur_no_risk_polis_jaren" equals 0
@@ -68,7 +68,7 @@ Feature: No-risk polis (Ziektewet artikel 29b)
       | is_pwet_loonkostensubsidie        | false     |
       | is_beschut_werk                   | false     |
       | loonwaarde_lager_dan_minimumloon  | true      |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_no_risk_polis" is true
     And output "duur_no_risk_polis_jaren" equals -1

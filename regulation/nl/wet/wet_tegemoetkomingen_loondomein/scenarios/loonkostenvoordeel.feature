@@ -31,7 +31,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | false     |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, bedrag_per_uur_eurocent, maximum_per_jaar_eurocent, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
     And output "categorie_lkv" equals "arbeidsgehandicapte_werknemer"
@@ -51,7 +51,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | true      |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
     And output "categorie_lkv" equals "banenafspraak"
@@ -68,7 +68,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | true      |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "categorie_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "categorie_lkv, bedrag_per_uur_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "categorie_lkv" equals "oudere_werknemer"
     And output "bedrag_per_uur_eurocent" equals 305
@@ -83,7 +83,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | false     |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is false
     And output "categorie_lkv" equals "geen"
@@ -99,7 +99,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | false     |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | false     |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is false
     And output "hoogte_lkv_per_jaar_eurocent" equals 0
@@ -123,7 +123,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | false     |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | false     |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, tegemoetkoming_oudere_eurocent, tegemoetkoming_arbeidsgehandicapte_eurocent, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
     And output "categorie_lkv" equals "arbeidsgehandicapte_werknemer"
@@ -144,7 +144,7 @@ Feature: Loonkostenvoordeel (Wtl artikel 2.1 — vier categorieën)
       | is_doelgroep_banenafspraak                   | false     |
       | heeft_pensioengerechtigde_leeftijd_bereikt   | true      |
       | heeft_loonaangifte_verzoek_ingediend         | true      |
-    When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
+    When I evaluate outputs "heeft_recht_op_lkv, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is false
     And output "hoogte_lkv_per_jaar_eurocent" equals 0

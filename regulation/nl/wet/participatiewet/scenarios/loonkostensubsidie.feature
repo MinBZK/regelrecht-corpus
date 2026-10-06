@@ -25,7 +25,7 @@ Feature: Loonkostensubsidie (Participatiewet artikel 10c + 10d)
       | is_wsw_dienstbetrekking                            | false     |
       | loonwaarde_eurocent_per_maand                      | 107750    |
       | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, bruto_subsidie_eurocent_per_maand, maximum_subsidie_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is true
     And output "bruto_subsidie_eurocent_per_maand" equals 107750
@@ -44,7 +44,7 @@ Feature: Loonkostensubsidie (Participatiewet artikel 10c + 10d)
       | is_wsw_dienstbetrekking                            | false     |
       | loonwaarde_eurocent_per_maand                      | 21550     |
       | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is true
     And output "hoogte_lks_eurocent_per_maand" equals 150850
@@ -59,7 +59,7 @@ Feature: Loonkostensubsidie (Participatiewet artikel 10c + 10d)
       | is_wsw_dienstbetrekking                            | false     |
       | loonwaarde_eurocent_per_maand                      | 100000    |
       | minimumloon_plus_vakantiebijslag_eurocent_per_maand | 215500   |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is false
     And output "hoogte_lks_eurocent_per_maand" equals 0

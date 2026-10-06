@@ -23,7 +23,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | false     |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | true      |
-    When I evaluate "heeft_recht_op_jobcoaching" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "heeft_recht_op_jobcoaching, artikel_35_van_toepassing, voldoet_aan_basisvoorwaarden_lid_1, heeft_recht_op_werkplekaanpassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is true
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
@@ -41,7 +41,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | false     |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | true      |
-    When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "artikel_35_van_toepassing, heeft_recht_op_jobcoaching, heeft_recht_op_werkplekaanpassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false
     And output "heeft_recht_op_jobcoaching" is false
@@ -58,7 +58,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | true      |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | true      |
-    When I evaluate "artikel_35_van_toepassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "artikel_35_van_toepassing, heeft_recht_op_jobcoaching" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "artikel_35_van_toepassing" is false
     And output "heeft_recht_op_jobcoaching" is false
@@ -73,7 +73,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | false     |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | true      |
-    When I evaluate "voldoet_aan_basisvoorwaarden_lid_1" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "voldoet_aan_basisvoorwaarden_lid_1, heeft_recht_op_jobcoaching, heeft_recht_op_werkplekaanpassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is false
     And output "heeft_recht_op_jobcoaching" is false
@@ -90,7 +90,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | false     |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | false     |
-    When I evaluate "heeft_recht_op_jobcoaching" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "heeft_recht_op_jobcoaching, heeft_recht_op_werkplekaanpassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "heeft_recht_op_jobcoaching" is true
     And output "heeft_recht_op_werkplekaanpassing" is false
@@ -106,7 +106,7 @@ Feature: Jobcoaching en werkplekaanpassingen (Wet WIA artikel 35)
       | pwet_college_draagt_zorg_uitsluiting             | false     |
       | aanvraag_jobcoaching_ingediend                   | true      |
       | aanvraag_werkplekaanpassing_ingediend            | true      |
-    When I evaluate "voldoet_aan_basisvoorwaarden_lid_1" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "voldoet_aan_basisvoorwaarden_lid_1, heeft_recht_op_jobcoaching, heeft_recht_op_werkplekaanpassing" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is false
     And output "heeft_recht_op_jobcoaching" is false
