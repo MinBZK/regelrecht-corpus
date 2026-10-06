@@ -36,6 +36,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "heeft_aanspraak_op_persoonlijke_ondersteuning" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
@@ -58,6 +59,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "behoort_tot_doelgroep_artikel_10" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
@@ -78,6 +80,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "behoort_tot_doelgroep_artikel_10" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
@@ -98,6 +101,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | false     |
       | aanvraag_ingediend                             | true      |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "heeft_aanspraak_op_persoonlijke_ondersteuning" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is false
@@ -118,11 +122,16 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | college_acht_voorziening_noodzakelijk          | true      |
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | false     |
+      | behoort_tot_doelgroep_lks | false |
     When I evaluate "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" is true
-    And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is false
-    And output "heeft_aanspraak_op_voorziening_arbeidsinschakeling" is false
+    # Lid 1 kent de aanspraak onvoorwaardelijk toe; de aanvraag van lid 5 is
+    # de weg om daaraan gevolg te geven en geen voorwaarde voor het ontstaan
+    # ervan. Zonder aanvraag bestaat de aanspraak dus wel.
+    And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is true
+    And output "heeft_aanspraak_op_voorziening_arbeidsinschakeling" is true
+    And output "aanvraag_tot_gevolggeving_ingediend" is false
 
   # ────────────────────────────────────────────────────────────────────
   # Artikel 10da — de enige harde aanspraak
@@ -131,6 +140,11 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
     And the following parameters:
       | bsn                       | 999990101 |
       | behoort_tot_doelgroep_lks | true      |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
+      | dienstbetrekking_is_tot_stand_gekomen | false |
+      | college_heeft_loonwaarde_vastgesteld | false |
+      | vaststelling_loonwaarde_blijft_achterwege | false |
+      | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate "heeft_aanspraak_op_begeleiding_op_de_werkplek" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_begeleiding_op_de_werkplek" is true
@@ -143,6 +157,11 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
     And the following parameters:
       | bsn                       | 999990105 |
       | behoort_tot_doelgroep_lks | false     |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
+      | dienstbetrekking_is_tot_stand_gekomen | false |
+      | college_heeft_loonwaarde_vastgesteld | false |
+      | vaststelling_loonwaarde_blijft_achterwege | false |
+      | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate "heeft_aanspraak_op_begeleiding_op_de_werkplek" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_begeleiding_op_de_werkplek" is false

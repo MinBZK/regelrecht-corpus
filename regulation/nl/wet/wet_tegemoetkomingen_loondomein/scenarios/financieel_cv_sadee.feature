@@ -98,7 +98,6 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | voldoet_aan_amvb_indicatie_38b_1_d                       | false      |
       | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
@@ -108,6 +107,22 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_pensioengerechtigde_leeftijd_bereikt               | false      |
       | heeft_loonaangifte_verzoek_ingediend                     | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | verloonde_uren_voorwaarden_2_6 | 1664 |
+      | verloonde_uren_voorwaarden_2_10 | 1664 |
+      | verloonde_uren_voorwaarden_2_14 | 1664 |
+      | verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling | false |
+      | periode_2_12_is_verstreken | false |
+      | periode_2_8_is_verstreken | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
     When I evaluate "heeft_recht_op_lkv" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true

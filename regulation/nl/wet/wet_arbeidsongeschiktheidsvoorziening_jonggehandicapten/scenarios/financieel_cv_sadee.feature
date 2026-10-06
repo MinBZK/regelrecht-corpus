@@ -49,6 +49,11 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
       | aanvraag_loondispensatie_ingediend                | true      |
       | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
+      | gebruikelijke_beloning_per_uur_eurocent | 1450 |
+      | gerechtvaardigde_beloning_per_uur_eurocent | 1000 |
+      | verwachte_duur_verminderde_prestatie_maanden | 12 |
+      | vastgesteld_dispensatiepercentage | 70 |
+      | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true
@@ -65,16 +70,18 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | false     |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
-    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
+    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
-    And output "heeft_recht_op_jobcoaching" is true
-    And output "heeft_recht_op_werkplekaanpassing" is true
+    And output "mag_jobcoaching_toekennen" is true
+    And output "mag_werkplekaanpassing_toekennen" is true
 
   # Zonder aanvraag geen voorziening: lid 1 kent uitsluitend "op aanvraag"
   # toe. Beide aanvragen staan los van elkaar — een aanvraag voor
@@ -83,15 +90,17 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | false     |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | false     |
-    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | false |
+    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
-    And output "heeft_recht_op_jobcoaching" is true
-    And output "heeft_recht_op_werkplekaanpassing" is false
+    And output "mag_jobcoaching_toekennen" is true
+    And output "mag_werkplekaanpassing_toekennen" is false
 
   # Wsw-uitzondering uit lid 1: wie als Wsw-werknemer werkzaam is valt
   # buiten de voorzieningen, ook met een aanvraag en Wajong-recht.
@@ -99,13 +108,15 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                        | 999990100 |
-      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+      | is_jonggehandicapte | true      |
       | heeft_arbeidsverhouding_of_voorbereiding   | true      |
       | is_wsw_werknemer                           | true      |
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
-    When I evaluate "heeft_recht_op_jobcoaching" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
+    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is false
-    And output "heeft_recht_op_jobcoaching" is false
-    And output "heeft_recht_op_werkplekaanpassing" is false
+    And output "mag_jobcoaching_toekennen" is false
+    And output "mag_werkplekaanpassing_toekennen" is false

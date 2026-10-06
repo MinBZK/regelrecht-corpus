@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.4/schema/v0.5.4/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
 $id: wet_tegemoetkomingen_loondomein
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -131,7 +131,62 @@ articles:
           - name: verloonde_uren
             type: number
             required: true
-            description: Verloonde uren in kalenderjaar (loonaangifte).
+            description: |-
+              Verloonde uren in het kalenderjaar (loonaangifte, Wfsv 38b
+              lid 4). Grondslag voor de jaarmaxima; niet voor de
+              vermenigvuldiging per categorie — daarvoor tellen alleen de
+              uren binnen de periode waarin aan de voorwaarden is voldaan.
+          - name: verloonde_uren_voorwaarden_2_6
+            type: number
+            required: true
+            description: |-
+              Artikel 2.9: "€ 3,05 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.6". Alleen
+              de uren binnen de periode van artikel 2.8 waarin aan die
+              voorwaarden is voldaan, verlengd met het deel van het
+              aangiftetijdvak waarin die periode begint of eindigt
+              (artikel 2.8 lid 2). Bron: polisadministratie.
+          - name: verloonde_uren_voorwaarden_2_10
+            type: number
+            required: true
+            description: |-
+              Artikel 2.13: "€ 1,01 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.10". Alleen
+              de uren binnen de periode van artikel 2.12, verlengd met het
+              deel van het aangiftetijdvak waarin die periode begint of
+              eindigt (artikel 2.12 lid 2). Bron: polisadministratie.
+          - name: verloonde_uren_voorwaarden_2_14
+            type: number
+            required: true
+            description: |-
+              Artikel 2.17: "€ 3,05 per verloond uur van de werknemers die
+              voldoen aan de voorwaarden, bedoeld in artikel 2.14". Alleen
+              de uren binnen de periode van artikel 2.16, verlengd met het
+              deel van het aangiftetijdvak waarin die periode begint of
+              eindigt (artikel 2.16 lid 2). Bron: polisadministratie.
+          - name: verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.10 lid 2 onderdeel b: de werknemer verricht arbeid
+              in een dienstbetrekking als bedoeld in artikel 2 van de Wet
+              sociale werkvoorziening en wordt daarbij niet ter beschikking
+              gesteld aan een andere werkgever. Bron: gemeente / werkgever.
+          - name: periode_2_12_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.10 lid 3: het recht eindigt als de periode van
+              artikel 2.12 of artikel 6.2 lid 1 is verstreken. Bron: UWV.
+          - name: periode_2_8_is_verstreken
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2.6 lid 3 onderdeel c: het eerste lid is niet langer
+              van toepassing als de periode van artikel 2.8 — ten hoogste
+              drie aaneengesloten jaren vanaf de aanvang van de eerste
+              dienstbetrekking waarbij aan de voorwaarden is voldaan —
+              voor deze werknemer is verstreken. Bron: UWV.
           - name: heeft_pensioengerechtigde_leeftijd_bereikt
             type: boolean
             required: true
@@ -206,15 +261,6 @@ articles:
               heeft_wajong_duurzaam_geen_mogelijkheden waar is.
               Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
-          - name: voldoet_aan_amvb_indicatie_38b_1_d
-            type: boolean
-            required: true
-            description: |-
-              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
-              indicatie. Bron: UWV (uitvoering AMvB).
-              AMvB-implementatie is open_term — niet in deze YAML
-              gemodelleerd; engine ontvangt vlag van uitvoering.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
           - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
             type: boolean
             required: true
@@ -242,6 +288,62 @@ articles:
               (Wajong) maar heeft inmiddels duurzaam geen mogelijkheden
               tot arbeidsparticipatie (Wajong 1a:1). Bron: UWV.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: komt_uit_voortgezet_speciaal_onderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel a: doelgroep voortgezet speciaal onderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: komt_uit_praktijkonderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel b: doelgroep praktijkonderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_zich_schriftelijk_gemeld_bij_uwv
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1, aanhef: schriftelijke melding bij het UWV.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 3: uitsluiting bij duurzaam geen mogelijkheden tot arbeidsparticipatie.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: ontvangt_voorziening_wia_35_lid_2
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 1 onderdeel a: voorziening als bedoeld in Wet WIA 35 lid 2.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
+          - name: ontvangt_voorziening_pwet_10
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 1 onderdeel b: voorziening op grond van Participatiewet 10.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
+          - name: verzoek_van_college_of_eigen_aanvraag
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.26 lid 2: de vaststelling vindt plaats op verzoek van het college of op eigen aanvraag.
+              Doorgegeven aan Besluit Wfsv artikel 2.26.
+          - name: heeft_wia_uitkering_hoofdstuk_6
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: recht op een arbeidsongeschiktheidsuitkering als
+              bedoeld in hoofdstuk 6 van de Wet WIA. Bron: UWV.
+              Doorgegeven aan Wfsv artikel 38b.
+          - name: experiment_instrument_82a_suwi_ingezet
+            type: boolean
+            required: true
+            description: |-
+              38b.1.g: bij wijze van experiment is het instrument van
+              Wajong 2:20 of 3:63 ingezet, op grond van artikel 82a lid 1
+              Wet SUWI. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: is_jonggehandicapt_uwv_oordeel_lid_2
             type: boolean
             required: true
@@ -408,7 +510,7 @@ articles:
             type: boolean
             source:
               regulation: wet_financiering_sociale_verzekeringen
-              output: behoort_tot_doelgroepregister_banenafspraak
+              output: is_arbeidsbeperkte
               parameters:
                 bsn: $bsn
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
@@ -417,10 +519,18 @@ articles:
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
-                voldoet_aan_amvb_indicatie_38b_1_d: $voldoet_aan_amvb_indicatie_38b_1_d
                 is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
+                komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs
+                komt_uit_praktijkonderwijs: $komt_uit_praktijkonderwijs
+                heeft_zich_schriftelijk_gemeld_bij_uwv: $heeft_zich_schriftelijk_gemeld_bij_uwv
+                heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie: $heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+                ontvangt_voorziening_wia_35_lid_2: $ontvangt_voorziening_wia_35_lid_2
+                ontvangt_voorziening_pwet_10: $ontvangt_voorziening_pwet_10
+                verzoek_van_college_of_eigen_aanvraag: $verzoek_van_college_of_eigen_aanvraag
+                heeft_wia_uitkering_hoofdstuk_6: $heeft_wia_uitkering_hoofdstuk_6
+                experiment_instrument_82a_suwi_ingezet: $experiment_instrument_82a_suwi_ingezet
                 is_jonggehandicapt_uwv_oordeel_lid_2: $is_jonggehandicapt_uwv_oordeel_lid_2
                 datum_eerste_opname_doelgroepregister: $datum_eerste_opname_doelgroepregister
                 was_arbeidsbeperkte_lid_1_of_2: $was_arbeidsbeperkte_lid_1_of_2
@@ -467,6 +577,17 @@ articles:
             description: |-
               Totale LKV = hoogste van de per-categorie berekende
               tegemoetkomingen (art. 4.1 lid 3 anti-cumulatie).
+          - name: is_uitgesloten_2_10_lid_2_of_3
+            type: boolean
+            description: |-
+              Artikel 2.10 lid 2 onderdeel b en lid 3: Wsw-arbeid in de zin
+              van artikel 2 zonder terbeschikkingstelling, of het
+              verstrijken van de periode van artikel 2.12.
+          - name: voldoet_aan_voorwaarden_2_10
+            type: boolean
+            description: |-
+              Artikel 2.10: arbeidsbeperkte in de zin van Wfsv 38b, en niet
+              uitgesloten door lid 2 of lid 3.
           - name: categorie_lkv
             type: string
             description: |-
@@ -475,6 +596,39 @@ articles:
               genoemde (art. 4.1 lid 3, volgorde art. 2.1). 'geen' als
               geen recht.
         actions:
+          - output: is_uitgesloten_2_10_lid_2_of_3
+            value:
+              operation: OR
+              conditions:
+                - $verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling
+                - $periode_2_12_is_verstreken
+              legal_basis:
+                law: Wet tegemoetkomingen loondomein
+                bwb_id: BWBR0037522
+                article: '2.10'
+                paragraph: '2, 3'
+                explanation: |-
+                  Lid 2 onderdeel b sluit uit voor zover de werknemer arbeid
+                  verricht in een dienstbetrekking als bedoeld in artikel 2
+                  van de Wet sociale werkvoorziening zonder ter beschikking
+                  te worden gesteld aan een andere werkgever. Lid 3 laat het
+                  recht eindigen als de periode van artikel 2.12 of
+                  artikel 6.2 lid 1 is verstreken.
+          - output: voldoet_aan_voorwaarden_2_10
+            value:
+              operation: AND
+              conditions:
+                - $is_doelgroep_banenafspraak
+                - operation: NOT
+                  value: $is_uitgesloten_2_10_lid_2_of_3
+              legal_basis:
+                law: Wet tegemoetkomingen loondomein
+                bwb_id: BWBR0037522
+                article: '2.10'
+                explanation: |-
+                  Lid 1 verbindt het recht aan de hoedanigheid van
+                  arbeidsbeperkte in de zin van Wfsv artikel 38b; lid 2 en
+                  lid 3 nemen die weer weg.
           - output: heeft_recht_op_lkv
             value:
               operation: AND
@@ -484,9 +638,13 @@ articles:
                   value: $heeft_pensioengerechtigde_leeftijd_bereikt
                 - operation: OR
                   conditions:
-                    - $is_arbeidsgehandicapte_werknemer
+                    - operation: AND
+                      conditions:
+                        - $is_arbeidsgehandicapte_werknemer
+                        - operation: NOT
+                          value: $periode_2_8_is_verstreken
                     - $is_herplaatsen_arbeidsgehandicapte
-                    - $is_doelgroep_banenafspraak
+                    - $voldoet_aan_voorwaarden_2_10
               legal_basis:
                 law: Wet tegemoetkomingen loondomein
                 bwb_id: BWBR0037522
@@ -507,13 +665,15 @@ articles:
                     conditions:
                       - $heeft_recht_op_lkv
                       - $is_arbeidsgehandicapte_werknemer
+                      - operation: NOT
+                        value: $periode_2_8_is_verstreken
                   then:
                     operation: MIN
                     values:
                       - operation: MULTIPLY
                         values:
                           - 305
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_6
                       - 600000
               default: 0
               legal_basis:
@@ -529,14 +689,14 @@ articles:
                     operation: AND
                     conditions:
                       - $heeft_recht_op_lkv
-                      - $is_doelgroep_banenafspraak
+                      - $voldoet_aan_voorwaarden_2_10
                   then:
                     operation: MIN
                     values:
                       - operation: MULTIPLY
                         values:
                           - 101
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_10
                       - 200000
               default: 0
               legal_basis:
@@ -559,7 +719,7 @@ articles:
                       - operation: MULTIPLY
                         values:
                           - 305
-                          - $verloonde_uren
+                          - $verloonde_uren_voorwaarden_2_14
                       - 600000
               default: 0
               legal_basis:
@@ -598,6 +758,8 @@ articles:
                     conditions:
                       - $heeft_recht_op_lkv
                       - $is_arbeidsgehandicapte_werknemer
+                      - operation: NOT
+                        value: $periode_2_8_is_verstreken
                       - operation: EQUALS
                         subject: $tegemoetkoming_arbeidsgehandicapte_eurocent
                         value: $hoogte_lkv_per_jaar_eurocent
@@ -606,7 +768,7 @@ articles:
                     operation: AND
                     conditions:
                       - $heeft_recht_op_lkv
-                      - $is_doelgroep_banenafspraak
+                      - $voldoet_aan_voorwaarden_2_10
                       - operation: EQUALS
                         subject: $tegemoetkoming_banenafspraak_eurocent
                         value: $hoogte_lkv_per_jaar_eurocent
@@ -630,56 +792,39 @@ articles:
                   hoogste berekende tegemoetkoming; bij gelijke hoogte de
                   eerst in de wet genoemde (volgorde art. 2.1:
                   arbeidsgehandicapt → banenafspraak → herplaatsing).
-      untranslatables:
-        - construct: 'doelgroepverklaring-vereiste binnen 3 maanden (art. 2.3, 2.6)'
-          reason: |-
-            Het LKV vereist een doelgroepverklaring die binnen drie
-            maanden na aanvang dienstbetrekking moet zijn aangevraagd.
-            Deze procedure-toets staat los van de inhoudelijke
-            voorwaarden en valt onder uitvoeringsbeleid.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
+      markings:
+        - about: >-
+            de uitsluiting van de werknemer die in de zes maanden voor de
+            indiensttreding al bij dezelfde werkgever in dienst was
+          reason: >-
+            Het formaat kent een toets op de peildatum en geen toets over een
+            terugkijkvenster op een reeks eerdere dienstverbanden. De uitkomst komt
+            daarom als boolean binnen.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over een reeks eerdere dienstbetrekkingen
+            binnen een venster kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            niet op enig moment in de periode van zes maanden voorafgaand aan de datum
+            van indiensttreding in dienstbetrekking bij de werkgever is geweest
           accepted: true
-        - construct: 'aanvang dienstbetrekking-toets — 12-maanden uitsluiting'
-          reason: |-
-            Categorieën a en b sluiten werknemers uit die in de
-            6 maanden voorafgaand aan dienstbetrekking al bij dezelfde
-            werkgever in dienst waren (anti-misbruik). Deze tijdgebonden
-            herhalingstoets is niet faithful te modelleren met de
-            huidige operatie-set.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
-          accepted: true
-        - construct: 'samenloop met no-riskpolis, LKS en loondispensatie'
-          reason: |-
-            Voor categorie c (banenafspraak) was er tot 2024 samenloop
-            mogelijk met LKS; sinds 2025 is de banenafspraak-LKV
-            structureel gemaakt en is de doelgroepverklaring afgeschaft
-            (mogelijk geworden door de koppeling doelgroepregister ↔
-            polisadministratie; voor de WIA bestaat die koppeling nog niet,
-            zie heeft_geldige_doelgroepverklaring_2_15).
-            Cumulatieregels staan niet in deze artikelen.
-
-            Juristvalidatie (juni 2026): LKV en de no-riskpolis
-            (Ziektewet 29b) gaan altijd samen op — beide hangen aan
-            dezelfde doelgroep-status, via één bron: de kapstok
-            (is_doelgroep_banenafspraak ← Wfsv 38b
-            behoort_tot_doelgroepregister_banenafspraak). LKS (Pwet 10d) of
-            loondispensatie (Wajong 2:20) komen daar bóvenop bij
-            loonwaarde < minimumloon. Zie de uitgebreide samenloop-
-            notitie bij Ziektewet 29b.
-
-            Juristvalidatie (september 2026): niet als invoer in de
-            berekening opnemen — de gebruiker zou die informatie zelf
-            moeten aanleveren. Blijft accepted; hoort thuis als
-            disclaimer in de uiteindelijke tool.
-
+        - about: >-
+            de samenloop met de no-riskpolis, de loonkostensubsidie en de
+            loondispensatie
+          reason: >-
+            Samenloop is een regel over regelingen heen. Het formaat kent alleen
+            regels binnen een artikel en verdringing tussen twee regelingen via
+            overrides, en heeft geen vorm voor een regel die boven het stelsel staat.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een stelselregel die de uitkomsten van meerdere regelingen
+            tegen elkaar afzet, met de voorrangsregel van Wtl artikel 4.1 lid 3 als
+            eerste toepassing.
+          target: []
+          legal_text_excerpt: >-
+            Een werkgever kan in de loonaangifte een verzoek doen voor de volgende
+            tegemoetkomingen
           accepted: true
   - number: '2.6'
     text: |-
@@ -956,22 +1101,35 @@ articles:
                 onderdeel a voor de 35-minners; lid 3 sluit uit. De doelgroepverklaring
                 van onderdeel c is dus een harde eis: zonder verklaring geen categorie
                 a, ook met het juiste uitkeringsverleden.
-      untranslatables:
-        - construct: zes-maandentoets van lid 1 onderdeel b
-          reason: |-
-            Onderdeel b vraagt of de werknemer op enig moment in de zes maanden
-            voor indiensttreding bij deze werkgever in dienstbetrekking was. Die
-            tijdgebonden herhalingstoets over de loonaangifteketen is met de
-            huidige operatie-set niet faithful te modelleren; de engine ontvangt de
-            uitkomst als boolean.
+      markings:
+        - about: >-
+            de toets of de werknemer op enig moment in de zes maanden voor de
+            indiensttreding bij deze werkgever in dienstbetrekking was
+          reason: >-
+            Zelfde vorm als de uitsluiting in artikel 2.1: het formaat kent geen toets
+            over een terugkijkvenster op de loonaangifteketen.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin een voorwaarde over een reeks eerdere dienstbetrekkingen
+            binnen een venster kan worden uitgedrukt.
+          target: []
+          legal_text_excerpt: >-
+            niet op enig moment in de periode van zes maanden voorafgaand aan de datum
+            van indiensttreding in dienstbetrekking bij de werkgever is geweest
           accepted: true
-        - construct: vijfjaarsvenster en elf-wekenvoorwaarde van lid 2
-          reason: |-
-            Lid 2 combineert een vijfjaarstermijn na de wachttijd met vier
-            alternatieve startpunten, een arbeidskundig oordeel over de 35%-grens,
-            en een elf-wekenvoorwaarde met een tenzij-clausule. De termijnrekening
-            en het arbeidskundig oordeel zijn beide UWV-werk; de engine ontvangt
-            een boolean.
+        - about: >-
+            het vijfjaarsvenster met vier alternatieve startpunten en de elf-
+            wekenvoorwaarde met tenzij-clausule van lid 2
+          reason: >-
+            Het formaat kan een termijn vanaf een van vier alternatieve startpunten
+            niet uitdrukken, en evenmin een voorwaarde met een uitzondering die van
+            een eerdere dienstbetrekking afhangt.
+          resolution: model
+          resolved_by: >-
+            Een vorm voor een termijn met alternatieve startpunten, en een
+            uitzonderingsclausule binnen een voorwaarde.
+          target: []
+          legal_text_excerpt: binnen vijf jaar na de eerste dag na afloop van de wachttijd
           accepted: true
   - number: '2.7'
     text: |-
@@ -1329,14 +1487,23 @@ articles:
               bwb_id: BWBR0037522
               article: '2.14'
               paragraph: '1'
-      untranslatables:
-        - construct: onderbrekingen binnen de periode van artikel 2.16
-          reason: |-
-            Lid 4 bepaalt dat onderbrekingen van een dienstbetrekking tussen
-            dezelfde werkgever en werknemer binnen de periode van artikel 2.16 lid
-            1 geacht worden niet te hebben plaatsgevonden. Die samentelling over
-            dienstverbanden heen is niet met de huidige operatie-set uit te
-            drukken.
+      markings:
+        - about: >-
+            onderbrekingen die geacht worden niet te hebben plaatsgevonden binnen de
+            periode van artikel 2.16
+          reason: >-
+            Het formaat rekent over een dienstbetrekking en kent geen samentelling van
+            meerdere dienstbetrekkingen tussen dezelfde werkgever en werknemer tot een
+            doorlopende periode.
+          resolution: model
+          resolved_by: >-
+            Een vorm waarin meerdere dienstbetrekkingen tot een doorlopende periode
+            worden samengeteld.
+          target: []
+          legal_text_excerpt: >-
+            worden onderbrekingen van een dienstbetrekking tussen dezelfde werkgever
+            en werknemer binnen de periode, bedoeld in artikel 2.16, eerste lid,
+            geacht niet te hebben plaatsgevonden
           accepted: true
   - number: '2.15'
     text: |-
