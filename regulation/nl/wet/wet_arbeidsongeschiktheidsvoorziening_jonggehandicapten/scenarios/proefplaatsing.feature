@@ -21,7 +21,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_3_voorwaarden, max_duur_proefplaatsing_maanden" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_lid_3_voorwaarden" is true
     And output "mag_proefplaatsing_aangaan" is true
@@ -53,7 +53,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, arbeidsondersteuning_blijft_bestaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
     And output "arbeidsondersteuning_blijft_bestaan" is false
@@ -70,7 +70,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
       | aansprakelijkheidsverzekering_aanwezig         | false     |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_3_voorwaarden" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_lid_3_voorwaarden" is false
     And output "mag_proefplaatsing_aangaan" is false

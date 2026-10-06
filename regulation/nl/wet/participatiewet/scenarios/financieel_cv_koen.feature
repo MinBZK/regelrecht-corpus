@@ -72,7 +72,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | college_heeft_loonwaarde_vastgesteld | false |
       | vaststelling_loonwaarde_blijft_achterwege | false |
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, bruto_subsidie_eurocent_per_maand, maximum_subsidie_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is true
     And output "bruto_subsidie_eurocent_per_maand" equals 100958
@@ -99,7 +99,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | college_heeft_loonwaarde_vastgesteld | false |
       | vaststelling_loonwaarde_blijft_achterwege | false |
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "hoogte_lks_eurocent_per_maand" equals 100958
 
@@ -123,7 +123,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | college_heeft_loonwaarde_vastgesteld | false |
       | vaststelling_loonwaarde_blijft_achterwege | false |
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
-    When I evaluate "heeft_recht_op_lks" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "hoogte_lks_voltijd_eurocent_per_maand" equals 100958
     And output "hoogte_lks_eurocent_per_maand" equals 75718.5
@@ -168,7 +168,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
       | behoort_tot_doelgroep_lks | true |
-    When I evaluate "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" of "participatiewet"
+    When I evaluate outputs "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling, behoort_tot_doelgroep_artikel_10, heeft_aanspraak_op_persoonlijke_ondersteuning, heeft_aanspraak_op_voorziening_arbeidsinschakeling" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
     And output "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" is true
@@ -212,7 +212,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | ontvangt_algemene_bijstand                 | true      |
       | college_verleent_toestemming_proefplaatsing | true     |
       | behoort_tot_doelgroep_lks | true |
-    When I evaluate "mag_proefplaatsing_aangaan" of "participatiewet"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, max_duur_proefplaatsing_maanden, max_duur_verlenging_proefplaatsing_maanden, max_totale_duur_proefplaatsing_maanden" of "participatiewet"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is true
     And output "max_duur_proefplaatsing_maanden" equals 2

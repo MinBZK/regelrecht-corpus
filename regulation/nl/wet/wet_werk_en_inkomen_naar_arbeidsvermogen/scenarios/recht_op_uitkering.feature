@@ -137,7 +137,7 @@ Feature: Wet WIA, recht op uitkering (artikel 47 en 54)
       | bsn                  | 999990200  |
       | is_ziek_geworden     | true       |
       | eerste_dag_wachttijd | 2024-03-01 |
-    When I evaluate "wachttijd_doorlopen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "wachttijd_doorlopen, wachttijd_einddatum" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "wachttijd_einddatum" equals "2026-02-27"
     And output "wachttijd_doorlopen" is true

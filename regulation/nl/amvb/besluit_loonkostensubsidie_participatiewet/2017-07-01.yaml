@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.2/schema.json
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
 $id: besluit_loonkostensubsidie_participatiewet
 regulatory_layer: AMVB
 publication_date: '2021-03-08'
@@ -58,6 +58,188 @@ articles:
       - id: ref2
         bwb_id: BWBR0002638
         artikel: '12'
+    machine_readable:
+      implements:
+        - law: participatiewet
+          article: 10c
+          open_term: heeft_mogelijkheden_tot_arbeidsparticipatie
+          gelet_op: |-
+            Artikel 6 lid 1 onderdeel e van de Participatiewet rekent tot de
+            doelgroep loonkostensubsidie wie "wel mogelijkheden tot
+            arbeidsparticipatie" heeft, zonder te zeggen wanneer. Artikel 10e
+            lid 1 laat de regels daarover aan een algemene maatregel van
+            bestuur; dit artikel stelt ze.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: kan_taak_uitvoeren_in_arbeidsorganisatie
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a, met lid 3: de persoon kan een taak uitvoeren
+              in een arbeidsorganisatie. Een taak is de kleinste eenheid van
+              een functie en bestaat uit een of meer handelingen. Een oordeel
+              over de persoon. Bron: gemeente, op advies van een deskundige.
+          - name: beschikt_over_basale_werknemersvaardigheden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de persoon beschikt over basale
+              werknemersvaardigheden. Een oordeel over de persoon. Bron:
+              gemeente, op advies van een deskundige.
+          - name: kan_ten_minste_een_uur_aaneengesloten_werken
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel c: de persoon kan aaneengesloten werken gedurende
+              ten minste een periode van een uur. Bron: gemeente, op advies
+              van een deskundige.
+          - name: belastbaarheid_uren_per_dag
+            type: number
+            required: true
+            description: |-
+              Lid 1 onderdeel d: het aantal uren per dag dat de persoon
+              belastbaar is. Bron: gemeente, op advies van een deskundige.
+          - name: verdienvermogen_per_uur_eurocent
+            type: amount
+            nullable: true
+            required: false
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 onderdeel d, tweede tak: het bedrag dat de persoon per uur
+              kan verdienen. Alleen van belang als de persoon ten minste twee
+              en minder dan vier uur per dag belastbaar is; anders afwezig.
+              Bron: gemeente, op advies van een deskundige.
+        input:
+          - name: minimumloon_per_uur_eurocent
+            type: amount
+            source:
+              regulation: wet_minimumloon_en_minimumvakantiebijslag
+              output: minimumloon_per_uur_eurocent
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 2: het minimumloon dat op grond van artikel 8 lid 1 en 3
+                van de Wet minimumloon voor de werknemer geldt, als bedrag per
+                uur. Sinds 1 januari 2024 noemt artikel 8 lid 1 onderdeel a
+                zelf een bedrag per uur; zie de markering bij dit artikel.
+        output:
+          - name: voldoet_aan_belastbaarheid_lid_1_d
+            type: boolean
+            description: |-
+              Lid 1 onderdeel d: ten minste vier uur per dag belastbaar, of ten
+              minste twee uur per dag belastbaar en per uur ten minste het
+              minimumloon per uur kunnen verdienen.
+          - name: heeft_mogelijkheden_tot_arbeidsparticipatie
+            type: boolean
+            description: |-
+              Lid 1: de persoon heeft mogelijkheden tot arbeidsparticipatie.
+              Vult de open term van Participatiewet artikel 10c in, die
+              artikel 6 lid 1 onderdeel e toetst.
+        actions:
+          - output: voldoet_aan_belastbaarheid_lid_1_d
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $belastbaarheid_uren_per_dag
+                    value: 4
+                  then: true
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: LESS_THAN
+                        subject: $belastbaarheid_uren_per_dag
+                        value: 2
+                      - operation: EQUALS
+                        subject: $verdienvermogen_per_uur_eurocent
+                        value: null
+                  then: false
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $verdienvermogen_per_uur_eurocent
+                value: $minimumloon_per_uur_eurocent
+            legal_basis:
+              law: Besluit loonkostensubsidie Participatiewet
+              bwb_id: BWBR0035631
+              article: '1'
+              paragraph: '1, 2'
+              sentence: 'd'
+              explanation: |-
+                "ten minste vier uur per dag belastbaar is of ten minste twee
+                uur per dag belastbaar is en in staat is per uur ten minste een
+                bedrag te verdienen dat gelijk is aan het minimumloon per uur".
+                Is het verdienvermogen niet vastgesteld, dan is de tweede tak
+                niet vervuld.
+          - output: heeft_mogelijkheden_tot_arbeidsparticipatie
+            value:
+              operation: AND
+              conditions:
+                - $kan_taak_uitvoeren_in_arbeidsorganisatie
+                - $beschikt_over_basale_werknemersvaardigheden
+                - $kan_ten_minste_een_uur_aaneengesloten_werken
+                - $voldoet_aan_belastbaarheid_lid_1_d
+            legal_basis:
+              law: Besluit loonkostensubsidie Participatiewet
+              bwb_id: BWBR0035631
+              article: '1'
+              paragraph: '1'
+              explanation: |-
+                De vier onderdelen zijn cumulatief: "a. ...; b. ...; c. ...;
+                en d. ...". Onderdeel a tot en met c zijn oordelen over de
+                persoon; onderdeel d is ten dele een rekenregel.
+      markings:
+        - about: >-
+            de omrekening van het minimumloon naar een bedrag per uur op basis van
+            een normale arbeidsduur van 38 uur per week
+          reason: >-
+            Lid 2 schrijft voor het minimumloon "te verminderen tot een bedrag per
+            uur" uitgaande van 38 uur per week. Sinds 1 januari 2024 noemt artikel 8
+            lid 1 onderdeel a van de Wet minimumloon zelf een bedrag per uur, en
+            rekent onderdeel c met een werkweek van 36 uur. Het model neemt het
+            wettelijke uurbedrag over. Of de omrekening op 38 uur nog iets toevoegt,
+            of dat lid 2 na de wetswijziging is blijven staan zonder te zijn
+            aangepast, is een vraag aan de wetgever.
+          resolution: model
+          resolved_by: >-
+            Een antwoord van de wetgever of de jurist op de vraag of lid 2 het
+            wettelijke uurbedrag bedoelt, of een maandbedrag gedeeld door 38 uur per
+            week.
+          target: []
+          legal_text_excerpt: >-
+            Bij de vermindering, bedoeld in de vorige zin, wordt uitgegaan van een
+            normale arbeidsduur als bedoeld in artikel 12, derde lid, van de Wet
+            minimumloon en minimumvakantiebijslag, van 38 uur per week.
+          accepted: true
+        - about: >-
+            het minimumloon dat "voor de werknemer" geldt, dat voor jongeren een
+            percentage is (artikel 8 lid 3 Wet minimumloon)
+          reason: >-
+            Het minimumloon per uur komt uit artikel 8 van de Wet minimumloon zoals
+            dat in het corpus is gemodelleerd: het bedrag voor werknemers van 21 jaar
+            en ouder. De jeugdpercentages van lid 3 staan in het Besluit
+            minimumjeugdloon (BWBR0003599), dat in het corpus ligt maar niet is
+            gemodelleerd.
+          resolution: model
+          resolved_by: >-
+            Het Besluit minimumjeugdloon, gemodelleerd en gekoppeld aan artikel 8
+            lid 3 van de Wet minimumloon.
+          target:
+            - voldoet_aan_belastbaarheid_lid_1_d
+            - heeft_mogelijkheden_tot_arbeidsparticipatie
+          legal_text_excerpt: >-
+            het bedrag, dat op grond van artikel 8, eerste en derde lid, van de Wet
+            minimumloon en minimumvakantiebijslag voor de werknemer als minimumloon
+            geldt
+          accepted: true
   - number: '2'
     text: |-
       1 Het college stelt de loonwaarde schriftelijk vast op basis van de feitelijke werkzaamheden op de werkplek van een
@@ -68,6 +250,110 @@ articles:
       plaats door of onder verantwoordelijkheid van een deskundige. Het college draagt er zorg voor dat de deskundige
       over voldoende deskundigheid beschikt.
     url: https://wetten.overheid.nl/BWBR0035631/2017-07-01#Artikel2
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: behoort_tot_doelgroep_lks
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de vaststelling betreft "een persoon uit de doelgroep
+              loonkostensubsidie". Bron: gemeente (vaststelling op grond van
+              Participatiewet artikel 10c).
+          - name: werkgever_is_voornemens_of_is_dienstbetrekking_aangegaan
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de werkgever is voornemens een dienstbetrekking aan te gaan
+              met die persoon, of is die aangegaan. Bron: werkgever / gemeente.
+          - name: loonwaarde_schriftelijk_vastgesteld
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: het college heeft de loonwaarde schriftelijk vastgesteld.
+              Bron: gemeente.
+          - name: vastgesteld_op_feitelijke_werkzaamheden_op_de_werkplek
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de vaststelling berust op de feitelijke werkzaamheden op de
+              werkplek bij de werkgever. Bron: gemeente.
+          - name: vastgesteld_met_inbreng_van_de_werkgever
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de werkgever heeft inbreng gehad in de vaststelling. Bron:
+              gemeente.
+          - name: vastgesteld_volgens_beschreven_objectieve_methode
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de vaststelling berust op een beschreven objectieve
+              methode. Welke methode dat mag zijn, regelt artikel 3 bij
+              ministeriële regeling, of artikel 4 bij een gemelde methode van
+              een samenwerkingsverband. Bron: gemeente.
+          - name: vastgesteld_door_of_onder_verantwoordelijkheid_van_deskundige
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de vaststelling vindt plaats door of onder
+              verantwoordelijkheid van een deskundige met voldoende
+              deskundigheid. Of de deskundigheid voldoende is, is een oordeel
+              waarvoor het college zorg draagt. Bron: gemeente.
+        output:
+          - name: vaststelling_loonwaarde_voldoet_aan_artikel_2
+            type: boolean
+            description: |-
+              De vaststelling van de loonwaarde voldoet aan de eisen van lid 1
+              en lid 2. Participatiewet artikel 10d lid 1 onderdeel a vraagt
+              alleen dat het college de loonwaarde heeft vastgesteld; dit
+              artikel zegt hoe dat moet gebeuren. De loonwaarde zelf is de
+              uitkomst van de meting en blijft een gegeven.
+        actions:
+          - output: vaststelling_loonwaarde_voldoet_aan_artikel_2
+            value:
+              operation: AND
+              conditions:
+                - $behoort_tot_doelgroep_lks
+                - $werkgever_is_voornemens_of_is_dienstbetrekking_aangegaan
+                - $loonwaarde_schriftelijk_vastgesteld
+                - $vastgesteld_op_feitelijke_werkzaamheden_op_de_werkplek
+                - $vastgesteld_met_inbreng_van_de_werkgever
+                - $vastgesteld_volgens_beschreven_objectieve_methode
+                - $vastgesteld_door_of_onder_verantwoordelijkheid_van_deskundige
+            legal_basis:
+              law: Besluit loonkostensubsidie Participatiewet
+              bwb_id: BWBR0035631
+              article: '2'
+              paragraph: '1, 2'
+              explanation: |-
+                "Het college stelt de loonwaarde schriftelijk vast op basis van
+                de feitelijke werkzaamheden op de werkplek ... en met inbreng van
+                de werkgever" (lid 1), "op basis van een beschreven objectieve
+                methode en deze vaststelling vindt plaats door of onder
+                verantwoordelijkheid van een deskundige" (lid 2). Eisen aan de
+                procedure; geen rekenregel voor de hoogte.
+      open_terms:
+        - id: nadere_regels_methode_loonwaarde
+          type: string
+          required: false
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 3 Besluit loonkostensubsidie Participatiewet
+          description: |-
+            Artikel 3: bij ministeriële regeling kunnen nadere regels worden
+            gesteld aan de methode ter vaststelling van de loonwaarde, ten minste
+            over de bestanddelen, de vergelijking met een gemiddelde werknemer
+            en de berekening en weging. Die regeling bepaalt wat als "beschreven
+            objectieve methode" geldt. Welke regeling dat is, is nog niet
+            vastgesteld; zij is niet in het corpus.
   - number: '3'
     text: |-
       Bij ministeriële regeling kunnen nadere regels worden gesteld aan de methode ter vaststelling van de loonwaarde.

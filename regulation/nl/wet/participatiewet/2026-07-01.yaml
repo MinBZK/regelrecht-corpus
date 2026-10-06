@@ -2107,6 +2107,21 @@ articles:
               Lid 2: datum waarop de vorige aanvraag als bedoeld in lid 1
               onderdeel a is ingediend. Zonder eerdere aanvraag is deze
               afwezig. Bron: gemeente.
+          - name: is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              Artikel 6 lid 1 onderdeel e: van de persoon "is vastgesteld dat
+              zij met voltijdse arbeid niet in staat zijn tot het verdienen van
+              het wettelijk minimumloon". Bron: gemeente.
+          - name: is_persoon_artikel_10d_lid_2
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              Artikel 6 lid 1 onderdeel e, slot: "alsmede personen als bedoeld
+              in artikel 10d, tweede lid". Bron: gemeente.
         output:
           - name: mag_op_aanvraag_vaststellen
             type: boolean
@@ -2125,6 +2140,14 @@ articles:
             description: |-
               Lid 2: een aanvraag als bedoeld in lid 1 onderdeel a kan
               slechts eenmaal per twaalf maanden worden ingediend.
+          - name: voldoet_aan_omschrijving_doelgroep_lks
+            type: boolean
+            description: |-
+              Artikel 6 lid 1 onderdeel e: de persoon valt onder de omschrijving
+              van de doelgroep loonkostensubsidie. Dat is waaraan het college
+              toetst als het op grond van dit artikel vaststelt of iemand tot
+              de doelgroep behoort. De vaststelling zelf blijft een besluit van
+              het college; artikel 10d leest die als gegeven.
         actions:
           - output: mag_op_aanvraag_vaststellen
             value: $is_persoon_artikel_7_lid_1_a_of_7a
@@ -2175,6 +2198,48 @@ articles:
                   "Een aanvraag als bedoeld in het eerste lid, onderdeel a,
                   kan slechts eenmaal per twaalf maanden worden ingediend."
                   Zonder eerdere aanvraag staat de weg open.
+          - output: voldoet_aan_omschrijving_doelgroep_lks
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - $is_persoon_artikel_7_lid_1_a_of_7a
+                    - operation: EQUALS
+                      subject: $is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen
+                      value: true
+                    - $heeft_mogelijkheden_tot_arbeidsparticipatie
+                - operation: EQUALS
+                  subject: $is_persoon_artikel_10d_lid_2
+                  value: true
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '6'
+              paragraph: '1'
+              sentence: 'e'
+              explanation: |-
+                "doelgroep loonkostensubsidie: personen als bedoeld in de
+                artikelen 7, eerste lid, onderdeel a, en 7a, eerste lid,
+                onderdeel a, en derde lid, van wie is vastgesteld dat zij met
+                voltijdse arbeid niet in staat zijn tot het verdienen van het
+                wettelijk minimumloon, doch wel mogelijkheden tot
+                arbeidsparticipatie hebben, alsmede personen als bedoeld in
+                artikel 10d, tweede lid". Wat mogelijkheden tot
+                arbeidsparticipatie zijn, zegt het Besluit loonkostensubsidie
+                Participatiewet in artikel 1, op grond van artikel 10e lid 1.
+      open_terms:
+        - id: heeft_mogelijkheden_tot_arbeidsparticipatie
+          type: boolean
+          required: true
+          delegated_to: regering
+          delegation_type: AMVB
+          legal_basis: artikel 10e lid 1 Participatiewet
+          description: |-
+            Artikel 6 lid 1 onderdeel e: de persoon heeft "wel mogelijkheden tot
+            arbeidsparticipatie". Artikel 10e lid 1 laat de regels daarover aan
+            een algemene maatregel van bestuur. Ingevuld door Besluit
+            loonkostensubsidie Participatiewet artikel 1.
   - number: 10d
     text: |-
       1 Indien een werkgever voornemens is een dienstbetrekking aan te gaan met een persoon die behoort tot de

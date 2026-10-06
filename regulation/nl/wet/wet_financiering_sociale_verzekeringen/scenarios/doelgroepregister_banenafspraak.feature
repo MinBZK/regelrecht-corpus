@@ -63,7 +63,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_1_b, voldoet_aan_grond_38b_1_c, voldoet_aan_grond_38b_1_d, voldoet_aan_grond_38b_1_e, voldoet_aan_grond_38b_1_f, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister, datum_opname_doelgroepregister, vaststelling_door" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
     And output "voldoet_aan_grond_38b_1_b" is false
@@ -108,7 +108,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_1_c, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister, datum_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
     And output "voldoet_aan_grond_38b_1_c" is true
@@ -149,7 +149,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
     And output "is_arbeidsbeperkte" is false
@@ -190,7 +190,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister, datum_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is true
     And output "is_arbeidsbeperkte" is true
@@ -226,7 +226,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
     And output "is_arbeidsbeperkte" is false
@@ -267,7 +267,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | <lid2> |
       | verzoek_van_college_of_eigen_aanvraag | <lid2> |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "<opnamegrond>"
@@ -309,7 +309,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_f" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_f" is false
     And output "is_arbeidsbeperkte" is false
@@ -348,7 +348,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
     And output "voldoet_aan_grond_38b_2" is false
@@ -389,7 +389,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_6" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_6" is false
     And output "is_arbeidsbeperkte" is false
@@ -428,7 +428,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
     And output "is_arbeidsbeperkte" is false
@@ -463,7 +463,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "is_arbeidsbeperkte" of "wet_financiering_sociale_verzekeringen"
+    When I evaluate outputs "is_arbeidsbeperkte, grond_opname_doelgroepregister, verloonde_uren_definitie_actief" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is false
     And output "grond_opname_doelgroepregister" equals "geen"

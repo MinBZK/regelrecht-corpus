@@ -37,7 +37,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
       | behoort_tot_doelgroep_lks | false |
-    When I evaluate "heeft_aanspraak_op_persoonlijke_ondersteuning" of "participatiewet"
+    When I evaluate outputs "heeft_aanspraak_op_persoonlijke_ondersteuning, behoort_tot_doelgroep_artikel_10, heeft_aanspraak_op_voorziening_arbeidsinschakeling" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
     And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is true
@@ -60,7 +60,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | true      |
       | behoort_tot_doelgroep_lks | false |
-    When I evaluate "behoort_tot_doelgroep_artikel_10" of "participatiewet"
+    When I evaluate outputs "behoort_tot_doelgroep_artikel_10, heeft_aanspraak_op_persoonlijke_ondersteuning" of "participatiewet"
     Then the execution succeeds
     And output "behoort_tot_doelgroep_artikel_10" is true
     And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is true
@@ -102,7 +102,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | kan_taken_niet_verrichten_zonder_ondersteuning | false     |
       | aanvraag_ingediend                             | true      |
       | behoort_tot_doelgroep_lks | false |
-    When I evaluate "heeft_aanspraak_op_persoonlijke_ondersteuning" of "participatiewet"
+    When I evaluate outputs "heeft_aanspraak_op_persoonlijke_ondersteuning, heeft_aanspraak_op_voorziening_arbeidsinschakeling" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is false
     And output "heeft_aanspraak_op_voorziening_arbeidsinschakeling" is true
@@ -123,7 +123,7 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
       | kan_taken_niet_verrichten_zonder_ondersteuning | true      |
       | aanvraag_ingediend                             | false     |
       | behoort_tot_doelgroep_lks | false |
-    When I evaluate "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" of "participatiewet"
+    When I evaluate outputs "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling, heeft_aanspraak_op_persoonlijke_ondersteuning, heeft_aanspraak_op_voorziening_arbeidsinschakeling, aanvraag_tot_gevolggeving_ingediend" of "participatiewet"
     Then the execution succeeds
     And output "heeft_aanspraak_op_ondersteuning_arbeidsinschakeling" is true
     # Lid 1 kent de aanspraak onvoorwaardelijk toe; de aanvraag van lid 5 is

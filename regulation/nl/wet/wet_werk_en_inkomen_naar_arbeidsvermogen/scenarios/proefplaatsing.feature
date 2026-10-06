@@ -29,7 +29,7 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | heeft_recht_op_wga_uitkering | true |
       | verdiencapaciteit_percentage_maatmaninkomen | 50 |
       | is_medisch_duurzaam | false |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_2_voorwaarden, max_duur_proefplaatsing_maanden" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_voorwaarden" is true
     And output "mag_proefplaatsing_aangaan" is true
@@ -71,7 +71,7 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | heeft_recht_op_wga_uitkering | false |
       | verdiencapaciteit_percentage_maatmaninkomen | 50 |
       | is_medisch_duurzaam | false |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, sollicitatieplicht_opgeschort" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "mag_proefplaatsing_aangaan" is false
     And output "sollicitatieplicht_opgeschort" is false
@@ -91,7 +91,7 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
       | heeft_recht_op_wga_uitkering | true |
       | verdiencapaciteit_percentage_maatmaninkomen | 50 |
       | is_medisch_duurzaam | false |
-    When I evaluate "mag_proefplaatsing_aangaan" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_2_voorwaarden" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_voorwaarden" is false
     And output "mag_proefplaatsing_aangaan" is false

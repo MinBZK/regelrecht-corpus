@@ -138,7 +138,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1, voldoet_aan_lid_2_a, voldoet_aan_lid_2_e, voldoet_aan_lid_2_f, voldoet_aan_lid_2, voldoet_aan_lid_4, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is false
     And output "voldoet_aan_lid_1" is false

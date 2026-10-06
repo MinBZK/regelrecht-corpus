@@ -106,7 +106,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_a, voldoet_aan_lid_1_b, voldoet_aan_lid_1, voldoet_aan_lid_2, voldoet_aan_lid_4, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is true
     And output "voldoet_aan_lid_1_a" is true
@@ -195,7 +195,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_4" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_4" is true
     And output "heeft_recht_op_no_risk_polis" is true
@@ -278,7 +278,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_b, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is false
     And output "voldoet_aan_lid_1_b" is true
@@ -365,7 +365,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_1_c, voldoet_aan_lid_1_d, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_1_c" is true
     And output "voldoet_aan_lid_1_d" is false
@@ -452,7 +452,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_1_c, voldoet_aan_lid_1_d, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_1_c" is false
     And output "voldoet_aan_lid_1_d" is true
@@ -539,7 +539,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate "heeft_recht_op_no_risk_polis" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_2_e, voldoet_aan_lid_2_f, voldoet_aan_lid_1_d, voldoet_aan_lid_1, voldoet_aan_lid_2, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_e" is false
     And output "voldoet_aan_lid_2_f" is true

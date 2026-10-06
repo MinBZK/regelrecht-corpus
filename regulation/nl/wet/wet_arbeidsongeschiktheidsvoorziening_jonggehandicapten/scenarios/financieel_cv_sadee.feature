@@ -54,7 +54,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
       | vastgesteld_dispensatiepercentage | 70 |
       | minimumloon_per_uur_eurocent | 1450 |
-    When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true
     And output "beding_lagere_beloning_is_nietig" is true
@@ -77,7 +77,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
-    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_jobcoaching_toekennen, voldoet_aan_basisvoorwaarden_lid_1, mag_werkplekaanpassing_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is true
     And output "mag_jobcoaching_toekennen" is true
@@ -97,7 +97,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_werkplekaanpassing_ingediend      | false     |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | false |
-    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_jobcoaching_toekennen, mag_werkplekaanpassing_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "mag_jobcoaching_toekennen" is true
     And output "mag_werkplekaanpassing_toekennen" is false
@@ -115,7 +115,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
-    When I evaluate "mag_jobcoaching_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "mag_jobcoaching_toekennen, voldoet_aan_basisvoorwaarden_lid_1, mag_werkplekaanpassing_toekennen" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_basisvoorwaarden_lid_1" is false
     And output "mag_jobcoaching_toekennen" is false
