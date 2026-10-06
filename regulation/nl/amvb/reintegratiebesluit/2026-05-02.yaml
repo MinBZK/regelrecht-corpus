@@ -789,6 +789,210 @@ articles:
       - id: ref5
         bwb_id: BWBR0017745
         artikel: '49'
+    machine_readable:
+      definitions:
+        grenspercentage_loon:
+          value: 50
+        maanden_per_jaar:
+          value: 12
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: werknemer_in_dienst_gehouden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1: de werkgever heeft de werknemer, bedoeld in Wet WIA
+              artikel 36 lid 1 onderdeel a, in dienst gehouden. Bron: werkgever.
+          - name: werknemer_in_dienst_genomen
+            type: boolean
+            required: true
+            description: |-
+              Lid 2: de werkgever heeft die werknemer in dienst genomen.
+              Bron: werkgever.
+          - name: loon_over_kalenderjaar_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Het loon van de werknemer over het kalenderjaar. Bron:
+              polisadministratie.
+          - name: werkgever_kan_korting_wfsv_49_toepassen
+            type: boolean
+            required: true
+            description: |-
+              Lid 3: de werkgever kan voor deze werknemer de korting van artikel
+              49 van de Wet financiering sociale verzekeringen toepassen. Kan hij
+              dat niet, dan zijn lid 1 en lid 2 niet van toepassing en blijft de
+              nulstelling achterwege. Bron: UWV / Belastingdienst.
+        output:
+          - name: jaarminimumloon_eurocent
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 onderdeel a: het naar een jaarbedrag herleide minimumloon
+              zoals dat voor de werknemer gold op 1 januari van het
+              desbetreffende kalenderjaar.
+          - name: loon_onder_vijftig_procent_minimumloon
+            type: boolean
+            description: |-
+              Lid 1 en 2, onderdeel a tegenover onderdeel b: ligt het loon over
+              het kalenderjaar onder de helft van het jaarminimumloon.
+          - name: nulstelling_van_toepassing
+            type: boolean
+            description: |-
+              Lid 1 en 2 gelden, tenzij lid 3 hen opzij zet omdat de werkgever de
+              korting van Wfsv artikel 49 niet kan toepassen.
+          - name: bedrag_artikel_36_lid_1_a_eurocent
+            type: amount
+            nullable: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Het bedrag, bedoeld in Wet WIA artikel 36 lid 1 onderdeel a. Dit
+              artikel stelt het op nul, in beide takken van lid 1 en lid 2.
+        actions:
+          - output: jaarminimumloon_eurocent
+            value:
+              operation: MULTIPLY
+              values:
+                - $minimumloon_per_maand_op_een_januari_eurocent
+                - $maanden_per_jaar
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019152
+              article: '11'
+              paragraph: '1'
+              sentence: 'a'
+              explanation: |-
+                "het naar een jaarbedrag herleide minimumloon ... zoals dat voor
+                de werknemer gold op 1 januari van het desbetreffende
+                kalenderjaar". Het maandbedrag van artikel 8 lid 1 onderdeel b
+                van de Wet minimumloon maal twaalf.
+          - output: loon_onder_vijftig_procent_minimumloon
+            value:
+              operation: LESS_THAN
+              subject: $loon_over_kalenderjaar_eurocent
+              value:
+                operation: DIVIDE
+                values:
+                  - operation: MULTIPLY
+                    values:
+                      - $jaarminimumloon_eurocent
+                      - $grenspercentage_loon
+                  - 100
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019152
+              article: '11'
+              paragraph: '1, 2'
+              explanation: |-
+                Onderdeel a geldt bij minder dan vijftig procent, onderdeel b bij
+                ten minste vijftig procent. De grens is in beide leden dezelfde.
+          - output: nulstelling_van_toepassing
+            value:
+              operation: AND
+              conditions:
+                - operation: OR
+                  conditions:
+                    - $werknemer_in_dienst_gehouden
+                    - $werknemer_in_dienst_genomen
+                - $werkgever_kan_korting_wfsv_49_toepassen
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019152
+              article: '11'
+              paragraph: '3'
+              explanation: |-
+                "Het eerste en tweede lid zijn niet van toepassing indien de
+                subsidie ... wordt verstrekt ten behoeve van een werknemer ...
+                voor wie de werkgever geen korting als bedoeld in artikel 49 van
+                de Wet financiering sociale verzekeringen kan toepassen."
+          - output: bedrag_artikel_36_lid_1_a_eurocent
+            value:
+              operation: IF
+              cases:
+                - when: $nulstelling_van_toepassing
+                  then: 0
+              default: null
+            legal_basis:
+              law: Reintegratiebesluit
+              bwb_id: BWBR0019152
+              article: '11'
+              paragraph: '1, 2, 3'
+              explanation: |-
+                Lid 1 en lid 2 stellen het bedrag in alle vier de gevallen op
+                € 0,-: in dienst gehouden of genomen, onder of boven de helft van
+                het jaarminimumloon. Zet lid 3 hen opzij, dan stelt dit artikel
+                geen bedrag vast en valt de vaststelling terug op Wet WIA
+                artikel 36 zelf; dat artikel is niet gemodelleerd, dus de uitkomst
+                is hier afwezig en niet nul.
+      markings:
+        - about: >-
+            de verwijzing naar het minimumloon zoals dat gold op 1 januari van het
+            desbetreffende kalenderjaar
+          reason: >-
+            Het formaat selecteert versies van een aangehaalde regeling op een enkele
+            globale peildatum en kan een verwijzing niet op een andere datum laten
+            oplossen. Dezelfde constructie staat in artikel 3 van dit besluit.
+          resolution: model
+          resolved_by: >-
+            De datumbewuste verwijzing van RFC-020 (as_of). Die RFC heeft de status
+            concept.
+          target: []
+          legal_text_excerpt: >-
+            zoals dat voor de werknemer gold op 1 januari van het desbetreffende
+            kalenderjaar
+          accepted: true
+        - about: >-
+            het onderscheid tussen onderdeel a en onderdeel b, dat in beide leden tot
+            hetzelfde bedrag leidt
+          reason: >-
+            Het formaat kan het onderscheid uitdrukken; het heeft alleen geen
+            rechtsgevolg. Lid 1 en lid 2 splitsen elk in twee gevallen en kennen aan
+            allebei € 0,- toe, zodat de vijftigprocentsgrens nergens op uitkomt. Dit is
+            een waarneming over de tekst en niet over het formaat, en hoort als
+            wetgevingssignaal te worden voorgelegd.
+          resolution: model
+          resolved_by: >-
+            Een antwoord van de wetgever op de vraag of de splitsing bedoeld is en of
+            de bedragen bewust op nul staan, dan wel of hier een eerdere regeling is
+            uitgehold zonder de structuur op te ruimen.
+          target: []
+          legal_text_excerpt: >-
+            a. € 0,-, indien het loon van de werknemer over het kalenderjaar minder dan
+            50% van het naar een jaarbedrag herleide minimumloon bedraagt ... en b.
+            € 0,-, indien het loon van de werknemer over het kalenderjaar ten minste
+            50% van het in onderdeel a bedoelde minimumloon bedraagt.
+          accepted: true
+      open_terms:
+        - id: minimumloon_per_maand_op_een_januari_eurocent
+          type: amount
+          required: false
+          delegated_to: Onze Minister
+          delegation_type: MINISTERIELE_REGELING
+          legal_basis: artikel 14 Wet minimumloon en minimumvakantiebijslag
+          description: |-
+            Het maandbedrag van artikel 8 lid 1 onderdeel b van de Wet minimumloon
+            zoals dat gold op 1 januari van het kalenderjaar. Voor 2026 is dat
+            € 2.294,40; zie de gelijkluidende open term bij artikel 3 van dit
+            besluit.
+          default:
+            actions:
+              - output: minimumloon_per_maand_op_een_januari_eurocent
+                value: 229440
+                legal_basis:
+                  law: Regeling indexatie wettelijk minimumloon per 1 januari 2026
+                  article: '1'
+                  url: https://zoek.officielebekendmakingen.nl/stcrt-2025-34131.html
   - number: '12'
     text: |-
       1 Een subsidie op grond van [artikel 36, vierde lid, van de Wet WIA][ref1] met betrekking tot de noodzakelijke
