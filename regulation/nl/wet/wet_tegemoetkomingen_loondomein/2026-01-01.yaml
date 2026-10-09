@@ -214,8 +214,8 @@ articles:
             description: |-
               Pwet 10b lid 1: de persoon werkt in een dienstbetrekking beschut
               werk. Doorgegeven aan Wfsv artikel 38b.
-          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
-            type: boolean
+          - name: aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
+            type: number
             nullable: true
             required: true
             description: |-
@@ -329,16 +329,11 @@ articles:
               38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
               of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
               Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
-          - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
-            type: boolean
-            required: true
-            description: |-
-              38b.1.f overgangsrecht: persoon was op of na 1-1-2013 een
-              persoon als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong),
-              EN op 1-5-2015 niet langer zodanig persoon. Uitzondering:
-              voormalige Wajong-er die duurzaam geen mogelijkheden meer
-              heeft (Wajong 1a:1) valt buiten. Bron: UWV-historie.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+          - name: laatste_dag_persoon_lid_1_b_of_c
+            type: date
+            required: false
+            nullable: true
+            description: 'Wfsv 38b lid 1 onderdeel f: laatste dag als persoon onder lid 1 b of c. Doorgegeven aan Wfsv artikel 38b.'
           - name: was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
             type: boolean
             required: true
@@ -576,7 +571,7 @@ articles:
                 behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
                 college_heeft_vastgesteld_uitsluitend_beschut_werk: $is_uitgesloten_beschut_werk_pwet_10b
                 heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
-                aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+                aantal_gerealiseerde_dienstbetrekkingen_beschut_werk: $aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
                 is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
                 uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
@@ -590,7 +585,7 @@ articles:
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
                 is_pwet_toegeleid_naar_dienstbetrekking: $is_pwet_toegeleid_naar_dienstbetrekking
                 uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek: $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
-                was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+                laatste_dag_persoon_lid_1_b_of_c: $laatste_dag_persoon_lid_1_b_of_c
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
                 komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs
                 komt_uit_praktijkonderwijs: $komt_uit_praktijkonderwijs

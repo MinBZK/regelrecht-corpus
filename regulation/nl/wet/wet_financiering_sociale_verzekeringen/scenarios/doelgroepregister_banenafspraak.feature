@@ -51,7 +51,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2025-11-03 |
@@ -59,7 +59,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -102,7 +102,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
@@ -110,7 +110,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -149,7 +149,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
@@ -157,7 +157,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -196,7 +196,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
@@ -204,7 +204,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -238,7 +238,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2023-09-12 |
@@ -246,7 +246,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -285,7 +285,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | <e> |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | <e> |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | <f>        |
+      | laatste_dag_persoon_lid_1_b_of_c | <fdatum> |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | <lid2>     |
       | datum_eerste_opname_doelgroepregister                    | 2024-05-01 |
@@ -293,7 +293,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | <d> |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | <d> |
@@ -309,12 +309,12 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
     And output "grond_opname_doelgroepregister" equals "<opnamegrond>"
 
     Examples:
-      | grond            | a     | b     | c     | d     | e     | f     | lid2  | opnamegrond                | drempel | zesmnd |
-      | onderdeel b, Wsw | false | true  | false | false | false | false | false | wsw                        | null | null |
-      | onderdeel d      | false | false | false | true  | false | false | false | amvb_38b_1_d               | null | null |
-      | onderdeel e      | false | false | false | false | true  | false | false | pwet_uwv_wml_eigen_verzoek | false | true |
-      | onderdeel f      | false | false | false | false | false | true  | false | overgangsrecht_38b_1_f     | null | null |
-      | lid 2            | false | false | false | false | false | false | true  | jonggehandicapt_uwv_oordeel | null | null |
+      | grond            | a     | b     | c     | d     | e     | f     | lid2  | opnamegrond                | drempel | zesmnd | fdatum |
+      | onderdeel b, Wsw | false | true  | false | false | false | false | false | wsw                        | null | null | null |
+      | onderdeel d      | false | false | false | true  | false | false | false | amvb_38b_1_d               | null | null | null |
+      | onderdeel e      | false | false | false | false | true  | false | false | pwet_uwv_wml_eigen_verzoek | false | true | null |
+      | onderdeel f      | false | false | false | false | false | true  | false | overgangsrecht_38b_1_f     | null | null | 2014-06-30 |
+      | lid 2            | false | false | false | false | false | false | true  | jonggehandicapt_uwv_oordeel | null | null | null |
 
   # Onderdeel f kent, net als c, een eigen tegen-uitsluiting: wie destijds
   # onder lid 1.c viel maar inmiddels duurzaam geen mogelijkheden heeft,
@@ -333,7 +333,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | true       |
+      | laatste_dag_persoon_lid_1_b_of_c | 2014-06-30 |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | true       |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2014-02-01 |
@@ -341,7 +341,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -378,7 +378,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
@@ -386,7 +386,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -425,7 +425,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2019-06-17 |
@@ -433,7 +433,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | false      |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -470,7 +470,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2025-01-06 |
@@ -478,7 +478,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -511,7 +511,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
       | datum_eerste_opname_doelgroepregister                    | 2026-01-01 |
@@ -519,7 +519,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | registratie_nog_niet_geeindigd                           | true       |
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |

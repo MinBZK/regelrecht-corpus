@@ -1916,17 +1916,14 @@ articles:
               Lid 1, slot: de persoon verricht werkzaamheden in een
               dienstbetrekking in een beschutte omgeving onder aangepaste
               omstandigheden. Bron: gemeente / werkgever.
-          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
-            type: boolean
+          - name: aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
+            type: number
             nullable: true
-            required: true
+            required: false
             description: |-
-              Lid 6: het college heeft het aantal dienstbetrekkingen
-              bereikt dat op grond van lid 4 (ministeriële regeling) of
-              lid 5 (verordening) voor deze gemeente geldt. Zolang dat
-              niet is aangeleverd, wordt aangenomen dat het quotum niet
-              is gerealiseerd en de plicht van lid 1 dus bestaat.
-              Bron: gemeente.
+              Lid 6: het aantal dienstbetrekkingen beschut werk dat het college
+              heeft gerealiseerd. Afwezig zolang dat niet is aangeleverd; dan
+              blijft de plicht van lid 1 bestaan. Bron: gemeente.
         output:
           - name: is_uitsluitend_aangewezen_op_beschut_werk
             type: boolean
@@ -1957,11 +1954,19 @@ articles:
               operation: IF
               cases:
                 - when:
-                    operation: EQUALS
-                    subject: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
-                    value: null
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
+                        value: null
+                      - operation: EQUALS
+                        subject: $aantal_te_realiseren_dienstbetrekkingen
+                        value: null
                   then: false
-              default: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
+                value: $aantal_te_realiseren_dienstbetrekkingen
               legal_basis:
                 law: Participatiewet
                 bwb_id: BWBR0015703
@@ -1970,7 +1975,10 @@ articles:
                 explanation: |-
                   "Het eerste lid is niet van toepassing indien het aantal
                   dienstbetrekkingen, bedoeld in het vierde of het vijfde
-                  lid, door het college is gerealiseerd."
+                  lid, door het college is gerealiseerd." Het doel (lid 4:
+                  ministeriële regeling, lid 5: verordening) is de open term
+                  aantal_te_realiseren_dienstbetrekkingen; zolang die niet is
+                  ingevuld, blijft de plicht bestaan.
           - output: college_moet_voorziening_beschut_werk_aanbieden
             value:
               operation: AND

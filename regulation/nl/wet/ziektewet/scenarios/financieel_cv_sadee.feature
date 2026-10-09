@@ -109,7 +109,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | verricht_arbeid_in_dienstbetrekking | false |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
-      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
       | datum_eerste_opname_doelgroepregister | 2023-09-12 |
@@ -139,7 +139,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
       | vaststelling_loonwaarde_blijft_achterwege | false |
-      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
       | datum_voldaan_aan_lid_1 | 2014-06-02 |
