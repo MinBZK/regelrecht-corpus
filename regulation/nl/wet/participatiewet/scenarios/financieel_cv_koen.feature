@@ -36,9 +36,14 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # Koen heeft loonwaarde 60% daarvan = 151438 ec.
   # Bruto subsidie = 252396 - 151438 = 100958 ec.
   # Max 70% van WML+VB = 176677,2 ec.
-  # Voltijdbedrag (36 uur) = MIN(100958, 176677,2) = 100958 ec (€1.009,58).
-  # Koen werkt 32 uur; lid 4 tweede zin vermindert de subsidie naar
-  # evenredigheid: 100958 x 32 / 36 = 89740,44 ec (€897,40 per maand).
+  # Begrensd verschil = MIN(100958, 176677,2) = 100958 ec.
+  # Vergoeding werkgeverslasten: 25 procent erbovenop (Regeling
+  # loonkostensubsidie Participatiewet 2021, artikel 1; sinds 2026-10-09
+  # gekoppeld). Voltijdbedrag (36 uur) = 100958 x 1,25 = 126197,5 ec
+  # (€1.261,98). Koen werkt 32 uur; lid 4 tweede zin vermindert de subsidie
+  # naar evenredigheid: 126197,5 x 32 / 36 = 112175,56 ec (€1.121,76 per
+  # maand). Tot 2026-10-09 stond de vergoeding op nul en was het bedrag
+  # €897,40.
   #
   # Vóór de juristvalidatie van 2026-07-23 toonde het model hier het
   # 36-uursbedrag; dat was te hoog voor iedereen met een deeltijd-
@@ -48,7 +53,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # afrondingsoperatie, dus de assertion draagt decimalen (zie de
   # untranslatable over afronding). De presentatielaag rondt af.
   #
-  # Werknemer-relevantie: Koen weet dat de gemeente per maand €897,40 aan
+  # Werknemer-relevantie: Koen weet dat de gemeente per maand €1.121,76 aan
   # zijn werkgever betaalt om hem het WML-loon te kunnen geven.
   #
   # Tot 26 september 2026 stond hier 215500 ec als aangeleverde WML+VB, een
@@ -56,7 +61,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # vervangen door een aanroep naar de Wet minimumloon; het bedrag is
   # daarmee herleidbaar tot artikel 8 en artikel 15 in plaats van tot een
   # invoerveld.
-  Scenario: Gemeente betaalt €897,40 per maand LKS aan werkgever van Koen (32 uur)
+  Scenario: Gemeente betaalt €1.121,76 per maand LKS aan werkgever van Koen (32 uur)
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                                 | 999990101 |
@@ -77,8 +82,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
     And output "heeft_recht_op_lks" is true
     And output "bruto_subsidie_eurocent_per_maand" equals 100958
     And output "maximum_subsidie_eurocent_per_maand" equals 176677.2
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 100958
-    And output "hoogte_lks_eurocent_per_maand" equals 89740.444444444
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126197.5
+    And output "hoogte_lks_eurocent_per_maand" equals 112175.555555556
 
   # Voltijd: 36 uur laat het bedrag ongemoeid — de evenredigheidsfactor
   # is dan 1. Dit scenario bewaakt dat de correctie geen bedrag afsnoept
@@ -101,7 +106,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
-    And output "hoogte_lks_eurocent_per_maand" equals 100958
+    And output "hoogte_lks_eurocent_per_maand" equals 126197.5
 
   # Lid 4 spreekt van verminderen "of vermeerderen": boven 36 uur gaat
   # het bedrag omhoog. 40 uur is geen deler-vriendelijk getal, 27 wel —
@@ -125,8 +130,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 100958
-    And output "hoogte_lks_eurocent_per_maand" equals 75718.5
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126197.5
+    And output "hoogte_lks_eurocent_per_maand" equals 94648.125
 
   # ────────────────────────────────────────────────────────────────────
   # OPEN: Samenloop LKS ↔ LKV (Pwet 10d lid 9)

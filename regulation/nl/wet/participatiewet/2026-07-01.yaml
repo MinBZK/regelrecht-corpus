@@ -2584,10 +2584,10 @@ articles:
               unit: eurocent
             description: |-
               Lid 4 en lid 5: het totale bedrag van het wettelijk
-              minimumloon en de vakantiebijslag, vermeerderd met de bij
-              ministeriële regeling vastgestelde vergoeding voor
-              werkgeverslasten. Grondslag voor zowel de 70%-bovengrens
-              van lid 4 als de 50%-regel van lid 5.
+              minimumloon en de vakantiebijslag. Grondslag voor zowel de
+              70%-bovengrens van lid 4 als de 50%-regel van lid 5. De
+              vergoeding voor werkgeverslasten komt op de subsidie, niet op
+              deze grondslag.
           - name: bruto_subsidie_eurocent_per_maand
             type: amount
             type_spec:
@@ -2769,22 +2769,20 @@ articles:
                   dienstbetrekking. Over het tijdvak daarna stelt het
                   college de loonwaarde vast en geldt lid 4.
           - output: grondslag_maximum_eurocent_per_maand
-            value:
-              operation: ADD
-              values:
-                - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
-                - $werkgeverslastenvergoeding_eurocent
-              legal_basis:
-                law: Participatiewet
-                bwb_id: BWBR0015703
-                article: '10d'
-                paragraph: '4'
-                explanation: |-
-                  "het totale bedrag van het wettelijk minimumloon en de
-                  aanspraak op vakantiebijslag ..., vermeerderd met een bij
-                  ministeriële regeling vastgestelde vergoeding voor
-                  werkgeverslasten". De vergoeding hoort binnen de
-                  grondslag, niet ernaast.
+            value: $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '4'
+              explanation: |-
+                "het totale bedrag van het wettelijk minimumloon en de
+                aanspraak op vakantiebijslag". De vergoeding voor
+                werkgeverslasten komt er niet bij: de Regeling
+                loonkostensubsidie Participatiewet 2021 legt haar op een
+                percentage van de loonkosten waarover subsidie wordt
+                verstrekt, dus op de subsidie zelf. Zie
+                hoogte_lks_lid_4_voltijd_eurocent_per_maand.
           - output: bruto_subsidie_eurocent_per_maand
             value:
               operation: SUBTRACT
@@ -2815,21 +2813,30 @@ articles:
                 article: '10d'
                 paragraph: '4'
                 explanation: |-
-                  Ten hoogste 70 procent van de grondslag, inclusief de
-                  vergoeding voor werkgeverslasten.
+                  Ten hoogste 70 procent van het minimumloon en de
+                  vakantiebijslag.
           - output: hoogte_lks_lid_4_voltijd_eurocent_per_maand
             value:
               operation: IF
               cases:
                 - when: $heeft_recht_op_lks
                   then:
-                    operation: MAX
+                    operation: DIVIDE
                     values:
-                      - 0
-                      - operation: MIN
+                      - operation: MULTIPLY
                         values:
-                          - $bruto_subsidie_eurocent_per_maand
-                          - $maximum_subsidie_eurocent_per_maand
+                          - operation: MAX
+                            values:
+                              - 0
+                              - operation: MIN
+                                values:
+                                  - $bruto_subsidie_eurocent_per_maand
+                                  - $maximum_subsidie_eurocent_per_maand
+                          - operation: ADD
+                            values:
+                              - 100
+                              - $werkgeverslastenvergoeding_percentage
+                      - 100
               default: 0
               legal_basis:
                 law: Participatiewet
@@ -2837,6 +2844,18 @@ articles:
                 article: '10d'
                 paragraph: '4'
                 sentence: '1'
+                explanation: |-
+                  Het verschil tussen minimumloon en loonwaarde, elk met
+                  vakantiebijslag, ten hoogste 70 procent van het minimumloon
+                  en de vakantiebijslag, "vermeerderd met een bij ministeriële
+                  regeling vastgestelde vergoeding voor werkgeverslasten". De
+                  Regeling loonkostensubsidie Participatiewet 2021 (artikel 1)
+                  stelt die vergoeding op 25 procent "van de loonkosten waarover
+                  loonkostensubsidie wordt verstrekt". De vergoeding komt dus
+                  bovenop het begrensde verschil. De wettekst laat ook de lezing
+                  toe dat alleen de bovengrens wordt verhoogd; die lezing geeft
+                  een lager bedrag en is niet gekozen. Ter toetsing door de
+                  jurist.
           - output: hoogte_lks_lid_5_voltijd_eurocent_per_maand
             value:
               operation: IF
@@ -2849,7 +2868,11 @@ articles:
                         values:
                           - $grondslag_maximum_eurocent_per_maand
                           - $percentage_lid_5
-                      - 100
+                          - operation: ADD
+                            values:
+                              - 100
+                              - $werkgeverslastenvergoeding_percentage
+                      - 10000
               default: 0
               legal_basis:
                 law: Participatiewet
@@ -2860,7 +2883,8 @@ articles:
                 explanation: |-
                   50 procent van het totale bedrag van het wettelijk
                   minimumloon en de vakantiebijslag, vermeerderd met de
-                  vergoeding voor werkgeverslasten.
+                  vergoeding voor werkgeverslasten: het percentage van de
+                  regeling over de subsidie, zoals bij lid 4.
           - output: hoogte_lks_voltijd_eurocent_per_maand
             value:
               operation: IF
@@ -2923,20 +2947,17 @@ articles:
                   arbeidsduur korter of langer is dan 36 uren per week.
                   Lid 5, derde zin, schrijft dezelfde correctie voor.
       open_terms:
-        - id: werkgeverslastenvergoeding_eurocent
-          type: amount
-          required: false
+        - id: werkgeverslastenvergoeding_percentage
+          type: number
+          required: true
           delegated_to: minister
           delegation_type: MINISTERIELE_REGELING
-          legal_basis: artikel 10d lid 4 Participatiewet
+          legal_basis: artikel 10d lid 4 en 5 Participatiewet
           description: |-
-            Bij ministeriële regeling vastgestelde vergoeding voor
-            werkgeverslasten, bovenop de subsidie. Niet uitgewerkt
-            in deze YAML.
-          default:
-            actions:
-              - output: werkgeverslastenvergoeding_eurocent
-                value: 0
+            De bij ministeriële regeling vastgestelde vergoeding voor
+            werkgeverslasten, als percentage van de loonkosten waarover
+            loonkostensubsidie wordt verstrekt. Ingevuld door de Regeling
+            loonkostensubsidie Participatiewet 2021, artikel 1.
         - id: gebruikelijke_volledige_dienstbetrekking_uren
           description: >-
             De arbeidsduur die in overeenkomstige dienstbetrekkingen in de regel als
