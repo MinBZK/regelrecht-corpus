@@ -98,7 +98,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
-      | dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht | false |
+      | datum_ontstaan_recht_wajong | null |
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |

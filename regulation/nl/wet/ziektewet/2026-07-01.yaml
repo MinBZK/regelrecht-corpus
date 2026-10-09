@@ -2379,13 +2379,15 @@ articles:
               arbeidsondersteuning. Die hoofdstukken en de historie zijn
               niet gemodelleerd; het huidige recht op arbeidsondersteuning
               wordt wél afgeleid (Wajong 2:15). Bron: UWV-historie.
-          - name: dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht
-            type: boolean
-            required: true
+          - name: datum_ontstaan_recht_wajong
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Lid 2 onderdeel c: de dienstbetrekking is aangevangen voordat
-              de werknemer achttien werd en dus voordat zijn Wajong-recht
-              ontstond. Bron: UWV / werkgever.
+              Lid 2 onderdeel c: de dag waarop het recht op een
+              arbeidsongeschiktheidsuitkering of arbeidsondersteuning op grond
+              van de Wajong ontstond. Afwezig zonder dat recht, of als de
+              dienstbetrekking pas na het achttiende jaar begon. Bron: UWV.
           # --- lid 2 onderdeel b en d: Wsw ---
           - name: is_wsw_werknemer
             type: boolean
@@ -2970,6 +2972,12 @@ articles:
                 Lid 5: het dagloon van de verzekerde, volgens het Dagloonbesluit
                 werknemersverzekeringen artikel 12e.
         output:
+          - name: dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht
+            type: boolean
+            description: |-
+              Lid 2 onderdeel c: de dienstbetrekking is aangevangen voordat
+              de werknemer achttien werd, en daarom voordat zijn Wajong-recht
+              ontstond.
           - name: heeft_recht_op_wia_uitkering
             type: boolean
             description: 'Recht op een uitkering op grond van de Wet WIA (IVA of WGA).'
@@ -3308,6 +3316,37 @@ articles:
                   Lid 1 onderdelen a, b, c en d. Lid 3: onderdelen c en d
                   gelden niet voor de werknemer van lid 2 onderdelen d, e
                   en f.
+          - output: dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_ontstaan_recht_wajong
+                    value: null
+                  then: false
+              default:
+                operation: AND
+                conditions:
+                  - operation: LESS_THAN
+                    subject:
+                      operation: AGE
+                      date_of_birth: $geboortedatum
+                      reference_date: $datum_aanvang_dienstbetrekking
+                    value: 18
+                  - operation: LESS_THAN
+                    subject: $datum_aanvang_dienstbetrekking
+                    value: $datum_ontstaan_recht_wajong
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '2'
+              explanation: |-
+                Onderdeel c: "wiens dienstbetrekking [...] is aangevangen voordat
+                zijn recht op een arbeidsongeschiktheidsuitkering of
+                arbeidsondersteuning op grond van de Wajong ontstond, omdat die
+                dienstbetrekking is aangevangen voordat hij achttien jaar werd".
           - output: voldoet_aan_lid_2
             value:
               operation: OR
