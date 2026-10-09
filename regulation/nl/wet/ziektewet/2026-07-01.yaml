@@ -2864,9 +2864,13 @@ articles:
             type: boolean
             source:
               regulation: wet_financiering_sociale_verzekeringen
-              output: is_arbeidsbeperkte
+              output: is_arbeidsbeperkte_grond_a_d_e_f_lid_2_of_6
               parameters:
                 bsn: $bsn
+                behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
+                college_heeft_vastgesteld_uitsluitend_beschut_werk: $is_uitgesloten_beschut_werk_pwet_10b
+                heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
+                aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
                 is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
                 uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college

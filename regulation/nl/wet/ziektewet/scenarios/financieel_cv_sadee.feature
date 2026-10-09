@@ -150,7 +150,10 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     And output "heeft_recht_op_wia_uitkering" is false
     And output "voldoet_aan_lid_1" is false
     And output "voldoet_aan_lid_2_a" is true
-    And output "voldoet_aan_lid_2_e" is true
+    # Lid 2 onderdeel e (met lid 11 en 12) telt alleen de gronden a, d, e en f
+    # van Wfsv 38b lid 1, lid 2 en lid 6. Sadee staat in het doelgroepregister
+    # via onderdeel c (Wajong) en valt daarom onder lid 2 onderdeel a, niet e.
+    And output "voldoet_aan_lid_2_e" is false
     And output "voldoet_aan_lid_2_f" is false
     And output "voldoet_aan_lid_2" is true
     And output "heeft_recht_op_no_risk_polis" is true

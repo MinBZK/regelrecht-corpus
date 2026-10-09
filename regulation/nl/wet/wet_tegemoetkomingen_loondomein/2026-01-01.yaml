@@ -202,6 +202,25 @@ articles:
               Art. 2.1: werkgever heeft in de loonaangifte verzoek
               gedaan voor het loonkostenvoordeel.
           # --- doorgegeven aan Wfsv artikel 38b (doelgroepregister) ---
+          - name: behoort_tot_doelgroep_10b_lid_1
+            type: boolean
+            required: true
+            description: |-
+              Pwet 10b lid 1: persoon uit de kring van de voorziening beschut
+              werk. Doorgegeven aan Wfsv artikel 38b, voor de
+              beschut-werk-uitsluiting.
+          - name: heeft_dienstbetrekking_beschut_werk
+            type: boolean
+            required: true
+            description: |-
+              Pwet 10b lid 1: de persoon werkt in een dienstbetrekking beschut
+              werk. Doorgegeven aan Wfsv artikel 38b.
+          - name: aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
+            type: boolean
+            nullable: true
+            required: true
+            description: |-
+              Pwet 10b lid 6. Doorgegeven aan Wfsv artikel 38b.
           - name: is_uitgesloten_beschut_werk_pwet_10b
             type: boolean
             required: true
@@ -545,6 +564,10 @@ articles:
               output: is_arbeidsbeperkte
               parameters:
                 bsn: $bsn
+                behoort_tot_doelgroep_10b_lid_1: $behoort_tot_doelgroep_10b_lid_1
+                college_heeft_vastgesteld_uitsluitend_beschut_werk: $is_uitgesloten_beschut_werk_pwet_10b
+                heeft_dienstbetrekking_beschut_werk: $heeft_dienstbetrekking_beschut_werk
+                aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd: $aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
                 is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
                 uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college

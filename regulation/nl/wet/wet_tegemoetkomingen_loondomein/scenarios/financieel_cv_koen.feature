@@ -58,6 +58,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | heeft_geldige_doelgroepverklaring_2_15                   | false      |
       | periode_2_16_is_verstreken                               | false      |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | behoort_tot_doelgroep_10b_lid_1 | false |
+      | heeft_dienstbetrekking_beschut_werk | false |
       | is_pwet_toegeleid_of_lks_lid_2 | true |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
       | college_heeft_loonwaarde_onder_wml_vastgesteld | true |

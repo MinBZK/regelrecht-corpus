@@ -1853,6 +1853,14 @@ articles:
                 lid 1). De vaststelling komt uit de bronwet in plaats van als
                 losse parameter.
         output:
+          - name: is_arbeidsbeperkte_grond_a_d_e_f_lid_2_of_6
+            type: boolean
+            description: |-
+              De persoon is arbeidsbeperkte op grond van lid 1 onderdeel a, d,
+              e of f, lid 2, of de blijfgrond van lid 6. Dit is de kring die
+              Ziektewet 29b lid 2 onderdeel e met lid 11 en 12 bedoelt; de
+              Wsw-grond (b) en de Wajong-grond (c) hebben daar eigen
+              onderdelen.
           - name: is_arbeidsbeperkte
             type: boolean
             description: |-
@@ -2119,6 +2127,32 @@ articles:
                 heeft. Lid 6 herhaalt die uitzondering woordelijk; lid 2
                 kent haar niet. De uitsluiting werkt daarom over lid 1 en
                 lid 6 en niet over lid 2.
+          - output: is_arbeidsbeperkte_grond_a_d_e_f_lid_2_of_6
+            value:
+              operation: OR
+              conditions:
+                - operation: AND
+                  conditions:
+                    - operation: NOT
+                      value: $is_uitgesloten_beschut_werk_pwet_10b
+                    - operation: OR
+                      conditions:
+                        - $voldoet_aan_grond_38b_1_a
+                        - $voldoet_aan_grond_38b_1_d
+                        - $voldoet_aan_grond_38b_1_e
+                        - $voldoet_aan_grond_38b_1_f
+                        - $voldoet_aan_grond_38b_6
+                - $voldoet_aan_grond_38b_2
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1, 2, 6'
+              explanation: |-
+                Dezelfde opbouw als is_arbeidsbeperkte, met alleen de gronden
+                die Ziektewet 29b lid 2 onderdeel e (lid 1 onderdeel a in eigen
+                woorden), lid 11 (lid 1 onderdelen d, e, f en lid 2) en lid 12
+                (lid 6) noemen.
           - output: grond_opname_doelgroepregister
             value:
               operation: IF
