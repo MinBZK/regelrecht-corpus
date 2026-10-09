@@ -203,6 +203,146 @@ articles:
       - id: ref15
         bwb_id: BWBR0015703
         artikel: 10b
+    machine_readable:
+      implements:
+        - law: participatiewet
+          article: 10b
+          open_term: criteria_vaststelling_beschut_werk
+          gelet_op: |-
+            Participatiewet 10b lid 2 laat het UWV het college adviseren over de
+            vaststelling van lid 1, volgens regels bij algemene maatregel van
+            bestuur. Dit artikel geeft die regels: de twee vragen waarop het
+            advies rust en de gevallen waarin het UWV zonder onderzoek
+            antwoordt. Het college stelt vast; dit artikel geeft het advies.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon over wie het UWV adviseert.
+          - name: aangewezen_op_aanpassingen_buiten_redelijke_grenzen
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a: de persoon is bij het verrichten van
+              werkzaamheden aangewezen op technische of organisatorische
+              aanpassingen die niet binnen redelijke grenzen door een
+              werkgever kunnen worden gerealiseerd. Bron: onderzoek van het UWV.
+          - name: aangewezen_op_toezicht_of_begeleiding_buiten_redelijke_grenzen
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de persoon is aangewezen op permanent toezicht
+              of intensieve begeleiding die niet binnen redelijke grenzen door
+              een werkgever kan worden aangeboden. Bron: onderzoek van het UWV.
+          - name: is_wsw_geindiceerd_met_advies_begeleid_werken
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel a: de persoon is geïndiceerd in de zin van de Wsw
+              (of heeft een nog geldende indicatiebeschikking) en het UWV heeft
+              geadviseerd dat hij in staat is tot begeleid werken. Bron: UWV.
+          - name: is_wsw_geindiceerd_met_advies_niet_begeleid_werken
+            type: boolean
+            required: true
+            description: |-
+              Lid 4: de persoon is geïndiceerd in de zin van de Wsw en het UWV
+              heeft geadviseerd dat hij niet in staat is tot begeleid werken.
+              Bron: UWV.
+          - name: is_herhaald_verzoek_binnen_twaalf_maanden
+            type: boolean
+            required: true
+            description: |-
+              Lid 3 onderdeel b: de persoon zelf vraagt het advies aan (10b lid
+              3) en het UWV heeft in de twaalf maanden daarvoor al over hem
+              geadviseerd. Bron: UWV.
+          - name: vermeldt_nieuwe_feiten_of_veranderde_omstandigheden
+            type: boolean
+            required: true
+            description: |-
+              Lid 5 en 6: de aanvrager vermeldt nieuw gebleken feiten of
+              veranderde omstandigheden ten opzichte van de indicatiebeschikking
+              of het eerdere advies; dan doet het UWV toch onderzoek. Bron:
+              aanvraag.
+        output:
+          - name: antwoord_zonder_onderzoek_ontkennend
+            type: boolean
+            description: |-
+              Lid 3: het UWV beantwoordt beide vragen zonder onderzoek
+              ontkennend.
+          - name: antwoord_zonder_onderzoek_bevestigend
+            type: boolean
+            description: |-
+              Lid 4: het UWV beantwoordt ten minste een van de vragen zonder
+              onderzoek bevestigend.
+          - name: criteria_vaststelling_beschut_werk
+            type: boolean
+            description: |-
+              Lid 2: het UWV adviseert het college vast te stellen dat de
+              persoon uitsluitend in een beschutte omgeving onder aangepaste
+              omstandigheden mogelijkheden tot arbeidsparticipatie heeft.
+        actions:
+          - output: antwoord_zonder_onderzoek_ontkennend
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $vermeldt_nieuwe_feiten_of_veranderde_omstandigheden
+                - operation: OR
+                  conditions:
+                    - $is_wsw_geindiceerd_met_advies_begeleid_werken
+                    - $is_herhaald_verzoek_binnen_twaalf_maanden
+            legal_basis:
+              law: Besluit advisering beschut werk
+              bwb_id: BWBR0035947
+              article: '3'
+              paragraph: '3'
+              explanation: |-
+                Lid 3 onderdeel a en b, met de uitzonderingen van lid 5 en 6:
+                wie nieuwe feiten of veranderde omstandigheden vermeldt, krijgt
+                toch een onderzoek.
+          - output: antwoord_zonder_onderzoek_bevestigend
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $vermeldt_nieuwe_feiten_of_veranderde_omstandigheden
+                - $is_wsw_geindiceerd_met_advies_niet_begeleid_werken
+            legal_basis:
+              law: Besluit advisering beschut werk
+              bwb_id: BWBR0035947
+              article: '3'
+              paragraph: '4'
+              explanation: |-
+                Lid 4, met de uitzondering van lid 5.
+          - output: criteria_vaststelling_beschut_werk
+            value:
+              operation: IF
+              cases:
+                - when: $antwoord_zonder_onderzoek_ontkennend
+                  then: false
+                - when: $antwoord_zonder_onderzoek_bevestigend
+                  then: true
+              default:
+                operation: OR
+                conditions:
+                  - $aangewezen_op_aanpassingen_buiten_redelijke_grenzen
+                  - $aangewezen_op_toezicht_of_begeleiding_buiten_redelijke_grenzen
+            legal_basis:
+              law: Besluit advisering beschut werk
+              bwb_id: BWBR0035947
+              article: '3'
+              paragraph: '2'
+              explanation: |-
+                "Uitsluitend indien uit het onderzoek blijkt dat ten minste
+                een van de vragen [...] bevestigend wordt beantwoord, adviseert
+                het UWV aan het college om vast te stellen dat de persoon
+                uitsluitend in een beschutte omgeving [...] mogelijkheden tot
+                arbeidsparticipatie heeft." Lid 7 (gebruik van eerdere
+                gegevens) gaat over de werkwijze en is niet gemodelleerd.
   - number: '4'
     text: 'Dit besluit wordt aangehaald als: Besluit advisering beschut werk.'
     url: https://wetten.overheid.nl/BWBR0035947/2022-07-01#Artikel4
