@@ -72,7 +72,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -172,7 +172,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -265,7 +265,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -357,7 +357,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -453,7 +453,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -549,7 +549,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | false |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
@@ -645,7 +645,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_uitgesloten_beschut_werk_pwet_10b | true |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |

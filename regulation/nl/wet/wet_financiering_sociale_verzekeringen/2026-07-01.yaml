@@ -1639,12 +1639,22 @@ articles:
               38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
               de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
               1). Bron: UWV.
-          - name: college_heeft_loonwaarde_onder_wml_vastgesteld
+          - name: college_heeft_loonwaarde_vastgesteld_conform_10d
             type: boolean
             required: true
             description: |-
-              38b.1.a: het college heeft een loonwaarde onder het minimumloon
-              vastgesteld conform Pwet 10d. Bron: gemeente.
+              38b.1.a: het college heeft een loonwaarde vastgesteld in
+              overeenstemming met de eisen aan een loonwaardevaststelling op
+              grond van Participatiewet 10d. Bron: gemeente.
+          - name: loonwaarde_percentage
+            type: number
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a: de vastgestelde loonwaarde, als percentage van het
+              wettelijk minimumloon (Participatiewet artikel 6 lid 1 onderdeel
+              g). Onder de 100 bedraagt zij bij voltijdse arbeid minder dan het
+              minimumloon. Afwezig zonder vaststelling. Bron: gemeente.
           - name: kan_een_drempelfunctie_volledig_uitvoeren
             type: boolean
             required: false
@@ -1853,6 +1863,11 @@ articles:
                 lid 1). De vaststelling komt uit de bronwet in plaats van als
                 losse parameter.
         output:
+          - name: loonwaarde_onder_minimumloon_vastgesteld
+            type: boolean
+            description: |-
+              38b.1.a: het college heeft een loonwaarde vastgesteld die bij
+              voltijdse arbeid minder bedraagt dan het wettelijk minimumloon.
           - name: is_arbeidsbeperkte_grond_a_d_e_f_lid_2_of_6
             type: boolean
             description: |-
@@ -1936,6 +1951,34 @@ articles:
               SUWI 33 en loonaangifte (Wet LB 1964 28). Niet hier
               gemodelleerd.
         actions:
+          - output: loonwaarde_onder_minimumloon_vastgesteld
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $loonwaarde_percentage
+                    value: null
+                  then: false
+              default:
+                operation: AND
+                conditions:
+                  - $college_heeft_loonwaarde_vastgesteld_conform_10d
+                  - operation: LESS_THAN
+                    subject: $loonwaarde_percentage
+                    value: 100
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.a'
+              explanation: |-
+                "van wie door het college van burgemeester en wethouders in
+                overeenstemming met de eisen gesteld aan een
+                loonwaardevaststelling op grond van artikel 10d [...] een
+                loonwaarde is vastgesteld die bij voltijdse arbeid minder
+                bedraagt dan het wettelijk minimumloon". De loonwaarde is een
+                percentage van het minimumloon; onder de 100 is zij lager.
           - output: voldoet_aan_grond_38b_1_a
             value:
               operation: AND
@@ -1949,7 +1992,7 @@ articles:
                         - operation: EQUALS
                           subject: $uwv_acht_niet_in_staat_minimumloon_te_verdienen
                           value: true
-                    - $college_heeft_loonwaarde_onder_wml_vastgesteld
+                    - $loonwaarde_onder_minimumloon_vastgesteld
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745

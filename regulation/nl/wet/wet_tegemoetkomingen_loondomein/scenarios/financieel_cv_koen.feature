@@ -62,7 +62,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | heeft_dienstbetrekking_beschut_werk | false |
       | is_pwet_toegeleid_of_lks_lid_2 | true |
       | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
-      | college_heeft_loonwaarde_onder_wml_vastgesteld | true |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | true |
+      | loonwaarde_percentage | 60 |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
