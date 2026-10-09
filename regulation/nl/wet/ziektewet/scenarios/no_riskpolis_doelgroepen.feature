@@ -126,12 +126,107 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
     And output "heeft_recht_op_no_risk_polis" is true
     And output "duur_no_risk_polis_jaren" equals 5
 
+  Scenario: Fatma wordt ruim vijf jaar na de aanvang ziek: lid 1 dekt dat niet meer
+    # Lid 1 slotzin: alleen ziekte die begint in de vijf jaren na aanvang van
+    # de dienstbetrekking (1 mei 2026). Op 1 juni 2031 is die termijn voorbij.
+    Given the calculation date is "2031-06-01"
+    And the following parameters:
+      | bsn | 999990201 |
+      | geboortedatum | 1975-02-10 |
+      | datum_aanvang_dienstbetrekking | 2026-05-01 |
+      | is_verzekerde_wia | true |
+      | is_ziek_geworden_wia | true |
+      | eerste_dag_wachttijd_wia | 2024-03-01 |
+      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
+      | is_medisch_duurzaam_wia | false |
+      | heeft_recht_op_uitkering_hoofdstuk_6_of_7 | false |
+      | ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap | false |
+      | loondoorbetalings_of_ziekengeldtijdvak_loopt_nog | false |
+      | periode_zonder_ziekengeld_29_lid_11_loopt_nog | false |
+      | is_rechtens_vrijheid_ontnomen | false |
+      | onttrekt_zich_aan_vrijheidsstraf | false |
+      | woont_niet_in_nederland | false |
+      | heeft_pensioengerechtigde_leeftijd_bereikt | false |
+      | is_overleden | false |
+      | is_uitreiziger | false |
+      | arbeidskundig_onderzoek_verricht | true |
+      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | true |
+      | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | true |
+      | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
+      | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
+      | is_jonggehandicapte_hoofdstuk_2_wajong | false |
+      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | false |
+      | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
+      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
+      | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
+      | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
+      | dienstbetrekking_aangevangen_voor_achttien_en_voor_wajong_recht | false |
+      | is_wsw_werknemer | false |
+      | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
+      | is_uitgesloten_beschut_werk_pwet_10b | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
+      | is_wsw_geindiceerd_of_oude_indicatie | false |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
+      | heeft_wajong_duurzaam_geen_mogelijkheden | false |
+      | verricht_arbeid_in_dienstbetrekking | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
+      | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
+      | datum_eerste_opname_doelgroepregister | 2026-01-01 |
+      | was_arbeidsbeperkte_lid_1_of_2 | false |
+      | registratie_nog_niet_geeindigd | false |
+      | behoort_tot_doelgroep_lks | false |
+      | kan_minimumloon_niet_verdienen | false |
+      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | is_wsw_dienstbetrekking | false |
+      | loonwaarde_eurocent_per_maand | 215500 |
+      | overeengekomen_arbeidsduur_uren_per_week | 36 |
+      | behoort_tot_doelgroep_10b_lid_1 | false |
+      | heeft_dienstbetrekking_beschut_werk | false |
+      | dienstbetrekking_voortgezet_na_vaststelling_wia_recht | false |
+      | heeft_wia_uitkering_hoofdstuk_6 | false |
+      | experiment_instrument_82a_suwi_ingezet | false |
+      | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
+      | dienstbetrekking_is_tot_stand_gekomen | false |
+      | college_heeft_loonwaarde_vastgesteld | false |
+      | vaststelling_loonwaarde_blijft_achterwege | false |
+      | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
+      | einddatum_tijdvak_lid_1_b | null |
+      | wsw_subsidiebedrag_per_werkdag_eurocent | null |
+      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
+    When I evaluate outputs "ziekte_nu_binnen_termijn_lid_1, heeft_recht_op_no_risk_polis" of "ziektewet"
+    Then the execution succeeds
+    And output "ziekte_nu_binnen_termijn_lid_1" is false
+    And output "heeft_recht_op_no_risk_polis" is false
+
   Scenario: Fatma blijft bij haar eigen werkgever na de WGA-vaststelling en opent lid 4
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn | 999990201 |
       | geboortedatum | 1975-02-10 |
       | datum_aanvang_dienstbetrekking | 2015-09-01 |
+      | datum_vaststelling_recht_wia_uitkering | 2026-02-27 |
       | is_verzekerde_wia | true |
       | is_ziek_geworden_wia | true |
       | eerste_dag_wachttijd_wia | 2024-03-01 |

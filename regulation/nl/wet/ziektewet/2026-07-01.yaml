@@ -2213,6 +2213,14 @@ articles:
               de no-riskpolis wordt getoetst. Gebruikt voor de
               vijfjaarstermijnen van lid 1 onderdeel b onder 4° en
               onderdeel c en d. Bron: werkgever / polisadministratie.
+          - name: datum_vaststelling_recht_wia_uitkering
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              Lid 4: de dag waarop het recht op een WIA-uitkering is
+              vastgesteld. De no-riskpolis van lid 4 dekt ziekte die begint in
+              de vijf jaren daarna. Bron: UWV.
           # --- lid 1 onderdeel a en lid 4: doorgegeven aan Wet WIA (artikel 47, 54, 23, 5) ---
           - name: is_verzekerde_wia
             type: boolean
@@ -2995,6 +3003,23 @@ articles:
           - name: voldoet_aan_lid_4
             type: boolean
             description: Lid 4 — voortzetting dienstbetrekking na vaststelling WIA-recht.
+          - name: ziekte_nu_binnen_termijn_lid_1
+            type: boolean
+            description: |-
+              Lid 1, slotzin: een ongeschiktheid die op de peildatum begint,
+              valt in de vijf jaren na aanvang van de dienstbetrekking.
+          - name: ziekte_nu_binnen_termijn_lid_4
+            type: boolean
+            description: |-
+              Lid 4: een ongeschiktheid die op de peildatum begint, valt in de
+              vijf jaren na vaststelling van het recht op een WIA-uitkering.
+          - name: einddatum_no_risk_polis
+            type: date
+            nullable: true
+            description: |-
+              De laatste dag waarop een ongeschiktheid kan beginnen die nog
+              onder de no-riskpolis valt. Afwezig als er geen einde is (lid 2)
+              of geen recht.
           - name: heeft_recht_op_no_risk_polis
             type: boolean
             description: |-
@@ -3328,15 +3353,110 @@ articles:
                 werkzaam is in een dienstbetrekking in de zin van artikel 2
                 van de Wet sociale werkvoorziening." De uitsluiting geldt
                 voor het hele artikel, dus ook voor lid 2 en lid 4.
+          - output: ziekte_nu_binnen_termijn_lid_1
+            value:
+              operation: LESS_THAN
+              subject: $referencedate.iso
+              value:
+                operation: DATE_ADD
+                date: $datum_aanvang_dienstbetrekking
+                years: $duur_no_risk_polis_lid_1_jaren
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '1'
+              explanation: |-
+                "recht op ziekengeld over perioden van ongeschiktheid tot
+                werken wegens ziekte die zijn aangevangen in de vijf jaren na
+                aanvang van de dienstbetrekking". Het Financieel CV vraagt wat
+                de werkgever heeft als de werknemer nu ziek wordt; de peildatum
+                staat daarom voor de eerste dag van de ongeschiktheid.
+          - output: ziekte_nu_binnen_termijn_lid_4
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_vaststelling_recht_wia_uitkering
+                    value: null
+                  then: false
+              default:
+                operation: LESS_THAN
+                subject: $referencedate.iso
+                value:
+                  operation: DATE_ADD
+                  date: $datum_vaststelling_recht_wia_uitkering
+                  years: $duur_no_risk_polis_lid_4_jaren
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '4'
+              explanation: |-
+                "over perioden van ongeschiktheid tot werken wegens ziekte die
+                zijn aangevangen in de vijf jaren na vaststelling van het recht
+                op uitkering". Zonder vaststellingsdatum is de termijn niet te
+                toetsen en geldt lid 4 niet.
+          - output: einddatum_no_risk_polis
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: OR
+                    conditions:
+                      - $is_uitgesloten_lid_8
+                      - $voldoet_aan_lid_2
+                  then: null
+                - when:
+                    operation: AND
+                    conditions:
+                      - $voldoet_aan_lid_1
+                      - $ziekte_nu_binnen_termijn_lid_1
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_aanvang_dienstbetrekking
+                    years: $duur_no_risk_polis_lid_1_jaren
+                - when:
+                    operation: EQUALS
+                    subject: $datum_vaststelling_recht_wia_uitkering
+                    value: null
+                  then: null
+                - when:
+                    operation: AND
+                    conditions:
+                      - $voldoet_aan_lid_4
+                      - $ziekte_nu_binnen_termijn_lid_4
+                  then:
+                    operation: DATE_ADD
+                    date: $datum_vaststelling_recht_wia_uitkering
+                    years: $duur_no_risk_polis_lid_4_jaren
+              default: null
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '1, 2, 4'
+              explanation: |-
+                Lid 1 en lid 4 dekken ziekte die begint in de vijf jaren na
+                aanvang, respectievelijk na vaststelling van het WIA-recht; lid
+                2 kent geen termijn. Valt een werknemer onder lid 1 en lid 4
+                tegelijk, dan noemt deze uitkomst de termijn van lid 1.
           - output: heeft_recht_op_no_risk_polis
             value:
               operation: AND
               conditions:
                 - operation: OR
                   conditions:
-                    - $voldoet_aan_lid_1
+                    - operation: AND
+                      conditions:
+                        - $voldoet_aan_lid_1
+                        - $ziekte_nu_binnen_termijn_lid_1
                     - $voldoet_aan_lid_2
-                    - $voldoet_aan_lid_4
+                    - operation: AND
+                      conditions:
+                        - $voldoet_aan_lid_4
+                        - $ziekte_nu_binnen_termijn_lid_4
                 - operation: NOT
                   value: $is_uitgesloten_lid_8
               legal_basis:
@@ -3347,6 +3467,8 @@ articles:
                   Recht op no-risk polis bestaat als de werknemer onder
                   ten minste één van de doelgroepen lid 1, lid 2 of lid 4
                   valt, tenzij lid 8 het artikel buiten toepassing laat.
+                  Bij lid 1 en lid 4 alleen voor ziekte die binnen de
+                  termijn van vijf jaar begint.
           - output: dagloon_voor_ziekengeld_eurocent
             value:
               operation: IF
