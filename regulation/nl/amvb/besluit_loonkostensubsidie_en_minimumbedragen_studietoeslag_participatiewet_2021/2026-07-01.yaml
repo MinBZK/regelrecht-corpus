@@ -95,6 +95,9 @@ articles:
             lid 1 laat de regels daarover aan een algemene maatregel van
             bestuur; dit artikel stelt ze. Het verving per 1 juli 2021
             artikel 1 van het Besluit loonkostensubsidie Participatiewet.
+      definitions:
+        minimale_aaneengesloten_werkduur_uren:
+          value: 1
       execution:
         produces:
           legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
@@ -119,13 +122,13 @@ articles:
               Lid 1 onderdeel b: de persoon beschikt over basale
               werknemersvaardigheden. Een oordeel over de persoon. Bron:
               gemeente, op advies van een deskundige.
-          - name: kan_ten_minste_een_uur_aaneengesloten_werken
-            type: boolean
+          - name: aaneengesloten_werkduur_uren
+            type: number
             required: true
             description: |-
-              Lid 1 onderdeel c: de persoon kan aaneengesloten werken gedurende
-              ten minste een periode van een uur. Bron: gemeente, op advies
-              van een deskundige.
+              Lid 1 onderdeel c: de periode in uren die de persoon
+              aaneengesloten kan werken. Bron: gemeente, op advies van een
+              deskundige.
           - name: belastbaarheid_uren_per_dag
             type: number
             required: true
@@ -156,6 +159,11 @@ articles:
                 a, van de Wet minimumloon en minimumvakantiebijslag": het
                 wettelijke minimumloon per uur.
         output:
+          - name: kan_ten_minste_een_uur_aaneengesloten_werken
+            type: boolean
+            description: |-
+              Lid 1 onderdeel c: de persoon kan aaneengesloten werken gedurende
+              ten minste een periode van een uur.
           - name: voldoet_aan_belastbaarheid_lid_1_d
             type: boolean
             description: |-
@@ -169,6 +177,20 @@ articles:
               Vult de open term van Participatiewet artikel 10c in, die
               artikel 6 lid 1 onderdeel e toetst.
         actions:
+          - output: kan_ten_minste_een_uur_aaneengesloten_werken
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $aaneengesloten_werkduur_uren
+              value: $minimale_aaneengesloten_werkduur_uren
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '2'
+              paragraph: '1'
+              sentence: 'c'
+              explanation: |-
+                "aaneengesloten kan werken gedurende ten minste een periode van
+                een uur".
           - output: voldoet_aan_belastbaarheid_lid_1_d
             value:
               operation: IF

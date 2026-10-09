@@ -21,6 +21,10 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
   # Artikel 10d leest de vaststelling van het college als gegeven
   # (behoort_tot_doelgroep_lks). Deze scenario's raken die keten niet.
 
+  # Afgeleid op 2026-10-09: aaneengesloten_werkduur_uren vervangt de boolean
+  # "kan ten minste een uur aaneengesloten werken"; waar die waar was, staat
+  # hier 2 uur. Een aanname, geen gegeven uit de persona.
+
   Background:
     Given the calculation date is "2026-07-01"
 
@@ -35,7 +39,7 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
       | is_persoon_artikel_10d_lid_2                                      | false     |
       | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
       | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | kan_ten_minste_een_uur_aaneengesloten_werken                      | true      |
+      | aaneengesloten_werkduur_uren | 2 |
       | belastbaarheid_uren_per_dag                                       | 6.4       |
       | verdienvermogen_per_uur_eurocent                                  | null      |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
@@ -52,7 +56,7 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
       | is_persoon_artikel_10d_lid_2                                      | false     |
       | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
       | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | kan_ten_minste_een_uur_aaneengesloten_werken                      | true      |
+      | aaneengesloten_werkduur_uren | 2 |
       | belastbaarheid_uren_per_dag                                       | 3         |
       | verdienvermogen_per_uur_eurocent                                  | 1499      |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
@@ -69,7 +73,7 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
       | is_persoon_artikel_10d_lid_2                                      | false     |
       | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
       | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | kan_ten_minste_een_uur_aaneengesloten_werken                      | true      |
+      | aaneengesloten_werkduur_uren | 2 |
       | belastbaarheid_uren_per_dag                                       | 3         |
       | verdienvermogen_per_uur_eurocent                                  | 1498      |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
@@ -86,7 +90,7 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
       | is_persoon_artikel_10d_lid_2                                      | true      |
       | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
       | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | kan_ten_minste_een_uur_aaneengesloten_werken                      | true      |
+      | aaneengesloten_werkduur_uren | 2 |
       | belastbaarheid_uren_per_dag                                       | 1         |
       | verdienvermogen_per_uur_eurocent                                  | null      |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
