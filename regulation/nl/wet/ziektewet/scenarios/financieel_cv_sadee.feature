@@ -3,6 +3,11 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   Wil ik weten welke financiële voordelen ik krijg als ik Sadee aanneem
   Zodat ik een onderbouwd besluit kan nemen over het dienstverband
 
+  # Afgeleid op 2026-10-09: datum_aanvraag_lks vervangt de boolean
+  # "aanvraag binnen zes maanden". Waar die waar was, staat de aanvraag op een
+  # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
+  # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
+
   # Verticale slice door de zeven outputs van het Financieel CV voor één
   # werknemerprofiel. Doel: aan jurist + UWV-uitvoerder + ondernemer
   # concreet tonen wat regelrecht uitrekent én wat het laat zien als
@@ -112,7 +117,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | registratie_nog_niet_geeindigd | true |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | true |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 70 |

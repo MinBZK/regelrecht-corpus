@@ -2659,10 +2659,11 @@ articles:
             type: boolean
             required: true
             description: 'Pwet 10d lid 2: met voltijdse arbeid niet in staat het wettelijk minimumloon te verdienen.'
-          - name: aanvraag_lks_ingediend_binnen_zes_maanden
-            type: boolean
-            required: true
-            description: 'Pwet 10d lid 2: aanvraag binnen zes maanden na begin dienstbetrekking.'
+          - name: datum_aanvraag_lks
+            type: date
+            required: false
+            nullable: true
+            description: 'Pwet 10d lid 2: de dag van de aanvraag om loonkostensubsidie; afwezig zonder aanvraag.'
           - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
             type: boolean
             required: true
@@ -2919,7 +2920,7 @@ articles:
                 bsn: $bsn
                 behoort_tot_doelgroep_lks: $behoort_tot_doelgroep_lks
                 kan_minimumloon_niet_verdienen: $kan_minimumloon_niet_verdienen
-                aanvraag_lks_ingediend_binnen_zes_maanden: $aanvraag_lks_ingediend_binnen_zes_maanden
+                datum_aanvraag_lks: $datum_aanvraag_lks
                 voorafgaand_relevante_onderwijsroute_of_doelgroep: $voorafgaand_relevante_onderwijsroute_of_doelgroep
                 is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
                 loonwaarde_percentage: $loonwaarde_percentage

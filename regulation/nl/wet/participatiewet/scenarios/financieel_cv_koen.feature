@@ -5,6 +5,11 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   Zodat ik weet wat ik zelf kan aanvragen en welk financieel kader er
   voor mijn werkgever achter mijn dienstverband zit
 
+  # Afgeleid op 2026-10-09: datum_aanvraag_lks vervangt de boolean
+  # "aanvraag binnen zes maanden". Waar die waar was, staat de aanvraag op een
+  # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
+  # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
+
   # Verticale slice door de Financieel CV vanuit werknemer-perspectief.
   # Sommige outputs zijn werkgever-voordelen (LKS, LKV) — die zijn voor
   # transparantie meegenomen: een werknemer mag weten wat de
@@ -69,7 +74,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | bsn                                                 | 999990101 |
       | behoort_tot_doelgroep_lks                           | true      |
       | kan_minimumloon_niet_verdienen                      | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | datum_aanvraag_lks | 2026-02-01 |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_percentage | 60 |
@@ -96,7 +101,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | bsn                                                 | 999990101 |
       | behoort_tot_doelgroep_lks                           | true      |
       | kan_minimumloon_niet_verdienen                      | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | datum_aanvraag_lks | 2026-02-01 |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_percentage | 60 |
@@ -120,7 +125,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | bsn                                                 | 999990101 |
       | behoort_tot_doelgroep_lks                           | true      |
       | kan_minimumloon_niet_verdienen                      | true      |
-      | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
+      | datum_aanvraag_lks | 2026-02-01 |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_percentage | 60 |

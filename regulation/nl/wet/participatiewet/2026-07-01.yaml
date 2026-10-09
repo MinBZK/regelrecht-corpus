@@ -2439,12 +2439,14 @@ articles:
               Artikel 10d lid 2: college heeft vastgesteld dat persoon
               met voltijdse arbeid niet in staat is tot het verdienen
               van het wettelijk minimumloon.
-          - name: aanvraag_lks_ingediend_binnen_zes_maanden
-            type: boolean
-            required: true
+          - name: datum_aanvraag_lks
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Artikel 10d lid 2: aanvraag werkgever of werknemer is
-              binnen 6 maanden na begin dienstbetrekking ingediend.
+              Artikel 10d lid 2: de dag waarop de werkgever of werknemer
+              de aanvraag om loonkostensubsidie deed. Afwezig zonder
+              aanvraag. Bron: gemeente.
           - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
             type: boolean
             required: true
@@ -2559,6 +2561,11 @@ articles:
               Lid 1: het college verleent ambtshalve dan wel op aanvraag
               loonkostensubsidie, langs onderdeel a (na loonwaarde-
               vaststelling) of onderdeel b (vaststelling blijft achterwege).
+          - name: aanvraag_lks_binnen_zes_maanden
+            type: boolean
+            description: |-
+              Lid 2: de aanvraag is gedaan binnen zes maanden na het begin
+              van de dienstbetrekking.
           - name: heeft_recht_op_lks_lid_2
             type: boolean
             description: |-
@@ -2702,13 +2709,43 @@ articles:
                   voorwaarden van lid 2 gelden hier niet. Ontbreken de
                   feiten van lid 1, dan levert deze route onwaar op en
                   blijft lid 2 over.
+          - output: aanvraag_lks_binnen_zes_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $datum_aanvraag_lks
+                        value: null
+                      - operation: EQUALS
+                        subject: $datum_aanvang_dienstbetrekking
+                        value: null
+                  then: false
+              default:
+                operation: LESS_THAN_OR_EQUAL
+                subject: $datum_aanvraag_lks
+                value:
+                  operation: DATE_ADD
+                  date: $datum_aanvang_dienstbetrekking
+                  months: 6
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '2'
+              explanation: |-
+                "op aanvraag van de werkgever of werknemer, gedaan binnen zes
+                maanden na het begin van de dienstbetrekking". Zonder
+                aanvraagdatum of aanvangsdatum is niet voldaan.
           - output: heeft_recht_op_lks_lid_2
             value:
               operation: AND
               conditions:
                 - $behoort_tot_doelgroep_lks
                 - $kan_minimumloon_niet_verdienen
-                - $aanvraag_lks_ingediend_binnen_zes_maanden
+                - $aanvraag_lks_binnen_zes_maanden
                 - $voorafgaand_relevante_onderwijsroute_of_doelgroep
               legal_basis:
                 law: Participatiewet

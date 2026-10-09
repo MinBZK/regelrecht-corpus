@@ -3,6 +3,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
   Wil ik per doelgroep van artikel 29b zien wanneer de no-riskpolis opent
   Zodat elke grond apart toetsbaar is en de afleiding bij de juiste wet ligt
 
+  # Afgeleid op 2026-10-09: datum_aanvraag_lks vervangt de boolean
+  # "aanvraag binnen zes maanden". Waar die waar was, staat de aanvraag op een
+  # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
+  # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
+
   # Koen en Sadee (financieel_cv_*.feature) openen lid 2. Deze scenario's
   # toetsen de overige gronden, elk met de leaf-feiten van precies die
   # grond op waar en al het andere op onwaar. Het vaste blok onderaan
@@ -82,7 +87,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -182,7 +187,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -275,7 +280,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -367,7 +372,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -463,7 +468,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -559,7 +564,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
@@ -655,7 +660,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | registratie_nog_niet_geeindigd | false |
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
-      | aanvraag_lks_ingediend_binnen_zes_maanden | false |
+      | datum_aanvraag_lks | null |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
