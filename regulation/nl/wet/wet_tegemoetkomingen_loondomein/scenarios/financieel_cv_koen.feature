@@ -56,7 +56,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | hervat_eigen_arbeid_of_andere_functie                    | false      |
       | heeft_of_krijgt_wia_recht_bij_hervatting                 | false      |
       | heeft_geldige_doelgroepverklaring_2_15                   | false      |
-      | periode_2_16_is_verstreken                               | false      |
+      | datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15 | null |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -85,7 +85,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | verloonde_uren_voorwaarden_2_14 | 1664 |
       | verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling | false |
       | periode_2_12_is_verstreken | false |
-      | periode_2_8_is_verstreken | false |
+      | datum_aanvang_eerste_dienstbetrekking_2_6 | 2026-01-01 |
       | aantal_dienstbetrekkingen_beschut_werk_is_gerealiseerd | false |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |

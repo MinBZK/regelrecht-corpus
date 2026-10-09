@@ -178,15 +178,14 @@ articles:
             description: |-
               Artikel 2.10 lid 3: het recht eindigt als de periode van
               artikel 2.12 of artikel 6.2 lid 1 is verstreken. Bron: UWV.
-          - name: periode_2_8_is_verstreken
-            type: boolean
-            required: true
+          - name: datum_aanvang_eerste_dienstbetrekking_2_6
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Artikel 2.6 lid 3 onderdeel c: het eerste lid is niet langer
-              van toepassing als de periode van artikel 2.8 — ten hoogste
-              drie aaneengesloten jaren vanaf de aanvang van de eerste
-              dienstbetrekking waarbij aan de voorwaarden is voldaan —
-              voor deze werknemer is verstreken. Bron: UWV.
+              Artikel 2.8 lid 1: de aanvang van de eerste dienstbetrekking
+              tussen de werkgever en de werknemer waarbij aan de voorwaarden
+              van artikel 2.6 wordt voldaan. Bron: polisadministratie.
           - name: heeft_pensioengerechtigde_leeftijd_bereikt
             type: boolean
             required: true
@@ -519,13 +518,14 @@ articles:
               de loonaangifte — het feit is dan al bekend. Voor de WIA bestaat
               die koppeling (nog) niet, dus blijft de verklaring nodig. Het
               verschil is uitvoeringstechnisch, niet inhoudelijk.
-          - name: periode_2_16_is_verstreken
-            type: boolean
-            required: true
+          - name: datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Lid 2 onderdeel c: de periode van artikel 2.16 is voor deze werknemer
-              verstreken. Lid 4 telt onderbrekingen binnen die periode niet mee; die
-              samentelling is niet gemodelleerd.
+              Artikel 2.16 lid 1: de datum van aanvang van de aanvraagtermijn van
+              de doelgroepverklaring op grond van artikel 2.15 lid 1. Afwezig
+              zonder zo'n verklaring. Doorgegeven aan artikel 2.14. Bron: UWV.
         input:
           - name: is_arbeidsgehandicapte_werknemer
             type: boolean
@@ -560,7 +560,7 @@ articles:
                 heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
                 hervat_eigen_arbeid_of_andere_functie: $hervat_eigen_arbeid_of_andere_functie
                 is_wsw_of_beschut_werk_dienstbetrekking: $is_wsw_of_beschut_werk_dienstbetrekking
-                periode_2_16_is_verstreken: $periode_2_16_is_verstreken
+                datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15: $datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15
                 was_rea_arbeidsgehandicapte_voor_2006: $was_rea_arbeidsgehandicapte_voor_2006
               description: |-
                 Categorie c (art. 2.14). Idem: de vaststelling komt uit artikel 2.14,
@@ -614,6 +614,11 @@ articles:
                 onderliggende grond (o.a. Pwet 7 lid 1.a / 10d) wordt
                 daar als 38b.1.a beoordeeld.
         output:
+          - name: periode_2_8_is_verstreken
+            type: boolean
+            description: |-
+              Artikel 2.8 lid 1, met 2.6 lid 3 onderdeel c: de periode van drie
+              jaar vanaf de aanvang van de eerste dienstbetrekking is verstreken.
           - name: heeft_recht_op_lkv
             type: boolean
           - name: tegemoetkoming_arbeidsgehandicapte_eurocent
@@ -699,6 +704,32 @@ articles:
                   Lid 1 verbindt het recht aan de hoedanigheid van
                   arbeidsbeperkte in de zin van Wfsv artikel 38b; lid 2 en
                   lid 3 nemen die weer weg.
+          - output: periode_2_8_is_verstreken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_aanvang_eerste_dienstbetrekking_2_6
+                    value: null
+                  then: false
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $referencedate.iso
+                value:
+                  operation: DATE_ADD
+                  date: $datum_aanvang_eerste_dienstbetrekking_2_6
+                  years: 3
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.8'
+              paragraph: '1'
+              explanation: |-
+                "ten hoogste verstrekt over een aaneengesloten periode van drie
+                jaar vanaf de aanvang van de eerste dienstbetrekking". De
+                verlenging tot het eind van het aangiftetijdvak (lid 2) is niet
+                gemodelleerd. Zonder aanvangsdatum is de periode niet verstreken.
           - output: heeft_recht_op_lkv
             value:
               operation: AND
@@ -1495,14 +1526,19 @@ articles:
             type: boolean
             required: true
             description: 'Lid 2 onderdeel b: Wsw- of beschut-werk-dienstbetrekking.'
+          - name: datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              Artikel 2.16 lid 1: de datum van aanvang van de aanvraagtermijn van
+              de doelgroepverklaring op grond van artikel 2.15 lid 1. Bron: UWV.
+        output:
           - name: periode_2_16_is_verstreken
             type: boolean
-            required: true
             description: |-
-              Lid 2 onderdeel c: de periode van artikel 2.16 is voor deze werknemer
-              verstreken. Lid 4 telt onderbrekingen binnen die periode niet mee; die
-              samentelling is niet gemodelleerd.
-        output:
+              Artikel 2.16 lid 1, met lid 2 onderdeel c: de periode van een jaar
+              vanaf de aanvang van de aanvraagtermijn is verstreken.
           - name: voldoet_aan_grond_2_14_lid_1_a
             type: boolean
             description: 'Lid 1 onderdeel a: hervatting en een van de twee uitkeringsroutes.'
@@ -1515,6 +1551,32 @@ articles:
               Categorie c van artikel 2.1: de werknemer is herplaatste
               arbeidsgehandicapte werknemer in de zin van artikel 2.14.
         actions:
+          - output: periode_2_16_is_verstreken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15
+                    value: null
+                  then: false
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $referencedate.iso
+                value:
+                  operation: DATE_ADD
+                  date: $datum_aanvang_aanvraagtermijn_doelgroepverklaring_2_15
+                  years: 1
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.16'
+              paragraph: '1'
+              explanation: |-
+                "ten hoogste verstrekt over een aaneengesloten periode van een
+                jaar vanaf de datum van aanvang van de aanvraagtermijn van de
+                doelgroepverklaring". Lid 2 (aangiftetijdvak) en 2.14 lid 4
+                (onderbrekingen) zijn niet gemodelleerd.
           - output: voldoet_aan_grond_2_14_lid_1_a
             value:
               operation: AND
