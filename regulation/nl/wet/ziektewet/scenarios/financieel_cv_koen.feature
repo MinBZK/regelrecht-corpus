@@ -117,7 +117,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_lks_ingediend_binnen_zes_maanden | true |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | true |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 151438 |
+      | loonwaarde_percentage | 60 |
       | overeengekomen_arbeidsduur_uren_per_week | 32 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |

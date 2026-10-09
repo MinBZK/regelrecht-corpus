@@ -115,7 +115,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 150850 |
+      | loonwaarde_percentage | 70 |
       | overeengekomen_arbeidsduur_uren_per_week | 32 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |

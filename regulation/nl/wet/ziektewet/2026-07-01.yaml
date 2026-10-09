@@ -2671,12 +2671,10 @@ articles:
             type: boolean
             required: true
             description: 'Pwet 10d lid 3: uitsluitingsgrond Wsw-dienstbetrekking.'
-          - name: loonwaarde_eurocent_per_maand
-            type: amount
+          - name: loonwaarde_percentage
+            type: number
             required: true
-            type_spec:
-              unit: eurocent
-            description: 'Pwet 10d lid 4: vastgestelde loonwaarde per maand.'
+            description: 'Pwet 10d lid 4 met artikel 6 lid 1 onderdeel g: de vastgestelde loonwaarde, als percentage van het wettelijk minimumloon.'
           - name: overeengekomen_arbeidsduur_uren_per_week
             type: number
             required: true
@@ -2924,7 +2922,7 @@ articles:
                 aanvraag_lks_ingediend_binnen_zes_maanden: $aanvraag_lks_ingediend_binnen_zes_maanden
                 voorafgaand_relevante_onderwijsroute_of_doelgroep: $voorafgaand_relevante_onderwijsroute_of_doelgroep
                 is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
-                loonwaarde_eurocent_per_maand: $loonwaarde_eurocent_per_maand
+                loonwaarde_percentage: $loonwaarde_percentage
                 overeengekomen_arbeidsduur_uren_per_week: $overeengekomen_arbeidsduur_uren_per_week
                 werkgever_is_voornemens_dienstbetrekking_aan_te_gaan: $werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
                 dienstbetrekking_is_tot_stand_gekomen: $dienstbetrekking_is_tot_stand_gekomen

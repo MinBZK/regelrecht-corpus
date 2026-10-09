@@ -85,7 +85,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -185,7 +185,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -278,7 +278,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -370,7 +370,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -466,7 +466,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -562,7 +562,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
@@ -658,7 +658,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | aanvraag_lks_ingediend_binnen_zes_maanden | false |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
       | is_wsw_dienstbetrekking | false |
-      | loonwaarde_eurocent_per_maand | 215500 |
+      | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
       | behoort_tot_doelgroep_10b_lid_1 | true |
       | heeft_dienstbetrekking_beschut_werk | true |

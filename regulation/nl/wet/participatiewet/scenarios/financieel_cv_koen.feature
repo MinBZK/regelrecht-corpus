@@ -33,15 +33,17 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # WML+VB komt sinds 2026-09-26 uit de Wet minimumloon zelf: artikel 8
   # lid 1 onderdeel b met de herziening van artikel 14 geeft 233700 ec per
   # maand, artikel 15 telt daar 8% vakantiebijslag bij: 252396 ec.
-  # Koen heeft loonwaarde 60% daarvan = 151438 ec.
-  # Bruto subsidie = 252396 - 151438 = 100958 ec.
+  # Koen heeft loonwaarde 60% daarvan = 151437,6 ec (sinds 2026-10-09
+  # rekent het model zelf met het percentage; daarvoor werd het afgeronde
+  # bedrag 151438 aangeleverd).
+  # Bruto subsidie = 252396 - 151437,6 = 100958,4 ec.
   # Max 70% van WML+VB = 176677,2 ec.
-  # Begrensd verschil = MIN(100958, 176677,2) = 100958 ec.
+  # Begrensd verschil = MIN(100958,4, 176677,2) = 100958,4 ec.
   # Vergoeding werkgeverslasten: 25 procent erbovenop (Regeling
   # loonkostensubsidie Participatiewet 2021, artikel 1; sinds 2026-10-09
-  # gekoppeld). Voltijdbedrag (36 uur) = 100958 x 1,25 = 126197,5 ec
+  # gekoppeld). Voltijdbedrag (36 uur) = 100958,4 x 1,25 = 126198 ec
   # (€1.261,98). Koen werkt 32 uur; lid 4 tweede zin vermindert de subsidie
-  # naar evenredigheid: 126197,5 x 32 / 36 = 112175,56 ec (€1.121,76 per
+  # naar evenredigheid: 126198 x 32 / 36 = 112176 ec (€1.121,76 per
   # maand). Tot 2026-10-09 stond de vergoeding op nul en was het bedrag
   # €897,40.
   #
@@ -70,7 +72,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
-      | loonwaarde_eurocent_per_maand                       | 151438    |
+      | loonwaarde_percentage | 60 |
       | overeengekomen_arbeidsduur_uren_per_week            | 32        |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
@@ -80,10 +82,10 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
     When I evaluate outputs "heeft_recht_op_lks, bruto_subsidie_eurocent_per_maand, maximum_subsidie_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks" is true
-    And output "bruto_subsidie_eurocent_per_maand" equals 100958
+    And output "bruto_subsidie_eurocent_per_maand" equals 100958.4
     And output "maximum_subsidie_eurocent_per_maand" equals 176677.2
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126197.5
-    And output "hoogte_lks_eurocent_per_maand" equals 112175.555555556
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126198
+    And output "hoogte_lks_eurocent_per_maand" equals 112176
 
   # Voltijd: 36 uur laat het bedrag ongemoeid — de evenredigheidsfactor
   # is dan 1. Dit scenario bewaakt dat de correctie geen bedrag afsnoept
@@ -97,7 +99,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
-      | loonwaarde_eurocent_per_maand                       | 151438    |
+      | loonwaarde_percentage | 60 |
       | overeengekomen_arbeidsduur_uren_per_week            | 36        |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
@@ -106,7 +108,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
-    And output "hoogte_lks_eurocent_per_maand" equals 126197.5
+    And output "hoogte_lks_eurocent_per_maand" equals 126198
 
   # Lid 4 spreekt van verminderen "of vermeerderen": boven 36 uur gaat
   # het bedrag omhoog. 40 uur is geen deler-vriendelijk getal, 27 wel —
@@ -121,7 +123,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_lks_ingediend_binnen_zes_maanden           | true      |
       | voorafgaand_relevante_onderwijsroute_of_doelgroep   | true      |
       | is_wsw_dienstbetrekking                             | false     |
-      | loonwaarde_eurocent_per_maand                       | 151438    |
+      | loonwaarde_percentage | 60 |
       | overeengekomen_arbeidsduur_uren_per_week            | 27        |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
@@ -130,8 +132,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | datum_aanvang_dienstbetrekking | 2026-01-01 |
     When I evaluate outputs "heeft_recht_op_lks, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126197.5
-    And output "hoogte_lks_eurocent_per_maand" equals 94648.125
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126198
+    And output "hoogte_lks_eurocent_per_maand" equals 94648.5
 
   # ────────────────────────────────────────────────────────────────────
   # OPEN: Samenloop LKS ↔ LKV (Pwet 10d lid 9)

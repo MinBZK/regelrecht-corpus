@@ -2467,17 +2467,16 @@ articles:
             description: |-
               Artikel 10d lid 3: uitsluitingsgrond — dienstbetrekking
               op grond van artikelen 2 of 7 Wsw.
-          - name: loonwaarde_eurocent_per_maand
-            type: amount
+          - name: loonwaarde_percentage
+            type: number
             required: true
-            type_spec:
-              unit: eurocent
             description: |-
-              Vastgestelde loonwaarde van de persoon in eurocent per
-              maand. Voor lid 4 gebruikt om subsidie-hoogte te bepalen.
-              Bij beslissing zonder loonwaardevaststelling (lid 1 b)
-              kan deze nul zijn — dan geldt 50% eerste-6-mnd-regeling
-              (untranslatable).
+              De vastgestelde loonwaarde. Artikel 6 lid 1 onderdeel g:
+              "vastgesteld percentage van het wettelijk minimumloon". Het
+              Besluit loonkostensubsidie en minimumbedragen studietoeslag
+              Participatiewet 2021 (artikel 3 lid 2) rondt af op hele
+              procenten. Bij lid 1 onderdeel b, zonder vaststelling, kan het
+              nul zijn; dan geldt de 50-procentroute. Bron: college.
           - name: overeengekomen_arbeidsduur_uren_per_week
             type: number
             required: true
@@ -2589,6 +2588,14 @@ articles:
               70%-bovengrens van lid 4 als de 50%-regel van lid 5. De
               vergoeding voor werkgeverslasten komt op de subsidie, niet op
               deze grondslag.
+          - name: loonwaarde_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 4: de loonwaarde vermeerderd met de naar rato geldende
+              vakantiebijslag, als bedrag per maand: het loonwaardepercentage
+              van het minimumloon plus vakantiebijslag.
           - name: bruto_subsidie_eurocent_per_maand
             type: amount
             type_spec:
@@ -2784,6 +2791,25 @@ articles:
                 percentage van de loonkosten waarover subsidie wordt
                 verstrekt, dus op de subsidie zelf. Zie
                 hoogte_lks_lid_4_voltijd_eurocent_per_maand.
+          - output: loonwaarde_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
+                    - $loonwaarde_percentage
+                - 100
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '4'
+              explanation: |-
+                "de loonwaarde van die persoon vermeerderd met de voor die
+                persoon naar rato van de loonwaarde rechtens geldende
+                vakantiebijslag", met artikel 6 lid 1 onderdeel g: de loonwaarde
+                is een percentage van het wettelijk minimumloon.
           - output: bruto_subsidie_eurocent_per_maand
             value:
               operation: SUBTRACT
@@ -2796,9 +2822,7 @@ articles:
                 article: '10d'
                 paragraph: '4'
                 explanation: |-
-                  WML+VB − loonwaarde+VB. Hier wordt vakantiebijslag
-                  evenredig met loonwaarde meegenomen — wij ontvangen
-                  loonwaarde inclusief VB als één bedrag.
+                  WML+VB − loonwaarde+VB, beide als bedrag per maand.
           - output: maximum_subsidie_eurocent_per_maand
             value:
               operation: DIVIDE
