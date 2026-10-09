@@ -2540,6 +2540,20 @@ articles:
                 verklaart die van overeenkomstige toepassing op de verlening van
                 voorzieningen als bedoeld in dit artikel. Liggen de kosten
                 daaronder, dan wordt de voorziening niet verleend.
+          - name: gezamenlijke_waarde_boven_drempelbedrag
+            type: boolean
+            source:
+              regulation: reintegratiebesluit
+              output: mag_subsidie_ter_hoogte_van_gezamenlijke_waarde_verstrekken
+              parameters:
+                bsn: $bsn
+                kosten_voorziening_eurocent: $kosten_voorziening_eurocent
+                gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent: $gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent
+              description: |-
+                Reintegratiebesluit artikel 3 lid 2, met lid 3: overtreft de
+                gezamenlijke waarde van de voorzieningen in een kalenderjaar de
+                drempel, dan kan het UWV de voorziening toch verlenen, ook als
+                één voorziening eronder ligt.
         output:
           - name: artikel_35_van_toepassing
             type: boolean
@@ -2601,8 +2615,11 @@ articles:
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
-                - operation: NOT
-                  value: $kosten_onder_het_drempelbedrag
+                - operation: OR
+                  conditions:
+                    - operation: NOT
+                      value: $kosten_onder_het_drempelbedrag
+                    - $gezamenlijke_waarde_boven_drempelbedrag
                 - $aanvraag_jobcoaching_ingediend
                 - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
               legal_basis:
@@ -2624,8 +2641,11 @@ articles:
               conditions:
                 - $artikel_35_van_toepassing
                 - $voldoet_aan_basisvoorwaarden_lid_1
-                - operation: NOT
-                  value: $kosten_onder_het_drempelbedrag
+                - operation: OR
+                  conditions:
+                    - operation: NOT
+                      value: $kosten_onder_het_drempelbedrag
+                    - $gezamenlijke_waarde_boven_drempelbedrag
                 - $aanvraag_werkplekaanpassing_ingediend
                 - $voorziening_is_meeneembaar_en_individueel_afgestemd
               legal_basis:

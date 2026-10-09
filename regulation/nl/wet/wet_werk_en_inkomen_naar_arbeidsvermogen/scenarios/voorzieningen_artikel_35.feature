@@ -69,8 +69,35 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
     And output "mag_jobcoaching_toekennen" is false
     And output "mag_werkplekaanpassing_toekennen" is false
 
-  # De drempel is "minder bedragen dan", dus precies op het bedrag valt de
-  # voorziening er nog binnen. 19516 eurocent ligt net boven 19515,59.
+  Scenario: Onder de drempel, maar samen met eerdere voorzieningen erboven
+    # Reintegratiebesluit artikel 3 lid 2: overtreft de gezamenlijke waarde
+    # van de voorzieningen in het kalenderjaar de drempel, dan kan het UWV
+    # toch verlenen. Lid 3 maakt dat van overeenkomstige toepassing op
+    # artikel 35.
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                                      | 999990400 |
+      | heeft_structurele_functionele_beperking                  | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding                 | true      |
+      | is_wsw_werknemer                                         | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong               | false     |
+      | pwet_college_draagt_zorg_uitsluiting                     | false     |
+      | aanvraag_jobcoaching_ingediend                            | true      |
+      | aanvraag_werkplekaanpassing_ingediend                     | true      |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
+      | kosten_voorziening_eurocent                               | 15000     |
+      | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 30000     |
+    When I evaluate outputs "mag_werkplekaanpassing_toekennen, artikel_35_van_toepassing, voldoet_aan_basisvoorwaarden_lid_1, mag_jobcoaching_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    Then the execution succeeds
+    And output "artikel_35_van_toepassing" is true
+    And output "voldoet_aan_basisvoorwaarden_lid_1" is true
+    And output "mag_jobcoaching_toekennen" is true
+    And output "mag_werkplekaanpassing_toekennen" is true
+
+  # De drempel is "minder bedragen dan", dus vanaf het bedrag zelf valt de
+  # voorziening er binnen. Dit scenario toetst 19516 eurocent, net boven
+  # 19515,59.
   Scenario: Precies boven de drempel valt de voorziening er nog binnen
     Given the calculation date is "2026-07-01"
     And the following parameters:
