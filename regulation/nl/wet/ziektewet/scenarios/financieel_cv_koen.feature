@@ -120,7 +120,9 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | behoort_tot_doelgroep_lks | true |
       | kan_minimumloon_niet_verdienen | true |
       | datum_aanvraag_lks | 2026-02-01 |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | true |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | true |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
       | overeengekomen_arbeidsduur_uren_per_week | 32 |

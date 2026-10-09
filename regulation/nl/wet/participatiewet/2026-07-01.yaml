@@ -2447,22 +2447,31 @@ articles:
               Artikel 10d lid 2: de dag waarop de werkgever of werknemer
               de aanvraag om loonkostensubsidie deed. Afwezig zonder
               aanvraag. Bron: gemeente.
-          - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
+          - name: datum_einde_deelname_onderwijs_lid_2_a
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              Artikel 10d lid 2 onderdeel a: de laatste dag waarop de persoon
+              deelnam aan het praktijkonderwijs, het voortgezet speciaal
+              onderwijs of de entreeopleiding. Afwezig als dat niet zo is.
+              Bron: onderwijsadministratie / gemeente.
+          - name: was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
             type: boolean
             required: true
             description: |-
-              Artikel 10d lid 2, onderdelen a, b en c — één boolean over
-              de drie routes, omdat lid 2 ze als alternatieven opsomt:
-              a. in de 6 maanden voorafgaand aan de dienstbetrekking
-              deelnam aan praktijkonderwijs, voortgezet speciaal onderwijs
-              of de entreeopleiding;
-              b. persoon was als bedoeld in artikel 7 lid 1 a of
-              artikel 7a lid 1 a;
-              c. uit 's Rijks kas bekostigd onderwijs volgde zonder
-              startkwalificatie, voor zover het gaat om een persoon als
-              bedoeld in artikel 7a lid 3 die een leer-werktraject volgt.
-              Onderdeel c is per 2026 toegevoegd (versie-drift, bevestigd
-              in de juristvalidatie van 2026-07-23).
+              Artikel 10d lid 2 onderdeel b: de persoon was in de zes maanden
+              voorafgaand aan de dienstbetrekking een persoon als bedoeld in
+              artikel 7 lid 1 onderdeel a of 7a lid 1 onderdeel a. Bron:
+              gemeente.
+          - name: volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
+            type: boolean
+            required: true
+            description: |-
+              Artikel 10d lid 2 onderdeel c: de persoon volgde in die zes
+              maanden uit 's Rijks kas bekostigd onderwijs zonder
+              startkwalificatie, als persoon als bedoeld in artikel 7a lid 3
+              die een leer-werktraject volgt. Bron: gemeente.
           - name: is_wsw_dienstbetrekking
             type: boolean
             required: true
@@ -2561,6 +2570,11 @@ articles:
               Lid 1: het college verleent ambtshalve dan wel op aanvraag
               loonkostensubsidie, langs onderdeel a (na loonwaarde-
               vaststelling) of onderdeel b (vaststelling blijft achterwege).
+          - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
+            type: boolean
+            description: |-
+              Lid 2 onderdelen a, b en c: in de zes maanden voorafgaand aan de
+              dienstbetrekking een van de drie routes.
           - name: aanvraag_lks_binnen_zes_maanden
             type: boolean
             description: |-
@@ -2709,6 +2723,44 @@ articles:
                   voorwaarden van lid 2 gelden hier niet. Ontbreken de
                   feiten van lid 1, dan levert deze route onwaar op en
                   blijft lid 2 over.
+          - output: voorafgaand_relevante_onderwijsroute_of_doelgroep
+            value:
+              operation: OR
+              conditions:
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: OR
+                        conditions:
+                          - operation: EQUALS
+                            subject: $datum_einde_deelname_onderwijs_lid_2_a
+                            value: null
+                          - operation: EQUALS
+                            subject: $datum_aanvang_dienstbetrekking
+                            value: null
+                      then: false
+                  default:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_einde_deelname_onderwijs_lid_2_a
+                    value:
+                      operation: DATE_ADD
+                      date: $datum_aanvang_dienstbetrekking
+                      months: -6
+                - $was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+                - $volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '2'
+              explanation: |-
+                "die persoon in de periode van zes maanden voorafgaand aan de
+                dienstbetrekking: a. deelnam aan [...] het praktijkonderwijs
+                [...] het voortgezet speciaal onderwijs [...] de
+                entreeopleiding; b. een persoon was als bedoeld in de artikelen
+                7, eerste lid, onderdeel a, of 7a, eerste lid, onderdeel a; dan
+                wel c. [...] onderwijs volgde zonder een startkwalificatie".
+                Onderdeel a wordt aan de einddatum van de deelname getoetst.
           - output: aanvraag_lks_binnen_zes_maanden
             value:
               operation: IF

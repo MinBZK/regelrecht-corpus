@@ -88,7 +88,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -188,7 +190,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -281,7 +285,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -373,7 +379,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -469,7 +477,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -567,7 +577,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -660,7 +672,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |
@@ -756,7 +770,9 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | behoort_tot_doelgroep_lks | false |
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
-      | voorafgaand_relevante_onderwijsroute_of_doelgroep | false |
+      | datum_einde_deelname_onderwijs_lid_2_a | null |
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 100 |
       | overeengekomen_arbeidsduur_uren_per_week | 36 |

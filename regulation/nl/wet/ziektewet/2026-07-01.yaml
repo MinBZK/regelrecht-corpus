@@ -2666,10 +2666,19 @@ articles:
             required: false
             nullable: true
             description: 'Pwet 10d lid 2: de dag van de aanvraag om loonkostensubsidie; afwezig zonder aanvraag.'
-          - name: voorafgaand_relevante_onderwijsroute_of_doelgroep
+          - name: datum_einde_deelname_onderwijs_lid_2_a
+            type: date
+            required: false
+            nullable: true
+            description: 'Pwet 10d lid 2 onderdeel a: laatste dag deelname praktijkonderwijs, vso of entreeopleiding.'
+          - name: was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
             type: boolean
             required: true
-            description: 'Pwet 10d lid 2 onderdelen a, b en c.'
+            description: 'Pwet 10d lid 2 onderdeel b.'
+          - name: volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
+            type: boolean
+            required: true
+            description: 'Pwet 10d lid 2 onderdeel c.'
           - name: is_wsw_dienstbetrekking
             type: boolean
             required: true
@@ -2924,7 +2933,9 @@ articles:
                 behoort_tot_doelgroep_lks: $behoort_tot_doelgroep_lks
                 kan_minimumloon_niet_verdienen: $kan_minimumloon_niet_verdienen
                 datum_aanvraag_lks: $datum_aanvraag_lks
-                voorafgaand_relevante_onderwijsroute_of_doelgroep: $voorafgaand_relevante_onderwijsroute_of_doelgroep
+                datum_einde_deelname_onderwijs_lid_2_a: $datum_einde_deelname_onderwijs_lid_2_a
+                was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand: $was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+                volgde_onderwijs_zonder_startkwalificatie_leerwerktraject: $volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
                 is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
                 loonwaarde_percentage: $loonwaarde_percentage
                 overeengekomen_arbeidsduur_uren_per_week: $overeengekomen_arbeidsduur_uren_per_week
