@@ -1124,6 +1124,133 @@ articles:
       - id: ref20
         bwb_id: BWBR0013008
         artikel: 6:3
+    machine_readable:
+      definitions:
+        standaard_aantal_dagloondagen:
+          value: 261
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: loon_referteperiode_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1, factor A: het loon dat de werknemer in de referteperiode
+              bij een werkgever heeft genoten, in de zin van artikel 12c. Bron:
+              polisadministratie van het UWV (loonaangifte).
+          - name: uitbetaalde_vakantiebijslag_referteperiode_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1, factor B: de vakantiebijslag en het
+              arbeidsvoorwaardenbedrag die in de referteperiode als loon zijn
+              uitbetaald ten laste van een opgebouwd bedrag. Bron:
+              polisadministratie van het UWV.
+          - name: opgebouwde_vakantiebijslag_referteperiode_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1, factor C: de in de referteperiode opgebouwde bedragen voor
+              vakantiebijslag of een arbeidsvoorwaardenbedrag. Bron:
+              polisadministratie van het UWV.
+          - name: dienstbetrekking_aangevangen_na_aanvang_referteperiode
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 en 4: de dienstbetrekking waaruit de werknemer ziek is
+              geworden, is na de aanvang van de referteperiode begonnen. Bron:
+              polisadministratie van het UWV.
+          - name: aantal_dagloondagen_sinds_aanvang_dienstbetrekking
+            type: number
+            required: false
+            nullable: true
+            description: |-
+              Lid 1 en 4: het aantal dagloondagen vanaf de dag waarop de
+              dienstbetrekking is aangevangen tot en met de laatste dag van de
+              referteperiode (lid 1), of, als de dienstbetrekking na de
+              referteperiode begon, tot de eerste dag van de ongeschiktheid tot
+              werken (lid 4). Dagloondagen zijn de dagen van maandag tot en met
+              vrijdag (artikel 1). Alleen van belang als de dienstbetrekking na
+              de aanvang van de referteperiode begon. Bron: UWV.
+        output:
+          - name: aantal_dagloondagen_d
+            type: number
+            nullable: true
+            description: |-
+              Lid 1, factor D: 261, of het aantal dagloondagen sinds de aanvang
+              van de dienstbetrekking als die na de aanvang van de
+              referteperiode begon.
+          - name: zw_dagloon_eurocent
+            type: amount
+            nullable: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Het dagloon van uitkeringen op grond van de Ziektewet:
+              (A - B + C) / D.
+        actions:
+          - output: aantal_dagloondagen_d
+            value:
+              operation: IF
+              cases:
+                - when: $dienstbetrekking_aangevangen_na_aanvang_referteperiode
+                  then: $aantal_dagloondagen_sinds_aanvang_dienstbetrekking
+              default: $standaard_aantal_dagloondagen
+            legal_basis:
+              law: Dagloonbesluit werknemersverzekeringen
+              bwb_id: BWBR0033471
+              article: 12e
+              paragraph: '1'
+              explanation: |-
+                "D staat voor 261 dan wel, indien de dienstbetrekking [...] is
+                aangevangen na aanvang maar voor het einde van de
+                referteperiode, voor het aantal dagloondagen vanaf en met
+                inbegrip van de dag waarop de dienstbetrekking is aangevangen".
+                Lid 4 telt voor een dienstbetrekking die na de referteperiode
+                begon tot de eerste ziektedag; het aantal komt in beide gevallen
+                als gegeven binnen. Lid 3 (tijdvakken zonder loon), lid 5
+                (opvolgende dienstbetrekkingen) en lid 6 (nul dagloondagen) zijn
+                niet gemodelleerd.
+          - output: zw_dagloon_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $aantal_dagloondagen_d
+                    value: null
+                  then: null
+              default:
+                operation: DIVIDE
+                values:
+                  - operation: ADD
+                    values:
+                      - operation: SUBTRACT
+                        values:
+                          - $loon_referteperiode_eurocent
+                          - $uitbetaalde_vakantiebijslag_referteperiode_eurocent
+                      - $opgebouwde_vakantiebijslag_referteperiode_eurocent
+                  - $aantal_dagloondagen_d
+            legal_basis:
+              law: Dagloonbesluit werknemersverzekeringen
+              bwb_id: BWBR0033471
+              article: 12e
+              paragraph: '1'
+              explanation: |-
+                "(A – B + C) / D". Het artikel noemt geen afronding; de
+                uitkomst blijft onafgerond.
   - number: 12f
     text: |-
       1 Indien de werknemer in een aangiftetijdvak geen loon of minder loon heeft genoten in verband met verlof
