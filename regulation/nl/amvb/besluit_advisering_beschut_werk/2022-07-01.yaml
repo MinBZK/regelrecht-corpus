@@ -252,13 +252,24 @@ articles:
               Lid 4: de persoon is geïndiceerd in de zin van de Wsw en het UWV
               heeft geadviseerd dat hij niet in staat is tot begeleid werken.
               Bron: UWV.
-          - name: is_herhaald_verzoek_binnen_twaalf_maanden
+          - name: is_aangevraagd_door_persoon_10b_lid_3
             type: boolean
             required: true
             description: |-
-              Lid 3 onderdeel b: de persoon zelf vraagt het advies aan (10b lid
-              3) en het UWV heeft in de twaalf maanden daarvoor al over hem
-              geadviseerd. Bron: UWV.
+              Lid 3 onderdeel b: het advies is aangevraagd door de persoon zelf,
+              als bedoeld in Participatiewet 10b lid 3. Bron: aanvraag.
+          - name: datum_verzoek_advies
+            type: date
+            required: true
+            description: 'Lid 3 onderdeel b: de dag van het verzoek om advies. Bron: aanvraag.'
+          - name: datum_vorig_advies_10b
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              Lid 3 onderdeel b: de dag van het laatste eerdere advies van het
+              UWV over deze persoon op grond van Participatiewet 10b lid 2 of 3.
+              Afwezig als er geen eerder advies is. Bron: UWV.
           - name: vermeldt_nieuwe_feiten_of_veranderde_omstandigheden
             type: boolean
             required: true
@@ -268,6 +279,12 @@ articles:
               of het eerdere advies; dan doet het UWV toch onderzoek. Bron:
               aanvraag.
         output:
+          - name: is_herhaald_verzoek_binnen_twaalf_maanden
+            type: boolean
+            description: |-
+              Lid 3 onderdeel b: de persoon vraagt zelf het advies aan en het UWV
+              heeft in de twaalf maanden voor het verzoek al over hem
+              geadviseerd.
           - name: antwoord_zonder_onderzoek_ontkennend
             type: boolean
             description: |-
@@ -285,6 +302,36 @@ articles:
               persoon uitsluitend in een beschutte omgeving onder aangepaste
               omstandigheden mogelijkheden tot arbeidsparticipatie heeft.
         actions:
+          - output: is_herhaald_verzoek_binnen_twaalf_maanden
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_vorig_advies_10b
+                    value: null
+                  then: false
+              default:
+                operation: AND
+                conditions:
+                  - $is_aangevraagd_door_persoon_10b_lid_3
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_vorig_advies_10b
+                    value:
+                      operation: DATE_ADD
+                      date: $datum_verzoek_advies
+                      months: -12
+            legal_basis:
+              law: Besluit advisering beschut werk
+              bwb_id: BWBR0035947
+              article: '3'
+              paragraph: '3'
+              sentence: 'b'
+              explanation: |-
+                "indien het advies is aangevraagd door een persoon als bedoeld
+                in artikel 10b, derde lid, van de Participatiewet, en het UWV in
+                de twaalf maanden voorafgaand aan het verzoek ten aanzien van die
+                persoon een advies heeft gegeven".
           - output: antwoord_zonder_onderzoek_ontkennend
             value:
               operation: AND
