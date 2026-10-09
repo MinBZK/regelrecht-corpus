@@ -4,6 +4,10 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
   arbeidsondersteuning
   Zodat de Wajong-status één vindplaats heeft in plaats van een losse vlag
 
+  # Afgeleid op 2026-10-09: verdiencapaciteit_wajong_percentage_maatmaninkomen
+  # vervangt de boolean "niet in staat meer dan 75% van het maatmaninkomen te
+  # verdienen"; waar die waar was, staat hier 60. Een aanname.
+
   # Artikel 2:15 lid 1 is cumulatief (jonggehandicapte, ten hoogste 75%
   # van het maatmaninkomen, geen uitsluitingsgrond 2:11, achttien jaar,
   # aanvraag op of na 1 januari 2010). Lid 2 laat het recht zestien weken
@@ -24,7 +28,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | bsn                                              | 999990100  |
       | aanvraag_arbeidsondersteuning_ingediend          | true       |
       | is_jonggehandicapte_hoofdstuk_2                  | true       |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true       |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 60 |
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2014-06-02 |
@@ -44,7 +48,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | bsn                                              | 999990100  |
       | aanvraag_arbeidsondersteuning_ingediend          | false      |
       | is_jonggehandicapte_hoofdstuk_2                  | true       |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true       |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 60 |
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 1900-01-01 |
@@ -61,7 +65,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | bsn                                              | 999990101  |
       | aanvraag_arbeidsondersteuning_ingediend          | true       |
       | is_jonggehandicapte_hoofdstuk_2                  | true       |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true       |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 60 |
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2014-10-06 |
@@ -81,7 +85,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | bsn                                              | 999990101  |
       | aanvraag_arbeidsondersteuning_ingediend          | true       |
       | is_jonggehandicapte_hoofdstuk_2                  | true       |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true       |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 60 |
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 1996-05-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2025-03-03 |
@@ -100,7 +104,7 @@ Feature: Wajong, recht op arbeidsondersteuning (artikel 2:15)
       | bsn                                              | 999990102  |
       | aanvraag_arbeidsondersteuning_ingediend          | true       |
       | is_jonggehandicapte_hoofdstuk_2                  | true       |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true       |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 60 |
       | is_uitsluitingsgrond_2_11_van_toepassing         | false      |
       | geboortedatum                                    | 2009-01-15 |
       | datum_aanvraag_arbeidsondersteuning              | 2026-03-02 |

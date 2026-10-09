@@ -1445,6 +1445,8 @@ articles:
         hoofdstuk: '8'
     machine_readable:
       definitions:
+        grens_verdiencapaciteit_maatmaninkomen_procent:
+          value: 75
         inwerkingtreding_wet_stb_2009_580:
           value: '2010-01-01'
         inwerkingtreding_invoeringswet_participatiewet_artikel_iii_b:
@@ -1476,13 +1478,13 @@ articles:
               het maatmaninkomen te verdienen, zonder uitzicht op herstel
               binnen een jaar. Bron: UWV-beoordeling (artikel 2:3 is niet
               gemodelleerd; zie untranslatable).
-          - name: niet_in_staat_meer_dan_75_procent_maatmaninkomen
-            type: boolean
+          - name: verdiencapaciteit_wajong_percentage_maatmaninkomen
+            type: number
             required: true
             description: |-
-              Lid 1 onderdeel a: sinds de dag waarop hij jonggehandicapte
-              werd niet in staat gebleven meer dan 75% van het
-              maatmaninkomen te verdienen. Bron: UWV-beoordeling.
+              Lid 1 onderdeel a: het percentage van het maatmaninkomen dat de
+              jonggehandicapte sinds de dag waarop hij jonggehandicapte werd
+              ten hoogste heeft kunnen verdienen. Bron: UWV-beoordeling.
           - name: is_uitsluitingsgrond_2_11_van_toepassing
             type: boolean
             required: true
@@ -1562,7 +1564,9 @@ articles:
                     operation: AND
                     conditions:
                       - $is_jonggehandicapte_hoofdstuk_2
-                      - $niet_in_staat_meer_dan_75_procent_maatmaninkomen
+                      - operation: LESS_THAN_OR_EQUAL
+                        subject: $verdiencapaciteit_wajong_percentage_maatmaninkomen
+                        value: $grens_verdiencapaciteit_maatmaninkomen_procent
                       - operation: NOT
                         value: $is_uitsluitingsgrond_2_11_van_toepassing
                       - operation: GREATER_THAN_OR_EQUAL

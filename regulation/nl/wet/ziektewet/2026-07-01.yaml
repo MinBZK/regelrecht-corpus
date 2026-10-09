@@ -2339,10 +2339,10 @@ articles:
             type: boolean
             required: true
             description: 'Jonggehandicapte in de zin van Wajong 2:3. Bron: UWV-beoordeling.'
-          - name: niet_in_staat_meer_dan_75_procent_maatmaninkomen
-            type: boolean
+          - name: verdiencapaciteit_wajong_percentage_maatmaninkomen
+            type: number
             required: true
-            description: 'Wajong 2:15 lid 1 onderdeel a. Bron: UWV-beoordeling.'
+            description: 'Wajong 2:15 lid 1 onderdeel a: het percentage van het maatmaninkomen dat de jonggehandicapte ten hoogste heeft kunnen verdienen.'
           - name: is_uitsluitingsgrond_2_11_wajong_van_toepassing
             type: boolean
             required: true
@@ -2859,7 +2859,7 @@ articles:
                 bsn: $bsn
                 aanvraag_arbeidsondersteuning_ingediend: $aanvraag_arbeidsondersteuning_wajong_ingediend
                 is_jonggehandicapte_hoofdstuk_2: $is_jonggehandicapte_hoofdstuk_2_wajong
-                niet_in_staat_meer_dan_75_procent_maatmaninkomen: $niet_in_staat_meer_dan_75_procent_maatmaninkomen
+                verdiencapaciteit_wajong_percentage_maatmaninkomen: $verdiencapaciteit_wajong_percentage_maatmaninkomen
                 is_uitsluitingsgrond_2_11_van_toepassing: $is_uitsluitingsgrond_2_11_wajong_van_toepassing
                 geboortedatum: $geboortedatum
                 datum_aanvraag_arbeidsondersteuning: $datum_aanvraag_arbeidsondersteuning_wajong

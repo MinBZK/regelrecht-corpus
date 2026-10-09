@@ -90,7 +90,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | true |
       | is_jonggehandicapte_hoofdstuk_2_wajong | true |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | true |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 70 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
       | datum_aanvraag_arbeidsondersteuning_wajong | 2014-06-02 |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |

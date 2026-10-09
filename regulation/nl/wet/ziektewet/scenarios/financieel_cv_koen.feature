@@ -92,7 +92,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
-      | niet_in_staat_meer_dan_75_procent_maatmaninkomen | false |
+      | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
       | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
