@@ -1624,16 +1624,44 @@ articles:
               Doorgegeven aan Participatiewet 10b: de persoon verricht
               werkzaamheden in een dienstbetrekking in een beschutte omgeving.
               Bron: gemeente.
-          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+          - name: is_pwet_toegeleid_of_lks_lid_2
             type: boolean
             required: true
             description: |-
-              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
-              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
-              college) heeft vastgesteld dat persoon niet in staat is WML te
-              verdienen, OF college heeft loonwaarde < WML vastgesteld
-              conform Pwet 10d. Bron: UWV + gemeente.
+              38b.1.a: de persoon is met ondersteuning van het college (Pwet 7
+              lid 1 onderdeel a) toegeleid naar een dienstbetrekking, of er
+              wordt loonkostensubsidie verstrekt op grond van Pwet 10d lid 2.
+              Bron: gemeente.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
+              de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
+              1). Bron: UWV.
+          - name: college_heeft_loonwaarde_onder_wml_vastgesteld
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het college heeft een loonwaarde onder het minimumloon
+              vastgesteld conform Pwet 10d. Bron: gemeente.
+          - name: kan_een_drempelfunctie_volledig_uitvoeren
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6 en 7: uit de beoordeling
+              van het UWV blijkt dat de persoon één drempelfunctie kan
+              uitvoeren, al dan niet met aanpassingen. Afwezig zonder
+              beoordeling. Bron: UWV.
+          - name: beperkingen_duren_ten_minste_zes_maanden
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6: de beperkingen bestaan
+              naar verwachting nog ten minste zes maanden na de beoordeling.
+              Afwezig zonder beoordeling. Bron: UWV.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -1668,13 +1696,19 @@ articles:
               dienstbetrekking". Alleen van belang wanneer
               heeft_wajong_duurzaam_geen_mogelijkheden waar is.
               Bron: polisadministratie / loonaangifte.
-          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+          - name: is_pwet_toegeleid_naar_dienstbetrekking
             type: boolean
             required: true
             description: |-
-              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
-              vastgesteld dat persoon niet in staat is WML te verdienen.
+              38b.1.e: de persoon is met ondersteuning van het college (Pwet 7
+              lid 1 onderdeel a) toegeleid naar een dienstbetrekking. Bron:
+              gemeente.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
+              of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
               Bron: UWV.
           - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
             type: boolean
@@ -1789,6 +1823,19 @@ articles:
               van arbeidsbeperkten (artikel 38d lid 1) is nog niet
               geëindigd. Bron: UWV-registratie.
         input:
+          - name: uwv_acht_niet_in_staat_minimumloon_te_verdienen
+            type: boolean
+            nullable: true
+            source:
+              regulation: besluit_suwi
+              output: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
+              parameters:
+                bsn: $bsn
+                kan_een_drempelfunctie_volledig_uitvoeren: $kan_een_drempelfunctie_volledig_uitvoeren
+                beperkingen_duren_ten_minste_zes_maanden: $beperkingen_duren_ten_minste_zes_maanden
+              description: |-
+                Besluit SUWI artikel 3.5 lid 6: het UWV acht de persoon niet in
+                staat het minimumloon te verdienen. Afwezig zonder beoordeling.
           - name: is_uitgesloten_beschut_werk_pwet_10b
             type: boolean
             source:
@@ -1882,7 +1929,19 @@ articles:
               gemodelleerd.
         actions:
           - output: voldoet_aan_grond_38b_1_a
-            value: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+            value:
+              operation: AND
+              conditions:
+                - $is_pwet_toegeleid_of_lks_lid_2
+                - operation: OR
+                  conditions:
+                    - operation: AND
+                      conditions:
+                        - $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+                        - operation: EQUALS
+                          subject: $uwv_acht_niet_in_staat_minimumloon_te_verdienen
+                          value: true
+                    - $college_heeft_loonwaarde_onder_wml_vastgesteld
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
@@ -1891,7 +1950,8 @@ articles:
               explanation: |-
                 Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, met
                 UWV-vaststelling 'kan WML niet verdienen' op verzoek van
-                het college, dan wel college-loonwaarde < WML.
+                het college (de drempelfunctietoets van Besluit SUWI 3.5),
+                dan wel college-loonwaarde < WML.
           - output: voldoet_aan_grond_38b_1_b
             value: $is_wsw_geindiceerd_of_oude_indicatie
             legal_basis:
@@ -1936,7 +1996,14 @@ articles:
                 Voldoet aan bij of krachtens AMvB vastgestelde indicatie.
                 Concrete invulling AMvB valt buiten deze YAML.
           - output: voldoet_aan_grond_38b_1_e
-            value: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            value:
+              operation: AND
+              conditions:
+                - $is_pwet_toegeleid_naar_dienstbetrekking
+                - $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+                - operation: EQUALS
+                  subject: $uwv_acht_niet_in_staat_minimumloon_te_verdienen
+                  value: true
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
@@ -1944,7 +2011,8 @@ articles:
               paragraph: '1.e'
               explanation: |-
                 Pwet 7 lid 1.a-toeleiding + UWV-vaststelling op eigen
-                verzoek dat persoon WML niet kan verdienen.
+                verzoek dat persoon WML niet kan verdienen (Besluit SUWI
+                3.5).
           - output: voldoet_aan_grond_38b_1_f
             value:
               operation: AND

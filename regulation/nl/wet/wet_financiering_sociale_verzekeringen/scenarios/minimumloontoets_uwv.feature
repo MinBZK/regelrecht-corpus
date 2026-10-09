@@ -11,8 +11,8 @@ Feature: Toets of iemand het minimumloon kan verdienen, Besluit SUWI artikel 3.5
   # er geen of maar een deel van één kan uitvoeren, niet, mits de beperkingen
   # nog ten minste zes maanden duren (lid 6).
   #
-  # Wfsv 38b leest de vaststelling nog als samengesteld gegeven; deze scenario's
-  # toetsen het besluit zelf.
+  # Wfsv 38b lid 1 onderdeel a en e lezen dit artikel sinds 2026-10-09; deze
+  # scenario's toetsen het besluit zelf.
 
   Background:
     Given the calculation date is "2026-07-01"

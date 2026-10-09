@@ -212,17 +212,44 @@ articles:
               Bron: gemeente. Zo'n persoon is per definitie GEEN
               arbeidsbeperkte in zin van 38b.1.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
-          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+          - name: is_pwet_toegeleid_of_lks_lid_2
             type: boolean
             required: true
             description: |-
-              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
-              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
-              college) heeft vastgesteld dat persoon niet in staat is WML te
-              verdienen, OF college heeft loonwaarde < WML vastgesteld
-              conform Pwet 10d. Bron: UWV + gemeente.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+              38b.1.a: toegeleid met ondersteuning van het college (Pwet 7 lid
+              1 onderdeel a) of loonkostensubsidie op grond van Pwet 10d lid
+              2. Bron: gemeente. Doorgegeven aan Wfsv artikel 38b.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
+              de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
+              1). Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
+          - name: college_heeft_loonwaarde_onder_wml_vastgesteld
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het college heeft een loonwaarde onder het minimumloon
+              vastgesteld conform Pwet 10d. Bron: gemeente. Doorgegeven aan
+              Wfsv artikel 38b.
+          - name: kan_een_drempelfunctie_volledig_uitvoeren
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6 en 7: de persoon kan
+              één drempelfunctie uitvoeren, al dan niet met aanpassingen.
+              Afwezig zonder beoordeling. Bron: UWV. Doorgegeven aan Wfsv
+              artikel 38b.
+          - name: beperkingen_duren_ten_minste_zes_maanden
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6: de beperkingen bestaan
+              naar verwachting nog ten minste zes maanden. Afwezig zonder
+              beoordeling. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -261,15 +288,20 @@ articles:
               heeft_wajong_duurzaam_geen_mogelijkheden waar is.
               Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
-          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+          - name: is_pwet_toegeleid_naar_dienstbetrekking
             type: boolean
             required: true
             description: |-
-              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
-              vastgesteld dat persoon niet in staat is WML te verdienen.
-              Bron: UWV.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+              38b.1.e: toegeleid met ondersteuning van het college (Pwet 7 lid
+              1 onderdeel a) naar een dienstbetrekking. Bron: gemeente.
+              Doorgegeven aan Wfsv artikel 38b.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
+              of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
+              Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
             type: boolean
             required: true
@@ -514,12 +546,17 @@ articles:
               parameters:
                 bsn: $bsn
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
-                is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+                is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
+                uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+                college_heeft_loonwaarde_onder_wml_vastgesteld: $college_heeft_loonwaarde_onder_wml_vastgesteld
+                kan_een_drempelfunctie_volledig_uitvoeren: $kan_een_drempelfunctie_volledig_uitvoeren
+                beperkingen_duren_ten_minste_zes_maanden: $beperkingen_duren_ten_minste_zes_maanden
                 is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
-                is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+                is_pwet_toegeleid_naar_dienstbetrekking: $is_pwet_toegeleid_naar_dienstbetrekking
+                uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek: $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
                 komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs

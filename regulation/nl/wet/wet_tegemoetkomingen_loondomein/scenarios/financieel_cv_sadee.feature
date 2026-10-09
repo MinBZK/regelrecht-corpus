@@ -93,12 +93,15 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | heeft_geldige_doelgroepverklaring_2_15                   | false      |
       | periode_2_16_is_verstreken                               | false      |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling    | false      |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false      |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01     | false      |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -123,6 +126,8 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, tegemoetkoming_banenafspraak_eurocent, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true

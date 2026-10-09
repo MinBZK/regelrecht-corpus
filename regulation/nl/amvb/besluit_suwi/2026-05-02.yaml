@@ -998,7 +998,8 @@ articles:
             description: BSN van de persoon die het UWV beoordeelt.
           - name: kan_een_drempelfunctie_volledig_uitvoeren
             type: boolean
-            required: true
+            required: false
+            nullable: true
             description: |-
               Lid 6 en 7: uit de analyse van het arbeidsvermogen, getoetst aan
               de methodiek van drempelfuncties (lid 3 tot en met 5), blijkt dat
@@ -1007,7 +1008,8 @@ articles:
               slechts een deel van één drempelfunctie kan uitvoeren. Bron: UWV.
           - name: beperkingen_duren_ten_minste_zes_maanden
             type: boolean
-            required: true
+            required: false
+            nullable: true
             description: |-
               Lid 6: de beperkingen of belemmeringen die de persoon ondervindt,
               bestaan naar verwachting nog ten minste zes maanden na de
@@ -1015,12 +1017,14 @@ articles:
         output:
           - name: wordt_geacht_minimumloon_te_kunnen_verdienen
             type: boolean
+            nullable: true
             description: |-
               Lid 7: de persoon kan één drempelfunctie uitvoeren, al dan niet
               met aanpassingen, en wordt geacht in staat te zijn het
               minimumloon te verdienen.
           - name: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
             type: boolean
+            nullable: true
             description: |-
               Lid 6: de persoon kan geen drempelfunctie of voor een deel één
               drempelfunctie uitvoeren, en de beperkingen bestaan naar
@@ -1029,7 +1033,15 @@ articles:
               dan van kortere duur.
         actions:
           - output: wordt_geacht_minimumloon_te_kunnen_verdienen
-            value: $kan_een_drempelfunctie_volledig_uitvoeren
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $kan_een_drempelfunctie_volledig_uitvoeren
+                    value: null
+                  then: null
+              default: $kan_een_drempelfunctie_volledig_uitvoeren
             legal_basis:
               law: Besluit SUWI
               bwb_id: BWBR0013267
@@ -1042,11 +1054,24 @@ articles:
                 zijn het minimumloon te verdienen."
           - output: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
             value:
-              operation: AND
-              conditions:
-                - operation: NOT
-                  value: $kan_een_drempelfunctie_volledig_uitvoeren
-                - $beperkingen_duren_ten_minste_zes_maanden
+              operation: IF
+              cases:
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: EQUALS
+                        subject: $kan_een_drempelfunctie_volledig_uitvoeren
+                        value: null
+                      - operation: EQUALS
+                        subject: $beperkingen_duren_ten_minste_zes_maanden
+                        value: null
+                  then: null
+              default:
+                operation: AND
+                conditions:
+                  - operation: NOT
+                    value: $kan_een_drempelfunctie_volledig_uitvoeren
+                  - $beperkingen_duren_ten_minste_zes_maanden
             legal_basis:
               law: Besluit SUWI
               bwb_id: BWBR0013267

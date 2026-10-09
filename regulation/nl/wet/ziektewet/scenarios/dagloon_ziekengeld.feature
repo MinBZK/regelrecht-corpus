@@ -11,8 +11,8 @@ Feature: ZW-dagloon, Dagloonbesluit werknemersverzekeringen artikel 12e
   # aanvang.
   #
   # Deze scenario's rekenen met ronde voorbeeldbedragen, niet met de lonen van
-  # Koen en Sadee. Ziektewet 29b leest het dagloon nog als gegeven; de koppeling
-  # met dit artikel volgt apart.
+  # Koen en Sadee. Ziektewet 29b lid 5 haalt het dagloon sinds 2026-10-09 uit
+  # dit artikel.
 
   Background:
     Given the calculation date is "2026-07-01"

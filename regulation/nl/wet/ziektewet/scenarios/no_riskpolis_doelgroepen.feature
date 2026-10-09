@@ -65,12 +65,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -90,7 +93,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -106,6 +113,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_a, voldoet_aan_lid_1_b, voldoet_aan_lid_1, voldoet_aan_lid_2, voldoet_aan_lid_4, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is true
@@ -154,12 +163,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -179,7 +191,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -195,6 +211,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_4" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_4" is true
@@ -237,12 +255,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -262,7 +283,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -278,6 +303,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_b, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is false
@@ -324,12 +351,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -349,7 +379,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -365,6 +399,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_1_c, voldoet_aan_lid_1_d, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_1_c" is true
@@ -411,12 +447,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -436,7 +475,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -452,6 +495,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_1_c, voldoet_aan_lid_1_d, voldoet_aan_lid_1, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_1_c" is false
@@ -498,12 +543,15 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | true |
-      | is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling | false |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | college_heeft_loonwaarde_onder_wml_vastgesteld | false |
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
       | verricht_arbeid_in_dienstbetrekking | false |
-      | is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek | false |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
       | was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01 | false |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden | false |
       | is_jonggehandicapt_uwv_oordeel_lid_2 | false |
@@ -523,7 +571,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | heeft_wia_uitkering_hoofdstuk_6 | false |
       | experiment_instrument_82a_suwi_ingezet | false |
       | verricht_arbeid_in_wsw_dienstbetrekking_artikel_2 | false |
-      | dagloon_eurocent | 0 |
+      | loon_referteperiode_eurocent | 0 |
+      | uitbetaalde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
+      | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
+      | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
       | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
       | dienstbetrekking_is_tot_stand_gekomen | false |
       | college_heeft_loonwaarde_vastgesteld | false |
@@ -539,6 +591,8 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
+      | kan_een_drempelfunctie_volledig_uitvoeren | null |
+      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_no_risk_polis, voldoet_aan_lid_2_e, voldoet_aan_lid_2_f, voldoet_aan_lid_1_d, voldoet_aan_lid_1, voldoet_aan_lid_2, duur_no_risk_polis_jaren" of "ziektewet"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_e" is false

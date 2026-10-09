@@ -2438,17 +2438,44 @@ articles:
               Bron: gemeente. Sluit uit van het doelgroepregister (Wfsv 38b,
               aanhef) en is tegelijk de grond voor beschut werk (lid 2
               onderdeel f, via Pwet 10b).
-          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+          - name: is_pwet_toegeleid_of_lks_lid_2
             type: boolean
             required: true
             description: |-
-              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
-              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
-              college) heeft vastgesteld dat persoon niet in staat is WML te
-              verdienen, OF college heeft loonwaarde < WML vastgesteld
-              conform Pwet 10d. Bron: UWV + gemeente.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+              38b.1.a: toegeleid met ondersteuning van het college (Pwet 7 lid
+              1 onderdeel a) of loonkostensubsidie op grond van Pwet 10d lid
+              2. Bron: gemeente. Doorgegeven aan Wfsv artikel 38b.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
+              de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
+              1). Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
+          - name: college_heeft_loonwaarde_onder_wml_vastgesteld
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het college heeft een loonwaarde onder het minimumloon
+              vastgesteld conform Pwet 10d. Bron: gemeente. Doorgegeven aan
+              Wfsv artikel 38b.
+          - name: kan_een_drempelfunctie_volledig_uitvoeren
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6 en 7: de persoon kan
+              één drempelfunctie uitvoeren, al dan niet met aanpassingen.
+              Afwezig zonder beoordeling. Bron: UWV. Doorgegeven aan Wfsv
+              artikel 38b.
+          - name: beperkingen_duren_ten_minste_zes_maanden
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a en e, via Besluit SUWI 3.5 lid 6: de beperkingen bestaan
+              naar verwachting nog ten minste zes maanden. Afwezig zonder
+              beoordeling. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -2487,15 +2514,20 @@ articles:
               heeft_wajong_duurzaam_geen_mogelijkheden waar is.
               Bron: polisadministratie / loonaangifte.
               Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
-          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+          - name: is_pwet_toegeleid_naar_dienstbetrekking
             type: boolean
             required: true
             description: |-
-              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
-              vastgesteld dat persoon niet in staat is WML te verdienen.
-              Bron: UWV.
-              Doorgegeven aan Wfsv artikel 38b, dat hiermee de doelgroepregistratie vaststelt.
+              38b.1.e: toegeleid met ondersteuning van het college (Pwet 7 lid
+              1 onderdeel a) naar een dienstbetrekking. Bron: gemeente.
+              Doorgegeven aan Wfsv artikel 38b.
+          - name: uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
+              of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
+              Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
             type: boolean
             required: true
@@ -2684,14 +2716,42 @@ articles:
               Ontbreekt de waarde, dan valt het model terug op de
               WIA-wachttijd. Bron: UWV.
           # --- lid 5, 6 en 7: de hoogte van het ziekengeld ---
-          - name: dagloon_eurocent
+          - name: loon_referteperiode_eurocent
             type: amount
             required: true
             type_spec:
               unit: eurocent
             description: |-
-              Lid 5: het dagloon van de verzekerde, waarover het
-              ziekengeld wordt berekend. Bron: UWV (Dagloonbesluit).
+              Lid 5, via het Dagloonbesluit artikel 12e (factor A): het loon
+              in de referteperiode. Bron: polisadministratie van het UWV.
+          - name: uitbetaalde_vakantiebijslag_referteperiode_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Dagloonbesluit artikel 12e, factor B. Bron: polisadministratie.
+          - name: opgebouwde_vakantiebijslag_referteperiode_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Dagloonbesluit artikel 12e, factor C. Bron: polisadministratie.
+          - name: dienstbetrekking_aangevangen_na_aanvang_referteperiode
+            type: boolean
+            required: true
+            description: |-
+              Dagloonbesluit artikel 12e lid 1 en 4. Bron: polisadministratie.
+          - name: aantal_dagloondagen_sinds_aanvang_dienstbetrekking
+            type: number
+            required: false
+            nullable: true
+            description: |-
+              Dagloonbesluit artikel 12e lid 1 en 4: het aantal dagloondagen
+              sinds de aanvang van de dienstbetrekking. Afwezig zolang er nog
+              geen ziekte is ingetreden of het UWV het niet heeft opgegeven;
+              het dagloon is dan onbekend. Bron: UWV.
           - name: wsw_subsidiebedrag_per_werkdag_eurocent
             type: amount
             nullable: true
@@ -2808,12 +2868,17 @@ articles:
               parameters:
                 bsn: $bsn
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
-                is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+                is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
+                uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+                college_heeft_loonwaarde_onder_wml_vastgesteld: $college_heeft_loonwaarde_onder_wml_vastgesteld
+                kan_een_drempelfunctie_volledig_uitvoeren: $kan_een_drempelfunctie_volledig_uitvoeren
+                beperkingen_duren_ten_minste_zes_maanden: $beperkingen_duren_ten_minste_zes_maanden
                 is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
-                is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+                is_pwet_toegeleid_naar_dienstbetrekking: $is_pwet_toegeleid_naar_dienstbetrekking
+                uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek: $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
                 was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01: $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
                 komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs
@@ -2876,6 +2941,22 @@ articles:
               description: |-
                 Lid 2 onderdeel f: arbeid in een dienstbetrekking als
                 bedoeld in Pwet 10b lid 1 (beschut werk).
+          - name: dagloon_eurocent
+            type: amount
+            nullable: true
+            source:
+              regulation: dagloonbesluit_werknemersverzekeringen
+              output: zw_dagloon_eurocent
+              parameters:
+                bsn: $bsn
+                loon_referteperiode_eurocent: $loon_referteperiode_eurocent
+                uitbetaalde_vakantiebijslag_referteperiode_eurocent: $uitbetaalde_vakantiebijslag_referteperiode_eurocent
+                opgebouwde_vakantiebijslag_referteperiode_eurocent: $opgebouwde_vakantiebijslag_referteperiode_eurocent
+                dienstbetrekking_aangevangen_na_aanvang_referteperiode: $dienstbetrekking_aangevangen_na_aanvang_referteperiode
+                aantal_dagloondagen_sinds_aanvang_dienstbetrekking: $aantal_dagloondagen_sinds_aanvang_dienstbetrekking
+              description: |-
+                Lid 5: het dagloon van de verzekerde, volgens het Dagloonbesluit
+                werknemersverzekeringen artikel 12e.
         output:
           - name: heeft_recht_op_wia_uitkering
             type: boolean
@@ -2930,6 +3011,7 @@ articles:
               alternatieven; de WIA-wachttijd is er daar één van.
           - name: dagloon_voor_ziekengeld_eurocent
             type: amount
+            nullable: true
             type_spec:
               unit: eurocent
             description: |-
@@ -2938,6 +3020,7 @@ articles:
               herleide subsidiebedrag.
           - name: ziekengeld_per_dag_eurocent
             type: amount
+            nullable: true
             type_spec:
               unit: eurocent
             description: |-
@@ -3266,6 +3349,11 @@ articles:
               cases:
                 - when:
                     operation: EQUALS
+                    subject: $dagloon_eurocent
+                    value: null
+                  then: null
+                - when:
+                    operation: EQUALS
                     subject: $wsw_subsidiebedrag_per_werkdag_eurocent
                     value: null
                   then: $dagloon_eurocent
@@ -3299,16 +3387,23 @@ articles:
             value:
               operation: IF
               cases:
-                - when: $heeft_recht_op_no_risk_polis
-                  then:
-                    operation: DIVIDE
+                - when:
+                    operation: NOT
+                    value: $heeft_recht_op_no_risk_polis
+                  then: 0
+                - when:
+                    operation: EQUALS
+                    subject: $dagloon_voor_ziekengeld_eurocent
+                    value: null
+                  then: null
+              default:
+                operation: DIVIDE
+                values:
+                  - operation: MULTIPLY
                     values:
-                      - operation: MULTIPLY
-                        values:
-                          - $dagloon_voor_ziekengeld_eurocent
-                          - $percentage_ziekengeld_lid_5
-                      - 100
-              default: 0
+                      - $dagloon_voor_ziekengeld_eurocent
+                      - $percentage_ziekengeld_lid_5
+                  - 100
               legal_basis:
                 law: Ziektewet
                 bwb_id: BWBR0001888
