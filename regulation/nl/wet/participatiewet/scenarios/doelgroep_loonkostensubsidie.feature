@@ -6,15 +6,17 @@ Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipa
   artikel 10c vaststelt dat iemand tot de doelgroep behoort
 
   # Toegevoegd 2026-10-06. Artikel 6 lid 1 onderdeel e vraagt dat iemand "wel
-  # mogelijkheden tot arbeidsparticipatie" heeft. Wat dat is, staat in artikel 1
-  # van het Besluit loonkostensubsidie Participatiewet: een taak kunnen
+  # mogelijkheden tot arbeidsparticipatie" heeft. Wat dat is, staat in artikel 2
+  # van het Besluit loonkostensubsidie en minimumbedragen studietoeslag
+  # Participatiewet 2021 (tot 2026-10-09 gemodelleerd in het per 1 juli 2021
+  # ingetrokken Besluit loonkostensubsidie Participatiewet): een taak kunnen
   # uitvoeren, basale werknemersvaardigheden, een uur aaneengesloten kunnen
   # werken, en ten minste vier uur per dag belastbaar zijn, of twee uur en dan
   # per uur ten minste het minimumloon per uur verdienen.
   #
   # Het minimumloon per uur komt uit de Wet minimumloon, artikel 8 met de
-  # herziening per 1 juli 2026: 1499 eurocent. Zie de marking bij artikel 1 van
-  # het besluit over de omrekening op 38 uur die lid 2 nog noemt.
+  # herziening per 1 juli 2026: 1499 eurocent. Artikel 2 lid 2 verwijst daar
+  # rechtstreeks naar; de omrekening op 38 uur van het oude besluit is weg.
   #
   # Artikel 10d leest de vaststelling van het college als gegeven
   # (behoort_tot_doelgroep_lks). Deze scenario's raken die keten niet.

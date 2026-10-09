@@ -1,0 +1,578 @@
+---
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$id: besluit_loonkostensubsidie_en_minimumbedragen_studietoeslag_participatiewet_2021
+regulatory_layer: AMVB
+publication_date: '2026-06-05'
+valid_from: '2026-07-01'
+bwb_id: BWBR0044894
+url: https://wetten.overheid.nl/BWBR0044894/2026-07-01
+preamble:
+  text: >-
+    Wij Willem-Alexander, bij de gratie Gods, Koning der Nederlanden, Prins van Oranje-Nassau, enz. enz. enz.
+
+
+    Op de voordracht van de Staatssecretaris van Sociale Zaken en Werkgelegenheid van 7 december 2020, nr. 2020-
+    0000160093;
+
+
+    Gelet op artikel 10e van de Participatiewet en artikel 10a van de Wet structuur uitvoeringsorganisatie werk en
+    inkomen;
+
+
+    De Afdeling advisering van de Raad van State gehoord (advies van 13 januari 2021, nr. W12.20.0456/III);
+
+
+    Gezien het nader rapport van Onze Minister van Sociale Zaken en Werkgelegenheid van 18 februari 2021, nr. 2021-
+    0000035086,
+
+
+    Hebben goedgevonden en verstaan:
+  url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#ArtikelAanhef
+articles:
+  - number: '1'
+    text: |-
+      In dit besluit en de daarop berustende bepalingen wordt verstaan onder:
+
+      - *hoofdtaak:* een taak, of meerdere taken of handelingen met in de werkzaamheden onderlinge samenhang, waaraan de
+      werknemer ten minste 1/16 deel van de werktijd per week en 30 minuten van de werktijd per werkdag besteedt;
+      - *kwaliteit:* het gemiddelde aantal geproduceerde eenheden of diensten over een relevante periode dat bruikbaar is
+      en voldoet aan de gestelde kwaliteit;
+      - *loonwaardedeskundige:* de door het college voor het bepalen van de loonwaarde aangewezen natuurlijke persoon;
+      - *netto werktijd:* de tijd die de werknemer besteedt aan het verrichten van handelingen behorend tot een
+      hoofdtaak;
+      - *normfunctie:* de functie van een gemiddelde werknemer met een soortgelijke opleiding en ervaring, die niet tot
+      de doelgroep loonkostensubsidie behoort die wat betreft samenstelling van de werkzaamheden het dichtst tegen de
+      feitelijk uitgevoerde werkzaamheden van de potentiële werknemer aan ligt;
+      - *tempo:* het gemiddelde aantal geproduceerde eenheden of diensten over een relevante periode;
+      - *werknemer:* persoon als bedoeld in [artikel 10d, eerste of tweede lid, van de Participatiewet][ref1] met wie
+      de werkgever voornemens is een dienstbetrekking als bedoeld in die leden aan te gaan, of met wie de werkgever een
+      dienstbetrekking als bedoeld in die leden is aangegaan.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel10d
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel1
+    references:
+      - id: ref1
+        bwb_id: BWBR0015703
+        artikel: 10d
+  - number: '2'
+    text: |-
+      1 Een persoon heeft mogelijkheden tot arbeidsparticipatie indien die persoon:
+
+      a. een taak kan uitvoeren in een arbeidsorganisatie;
+
+      b. over basale werknemersvaardigheden beschikt;
+
+      c. aaneengesloten kan werken gedurende ten minste een periode van een uur; en
+
+      d. ten minste vier uur per dag belastbaar is of ten minste twee uur per dag belastbaar is en in staat is per uur
+      ten minste een bedrag te verdienen dat gelijk is aan het minimumloon per uur.
+
+      2 Onder minimumloon per uur wordt in dit artikel verstaan: het bedrag, bedoeld in
+      [artikel 8, eerste lid, onderdeel a, van de Wet minimumloon en minimumvakantiebijslag][ref1].
+
+      3 Een taak als bedoeld in het eerste lid, onderdeel a, is de kleinste eenheid van een functie en bestaat uit één of
+      meerdere handelingen.
+
+      4 Bij ministeriële regeling kunnen met betrekking tot het eerste lid nadere regels worden gesteld.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0002638#Artikel8
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel2
+    references:
+      - id: ref1
+        bwb_id: BWBR0002638
+        artikel: '8'
+    machine_readable:
+      implements:
+        - law: participatiewet
+          article: 10c
+          open_term: heeft_mogelijkheden_tot_arbeidsparticipatie
+          gelet_op: |-
+            Artikel 6 lid 1 onderdeel e van de Participatiewet rekent tot de
+            doelgroep loonkostensubsidie wie "wel mogelijkheden tot
+            arbeidsparticipatie" heeft, zonder te zeggen wanneer. Artikel 10e
+            lid 1 laat de regels daarover aan een algemene maatregel van
+            bestuur; dit artikel stelt ze. Het verving per 1 juli 2021
+            artikel 1 van het Besluit loonkostensubsidie Participatiewet.
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon.
+          - name: kan_taak_uitvoeren_in_arbeidsorganisatie
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel a, met lid 3: de persoon kan een taak uitvoeren
+              in een arbeidsorganisatie. Een taak is de kleinste eenheid van
+              een functie en bestaat uit een of meer handelingen. Een oordeel
+              over de persoon. Bron: gemeente, op advies van een deskundige.
+          - name: beschikt_over_basale_werknemersvaardigheden
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel b: de persoon beschikt over basale
+              werknemersvaardigheden. Een oordeel over de persoon. Bron:
+              gemeente, op advies van een deskundige.
+          - name: kan_ten_minste_een_uur_aaneengesloten_werken
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 onderdeel c: de persoon kan aaneengesloten werken gedurende
+              ten minste een periode van een uur. Bron: gemeente, op advies
+              van een deskundige.
+          - name: belastbaarheid_uren_per_dag
+            type: number
+            required: true
+            description: |-
+              Lid 1 onderdeel d: het aantal uren per dag dat de persoon
+              belastbaar is. Bron: gemeente, op advies van een deskundige.
+          - name: verdienvermogen_per_uur_eurocent
+            type: amount
+            nullable: true
+            required: false
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1 onderdeel d, tweede tak: het bedrag dat de persoon per uur
+              kan verdienen. Alleen van belang als de persoon ten minste twee
+              en minder dan vier uur per dag belastbaar is; anders afwezig.
+              Bron: gemeente, op advies van een deskundige.
+        input:
+          - name: minimumloon_per_uur_eurocent
+            type: amount
+            source:
+              regulation: wet_minimumloon_en_minimumvakantiebijslag
+              output: minimumloon_per_uur_eurocent
+              parameters:
+                bsn: $bsn
+              description: |-
+                Lid 2: "het bedrag, bedoeld in artikel 8, eerste lid, onderdeel
+                a, van de Wet minimumloon en minimumvakantiebijslag": het
+                wettelijke minimumloon per uur.
+        output:
+          - name: voldoet_aan_belastbaarheid_lid_1_d
+            type: boolean
+            description: |-
+              Lid 1 onderdeel d: ten minste vier uur per dag belastbaar, of ten
+              minste twee uur per dag belastbaar en per uur ten minste het
+              minimumloon per uur kunnen verdienen.
+          - name: heeft_mogelijkheden_tot_arbeidsparticipatie
+            type: boolean
+            description: |-
+              Lid 1: de persoon heeft mogelijkheden tot arbeidsparticipatie.
+              Vult de open term van Participatiewet artikel 10c in, die
+              artikel 6 lid 1 onderdeel e toetst.
+        actions:
+          - output: voldoet_aan_belastbaarheid_lid_1_d
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $belastbaarheid_uren_per_dag
+                    value: 4
+                  then: true
+                - when:
+                    operation: OR
+                    conditions:
+                      - operation: LESS_THAN
+                        subject: $belastbaarheid_uren_per_dag
+                        value: 2
+                      - operation: EQUALS
+                        subject: $verdienvermogen_per_uur_eurocent
+                        value: null
+                  then: false
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $verdienvermogen_per_uur_eurocent
+                value: $minimumloon_per_uur_eurocent
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '2'
+              paragraph: '1, 2'
+              sentence: 'd'
+              explanation: |-
+                "ten minste vier uur per dag belastbaar is of ten minste twee
+                uur per dag belastbaar is en in staat is per uur ten minste een
+                bedrag te verdienen dat gelijk is aan het minimumloon per uur".
+                Is het verdienvermogen niet vastgesteld, dan is de tweede tak
+                niet vervuld.
+          - output: heeft_mogelijkheden_tot_arbeidsparticipatie
+            value:
+              operation: AND
+              conditions:
+                - $kan_taak_uitvoeren_in_arbeidsorganisatie
+                - $beschikt_over_basale_werknemersvaardigheden
+                - $kan_ten_minste_een_uur_aaneengesloten_werken
+                - $voldoet_aan_belastbaarheid_lid_1_d
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '2'
+              paragraph: '1'
+              explanation: |-
+                De vier onderdelen zijn cumulatief: "a. ...; b. ...; c. ...;
+                en d. ...". Onderdeel a tot en met c zijn oordelen over de
+                persoon; onderdeel d is ten dele een rekenregel.
+  - number: '3'
+    text: |-
+      1 Het college stelt de loonwaarde vast op basis van de feitelijke werkzaamheden op de werkplek van de werknemer bij
+      de werkgever met inachtneming van het bij of krachtens deze paragraaf gestelde op grond van het rapport, bedoeld in
+      het derde lid, onderdeel d, en met inbreng van de werknemer en de werkgever die voornemens is een dienstbetrekking
+      aan te gaan dan wel een dienstbetrekking is aangegaan met de werknemer.
+
+      2 De loonwaarde bedraagt de som van de arbeidsprestaties per hoofdtaak, bedoeld in [artikel 5][ref1], rekenkundig
+      afgerond op hele procenten.
+
+      3 De loonwaardedeskundige:
+
+      a. bepaalt de normfunctie overeenkomstig [artikel 4][ref2];
+
+      b. stelt de arbeidsprestaties per hoofdtaak vast overeenkomstig [artikel 5][ref3];
+
+      c. berekent de loonwaarde; en
+
+      d. legt de bevindingen, nadat de werknemer en de werkgever die een dienstbetrekking is aangegaan met de werknemer
+      of dat voornemens is in staat zijn gesteld hun zienswijze kenbaar te maken, vast in een rapport dat voldoet aan bij
+      ministeriële regeling te stellen regels.
+
+      4 Het college draagt er zorg voor dat de loonwaardedeskundige aan de krachtens [artikel 6][ref4] gestelde
+      kwaliteitseisen voldoet en in voldoende mate onafhankelijk functioneert.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0044894#Artikel5
+      [ref2]: https://wetten.overheid.nl/BWBR0044894#Artikel4
+      [ref3]: https://wetten.overheid.nl/BWBR0044894#Artikel5
+      [ref4]: https://wetten.overheid.nl/BWBR0044894#Artikel6
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel3
+    references:
+      - id: ref1
+        bwb_id: BWBR0044894
+        artikel: '5'
+        paragraaf: '3'
+      - id: ref2
+        bwb_id: BWBR0044894
+        artikel: '4'
+        paragraaf: '3'
+      - id: ref3
+        bwb_id: BWBR0044894
+        artikel: '5'
+        paragraaf: '3'
+      - id: ref4
+        bwb_id: BWBR0044894
+        artikel: '6'
+        paragraaf: '3'
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: hoofdtaken
+            type: array
+            required: true
+            description: |-
+              Artikel 5: per hoofdtaak de prestaties die de
+              loonwaardedeskundige vaststelt, elk als percentage:
+              tempo_percentage (T), kwaliteit_percentage (K),
+              netto_werktijd_percentage (N) en bijdrage_werktijd_percentage
+              (BT, het aandeel van de hoofdtaak in de tijd die de werknemer in
+              totaal aan hoofdtaken besteedt). Bron: rapport van de
+              loonwaardedeskundige (lid 3 onderdeel d).
+        output:
+          - name: aantal_hoofdtaken
+            type: number
+            description: 'Artikel 5 lid 1: het aantal hoofdtaken.'
+          - name: totale_bijdrage_werktijd_percentage
+            type: number
+            description: 'Artikel 5 lid 1: de hoofdtaken omvatten samen 100 procent van de werktijd.'
+          - name: hoofdtaken_voldoen_aan_artikel_5_lid_1
+            type: boolean
+            description: |-
+              Artikel 5 lid 1: maximaal vijf hoofdtaken, die tezamen 100
+              procent van de werktijd omvatten.
+          - name: loonwaarde_percentage
+            type: number
+            description: |-
+              Lid 2: de loonwaarde, als percentage van de bij de normfunctie
+              behorende prestatie: de som van de arbeidsprestaties per
+              hoofdtaak, rekenkundig afgerond op hele procenten.
+        actions:
+          - output: aantal_hoofdtaken
+            value:
+              operation: FOREACH
+              collection: $hoofdtaken
+              body: 1
+              combine: ADD
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '5'
+              paragraph: '1'
+          - output: totale_bijdrage_werktijd_percentage
+            value:
+              operation: FOREACH
+              collection: $hoofdtaken
+              body: $current.bijdrage_werktijd_percentage
+              combine: ADD
+              as: current
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '5'
+              paragraph: '1'
+          - output: hoofdtaken_voldoen_aan_artikel_5_lid_1
+            value:
+              operation: AND
+              conditions:
+                - operation: LESS_THAN_OR_EQUAL
+                  subject: $aantal_hoofdtaken
+                  value: 5
+                - operation: EQUALS
+                  subject: $totale_bijdrage_werktijd_percentage
+                  value: 100
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '5'
+              paragraph: '1'
+              explanation: |-
+                "voor maximaal vijf hoofdtaken, die tezamen 100% van de
+                werktijd van de werknemer omvatten".
+          - output: loonwaarde_percentage
+            value:
+              operation: ROUND
+              precision: 0
+              value:
+                operation: FOREACH
+                collection: $hoofdtaken
+                as: current
+                combine: ADD
+                body:
+                  operation: DIVIDE
+                  values:
+                    - operation: MULTIPLY
+                      values:
+                        - $current.tempo_percentage
+                        - $current.kwaliteit_percentage
+                        - $current.netto_werktijd_percentage
+                        - $current.bijdrage_werktijd_percentage
+                    - 1000000
+            legal_basis:
+              law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
+              bwb_id: BWBR0044894
+              article: '3'
+              paragraph: '2'
+              explanation: |-
+                "De loonwaarde bedraagt de som van de arbeidsprestaties per
+                hoofdtaak, bedoeld in artikel 5, rekenkundig afgerond op hele
+                procenten." Artikel 5 lid 2: AP = T * K * N * BT, met T, K en N
+                als percentage van de prestatie bij de normfunctie en BT als
+                aandeel in de werktijd; met vier percentages is AP in procenten
+                het product gedeeld door 100^3. Lid 1 en 3 (vaststelling door
+                het college, de taken van de deskundige) en artikel 4 (de
+                normfunctie) gaan over de werkwijze en zijn niet gemodelleerd.
+  - number: '4'
+    text: >-
+      1 De loonwaardedeskundige bepaalt een normfunctie die wat betreft de werktijd die aan hoofdtaken wordt besteed voor
+      ten minste 60% overeenkomt met de feitelijke hoofdtaken van de werknemer en gaat daarbij uit van functies die:
+
+
+      a. bij de werkgever beschikbaar zijn of, indien dat niet mogelijk is;
+
+
+      b. beschreven zijn in de toepasselijke collectieve arbeidsovereenkomst of functies die beschikbaar zijn in de
+      betreffende sector of, indien dat niet mogelijk is;
+
+
+      c. beschikbaar zijn op de Nederlandse arbeidsmarkt.
+
+
+      2 Indien er geen functie is die voldoet aan het eerste lid, bepaalt de loonwaardedeskundige de normfunctie op grond
+      van een samenstelling van hoofdtaken die overeenkomt met de hoofdtaken van de werknemer en gaat daarbij uit van
+      hoofdtaken die:
+
+
+      a. bij de werkgever uitgevoerd worden, of, indien dat niet mogelijk is;
+
+
+      b. behoren tot functies die beschreven zijn in de toepasselijke collectieve arbeidsovereenkomst of in de
+      betreffende sector of, indien dat niet mogelijk is;
+
+
+      c. behoren tot functies die beschikbaar zijn op de Nederlandse arbeidsmarkt.
+
+
+      3 Bij ministeriële regeling kunnen nadere regels gesteld worden met betrekking tot dit artikel.
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel4
+  - number: '5'
+    text: >-
+      1 De loonwaardedeskundige stelt voor maximaal vijf hoofdtaken, die tezamen 100% van de werktijd van de werknemer
+      omvatten, de arbeidsprestatie vast.
+
+
+      2 De arbeidsprestatie per hoofdtaak bedraagt: AP=T*K*N*BT, waarbij:
+
+
+      **AP** staat voor de arbeidsprestatie per hoofdtaak,
+
+
+      **T** staat voor de prestatie in de hoofdtaak in tempo van de werknemer uitgedrukt in een percentage van de bij de
+      normfunctie behorende prestatie in de hoofdtaak,
+
+
+      **K** staat voor de prestatie in de taak in kwaliteit van de werknemer uitgedrukt in een percentage van de bij de
+      normfunctie behorende prestatie in de hoofdtaak,
+
+
+      **N** staat voor de netto werktijd in de hoofdtaak van de werknemer uitgedrukt in een percentage van de bij de
+      normfunctie behorende prestatie in de hoofdtaak, en
+
+
+      **BT** staat voor de bijdrage in werktijd van de hoofdtaak aan de tijd die de werknemer in totaal aan hoofdtaken
+      besteedt.
+
+
+      3 Factoren die van invloed zijn op meer dan een van de prestaties T, K of N komen in slechts een van de prestaties
+      tot uitdrukking.
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel5
+  - number: '6'
+    text: >-
+      De loonwaardedeskundige voldoet wat betreft kennis over de relevante wet- en regelgeving met betrekking tot
+      het bepalen van de loonwaarde, andere voor de bepaling van de loonwaarde relevante kennis, passende opleiding,
+      vaardigheden en ervaring aan bij ministeriële regeling te stellen eisen.
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel6
+  - number: '7'
+    text: >-
+      Het college betaalt de loonkostensubsidie voor het deel van de arbeidsduur dat in de arbeidsovereenkomst is
+      vastgelegd uiterlijk uit op de laatste werkdag voorafgaand aan de eenentwintigste dag van de maand waarin de arbeid
+      is verricht.
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel7
+  - number: 7a
+    text: |-
+      Het bedrag, bedoeld in [artikel 36b, eerste lid, van de Participatiewet][ref1] bedraagt per maand minimaal voor:
+
+      a. 21-jarigen en ouder: € 390,07;
+
+      b. 20-jarigen: € 312,06;
+
+      c. 19-jarigen: € 234,05;
+
+      d. 18-jarigen: € 195,04;
+
+      e. 17-jarigen: € 154,08;
+
+      f. 16-jarigen: € 134,58;
+
+      g. 15-jarigen: € 117,03.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel36b
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel7a
+    references:
+      - id: ref1
+        bwb_id: BWBR0015703
+        artikel: 36b
+  - number: 7b
+    text: |-
+      Het bedrag, bedoeld in [artikel 36b, vijfde lid, van de Participatiewet][ref1] bedraagt per maand € 234,05.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel36b
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel7b
+    references:
+      - id: ref1
+        bwb_id: BWBR0015703
+        artikel: 36b
+  - number: 7c
+    text: |-
+      1 Met ingang van de dag waarop het netto minimumloon, bedoeld in
+      [artikel 37, eerste lid, van de Participatiewet][ref1] wijzigt, worden de bedragen, genoemd in de
+      [artikelen 7a][ref2] en [7b][ref3], gewijzigd met het percentage van die wijziging.
+
+      2 De gewijzigde bedragen en de dag waarop de wijzigingen ingaan, worden door of namens Onze Minister medegedeeld in
+      de Staatscourant.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel37
+      [ref2]: https://wetten.overheid.nl/BWBR0044894#Artikel7a
+      [ref3]: https://wetten.overheid.nl/BWBR0044894#Artikel7b
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel7c
+    references:
+      - id: ref1
+        bwb_id: BWBR0015703
+        artikel: '37'
+      - id: ref2
+        bwb_id: BWBR0044894
+        artikel: 7a
+        paragraaf: 4a
+      - id: ref3
+        bwb_id: BWBR0044894
+        artikel: 7b
+        paragraaf: 4a
+  - number: '8'
+    text: |-
+      1 Ten aanzien van de werknemer waarvoor of door wie een aanvraag voor het verlenen
+      van loonkostensubsidie is ingediend voor de dag van inwerkingtreding van dit besluit
+      blijven tot het moment waarop de loonwaarde opnieuw wordt vastgesteld, bedoeld in
+      [artikel 10d, zesde lid, van de Participatiewet][ref1], het [Besluit loonkostensubsidie Participatiewet][ref2]
+      en [artikel 2.3, tweede lid, onderdeel i, van het Besluit SUWI][ref3] zoals die luidden op de dag voor de
+      inwerkingtreding van dit besluit, van toepassing.
+
+      2 Het eerste lid is van overeenkomstige toepassing indien de loonkostensubsidie ambtshalve wordt verleend en de
+      voorbereiding van het besluit tot verlenen van loonkostensubsidie is aangevangen voor de dag van inwerkingtreding
+      van dit besluit.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0015703#Artikel10d
+      [ref2]: https://wetten.overheid.nl/BWBR0035631
+      [ref3]: https://wetten.overheid.nl/BWBR0013267#Artikel2.3
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel8
+    references:
+      - id: ref1
+        bwb_id: BWBR0015703
+        artikel: 10d
+      - id: ref2
+        bwb_id: BWBR0035631
+      - id: ref3
+        bwb_id: BWBR0013267
+        artikel: '2.3'
+  - number: '9'
+    text: |-
+      1 Het [Besluit loonkostensubsidie Participatiewet][ref1] wordt ingetrokken.
+
+      2
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0035631
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel9
+    references:
+      - id: ref1
+        bwb_id: BWBR0035631
+  - number: '10'
+    text: 'Dit besluit wordt aangehaald als: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021.'
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel10
+  - number: '11'
+    text: |-
+      Dit besluit treedt in werking met ingang van 1 juli 2021, met uitzondering van [artikel 7][ref1], dat op een bij
+      koninklijk besluit te bepalen tijdstip in werking treedt.
+
+
+      [ref1]: https://wetten.overheid.nl/BWBR0044894#Artikel7
+    url: https://wetten.overheid.nl/BWBR0044894/2026-07-01#Artikel11
+    references:
+      - id: ref1
+        bwb_id: BWBR0044894
+        artikel: '7'
+        paragraaf: '4'
