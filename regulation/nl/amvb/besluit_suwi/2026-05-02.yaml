@@ -986,6 +986,81 @@ articles:
       - id: ref9
         bwb_id: BWBR0015703
         artikel: 10d
+    machine_readable:
+      execution:
+        produces:
+          legal_character: BESLUIT_VAN_ALGEMENE_STREKKING
+          decision_type: ALGEMEEN_VERBINDEND_VOORSCHRIFT
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de persoon die het UWV beoordeelt.
+          - name: kan_een_drempelfunctie_volledig_uitvoeren
+            type: boolean
+            required: true
+            description: |-
+              Lid 6 en 7: uit de analyse van het arbeidsvermogen, getoetst aan
+              de methodiek van drempelfuncties (lid 3 tot en met 5), blijkt dat
+              de persoon één drempelfunctie kan uitvoeren, al dan niet met
+              aanpassingen. Onwaar als de persoon geen drempelfunctie of
+              slechts een deel van één drempelfunctie kan uitvoeren. Bron: UWV.
+          - name: beperkingen_duren_ten_minste_zes_maanden
+            type: boolean
+            required: true
+            description: |-
+              Lid 6: de beperkingen of belemmeringen die de persoon ondervindt,
+              bestaan naar verwachting nog ten minste zes maanden na de
+              beoordeling. Bron: UWV.
+        output:
+          - name: wordt_geacht_minimumloon_te_kunnen_verdienen
+            type: boolean
+            description: |-
+              Lid 7: de persoon kan één drempelfunctie uitvoeren, al dan niet
+              met aanpassingen, en wordt geacht in staat te zijn het
+              minimumloon te verdienen.
+          - name: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
+            type: boolean
+            description: |-
+              Lid 6: de persoon kan geen drempelfunctie of voor een deel één
+              drempelfunctie uitvoeren, en de beperkingen bestaan naar
+              verwachting nog ten minste zes maanden. Is geen van beide
+              uitkomsten waar, dan zegt dit artikel niets: de beperkingen zijn
+              dan van kortere duur.
+        actions:
+          - output: wordt_geacht_minimumloon_te_kunnen_verdienen
+            value: $kan_een_drempelfunctie_volledig_uitvoeren
+            legal_basis:
+              law: Besluit SUWI
+              bwb_id: BWBR0013267
+              article: '3.5'
+              paragraph: '7'
+              explanation: |-
+                "Indien uit de analyse [...] blijkt dat een persoon één
+                drempelfunctie kan uitvoeren of één drempelfunctie kan uitvoeren
+                met behulp van aanpassingen wordt de persoon geacht in staat te
+                zijn het minimumloon te verdienen."
+          - output: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
+            value:
+              operation: AND
+              conditions:
+                - operation: NOT
+                  value: $kan_een_drempelfunctie_volledig_uitvoeren
+                - $beperkingen_duren_ten_minste_zes_maanden
+            legal_basis:
+              law: Besluit SUWI
+              bwb_id: BWBR0013267
+              article: '3.5'
+              paragraph: '6'
+              explanation: |-
+                "Indien uit de analyse [...] blijkt dat een persoon geen
+                drempelfunctie of voor een deel één drempelfunctie kan uitvoeren
+                wordt de persoon niet geacht in staat te zijn het minimumloon te
+                verdienen met dien verstande dat de beperkingen of belemmeringen
+                die een persoon ondervindt naar verwachting nog ten minste voor
+                6 maanden na de beoordeling zullen bestaan." Lid 8 (de
+                beoordeling voor 38b lid 2, met een voorziening) en lid 10 (wanneer
+                een beoordeling niet langer geldig is) zijn niet gemodelleerd.
   - number: '4.1'
     text: |-
       1 Bij de toepassing van [artikel 30a, negende lid, van de Wet SUWI][ref1] laat het UWV de werkzaamheden verrichten
