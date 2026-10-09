@@ -55,7 +55,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
       | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-      | uitkeringsduur_hoofdstuk_ii_is_verstreken | false |
+      | einddatum_uitkeringsduur_hoofdstuk_ii | null |
       | dagen_ziekte_onderbreking_proefplaatsing | 0 |
       | datum_aanvang_proefplaatsing | null |
     When I evaluate outputs "uwv_mag_toestemming_verlenen, ww_uitkering_blijft_bestaan" of "werkloosheidswet"

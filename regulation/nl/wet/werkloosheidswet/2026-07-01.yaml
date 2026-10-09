@@ -4243,14 +4243,14 @@ articles:
               Lid 3 onderdeel c: werknemer heeft de werkzaamheden niet
               reeds eerder onbeloond op een proefplaats bij deze
               werkgever (of diens rechtsvoorganger) verricht.
-          - name: uitkeringsduur_hoofdstuk_ii_is_verstreken
-            type: boolean
-            required: true
+          - name: einddatum_uitkeringsduur_hoofdstuk_ii
+            type: date
+            required: false
+            nullable: true
             description: |-
               Lid 2, "onverminderd artikel 20, eerste lid, aanhef en
-              onderdeel b": het recht op uitkering eindigt zodra de
-              uitkeringsduur is verstreken. De proefplaatsing houdt dat
-              einde niet tegen. Bron: UWV.
+              onderdeel b": de dag waarop de uitkeringsduur van hoofdstuk II
+              verstrijkt. Afwezig zonder WW-uitkering. Bron: UWV.
           - name: datum_aanvang_proefplaatsing
             type: date
             nullable: true
@@ -4275,6 +4275,11 @@ articles:
               uitzicht op een aansluitende dienstbetrekking van dezelfde
               of grotere omvang voor ten minste 6 maanden.
         output:
+          - name: uitkeringsduur_hoofdstuk_ii_is_verstreken
+            type: boolean
+            description: |-
+              Artikel 20 lid 1 onderdeel b: op de peildatum is de
+              uitkeringsduur verstreken.
           - name: voldoet_aan_lid_3_voorwaarden
             type: boolean
             description: |-
@@ -4364,6 +4369,29 @@ articles:
                   ontvangen voor de toepassing van dat lid buiten
                   beschouwing, zodat de einddatum met dat aantal dagen
                   opschuift.
+          - output: uitkeringsduur_hoofdstuk_ii_is_verstreken
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $einddatum_uitkeringsduur_hoofdstuk_ii
+                    value: null
+                  then: false
+              default:
+                operation: GREATER_THAN_OR_EQUAL
+                subject: $referencedate.iso
+                value: $einddatum_uitkeringsduur_hoofdstuk_ii
+            legal_basis:
+              law: Werkloosheidswet
+              bwb_id: BWBR0004045
+              article: '20'
+              paragraph: '1'
+              sentence: 'b'
+              explanation: |-
+                Het recht op uitkering eindigt "met ingang van de dag waarop de
+                [...] uitkeringsduur is verstreken". Zonder einddatum is er geen
+                uitkering die kan verstrijken.
           - output: ww_uitkering_blijft_bestaan
             value:
               operation: AND
