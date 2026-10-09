@@ -54,10 +54,13 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
       | vastgesteld_dispensatiepercentage | 70 |
       | minimumloon_per_uur_eurocent | 1450 |
-    When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig, aanspraak_beloning_per_uur_eurocent" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true
     And output "beding_lagere_beloning_is_nietig" is true
+    # Besluit loondispensatie Wajong artikel 3: 70 procent van het minimumloon
+    # per uur per 1 juli 2026 (1499 eurocent).
+    And output "aanspraak_beloning_per_uur_eurocent" equals 1049.3
 
   # ───────────────────────────────────────────────────────────────────
   # JC/WPA — Wajong artikel 2:22

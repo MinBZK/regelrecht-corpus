@@ -190,7 +190,8 @@ articles:
             description: BSN van de werknemer.
           - name: vastgesteld_dispensatiepercentage
             type: number
-            required: true
+            required: false
+            nullable: true
             description: |-
               Het percentage van het minimumloon per uur waarop het UWV de
               aanspraak van de werknemer vaststelt. Volgt uit de
@@ -211,6 +212,7 @@ articles:
         output:
           - name: aanspraak_beloning_per_uur_eurocent
             type: amount
+            nullable: true
             type_spec:
               unit: eurocent
             description: |-
@@ -220,13 +222,21 @@ articles:
         actions:
           - output: aanspraak_beloning_per_uur_eurocent
             value:
-              operation: DIVIDE
-              values:
-                - operation: MULTIPLY
-                  values:
-                    - $minimumloon_per_uur_eurocent
-                    - $vastgesteld_dispensatiepercentage
-                - 100
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $vastgesteld_dispensatiepercentage
+                    value: null
+                  then: null
+              default:
+                operation: DIVIDE
+                values:
+                  - operation: MULTIPLY
+                    values:
+                      - $minimumloon_per_uur_eurocent
+                      - $vastgesteld_dispensatiepercentage
+                  - 100
             legal_basis:
               law: Besluit loondispensatie Wajong
               bwb_id: BWBR0020119

@@ -1952,7 +1952,39 @@ articles:
               hoofdstuk 2 oude Wajong). Bron: UWV-doelgroepregister.
               Direct als parameter; doelgroepvaststelling via
               artikel 1:1 is in deze wet zelf gemodelleerd.
+          - name: vastgesteld_dispensatiepercentage
+            type: number
+            required: false
+            nullable: true
+            description: |-
+              Lid 1: het percentage van het minimumloon per uur waarop het
+              UWV de aanspraak bij loondispensatie vaststelt (Besluit
+              loondispensatie Wajong artikel 3). Volgt uit de
+              loonwaardevaststelling. Bron: UWV.
+        input:
+          - name: aanspraak_bij_loondispensatie_per_uur_eurocent
+            type: amount
+            nullable: true
+            source:
+              regulation: besluit_loondispensatie_wajong
+              output: aanspraak_beloning_per_uur_eurocent
+              parameters:
+                bsn: $bsn
+                vastgesteld_dispensatiepercentage: $vastgesteld_dispensatiepercentage
+              description: |-
+                Besluit loondispensatie Wajong artikel 3: de aanspraak per uur
+                is een percentage van het minimumloon per uur.
         output:
+          - name: aanspraak_beloning_per_uur_eurocent
+            type: amount
+            nullable: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1: de verminderde aanspraak van de werknemer op beloning per
+              uur, "naar evenredigheid", in de rekenvorm van Besluit
+              loondispensatie Wajong artikel 3. Afwezig zonder recht op
+              loondispensatie of zonder vastgesteld percentage.
           - name: heeft_recht_op_loondispensatie
             type: boolean
             description: |-
@@ -1985,6 +2017,25 @@ articles:
                   minimumloon, aanvraag ingediend.
           - output: beding_lagere_beloning_is_nietig
             value: true
+          - output: aanspraak_beloning_per_uur_eurocent
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value: $heeft_recht_op_loondispensatie
+                  then: null
+              default: $aanspraak_bij_loondispensatie_per_uur_eurocent
+            legal_basis:
+              law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+              bwb_id: BWBR0008657
+              article: '2:20'
+              paragraph: '1'
+              explanation: |-
+                "vermindert het UWV [...] de hoogte van de aanspraak op een
+                geldelijke beloning voor de verrichte arbeid naar
+                evenredigheid". Hoe, staat in artikel 3 van het Besluit
+                loondispensatie Wajong.
       open_terms:
         - id: dispensatiepercentage
           type: number
