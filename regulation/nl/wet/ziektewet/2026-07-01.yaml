@@ -2386,8 +2386,7 @@ articles:
             description: |-
               Lid 2 onderdeel c: de dag waarop het recht op een
               arbeidsongeschiktheidsuitkering of arbeidsondersteuning op grond
-              van de Wajong ontstond. Afwezig zonder dat recht, of als de
-              dienstbetrekking pas na het achttiende jaar begon. Bron: UWV.
+              van de Wajong ontstond. Afwezig zonder dat recht. Bron: UWV.
           # --- lid 2 onderdeel b en d: Wsw ---
           - name: is_wsw_werknemer
             type: boolean
@@ -3031,9 +3030,10 @@ articles:
             type: date
             nullable: true
             description: |-
-              De laatste dag waarop een ongeschiktheid kan beginnen die nog
-              onder de no-riskpolis valt. Afwezig als er geen einde is (lid 2)
-              of geen recht.
+              De dag waarop de termijn van vijf jaar verstrijkt: een
+              ongeschiktheid die op of na deze dag begint, valt niet meer onder
+              de no-riskpolis. Afwezig als er geen einde is (lid 2) of geen
+              recht.
           - name: heeft_recht_op_no_risk_polis
             type: boolean
             description: |-
@@ -3343,6 +3343,9 @@ articles:
                   - operation: LESS_THAN
                     subject: $datum_aanvang_dienstbetrekking
                     value: $datum_ontstaan_recht_wajong
+                  - operation: LESS_THAN_OR_EQUAL
+                    subject: $datum_ontstaan_recht_wajong
+                    value: $referencedate.iso
             legal_basis:
               law: Ziektewet
               bwb_id: BWBR0001888
@@ -3353,6 +3356,10 @@ articles:
                 zijn recht op een arbeidsongeschiktheidsuitkering of
                 arbeidsondersteuning op grond van de Wajong ontstond, omdat die
                 dienstbetrekking is aangevangen voordat hij achttien jaar werd".
+                Slotzin van lid 2: "Het recht op ziekengeld van de werknemer,
+                bedoeld in onderdeel c, ontstaat niet eerder dan zijn recht op
+                [...] de Wajong"; vóór die dag is aan onderdeel c dus nog niet
+                voldaan.
           - output: voldoet_aan_lid_2
             value:
               operation: OR

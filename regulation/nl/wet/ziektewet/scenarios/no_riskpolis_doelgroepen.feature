@@ -520,9 +520,11 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
     And output "duur_no_risk_polis_jaren" equals 5
 
   Scenario: Lotte begon vóór haar achttiende te werken en krijgt daarna Wajong: lid 2 onderdeel c
-    # Aangenomen: haar Wajong-recht ontstaat op 1 december 2026. De
-    # dienstbetrekking begon op 1 augustus 2025, toen zij zestien was.
-    Given the calculation date is "2026-07-01"
+    # Aangenomen: haar Wajong-recht ontstaat op 1 december 2026, na haar
+    # achttiende (3 november 2026). De dienstbetrekking begon op 1 augustus
+    # 2025, toen zij zestien was. Lid 2 slotzin: het recht op ziekengeld
+    # ontstaat niet eerder dan het Wajong-recht, dus de peildatum ligt erna.
+    Given the calculation date is "2027-01-15"
     And the following parameters:
       | bsn | 999990203 |
       | geboortedatum | 2008-11-03 |
