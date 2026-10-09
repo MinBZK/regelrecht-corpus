@@ -52,7 +52,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | gebruikelijke_beloning_per_uur_eurocent | 1450 |
       | gerechtvaardigde_beloning_per_uur_eurocent | 1000 |
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
-      | vastgesteld_dispensatiepercentage | 70 |
+      | vastgesteld_aanspraakpercentage_minimumloon | 70 |
       | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig, aanspraak_beloning_per_uur_eurocent" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
@@ -61,6 +61,26 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
     # Besluit loondispensatie Wajong artikel 3: 70 procent van het minimumloon
     # per uur per 1 juli 2026 (1499 eurocent).
     And output "aanspraak_beloning_per_uur_eurocent" equals 1049.3
+
+  Scenario: Geen loondispensatie als de beloning minder dan 25 procent lager ligt
+    # Besluit loondispensatie Wajong artikel 1: de grens is 75 procent van
+    # 1450 = 1087,5 eurocent; een gerechtvaardigde beloning van 1100 ligt
+    # daarboven. Het oordeel van het UWV alleen is dan niet genoeg.
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                               | 999990100 |
+      | is_wsw_werknemer                                  | false     |
+      | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
+      | aanvraag_loondispensatie_ingediend                | true      |
+      | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
+      | gebruikelijke_beloning_per_uur_eurocent | 1450 |
+      | gerechtvaardigde_beloning_per_uur_eurocent | 1100 |
+      | verwachte_duur_verminderde_prestatie_maanden | 12 |
+      | vastgesteld_aanspraakpercentage_minimumloon | 70 |
+      | minimumloon_per_uur_eurocent | 1450 |
+    When I evaluate outputs "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    Then the execution succeeds
+    And output "heeft_recht_op_loondispensatie" is false
 
   # ───────────────────────────────────────────────────────────────────
   # JC/WPA — Wajong artikel 2:22

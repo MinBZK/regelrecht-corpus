@@ -19,7 +19,7 @@ Feature: Aanspraak per uur bij loondispensatie, Besluit loondispensatie Wajong a
   Scenario: Sadee, loonwaarde 70 procent
     Given the following parameters:
       | bsn                              | 999990100 |
-      | vastgesteld_dispensatiepercentage | 70        |
+      | vastgesteld_aanspraakpercentage_minimumloon | 70        |
     When I evaluate outputs "aanspraak_beloning_per_uur_eurocent" of "besluit_loondispensatie_wajong"
     Then the execution succeeds
     And output "aanspraak_beloning_per_uur_eurocent" equals 1049.3
@@ -27,7 +27,7 @@ Feature: Aanspraak per uur bij loondispensatie, Besluit loondispensatie Wajong a
   Scenario: Geen vermindering bij 100 procent
     Given the following parameters:
       | bsn                              | 999990100 |
-      | vastgesteld_dispensatiepercentage | 100       |
+      | vastgesteld_aanspraakpercentage_minimumloon | 100       |
     When I evaluate outputs "aanspraak_beloning_per_uur_eurocent" of "besluit_loondispensatie_wajong"
     Then the execution succeeds
     And output "aanspraak_beloning_per_uur_eurocent" equals 1499

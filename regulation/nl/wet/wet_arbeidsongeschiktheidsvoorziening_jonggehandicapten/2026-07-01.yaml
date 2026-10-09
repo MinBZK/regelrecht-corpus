@@ -1952,16 +1952,68 @@ articles:
               hoofdstuk 2 oude Wajong). Bron: UWV-doelgroepregister.
               Direct als parameter; doelgroepvaststelling via
               artikel 1:1 is in deze wet zelf gemodelleerd.
-          - name: vastgesteld_dispensatiepercentage
+          - name: vastgesteld_aanspraakpercentage_minimumloon
             type: number
             required: false
             nullable: true
             description: |-
               Lid 1: het percentage van het minimumloon per uur waarop het
               UWV de aanspraak bij loondispensatie vaststelt (Besluit
-              loondispensatie Wajong artikel 3). Volgt uit de
-              loonwaardevaststelling. Bron: UWV.
+              loondispensatie Wajong artikel 3), bijvoorbeeld 70. Volgt uit de
+              loonwaardevaststelling. Het verminderingspercentage is honderd
+              min dit getal. Bron: UWV.
+          - name: gerechtvaardigde_beloning_per_uur_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1, via Besluit loondispensatie Wajong artikel 1: de beloning
+              per gewerkt uur die de arbeidsprestatie rechtvaardigt. Bron:
+              arbeidsdeskundig onderzoek van het UWV.
+          - name: gebruikelijke_beloning_per_uur_eurocent
+            type: amount
+            required: true
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 1, via Besluit loondispensatie Wajong artikel 1: de beloning
+              per uur die voor dezelfde arbeid gebruikelijk is. Bron:
+              arbeidsdeskundig onderzoek van het UWV.
+          - name: verwachte_duur_verminderde_prestatie_maanden
+            type: number
+            required: true
+            description: |-
+              Lid 1, via Besluit loondispensatie Wajong artikel 2: het aantal
+              maanden waarin naar verwachting sprake is van een duidelijk
+              verminderde arbeidsprestatie. Bron: UWV.
         input:
+          - name: voldoet_aan_drempel_besluit_artikel_1
+            type: boolean
+            source:
+              regulation: besluit_loondispensatie_wajong
+              output: duidelijk_minder_dan_minimumloon
+              parameters:
+                bsn: $bsn
+                gerechtvaardigde_beloning_per_uur_eurocent: $gerechtvaardigde_beloning_per_uur_eurocent
+                gebruikelijke_beloning_per_uur_eurocent: $gebruikelijke_beloning_per_uur_eurocent
+              description: |-
+                Besluit loondispensatie Wajong artikel 1: een duidelijk
+                verminderde arbeidsprestatie wordt slechts aangenomen bij een
+                gerechtvaardigde beloning ten minste 25 procent onder de
+                gebruikelijke.
+          - name: voldoet_aan_zesmaandeneis
+            type: boolean
+            source:
+              regulation: besluit_loondispensatie_wajong
+              output: voldoet_aan_zesmaandeneis
+              parameters:
+                bsn: $bsn
+                verwachte_duur_verminderde_prestatie_maanden: $verwachte_duur_verminderde_prestatie_maanden
+              description: |-
+                Besluit loondispensatie Wajong artikel 2: loondispensatie wordt
+                slechts verleend bij een verwachte duur van ten minste zes
+                maanden.
           - name: aanspraak_bij_loondispensatie_per_uur_eurocent
             type: amount
             nullable: true
@@ -1970,7 +2022,7 @@ articles:
               output: aanspraak_beloning_per_uur_eurocent
               parameters:
                 bsn: $bsn
-                vastgesteld_dispensatiepercentage: $vastgesteld_dispensatiepercentage
+                vastgesteld_aanspraakpercentage_minimumloon: $vastgesteld_aanspraakpercentage_minimumloon
               description: |-
                 Besluit loondispensatie Wajong artikel 3: de aanspraak per uur
                 is een percentage van het minimumloon per uur.
@@ -2005,6 +2057,8 @@ articles:
                 - operation: NOT
                   value: $is_wsw_werknemer
                 - $arbeidsprestatie_duidelijk_minder_dan_minimumloon
+                - $voldoet_aan_drempel_besluit_artikel_1
+                - $voldoet_aan_zesmaandeneis
                 - $aanvraag_loondispensatie_ingediend
               legal_basis:
                 law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
@@ -2014,7 +2068,10 @@ articles:
                 explanation: |-
                   Cumulatieve voorwaarden lid 1: Wajong-status,
                   niet-Wsw, arbeidsprestatie duidelijk minder dan
-                  minimumloon, aanvraag ingediend.
+                  minimumloon, aanvraag ingediend. Het oordeel van het UWV
+                  over "duidelijk minder" is gebonden aan de ondergrens van
+                  Besluit loondispensatie Wajong artikel 1 (ten minste 25
+                  procent lager) en artikel 2 (ten minste zes maanden).
           - output: beding_lagere_beloning_is_nietig
             value: true
           - output: aanspraak_beloning_per_uur_eurocent
@@ -2037,22 +2094,6 @@ articles:
                 evenredigheid". Hoe, staat in artikel 3 van het Besluit
                 loondispensatie Wajong.
       open_terms:
-        - id: dispensatiepercentage
-          type: number
-          required: false
-          delegated_to: UWV
-          delegation_type: BELEIDSREGEL
-          legal_basis: artikel 2:20 lid 1 Wajong (uitvoeringsbeleid UWV)
-          description: |-
-            Het verminderingspercentage waarmee de beloning evenredig
-            naar beneden wordt bijgesteld. Vastgesteld door UWV per
-            individueel geval op basis van loonwaardevaststelling.
-            Niet eenduidig in de wet zelf — leeft in UWV-beleidsregels
-            ('Beleidsregels UWV loondispensatie').
-          default:
-            actions:
-              - output: dispensatiepercentage
-                value: 0
         - id: duidelijk_minder_dan_minimumloon
           description: >-
             Of de arbeidsprestatie duidelijk minder is dan de prestatie die een

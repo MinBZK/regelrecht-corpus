@@ -188,7 +188,7 @@ articles:
             type: string
             required: true
             description: BSN van de werknemer.
-          - name: vastgesteld_dispensatiepercentage
+          - name: vastgesteld_aanspraakpercentage_minimumloon
             type: number
             required: false
             nullable: true
@@ -226,7 +226,7 @@ articles:
               cases:
                 - when:
                     operation: EQUALS
-                    subject: $vastgesteld_dispensatiepercentage
+                    subject: $vastgesteld_aanspraakpercentage_minimumloon
                     value: null
                   then: null
               default:
@@ -235,7 +235,7 @@ articles:
                   - operation: MULTIPLY
                     values:
                       - $minimumloon_per_uur_eurocent
-                      - $vastgesteld_dispensatiepercentage
+                      - $vastgesteld_aanspraakpercentage_minimumloon
                   - 100
             legal_basis:
               law: Besluit loondispensatie Wajong

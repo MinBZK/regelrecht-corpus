@@ -44,7 +44,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | gebruikelijke_beloning_per_uur_eurocent | 1450 |
       | gerechtvaardigde_beloning_per_uur_eurocent | 1000 |
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
-      | vastgesteld_dispensatiepercentage | 70 |
+      | vastgesteld_aanspraakpercentage_minimumloon | 70 |
       | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
