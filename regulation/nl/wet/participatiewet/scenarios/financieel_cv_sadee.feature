@@ -55,7 +55,9 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | kan_minimumloon_niet_verdienen                      | true      |
       | datum_aanvraag_lks | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | true |
+      # Sadee heeft Wajong en geen bijstand (juristdoorloop 2026-09-02); geen van
+      # de drie routes van lid 2 is op haar van toepassing.
+      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_percentage | 70 |

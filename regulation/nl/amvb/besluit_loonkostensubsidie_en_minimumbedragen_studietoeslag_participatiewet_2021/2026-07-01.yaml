@@ -326,6 +326,7 @@ articles:
               procent van de werktijd omvatten.
           - name: loonwaarde_percentage
             type: number
+            nullable: true
             description: |-
               Lid 2: de loonwaarde, als percentage van de bij de normfunctie
               behorende prestatie: de som van de arbeidsprestaties per
@@ -374,23 +375,30 @@ articles:
                 werktijd van de werknemer omvatten".
           - output: loonwaarde_percentage
             value:
-              operation: ROUND
-              precision: 0
-              value:
-                operation: FOREACH
-                collection: $hoofdtaken
-                as: current
-                combine: ADD
-                body:
-                  operation: DIVIDE
-                  values:
-                    - operation: MULTIPLY
-                      values:
-                        - $current.tempo_percentage
-                        - $current.kwaliteit_percentage
-                        - $current.netto_werktijd_percentage
-                        - $current.bijdrage_werktijd_percentage
-                    - 1000000
+              operation: IF
+              cases:
+                - when:
+                    operation: NOT
+                    value: $hoofdtaken_voldoen_aan_artikel_5_lid_1
+                  then: null
+              default:
+                operation: ROUND
+                precision: 0
+                value:
+                  operation: FOREACH
+                  collection: $hoofdtaken
+                  as: current
+                  combine: ADD
+                  body:
+                    operation: DIVIDE
+                    values:
+                      - operation: MULTIPLY
+                        values:
+                          - $current.tempo_percentage
+                          - $current.kwaliteit_percentage
+                          - $current.netto_werktijd_percentage
+                          - $current.bijdrage_werktijd_percentage
+                      - 1000000
             legal_basis:
               law: Besluit loonkostensubsidie en minimumbedragen studietoeslag Participatiewet 2021
               bwb_id: BWBR0044894
@@ -402,7 +410,9 @@ articles:
                 procenten." Artikel 5 lid 2: AP = T * K * N * BT, met T, K en N
                 als percentage van de prestatie bij de normfunctie en BT als
                 aandeel in de werktijd; met vier percentages is AP in procenten
-                het product gedeeld door 100^3. Lid 1 en 3 (vaststelling door
+                het product gedeeld door 100^3. Voldoen de hoofdtaken niet aan
+                artikel 5 lid 1 (meer dan vijf, of samen geen 100 procent), dan
+                is er geen geldig vastgestelde loonwaarde. Lid 1 en 3 (vaststelling door
                 het college, de taken van de deskundige) en artikel 4 (de
                 normfunctie) gaan over de werkwijze en zijn niet gemodelleerd.
   - number: '4'

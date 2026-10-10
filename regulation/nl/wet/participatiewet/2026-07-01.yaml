@@ -2798,12 +2798,17 @@ articles:
                         value: null
                   then: false
               default:
-                operation: LESS_THAN_OR_EQUAL
-                subject: $datum_aanvraag_lks
-                value:
-                  operation: DATE_ADD
-                  date: $datum_aanvang_dienstbetrekking
-                  months: 6
+                operation: AND
+                conditions:
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_aanvraag_lks
+                    value: $datum_aanvang_dienstbetrekking
+                  - operation: LESS_THAN_OR_EQUAL
+                    subject: $datum_aanvraag_lks
+                    value:
+                      operation: DATE_ADD
+                      date: $datum_aanvang_dienstbetrekking
+                      months: 6
             legal_basis:
               law: Participatiewet
               bwb_id: BWBR0015703
@@ -2811,8 +2816,9 @@ articles:
               paragraph: '2'
               explanation: |-
                 "op aanvraag van de werkgever of werknemer, gedaan binnen zes
-                maanden na het begin van de dienstbetrekking". Zonder
-                aanvraagdatum of aanvangsdatum is niet voldaan.
+                maanden na het begin van de dienstbetrekking": op of na de
+                aanvang, en uiterlijk zes maanden erna. Zonder aanvraagdatum
+                of aanvangsdatum is niet voldaan.
           - output: heeft_recht_op_lks_lid_2
             value:
               operation: AND
