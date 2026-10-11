@@ -1,98 +1,77 @@
-Feature: Doelgroep loonkostensubsidie, met de mogelijkheden tot arbeidsparticipatie
+Feature: Doelgroep loonkostensubsidie, Participatiewet artikel 6 lid 1 onderdeel e
   Als gemeente
   Wil ik weten of iemand valt onder de omschrijving van de doelgroep
   loonkostensubsidie in Participatiewet artikel 6 lid 1 onderdeel e
   Zodat zichtbaar is waaraan het college toetst voordat het op grond van
   artikel 10c vaststelt dat iemand tot de doelgroep behoort
 
-  # Toegevoegd 2026-10-06. Artikel 6 lid 1 onderdeel e vraagt dat iemand "wel
-  # mogelijkheden tot arbeidsparticipatie" heeft. Wat dat is, staat in artikel 2
-  # van het Besluit loonkostensubsidie en minimumbedragen studietoeslag
-  # Participatiewet 2021 (tot 2026-10-09 gemodelleerd in het per 1 juli 2021
-  # ingetrokken Besluit loonkostensubsidie Participatiewet): een taak kunnen
-  # uitvoeren, basale werknemersvaardigheden, een uur aaneengesloten kunnen
-  # werken, en ten minste vier uur per dag belastbaar zijn, of twee uur en dan
-  # per uur ten minste het minimumloon per uur verdienen.
+  # Toegevoegd 2026-10-06, teruggebracht 2026-10-11. Artikel 6 lid 1
+  # onderdeel e vraagt drie dingen: een persoon als bedoeld in artikel 7 lid 1
+  # onderdeel a of 7a, van wie is vastgesteld dat hij met voltijdse arbeid het
+  # minimumloon niet kan verdienen, en die "wel mogelijkheden tot
+  # arbeidsparticipatie" heeft. Wie onder artikel 10d lid 2 valt, hoort er ook
+  # bij.
   #
-  # Het minimumloon per uur komt uit de Wet minimumloon, artikel 8 met de
-  # herziening per 1 juli 2026: 1499 eurocent. Artikel 2 lid 2 verwijst daar
-  # rechtstreeks naar; de omrekening op 38 uur van het oude besluit is weg.
+  # Wat mogelijkheden tot arbeidsparticipatie zijn, regelt de algemene
+  # maatregel van bestuur van artikel 10e lid 1 (Besluit loonkostensubsidie en
+  # minimumbedragen studietoeslag Participatiewet 2021, artikel 2). De jurist
+  # heeft dat besluit op 25 september 2026 buiten de scope geplaatst; het
+  # oordeel is hier een aangeleverd feit.
   #
   # Artikel 10d leest de vaststelling van het college als gegeven
   # (behoort_tot_doelgroep_lks). Deze scenario's raken die keten niet.
-
-  # Afgeleid op 2026-10-09: aaneengesloten_werkduur_uren vervangt de boolean
-  # "kan ten minste een uur aaneengesloten werken"; waar die waar was, staat
-  # hier 2 uur. Een aanname, geen gegeven uit de persona.
 
   Background:
     Given the calculation date is "2026-07-01"
 
   Scenario: Koen valt onder de omschrijving van de doelgroep
-    # Koen werkt 32 uur per week, dus ruim vier uur per dag.
     Given the following parameters:
-      | bsn                                                               | 999993653 |
-      | is_persoon_artikel_7_lid_1_a_of_7a                                | true      |
-      | is_persoon_kring_ambtshalve_vaststelling                          | true      |
-      | datum_vorige_aanvraag_doelgroepvaststelling                       | null      |
+      | bsn                                                                | 999993653 |
+      | is_persoon_artikel_7_lid_1_a_of_7a                                 | true      |
+      | is_persoon_kring_ambtshalve_vaststelling                           | true      |
+      | datum_vorige_aanvraag_doelgroepvaststelling                        | null      |
       | is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen | true      |
-      | is_persoon_artikel_10d_lid_2                                      | false     |
-      | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
-      | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | aaneengesloten_werkduur_uren | 2 |
-      | belastbaarheid_uren_per_dag                                       | 6.4       |
-      | verdienvermogen_per_uur_eurocent                                  | null      |
+      | heeft_mogelijkheden_tot_arbeidsparticipatie                        | true      |
+      | is_persoon_artikel_10d_lid_2                                       | false     |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
     Then the execution succeeds
     And output "voldoet_aan_omschrijving_doelgroep_lks" is true
 
-  Scenario: Drie uur per dag belastbaar en het minimumloon per uur verdienen is genoeg
+  Scenario: Zonder mogelijkheden tot arbeidsparticipatie valt iemand erbuiten
     Given the following parameters:
-      | bsn                                                               | 999993653 |
-      | is_persoon_artikel_7_lid_1_a_of_7a                                | true      |
-      | is_persoon_kring_ambtshalve_vaststelling                          | true      |
-      | datum_vorige_aanvraag_doelgroepvaststelling                       | null      |
+      | bsn                                                                | 999993653 |
+      | is_persoon_artikel_7_lid_1_a_of_7a                                 | true      |
+      | is_persoon_kring_ambtshalve_vaststelling                           | true      |
+      | datum_vorige_aanvraag_doelgroepvaststelling                        | null      |
       | is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen | true      |
-      | is_persoon_artikel_10d_lid_2                                      | false     |
-      | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
-      | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | aaneengesloten_werkduur_uren | 2 |
-      | belastbaarheid_uren_per_dag                                       | 3         |
-      | verdienvermogen_per_uur_eurocent                                  | 1499      |
+      | heeft_mogelijkheden_tot_arbeidsparticipatie                        | false     |
+      | is_persoon_artikel_10d_lid_2                                       | false     |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
     Then the execution succeeds
-    And output "voldoet_aan_omschrijving_doelgroep_lks" is true
+    And output "voldoet_aan_omschrijving_doelgroep_lks" is false
 
-  Scenario: Drie uur per dag belastbaar en één cent onder het minimumloon per uur is niet genoeg
+  Scenario: Zolang het oordeel over de mogelijkheden ontbreekt, is er geen doelgroep
     Given the following parameters:
-      | bsn                                                               | 999993653 |
-      | is_persoon_artikel_7_lid_1_a_of_7a                                | true      |
-      | is_persoon_kring_ambtshalve_vaststelling                          | true      |
-      | datum_vorige_aanvraag_doelgroepvaststelling                       | null      |
+      | bsn                                                                | 999993653 |
+      | is_persoon_artikel_7_lid_1_a_of_7a                                 | true      |
+      | is_persoon_kring_ambtshalve_vaststelling                           | true      |
+      | datum_vorige_aanvraag_doelgroepvaststelling                        | null      |
       | is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen | true      |
-      | is_persoon_artikel_10d_lid_2                                      | false     |
-      | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
-      | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | aaneengesloten_werkduur_uren | 2 |
-      | belastbaarheid_uren_per_dag                                       | 3         |
-      | verdienvermogen_per_uur_eurocent                                  | 1498      |
+      | heeft_mogelijkheden_tot_arbeidsparticipatie                        | null      |
+      | is_persoon_artikel_10d_lid_2                                       | false     |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
     Then the execution succeeds
     And output "voldoet_aan_omschrijving_doelgroep_lks" is false
 
   Scenario: Wie onder artikel 10d lid 2 valt, hoort er ook zonder die mogelijkheden bij
     Given the following parameters:
-      | bsn                                                               | 999993653 |
-      | is_persoon_artikel_7_lid_1_a_of_7a                                | true      |
-      | is_persoon_kring_ambtshalve_vaststelling                          | true      |
-      | datum_vorige_aanvraag_doelgroepvaststelling                       | null      |
+      | bsn                                                                | 999993653 |
+      | is_persoon_artikel_7_lid_1_a_of_7a                                 | true      |
+      | is_persoon_kring_ambtshalve_vaststelling                           | true      |
+      | datum_vorige_aanvraag_doelgroepvaststelling                        | null      |
       | is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen | true      |
-      | is_persoon_artikel_10d_lid_2                                      | true      |
-      | kan_taak_uitvoeren_in_arbeidsorganisatie                          | true      |
-      | beschikt_over_basale_werknemersvaardigheden                       | true      |
-      | aaneengesloten_werkduur_uren | 2 |
-      | belastbaarheid_uren_per_dag                                       | 1         |
-      | verdienvermogen_per_uur_eurocent                                  | null      |
+      | heeft_mogelijkheden_tot_arbeidsparticipatie                        | false     |
+      | is_persoon_artikel_10d_lid_2                                       | true      |
     When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
     Then the execution succeeds
     And output "voldoet_aan_omschrijving_doelgroep_lks" is true

@@ -2126,6 +2126,18 @@ articles:
               Artikel 6 lid 1 onderdeel e: van de persoon "is vastgesteld dat
               zij met voltijdse arbeid niet in staat zijn tot het verdienen van
               het wettelijk minimumloon". Bron: gemeente.
+          - name: heeft_mogelijkheden_tot_arbeidsparticipatie
+            type: boolean
+            required: false
+            nullable: true
+            description: |-
+              Artikel 6 lid 1 onderdeel e: de persoon heeft "wel mogelijkheden
+              tot arbeidsparticipatie". Wat dat is, regelt de algemene maatregel
+              van bestuur van artikel 10e lid 1; vindplaats: Besluit
+              loonkostensubsidie en minimumbedragen studietoeslag Participatiewet
+              2021 (BWBR0044894), artikel 2. Op 25 september 2026 door de jurist
+              buiten de scope geplaatst; het oordeel is daarom een aangeleverd
+              feit. Bron: gemeente.
           - name: is_persoon_artikel_10d_lid_2
             type: boolean
             required: false
@@ -2219,7 +2231,9 @@ articles:
                     - operation: EQUALS
                       subject: $is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen
                       value: true
-                    - $heeft_mogelijkheden_tot_arbeidsparticipatie
+                    - operation: EQUALS
+                      subject: $heeft_mogelijkheden_tot_arbeidsparticipatie
+                      value: true
                 - operation: EQUALS
                   subject: $is_persoon_artikel_10d_lid_2
                   value: true
@@ -2237,21 +2251,11 @@ articles:
                 wettelijk minimumloon, doch wel mogelijkheden tot
                 arbeidsparticipatie hebben, alsmede personen als bedoeld in
                 artikel 10d, tweede lid". Wat mogelijkheden tot
-                arbeidsparticipatie zijn, zegt het Besluit loonkostensubsidie
-                Participatiewet in artikel 1, op grond van artikel 10e lid 1.
-      open_terms:
-        - id: heeft_mogelijkheden_tot_arbeidsparticipatie
-          type: boolean
-          required: true
-          delegated_to: regering
-          delegation_type: AMVB
-          legal_basis: artikel 10e lid 1 Participatiewet
-          description: |-
-            Artikel 6 lid 1 onderdeel e: de persoon heeft "wel mogelijkheden tot
-            arbeidsparticipatie". Artikel 10e lid 1 laat de regels daarover aan
-            een algemene maatregel van bestuur. Ingevuld door artikel 2 van
-            het Besluit loonkostensubsidie en minimumbedragen studietoeslag
-            Participatiewet 2021.
+                arbeidsparticipatie zijn, regelt de algemene maatregel van
+                bestuur van artikel 10e lid 1 (vindplaats: Besluit
+                loonkostensubsidie en minimumbedragen studietoeslag
+                Participatiewet 2021, artikel 2). Die staat buiten de scope;
+                het oordeel is een aangeleverd feit.
   - number: 10d
     text: |-
       1 Indien een werkgever voornemens is een dienstbetrekking aan te gaan met een persoon die behoort tot de
@@ -2494,11 +2498,13 @@ articles:
             required: true
             description: |-
               De vastgestelde loonwaarde. Artikel 6 lid 1 onderdeel g:
-              "vastgesteld percentage van het wettelijk minimumloon". Het
-              Besluit loonkostensubsidie en minimumbedragen studietoeslag
-              Participatiewet 2021 (artikel 3 lid 2) rondt af op hele
-              procenten. Bij lid 1 onderdeel b, zonder vaststelling, kan het
-              nul zijn; dan geldt de 50-procentroute. Bron: college.
+              "vastgesteld percentage van het wettelijk minimumloon". De
+              wijze van vaststelling regelt de algemene maatregel van bestuur
+              van artikel 10e lid 1 (vindplaats: Besluit loonkostensubsidie en
+              minimumbedragen studietoeslag Participatiewet 2021, artikel 3);
+              die staat buiten de scope, de loonwaarde is een aangeleverd
+              feit. Bij lid 1 onderdeel b, zonder vaststelling, kan het nul
+              zijn; dan geldt de 50-procentroute. Bron: college.
           - name: overeengekomen_arbeidsduur_uren_per_week
             type: number
             required: true
@@ -3304,10 +3310,12 @@ articles:
           description: |-
             Lid 1 — bij of krachtens AMvB kunnen regels worden gesteld
             over artikel 6 ten aanzien van de doelgroep loonkostensubsidie,
-            de loonwaarde en de wijze waarop die wordt vastgesteld. Het
-            Besluit loonkostensubsidie en minimumbedragen studietoeslag
-            Participatiewet 2021 vult dit in; het verving per 1 juli 2021 het
-            Besluit loonkostensubsidie Participatiewet.
+            de loonwaarde en de wijze waarop die wordt vastgesteld.
+            Vindplaats: Besluit loonkostensubsidie en minimumbedragen
+            studietoeslag Participatiewet 2021 (BWBR0044894), dat per 1 juli
+            2021 het Besluit loonkostensubsidie Participatiewet verving. Op
+            25 september 2026 door de jurist buiten de scope geplaatst en
+            daarom niet ingevuld; alleen de vindplaats staat als default.
           default:
             actions:
               - output: regels_doelgroep_lks_en_loonwaarde_amvb
