@@ -1632,13 +1632,15 @@ articles:
               lid 1 onderdeel a) toegeleid naar een dienstbetrekking, of er
               wordt loonkostensubsidie verstrekt op grond van Pwet 10d lid 2.
               Bron: gemeente.
-          - name: uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+          - name: uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
             type: boolean
             required: true
             description: |-
-              38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
-              de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
-              1). Bron: UWV.
+              38b.1.a: "van wie uitsluitend op verzoek van het college van
+              burgemeester en wethouders door het UWV is vastgesteld dat hij
+              niet in staat is tot het verdienen van het wettelijk minimumloon".
+              Hoe het UWV dat vaststelt (Besluit SUWI artikel 3.5) staat buiten
+              de scope; de vaststelling is een aangeleverd feit. Bron: UWV.
           - name: college_heeft_loonwaarde_vastgesteld_conform_10d
             type: boolean
             required: true
@@ -1655,23 +1657,6 @@ articles:
               wettelijk minimumloon (Participatiewet artikel 6 lid 1 onderdeel
               g). Onder de 100 bedraagt zij bij voltijdse arbeid minder dan het
               minimumloon. Afwezig zonder vaststelling. Bron: gemeente.
-          - name: kan_een_drempelfunctie_volledig_uitvoeren
-            type: boolean
-            required: false
-            nullable: true
-            description: |-
-              38b.1.a en e, via Besluit SUWI 3.5 lid 6 en 7: uit de beoordeling
-              van het UWV blijkt dat de persoon één drempelfunctie kan
-              uitvoeren, al dan niet met aanpassingen. Afwezig zonder
-              beoordeling. Bron: UWV.
-          - name: beperkingen_duren_ten_minste_zes_maanden
-            type: boolean
-            required: false
-            nullable: true
-            description: |-
-              38b.1.a en e, via Besluit SUWI 3.5 lid 6: de beperkingen bestaan
-              naar verwachting nog ten minste zes maanden na de beoordeling.
-              Afwezig zonder beoordeling. Bron: UWV.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -1713,13 +1698,15 @@ articles:
               38b.1.e: de persoon is met ondersteuning van het college (Pwet 7
               lid 1 onderdeel a) toegeleid naar een dienstbetrekking. Bron:
               gemeente.
-          - name: uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+          - name: uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
             type: boolean
             required: true
             description: |-
-              38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
-              of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
-              Bron: UWV.
+              38b.1.e: "van wie op eigen verzoek door het UWV is of wordt
+              vastgesteld dat hij niet in staat is tot het verdienen van het
+              wettelijk minimumloon". Hoe het UWV dat vaststelt (Besluit SUWI
+              artikel 3.5) staat buiten de scope; de vaststelling is een
+              aangeleverd feit. Bron: UWV.
           - name: laatste_dag_persoon_lid_1_b_of_c
             type: date
             required: false
@@ -1833,19 +1820,6 @@ articles:
               van arbeidsbeperkten (artikel 38d lid 1) is nog niet
               geëindigd. Bron: UWV-registratie.
         input:
-          - name: uwv_acht_niet_in_staat_minimumloon_te_verdienen
-            type: boolean
-            nullable: true
-            source:
-              regulation: besluit_suwi
-              output: wordt_niet_geacht_minimumloon_te_kunnen_verdienen
-              parameters:
-                bsn: $bsn
-                kan_een_drempelfunctie_volledig_uitvoeren: $kan_een_drempelfunctie_volledig_uitvoeren
-                beperkingen_duren_ten_minste_zes_maanden: $beperkingen_duren_ten_minste_zes_maanden
-              description: |-
-                Besluit SUWI artikel 3.5 lid 6: het UWV acht de persoon niet in
-                staat het minimumloon te verdienen. Afwezig zonder beoordeling.
           - name: is_uitgesloten_beschut_werk_pwet_10b
             type: boolean
             source:
@@ -1986,12 +1960,7 @@ articles:
                 - $is_pwet_toegeleid_of_lks_lid_2
                 - operation: OR
                   conditions:
-                    - operation: AND
-                      conditions:
-                        - $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
-                        - operation: EQUALS
-                          subject: $uwv_acht_niet_in_staat_minimumloon_te_verdienen
-                          value: true
+                    - $uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
                     - $loonwaarde_onder_minimumloon_vastgesteld
             legal_basis:
               law: Wet financiering sociale verzekeringen
@@ -1999,10 +1968,12 @@ articles:
               article: 38b
               paragraph: '1.a'
               explanation: |-
-                Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, met
-                UWV-vaststelling 'kan WML niet verdienen' op verzoek van
-                het college (de drempelfunctietoets van Besluit SUWI 3.5),
-                dan wel college-loonwaarde < WML.
+                Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, en
+                "uitsluitend op verzoek van het college [...] door het UWV
+                is vastgesteld dat hij niet in staat is tot het verdienen
+                van het wettelijk minimumloon", dan wel een door het
+                college vastgestelde loonwaarde onder het minimumloon. Hoe
+                het UWV vaststelt (Besluit SUWI 3.5) staat buiten de scope.
           - output: voldoet_aan_grond_38b_1_b
             value: $is_wsw_geindiceerd_of_oude_indicatie
             legal_basis:
@@ -2051,19 +2022,17 @@ articles:
               operation: AND
               conditions:
                 - $is_pwet_toegeleid_naar_dienstbetrekking
-                - $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
-                - operation: EQUALS
-                  subject: $uwv_acht_niet_in_staat_minimumloon_te_verdienen
-                  value: true
+                - $uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1.e'
               explanation: |-
-                Pwet 7 lid 1.a-toeleiding + UWV-vaststelling op eigen
-                verzoek dat persoon WML niet kan verdienen (Besluit SUWI
-                3.5).
+                Pwet 7 lid 1.a-toeleiding en "op eigen verzoek door het UWV
+                is of wordt vastgesteld dat hij niet in staat is tot het
+                verdienen van het wettelijk minimumloon". Hoe het UWV
+                vaststelt (Besluit SUWI 3.5) staat buiten de scope.
           - output: voldoet_aan_grond_38b_1_f
             value:
               operation: AND

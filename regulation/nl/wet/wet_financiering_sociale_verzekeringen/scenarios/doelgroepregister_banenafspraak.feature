@@ -42,7 +42,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990101  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | true |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | true |
       | loonwaarde_percentage | 60 |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -50,7 +50,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -67,8 +67,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_1_b, voldoet_aan_grond_38b_1_c, voldoet_aan_grond_38b_1_d, voldoet_aan_grond_38b_1_e, voldoet_aan_grond_38b_1_f, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister, datum_opname_doelgroepregister, vaststelling_door" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -93,7 +91,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990100  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -101,7 +99,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -118,8 +116,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_1_c, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister, datum_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
@@ -140,7 +136,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990100  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -148,7 +144,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -165,8 +161,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -187,7 +181,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990100  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -195,7 +189,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -212,8 +206,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister, datum_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is true
@@ -229,7 +221,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990100  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -237,7 +229,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | true       |
       | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -254,8 +246,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_c, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_c" is false
@@ -276,7 +266,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990102  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | <a> |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | <a> |
       | loonwaarde_percentage | 60 |
       | is_wsw_geindiceerd_of_oude_indicatie                     | <b>        |
@@ -284,7 +274,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | <e> |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | <e> |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | <e> |
       | laatste_dag_persoon_lid_1_b_of_c | <fdatum> |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | <lid2>     |
@@ -301,20 +291,18 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | <lid2> |
       | verzoek_van_college_of_eigen_aanvraag | <lid2> |
-      | kan_een_drempelfunctie_volledig_uitvoeren | <drempel> |
-      | beperkingen_duren_ten_minste_zes_maanden | <zesmnd> |
     When I evaluate outputs "is_arbeidsbeperkte, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is true
     And output "grond_opname_doelgroepregister" equals "<opnamegrond>"
 
     Examples:
-      | grond            | a     | b     | c     | d     | e     | f     | lid2  | opnamegrond                | drempel | zesmnd | fdatum |
-      | onderdeel b, Wsw | false | true  | false | false | false | false | false | wsw                        | null | null | null |
-      | onderdeel d      | false | false | false | true  | false | false | false | amvb_38b_1_d               | null | null | null |
-      | onderdeel e      | false | false | false | false | true  | false | false | pwet_uwv_wml_eigen_verzoek | false | true | null |
-      | onderdeel f      | false | false | false | false | false | true  | false | overgangsrecht_38b_1_f     | null | null | 2014-06-30 |
-      | lid 2            | false | false | false | false | false | false | true  | jonggehandicapt_uwv_oordeel | null | null | null |
+      | grond | a | b | c | d | e | f | lid2 | opnamegrond | fdatum |
+      | onderdeel b, Wsw | false | true | false | false | false | false | false | wsw | null |
+      | onderdeel d | false | false | false | true | false | false | false | amvb_38b_1_d | null |
+      | onderdeel e | false | false | false | false | true | false | false | pwet_uwv_wml_eigen_verzoek | null |
+      | onderdeel f | false | false | false | false | false | true | false | overgangsrecht_38b_1_f | 2014-06-30 |
+      | lid 2 | false | false | false | false | false | false | true | jonggehandicapt_uwv_oordeel | null |
 
   # Onderdeel f kent, net als c, een eigen tegen-uitsluiting: wie destijds
   # onder lid 1.c viel maar inmiddels duurzaam geen mogelijkheden heeft,
@@ -324,7 +312,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990102  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -332,7 +320,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | 2014-06-30 |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | true       |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -349,8 +337,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_f" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_f" is false
@@ -369,7 +355,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990103  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -377,7 +363,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -394,8 +380,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, voldoet_aan_grond_38b_2, voldoet_aan_grond_38b_6, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is false
@@ -416,7 +400,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990103  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -424,7 +408,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -441,8 +425,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_6" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_6" is false
@@ -461,7 +443,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990104  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | true       |
       | is_pwet_toegeleid_of_lks_lid_2 | true |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | true |
       | loonwaarde_percentage | 60 |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -469,7 +451,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -486,8 +468,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_a, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "voldoet_aan_grond_38b_1_a" is true
@@ -502,7 +482,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | bsn                                                      | 999990105  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
       | loonwaarde_percentage | null |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -510,7 +490,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -527,8 +507,6 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "is_arbeidsbeperkte, grond_opname_doelgroepregister, verloonde_uren_definitie_actief" of "wet_financiering_sociale_verzekeringen"
     Then the execution succeeds
     And output "is_arbeidsbeperkte" is false

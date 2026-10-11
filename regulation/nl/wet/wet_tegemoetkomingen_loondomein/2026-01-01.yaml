@@ -237,13 +237,15 @@ articles:
               38b.1.a: toegeleid met ondersteuning van het college (Pwet 7 lid
               1 onderdeel a) of loonkostensubsidie op grond van Pwet 10d lid
               2. Bron: gemeente. Doorgegeven aan Wfsv artikel 38b.
-          - name: uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+          - name: uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
             type: boolean
             required: true
             description: |-
-              38b.1.a: het UWV heeft op verzoek van het college beoordeeld of
-              de persoon het minimumloon kan verdienen (Besluit SUWI 3.5 lid
-              1). Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
+              38b.1.a: "van wie uitsluitend op verzoek van het college van
+              burgemeester en wethouders door het UWV is vastgesteld dat hij
+              niet in staat is tot het verdienen van het wettelijk minimumloon".
+              Hoe het UWV dat vaststelt (Besluit SUWI artikel 3.5) staat buiten
+              de scope; de vaststelling is een aangeleverd feit. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: college_heeft_loonwaarde_vastgesteld_conform_10d
             type: boolean
             required: true
@@ -260,23 +262,6 @@ articles:
               wettelijk minimumloon (Participatiewet artikel 6 lid 1 onderdeel
               g). Onder de 100 bedraagt zij bij voltijdse arbeid minder dan het
               minimumloon. Afwezig zonder vaststelling. Bron: gemeente. Doorgegeven aan Wfsv artikel 38b.
-          - name: kan_een_drempelfunctie_volledig_uitvoeren
-            type: boolean
-            required: false
-            nullable: true
-            description: |-
-              38b.1.a en e, via Besluit SUWI 3.5 lid 6 en 7: de persoon kan
-              één drempelfunctie uitvoeren, al dan niet met aanpassingen.
-              Afwezig zonder beoordeling. Bron: UWV. Doorgegeven aan Wfsv
-              artikel 38b.
-          - name: beperkingen_duren_ten_minste_zes_maanden
-            type: boolean
-            required: false
-            nullable: true
-            description: |-
-              38b.1.a en e, via Besluit SUWI 3.5 lid 6: de beperkingen bestaan
-              naar verwachting nog ten minste zes maanden. Afwezig zonder
-              beoordeling. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -322,13 +307,15 @@ articles:
               38b.1.e: toegeleid met ondersteuning van het college (Pwet 7 lid
               1 onderdeel a) naar een dienstbetrekking. Bron: gemeente.
               Doorgegeven aan Wfsv artikel 38b.
-          - name: uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+          - name: uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
             type: boolean
             required: true
             description: |-
-              38b.1.e: het UWV heeft op verzoek van de persoon zelf beoordeeld
-              of hij het minimumloon kan verdienen (Besluit SUWI 3.5 lid 1).
-              Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
+              38b.1.e: "van wie op eigen verzoek door het UWV is of wordt
+              vastgesteld dat hij niet in staat is tot het verdienen van het
+              wettelijk minimumloon". Hoe het UWV dat vaststelt (Besluit SUWI
+              artikel 3.5) staat buiten de scope; de vaststelling is een
+              aangeleverd feit. Bron: UWV. Doorgegeven aan Wfsv artikel 38b.
           - name: laatste_dag_persoon_lid_1_b_of_c
             type: date
             required: false
@@ -574,17 +561,15 @@ articles:
                 aantal_gerealiseerde_dienstbetrekkingen_beschut_werk: $aantal_gerealiseerde_dienstbetrekkingen_beschut_werk
                 is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
                 is_pwet_toegeleid_of_lks_lid_2: $is_pwet_toegeleid_of_lks_lid_2
-                uwv_heeft_wml_beoordeling_verricht_op_verzoek_college: $uwv_heeft_wml_beoordeling_verricht_op_verzoek_college
+                uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon: $uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
                 college_heeft_loonwaarde_vastgesteld_conform_10d: $college_heeft_loonwaarde_vastgesteld_conform_10d
                 loonwaarde_percentage: $loonwaarde_percentage
-                kan_een_drempelfunctie_volledig_uitvoeren: $kan_een_drempelfunctie_volledig_uitvoeren
-                beperkingen_duren_ten_minste_zes_maanden: $beperkingen_duren_ten_minste_zes_maanden
                 is_wsw_geindiceerd_of_oude_indicatie: $is_wsw_geindiceerd_of_oude_indicatie
                 heeft_wajong_arbeidsondersteuning_of_uitkering: $heeft_wajong_arbeidsondersteuning_of_uitkering
                 heeft_wajong_duurzaam_geen_mogelijkheden: $heeft_wajong_duurzaam_geen_mogelijkheden
                 verricht_arbeid_in_dienstbetrekking: $verricht_arbeid_in_dienstbetrekking
                 is_pwet_toegeleid_naar_dienstbetrekking: $is_pwet_toegeleid_naar_dienstbetrekking
-                uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek: $uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek
+                uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon: $uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
                 laatste_dag_persoon_lid_1_b_of_c: $laatste_dag_persoon_lid_1_b_of_c
                 was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
                 komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs

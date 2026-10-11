@@ -61,7 +61,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | behoort_tot_doelgroep_10b_lid_1 | false |
       | heeft_dienstbetrekking_beschut_werk | false |
       | is_pwet_toegeleid_of_lks_lid_2 | true |
-      | uwv_heeft_wml_beoordeling_verricht_op_verzoek_college | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
       | college_heeft_loonwaarde_vastgesteld_conform_10d | true |
       | loonwaarde_percentage | 60 |
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
@@ -69,7 +69,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
       | verricht_arbeid_in_dienstbetrekking                      | false      |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
-      | uwv_heeft_wml_beoordeling_verricht_op_eigen_verzoek | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
       | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
       | is_jonggehandicapt_uwv_oordeel_lid_2                     | false      |
@@ -94,8 +94,6 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-      | kan_een_drempelfunctie_volledig_uitvoeren | null |
-      | beperkingen_duren_ten_minste_zes_maanden | null |
     When I evaluate outputs "heeft_recht_op_lkv, categorie_lkv, tegemoetkoming_banenafspraak_eurocent, hoogte_lkv_per_jaar_eurocent" of "wet_tegemoetkomingen_loondomein"
     Then the execution succeeds
     And output "heeft_recht_op_lkv" is true
