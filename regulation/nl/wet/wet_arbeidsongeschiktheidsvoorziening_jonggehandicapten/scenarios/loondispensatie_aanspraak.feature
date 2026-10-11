@@ -31,3 +31,25 @@ Feature: Aanspraak per uur bij loondispensatie, Besluit loondispensatie Wajong a
     When I evaluate outputs "aanspraak_beloning_per_uur_eurocent" of "besluit_loondispensatie_wajong"
     Then the execution succeeds
     And output "aanspraak_beloning_per_uur_eurocent" equals 1499
+
+  # Toegevoegd 2026-10-11, artikel 6 van het besluit: loondispensatie eindigt
+  # bij achttien jaar voor wie dan geen Wajong-arbeidsondersteuning heeft.
+  Scenario: Zestien jaar zonder Wajong-arbeidsondersteuning, de dispensatie eindigt bij achttien
+    Given the following parameters:
+      | bsn                                       | 999990500  |
+      | geboortedatum                             | 2010-01-01 |
+      | heeft_recht_op_arbeidsondersteuning_wajong | false     |
+    When I evaluate outputs "is_jonger_dan_achttien, loondispensatie_eindigt_bij_achttien" of "besluit_loondispensatie_wajong"
+    Then the execution succeeds
+    And output "is_jonger_dan_achttien" is true
+    And output "loondispensatie_eindigt_bij_achttien" is true
+
+  Scenario: Volwassen Wajonger, artikel 6 speelt niet
+    Given the following parameters:
+      | bsn                                       | 999990100  |
+      | geboortedatum                             | 1996-05-14 |
+      | heeft_recht_op_arbeidsondersteuning_wajong | true      |
+    When I evaluate outputs "is_jonger_dan_achttien, loondispensatie_eindigt_bij_achttien" of "besluit_loondispensatie_wajong"
+    Then the execution succeeds
+    And output "is_jonger_dan_achttien" is false
+    And output "loondispensatie_eindigt_bij_achttien" is false

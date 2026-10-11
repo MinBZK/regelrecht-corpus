@@ -120,7 +120,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
       | ontvangt_voorziening_wia_35_lid_2 | false |
       | ontvangt_voorziening_pwet_10 | false |
       | verzoek_van_college_of_eigen_aanvraag | false |
-    When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_a, voldoet_aan_lid_1_b, voldoet_aan_lid_1, voldoet_aan_lid_2, voldoet_aan_lid_4, duur_no_risk_polis_jaren" of "ziektewet"
+    When I evaluate outputs "heeft_recht_op_no_risk_polis, heeft_recht_op_wia_uitkering, voldoet_aan_lid_1_a, voldoet_aan_lid_1_b, voldoet_aan_lid_1, voldoet_aan_lid_2, voldoet_aan_lid_4, duur_no_risk_polis_jaren, einddatum_no_risk_polis" of "ziektewet"
     Then the execution succeeds
     And output "heeft_recht_op_wia_uitkering" is true
     And output "voldoet_aan_lid_1_a" is true
@@ -130,6 +130,7 @@ Feature: Ziektewet, doelgroepen van de no-riskpolis (artikel 29b)
     And output "voldoet_aan_lid_4" is false
     And output "heeft_recht_op_no_risk_polis" is true
     And output "duur_no_risk_polis_jaren" equals 5
+    And output "einddatum_no_risk_polis" equals "2031-05-01"
 
   Scenario: Fatma wordt ruim vijf jaar na de aanvang ziek: lid 1 dekt dat niet meer
     # Lid 1 slotzin: alleen ziekte die begint in de vijf jaren na aanvang van

@@ -304,6 +304,45 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | onderdeel f | false | false | false | false | false | true | false | overgangsrecht_38b_1_f | 2014-06-30 |
       | lid 2 | false | false | false | false | false | false | true | jonggehandicapt_uwv_oordeel | null |
 
+  # Toegevoegd 2026-10-11: onderdeel g stond niet in de Outline. Een WGA-
+  # gerechtigde voor wie bij wijze van experiment (Wet SUWI 82a) loondispensatie
+  # is ingezet, telt als arbeidsbeperkte.
+  Scenario: Onderdeel g, WGA-uitkering met het experiment loondispensatie
+    Given the following parameters:
+      | bsn                                                      | 999990102  |
+      | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
+      | is_pwet_toegeleid_of_lks_lid_2 | false |
+      | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
+      | college_heeft_loonwaarde_vastgesteld_conform_10d | false |
+      | loonwaarde_percentage | 60 |
+      | is_wsw_geindiceerd_of_oude_indicatie                     | false        |
+      | heeft_wajong_arbeidsondersteuning_of_uitkering           | false        |
+      | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | is_pwet_toegeleid_naar_dienstbetrekking | false |
+      | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
+      | laatste_dag_persoon_lid_1_b_of_c | null |
+      | was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden     | false      |
+      | is_jonggehandicapt_uwv_oordeel_lid_2                     | false     |
+      | datum_eerste_opname_doelgroepregister                    | 2024-05-01 |
+      | was_arbeidsbeperkte_lid_1_of_2                           | false      |
+      | registratie_nog_niet_geeindigd                           | true       |
+      | heeft_wia_uitkering_hoofdstuk_6 | true |
+      | experiment_instrument_82a_suwi_ingezet | true |
+      | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
+      | komt_uit_voortgezet_speciaal_onderwijs | false |
+      | komt_uit_praktijkonderwijs | false |
+      | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
+      | heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie | false |
+      | ontvangt_voorziening_wia_35_lid_2 | false |
+      | ontvangt_voorziening_pwet_10 | false |
+      | verzoek_van_college_of_eigen_aanvraag | false |
+    When I evaluate outputs "is_arbeidsbeperkte, voldoet_aan_grond_38b_1_g, grond_opname_doelgroepregister" of "wet_financiering_sociale_verzekeringen"
+    Then the execution succeeds
+    And output "voldoet_aan_grond_38b_1_g" is true
+    And output "is_arbeidsbeperkte" is true
+    And output "grond_opname_doelgroepregister" equals "wga_met_experiment_38b_1_g"
+
   # Onderdeel f kent, net als c, een eigen tegen-uitsluiting: wie destijds
   # onder lid 1.c viel maar inmiddels duurzaam geen mogelijkheden heeft,
   # houdt het overgangsrecht niet.

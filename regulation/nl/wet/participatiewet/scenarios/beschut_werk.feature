@@ -18,10 +18,12 @@ Feature: Participatiewet, beschut werk (artikel 10b)
       | college_heeft_vastgesteld_uitsluitend_beschut_werk | true    |
       | heeft_dienstbetrekking_beschut_werk              | true      |
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
-    When I evaluate outputs "verricht_arbeid_in_beschut_werk, is_uitsluitend_aangewezen_op_beschut_werk" of "participatiewet"
+    When I evaluate outputs "verricht_arbeid_in_beschut_werk, is_uitsluitend_aangewezen_op_beschut_werk, college_moet_voorziening_beschut_werk_aanbieden, plicht_vervallen_wegens_gerealiseerd_aantal" of "participatiewet"
     Then the execution succeeds
     And output "is_uitsluitend_aangewezen_op_beschut_werk" is true
     And output "verricht_arbeid_in_beschut_werk" is true
+    And output "plicht_vervallen_wegens_gerealiseerd_aantal" is false
+    And output "college_moet_voorziening_beschut_werk_aanbieden" is true
 
   Scenario: Zonder vaststelling van het college is een dienstbetrekking geen beschut werk
     Given the calculation date is "2026-07-01"

@@ -33,9 +33,12 @@ Feature: Doelgroep loonkostensubsidie, Participatiewet artikel 6 lid 1 onderdeel
       | is_vastgesteld_kan_met_voltijdse_arbeid_minimumloon_niet_verdienen | true      |
       | heeft_mogelijkheden_tot_arbeidsparticipatie                        | true      |
       | is_persoon_artikel_10d_lid_2                                       | false     |
-    When I evaluate "voldoet_aan_omschrijving_doelgroep_lks" of "participatiewet"
+    When I evaluate outputs "voldoet_aan_omschrijving_doelgroep_lks, mag_op_aanvraag_vaststellen, mag_ambtshalve_vaststellen, aanvraag_is_toegestaan_lid_2" of "participatiewet"
     Then the execution succeeds
     And output "voldoet_aan_omschrijving_doelgroep_lks" is true
+    And output "mag_op_aanvraag_vaststellen" is true
+    And output "mag_ambtshalve_vaststellen" is true
+    And output "aanvraag_is_toegestaan_lid_2" is true
 
   Scenario: Zonder mogelijkheden tot arbeidsparticipatie valt iemand erbuiten
     Given the following parameters:

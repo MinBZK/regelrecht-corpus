@@ -58,7 +58,8 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | einddatum_uitkeringsduur_hoofdstuk_ii | null |
       | dagen_ziekte_onderbreking_proefplaatsing | 0 |
       | datum_aanvang_proefplaatsing | null |
-    When I evaluate outputs "uwv_mag_toestemming_verlenen, ww_uitkering_blijft_bestaan" of "werkloosheidswet"
+    When I evaluate outputs "uwv_mag_toestemming_verlenen, ww_uitkering_blijft_bestaan, max_duur_proefplaatsing_maanden, einddatum_proefplaatsing" of "werkloosheidswet"
     Then the execution succeeds
+    And output "max_duur_proefplaatsing_maanden" equals 6
     And output "uwv_mag_toestemming_verlenen" is false
     And output "ww_uitkering_blijft_bestaan" is false
