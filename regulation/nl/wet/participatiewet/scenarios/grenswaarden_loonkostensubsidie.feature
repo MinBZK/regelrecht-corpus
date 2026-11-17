@@ -5,6 +5,12 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
   Peildatum 1 juli 2026; de parameterblokken komen uit loonkostensubsidie_routes,
   doelgroep_loonkostensubsidie en voorzieningen_arbeidsinschakeling.
 
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Waar die onwaar was, staat de datum op null:
+  # de persoon was nooit zo'n persoon. Onderdeel b blijft dan onwaar en de
+  # uitkomst gelijk.
+
   # Lid 2: "binnen zes maanden na aanvang van de dienstbetrekking". Het model leest de dag
   # zes maanden na de aanvang als de laatste dag van de termijn (kleiner dan of gelijk).
   Scenario: Aanvraag precies zes maanden na de aanvang valt nog binnen de termijn van lid 2
@@ -15,7 +21,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-07-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-10-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |
@@ -38,7 +44,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-07-02 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-10-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |
@@ -61,7 +67,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-10-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |
@@ -83,7 +89,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-01-31 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-10-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |
@@ -105,7 +111,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-07-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |
@@ -128,7 +134,7 @@ Feature: Participatiewet, grenzen van de termijnen in artikel 10, 10c en 10d
       | kan_minimumloon_niet_verdienen                            | true |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-06-30 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                                   | false |
       | loonwaarde_percentage                                     | 60 |

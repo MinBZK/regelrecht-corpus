@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: werkloosheidswet
 regulatory_layer: WET
 publication_date: '2019-10-31'
@@ -4205,6 +4205,10 @@ articles:
         hoofdstuk: II
         paragraaf: '1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV kan toestemming verlenen.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         max_duur_proefplaatsing_maanden:
           value: 6
@@ -4274,6 +4278,19 @@ articles:
               Lid 3 onderdeel d: naar het oordeel van het UWV is er reëel
               uitzicht op een aansluitende dienstbetrekking van dezelfde
               of grotere omvang voor ten minste 6 maanden.
+          # Lid 1 geeft een bevoegdheid ("kan toestemming verlenen"), lid 2
+          # verbindt het gevolg aan de verleende toestemming ("gedurende de
+          # periode waarover toestemming is verleend"). Of het UWV de
+          # bevoegdheid heeft gebruikt, volgt niet uit de voorwaarden; het is
+          # een feit uit het besluit.
+          - name: uwv_heeft_toestemming_verleend
+            type: boolean
+            required: true
+            description: |-
+              Lid 1 en 2: het UWV heeft de toestemming voor de onbeloonde
+              werkzaamheden op de proefplaats daadwerkelijk verleend. Lid 1
+              maakt dat mogelijk ("kan"), lid 2 knoopt het behoud van de
+              uitkering aan de verleende toestemming. Bron: UWV-besluit.
         output:
           - name: uitkeringsduur_hoofdstuk_ii_is_verstreken
             type: boolean
@@ -4302,6 +4319,12 @@ articles:
               Lid 1 en lid 4: zes maanden na aanvang, verlengd met de
               dagen waarover tijdens de proefplaatsing een uitkering bij
               ziekte is ontvangen.
+          - name: peildatum_valt_in_periode_proefplaatsing
+            type: boolean
+            description: |-
+              Lid 1, 2 en 4: de peildatum ligt op of na de aanvang van de
+              proefplaatsing en vóór de einddatum (zes maanden na aanvang,
+              verlengd met de ziektedagen).
           - name: ww_uitkering_blijft_bestaan
             type: boolean
             description: |-
@@ -4392,11 +4415,57 @@ articles:
                 Het recht op uitkering eindigt "met ingang van de dag waarop de
                 [...] uitkeringsduur is verstreken". Zonder einddatum is er geen
                 uitkering die kan verstrijken.
+          # Lid 1 en 4: de periode loopt van de aanvang tot de einddatum. De
+          # einddatum is de dag waarop de zes maanden (plus ziektedagen) om
+          # zijn: aanvang 1 januari geeft einddatum 1 juli, en 30 juni is de
+          # laatste dag binnen de periode. Vandaar strikt kleiner dan.
+          - output: peildatum_valt_in_periode_proefplaatsing
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_aanvang_proefplaatsing
+                    value: null
+                  then: false
+                - when:
+                    operation: EQUALS
+                    subject: $einddatum_proefplaatsing
+                    value: null
+                  then: false
+              default:
+                operation: AND
+                conditions:
+                  - operation: GREATER_THAN_OR_EQUAL
+                    subject: $referencedate.iso
+                    value: $datum_aanvang_proefplaatsing
+                  - operation: LESS_THAN
+                    subject: $referencedate.iso
+                    value: $einddatum_proefplaatsing
+            legal_basis:
+              law: Werkloosheidswet
+              bwb_id: BWBR0004045
+              article: 76a
+              paragraph: '1, 2, 4'
+              explanation: |-
+                Lid 2: "gedurende de periode waarover toestemming is verleend".
+                Lid 1 begrenst die periode op zes maanden, lid 4 verlengt haar
+                met de ziektedagen. Zonder aanvangsdatum is er geen periode.
+                Het model neemt aan dat de toestemming de volle zes maanden
+                beslaat; een kortere toestemming zou een eigen einddatum uit
+                het UWV-besluit vragen.
+          # Lid 2. Hersteld na review (25 oktober 2026): het model las "kan
+          # toestemming verlenen" (lid 1) als "toestemming is verleend" en
+          # liet de uitkering ook na de einddatum van de proefplaatsing
+          # doorlopen. Nu: verleende toestemming en peildatum binnen de
+          # periode.
           - output: ww_uitkering_blijft_bestaan
             value:
               operation: AND
               conditions:
                 - $uwv_mag_toestemming_verlenen
+                - $uwv_heeft_toestemming_verleend
+                - $peildatum_valt_in_periode_proefplaatsing
                 - operation: NOT
                   value: $uitkeringsduur_hoofdstuk_ii_is_verstreken
               legal_basis:
@@ -4405,11 +4474,12 @@ articles:
                 article: 76a
                 paragraph: '2'
                 explanation: |-
-                  Lid 2 laat het recht op uitkering bestaan gedurende de
-                  periode waarover toestemming is verleend, "onverminderd
-                  artikel 20, eerste lid, aanhef en onderdeel b". Die
-                  clausule hield het model niet tegen, zodat de uitkering
-                  ook doorliep nadat de uitkeringsduur was verstreken.
+                  Lid 2 laat het recht op uitkering bestaan "gedurende de
+                  periode waarover toestemming is verleend tot het verrichten
+                  van die werkzaamheden", "onverminderd artikel 20, eerste
+                  lid, aanhef en onderdeel b". Drie eisen dus: de toestemming
+                  is verleend (niet alleen mogelijk), de peildatum valt in de
+                  periode, en de uitkeringsduur is niet verstreken.
       open_terms:
         - id: nadere_regels_uitvoering_proefplaatsing
           type: string

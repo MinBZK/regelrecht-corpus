@@ -9,12 +9,18 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -41,6 +47,13 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # LDP — Wajong artikel 2:20
   # Werkgever heeft loondispensatie aangevraagd voor Sadee; UWV stelt
   # vast dat haar arbeidsprestatie < minimumloon is.
+  # Gekozen waarden: de gebruikelijke beloning voor dit werk is 1500
+  # eurocent per uur, net boven het minimumloon per 1 juli 2026 (1499,
+  # WML artikel 8 na herziening). De gerechtvaardigde beloning is 70
+  # procent daarvan (1050), in lijn met de loonwaarde van 70 procent.
+  # Besluit loondispensatie Wajong artikel 1 vraagt alleen dat die ten
+  # minste 25 procent lager ligt (grens 1125); de aanspraak zelf volgt uit
+  # artikel 3 en hangt niet van de gebruikelijke beloning af.
   Scenario: Sadee komt in aanmerking voor loondispensatie via Wajong art. 2:20
     Given the calculation date is "2026-07-01"
     And the following parameters:
@@ -49,11 +62,12 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
       | aanvraag_loondispensatie_ingediend                | true      |
       | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
-      | gebruikelijke_beloning_per_uur_eurocent | 1450 |
-      | gerechtvaardigde_beloning_per_uur_eurocent | 1000 |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong  | false |
+      | loondispensatie_voor_2018_verleend_voor_dezelfde_functie| false |
+      | gebruikelijke_beloning_per_uur_eurocent | 1500 |
+      | gerechtvaardigde_beloning_per_uur_eurocent | 1050 |
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
       | vastgesteld_aanspraakpercentage_minimumloon | 70 |
-      | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate outputs "heeft_recht_op_loondispensatie, beding_lagere_beloning_is_nietig, aanspraak_beloning_per_uur_eurocent" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is true
@@ -64,8 +78,9 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
 
   Scenario: Geen loondispensatie als de beloning minder dan 25 procent lager ligt
     # Besluit loondispensatie Wajong artikel 1: de grens is 75 procent van
-    # 1450 = 1087,5 eurocent; een gerechtvaardigde beloning van 1100 ligt
-    # daarboven. Het oordeel van het UWV alleen is dan niet genoeg.
+    # 1500 = 1125 eurocent; een gerechtvaardigde beloning van 1200 (80
+    # procent) ligt daarboven. Het oordeel van het UWV alleen is dan niet
+    # genoeg.
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                               | 999990100 |
@@ -73,11 +88,12 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | arbeidsprestatie_duidelijk_minder_dan_minimumloon | true      |
       | aanvraag_loondispensatie_ingediend                | true      |
       | heeft_recht_op_arbeidsondersteuning_wajong        | true      |
-      | gebruikelijke_beloning_per_uur_eurocent | 1450 |
-      | gerechtvaardigde_beloning_per_uur_eurocent | 1100 |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong  | false |
+      | loondispensatie_voor_2018_verleend_voor_dezelfde_functie| false |
+      | gebruikelijke_beloning_per_uur_eurocent | 1500 |
+      | gerechtvaardigde_beloning_per_uur_eurocent | 1200 |
       | verwachte_duur_verminderde_prestatie_maanden | 12 |
       | vastgesteld_aanspraakpercentage_minimumloon | 70 |
-      | minimumloon_per_uur_eurocent | 1450 |
     When I evaluate outputs "heeft_recht_op_loondispensatie" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "heeft_recht_op_loondispensatie" is false

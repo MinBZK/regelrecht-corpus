@@ -300,6 +300,18 @@ articles:
                       - $maximum_per_jaar_eurocent
               default: 0
       untranslatables:
+        - construct: 'aanroep Wfsv 38b met alleen bsn (art. 2.10, categorie banenafspraak)'
+          reason: |-
+            De input is_doelgroep_banenafspraak vraagt
+            behoort_tot_doelgroepregister_banenafspraak op bij de Wfsv en
+            geeft alleen bsn mee. De Wfsv-versie die bij deze Wtl-versie
+            geldt (1 januari 2024) heeft voor artikel 38b geen
+            machine_readable en kent die output dus niet. Herstel vraagt
+            een 38b-model voor 2024.
+            De aanroep is niet herbouwd. Een scenario werkt alleen als het
+            de uitkomst zelf meegeeft (override van de input), niet via de
+            berekening in de Wfsv.
+          accepted: true
         - construct: 'doelgroepverklaring-vereiste binnen 3 maanden (art. 2.3, 2.6)'
           reason: |-
             Het LKV vereist een doelgroepverklaring die binnen drie

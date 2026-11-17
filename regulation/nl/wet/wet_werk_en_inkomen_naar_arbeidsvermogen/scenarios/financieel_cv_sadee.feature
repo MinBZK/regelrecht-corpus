@@ -9,12 +9,18 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -41,8 +47,10 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # JC + WPA — Wet WIA artikel 35
   # KEY INSIGHT: lid 4.a sluit Wajong-gerechtigden uit van artikel 35-
   # voorzieningen. Werkgever die JC/WPA voor Sadee verwacht moet weten:
-  # die loopt niet via WIA, maar via Wajong-eigen voorzieningen
-  # (art. 2:22 e.v. — niet in deze slice gemodelleerd).
+  # die loopt niet via WIA, maar via de Wajong-eigen voorzieningen van
+  # art. 2:22 lid 2 onderdelen c en d; die zijn gemodelleerd en staan in
+  # wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten/scenarios/
+  # financieel_cv_sadee.feature.
   Scenario: Sadee valt buiten WIA artikel 35 voor JC en WPA (lid 4.a Wajong)
     Given the calculation date is "2026-07-01"
     And the following parameters:
@@ -55,6 +63,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
       | kosten_voorziening_eurocent | 250000 |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |

@@ -53,11 +53,12 @@ Feature: Proefplaatsing met behoud van algemene bijstand (Pwet art. 8a lid 2 d)
   # Lid 2 onderdeel d stelt de proefplaatsing uitsluitend open voor wie
   # algemene bijstand ontvangt. Wie wel tot de doelgroep van art. 7 lid 1
   # onderdeel a behoort maar geen bijstand ontvangt — bijvoorbeeld een
-  # niet-uitkeringsgerechtigde — valt erbuiten.
+  # niet-uitkeringsgerechtigde — valt erbuiten. Eigen testpersoon
+  # 999990732 (tot 2026-10-25 999990102, gedeeld met drie andere personen).
   Scenario: Zonder algemene bijstand geen proefplaatsing via de Participatiewet
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                         | 999990102 |
+      | bsn                                         | 999990732 |
       | behoort_tot_doelgroep_artikel_7_lid_1_a     | true      |
       | ontvangt_algemene_bijstand                  | false     |
       | college_verleent_toestemming_proefplaatsing | true      |

@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: wet_werk_en_inkomen_naar_arbeidsvermogen
 regulatory_layer: WET
 publication_date: '2019-04-12'
@@ -2427,10 +2427,20 @@ articles:
         bwb_id: BWBR0015703
         artikel: 10d
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV kan voorzieningen toekennen.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1: "kan ... op aanvraag voorzieningen toekennen".
+          - type: AANVRAAG
+            requests: wet_werk_en_inkomen_naar_arbeidsvermogen#35
+            parameters:
+              - bsn
+              - kosten_voorziening_eurocent
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -2491,6 +2501,16 @@ articles:
               opleidingsplaats of de proefplaats of de te gebruiken
               hulpmiddelen, die in overwegende mate op het individu is
               afgestemd. Bron: UWV-beoordeling.
+          - name: ondersteuning_is_in_overwegende_mate_op_individu_gericht
+            type: boolean
+            required: true
+            description: |-
+              Lid 5 met Reintegratiebesluit artikel 4: een voorziening als
+              bedoeld in artikel 35 "wordt slechts verleend indien deze in
+              overwegende mate op het individu is gericht". Voor de
+              werkplekaanpassing zit die eis al in lid 2 onderdeel c; voor
+              de persoonlijke ondersteuning van onderdeel d komt hij alleen
+              uit artikel 4 van het besluit. Bron: UWV-beoordeling.
           - name: kosten_voorziening_eurocent
             type: amount
             required: true
@@ -2622,6 +2642,9 @@ articles:
                     - $gezamenlijke_waarde_boven_drempelbedrag
                 - $aanvraag_jobcoaching_ingediend
                 - $ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
+                # Lid 5 met Reintegratiebesluit artikel 4: slechts verleend
+                # indien in overwegende mate op het individu gericht.
+                - $ondersteuning_is_in_overwegende_mate_op_individu_gericht
               legal_basis:
                 law: Wet werk en inkomen naar arbeidsvermogen
                 bwb_id: BWBR0019057
@@ -2634,7 +2657,10 @@ articles:
                   "worden uitsluitend verstaan" en eist in onderdeel d dat
                   de ondersteuning noodzakelijk is en een compensatie vormt
                   voor de beperkingen; die toets staat hier naast de
-                  aanvraag.
+                  aanvraag. Daarnaast geldt de nadere regel van lid 5:
+                  Reintegratiebesluit artikel 4 verleent een voorziening
+                  als bedoeld in artikel 35 slechts indien deze in
+                  overwegende mate op het individu is gericht.
           - output: mag_werkplekaanpassing_toekennen
             value:
               operation: AND
@@ -2669,8 +2695,9 @@ articles:
           description: |-
             Lid 5 — bij of krachtens AMvB kunnen nadere regels worden
             gesteld. Het Reïntegratiebesluit (BWBR0019152) vult dit in;
-            de koppeling staat als implements-blok op artikel 1a van dat
-            besluit, dat de grondslagen opsomt waarop het berust.
+            de koppeling staat als implements-blok op artikel 4 van dat
+            besluit, waar de nadere regel zelf staat. Artikel 1a van het
+            besluit somt de grondslagen op waarop het berust.
           default:
             actions:
               - output: nadere_regels_voorzieningen_artikel_35
@@ -2694,6 +2721,15 @@ articles:
           type: boolean
           required: false
           decided_per_case_by: het UWV, op grond van Wet WIA artikel 35 lid 2 onderdeel d
+        - id: ondersteuning_in_overwegende_mate_op_individu_gericht
+          description: >-
+            Of de persoonlijke ondersteuning (lid 2 onderdeel d) in overwegende mate
+            op het individu is gericht, zoals Reintegratiebesluit artikel 4 eist.
+          type: boolean
+          required: false
+          decided_per_case_by: >-
+            het UWV, op grond van Wet WIA artikel 35 lid 5 met Reintegratiebesluit
+            artikel 4
       markings:
         - about: >-
             de uitsluiting tot het moment dat het inkomen twee aaneengesloten jaren
@@ -2876,6 +2912,10 @@ articles:
         hoofdstuk: '4'
         paragraaf: '4.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV kan toestemming verlenen.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         max_duur_proefplaatsing_maanden:
           value: 6
@@ -2888,28 +2928,72 @@ articles:
             type: string
             required: true
             description: BSN van de gedeeltelijk arbeidsgeschikte.
-          - name: heeft_recht_op_wga_uitkering
-            type: boolean
-            required: true
-            description: |-
-              Lid 1: recht op een uitkering op grond van deze wet. Artikel 5
-              omschrijft de gedeeltelijk arbeidsgeschikte als degene die
-              "niet volledig en duurzaam arbeidsongeschikt is", zodat de
-              IVA-uitkering van artikel 47 hier buiten valt en alleen de
-              WGA-uitkering van artikel 54 overblijft. Bron: UWV.
           - name: verdiencapaciteit_percentage_maatmaninkomen
             type: number
             required: true
             description: |-
               Artikel 5: resterende verdiencapaciteit als percentage van
-              het maatmaninkomen. Doorgegeven aan artikel 5. Bron: UWV.
+              het maatmaninkomen. Doorgegeven aan artikel 5 en 54. Bron: UWV.
           - name: is_medisch_duurzaam
             type: boolean
             required: true
             description: |-
               Artikel 4 lid 2 en 3: duurzaamheid van de
-              arbeidsongeschiktheid. Doorgegeven aan artikel 5. Bron:
+              arbeidsongeschiktheid. Doorgegeven aan artikel 5 en 54. Bron:
               verzekeringsarts UWV.
+          # --- doorgegeven aan artikel 54 (recht op WGA-uitkering) ---
+          - name: is_verzekerde_wia
+            type: boolean
+            required: true
+            description: 'Artikel 54 lid 1, aanhef: verzekerde (artikel 7 tot en met 9). Bron: polisadministratie UWV.'
+          - name: is_ziek_geworden
+            type: boolean
+            required: true
+            description: 'Artikel 54 lid 1, aanhef: "de verzekerde die ziek wordt". Bron: ziekmelding.'
+          - name: eerste_dag_wachttijd
+            type: date
+            required: false
+            description: 'Artikel 54 lid 1 onderdeel a met artikel 23: eerste dag van de wachttijd. Bron: UWV.'
+          - name: heeft_recht_op_uitkering_hoofdstuk_6_of_7
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 1°, via artikel 54. Bron: UWV.'
+          - name: ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel a onder 2°, via artikel 54. Bron: UWV.'
+          - name: loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel b, via artikel 54. Bron: werkgever / UWV.'
+          - name: periode_zonder_ziekengeld_29_lid_11_loopt_nog
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel c, via artikel 54. Bron: UWV.'
+          - name: is_rechtens_vrijheid_ontnomen
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel d, via artikel 54. Bron: Justid/UWV.'
+          - name: onttrekt_zich_aan_vrijheidsstraf
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel e, via artikel 54. Bron: Justid/UWV.'
+          - name: woont_niet_in_nederland
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel f, via artikel 54. Bron: BRP.'
+          - name: heeft_pensioengerechtigde_leeftijd_bereikt
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel g, via artikel 54. Bron: BRP / SVB.'
+          - name: is_overleden
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel h, via artikel 54. Bron: BRP.'
+          - name: is_uitreiziger
+            type: boolean
+            required: true
+            description: 'Artikel 43 onderdeel i, via artikel 54. Bron: UWV.'
           - name: in_staat_tot_werkzaamheden
             type: boolean
             required: true
@@ -2955,6 +3039,36 @@ articles:
                 sluit daarop aan met "hij is volledig en duurzaam
                 arbeidsongeschikt", zodat de IVA-gerechtigde hier niet
                 onder valt.
+          - name: heeft_recht_op_wga_uitkering
+            type: boolean
+            source:
+              regulation: wet_werk_en_inkomen_naar_arbeidsvermogen
+              output: heeft_recht_op_wga_uitkering
+              parameters:
+                bsn: $bsn
+                is_verzekerde_wia: $is_verzekerde_wia
+                is_ziek_geworden: $is_ziek_geworden
+                eerste_dag_wachttijd: $eerste_dag_wachttijd
+                verdiencapaciteit_percentage_maatmaninkomen: $verdiencapaciteit_percentage_maatmaninkomen
+                is_medisch_duurzaam: $is_medisch_duurzaam
+                heeft_recht_op_uitkering_hoofdstuk_6_of_7: $heeft_recht_op_uitkering_hoofdstuk_6_of_7
+                ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap: $ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap
+                loondoorbetalings_of_ziekengeldtijdvak_loopt_nog: $loondoorbetalings_of_ziekengeldtijdvak_loopt_nog
+                periode_zonder_ziekengeld_29_lid_11_loopt_nog: $periode_zonder_ziekengeld_29_lid_11_loopt_nog
+                is_rechtens_vrijheid_ontnomen: $is_rechtens_vrijheid_ontnomen
+                onttrekt_zich_aan_vrijheidsstraf: $onttrekt_zich_aan_vrijheidsstraf
+                woont_niet_in_nederland: $woont_niet_in_nederland
+                heeft_pensioengerechtigde_leeftijd_bereikt: $heeft_pensioengerechtigde_leeftijd_bereikt
+                is_overleden: $is_overleden
+                is_uitreiziger: $is_uitreiziger
+              description: |-
+                Lid 1: "die recht heeft op een uitkering op grond van deze
+                wet". Artikel 5 omschrijft de gedeeltelijk arbeidsgeschikte
+                als degene die "niet volledig en duurzaam arbeidsongeschikt
+                is", zodat de IVA-uitkering van artikel 47 hier buiten valt
+                en alleen de WGA-uitkering overblijft. Artikel 54 berekent
+                dat recht; het wordt hier niet opnieuw als losse vlag
+                aangenomen.
         output:
           - name: voldoet_aan_lid_2_voorwaarden
             type: boolean
@@ -3461,6 +3575,10 @@ articles:
         artikel: '43'
         hoofdstuk: '5'
     machine_readable:
+      # Bevoegd gezag (RFC-002): het UWV beslist over het recht op uitkering.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -3862,6 +3980,10 @@ articles:
         hoofdstuk: '7'
         paragraaf: '7.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): het UWV beslist over het recht op uitkering.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       execution:
         produces:
           legal_character: BESCHIKKING

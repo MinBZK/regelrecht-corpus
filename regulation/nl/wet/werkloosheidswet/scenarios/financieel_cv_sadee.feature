@@ -9,12 +9,18 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -39,9 +45,21 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
 
   # ────────────────────────────────────────────────────────────────────
   # PP — WW artikel 76a
-  # Sadee heeft geen WW-uitkering (komt uit Wajong), dus PP is niet aan
-  # de orde. Werkgever moet weten: proefplaatsing met behoud van uitkering
-  # is een WW-instrument, niet beschikbaar voor Wajongers.
+  # Sadee heeft geen WW-uitkering (komt uit Wajong), dus deze route is
+  # niet van toepassing.
+  #
+  # GECORRIGEERD 2026-10-25, zoals bij Koen op 2026-09-02 na
+  # juristfeedback: hier stond dat proefplaatsing "een WW-instrument" is,
+  # "niet beschikbaar voor Wajongers". Dat is onjuist — proefplaatsing
+  # staat in vier wetten, met verschillende kaders:
+  #
+  #   WW art. 76a       — 6 maanden, WW-uitkering loopt door
+  #   Wet WIA art. 37   — 6 maanden, sollicitatieplicht opgeschort
+  #   Wajong art. 2:24  — 6 maanden, arbeidsondersteuning loopt door
+  #   Pwet art. 8a.2.d  — 2 maanden, verlengbaar met maximaal 4
+  #
+  # Werkgever-relevantie: een proefplaatsing met Sadee loopt via de Wajong
+  # (art. 2:24), niet via de WW.
   Scenario: Sadee mag geen proefplaatsing aangaan zonder WW-uitkering
     Given the calculation date is "2026-07-01"
     And the following parameters:
@@ -54,6 +72,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | einddatum_uitkeringsduur_hoofdstuk_ii | null |
       | dagen_ziekte_onderbreking_proefplaatsing | 0 |
       | datum_aanvang_proefplaatsing | null |
+      | uwv_heeft_toestemming_verleend                 | false |
     When I evaluate outputs "uwv_mag_toestemming_verlenen, ww_uitkering_blijft_bestaan" of "werkloosheidswet"
     Then the execution succeeds
     And output "uwv_mag_toestemming_verlenen" is false

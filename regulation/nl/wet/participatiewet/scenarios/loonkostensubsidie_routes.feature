@@ -14,8 +14,21 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
   #   - lid 4: het maximum van 70 procent dat bindt bij een lage loonwaarde.
   #
   # Bedragen per 1 juli 2026: minimumloon met vakantiebijslag 252396 eurocent;
-  # vergoeding werkgeverslasten 25 procent = 63099; grondslag 315495; maximum
-  # 70 procent = 220846,5; forfait 50 procent = 157747,5.
+  # maximum 70 procent daarvan = 176677,2; forfait 50 procent = 126198.
+  # De vergoeding voor werkgeverslasten (Regeling loonkostensubsidie
+  # Participatiewet 2021, artikel 1: 25 procent) komt daar bovenop en valt
+  # buiten het maximum (jurist, 10 november 2026). Tot die datum zat de
+  # vergoeding in de grondslag van het maximum en van het forfait (315495),
+  # met een maximum van 220846,5 en een forfait van 157747,5 zonder aparte
+  # vergoeding. Het model rekent de vergoeding over het bedrag van de
+  # loonkostensubsidie; of dat de bedoelde loonkosten zijn, is een open
+  # lezing (markering bij artikel 10d).
+
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Waar die onwaar was, staat de datum op null:
+  # de persoon was nooit zo'n persoon. Onderdeel b blijft dan onwaar en de
+  # uitkomst gelijk.
 
   Background:
     Given the calculation date is "2026-07-01"
@@ -27,7 +40,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 60         |
@@ -37,7 +50,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | college_heeft_loonwaarde_vastgesteld                      | true       |
       | vaststelling_loonwaarde_blijft_achterwege                 | false      |
       | datum_aanvang_dienstbetrekking                            | 2026-06-01 |
-    When I evaluate outputs "heeft_recht_op_lks_lid_1, heeft_recht_op_lks_lid_2, heeft_recht_op_lks, volgt_de_vijftig_procent_route, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks_lid_1, heeft_recht_op_lks_lid_2, heeft_recht_op_lks, volgt_de_vijftig_procent_route, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand, vergoeding_werkgeverslasten_eurocent_per_maand, hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks_lid_1" is true
     And output "heeft_recht_op_lks_lid_2" is false
@@ -45,17 +58,22 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
     And output "volgt_de_vijftig_procent_route" is false
     And output "hoogte_lks_voltijd_eurocent_per_maand" equals 100958.4
     And output "hoogte_lks_eurocent_per_maand" equals 100958.4
+    And output "vergoeding_werkgeverslasten_eurocent_per_maand" equals 25239.6
+    And output "hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" equals 126198
 
   Scenario: Lid 1 onderdeel b met lid 5, vaststelling achterwege, binnen zes maanden na aanvang
     # Aanvang 1 maart, peildatum 1 juli: binnen de zes maanden. Het college
     # heeft nog geen loonwaarde; het percentage staat op nul.
+    # Lid 5: 50 procent van 252396 = 126198; de vergoeding voor
+    # werkgeverslasten komt erbovenop: 25 procent van 126198 = 31549,5
+    # (jurist, 10 november 2026: "bij fft lks 50%wml").
     Given the following parameters:
       | bsn                                                       | 999990302  |
       | behoort_tot_doelgroep_lks                                 | true       |
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 0          |
@@ -65,14 +83,16 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | college_heeft_loonwaarde_vastgesteld                      | false      |
       | vaststelling_loonwaarde_blijft_achterwege                 | true       |
       | datum_aanvang_dienstbetrekking                            | 2026-03-01 |
-    When I evaluate outputs "heeft_recht_op_lks_lid_1, heeft_recht_op_lks, volgt_de_vijftig_procent_route, hoogte_lks_lid_5_voltijd_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand" of "participatiewet"
+    When I evaluate outputs "heeft_recht_op_lks_lid_1, heeft_recht_op_lks, volgt_de_vijftig_procent_route, hoogte_lks_lid_5_voltijd_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand, vergoeding_werkgeverslasten_eurocent_per_maand, hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "heeft_recht_op_lks_lid_1" is true
     And output "heeft_recht_op_lks" is true
     And output "volgt_de_vijftig_procent_route" is true
-    And output "hoogte_lks_lid_5_voltijd_eurocent_per_maand" equals 157747.5
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 157747.5
-    And output "hoogte_lks_eurocent_per_maand" equals 157747.5
+    And output "hoogte_lks_lid_5_voltijd_eurocent_per_maand" equals 126198
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 126198
+    And output "hoogte_lks_eurocent_per_maand" equals 126198
+    And output "vergoeding_werkgeverslasten_eurocent_per_maand" equals 31549.5
+    And output "hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" equals 157747.5
 
   Scenario: Lid 1 onderdeel b na zes maanden, het college heeft de loonwaarde alsnog vastgesteld, lid 4 geldt
     Given the following parameters:
@@ -81,7 +101,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 60         |
@@ -98,6 +118,34 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
     And output "hoogte_lks_lid_5_voltijd_eurocent_per_maand" equals 0
     And output "hoogte_lks_voltijd_eurocent_per_maand" equals 100958.4
 
+  Scenario: Lid 1 onderdeel b na zes maanden, het college heeft de loonwaarde nog niet vastgesteld, geen bedrag
+    # Art. 10d lid 5, tweede zin: "Over het tijdvak na die periode stelt het
+    # college de loonwaarde vast en verleent het college loonkostensubsidie met
+    # inachtneming van het vierde lid." Zonder vastgestelde loonwaarde geen
+    # lid-4-bedrag (loonwaarde 0 zou anders het maximum geven).
+    Given the following parameters:
+      | bsn                                                       | 999990302  |
+      | behoort_tot_doelgroep_lks                                 | true       |
+      | kan_minimumloon_niet_verdienen                            | true       |
+      | datum_aanvraag_lks                                        | null       |
+      | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
+      | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
+      | is_wsw_dienstbetrekking                                   | false      |
+      | loonwaarde_percentage                                     | 0          |
+      | overeengekomen_arbeidsduur_uren_per_week                  | 36         |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan      | true       |
+      | dienstbetrekking_is_tot_stand_gekomen                     | true       |
+      | college_heeft_loonwaarde_vastgesteld                      | false      |
+      | vaststelling_loonwaarde_blijft_achterwege                 | true       |
+      | datum_aanvang_dienstbetrekking                            | 2025-12-01 |
+    When I evaluate outputs "heeft_recht_op_lks, volgt_de_vijftig_procent_route, hoogte_lks_lid_4_voltijd_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand" of "participatiewet"
+    Then the execution succeeds
+    And output "heeft_recht_op_lks" is true
+    And output "volgt_de_vijftig_procent_route" is false
+    And output "hoogte_lks_lid_4_voltijd_eurocent_per_maand" equals 0
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 0
+
   Scenario: Lid 2 onderdeel a, deelname aan onderwijs beëindigd in de zes maanden vóór de aanvang
     Given the following parameters:
       | bsn                                                       | 999990303  |
@@ -105,7 +153,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-10-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 60         |
@@ -129,7 +177,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | true       |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 60         |
@@ -152,7 +200,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a                    | 2025-03-01 |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 60         |
@@ -175,7 +223,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | true       |
       | loonwaarde_percentage                                     | 60         |
@@ -192,15 +240,18 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
     And output "heeft_recht_op_lks" is false
     And output "hoogte_lks_eurocent_per_maand" equals 0
 
-  Scenario: Lid 4, het maximum van 70 procent bindt bij een loonwaarde van 10 procent
-    # Verschil 252396 − 25239,6 = 227156,4; maximum 220846,5 is lager.
+  Scenario: Lid 4, het maximum van 70 procent bindt bij een loonwaarde van 10 procent, de vergoeding voor werkgeverslasten komt erbovenop
+    # Verschil 252396 − 25239,6 = 227156,4; maximum 70 procent van 252396 =
+    # 176677,2 is lager. De vergoeding voor werkgeverslasten valt buiten het
+    # maximum: 25 procent van 176677,2 = 44169,3, samen 220846,5 (jurist,
+    # 10 november 2026).
     Given the following parameters:
       | bsn                                                       | 999990307  |
       | behoort_tot_doelgroep_lks                                 | true       |
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 10         |
@@ -210,11 +261,14 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | college_heeft_loonwaarde_vastgesteld                      | true       |
       | vaststelling_loonwaarde_blijft_achterwege                 | false      |
       | datum_aanvang_dienstbetrekking                            | 2026-06-01 |
-    When I evaluate outputs "bruto_subsidie_eurocent_per_maand, maximum_subsidie_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand" of "participatiewet"
+    When I evaluate outputs "bruto_subsidie_eurocent_per_maand, maximum_subsidie_eurocent_per_maand, hoogte_lks_voltijd_eurocent_per_maand, hoogte_lks_eurocent_per_maand, vergoeding_werkgeverslasten_eurocent_per_maand, hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" of "participatiewet"
     Then the execution succeeds
     And output "bruto_subsidie_eurocent_per_maand" equals 227156.4
-    And output "maximum_subsidie_eurocent_per_maand" equals 220846.5
-    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 220846.5
+    And output "maximum_subsidie_eurocent_per_maand" equals 176677.2
+    And output "hoogte_lks_voltijd_eurocent_per_maand" equals 176677.2
+    And output "hoogte_lks_eurocent_per_maand" equals 176677.2
+    And output "vergoeding_werkgeverslasten_eurocent_per_maand" equals 44169.3
+    And output "hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand" equals 220846.5
 
   Scenario: Lid 4, een loonwaarde van 100 procent laat geen verschil over
     Given the following parameters:
@@ -223,7 +277,7 @@ Feature: Alle routes van de loonkostensubsidie, Participatiewet artikel 10d
       | kan_minimumloon_niet_verdienen                            | true       |
       | datum_aanvraag_lks                                        | null       |
       | datum_einde_deelname_onderwijs_lid_2_a                    | null       |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand    | false      |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b              | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false      |
       | is_wsw_dienstbetrekking                                   | false      |
       | loonwaarde_percentage                                     | 100        |

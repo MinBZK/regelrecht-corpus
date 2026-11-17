@@ -17,6 +17,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
     And the following parameters:
       | bsn                                            | 999990100 |
       | heeft_recht_op_arbeidsondersteuning            | true      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong| false |
       | in_staat_tot_werkzaamheden                     | true      |
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
@@ -34,6 +35,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
     And the following parameters:
       | bsn                                            | 999990100 |
       | heeft_recht_op_arbeidsondersteuning            | true      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong| false |
       | in_staat_tot_werkzaamheden                     | true      |
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
@@ -49,6 +51,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
     And the following parameters:
       | bsn                                            | 999990101 |
       | heeft_recht_op_arbeidsondersteuning            | false     |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong| false |
       | in_staat_tot_werkzaamheden                     | true      |
       | aansprakelijkheidsverzekering_aanwezig         | true      |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
@@ -66,6 +69,7 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
     And the following parameters:
       | bsn                                            | 999990100 |
       | heeft_recht_op_arbeidsondersteuning            | true      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong| false |
       | in_staat_tot_werkzaamheden                     | true      |
       | aansprakelijkheidsverzekering_aanwezig         | false     |
       | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
@@ -73,4 +77,23 @@ Feature: Proefplaatsing met behoud van arbeidsondersteuning (Wajong art. 2:24)
     When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_3_voorwaarden" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
     Then the execution succeeds
     And output "voldoet_aan_lid_3_voorwaarden" is false
+    And output "mag_proefplaatsing_aangaan" is false
+
+  # Toegevoegd 2026-10-25. Artikel 2:30 lid 1 sluit artikel 2:24 uit voor de
+  # volledig en duurzaam arbeidsongeschikte; de uitzondering van lid 2 geldt
+  # alleen voor artikel 2:20. Eigen testpersoon 999990731 (tot 2026-10-25
+  # 999990102, gedeeld met drie andere personen).
+  Scenario: Volledig en duurzaam arbeidsongeschikt: geen proefplaatsing op grond van artikel 2:24 (artikel 2:30 lid 1)
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                              | 999990731 |
+      | heeft_recht_op_arbeidsondersteuning              | true      |
+      | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | true      |
+      | in_staat_tot_werkzaamheden                       | true      |
+      | aansprakelijkheidsverzekering_aanwezig           | true      |
+      | niet_eerder_proefplaatsing_zelfde_werkgever      | true      |
+      | reeel_uitzicht_op_dienstbetrekking_zes_maanden   | true      |
+    When I evaluate outputs "artikel_2_24_van_toepassing, mag_proefplaatsing_aangaan" of "wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+    Then the execution succeeds
+    And output "artikel_2_24_van_toepassing" is false
     And output "mag_proefplaatsing_aangaan" is false

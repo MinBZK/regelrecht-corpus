@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.5.0/schema/v0.5.0/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: participatiewet
 regulatory_layer: WET
 publication_date: '2014-07-15'
@@ -263,6 +263,19 @@ articles:
           - name: voldoet_aan_voorwaarden_artikel_21
             type: boolean
         actions:
+          # MARKING (bekende afwijking, review oktober 2026; schema v0.5.0 kent
+          # geen markings- of untranslatables-veld, daarom als commentaar).
+          # Niet herbouwd: deze versie valt buiten de FCV-keten.
+          # Artikel 21 noemt in onderdeel a "zonder kostendelende
+          # medebewoners" en in onderdeel b "gehuwden waarvan beide echtgenoten
+          # jonger zijn dan de pensioengerechtigde leeftijd, zonder
+          # kostendelende medebewoners". Dit model toetst
+          # heeft_kostendelende_medebewoners niet en toetst de
+          # pensioengerechtigde leeftijd alleen voor de belanghebbende zelf,
+          # niet voor de echtgenoot. Bij kostendelers of een echtgenoot met
+          # pensioengerechtigde leeftijd geeft het model ten onrechte de norm
+          # van artikel 21 (zie artikel 22 en 22a).
+
           # Check eligibility conditions: "21 jaar of ouder doch jonger dan de
           # pensioengerechtigde leeftijd". Note: kostendelende medebewoners does NOT
           # exclude from Art 21 — it determines WHICH norm applies (Art 21 vs Art 22a),

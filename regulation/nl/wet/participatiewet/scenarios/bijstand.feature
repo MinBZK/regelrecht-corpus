@@ -1,3 +1,12 @@
+# Buiten scope (review 2026-10-25, C10; besluit eigenaar): de Background laadt
+# de Afstemmingsverordening Diemen, die niet in dit corpus zit; de versie
+# 2024-01-01 heeft bovendien geen machine_readable. Daardoor faalden alle
+# elf scenario's, ook de twee zonder verordening. De tag @wip laat de
+# BDD-runner van de engine (packages/engine/tests/bdd/main.rs,
+# filter_run_and_exit) het hele bestand overslaan, zodat de suite ze niet als
+# rood telt. In de engine betekent @wip "bekend gat, niet draaien"; hier is het
+# gat een ontbrekende verordening. Weghalen zodra die verordening er is.
+@wip
 Feature: Bijstandsaanvraag via Participatiewet
   Als burger zonder voldoende middelen
   Wil ik bijstand kunnen aanvragen bij mijn gemeente

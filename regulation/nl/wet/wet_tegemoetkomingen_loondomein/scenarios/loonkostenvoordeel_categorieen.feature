@@ -190,6 +190,13 @@ Feature: Loonkostenvoordeel per categorie (Wtl 2026)
     And output "hoogte_lkv_per_jaar_eurocent" equals 0
 
   # Hervatting met WIA-recht, doelgroepverklaring 2.15, aanvraagtermijn van 2.16 (één jaar) loopt nog.
+  # De periode van 2.16 begint op 1 maart 2026. In kalenderjaar 2026 vallen
+  # daarbinnen de maanden maart t/m december: 10 van de 12 maanden. Bij
+  # 1664 uur per jaar is dat 1664 × 10/12 = 1386,67, afgerond 1387 verloonde
+  # uren (verloonde_uren_voorwaarden_2_14 telt alleen de uren binnen de
+  # periode, art. 2.16 lid 2). 1387 × € 3,05 = € 4.230,35, onder het maximum
+  # van € 6.000 (art. 2.17). Gecorrigeerd 25 oktober 2026: stond op 1664 uur
+  # (vol jaar) en € 5.075,20.
   Scenario: Herplaatsen arbeidsgehandicapte werknemer (2.14), € 3,05 per verloond uur
     Given the calculation date is "2026-07-01"
     And the following parameters:
@@ -230,7 +237,7 @@ Feature: Loonkostenvoordeel per categorie (Wtl 2026)
       | experiment_instrument_82a_suwi_ingezet | false |
       | verloonde_uren_voorwaarden_2_6 | 1664 |
       | verloonde_uren_voorwaarden_2_10 | 1664 |
-      | verloonde_uren_voorwaarden_2_14 | 1664 |
+      | verloonde_uren_voorwaarden_2_14 | 1387 |
       | verricht_wsw_arbeid_artikel_2_zonder_terbeschikkingstelling | false |
       | periode_2_12_is_verstreken | false |
       | datum_aanvang_eerste_dienstbetrekking_2_6 | 2026-01-01 |
@@ -247,8 +254,8 @@ Feature: Loonkostenvoordeel per categorie (Wtl 2026)
     And output "heeft_recht_op_lkv" is true
     And output "is_herplaatsen_arbeidsgehandicapte" is true
     And output "categorie_lkv" equals "herplaatsen_arbeidsgehandicapte"
-    And output "tegemoetkoming_herplaatsen_eurocent" equals 507520
-    And output "hoogte_lkv_per_jaar_eurocent" equals 507520
+    And output "tegemoetkoming_herplaatsen_eurocent" equals 423035
+    And output "hoogte_lkv_per_jaar_eurocent" equals 423035
 
   # Termijn aangevangen 1 mei 2025; één jaar is op 1 juli 2026 verstreken.
   Scenario: Herplaatsen: aanvraagtermijn van 2.16 verstreken, geen loonkostenvoordeel

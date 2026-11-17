@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: ziektewet
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -2175,6 +2175,10 @@ articles:
         bwb_id: BWBR0017745
         artikel: 38d
     machine_readable:
+      # Bevoegd gezag (RFC-002): het UWV beslist over het recht op ziekengeld.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         duur_no_risk_polis_lid_1_jaren:
           value: 5
@@ -2297,16 +2301,27 @@ articles:
               Lid 1 onderdeel b, aanhef: in een arbeidskundig onderzoek is
               de mate van arbeidsongeschiktheid op de eerste dag na de
               wachttijd vastgesteld. Bron: UWV.
-          - name: geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
-            type: boolean
-            required: true
+          - name: datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Lid 1 onderdeel b onder 2°: op de eerste dag van elf weken
-              voorafgaand aan het einde van de wachttijd geen
-              dienstbetrekking meer, of geen dienstbetrekking met een
-              andere werkgever dan de eigen werkgever (tenzij die al op de
-              eerste dag van de wachttijd bestond). Bron: UWV /
+              Lid 1 onderdeel b onder 2°: de aanvang van de dienstbetrekking
+              met een andere werkgever dan de eigen werkgever. Afwezig als
+              er geen zo'n dienstbetrekking was. Het model leidt de peildag
+              (elf weken vóór `peildatum_lid_1_b`) zelf af en toetst of
+              deze dienstbetrekking op die dag liep en of zij al bestond op
+              de eerste dag van de wachttijd. Bron: UWV /
               polisadministratie.
+          - name: datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              Lid 1 onderdeel b onder 2°: de laatste dag van de
+              dienstbetrekking met een andere werkgever dan de eigen
+              werkgever. Afwezig als die dienstbetrekking niet is geëindigd
+              of als er geen was. Bron: UWV / polisadministratie.
           - name: niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever
             type: boolean
             required: true
@@ -2349,18 +2364,21 @@ articles:
             description: 'Wajong 2:15 lid 1 onderdeel b (artikel 2:11). Bron: UWV.'
           - name: datum_voldaan_aan_lid_1
             type: date
-            required: true
+            required: false
+            nullable: true
             description: |-
               Wajong 2:15 lid 2: de dag waarop aan alle voorwaarden van
               lid 1 wordt voldaan, ten vroegste het achttiende jaar.
-              Doorgegeven aan de Wajong.
+              Doorgegeven aan de Wajong, waar hij nullable is. Afwezig als
+              niet aan lid 1 wordt voldaan.
           - name: datum_aanvraag_arbeidsondersteuning_wajong
             type: date
             required: false
+            nullable: true
             description: |-
               Datum van de aanvraag om arbeidsondersteuning (Wajong 2:15
-              lid 1 onderdeel d en lid 2). Alleen vereist als een
-              aanvraag is ingediend. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+              lid 1 onderdeel d en lid 2). Afwezig zonder aanvraag.
+              Doorgegeven aan de Wajong, waar hij nullable is. Bron: UWV.
           - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
             type: boolean
             required: true
@@ -2652,10 +2670,11 @@ articles:
             required: false
             nullable: true
             description: 'Pwet 10d lid 2 onderdeel a: laatste dag deelname praktijkonderwijs, vso of entreeopleiding.'
-          - name: was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
-            type: boolean
-            required: true
-            description: 'Pwet 10d lid 2 onderdeel b.'
+          - name: datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+            type: date
+            required: false
+            nullable: true
+            description: 'Pwet 10d lid 2 onderdeel b: laatste dag als persoon als bedoeld in Pwet artikel 7 lid 1 onderdeel a of 7a lid 1 onderdeel a; afwezig als dat nooit zo was.'
           - name: volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
             type: boolean
             required: true
@@ -2711,9 +2730,11 @@ articles:
               wet, het tijdvak van artikel 629 lid 11 onderdeel a van
               Boek 7 BW, en de tijdvakken van artikel 29 lid 10 onderdeel a
               en artikel 76a lid 6 onderdeel a van deze wet. Dit is de
-              einddatum van het tijdvak dat voor deze werknemer geldt.
-              Ontbreekt de waarde, dan valt het model terug op de
-              WIA-wachttijd. Bron: UWV.
+              laatste dag van het tijdvak dat voor deze werknemer geldt;
+              het model telt er één dag bij op om de eerste dag erna te
+              krijgen (peildatum_lid_1_b). Ontbreekt de waarde, dan valt
+              het model terug op de WIA-wachttijd, waarvan de bron al de
+              eerste dag na afloop levert. Bron: UWV.
           # --- lid 5, 6 en 7: de hoogte van het ziekengeld ---
           - name: loon_referteperiode_eurocent
             type: amount
@@ -2859,6 +2880,21 @@ articles:
               description: |-
                 Lid 2 onderdeel a: recht op arbeidsondersteuning op grond
                 van de Wajong (artikel 2:15).
+          - name: invoer_onvolledig_wajong_2_15
+            type: boolean
+            source:
+              regulation: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
+              output: invoer_onvolledig_artikel_2_15
+              parameters:
+                bsn: $bsn
+                aanvraag_arbeidsondersteuning_ingediend: $aanvraag_arbeidsondersteuning_wajong_ingediend
+                datum_aanvraag_arbeidsondersteuning: $datum_aanvraag_arbeidsondersteuning_wajong
+                datum_voldaan_aan_lid_1: $datum_voldaan_aan_lid_1
+              description: |-
+                Wajong 2:15: de aanvraag om arbeidsondersteuning is
+                ingediend, maar een van beide datums ontbreekt. Dan is
+                heeft_recht_op_arbeidsondersteuning_wajong false zonder
+                afwijzing.
           - name: is_banenafspraak_doelgroep
             type: boolean
             source:
@@ -2913,7 +2949,7 @@ articles:
                 kan_minimumloon_niet_verdienen: $kan_minimumloon_niet_verdienen
                 datum_aanvraag_lks: $datum_aanvraag_lks
                 datum_einde_deelname_onderwijs_lid_2_a: $datum_einde_deelname_onderwijs_lid_2_a
-                was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand: $was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+                datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b: $datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
                 volgde_onderwijs_zonder_startkwalificatie_leerwerktraject: $volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
                 is_wsw_dienstbetrekking: $is_wsw_dienstbetrekking
                 loonwaarde_percentage: $loonwaarde_percentage
@@ -2989,6 +3025,14 @@ articles:
           - name: voldoet_aan_lid_2_a
             type: boolean
             description: 'Lid 2 onderdeel a: recht (gehad) op Wajong-uitkering of -arbeidsondersteuning.'
+          - name: invoer_onvolledig_lid_2_a
+            type: boolean
+            description: |-
+              Invoercontrole bij lid 2 onderdeel a: de Wajong-aanvraag is
+              ingediend maar de aanvraagdatum of de datum waarop aan
+              Wajong 2:15 lid 1 wordt voldaan ontbreekt. Is dit waar, dan
+              berust een onware voldoet_aan_lid_2_a op onvolledige
+              invoer, niet op een afwijzing.
           - name: voldoet_aan_lid_2_e
             type: boolean
             description: 'Lid 2 onderdeel e: doelgroepregister banenafspraak of loonkostensubsidie.'
@@ -3001,6 +3045,12 @@ articles:
           - name: voldoet_aan_lid_4
             type: boolean
             description: Lid 4 — voortzetting dienstbetrekking na vaststelling WIA-recht.
+          - name: ziekte_nu_na_aanvang_dienstbetrekking
+            type: boolean
+            description: |-
+              Lid 1 en lid 2, slotzin: een ongeschiktheid die op de peildatum
+              begint, is aangevangen na (op of na de dag van) aanvang van de
+              dienstbetrekking.
           - name: ziekte_nu_binnen_termijn_lid_1
             type: boolean
             description: |-
@@ -3037,6 +3087,20 @@ articles:
               Lid 1 onderdeel b: de eerste dag na afloop van het voor deze
               werknemer geldende tijdvak. De wet noemt zes tijdvakken als
               alternatieven; de WIA-wachttijd is er daar één van.
+          - name: peildag_elf_weken_lid_1_b_2
+            type: date
+            nullable: true
+            description: |-
+              Lid 1 onderdeel b onder 2°: "de eerste dag van elf weken
+              voorafgaand aan die dag", dus elf weken vóór
+              `peildatum_lid_1_b`. Afwezig als die peildatum ontbreekt.
+          - name: geen_dienstbetrekking_elders_lid_1_b_2
+            type: boolean
+            description: |-
+              Lid 1 onderdeel b onder 2°: op de peildag geen
+              dienstbetrekking met een andere werkgever dan de eigen
+              werkgever, tenzij die al bestond op de eerste dag van de
+              wachttijd.
           - name: dagloon_voor_ziekengeld_eurocent
             type: amount
             nullable: true
@@ -3089,7 +3153,10 @@ articles:
                       operation: EQUALS
                       subject: $einddatum_tijdvak_lid_1_b
                       value: null
-                  then: $einddatum_tijdvak_lid_1_b
+                  then:
+                    operation: DATE_ADD
+                    date: $einddatum_tijdvak_lid_1_b
+                    days: 1
                 - when: $is_ziek_geworden_wia
                   then: $wachttijd_einddatum_wia
               default: null
@@ -3108,9 +3175,83 @@ articles:
                   van Boek 7 van het Burgerlijk Wetboek dan wel van het
                   tijdvak, bedoeld in artikel 29, tiende lid, onderdeel a,
                   of artikel 76a, zesde lid, onderdeel a". Zes
-                  alternatieven; wordt het geldende tijdvak aangeleverd,
-                  dan telt dat, anders valt het model terug op de
-                  WIA-wachttijd.
+                  alternatieven; wordt de laatste dag van het geldende
+                  tijdvak aangeleverd, dan is de peildatum de dag daarna,
+                  anders valt het model terug op de WIA-wachttijd
+                  (wachttijd_einddatum is al de eerste dag na afloop:
+                  eerste dag + 104 weken).
+          - output: peildag_elf_weken_lid_1_b_2
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $peildatum_lid_1_b
+                    value: null
+                  then: null
+              default:
+                operation: DATE_ADD
+                date: $peildatum_lid_1_b
+                weeks: -11
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel b onder 2°: "alsmede op de eerste dag van elf
+                  weken voorafgaand aan die dag". "Die dag" is de eerste
+                  dag na afloop van het tijdvak (peildatum_lid_1_b).
+          - output: geen_dienstbetrekking_elders_lid_1_b_2
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2
+                    value: null
+                  then: true
+                - when:
+                    operation: EQUALS
+                    subject: $peildag_elf_weken_lid_1_b_2
+                    value: null
+                  then: false
+                - when:
+                    operation: GREATER_THAN
+                    subject: $datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2
+                    value: $peildag_elf_weken_lid_1_b_2
+                  then: true
+                - when:
+                    operation: LESS_THAN_OR_EQUAL
+                    subject: $datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2
+                    value: $eerste_dag_wachttijd_wia
+                  then: true
+                - when:
+                    operation: EQUALS
+                    subject: $datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2
+                    value: null
+                  then: false
+              default:
+                operation: LESS_THAN
+                subject: $datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2
+                value: $peildag_elf_weken_lid_1_b_2
+              legal_basis:
+                law: Ziektewet
+                bwb_id: BWBR0001888
+                article: 29b
+                paragraph: '1'
+                explanation: |-
+                  Onderdeel b onder 2°: "geen dienstbetrekking meer had of
+                  geen dienstbetrekking had met een andere werkgever dan
+                  zijn eigen werkgever, tenzij de dienstbetrekking met die
+                  andere werkgever reeds bestond op de eerste dag van de
+                  wachttijd". Wie geen dienstbetrekking meer had, had er
+                  ook geen met een andere werkgever; het eerste alternatief
+                  gaat dus op in het tweede. De voorwaarde faalt alleen als
+                  op de peildag een dienstbetrekking met een andere
+                  werkgever liep die na de eerste dag van de wachttijd is
+                  aangevangen. Tot 25 oktober 2026 was dit één aangeleverde
+                  ja/nee.
           - output: voldoet_aan_lid_1_b
             value:
               operation: IF
@@ -3128,7 +3269,7 @@ articles:
                       - operation: LESS_THAN
                         subject: $arbeidsongeschiktheidspercentage
                         value: $grens_arbeidsongeschiktheid_lid_1_b_procent
-                      - $geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+                      - $geen_dienstbetrekking_elders_lid_1_b_2
                       - $niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever
                       - operation: GREATER_THAN_OR_EQUAL
                         subject: $datum_aanvang_dienstbetrekking
@@ -3172,6 +3313,16 @@ articles:
                   arbeidsondersteuning wordt afgeleid uit Wajong 2:15; de
                   uitkering (hoofdstuk 1a en 3) en de historie komen als
                   aangeleverd feit binnen.
+          - output: invoer_onvolledig_lid_2_a
+            value: $invoer_onvolledig_wajong_2_15
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '2'
+              explanation: |-
+                Geen voorwaarde uit de wet maar een invoercontrole,
+                doorgegeven uit Wajong 2:15 (invoer_onvolledig_artikel_2_15).
           - output: voldoet_aan_lid_1_c
             value:
               operation: IF
@@ -3390,14 +3541,39 @@ articles:
                 werkzaam is in een dienstbetrekking in de zin van artikel 2
                 van de Wet sociale werkvoorziening." De uitsluiting geldt
                 voor het hele artikel, dus ook voor lid 2 en lid 4.
+          - output: ziekte_nu_na_aanvang_dienstbetrekking
+            # Art. 29b lid 1 en lid 2, slotzin: alleen ziekte "die zijn
+            # aangevangen in de vijf jaren na aanvang van de dienstbetrekking"
+            # (lid 1) of "die zijn aangevangen na aanvang van de
+            # dienstbetrekking" (lid 2). Een ongeschiktheid vóór de aanvang
+            # valt er niet onder.
+            value:
+              operation: GREATER_THAN_OR_EQUAL
+              subject: $referencedate.iso
+              value: $datum_aanvang_dienstbetrekking
+            legal_basis:
+              law: Ziektewet
+              bwb_id: BWBR0001888
+              article: 29b
+              paragraph: '1, 2'
+              explanation: |-
+                Ondergrens van de termijn in de slotzin van lid 1 ("in de vijf
+                jaren na aanvang van de dienstbetrekking") en van lid 2 ("na
+                aanvang van de dienstbetrekking"). De dag van aanvang zelf telt
+                mee: ziekte op de eerste werkdag is ziekte tijdens de
+                dienstbetrekking.
           - output: ziekte_nu_binnen_termijn_lid_1
             value:
-              operation: LESS_THAN
-              subject: $referencedate.iso
-              value:
-                operation: DATE_ADD
-                date: $datum_aanvang_dienstbetrekking
-                years: $duur_no_risk_polis_lid_1_jaren
+              operation: AND
+              conditions:
+                # Art. 29b lid 1, slotzin: ondergrens = aanvang dienstbetrekking.
+                - $ziekte_nu_na_aanvang_dienstbetrekking
+                - operation: LESS_THAN
+                  subject: $referencedate.iso
+                  value:
+                    operation: DATE_ADD
+                    date: $datum_aanvang_dienstbetrekking
+                    years: $duur_no_risk_polis_lid_1_jaren
             legal_basis:
               law: Ziektewet
               bwb_id: BWBR0001888
@@ -3489,7 +3665,12 @@ articles:
                       conditions:
                         - $voldoet_aan_lid_1
                         - $ziekte_nu_binnen_termijn_lid_1
-                    - $voldoet_aan_lid_2
+                    # Art. 29b lid 2, slotzin: alleen ziekte "die zijn
+                    # aangevangen na aanvang van de dienstbetrekking".
+                    - operation: AND
+                      conditions:
+                        - $voldoet_aan_lid_2
+                        - $ziekte_nu_na_aanvang_dienstbetrekking
                     - operation: AND
                       conditions:
                         - $voldoet_aan_lid_4
@@ -3505,7 +3686,9 @@ articles:
                   ten minste één van de doelgroepen lid 1, lid 2 of lid 4
                   valt, tenzij lid 8 het artikel buiten toepassing laat.
                   Bij lid 1 en lid 4 alleen voor ziekte die binnen de
-                  termijn van vijf jaar begint.
+                  termijn van vijf jaar begint; bij lid 1 en lid 2 niet
+                  voor ziekte die vóór de aanvang van de dienstbetrekking
+                  begint.
           - output: dagloon_voor_ziekengeld_eurocent
             value:
               operation: IF
@@ -3618,6 +3801,26 @@ articles:
             inkomen naar arbeidsvermogen
           accepted: true
         - about: >-
+            lid 1 onderdeel b onder 2°, de dienstbetrekking met een andere werkgever
+          reason: >-
+            Het model kent één dienstbetrekking met een andere werkgever (aanvang en
+            einde als aangeleverde datums). Meer dan één zo'n dienstbetrekking past
+            niet in die parameters. Voor de uitzondering gebruikt het model de eerste
+            dag van de WIA-wachttijd, ook als de peildatum uit een ander tijdvak van
+            onderdeel b komt; of "de wachttijd" dan dezelfde dag aanwijst, is een
+            open lezing.
+          resolution: model
+          resolved_by: >-
+            Een lijst van dienstbetrekkingen met aanvang en einde, en per tijdvak van
+            onderdeel b de bijbehorende eerste dag.
+          target: []
+          legal_text_excerpt: >-
+            alsmede op de eerste dag van elf weken voorafgaand aan die dag geen
+            dienstbetrekking meer had of geen dienstbetrekking had met een andere
+            werkgever dan zijn eigen werkgever, tenzij de dienstbetrekking met die
+            andere werkgever reeds bestond op de eerste dag van de wachttijd
+          accepted: true
+        - about: >-
             het ontstaansmoment van het recht op ziekengeld in de slotzin van lid 2
           reason: >-
             Het formaat beantwoordt of op de peildatum recht bestaat en berekent geen
@@ -3661,6 +3864,85 @@ articles:
           legal_text_excerpt: >-
             heeft vanaf de eerste dag van zijn ongeschiktheid tot werken recht op
             ziekengeld
+          accepted: true
+        # Restronde 25 oktober 2026: lid 4 kent een eigen ondergrens (vaststelling
+        # van het recht op uitkering), niet die van lid 1 en 2 (aanvang dienstbetrekking).
+        - about: >-
+            de ondergrens van de vijf jaren na vaststelling van het recht op uitkering
+            (lid 4)
+          reason: >-
+            ziekte_nu_binnen_termijn_lid_4 toetst alleen de bovengrens: de peildatum
+            ligt vóór vaststelling plus vijf jaar. Een ongeschiktheid die vóór de
+            vaststelling van het WIA-recht begon, valt er zo ook onder. De ondergrens
+            die bij lid 1 en 2 is toegevoegd (ziekte_nu_na_aanvang_dienstbetrekking)
+            is hier niet te hergebruiken: lid 4 rekent vanaf de vaststelling van het
+            recht op uitkering, niet vanaf de aanvang van de dienstbetrekking. De
+            bewerkingen bestaan; de toevoeging is niet zonder meer evident en is in
+            deze ronde niet doorgevoerd.
+          resolution: model
+          resolved_by: >-
+            Een ondergrens in ziekte_nu_binnen_termijn_lid_4: peildatum op of na
+            datum_vaststelling_recht_wia_uitkering, naar het voorbeeld van
+            ziekte_nu_na_aanvang_dienstbetrekking, met een scenario op de grens.
+          target: []
+          legal_text_excerpt: >-
+            wegens ziekte die zijn aangevangen in de vijf jaren na vaststelling van
+            het recht op uitkering
+          accepted: true
+        # Review oktober 2026, bevinding 6 (D): lid 6 is niet gemodelleerd.
+        - about: >-
+            het ziekengeld dat op verzoek van de werkgever in het tijdvak van 52
+            weken op het dagloon wordt gesteld (lid 6)
+          reason: >-
+            Een tijdvak van 52 weken vanaf een datum is uit te drukken (DATE_ADD met
+            weken). Het gat zit elders. Het tijdvak loopt vanaf de eerste dag van
+            ongeschiktheid met samentelling van perioden volgens artikel 29 lid 5
+            tweede en derde zin; het formaat heeft geen vorm om meerdere perioden van
+            ongeschiktheid tot één tijdvak samen te tellen. Daarnaast ontbreekt
+            invoer: het verzoek van de werkgever en het loon dat de werkgever
+            verschuldigd zou zijn, feiten die het model niet ontvangt.
+            ziekengeld_per_dag_eurocent rekent daarom altijd met de 70% van lid 5;
+            bij een verzoek van de werkgever is dat in de eerste 52 weken te laag.
+          resolution: model
+          resolved_by: >-
+            Een vorm om perioden van ongeschiktheid volgens artikel 29 lid 5
+            samen te tellen tot één tijdvak, plus de invoer verzoek van de werkgever
+            en de loonaanspraak als bovengrens, zodat lid 6 binnen dat tijdvak het
+            dagloon begrensd op het loon kan opleveren.
+          target: []
+          legal_text_excerpt: >-
+            In afwijking van het vijfde lid wordt het ziekengeld in het tijdvak van
+            52 weken vanaf de eerste dag van ongeschiktheid tot werken van de
+            werknemer, bedoeld in artikel 3, op verzoek van de werkgever gesteld op
+            het dagloon
+          accepted: true
+        # Review oktober 2026, bevinding 7 (A/D): open lezing, niet zelf beslist.
+        - about: >-
+            de loonkostensubsidieroute van lid 2 onderdeel e: de cumulatieve eis van
+            een vaststelling door het UWV of een loonwaarde onder het minimumloon,
+            en de slotzin over het ontstaan van het recht
+          reason: >-
+            voldoet_aan_lid_2_e laat de werknemer ten behoeve van wie
+            loonkostensubsidie op grond van artikel 10d lid 2 Participatiewet wordt
+            verstrekt, toe zonder de tweede helft van onderdeel e ("en van wie door
+            het UWV is vastgesteld [...] dan wel van wie door het college [...] een
+            loonwaarde is vastgesteld die minder bedraagt dan het wettelijk
+            minimumloon") en zonder de slotzin van lid 2 (het recht ontstaat niet
+            eerder dan het moment waarop hij arbeidsbeperkte wordt als bedoeld in
+            Wfsv 38b). Of die eisen naast de LKS-route cumulatief gelden, of dat de
+            LKS-verstrekking ze al impliceert, is een open juridische lezing. Het
+            model kiest niet en laat de route staan zoals hij is.
+          resolution: model
+          resolved_by: >-
+            Een besluit van de jurist over de lezing van onderdeel e; daarna de
+            LKS-route laten lopen via dezelfde vaststellingseis en de
+            arbeidsbeperktenstatus (Wfsv 38b) als de toeleidingsroute.
+          target: []
+          legal_text_excerpt: >-
+            of een persoon is ten behoeve van wie loonkostensubsidie wordt verstrekt
+            op grond van artikel 10d, tweede lid, van de Participatiewet, en van wie
+            door het Uitvoeringsinstituut werknemersverzekeringen is vastgesteld dat
+            hij niet in staat is tot het verdienen van het wettelijk minimumloon
           accepted: true
       open_terms:
         - id: vijfjaarstermijn_bij_opvolgende_dienstverbanden

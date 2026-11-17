@@ -16,21 +16,39 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
   #   - lid 4 schort de plicht om passende arbeid te verkrijgen op
   #     (art. 30 lid 1 onderdeel b), waar de WW het uitkeringsrecht
   #     laat doorlopen en de Wajong de arbeidsondersteuning
+  #
+  # Het WGA-recht uit lid 1 komt uit artikel 54 (sinds 25 oktober 2026 via
+  # source, niet meer als losse vlag). Persona in de positieve scenario's:
+  # Fatma (999990200) uit recht_op_uitkering.feature, ziek sinds 1 maart
+  # 2024, 50% verdiencapaciteit, wachttijd verstreken, geen
+  # uitsluitingsgrond.
 
   Scenario: WIA-gerechtigde mag op proefplaats als lid 2 cumulatief is vervuld
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                            | 999990100 |
-      | heeft_recht_op_wia_uitkering                   | true      |
-      | in_staat_tot_werkzaamheden                     | true      |
-      | aansprakelijkheidsverzekering_aanwezig         | true      |
-      | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
-      | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-      | heeft_recht_op_wga_uitkering | true |
-      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
-      | is_medisch_duurzaam | false |
-    When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_2_voorwaarden, max_duur_proefplaatsing_maanden" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+      | bsn                                                     | 999990200  |
+      | is_verzekerde_wia                                       | true       |
+      | is_ziek_geworden                                        | true       |
+      | eerste_dag_wachttijd                                    | 2024-03-01 |
+      | verdiencapaciteit_percentage_maatmaninkomen             | 50         |
+      | is_medisch_duurzaam                                     | false      |
+      | heeft_recht_op_uitkering_hoofdstuk_6_of_7               | false      |
+      | ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap | false      |
+      | loondoorbetalings_of_ziekengeldtijdvak_loopt_nog        | false      |
+      | periode_zonder_ziekengeld_29_lid_11_loopt_nog           | false      |
+      | is_rechtens_vrijheid_ontnomen                           | false      |
+      | onttrekt_zich_aan_vrijheidsstraf                        | false      |
+      | woont_niet_in_nederland                                 | false      |
+      | heeft_pensioengerechtigde_leeftijd_bereikt              | false      |
+      | is_overleden                                            | false      |
+      | is_uitreiziger                                          | false      |
+      | in_staat_tot_werkzaamheden                              | true       |
+      | aansprakelijkheidsverzekering_aanwezig                  | true       |
+      | niet_eerder_proefplaatsing_zelfde_werkgever             | true       |
+      | reeel_uitzicht_op_dienstbetrekking_zes_maanden          | true       |
+    When I evaluate outputs "heeft_recht_op_wga_uitkering, mag_proefplaatsing_aangaan, voldoet_aan_lid_2_voorwaarden, max_duur_proefplaatsing_maanden" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
+    And output "heeft_recht_op_wga_uitkering" is true
     And output "voldoet_aan_lid_2_voorwaarden" is true
     And output "mag_proefplaatsing_aangaan" is true
     And output "max_duur_proefplaatsing_maanden" equals 6
@@ -42,15 +60,26 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
   Scenario: Tijdens de proefplaatsing is de sollicitatieplicht opgeschort
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                            | 999990100 |
-      | heeft_recht_op_wia_uitkering                   | true      |
-      | in_staat_tot_werkzaamheden                     | true      |
-      | aansprakelijkheidsverzekering_aanwezig         | true      |
-      | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
-      | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-      | heeft_recht_op_wga_uitkering | true |
-      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
-      | is_medisch_duurzaam | false |
+      | bsn                                                     | 999990200  |
+      | is_verzekerde_wia                                       | true       |
+      | is_ziek_geworden                                        | true       |
+      | eerste_dag_wachttijd                                    | 2024-03-01 |
+      | verdiencapaciteit_percentage_maatmaninkomen             | 50         |
+      | is_medisch_duurzaam                                     | false      |
+      | heeft_recht_op_uitkering_hoofdstuk_6_of_7               | false      |
+      | ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap | false      |
+      | loondoorbetalings_of_ziekengeldtijdvak_loopt_nog        | false      |
+      | periode_zonder_ziekengeld_29_lid_11_loopt_nog           | false      |
+      | is_rechtens_vrijheid_ontnomen                           | false      |
+      | onttrekt_zich_aan_vrijheidsstraf                        | false      |
+      | woont_niet_in_nederland                                 | false      |
+      | heeft_pensioengerechtigde_leeftijd_bereikt              | false      |
+      | is_overleden                                            | false      |
+      | is_uitreiziger                                          | false      |
+      | in_staat_tot_werkzaamheden                              | true       |
+      | aansprakelijkheidsverzekering_aanwezig                  | true       |
+      | niet_eerder_proefplaatsing_zelfde_werkgever             | true       |
+      | reeel_uitzicht_op_dienstbetrekking_zes_maanden          | true       |
     When I evaluate "sollicitatieplicht_opgeschort" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "sollicitatieplicht_opgeschort" is true
@@ -59,20 +88,35 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
   # WIA is gestroomd naar gemeentelijke ondersteuning (art. 35 lid 4.b,
   # Pwet art. 7 lid 1 a) loopt de proefplaatsing via Pwet art. 8a lid 2
   # onderdeel d, met een termijn van twee maanden in plaats van zes.
+  # Persona hier (999990720): ziek sinds 6 januari 2025, zodat op de
+  # peildatum de wachttijd van 104 weken nog loopt en het loon nog wordt
+  # doorbetaald (artikel 54 lid 1 onderdeel a en artikel 43 onderdeel b).
   Scenario: Zonder WIA-recht geen proefplaatsing via artikel 37
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                            | 999990101 |
-      | heeft_recht_op_wia_uitkering                   | false     |
-      | in_staat_tot_werkzaamheden                     | true      |
-      | aansprakelijkheidsverzekering_aanwezig         | true      |
-      | niet_eerder_proefplaatsing_zelfde_werkgever    | true      |
-      | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-      | heeft_recht_op_wga_uitkering | false |
-      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
-      | is_medisch_duurzaam | false |
-    When I evaluate outputs "mag_proefplaatsing_aangaan, sollicitatieplicht_opgeschort" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+      | bsn                                                     | 999990720  |
+      | is_verzekerde_wia                                       | true       |
+      | is_ziek_geworden                                        | true       |
+      | eerste_dag_wachttijd                                    | 2025-01-06 |
+      | verdiencapaciteit_percentage_maatmaninkomen             | 50         |
+      | is_medisch_duurzaam                                     | false      |
+      | heeft_recht_op_uitkering_hoofdstuk_6_of_7               | false      |
+      | ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap | false      |
+      | loondoorbetalings_of_ziekengeldtijdvak_loopt_nog        | true       |
+      | periode_zonder_ziekengeld_29_lid_11_loopt_nog           | false      |
+      | is_rechtens_vrijheid_ontnomen                           | false      |
+      | onttrekt_zich_aan_vrijheidsstraf                        | false      |
+      | woont_niet_in_nederland                                 | false      |
+      | heeft_pensioengerechtigde_leeftijd_bereikt              | false      |
+      | is_overleden                                            | false      |
+      | is_uitreiziger                                          | false      |
+      | in_staat_tot_werkzaamheden                              | true       |
+      | aansprakelijkheidsverzekering_aanwezig                  | true       |
+      | niet_eerder_proefplaatsing_zelfde_werkgever             | true       |
+      | reeel_uitzicht_op_dienstbetrekking_zes_maanden          | true       |
+    When I evaluate outputs "heeft_recht_op_wga_uitkering, mag_proefplaatsing_aangaan, sollicitatieplicht_opgeschort" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
+    And output "heeft_recht_op_wga_uitkering" is false
     And output "mag_proefplaatsing_aangaan" is false
     And output "sollicitatieplicht_opgeschort" is false
 
@@ -82,15 +126,26 @@ Feature: Proefplaatsing met behoud van WIA-uitkering (Wet WIA art. 37)
   Scenario: Eerdere proefplaatsing bij dezelfde werkgever blokkeert een tweede
     Given the calculation date is "2026-07-01"
     And the following parameters:
-      | bsn                                            | 999990100 |
-      | heeft_recht_op_wia_uitkering                   | true      |
-      | in_staat_tot_werkzaamheden                     | true      |
-      | aansprakelijkheidsverzekering_aanwezig         | true      |
-      | niet_eerder_proefplaatsing_zelfde_werkgever    | false     |
-      | reeel_uitzicht_op_dienstbetrekking_zes_maanden | true      |
-      | heeft_recht_op_wga_uitkering | true |
-      | verdiencapaciteit_percentage_maatmaninkomen | 50 |
-      | is_medisch_duurzaam | false |
+      | bsn                                                     | 999990200  |
+      | is_verzekerde_wia                                       | true       |
+      | is_ziek_geworden                                        | true       |
+      | eerste_dag_wachttijd                                    | 2024-03-01 |
+      | verdiencapaciteit_percentage_maatmaninkomen             | 50         |
+      | is_medisch_duurzaam                                     | false      |
+      | heeft_recht_op_uitkering_hoofdstuk_6_of_7               | false      |
+      | ontvangt_wazo_uitkering_wegens_ziekte_door_zwangerschap | false      |
+      | loondoorbetalings_of_ziekengeldtijdvak_loopt_nog        | false      |
+      | periode_zonder_ziekengeld_29_lid_11_loopt_nog           | false      |
+      | is_rechtens_vrijheid_ontnomen                           | false      |
+      | onttrekt_zich_aan_vrijheidsstraf                        | false      |
+      | woont_niet_in_nederland                                 | false      |
+      | heeft_pensioengerechtigde_leeftijd_bereikt              | false      |
+      | is_overleden                                            | false      |
+      | is_uitreiziger                                          | false      |
+      | in_staat_tot_werkzaamheden                              | true       |
+      | aansprakelijkheidsverzekering_aanwezig                  | true       |
+      | niet_eerder_proefplaatsing_zelfde_werkgever             | false      |
+      | reeel_uitzicht_op_dienstbetrekking_zes_maanden          | true       |
     When I evaluate outputs "mag_proefplaatsing_aangaan, voldoet_aan_lid_2_voorwaarden" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
     Then the execution succeeds
     And output "voldoet_aan_lid_2_voorwaarden" is false

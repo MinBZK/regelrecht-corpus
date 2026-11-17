@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: wet_financiering_sociale_verzekeringen
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -1669,9 +1669,12 @@ articles:
             required: true
             description: |-
               38b.1.c: recht op arbeidsondersteuning of arbeidsongeschiktheids-
-              uitkering Wajong. Uitsluiting: persoon heeft duurzaam geen
-              mogelijkheden tot arbeidsparticipatie (Wajong 1a:1) — die
-              valt buiten 38b.1.c. Bron: UWV.
+              uitkering Wajong. Wie duurzaam geen mogelijkheden tot
+              arbeidsparticipatie heeft (Wajong 1a:1), valt niet absoluut
+              buiten 38b.1.c: de slotzin laat hem meetellen zodra hij arbeid
+              verricht in een dienstbetrekking (juristronde 3, 8 september
+              2026); zie heeft_wajong_duurzaam_geen_mogelijkheden en
+              verricht_arbeid_in_dienstbetrekking. Bron: UWV.
           - name: heeft_wajong_duurzaam_geen_mogelijkheden
             type: boolean
             required: true

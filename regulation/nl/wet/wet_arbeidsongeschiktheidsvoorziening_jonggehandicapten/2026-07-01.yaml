@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
 regulatory_layer: WET
 publication_date: '2020-12-04'
@@ -1444,6 +1444,10 @@ articles:
         artikel: 8:10
         hoofdstuk: '8'
     machine_readable:
+      # Bevoegd gezag (RFC-002): artikel 2:15 met artikel 1:1: het UWV beslist over het recht op arbeidsondersteuning.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         grens_verdiencapaciteit_maatmaninkomen_procent:
           value: 75
@@ -1455,8 +1459,14 @@ articles:
           value: 16
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1, aanhef: "De jonggehandicapte heeft op aanvraag recht op arbeidsondersteuning".
+          - type: AANVRAAG
+            requests: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten#2:15
+            parameters:
+              - bsn
+              - datum_aanvraag_arbeidsondersteuning
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -1499,12 +1509,14 @@ articles:
           - name: datum_aanvraag_arbeidsondersteuning
             type: date
             required: false
+            nullable: true
             description: |-
               Datum waarop de aanvraag om arbeidsondersteuning is ingediend.
               Lid 1 onderdeel d toetst deze aan de inwerkingtreding van de
               Wet van 3 december 2009 (Stb. 2009, 580); lid 2 rekent er
               zestien weken bij. Alleen vereist als een aanvraag is
-              ingediend. Bron: UWV. Zolang dat feit onwaar is, wordt 1900-01-01 aangeleverd; de waarde wordt dan niet gebruikt.
+              ingediend; zonder aanvraag is de waarde null en wordt zij
+              niet gebruikt. Bron: UWV.
           - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
             type: boolean
             required: true
@@ -1519,11 +1531,14 @@ articles:
               Ziektewet. Bron: UWV-beoordeling.
           - name: datum_voldaan_aan_lid_1
             type: date
-            required: true
+            required: false
+            nullable: true
             description: |-
               Lid 2: de dag waarop aan alle voorwaarden van lid 1 wordt
               voldaan. Ten vroegste de dag waarop de jonggehandicapte
-              achttien jaar wordt (lid 1 onderdeel c). Bron: UWV.
+              achttien jaar wordt (lid 1 onderdeel c). Zonder aanvraag is
+              er geen recht en is de waarde null; zij wordt dan niet
+              gebruikt. Bron: UWV.
           - name: recht_herleeft_op_grond_van_2_17
             type: boolean
             required: true
@@ -1553,13 +1568,32 @@ articles:
             type: boolean
             description: |-
               Op de peildatum bestaat recht op arbeidsondersteuning op
-              grond van hoofdstuk 2 van de Wajong.
+              grond van hoofdstuk 2 van de Wajong. Is de aanvraag
+              ingediend maar ontbreekt een datum, dan is deze uitkomst
+              false en meldt invoer_onvolledig_artikel_2_15 dat het om
+              onvolledige invoer gaat, niet om een afwijzing.
+          - name: invoer_onvolledig_artikel_2_15
+            type: boolean
+            description: |-
+              De aanvraag is ingediend, maar de datum van de aanvraag of
+              de datum waarop aan lid 1 wordt voldaan ontbreekt. Dan
+              zijn voldoet_aan_voorwaarden_lid_1, recht_kan_nog_ontstaan
+              en heeft_recht_op_arbeidsondersteuning false zonder dat er
+              een afwijzing achter zit; deze uitkomst maakt dat zichtbaar.
         actions:
           - output: voldoet_aan_voorwaarden_lid_1
             value:
               operation: IF
               cases:
-                - when: $aanvraag_arbeidsondersteuning_ingediend
+                - when:
+                    operation: AND
+                    conditions:
+                      - $aanvraag_arbeidsondersteuning_ingediend
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $datum_aanvraag_arbeidsondersteuning
+                          value: null
                   then:
                     operation: AND
                     conditions:
@@ -1589,13 +1623,23 @@ articles:
                   verdienen; b. geen uitsluitingsgrond 2:11; c. achttien
                   jaar of ouder op de peildatum; d. aanvraag op of na
                   1 januari 2010, de inwerkingtreding van Stb. 2009, 580.
+                  Ontbreekt bij een ingediende aanvraag de aanvraagdatum,
+                  dan is de uitkomst false; zie invoer_onvolledig_artikel_2_15.
           - output: ingangsdatum_recht_op_arbeidsondersteuning
             value:
               operation: IF
               cases:
                 - when:
-                    operation: NOT
-                    value: $aanvraag_arbeidsondersteuning_ingediend
+                    operation: OR
+                    conditions:
+                      - operation: NOT
+                        value: $aanvraag_arbeidsondersteuning_ingediend
+                      - operation: EQUALS
+                        subject: $datum_aanvraag_arbeidsondersteuning
+                        value: null
+                      - operation: EQUALS
+                        subject: $datum_voldaan_aan_lid_1
+                        value: null
                   then: null
                 - when:
                     operation: OR
@@ -1702,6 +1746,31 @@ articles:
                   Recht bestaat als aan lid 1 is voldaan, het recht nog
                   kon ontstaan (lid 4 en 5) en de ingangsdatum (lid 2 en
                   3) op de peildatum is bereikt.
+          - output: invoer_onvolledig_artikel_2_15
+            value:
+              operation: AND
+              conditions:
+                - $aanvraag_arbeidsondersteuning_ingediend
+                - operation: OR
+                  conditions:
+                    - operation: EQUALS
+                      subject: $datum_aanvraag_arbeidsondersteuning
+                      value: null
+                    - operation: EQUALS
+                      subject: $datum_voldaan_aan_lid_1
+                      value: null
+              legal_basis:
+                law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+                bwb_id: BWBR0008657
+                article: '2:15'
+                explanation: |-
+                  Geen voorwaarde uit de wet maar een invoercontrole: lid 1
+                  (onderdeel d) en lid 2 rekenen met de aanvraagdatum en
+                  het lid-1-moment. Ontbreekt een van beide bij een
+                  ingediende aanvraag, dan kan het model het recht niet
+                  vaststellen. De drie uitkomsten hierboven vallen dan op
+                  false terug; deze uitkomst onderscheidt dat van een
+                  afwijzing.
       open_terms:
         - id: jonggehandicapte_artikel_2_3
           description: >-
@@ -1918,10 +1987,19 @@ articles:
       - id: ref1
         bwb_id: BWBR0002638
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV vermindert de aanspraak.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1: "vermindert het Uitvoeringsinstituut werknemersverzekeringen op verzoek van de betrokken werkgever of werknemer".
+          - type: AANVRAAG
+            requests: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten#2:20
+            parameters:
+              - bsn
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -1937,10 +2015,10 @@ articles:
             type: boolean
             required: true
             description: |-
-              Lid 1: UWV heeft vastgesteld dat de arbeidsprestatie van
-              werknemer in deze functie wegens ziekte of gebrek "duidelijk
-              minder" is dan de prestatie die het minimumloon
-              rechtvaardigt.
+              Lid 1: het UWV heeft vastgesteld dat de arbeidsprestatie van de
+              werknemer in deze functie ten gevolge van ziekte of gebrek
+              duidelijk minder is dan de arbeidsprestatie die een geldelijke
+              beloning van het minimumloon rechtvaardigt.
           - name: aanvraag_loondispensatie_ingediend
             type: boolean
             required: true
@@ -1951,11 +2029,33 @@ articles:
             type: boolean
             required: true
             description: |-
-              Lid 1: werknemer heeft recht op arbeidsondersteuning op
-              grond van Wajong (hoofdstuk 1A nieuwe Wajong of
-              hoofdstuk 2 oude Wajong). Bron: UWV-doelgroepregister.
-              Direct als parameter; doelgroepvaststelling via
-              artikel 1:1 is in deze wet zelf gemodelleerd.
+              Lid 1: werknemer heeft recht op arbeidsondersteuning. Volgens
+              artikel 1:1 lid 1 onderdeel o is dat het recht op
+              arbeidsondersteuning op grond van hoofdstuk 2 (artikel 2:15);
+              hoofdstuk 1A kent geen arbeidsondersteuning. Bron: UWV.
+              Direct als parameter en niet uit artikel 2:15 afgeleid:
+              artikel 2:15 vraagt nog acht gegevens over de aanvraag en de
+              beoordeling van arbeidsondersteuning (zie Ziektewet artikel 29b,
+              dat ze wel doorgeeft), die bij een loondispensatieverzoek niet
+              opnieuw worden ingewonnen.
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2:30 lid 1: artikel 2:20 is niet van toepassing op de
+              jonggehandicapte die volledig en duurzaam arbeidsongeschikt is
+              in de zin van artikel 2:4 lid 1 ("duurzaam geen mogelijkheden
+              tot arbeidsparticipatie"). Zelfde gegeven als bij artikel 2:15
+              lid 3 onderdeel a. Bron: UWV-beoordeling.
+          - name: loondispensatie_voor_2018_verleend_voor_dezelfde_functie
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2:30 lid 2: vóór 1 januari 2018 was loondispensatie
+              verleend en het verzoek betreft dezelfde functie als waarvoor
+              die loondispensatie was verleend. Dan blijft artikel 2:20 ook
+              bij volledige en duurzame arbeidsongeschiktheid van
+              toepassing. Bron: UWV.
           - name: vastgesteld_aanspraakpercentage_minimumloon
             type: number
             required: false
@@ -2041,6 +2141,12 @@ articles:
               uur, "naar evenredigheid", in de rekenvorm van Besluit
               loondispensatie Wajong artikel 3. Afwezig zonder recht op
               loondispensatie of zonder vastgesteld percentage.
+          - name: artikel_2_20_van_toepassing
+            type: boolean
+            description: |-
+              Artikel 2:30: artikel 2:20 geldt niet voor de volledig en
+              duurzaam arbeidsongeschikte (lid 1), tenzij vóór 1 januari 2018
+              loondispensatie was verleend voor dezelfde functie (lid 2).
           - name: heeft_recht_op_loondispensatie
             type: boolean
             description: |-
@@ -2053,10 +2159,33 @@ articles:
               wordt overeengekomen dan UWV heeft vastgesteld is nietig.
               Constante uit dwingend recht.
         actions:
+          # Artikel 2:30 lid 1 en 2: uitsluiting van de volledig en duurzaam
+          # arbeidsongeschikte, met de uitzondering voor loondispensatie die
+          # vóór 1 januari 2018 voor dezelfde functie was verleend.
+          - output: artikel_2_20_van_toepassing
+            value:
+              operation: OR
+              conditions:
+                - operation: NOT
+                  value: $is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+                - $loondispensatie_voor_2018_verleend_voor_dezelfde_functie
+            legal_basis:
+              law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+              bwb_id: BWBR0008657
+              article: '2:30'
+              explanation: |-
+                Lid 1: "De artikelen 2:18 tot en met 2:20 [...] en 2:24 zijn
+                niet van toepassing op de jonggehandicapte die volledig en
+                duurzaam arbeidsongeschikt is." Lid 2: "In afwijking van het
+                eerste lid is artikel 2:20 wel van toepassing [...] indien
+                ten aanzien van die jonggehandicapte voor 1 januari 2018
+                loondispensatie was verleend en voor zover het een verzoek om
+                loondispensatie betreft voor dezelfde functie".
           - output: heeft_recht_op_loondispensatie
             value:
               operation: AND
               conditions:
+                - $artikel_2_20_van_toepassing
                 - $heeft_recht_op_arbeidsondersteuning_wajong
                 - operation: NOT
                   value: $is_wsw_werknemer
@@ -2072,10 +2201,12 @@ articles:
                 explanation: |-
                   Cumulatieve voorwaarden lid 1: Wajong-status,
                   niet-Wsw, arbeidsprestatie duidelijk minder dan
-                  minimumloon, aanvraag ingediend. Het oordeel van het UWV
+                  minimumloon, op verzoek (de aanvraag); artikel 2:30 bepaalt of
+                  artikel 2:20 überhaupt van toepassing is. Het oordeel van het UWV
                   over "duidelijk minder" is gebonden aan de ondergrens van
                   Besluit loondispensatie Wajong artikel 1 (ten minste 25
-                  procent lager) en artikel 2 (ten minste zes maanden).
+                  procent lager); artikel 2 verleent alleen als de verminderde
+                  arbeidsprestatie naar verwachting ten minste zes maanden duurt.
           - output: beding_lagere_beloning_is_nietig
             value: true
           - output: aanspraak_beloning_per_uur_eurocent
@@ -2100,8 +2231,9 @@ articles:
       open_terms:
         - id: duidelijk_minder_dan_minimumloon
           description: >-
-            Of de arbeidsprestatie duidelijk minder is dan de prestatie die een
-            beloning van het minimumloon rechtvaardigt.
+            Of de arbeidsprestatie van de werknemer in deze functie ten gevolge
+            van ziekte of gebrek duidelijk minder is dan de arbeidsprestatie die
+            een geldelijke beloning van het minimumloon rechtvaardigt.
           type: boolean
           required: false
           decided_per_case_by: het UWV, op grond van Wajong artikel 2:20 lid 1
@@ -2161,10 +2293,19 @@ articles:
       - id: ref1
         bwb_id: BWBR0008903
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV kan voorzieningen toekennen.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1: "kan ... op aanvraag voorzieningen toekennen".
+          - type: AANVRAAG
+            requests: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten#2:22
+            parameters:
+              - bsn
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -2175,9 +2316,10 @@ articles:
             required: true
             description: |-
               Lid 1 richt zich tot "de jonggehandicapte" en niet tot degene
-              die recht heeft op arbeidsondersteuning. Doelgroepvaststelling
-              loopt via artikel 1:1 (hoofdstuk 1A nieuwe Wajong) dan wel
-              hoofdstuk 2 oude Wajong. Bron: UWV.
+              die recht heeft op arbeidsondersteuning. Jonggehandicapte is
+              volgens artikel 1:1 lid 1 onderdeel d de persoon bedoeld in
+              artikel 1a:1, 2:3 of 3:2; die artikelen zijn hier niet
+              gemodelleerd. Bron: UWV.
           - name: ondersteuning_is_noodzakelijk_en_compenseert_beperkingen
             type: boolean
             required: true
@@ -2300,7 +2442,7 @@ articles:
           description: |-
             Lid 4 — bij of krachtens AMvB kunnen nadere regels worden
             gesteld met betrekking tot dit artikel. Het Reïntegratiebesluit
-            (BWBR0018394) vult dit in; de koppeling loopt via het
+            (BWBR0019152) vult dit in; de koppeling loopt via het
             implements-blok in dat besluit.
           default:
             actions:
@@ -2391,6 +2533,10 @@ articles:
       5 Bij ministeriële regeling kunnen nadere regels worden gesteld met betrekking tot de uitvoering van dit artikel.
     url: https://wetten.overheid.nl/BWBR0008657/2026-07-01#Artikel224
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het UWV kan toestemming verlenen.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         max_duur_proefplaatsing_maanden:
           value: 6
@@ -2409,6 +2555,14 @@ articles:
             description: |-
               Lid 1: de jonggehandicapte heeft recht op arbeidsondersteuning
               op grond van deze wet. Bron: UWV.
+          - name: is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+            type: boolean
+            required: true
+            description: |-
+              Artikel 2:30 lid 1: artikel 2:24 is niet van toepassing op de
+              jonggehandicapte die volledig en duurzaam arbeidsongeschikt is
+              in de zin van artikel 2:4 lid 1. De uitzondering van artikel
+              2:30 lid 2 geldt alleen voor artikel 2:20. Bron: UWV-beoordeling.
           - name: in_staat_tot_werkzaamheden
             type: boolean
             required: true
@@ -2441,6 +2595,11 @@ articles:
           - name: voldoet_aan_lid_3_voorwaarden
             type: boolean
             description: 'Cumulatieve toets lid 3 onderdelen a, b, c en d.'
+          - name: artikel_2_24_van_toepassing
+            type: boolean
+            description: |-
+              Artikel 2:30 lid 1: artikel 2:24 geldt niet voor de volledig en
+              duurzaam arbeidsongeschikte.
           - name: mag_proefplaatsing_aangaan
             type: boolean
             description: |-
@@ -2480,10 +2639,28 @@ articles:
                   Lid 3 onderdelen a tot en met d zijn cumulatief, in
                   dezelfde bewoordingen als WW artikel 76a lid 3 en Wet
                   WIA artikel 37 lid 2.
+          # Artikel 2:30 lid 1: geen proefplaatsing op grond van 2:24 voor de
+          # volledig en duurzaam arbeidsongeschikte; lid 2 zondert alleen
+          # artikel 2:20 uit.
+          - output: artikel_2_24_van_toepassing
+            value:
+              operation: NOT
+              value: $is_volledig_en_duurzaam_arbeidsongeschikt_wajong
+            legal_basis:
+              law: Wet arbeidsongeschiktheidsvoorziening jonggehandicapten
+              bwb_id: BWBR0008657
+              article: '2:30'
+              paragraph: '1'
+              explanation: |-
+                "De artikelen 2:18 tot en met 2:20, 2:21 zoals dat luidde op
+                31 december 2011 en 2:24 zijn niet van toepassing op de
+                jonggehandicapte die volledig en duurzaam arbeidsongeschikt
+                is."
           - output: mag_proefplaatsing_aangaan
             value:
               operation: AND
               conditions:
+                - $artikel_2_24_van_toepassing
                 - $heeft_recht_op_arbeidsondersteuning
                 - $voldoet_aan_lid_3_voorwaarden
               legal_basis:
@@ -2493,7 +2670,8 @@ articles:
                 paragraph: '1'
                 explanation: |-
                   Lid 1 vereist recht op arbeidsondersteuning; lid 3 stelt
-                  de voorwaarden aan de werkzaamheden zelf.
+                  de voorwaarden aan de werkzaamheden zelf. Artikel 2:30 lid 1
+                  sluit de volledig en duurzaam arbeidsongeschikte uit.
           - output: max_duur_proefplaatsing_maanden
             value: $max_duur_proefplaatsing_maanden
           - output: arbeidsondersteuning_blijft_bestaan

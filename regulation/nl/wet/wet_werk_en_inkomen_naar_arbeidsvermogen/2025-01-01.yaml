@@ -2881,7 +2881,7 @@ articles:
           legal_basis: artikel 35 lid 5 Wet WIA
           description: |-
             Lid 5 — bij of krachtens AMvB kunnen nadere regels worden
-            gesteld. Reïntegratiebesluit (BWBR0018394) implementeert dit
+            gesteld. Reïntegratiebesluit (BWBR0019152) implementeert dit
             mede. Niet als implements opgenomen in deze YAML; placeholder.
           default:
             actions:
@@ -2924,6 +2924,26 @@ articles:
             "noodzakelijk" is en "een compensatie vormt voor zijn
             beperkingen". UWV-discretionair.
           legal_text_excerpt: 'noodzakelijke persoonlijke ondersteuning ... indien die ondersteuning een compensatie vormt voor zijn beperkingen'
+          accepted: true
+        - construct: 'bekende afwijking: lid 2 onderdeel c en d, lid 5 en Reintegratiebesluit artikel 3 en 4 ontbreken in de actions'
+          reason: |-
+            Dit oudere model toetst voor heeft_recht_op_jobcoaching en
+            heeft_recht_op_werkplekaanpassing alleen lid 1, lid 4 en de
+            aanvraag. De materiele eisen van lid 2 onderdeel c (meeneembaar,
+            in overwegende mate op het individu afgestemd) en onderdeel d
+            (noodzakelijk, compensatie voor beperkingen) doen niet mee,
+            evenmin de drempel van Reintegratiebesluit artikel 3 en de eis
+            van artikel 4 (in overwegende mate op het individu gericht).
+            Ook zijn de outputs als recht benoemd, terwijl lid 1 een
+            kan-bepaling is. De uitkomst is daardoor te ruim. Het model van
+            2026-07-01 heeft deze toetsen wel; deze versie wordt niet
+            herbouwd. Scenario jobcoaching_werkplekaanpassing.feature
+            (peildatum 2025-01-01) borgt het huidige gedrag.
+          suggestion: |-
+            Bij herbouw de parameters en voorwaarden van de versie
+            2026-07-01 overnemen (mag_jobcoaching_toekennen en
+            mag_werkplekaanpassing_toekennen).
+          legal_text_excerpt: 'Onder voorzieningen als bedoeld in het eerste lid worden uitsluitend verstaan'
           accepted: true
   - number: '35.2'
     text: 'Onder voorzieningen als bedoeld in het eerste lid worden uitsluitend verstaan:'

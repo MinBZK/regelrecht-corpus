@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: wet_tegemoetkomingen_loondomein
 regulatory_layer: WET
 publication_date: '2025-05-09'
@@ -119,10 +119,20 @@ articles:
         artikel: '4.1'
         hoofdstuk: IV
     machine_readable:
+      # Bevoegd gezag (RFC-002): artikel 4.2 lid 1: op de verzoeken beslist de inspecteur.
+      competent_authority:
+        name: de inspecteur
+        type: CATEGORY
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Artikel 2.1, aanhef: "Een werkgever kan in de loonaangifte een verzoek doen".
+          - type: AANVRAAG
+            requests: wet_tegemoetkomingen_loondomein#2.1
+            parameters:
+              - bsn
+              - verloonde_uren
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -1037,6 +1047,10 @@ articles:
         hoofdstuk: II
         paragraaf: '2.3'
     machine_readable:
+      # Bevoegd gezag (RFC-002): artikel 4.2 lid 1: op de verzoeken beslist de inspecteur.
+      competent_authority:
+        name: de inspecteur
+        type: CATEGORY
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -1212,6 +1226,38 @@ articles:
           target: []
           legal_text_excerpt: binnen vijf jaar na de eerste dag na afloop van de wachttijd
           accepted: true
+        # Review 25 oktober 2026 (open lezing, niet beslist): periode_2_8_is_verstreken toetst op de
+        # peildatum, terwijl de tegemoetkoming per kalenderjaar wordt berekend
+        # (artikel 4.1) en de uren al tot de periode zijn beperkt. Eindigt de
+        # periode midden in het jaar, dan geeft het model € 0 voor het hele jaar.
+        - about: >-
+            de periode van artikel 2.8 die voor deze werknemer is verstreken,
+            toegepast op een tegemoetkoming die per kalenderjaar wordt berekend
+          reason: >-
+            Het model toetst periode_2_8_is_verstreken (artikel 2.1) op de peildatum en zet bij
+            een verstreken periode de hele jaartegemoetkoming op nul. De
+            tegemoetkoming wordt per kalenderjaar berekend (artikel 4.1 lid 1 en 2)
+            over verloonde uren die de parameter verloonde_uren_voorwaarden_2_6
+            al tot de periode van artikel 2.8 beperkt. Een periode die midden in het
+            kalenderjaar van de peildatum eindigt, geeft zo € 0 voor ook de uren
+            vóór het einde (voorbeeld: scenario 'Herplaatsen: aanvraagtermijn van
+            2.16 verstreken' in loonkostenvoordeel_categorieen.feature). Of "niet
+            langer van toepassing" het hele kalenderjaar raakt of alleen de uren na
+            het einde, is een open lezing voor de jurist en wordt hier niet
+            beslist. Het is geen vormgat: schema v0.7.1 kent DATE_PART en START_OF,
+            waarmee "de periode eindigde vóór 1 januari van het kalenderjaar van de
+            peildatum" uit te drukken is zodra de lezing vaststaat.
+          resolution: model
+          resolved_by: >-
+            Een beslissing van de jurist over de reikwijdte van "niet langer van
+            toepassing" (heel kalenderjaar of alleen de uren na het einde van de
+            periode van artikel 2.8). Daarna de toets met START_OF of DATE_PART
+            modelleren en het scenario bij 2.16 met de uren tot het einde van de
+            periode herzien. Artikel 2.10 lid 3 (periode 2.12) heeft dezelfde vorm.
+          target: []
+          legal_text_excerpt: >-
+            Het eerste lid is niet of niet langer van toepassing indien: c. de periode, bedoeld in artikel 2.8, voor deze werknemer is verstreken.
+          accepted: true
   - number: '2.7'
     text: |-
       1 Het Uitvoeringsinstituut werknemersverzekeringen verstrekt uitsluitend aan degene die een dienstbetrekking
@@ -1248,6 +1294,56 @@ articles:
         artikel: '2.6'
         hoofdstuk: II
         paragraaf: '2.3'
+    machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het Uitvoeringsinstituut
+      # werknemersverzekeringen verstrekt de doelgroepverklaring. Alleen de
+      # aanvraagtermijn van lid 1, derde volzin, is uitvoerbaar gemaakt; de
+      # voorwaarden voor de verklaring en het verzoek zelf niet.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
+      definitions:
+        aanvraagtermijn_doelgroepverklaring_maanden:
+          value: 3
+      execution:
+        parameters:
+          - name: datum_aanvang_dienstbetrekking
+            type: date
+            required: true
+            description: |-
+              Lid 1, derde volzin: de aanvang van de dienstbetrekking die de
+              aanvrager met de werkgever aangaat. Bron: werkgever /
+              polisadministratie.
+        output:
+          - name: uiterste_datum_aanvraag_doelgroepverklaring
+            type: date
+            description: |-
+              Lid 1, derde volzin: de laatste dag waarop de doelgroepverklaring
+              binnen drie maanden na aanvang van de dienstbetrekking wordt
+              aangevraagd.
+        actions:
+          # Drie maanden na aanvang, met de dagafkapping van DATE_ADD: bestaat
+          # de overeenkomstige dag niet in de doelmaand, dan de laatste dag van
+          # die maand (30 november → 28 of 29 februari). Zelfde vorm als de
+          # zes maanden van Participatiewet artikel 10d lid 2. Verlenging door
+          # de Algemene termijnenwet (weekend, feestdag) is niet gemodelleerd.
+          - output: uiterste_datum_aanvraag_doelgroepverklaring
+            value:
+              operation: DATE_ADD
+              date: $datum_aanvang_dienstbetrekking
+              months: $aanvraagtermijn_doelgroepverklaring_maanden
+            legal_basis:
+              law: Wet tegemoetkomingen loondomein
+              bwb_id: BWBR0037522
+              article: '2.7'
+              paragraph: '1'
+              url: https://wetten.overheid.nl/BWBR0037522/2026-01-01#Artikel2.7
+              juriconnect: jci1.3:c:BWBR0037522&artikel=2.7&lid=1&z=2026-01-01&g=2026-01-01
+              explanation: |-
+                "De doelgroepverklaring wordt aangevraagd binnen drie maanden
+                na aanvang van de dienstbetrekking." De dag van aanvang telt
+                niet mee; de termijn eindigt op de overeenkomstige dag drie
+                maanden later.
   - number: '2.8'
     text: |-
       1 Een loonkostenvoordeel arbeidsgehandicapte werknemer wordt ten hoogste verstrekt over een aaneengesloten periode
@@ -1462,6 +1558,10 @@ articles:
         hoofdstuk: II
         paragraaf: '2.5'
     machine_readable:
+      # Bevoegd gezag (RFC-002): artikel 4.2 lid 1: op de verzoeken beslist de inspecteur.
+      competent_authority:
+        name: de inspecteur
+        type: CATEGORY
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -1616,6 +1716,38 @@ articles:
             worden onderbrekingen van een dienstbetrekking tussen dezelfde werkgever
             en werknemer binnen de periode, bedoeld in artikel 2.16, eerste lid,
             geacht niet te hebben plaatsgevonden
+          accepted: true
+        # Review 25 oktober 2026 (open lezing, niet beslist): periode_2_16_is_verstreken toetst op de
+        # peildatum, terwijl de tegemoetkoming per kalenderjaar wordt berekend
+        # (artikel 4.1) en de uren al tot de periode zijn beperkt. Eindigt de
+        # periode midden in het jaar, dan geeft het model € 0 voor het hele jaar.
+        - about: >-
+            de periode van artikel 2.16 die voor deze werknemer is verstreken,
+            toegepast op een tegemoetkoming die per kalenderjaar wordt berekend
+          reason: >-
+            Het model toetst periode_2_16_is_verstreken (artikel 2.1) op de peildatum en zet bij
+            een verstreken periode de hele jaartegemoetkoming op nul. De
+            tegemoetkoming wordt per kalenderjaar berekend (artikel 4.1 lid 1 en 2)
+            over verloonde uren die de parameter verloonde_uren_voorwaarden_2_14
+            al tot de periode van artikel 2.16 beperkt. Een periode die midden in het
+            kalenderjaar van de peildatum eindigt, geeft zo € 0 voor ook de uren
+            vóór het einde (voorbeeld: scenario 'Herplaatsen: aanvraagtermijn van
+            2.16 verstreken' in loonkostenvoordeel_categorieen.feature). Of "niet
+            langer van toepassing" het hele kalenderjaar raakt of alleen de uren na
+            het einde, is een open lezing voor de jurist en wordt hier niet
+            beslist. Het is geen vormgat: schema v0.7.1 kent DATE_PART en START_OF,
+            waarmee "de periode eindigde vóór 1 januari van het kalenderjaar van de
+            peildatum" uit te drukken is zodra de lezing vaststaat.
+          resolution: model
+          resolved_by: >-
+            Een beslissing van de jurist over de reikwijdte van "niet langer van
+            toepassing" (heel kalenderjaar of alleen de uren na het einde van de
+            periode van artikel 2.16). Daarna de toets met START_OF of DATE_PART
+            modelleren en het scenario bij 2.16 met de uren tot het einde van de
+            periode herzien. Artikel 2.10 lid 3 (periode 2.12) heeft dezelfde vorm.
+          target: []
+          legal_text_excerpt: >-
+            Het eerste lid is niet of niet langer van toepassing indien: c. de periode, bedoeld in artikel 2.16, voor deze werknemer is verstreken.
           accepted: true
   - number: '2.15'
     text: |-

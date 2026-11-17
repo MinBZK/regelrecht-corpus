@@ -8,18 +8,54 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
   # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
 
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Waar die onwaar was, staat de datum op null:
+  # de persoon was nooit zo'n persoon. Onderdeel b blijft dan onwaar en de
+  # uitkomst gelijk.
+
+  # Rechtgezet op 2026-10-25 (review C1): datum_ontstaan_recht_wajong was null,
+  # terwijl het recht volgens de toelichting hieronder op 22 september 2014
+  # ontstond; nu 2014-09-22. Sadee is in dienst, dus
+  # verricht_arbeid_in_dienstbetrekking staat op waar. De uitkomsten blijven
+  # gelijk: lid 2 onderdeel c vraagt een dienstbetrekking die vóór het
+  # achttiende jaar en vóór het Wajong-recht begon (Sadee: 2024), en
+  # verricht_arbeid_in_dienstbetrekking telt alleen bij "duurzaam geen
+  # mogelijkheden".
+
+  # Afgeleid op 2026-10-25 (review B2): geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+  # is vervangen door datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 en
+  # datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2. Het model leidt de
+  # peildag van 29b lid 1 onderdeel b onder 2° (elf weken vóór peildatum_lid_1_b)
+  # zelf af. Beide datums staan hier op null: geen van deze persona's had een
+  # dienstbetrekking bij een andere werkgever. Waar de oude boolean onwaar was,
+  # was dat een uit-waarde; onderdeel b opent daar nog steeds niet, omdat er
+  # geen wachttijd is of de werknemer 35% of meer arbeidsongeschikt is.
+
+  # Rechtgezet op 2026-10-25 (review C12): datum_voldaan_aan_lid_1 en
+  # datum_aanvraag_arbeidsondersteuning_wajong staan op null in plaats van
+  # 1900-01-01. Ze zijn nullable in de Wajong, en sinds deze datum ook in de
+  # Ziektewet. eerste_dag_wachttijd_wia houdt 1900-01-01, omdat de WIA-parameter
+  # waar hij heen gaat niet nullable is.
+
   # Verticale slice door de zeven outputs van het Financieel CV voor één
   # werknemerprofiel. Doel: aan jurist + UWV-uitvoerder + ondernemer
   # concreet tonen wat regelrecht uitrekent én wat het laat zien als
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -58,7 +94,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # onderdeel e draagt alleen via het register.
 
   # Datums die alleen gelden als een bijbehorend feit waar is (eerste
-  # ziektedag, datum Wajong-aanvraag) staan op 1900-01-01 wanneer dat feit
+  # ziektedag) staan op 1900-01-01 wanneer dat feit
   # onwaar is: de engine geeft een ontbrekende optionele parameter nog niet
   # als "geen waarde" door aan een andere wet, en de afleiding gebruikt de
   # datum dan niet.
@@ -85,7 +121,8 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | true |
@@ -96,7 +133,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
-      | datum_ontstaan_recht_wajong | null |
+      | datum_ontstaan_recht_wajong | 2014-09-22 |
       | is_wsw_werknemer | false |
       | had_wsw_dienstbetrekking_of_indicatie_voorafgaand | false |
       | is_uitgesloten_beschut_werk_pwet_10b | false |
@@ -106,7 +143,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | true |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
-      | verricht_arbeid_in_dienstbetrekking | false |
+      | verricht_arbeid_in_dienstbetrekking | true |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
@@ -119,7 +156,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | kan_minimumloon_niet_verdienen | true |
       | datum_aanvraag_lks | null |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 70 |

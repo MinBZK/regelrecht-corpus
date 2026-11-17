@@ -20,8 +20,10 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   #   - Pwet-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 60% van WML
   #   - In dienst per 1 januari 2026 bij logistiek MKB via gemeente
-  #   - €12 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
+  #   - €15 per uur × 32 uur per week × 52 weken
+  #     = 1664 verloonde uren, jaarloon €24.960 (2.496.000 eurocent)
+  #     (gecorrigeerd 25 oktober 2026: stond op €12, onder het
+  #     minimumuurloon van €14,99 per 1 juli 2026.)
   #
   # Peildatum 2026-07-01: de machine_readable hangt op de
   # 2026-07-01-wetsversies, dus die peildatum laadt precies wat wij
@@ -58,6 +60,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | einddatum_uitkeringsduur_hoofdstuk_ii | null |
       | dagen_ziekte_onderbreking_proefplaatsing | 0 |
       | datum_aanvang_proefplaatsing | null |
+      | uwv_heeft_toestemming_verleend                 | false |
     When I evaluate outputs "uwv_mag_toestemming_verlenen, ww_uitkering_blijft_bestaan, max_duur_proefplaatsing_maanden, einddatum_proefplaatsing" of "werkloosheidswet"
     Then the execution succeeds
     And output "max_duur_proefplaatsing_maanden" equals 6

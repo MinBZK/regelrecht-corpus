@@ -20,8 +20,13 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   #   - Pwet-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 60% van WML
   #   - In dienst per 1 januari 2026 bij logistiek MKB via gemeente
-  #   - €12 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
+  #   - €15 per uur × 32 uur per week × 52 weken
+  #     = 1664 verloonde uren, jaarloon €24.960 (2.496.000 eurocent)
+  #     (gecorrigeerd 25 oktober 2026: stond op €12, onder het
+  #     minimumuurloon van €14,99 per 1 juli 2026, WML art. 8 lid 1 a
+  #     met de indexatieregeling; het uurloon geldt sinds 2024 ongeacht
+  #     de normale arbeidsduur. De LKV banenafspraak (Wtl 2.10-2.13) kent
+  #     geen uurloongrens; het bedrag hangt alleen af van de verloonde uren.)
   #
   # Peildatum 2026-07-01: de machine_readable hangt op de
   # 2026-07-01-wetsversies, dus die peildatum laadt precies wat wij
@@ -30,9 +35,13 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
 
   # Het doelgroepregister komt niet meer als losse parameter binnen: de
   # engine leidt het af via Wfsv artikel 38b. Koen komt daar binnen op
-  # grond van lid 1 onderdeel a — toegeleid vanuit de Participatiewet met
-  # een UWV-loonwaardevaststelling. Alle andere gronden staan uit, zodat
-  # de trace laat zien wélke grond de registratie draagt.
+  # grond van lid 1 onderdeel a — toegeleid vanuit de Participatiewet, met
+  # een door het college vastgestelde loonwaarde (60%) onder het
+  # minimumloon; een UWV-vaststelling is er niet. Alle andere gronden
+  # staan uit, zodat de trace laat zien wélke grond de registratie draagt.
+  # Koen is in dienst, dus verricht_arbeid_in_dienstbetrekking is waar
+  # (gecorrigeerd 25 oktober 2026; telt alleen bij onderdeel c en verandert
+  # de uitkomst niet).
 
   # De categorie-indeling is niet langer een vinkje. Artikel 2.1 haalt
   # 'arbeidsgehandicapte werknemer' uit artikel 2.6 en 'herplaatsen' uit
@@ -67,7 +76,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
-      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |

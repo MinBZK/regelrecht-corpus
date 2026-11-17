@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.1/schema/v0.7.1/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: participatiewet
 regulatory_layer: WET
 publication_date: '2025-10-29'
@@ -957,6 +957,10 @@ articles:
         hoofdstuk: '2'
         paragraaf: '2.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 2 onderdeel d: het college verleent toestemming.
+      competent_authority:
+        name: college van burgemeester en wethouders
+        type: CATEGORY
       definitions:
         max_duur_proefplaatsing_maanden:
           value: 2
@@ -1434,10 +1438,19 @@ articles:
         hoofdstuk: '5'
         paragraaf: '5.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het college kan voorzieningen aanbieden.
+      competent_authority:
+        name: college van burgemeester en wethouders
+        type: CATEGORY
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 5: "Een persoon als bedoeld in het eerste of tweede lid, of een werkgever, kan bij het college een aanvraag indienen".
+          - type: AANVRAAG
+            requests: participatiewet#10
+            parameters:
+              - bsn
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -1881,6 +1894,10 @@ articles:
         hoofdstuk: '2'
         paragraaf: '2.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het college biedt beschut werk aan.
+      competent_authority:
+        name: college van burgemeester en wethouders
+        type: CATEGORY
       execution:
         produces:
           legal_character: BESCHIKKING
@@ -2084,13 +2101,22 @@ articles:
         hoofdstuk: '2'
         paragraaf: '2.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1: het college stelt vast.
+      competent_authority:
+        name: college van burgemeester en wethouders
+        type: CATEGORY
       definitions:
         aanvraagtermijn_lid_2_maanden:
           value: 12
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1 onderdeel a: "op schriftelijke aanvraag van een persoon"; onderdeel b: ambtshalve.
+          - type: AANVRAAG
+            requests: participatiewet#10c
+            parameters:
+              - bsn
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -2359,7 +2385,7 @@ articles:
       [ref11]: https://wetten.overheid.nl/BWBR0002638#Artikel15
       [ref12]: https://wetten.overheid.nl/BWBR0002638#Artikel15
       [ref13]: https://wetten.overheid.nl/BWBR0002638#Artikel15
-      [ref14]: https://wetten.overheid.nl/BWBR0015703#Artikel10a
+      [ref14]: https://wetten.overheid.nl/BWBR0015703#Artikel10d
       [ref15]: https://wetten.overheid.nl/BWBR0015703#Artikel10d
     url: https://wetten.overheid.nl/BWBR0015703/2026-07-01#Artikel10d
     references:
@@ -2414,7 +2440,7 @@ articles:
         artikel: '15'
       - id: ref14
         bwb_id: BWBR0015703
-        artikel: 10a
+        artikel: 10d
         hoofdstuk: '2'
         paragraaf: '2.1'
       - id: ref15
@@ -2423,6 +2449,10 @@ articles:
         hoofdstuk: '2'
         paragraaf: '2.1'
     machine_readable:
+      # Bevoegd gezag (RFC-002): lid 1 en 2: het college verleent loonkostensubsidie.
+      competent_authority:
+        name: college van burgemeester en wethouders
+        type: CATEGORY
       definitions:
         normarbeidsduur_uren_per_week:
           value: 36
@@ -2432,10 +2462,21 @@ articles:
           value: 50
         periode_vijftig_procent_maanden:
           value: 6
+        beslistermijn_lid_12_weken:
+          value: 5
       execution:
         produces:
-          legal_character: BESCHIKKING
-          decision_type: TOEKENNING
+          # De aanvraag (Awb 1:3 lid 3). Lid 1: "ambtshalve dan wel op aanvraag van de werkgever of die persoon"; lid 2: "op aanvraag van de werkgever of werknemer".
+          - type: AANVRAAG
+            requests: participatiewet#10d
+            parameters:
+              - bsn
+              - datum_aanvraag_lks
+              - overeengekomen_arbeidsduur_uren_per_week
+              - werkgever_is_voornemens_dienstbetrekking_aan_te_gaan
+              - datum_aanvang_dienstbetrekking
+          - type: BESCHIKKING
+            decision_type: TOEKENNING
         parameters:
           - name: bsn
             type: string
@@ -2471,14 +2512,18 @@ articles:
               deelnam aan het praktijkonderwijs, het voortgezet speciaal
               onderwijs of de entreeopleiding. Afwezig als dat niet zo is.
               Bron: onderwijsadministratie / gemeente.
-          - name: was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
-            type: boolean
-            required: true
+          - name: datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+            type: date
+            required: false
+            nullable: true
             description: |-
-              Artikel 10d lid 2 onderdeel b: de persoon was in de zes maanden
-              voorafgaand aan de dienstbetrekking een persoon als bedoeld in
-              artikel 7 lid 1 onderdeel a of 7a lid 1 onderdeel a. Bron:
-              gemeente.
+              Artikel 10d lid 2 onderdeel b: de laatste dag waarop de persoon
+              een persoon was als bedoeld in artikel 7 lid 1 onderdeel a of
+              artikel 7a lid 1 onderdeel a. Was hij dat tot de aanvang van de
+              dienstbetrekking, dan de dag vóór die aanvang. Afwezig als hij
+              dat nooit was. Het model toetst of die dag in de zes maanden
+              voorafgaand aan de dienstbetrekking valt, zoals bij onderdeel a.
+              Bron: gemeente.
           - name: volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
             type: boolean
             required: true
@@ -2558,6 +2603,18 @@ articles:
               Aanvang van de dienstbetrekking. Lid 5, eerste zin, begrenst
               de 50%-regel tot maximaal de eerste zes maanden daarvan.
               Bron: werkgever / polisadministratie.
+          - name: datum_vaststelling_lid_1_a_of_b
+            type: date
+            required: false
+            description: |-
+              Lid 12: de dag waarop het college de loonwaarde vaststelde
+              (onderdeel a: "nadat de loonwaarde is vastgesteld, bedoeld in
+              artikel 10d, eerste lid, aanhef en onderdeel a") of vaststelde
+              dat de vaststelling van de loonwaarde achterwege kan blijven
+              (onderdeel b: "nadat is vastgesteld dat de vaststelling van de
+              loonwaarde achterwege kan blijven, bedoeld in artikel 10d,
+              eerste lid, aanhef en onderdeel b"). Alleen nodig voor de
+              beslistermijn van lid 12. Bron: college.
         input:
           - name: minimumloon_plus_vakantiebijslag_eurocent_per_maand
             type: amount
@@ -2616,27 +2673,6 @@ articles:
               bedraagt gedurende maximaal de eerste zes maanden van de
               dienstbetrekking 50 procent. Daarna stelt het college de
               loonwaarde alsnog vast en geldt lid 4 (tweede zin).
-          - name: werkgeverslastenvergoeding_eurocent_per_maand
-            type: amount
-            type_spec:
-              unit: eurocent
-            description: |-
-              Lid 4 en lid 5: de bij ministeriële regeling vastgestelde
-              vergoeding voor werkgeverslasten, als bedrag per maand bij
-              voltijdse arbeid. Regeling loonkostensubsidie Participatiewet
-              2021, artikel 1: een percentage van de loonkosten waarover
-              loonkostensubsidie wordt verstrekt, hier het minimumloon met
-              vakantiebijslag.
-          - name: grondslag_maximum_eurocent_per_maand
-            type: amount
-            type_spec:
-              unit: eurocent
-            description: |-
-              Lid 4 en lid 5: "het totale bedrag van het wettelijk minimumloon
-              en de aanspraak op vakantiebijslag [...], vermeerderd met een bij
-              ministeriële regeling vastgestelde vergoeding voor
-              werkgeverslasten". Grondslag voor zowel de 70%-bovengrens van
-              lid 4 als de 50%-regel van lid 5.
           - name: loonwaarde_eurocent_per_maand
             type: amount
             type_spec:
@@ -2657,8 +2693,10 @@ articles:
             type_spec:
               unit: eurocent
             description: |-
-              Lid 4 — ten hoogste 70 procent van de grondslag, dus
-              inclusief de vergoeding voor werkgeverslasten.
+              Lid 4 — ten hoogste 70 procent van het totale bedrag van het
+              minimumloon en de vakantiebijslag. De vergoeding voor
+              werkgeverslasten valt buiten dit maximum (jurist, 10 november
+              2026).
           - name: arbeidsduur_voor_evenredigheid_uren_per_week
             type: number
             description: |-
@@ -2678,8 +2716,9 @@ articles:
             type_spec:
               unit: eurocent
             description: |-
-              Lid 5, eerste zin — 50 procent van de grondslag, op de
-              normbasis van 36 uren per week.
+              Lid 5, eerste zin — 50 procent van het totale bedrag van het
+              minimumloon en de vakantiebijslag, op de normbasis van 36 uren
+              per week. Zonder de vergoeding voor werkgeverslasten.
           - name: hoogte_lks_voltijd_eurocent_per_maand
             type: amount
             type_spec:
@@ -2694,7 +2733,33 @@ articles:
               unit: eurocent
             description: |-
               Bedrag na de evenredigheidscorrectie naar de overeengekomen
-              arbeidsduur.
+              arbeidsduur. Zonder de vergoeding voor werkgeverslasten; die
+              staat in vergoeding_werkgeverslasten_eurocent_per_maand.
+          - name: vergoeding_werkgeverslasten_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              Lid 4 en lid 5: de bij ministeriële regeling vastgestelde
+              vergoeding voor werkgeverslasten, als bedrag per maand.
+              Regeling loonkostensubsidie Participatiewet 2021, artikel 1: een
+              percentage van de loonkosten waarover loonkostensubsidie wordt
+              verstrekt. Komt bovenop de loonkostensubsidie en valt buiten het
+              maximum van 70 procent (jurist, 10 november 2026). Over welke
+              loonkosten precies, staat als open lezing gemarkeerd.
+          - name: hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand
+            type: amount
+            type_spec:
+              unit: eurocent
+            description: |-
+              De loonkostensubsidie vermeerderd met de vergoeding voor
+              werkgeverslasten: wat de werkgever per maand ontvangt.
+          - name: beslistermijn_lks_einddatum
+            type: date
+            description: |-
+              Lid 12: de laatste dag van de termijn van vijf weken waarbinnen
+              de beschikking tot loonkostensubsidie wordt genomen, gerekend
+              vanaf de vaststelling van lid 1 onderdeel a of b.
         actions:
           - output: is_uitgesloten_lid_3
             value: $is_wsw_dienstbetrekking
@@ -2774,7 +2839,25 @@ articles:
                       operation: DATE_ADD
                       date: $datum_aanvang_dienstbetrekking
                       months: -6
-                - $was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: OR
+                        conditions:
+                          - operation: EQUALS
+                            subject: $datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+                            value: null
+                          - operation: EQUALS
+                            subject: $datum_aanvang_dienstbetrekking
+                            value: null
+                      then: false
+                  default:
+                    operation: GREATER_THAN_OR_EQUAL
+                    subject: $datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+                    value:
+                      operation: DATE_ADD
+                      date: $datum_aanvang_dienstbetrekking
+                      months: -6
                 - $volgde_onderwijs_zonder_startkwalificatie_leerwerktraject
             legal_basis:
               law: Participatiewet
@@ -2788,7 +2871,11 @@ articles:
                 entreeopleiding; b. een persoon was als bedoeld in de artikelen
                 7, eerste lid, onderdeel a, of 7a, eerste lid, onderdeel a; dan
                 wel c. [...] onderwijs volgde zonder een startkwalificatie".
-                Onderdeel a wordt aan de einddatum van de deelname getoetst.
+                Onderdeel a wordt aan de einddatum van de deelname getoetst,
+                onderdeel b aan de laatste dag waarop de persoon een persoon
+                als bedoeld in artikel 7 lid 1 onderdeel a of 7a lid 1
+                onderdeel a was (sinds 25 oktober 2026; daarvoor een
+                aangeleverde ja/nee).
           - output: aanvraag_lks_binnen_zes_maanden
             value:
               operation: IF
@@ -2833,6 +2920,13 @@ articles:
                 - $kan_minimumloon_niet_verdienen
                 - $aanvraag_lks_binnen_zes_maanden
                 - $voorafgaand_relevante_onderwijsroute_of_doelgroep
+                # Art. 10d lid 3: "Het eerste en tweede lid is niet van
+                # toepassing indien de arbeid wordt verricht in een
+                # dienstbetrekking als bedoeld in de artikelen 2 en 7 van de
+                # Wet sociale werkvoorziening." De Ziektewet leest deze output
+                # los, dus de uitsluiting hoort hier zelf in.
+                - operation: NOT
+                  value: $is_uitgesloten_lid_3
               legal_basis:
                 law: Participatiewet
                 bwb_id: BWBR0015703
@@ -2843,7 +2937,8 @@ articles:
                   maanden na het begin van de dienstbetrekking,
                   vaststelling dat de persoon met voltijdse arbeid het
                   minimumloon niet kan verdienen, en een van de routes
-                  a, b of c in de zes maanden daarvoor.
+                  a, b of c in de zes maanden daarvoor. Lid 3 sluit lid 2
+                  uit bij een Wsw-dienstbetrekking.
           - output: heeft_recht_op_lks
             value:
               operation: AND
@@ -2899,44 +2994,6 @@ articles:
                   b, gedurende maximaal de eerste zes maanden van de
                   dienstbetrekking. Over het tijdvak daarna stelt het
                   college de loonwaarde vast en geldt lid 4.
-          - output: werkgeverslastenvergoeding_eurocent_per_maand
-            value:
-              operation: DIVIDE
-              values:
-                - operation: MULTIPLY
-                  values:
-                    - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
-                    - $werkgeverslastenvergoeding_percentage
-                - 100
-            legal_basis:
-              law: Regeling loonkostensubsidie Participatiewet 2021
-              bwb_id: BWBR0044901
-              article: '1'
-              explanation: |-
-                "De vergoeding voor werkgeverslasten [...] bedraagt 25 procent
-                van de loonkosten waarover loonkostensubsidie wordt verstrekt."
-                De loonkosten waarover de subsidie wordt verstrekt zijn het
-                minimumloon met vakantiebijslag, de term waar lid 4 de
-                vergoeding bij optelt. Of "loonkosten" hier iets anders omvat,
-                is de open vraag van de jurist aan het UWV (actieregister 1.5).
-          - output: grondslag_maximum_eurocent_per_maand
-            value:
-              operation: ADD
-              values:
-                - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
-                - $werkgeverslastenvergoeding_eurocent_per_maand
-            legal_basis:
-              law: Participatiewet
-              bwb_id: BWBR0015703
-              article: '10d'
-              paragraph: '4'
-              explanation: |-
-                "ten hoogste 70 procent van het totale bedrag van het wettelijk
-                minimumloon en de aanspraak op vakantiebijslag [...],
-                vermeerderd met een bij ministeriële regeling vastgestelde
-                vergoeding voor werkgeverslasten". De vergoeding staat in de
-                zin over het maximum en hoort daarom in deze grondslag; de
-                subsidie zelf blijft het verschil van de eerste zinshelft.
           - output: loonwaarde_eurocent_per_maand
             value:
               operation: DIVIDE
@@ -2975,7 +3032,7 @@ articles:
               values:
                 - operation: MULTIPLY
                   values:
-                    - $grondslag_maximum_eurocent_per_maand
+                    - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
                     - $maximum_percentage_lid_4
                 - 100
               legal_basis:
@@ -2984,13 +3041,35 @@ articles:
                 article: '10d'
                 paragraph: '4'
                 explanation: |-
-                  Ten hoogste 70 procent van de grondslag: minimumloon en
-                  vakantiebijslag, vermeerderd met de vergoeding voor
-                  werkgeverslasten.
+                  "maar is ten hoogste 70 procent van het totale bedrag van het
+                  wettelijk minimumloon en de aanspraak op vakantiebijslag op
+                  grond van artikel 15 van de Wet minimumloon en
+                  minimumvakantiebijslag". Jurist, 10 november 2026: de
+                  loonkostensubsidie is "maximaal 70% van het totale bedrag aan
+                  wml en vakantiebijslag"; de vergoeding voor werkgeverslasten
+                  wordt daarnaast betaald en telt niet mee in dit maximum.
           - output: hoogte_lks_lid_4_voltijd_eurocent_per_maand
             value:
               operation: IF
               cases:
+                # Art. 10d lid 5, tweede zin: na de periode van de 50%-route
+                # (lid 1 onderdeel b) "stelt het college de loonwaarde vast en
+                # verleent het college loonkostensubsidie met inachtneming van
+                # het vierde lid". Zonder vastgestelde loonwaarde is er voor
+                # die route nog geen lid-4-bedrag; anders zou loonwaarde 0 het
+                # maximum opleveren.
+                - when:
+                    operation: AND
+                    conditions:
+                      - operation: EQUALS
+                        subject: $vaststelling_loonwaarde_blijft_achterwege
+                        value: true
+                      - operation: NOT
+                        value:
+                          operation: EQUALS
+                          subject: $college_heeft_loonwaarde_vastgesteld
+                          value: true
+                  then: 0
                 - when: $heeft_recht_op_lks
                   then:
                     operation: MAX
@@ -3012,13 +3091,14 @@ articles:
                   tussen het wettelijk minimumloon vermeerderd met de aanspraak
                   op vakantiebijslag [...] en de loonwaarde van die persoon
                   vermeerderd met de [...] vakantiebijslag, maar is ten hoogste
-                  70 procent van [de grondslag]". De vergoeding voor
-                  werkgeverslasten staat in de tekst alleen bij het maximum; de
-                  subsidie zelf is het verschil. Of de vergoeding in de
-                  uitvoering ook bovenop de subsidie wordt betaald, is de vraag
-                  die de jurist bij het UWV heeft uitgezet (juristvalidatie
-                  2026-07-23, actieregister 1.5); zolang die open is, volgt het
-                  model de letter.
+                  70 procent van het totale bedrag van het wettelijk minimumloon
+                  en de aanspraak op vakantiebijslag [...], vermeerderd met een
+                  bij ministeriële regeling vastgestelde vergoeding voor
+                  werkgeverslasten". Jurist, 10 november 2026: "De Lks wordt
+                  berekend obv wml-/-loonwaarde [...] en is maximaal 70% van
+                  het totale bedrag aan wml en vakantiebijslag. Daarnaast wordt
+                  de vergoeding werkgeverslasten betaald". Dit bedrag is dus
+                  zonder de vergoeding; die volgt hieronder.
           - output: hoogte_lks_lid_5_voltijd_eurocent_per_maand
             value:
               operation: IF
@@ -3029,7 +3109,7 @@ articles:
                     values:
                       - operation: MULTIPLY
                         values:
-                          - $grondslag_maximum_eurocent_per_maand
+                          - $minimumloon_plus_vakantiebijslag_eurocent_per_maand
                           - $percentage_lid_5
                       - 100
               default: 0
@@ -3043,8 +3123,9 @@ articles:
                   "50 procent van het totale bedrag van het wettelijk
                   minimumloon en de aanspraak op vakantiebijslag [...],
                   vermeerderd met een bij ministeriële regeling vastgestelde
-                  vergoeding voor werkgeverslasten": dezelfde grondslag als
-                  het maximum van lid 4.
+                  vergoeding voor werkgeverslasten". Jurist, 10 november 2026:
+                  "bij fft lks 50%wml"; de vergoeding voor werkgeverslasten
+                  komt daar, net als bij lid 4, bovenop en volgt hieronder.
           - output: hoogte_lks_voltijd_eurocent_per_maand
             value:
               operation: IF
@@ -3106,6 +3187,78 @@ articles:
                   verminderd of vermeerderd als de overeengekomen
                   arbeidsduur korter of langer is dan 36 uren per week.
                   Lid 5, derde zin, schrijft dezelfde correctie voor.
+          - output: vergoeding_werkgeverslasten_eurocent_per_maand
+            value:
+              operation: DIVIDE
+              values:
+                - operation: MULTIPLY
+                  values:
+                    - $hoogte_lks_eurocent_per_maand
+                    - $werkgeverslastenvergoeding_percentage
+                - 100
+            legal_basis:
+              law: Regeling loonkostensubsidie Participatiewet 2021
+              bwb_id: BWBR0044901
+              article: '1'
+              url: https://wetten.overheid.nl/BWBR0044901/2025-01-01#Artikel1
+              explanation: |-
+                "De vergoeding voor werkgeverslasten, bedoeld in artikel 10d,
+                vierde en vijfde lid, van de Participatiewet, bedraagt 25
+                procent van de loonkosten waarover loonkostensubsidie wordt
+                verstrekt." Jurist, 10 november 2026: "Daarnaast wordt de
+                vergoeding werkgeverslasten betaald die wordt berekend over de
+                loonkosten waarover lks wordt berekend." Het model rekent het
+                percentage over de loonkosten die de loonkostensubsidie dekt,
+                het bedrag hierboven na de evenredigheid naar arbeidsduur. Of
+                "de loonkosten waarover loonkostensubsidie wordt verstrekt"
+                dat bedrag zijn of het hele minimumloon met vakantiebijslag,
+                is een open lezing (zie de markering bij dit artikel).
+          - output: hoogte_lks_met_vergoeding_werkgeverslasten_eurocent_per_maand
+            value:
+              operation: ADD
+              values:
+                - $hoogte_lks_eurocent_per_maand
+                - $vergoeding_werkgeverslasten_eurocent_per_maand
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '4'
+              explanation: |-
+                "[...] vermeerderd met een bij ministeriële regeling
+                vastgestelde vergoeding voor werkgeverslasten." Toelichting bij
+                de Regeling loonkostensubsidie Participatiewet 2021 (Stcrt.
+                2021, 9937, en Stcrt. 2024, 39498): "De aan een werkgever te
+                verstrekken loonkostensubsidie wordt op grond van de
+                Participatiewet vermeerderd met een vergoeding voor de
+                werkgeverslasten." Lid 5 heeft dezelfde vermeerdering.
+          # Lid 12. Telling als bij Awb 4:13 en 6:8: de dag van de vaststelling
+          # telt niet mee, de termijn eindigt op dezelfde weekdag vijf weken
+          # later. Verlenging door de Algemene termijnenwet (weekend,
+          # feestdag) is niet gemodelleerd. De verhouding tot de redelijke
+          # termijn van Awb 4:13, die op de aanvraag van dit artikel haakt,
+          # is niet gemodelleerd.
+          - output: beslistermijn_lks_einddatum
+            value:
+              operation: DATE_ADD
+              date: $datum_vaststelling_lid_1_a_of_b
+              weeks: $beslistermijn_lid_12_weken
+            legal_basis:
+              law: Participatiewet
+              bwb_id: BWBR0015703
+              article: '10d'
+              paragraph: '12'
+              url: https://wetten.overheid.nl/BWBR0015703/2026-07-01#Artikel10d
+              juriconnect: jci1.3:c:BWBR0015703&artikel=10d&lid=12&z=2026-07-01&g=2026-07-01
+              explanation: |-
+                "De beschikking tot loonkostensubsidie wordt genomen binnen
+                vijf weken: a. nadat de loonwaarde is vastgesteld, bedoeld in
+                artikel 10d, eerste lid, aanhef en onderdeel a; of b. nadat is
+                vastgesteld dat de vaststelling van de loonwaarde achterwege
+                kan blijven, bedoeld in artikel 10d, eerste lid, aanhef en
+                onderdeel b." Beide onderdelen geven dezelfde termijn; de
+                datum van de vaststelling die van toepassing is, is de
+                aanvangsdag.
       open_terms:
         - id: werkgeverslastenvergoeding_percentage
           type: number
@@ -3129,6 +3282,40 @@ articles:
             het college van burgemeester en wethouders, op grond van Participatiewet
             artikel 10d lid 4
       markings:
+        # Jurist 10 november 2026 (docs/szw/ruwe-feedback.md, ronde 5): het
+        # maximum en de plaats van de vergoeding zijn beantwoord; de grondslag
+        # van de vergoeding blijft een open lezing, niet zelf beslist.
+        - about: >-
+            de loonkosten waarover de vergoeding voor werkgeverslasten wordt
+            berekend
+          reason: >-
+            De regeling noemt "de loonkosten waarover loonkostensubsidie wordt
+            verstrekt", de jurist "de loonkosten waarover lks wordt berekend". Dat
+            kan het deel van de loonkosten zijn dat de loonkostensubsidie dekt (het
+            bedrag van lid 4 of lid 5), of het hele minimumloon met vakantiebijslag
+            waarover de loonkostensubsidie wordt berekend. Het model rekent met het
+            eerste. Bij een loonwaarde van 60 procent en 36 uur op 1 juli 2026 is de
+            vergoeding dan 25239,6 eurocent per maand; met het tweede 63099 eurocent.
+            Het verschil groeit naarmate de loonwaarde hoger is. Binnen de eerste
+            lezing maakt het model nog een keuze: het rekent de 25 procent over het
+            bedrag na het maximum van 70 procent, niet over het verschil tussen het
+            minimumloon met vakantiebijslag en de loonwaarde vóór dat maximum. Dat
+            scheelt alleen als het maximum bindt: bij een loonwaarde van 10 procent en
+            36 uur is de vergoeding 44169,3 eurocent per maand na het maximum en
+            56789,1 eurocent vóór het maximum. Het model staat op de eerste lezing, na
+            het maximum, en markeert beide keuzes hier; de vraag gaat als afstempunt
+            naar de jurist.
+          resolution: model
+          resolved_by: >-
+            Een besluit van de jurist over welke loonkosten de grondslag van de
+            vergoeding zijn; daarna de grondslag in
+            vergoeding_werkgeverslasten_eurocent_per_maand zo nodig vervangen door
+            het minimumloon met vakantiebijslag naar rato van de arbeidsduur.
+          target: []
+          legal_text_excerpt: >-
+            vermeerderd met een bij ministeriële regeling vastgestelde vergoeding voor
+            werkgeverslasten
+          accepted: true
         - about: >-
             de ambtshalve herziening van de hoogte per 1 januari
           reason: >-
@@ -5493,7 +5680,7 @@ articles:
       [ref6]: https://wetten.overheid.nl/BWBR0015703#Artikel22
       [ref7]: https://wetten.overheid.nl/BWBR0015703#Artikel37a
       [ref8]: https://wetten.overheid.nl/BWBR0015703#Artikel31
-      [ref9]: https://wetten.overheid.nl/BWBR0015703#Artikel31
+      [ref9]: https://wetten.overheid.nl/BWBR0015703#Artikel32
       [ref10]: https://wetten.overheid.nl/BWBR0015703#Artikel31
       [ref11]: https://wetten.overheid.nl/BWBR0015703#Artikel23
       [ref12]: https://wetten.overheid.nl/BWBR0018451
@@ -5543,7 +5730,7 @@ articles:
         paragraaf: '3.4'
       - id: ref9
         bwb_id: BWBR0015703
-        artikel: '31'
+        artikel: '32'
         hoofdstuk: '3'
         paragraaf: '3.4'
       - id: ref10

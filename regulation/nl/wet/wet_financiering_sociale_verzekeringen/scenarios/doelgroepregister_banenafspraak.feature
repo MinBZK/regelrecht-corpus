@@ -34,9 +34,14 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
   # ────────────────────────────────────────────────────────────────────
 
   # Koen komt binnen via onderdeel a: vanuit de Participatiewet toegeleid
-  # naar een dienstbetrekking, met een UWV-vaststelling dat hij het
-  # minimumloon niet zelfstandig kan verdienen. Dit is dezelfde grond die
-  # zijn loonkostensubsidie draagt.
+  # naar een dienstbetrekking, met een door het college vastgestelde
+  # loonwaarde (60%) die bij voltijdse arbeid onder het minimumloon ligt.
+  # Een UWV-vaststelling op verzoek van het college is er niet; onderdeel a
+  # laat beide routes toe. Dit is dezelfde grond die zijn
+  # loonkostensubsidie draagt. Koen is in dienst, dus
+  # verricht_arbeid_in_dienstbetrekking is waar (telt alleen bij c).
+  # vaststelling_door is in het model een constante ('UWV', het orgaan dat
+  # het register bijhoudt) en zegt niets over wie de loonwaarde vaststelde.
   Scenario: Koen staat in het register op grond van onderdeel a
     Given the following parameters:
       | bsn                                                      | 999990101  |
@@ -48,7 +53,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | false      |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
-      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
@@ -83,9 +88,12 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
     And output "vaststelling_door" equals "UWV"
 
   # Sadee komt binnen via onderdeel c: recht op arbeidsondersteuning
-  # Wajong. Onderdeel c kent een eigen uitsluiting — wie duurzaam geen
-  # mogelijkheden tot arbeidsparticipatie heeft (Wajong 1a:1) valt er
-  # buiten. Die staat hier uit; het twin-scenario hieronder zet hem aan.
+  # Wajong. Onderdeel c kent geen absolute uitsluiting (juristronde 3,
+  # 8 september 2026): wie duurzaam geen mogelijkheden tot
+  # arbeidsparticipatie heeft (Wajong 1a:1) telt alleen mee als hij arbeid
+  # verricht in een dienstbetrekking. Bij Sadee staat 'duurzaam geen
+  # mogelijkheden' uit, en zij is in dienst; de twin-scenario's hieronder
+  # zetten de beide assen om.
   Scenario: Sadee staat in het register op grond van onderdeel c
     Given the following parameters:
       | bsn                                                      | 999990100  |
@@ -97,7 +105,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
-      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
@@ -261,9 +269,12 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
   # meldt. De kolom d zet daarom die twee feiten, niet één parameter.
   # ────────────────────────────────────────────────────────────────────
 
+  # BSN per grond een eigen testpersoon (2026-10-25; voorheen deelden de
+  # Outline en de twee scenario's hieronder één BSN, ook met personen in de
+  # Wajong en de Participatiewet).
   Scenario Outline: Elke afzonderlijke grond opent het register: <grond>
     Given the following parameters:
-      | bsn                                                      | 999990102  |
+      | bsn                                                      | <bsn>      |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | <a> |
       | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
@@ -297,19 +308,19 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
     And output "grond_opname_doelgroepregister" equals "<opnamegrond>"
 
     Examples:
-      | grond | a | b | c | d | e | f | lid2 | opnamegrond | fdatum |
-      | onderdeel b, Wsw | false | true | false | false | false | false | false | wsw | null |
-      | onderdeel d | false | false | false | true | false | false | false | amvb_38b_1_d | null |
-      | onderdeel e | false | false | false | false | true | false | false | pwet_uwv_wml_eigen_verzoek | null |
-      | onderdeel f | false | false | false | false | false | true | false | overgangsrecht_38b_1_f | 2014-06-30 |
-      | lid 2 | false | false | false | false | false | false | true | jonggehandicapt_uwv_oordeel | null |
+      | grond | bsn | a | b | c | d | e | f | lid2 | opnamegrond | fdatum |
+      | onderdeel b, Wsw | 999990733 | false | true | false | false | false | false | false | wsw | null |
+      | onderdeel d | 999990734 | false | false | false | true | false | false | false | amvb_38b_1_d | null |
+      | onderdeel e | 999990735 | false | false | false | false | true | false | false | pwet_uwv_wml_eigen_verzoek | null |
+      | onderdeel f | 999990736 | false | false | false | false | false | true | false | overgangsrecht_38b_1_f | 2014-06-30 |
+      | lid 2 | 999990737 | false | false | false | false | false | false | true | jonggehandicapt_uwv_oordeel | null |
 
   # Toegevoegd 2026-10-11: onderdeel g stond niet in de Outline. Een WGA-
   # gerechtigde voor wie bij wijze van experiment (Wet SUWI 82a) loondispensatie
   # is ingezet, telt als arbeidsbeperkte.
   Scenario: Onderdeel g, WGA-uitkering met het experiment loondispensatie
     Given the following parameters:
-      | bsn                                                      | 999990102  |
+      | bsn                                                      | 999990738  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |
@@ -348,7 +359,7 @@ Feature: Doelgroepregister banenafspraak, Wfsv artikel 38b
   # houdt het overgangsrecht niet.
   Scenario: Tegen-uitsluiting van onderdeel f neutraliseert het overgangsrecht
     Given the following parameters:
-      | bsn                                                      | 999990102  |
+      | bsn                                                      | 999990739  |
       | is_uitgesloten_beschut_werk_pwet_10b                     | false      |
       | is_pwet_toegeleid_of_lks_lid_2 | false |
       | uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon | false |

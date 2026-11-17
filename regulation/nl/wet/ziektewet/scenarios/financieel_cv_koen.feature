@@ -10,6 +10,35 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
   # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
 
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Koen had een Pwet-uitkering tot zijn
+  # indiensttreding op 1 januari 2026; gekozen is 2025-12-31. Dat valt binnen
+  # de zes maanden, dus de uitkomst blijft gelijk.
+
+  # Rechtgezet op 2026-10-25 (review C1): Koen is in dienst met een door het
+  # college vastgestelde loonwaarde van 60%. werkgever_is_voornemens_dienstbetrekking_aan_te_gaan,
+  # dienstbetrekking_is_tot_stand_gekomen, college_heeft_loonwaarde_vastgesteld
+  # en verricht_arbeid_in_dienstbetrekking staan daarom op waar. De uitkomsten
+  # blijven gelijk: lid 2 onderdeel e leest Pwet 10d lid 2, en
+  # verricht_arbeid_in_dienstbetrekking telt alleen bij Wajong "duurzaam geen
+  # mogelijkheden".
+
+  # Afgeleid op 2026-10-25 (review B2): geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+  # is vervangen door datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 en
+  # datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2. Het model leidt de
+  # peildag van 29b lid 1 onderdeel b onder 2° (elf weken vóór peildatum_lid_1_b)
+  # zelf af. Beide datums staan hier op null: geen van deze persona's had een
+  # dienstbetrekking bij een andere werkgever. Waar de oude boolean onwaar was,
+  # was dat een uit-waarde; onderdeel b opent daar nog steeds niet, omdat er
+  # geen wachttijd is of de werknemer 35% of meer arbeidsongeschikt is.
+
+  # Rechtgezet op 2026-10-25 (review C12): datum_voldaan_aan_lid_1 en
+  # datum_aanvraag_arbeidsondersteuning_wajong staan op null in plaats van
+  # 1900-01-01. Ze zijn nullable in de Wajong, en sinds deze datum ook in de
+  # Ziektewet. eerste_dag_wachttijd_wia houdt 1900-01-01, omdat de WIA-parameter
+  # waar hij heen gaat niet nullable is.
+
   # Verticale slice door de Financieel CV vanuit werknemer-perspectief.
   # Sommige outputs zijn werkgever-voordelen (LKS, LKV) — die zijn voor
   # transparantie meegenomen: een werknemer mag weten wat de
@@ -25,8 +54,10 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   #   - Pwet-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 60% van WML
   #   - In dienst per 1 januari 2026 bij logistiek MKB via gemeente
-  #   - €12 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
+  #   - €15 per uur × 32 uur per week × 52 weken
+  #     = 1664 verloonde uren, jaarloon €24.960 (2.496.000 eurocent)
+  #     (gecorrigeerd 25 oktober 2026: stond op €12, onder het
+  #     minimumuurloon van €14,99 per 1 juli 2026.)
   #
   # Peildatum 2026-07-01: de machine_readable hangt op de
   # 2026-07-01-wetsversies, dus die peildatum laadt precies wat wij
@@ -60,7 +91,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   # van artikel 43 staan allemaal op onwaar.
 
   # Datums die alleen gelden als een bijbehorend feit waar is (eerste
-  # ziektedag, datum Wajong-aanvraag) staan op 1900-01-01 wanneer dat feit
+  # ziektedag) staan op 1900-01-01 wanneer dat feit
   # onwaar is: de engine geeft een ontbrekende optionele parameter nog niet
   # als "geen waarde" door aan een andere wet, en de afleiding gebruikt de
   # datum dan niet.
@@ -87,14 +118,15 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -108,7 +140,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | is_wsw_geindiceerd_of_oude_indicatie | false |
       | heeft_wajong_arbeidsondersteuning_of_uitkering | false |
       | heeft_wajong_duurzaam_geen_mogelijkheden | false |
-      | verricht_arbeid_in_dienstbetrekking | false |
+      | verricht_arbeid_in_dienstbetrekking | true |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |
@@ -121,7 +153,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | kan_minimumloon_niet_verdienen | true |
       | datum_aanvraag_lks | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | true |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | 2025-12-31 |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -137,14 +169,14 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | opgebouwde_vakantiebijslag_referteperiode_eurocent | 0 |
       | dienstbetrekking_aangevangen_na_aanvang_referteperiode | true |
       | aantal_dagloondagen_sinds_aanvang_dienstbetrekking | null |
-      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | false |
-      | dienstbetrekking_is_tot_stand_gekomen | false |
-      | college_heeft_loonwaarde_vastgesteld | false |
+      | werkgever_is_voornemens_dienstbetrekking_aan_te_gaan | true |
+      | dienstbetrekking_is_tot_stand_gekomen | true |
+      | college_heeft_loonwaarde_vastgesteld | true |
       | vaststelling_loonwaarde_blijft_achterwege | false |
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |

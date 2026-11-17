@@ -9,6 +9,29 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
   # van artikel 2 Wsw; lid 7 vermindert het dagloon met de Wsw-subsidie.
   # Parameterblok naar het scenario van Koen, met de Pwet-gronden op onwaar.
 
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Waar die onwaar was, staat de datum op null:
+  # de persoon was nooit zo'n persoon. Onderdeel b blijft dan onwaar en de
+  # uitkomst gelijk.
+  # In het scenario van lid 5 (Koens blok) staat de datum op 2025-12-31, de dag
+  # vóór de aanvang op 2026-01-01; dat valt binnen de zes maanden.
+
+  # Afgeleid op 2026-10-25 (review B2): geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd
+  # is vervangen door datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 en
+  # datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2. Het model leidt de
+  # peildag van 29b lid 1 onderdeel b onder 2° (elf weken vóór peildatum_lid_1_b)
+  # zelf af. Beide datums staan hier op null: geen van deze persona's had een
+  # dienstbetrekking bij een andere werkgever. Waar de oude boolean onwaar was,
+  # was dat een uit-waarde; onderdeel b opent daar nog steeds niet, omdat er
+  # geen wachttijd is of de werknemer 35% of meer arbeidsongeschikt is.
+
+  # Rechtgezet op 2026-10-25 (review C12): datum_voldaan_aan_lid_1 en
+  # datum_aanvraag_arbeidsondersteuning_wajong staan op null in plaats van
+  # 1900-01-01. Ze zijn nullable in de Wajong, en sinds deze datum ook in de
+  # Ziektewet. eerste_dag_wachttijd_wia houdt 1900-01-01, omdat de WIA-parameter
+  # waar hij heen gaat niet nullable is.
+
   Scenario: Lid 2 onderdeel b, Wsw-werknemer, polis zonder einde
     Given the calculation date is "2026-07-01"
     And the following parameters:
@@ -31,14 +54,15 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -65,7 +89,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -88,7 +112,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -126,14 +150,15 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -160,7 +185,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -183,7 +208,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -219,14 +244,15 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -253,7 +279,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -276,7 +302,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -314,14 +340,15 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -348,7 +375,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | kan_minimumloon_niet_verdienen | false |
       | datum_aanvraag_lks | null |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -371,7 +398,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | 3000 |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |
@@ -409,14 +436,15 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | is_overleden | false |
       | is_uitreiziger | false |
       | arbeidskundig_onderzoek_verricht | false |
-      | geen_dienstbetrekking_elders_elf_weken_voor_einde_wachttijd | false |
+      | datum_aanvang_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
+      | datum_einde_dienstbetrekking_andere_werkgever_lid_1_b_2 | null |
       | niet_in_staat_tot_eigen_of_passende_arbeid_bij_eigen_werkgever | false |
       | heeft_belemmering_bij_onderwijs_door_ziekte_of_gebrek | false |
       | aanvraag_arbeidsondersteuning_wajong_ingediend | false |
       | is_jonggehandicapte_hoofdstuk_2_wajong | false |
       | verdiencapaciteit_wajong_percentage_maatmaninkomen | 100 |
       | is_uitsluitingsgrond_2_11_wajong_van_toepassing | false |
-      | datum_aanvraag_arbeidsondersteuning_wajong | 1900-01-01 |
+      | datum_aanvraag_arbeidsondersteuning_wajong | null |
       | is_volledig_en_duurzaam_arbeidsongeschikt_wajong | false |
       | recht_op_arbeidsondersteuning_herleeft_2_17 | false |
       | had_of_heeft_wajong_arbeidsongeschiktheidsuitkering | false |
@@ -443,7 +471,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | kan_minimumloon_niet_verdienen | true |
       | datum_aanvraag_lks | 2026-02-01 |
       | datum_einde_deelname_onderwijs_lid_2_a | null |
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | true |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | 2025-12-31 |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking | false |
       | loonwaarde_percentage | 60 |
@@ -466,7 +494,7 @@ Feature: No-riskpolis bij Wsw, Ziektewet artikel 29b lid 2 onderdeel b en d, lid
       | aantal_gerealiseerde_dienstbetrekkingen_beschut_werk | null |
       | einddatum_tijdvak_lid_1_b | null |
       | wsw_subsidiebedrag_per_werkdag_eurocent | null |
-      | datum_voldaan_aan_lid_1 | 1900-01-01 |
+      | datum_voldaan_aan_lid_1 | null |
       | komt_uit_voortgezet_speciaal_onderwijs | false |
       | komt_uit_praktijkonderwijs | false |
       | heeft_zich_schriftelijk_gemeld_bij_uwv | false |

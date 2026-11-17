@@ -1,5 +1,5 @@
 ---
-$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/tags/schema-v0.7.0/schema/v0.7.0/schema.json
+$schema: https://raw.githubusercontent.com/NederlandseDigitaleDienst/regelrecht/refs/tags/schema-v0.8.13/schema/v0.8.13/schema.json
 $id: besluit_loondispensatie_wajong
 regulatory_layer: AMVB
 publication_date: '2010-08-18'
@@ -30,17 +30,14 @@ articles:
       - id: ref2
         bwb_id: BWBR0008657
         artikel: 3:63
+    # Geen implements van de open term duidelijk_minder_dan_minimumloon van
+    # Wajong 2:20. Artikel 1 geeft met "wordt slechts aangenomen indien" een
+    # noodzakelijke ondergrens, geen voldoende invulling: binnen die grens
+    # blijft het oordeel van het UWV individueel (juristfeedback ronde 4,
+    # norm 14). Wajong 2:20 leest deze output daarom via source als losse
+    # voorwaarde naast het UWV-oordeel; een implements zou de ondergrens tot
+    # het hele oordeel maken.
     machine_readable:
-      implements:
-        - law: wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten
-          article: '2:20'
-          open_term: duidelijk_minder_dan_minimumloon
-          gelet_op: |-
-            Artikel 2:20 lid 1 van de Wajong noemt geen regeling die de maatstaf
-            "duidelijk minder" invult. Dit besluit doet dat wel, en bindt het UWV
-            aan een ondergrens. De open term draagt daarom
-            decided_per_case_by en niet delegated_to; de invulling komt hier
-            langs de band van de regeling en niet langs een delegatiegrondslag.
       definitions:
         drempel_percentage_lager:
           value: 25
@@ -82,9 +79,11 @@ articles:
           - name: duidelijk_minder_dan_minimumloon
             type: boolean
             description: |-
-              De invulling van de open term van Wajong 2:20 lid 1: een
-              duidelijk verminderde arbeidsprestatie wordt slechts aangenomen
-              bij ten minste 25 procent lager.
+              Noodzakelijke voorwaarde voor "duidelijk minder" in Wajong 2:20
+              lid 1: een duidelijk verminderde arbeidsprestatie wordt slechts
+              aangenomen bij ten minste 25 procent lager. Waar deze uitkomst
+              waar is, is de prestatie nog niet duidelijk verminderd; dat blijft
+              het oordeel van het UWV. Geen invulling van de open term.
         actions:
           - output: drempelbeloning_per_uur_eurocent
             value:
@@ -246,9 +245,77 @@ articles:
                 minimumloon en minimumvakantiebijslag voor hem geldende
                 minimumloon per uur". Het artikel noemt geen afronding; de
                 uitkomst blijft onafgerond.
+      markings:
+        # Artikel 3: "het voor hem geldende minimumloon". Voor een werknemer
+        # jonger dan 21 jaar is dat het jeugdminimumloon van WML artikel 9;
+        # de bron levert alleen het volwassen minimumloon van WML artikel 8.
+        - about: >-
+            het voor hem geldende minimumloon per uur, voor een werknemer jonger
+            dan 21 jaar
+          reason: >-
+            De bron minimumloon_per_uur_eurocent komt uit WML artikel 8 en is het
+            minimumloon voor de werknemer van 21 jaar en ouder (WML artikel 7). Het
+            jeugdminimumloon van WML artikel 9 is in het corpus niet gemodelleerd en
+            de leeftijd van de werknemer gaat niet mee naar de bron. Voor een
+            werknemer jonger dan 21 jaar, in de praktijk vooral 18 tot en met 20
+            jaar, valt de aanspraak daardoor te hoog uit.
+          resolution: model
+          resolved_by: >-
+            WML artikel 9 met de leeftijdspercentages modelleren als output per
+            leeftijd, en de geboortedatum van de werknemer aan de bron van artikel 3
+            meegeven.
+          target: []
+          legal_text_excerpt: >-
+            voor hem geldende minimumloon per uur
+          accepted: true
   - number: '4'
     text: Loondispensatie wordt steeds verleend met ingang van de eerste dag van de maand waarin deze is aangevraagd.
     url: https://wetten.overheid.nl/BWBR0020119/2010-08-19#Artikel4
+    machine_readable:
+      # Bevoegd gezag (RFC-002): Wajong artikel 2:20 lid 1: het UWV verleent loondispensatie.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
+      execution:
+        produces:
+          legal_character: BESCHIKKING
+          decision_type: TOEKENNING
+        parameters:
+          - name: bsn
+            type: string
+            required: true
+            description: BSN van de werknemer.
+          - name: datum_aanvraag_loondispensatie
+            type: date
+            required: true
+            description: |-
+              De dag waarop de loondispensatie is aangevraagd ("de maand
+              waarin deze is aangevraagd"). Bron: UWV.
+        output:
+          - name: ingangsdatum_loondispensatie
+            type: date
+            description: |-
+              De eerste dag van de maand waarin de loondispensatie is
+              aangevraagd. Met ingang van die dag wordt loondispensatie
+              verleend.
+        actions:
+          - output: ingangsdatum_loondispensatie
+            value:
+              operation: START_OF
+              date: $datum_aanvraag_loondispensatie
+              in: month
+            legal_basis:
+              law: Besluit loondispensatie Wajong
+              bwb_id: BWBR0020119
+              article: '4'
+              url: https://wetten.overheid.nl/BWBR0020119/2010-08-19#Artikel4
+              juriconnect: jci1.3:c:BWBR0020119&artikel=4&z=2010-08-19&g=2010-08-19
+              explanation: |-
+                "Loondispensatie wordt steeds verleend met ingang van de
+                eerste dag van de maand waarin deze is aangevraagd." Het
+                artikel bepaalt alleen de ingangsdatum; of loondispensatie
+                wordt verleend, volgt uit Wajong artikel 2:20 en de artikelen
+                1 en 2 van dit besluit.
   - number: '5'
     text: |-
       Loondispensatie wordt verleend voor de periode waarin naar de verwachting van het UWV sprake zal zijn van een
@@ -269,6 +336,10 @@ articles:
         bwb_id: BWBR0008657
         artikel: 2:15
     machine_readable:
+      # Bevoegd gezag (RFC-002): Wajong artikel 2:20 lid 1: het UWV verleent loondispensatie.
+      competent_authority:
+        name: Uitvoeringsinstituut werknemersverzekeringen
+        type: INSTANCE
       definitions:
         eindleeftijd_loondispensatie_jaren:
           value: 18

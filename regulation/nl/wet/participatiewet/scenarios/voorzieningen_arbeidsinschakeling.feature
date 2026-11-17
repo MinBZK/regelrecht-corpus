@@ -107,10 +107,12 @@ Feature: Voorzieningen bij arbeidsinschakeling (Pwet art. 10 en 10da)
     And output "heeft_aanspraak_op_persoonlijke_ondersteuning" is false
     And output "heeft_aanspraak_op_voorziening_arbeidsinschakeling" is true
 
-  # Lid 5 maakt de aanvraag een voorwaarde voor het gevolg geven aan de
-  # aanspraak. De aanspraak zelf (lid 1) blijft bestaan zonder aanvraag;
-  # de toekenning niet.
-  Scenario: Zonder aanvraag geen toekenning, wel een aanspraak
+  # Lid 5 regelt de aanvraag om gevolg te geven aan de aanspraak. Dit
+  # scenario toetst dat de aanspraken van lid 1 zonder die aanvraag wel
+  # bestaan, en dat het model de aanvraag tot gevolggeving dan als niet
+  # ingediend meldt. Een toekenning of effectuering kent het model niet als
+  # uitkomst; die toetst dit scenario dus niet.
+  Scenario: Zonder aanvraag bestaat de aanspraak wel, maar is er geen aanvraag tot gevolggeving
     Given the calculation date is "2026-07-01"
     And the following parameters:
       | bsn                                            | 999990101 |

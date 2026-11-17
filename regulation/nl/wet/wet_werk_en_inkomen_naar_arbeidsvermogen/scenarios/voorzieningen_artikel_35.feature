@@ -35,6 +35,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | aanvraag_jobcoaching_ingediend                            | true      |
       | aanvraag_werkplekaanpassing_ingediend                     | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | true      |
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 250000    |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 250000    |
@@ -59,6 +60,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | aanvraag_jobcoaching_ingediend                            | true      |
       | aanvraag_werkplekaanpassing_ingediend                     | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | true      |
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 15000     |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 15000     |
@@ -85,6 +87,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | aanvraag_jobcoaching_ingediend                            | true      |
       | aanvraag_werkplekaanpassing_ingediend                     | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | true      |
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 15000     |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 30000     |
@@ -110,6 +113,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | aanvraag_jobcoaching_ingediend                            | true      |
       | aanvraag_werkplekaanpassing_ingediend                     | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | true      |
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
       | kosten_voorziening_eurocent                               | 19516     |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 19516     |
@@ -132,6 +136,7 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
       | aanvraag_jobcoaching_ingediend                            | true      |
       | aanvraag_werkplekaanpassing_ingediend                     | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | true      |
       | voorziening_is_meeneembaar_en_individueel_afgestemd       | false     |
       | kosten_voorziening_eurocent                               | 250000    |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 250000    |
@@ -139,3 +144,29 @@ Feature: Voorzieningen op grond van Wet WIA artikel 35, met het drempelbedrag
     Then the execution succeeds
     And output "mag_jobcoaching_toekennen" is true
     And output "mag_werkplekaanpassing_toekennen" is false
+
+  # Toegevoegd 2026-10-25. Lid 5 met Reintegratiebesluit artikel 4: een
+  # voorziening als bedoeld in artikel 35 "wordt slechts verleend indien deze
+  # in overwegende mate op het individu is gericht". Voor de persoonlijke
+  # ondersteuning van onderdeel d staat die eis niet in lid 2 zelf; zonder
+  # dat oordeel geen jobcoaching, ook boven de drempel.
+  Scenario: Zonder individuele gerichtheid (Reintegratiebesluit art. 4) geen jobcoaching
+    Given the calculation date is "2026-07-01"
+    And the following parameters:
+      | bsn                                                      | 999990410 |
+      | heeft_structurele_functionele_beperking                  | true      |
+      | heeft_arbeidsverhouding_of_voorbereiding                 | true      |
+      | is_wsw_werknemer                                         | false     |
+      | heeft_recht_op_arbeidsondersteuning_wajong               | false     |
+      | pwet_college_draagt_zorg_uitsluiting                     | false     |
+      | aanvraag_jobcoaching_ingediend                            | true      |
+      | aanvraag_werkplekaanpassing_ingediend                     | true      |
+      | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen  | true      |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht  | false     |
+      | voorziening_is_meeneembaar_en_individueel_afgestemd       | true      |
+      | kosten_voorziening_eurocent                               | 250000    |
+      | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent    | 250000    |
+    When I evaluate outputs "mag_werkplekaanpassing_toekennen, mag_jobcoaching_toekennen" of "wet_werk_en_inkomen_naar_arbeidsvermogen"
+    Then the execution succeeds
+    And output "mag_jobcoaching_toekennen" is false
+    And output "mag_werkplekaanpassing_toekennen" is true

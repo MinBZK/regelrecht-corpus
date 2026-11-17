@@ -47,7 +47,7 @@ Feature: Aanspraak per uur bij loondispensatie, Besluit loondispensatie Wajong a
   Scenario: Volwassen Wajonger, artikel 6 speelt niet
     Given the following parameters:
       | bsn                                       | 999990100  |
-      | geboortedatum                             | 1996-05-14 |
+      | geboortedatum                             | 1996-05-15 |
       | heeft_recht_op_arbeidsondersteuning_wajong | true      |
     When I evaluate outputs "is_jonger_dan_achttien, loondispensatie_eindigt_bij_achttien" of "besluit_loondispensatie_wajong"
     Then the execution succeeds

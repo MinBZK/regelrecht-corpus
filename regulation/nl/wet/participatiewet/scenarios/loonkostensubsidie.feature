@@ -6,6 +6,16 @@ Feature: Loonkostensubsidie (Participatiewet artikel 10c + 10d)
 
   # Bron: Participatiewet artikel 10d lid 1, 2, 3 en 4 (BWBR0015703).
   # Peildatum 2025-01-01.
+  #
+  # LET OP (review 2026-10-25, C8): dit bestand toetst het oude LKS-model
+  # van vóór 1 juli 2026 (Participatiewet 2025-01-01): aangeleverde
+  # ja/nee-vlaggen en WML+VB als vast, afgerond bedrag uit 2025 (215500 ec).
+  # Het huidige model (peildatum 2026-07-01, WML uit de Wet minimumloon,
+  # arbeidsduur, aanvangs- en aanvraagdatum) wordt getoetst in
+  # loonkostensubsidie_routes.feature, grenswaarden_loonkostensubsidie.feature
+  # en financieel_cv_koen.feature. Omzetten zou feiten vragen die deze
+  # persona's niet hebben (aanvang, arbeidsduur, datum aanvraag); daarom
+  # blijft dit bestand staan als toets van het oude model.
 
   Background:
     Given the calculation date is "2025-01-01"

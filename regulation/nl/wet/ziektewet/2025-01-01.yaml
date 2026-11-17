@@ -3135,6 +3135,20 @@ articles:
                   indiensttreding ("binnen vijf jaar na die dag"); lid 4:
                   5 jaar na vaststelling WIA-recht. Default 0 = geen recht.
       untranslatables:
+        - construct: 'aanroep Wfsv 38b met alleen bsn (lid 2 onderdeel e)'
+          reason: |-
+            De input is_banenafspraak_doelgroep vraagt
+            behoort_tot_doelgroepregister_banenafspraak op bij de Wfsv en
+            geeft alleen bsn mee. De Wfsv-versie die bij deze
+            Ziektewet-versie geldt (1 januari 2025) vraagt in artikel 38b
+            lid 1 negentien verplichte parameters (onder meer de
+            loonwaardevaststelling van artikel 10d Pwet, de gronden van
+            onderdeel b t/m f en de registratiegegevens van lid 6). Die
+            heeft deze Ziektewet-versie niet.
+            De aanroep is niet herbouwd. Een scenario werkt alleen als het
+            de uitkomst zelf meegeeft (override van de input), niet via de
+            berekening in de Wfsv.
+          accepted: true
         - construct: vijfjaarstermijn bij onderbroken dienstverbanden
           reason: |-
             Lid 1 onderdeel b 4° en lid 1 onderdeel c/d formuleren de

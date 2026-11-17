@@ -4,6 +4,17 @@ Feature: No-risk polis — scenarios uit Memorie van Toelichting
 
   # Bron: Kamerstuk 34194 nr. 3 (MvT)
   # URL: https://zoek.officielebekendmakingen.nl/kst-34194-3.html
+  #
+  # LET OP (review 2026-10-25, C8): dit bestand toetst het oude vlaggenmodel
+  # van artikel 29b van vóór 1 juli 2026 (Ziektewet 2025-01-01): de
+  # doelgroepen komen als losse ja/nee-vlaggen binnen. Het huidige model
+  # (peildatum 2026-07-01) leidt de doelgroepen af uit de Wet WIA, de Wajong,
+  # de Wfsv en de Participatiewet en vraagt daarvoor feiten die deze
+  # scenario's niet hebben (datums, arbeidsongeschiktheid, registerfeiten).
+  # Dat huidige model wordt getoetst in no_riskpolis_doelgroepen.feature,
+  # grenswaarden_no_riskpolis.feature, no_riskpolis_wsw.feature en de
+  # financieel_cv-bestanden. Dit bestand blijft staan als toets van het oude
+  # model.
 
   Background:
     Given the calculation date is "2025-01-01"

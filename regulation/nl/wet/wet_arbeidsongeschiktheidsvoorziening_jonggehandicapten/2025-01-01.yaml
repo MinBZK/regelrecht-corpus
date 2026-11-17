@@ -2253,6 +2253,30 @@ articles:
             lid 1). Zie de uitgebreide samenloop-notitie bij
             Ziektewet 29b.
           accepted: true
+        # Bekende afwijking in deze oude versie (niet herbouwd): de versie
+        # 2026-07-01 heeft de drempel, de zesmaandeneis en artikel 2:30 wel.
+        - construct: 'drempel en zesmaandeneis van het Besluit loondispensatie Wajong; artikel 2:30'
+          reason: |-
+            Dit model kent loondispensatie toe op het UWV-oordeel "duidelijk
+            minder" alleen. Het Besluit loondispensatie Wajong (geldig sinds
+            2010) bindt dat oordeel aan een ondergrens: artikel 1 "wordt
+            slechts aangenomen indien" de gerechtvaardigde beloning per uur
+            ten minste 25% lager ligt dan de gebruikelijke, en artikel 2
+            "wordt slechts verleend indien naar verwachting gedurende ten
+            minste zes maanden" sprake is van een verminderde prestatie.
+            Ook de uitsluiting van de volledig en duurzaam
+            arbeidsongeschikte in artikel 2:30 (met de uitzondering van lid
+            2 voor loondispensatie vóór 1 januari 2018 in dezelfde functie)
+            ontbreekt. Op peildatum 2025-01-01 geeft het model daardoor ook
+            recht op loondispensatie waar het Besluit of artikel 2:30 dat
+            uitsluit; zie scenarios/loondispensatie.feature.
+          suggestion: |-
+            De bedrading van de versie 2026-07-01 overnemen: de outputs
+            duidelijk_minder_dan_minimumloon en voldoet_aan_zesmaandeneis
+            van besluit_loondispensatie_wajong als source, en de
+            parameters voor artikel 2:30.
+          legal_text_excerpt: 'duidelijk minder is dan de arbeidsprestatie die een geldelijke beloning van het minimumloon rechtvaardigt'
+          accepted: true
   - number: 2:20.2
     text: |-
       Elk beding waarbij een geldelijke beloning voor de verrichte arbeid wordt overeengekomen die lager is dan de

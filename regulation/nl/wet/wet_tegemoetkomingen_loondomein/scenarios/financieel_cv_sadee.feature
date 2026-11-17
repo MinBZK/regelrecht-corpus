@@ -9,12 +9,18 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -67,7 +73,10 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # engine leidt het af via Wfsv artikel 38b. Sadee komt daar binnen op
   # grond van lid 1 onderdeel c — recht op arbeidsondersteuning Wajong,
   # zonder de uitsluiting 'duurzaam geen mogelijkheden'. Alle andere
-  # gronden staan uit.
+  # gronden staan uit. Sadee is in dienst, dus
+  # verricht_arbeid_in_dienstbetrekking is waar (gecorrigeerd 25 oktober
+  # 2026); dat telt pas mee bij 'duurzaam geen mogelijkheden' en verandert
+  # de uitkomst niet.
 
   # De categorie-indeling is niet langer een vinkje. Artikel 2.1 haalt
   # 'arbeidsgehandicapte werknemer' uit artikel 2.6 en 'herplaatsen' uit
@@ -102,7 +111,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | is_wsw_geindiceerd_of_oude_indicatie                     | false      |
       | heeft_wajong_arbeidsondersteuning_of_uitkering           | true       |
       | heeft_wajong_duurzaam_geen_mogelijkheden                 | false      |
-      | verricht_arbeid_in_dienstbetrekking                      | false      |
+      | verricht_arbeid_in_dienstbetrekking                      | true       |
       | is_pwet_toegeleid_naar_dienstbetrekking | false |
       | uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon | false |
       | laatste_dag_persoon_lid_1_b_of_c | null |

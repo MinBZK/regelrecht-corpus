@@ -8,18 +8,30 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
   # maand na de aanvang van de dienstbetrekking; waar hij onwaar was, is er
   # geen aanvraag. Die datum is een aanname, geen gegeven uit de persona.
 
+  # Afgeleid op 2026-10-25 (review B1): datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b
+  # vervangt de boolean was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand
+  # (Pwet 10d lid 2 onderdeel b). Waar die onwaar was, staat de datum op null:
+  # de persoon was nooit zo'n persoon. Onderdeel b blijft dan onwaar en de
+  # uitkomst gelijk.
+
   # Verticale slice door de zeven outputs van het Financieel CV voor één
   # werknemerprofiel. Doel: aan jurist + UWV-uitvoerder + ondernemer
   # concreet tonen wat regelrecht uitrekent én wat het laat zien als
   # "niet van toepassing" of "via andere regelgeving".
   #
   # Werknemerprofiel — Sadee
-  #   - 28 jaar (geboren 1996-05-15)
+  #   - 30 jaar op de peildatum 2026-07-01 (geboren 1996-05-15)
   #   - In dienst per 1 januari 2024
   #   - Wajong-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 70% van WML (arbeidsprestatie < minimumloon)
-  #   - €14,50 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €24.128 (2.412.800 eurocent)
+  #   - Loondispensatie (Wajong 2:20): de werkgever betaalt de
+  #     gerechtvaardigde beloning van €10,50 per uur, 70% van de
+  #     gebruikelijke beloning van €15,00 (WML 1-7-2026: €14,99)
+  #   - 32 uur per week × 52 weken = 1664 verloonde uren,
+  #     jaarloon €17.472 (1.747.200 eurocent)
+  #   (Rechtgezet 2026-10-25: stond op €14,50 per uur, onder het WML en
+  #   strijdig met de beloningen in het Wajong-scenario; geen scenariowaarde
+  #   gebruikte dat uurloon of jaarloon.)
   #
   # Peildatum 2026-07-01. De engine pakt per wet de laatst-geldende
   # versie (valid_from <= peildatum); de machine_readable hangt sinds de
@@ -57,7 +69,7 @@ Feature: Financieel CV, werkgever-perspectief, casus Sadee
       | datum_einde_deelname_onderwijs_lid_2_a | null |
       # Sadee heeft Wajong en geen bijstand (juristdoorloop 2026-09-02); geen van
       # de drie routes van lid 2 is op haar van toepassing.
-      | was_persoon_7_lid_1_a_of_7a_in_zes_maanden_voorafgaand | false |
+      | datum_laatst_persoon_7_lid_1_a_of_7a_lid_2_b | null |
       | volgde_onderwijs_zonder_startkwalificatie_leerwerktraject | false |
       | is_wsw_dienstbetrekking                             | false     |
       | loonwaarde_percentage | 70 |

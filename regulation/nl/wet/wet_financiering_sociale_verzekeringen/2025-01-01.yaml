@@ -1771,16 +1771,96 @@ articles:
               mogelijkheden tot arbeidsparticipatie heeft (Pwet 10b lid 1).
               Bron: gemeente. Zo'n persoon is per definitie GEEN
               arbeidsbeperkte in zin van 38b.1.
-          - name: is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+          # Versie-aansluiting (review 25 oktober 2026): de Wtl-versie van
+          # 1 januari 2026 roept dit artikel aan voor peildata van 1 januari tot
+          # en met 30 juni 2026 en geeft de feiten van lid 1 onderdelen a, d, e
+          # en f los mee, zoals de Wfsv-versie van 1 juli 2026 ze vraagt. De
+          # vier samengevatte vlaggen die hier stonden, kregen geen aanroeper
+          # mee ("Variable not found"). De tekst van a, d, e en f is in beide
+          # versies gelijk; onderdeel c (absolute uitsluiting) blijft zoals
+          # deze versie luidt.
+          - name: is_pwet_toegeleid_of_lks_lid_2
             type: boolean
             required: true
             description: |-
-              38b.1.a: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking OF loonkostensubsidie wordt
-              verstrekt op grond van Pwet 10d lid 2, EN UWV (op verzoek
-              college) heeft vastgesteld dat persoon niet in staat is WML te
-              verdienen, OF college heeft loonwaarde < WML vastgesteld
-              conform Pwet 10d. Bron: UWV + gemeente.
+              38b.1.a: de persoon is met ondersteuning van het college (Pwet 7
+              lid 1 onderdeel a) toegeleid naar een dienstbetrekking, of er
+              wordt loonkostensubsidie verstrekt op grond van Pwet 10d lid 2.
+              Bron: gemeente.
+          - name: uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: "van wie uitsluitend op verzoek van het college van
+              burgemeester en wethouders door het UWV is vastgesteld dat hij
+              niet in staat is tot het verdienen van het wettelijk minimumloon".
+              Hoe het UWV dat vaststelt (Besluit SUWI artikel 3.5) staat buiten
+              de scope; de vaststelling is een aangeleverd feit. Bron: UWV.
+          - name: college_heeft_loonwaarde_vastgesteld_conform_10d
+            type: boolean
+            required: true
+            description: |-
+              38b.1.a: het college heeft een loonwaarde vastgesteld in
+              overeenstemming met de eisen aan een loonwaardevaststelling op
+              grond van Participatiewet 10d. Bron: gemeente.
+          - name: loonwaarde_percentage
+            type: number
+            required: false
+            nullable: true
+            description: |-
+              38b.1.a: de vastgestelde loonwaarde, als percentage van het
+              wettelijk minimumloon (Participatiewet artikel 6 lid 1 onderdeel
+              g). Onder de 100 bedraagt zij bij voltijdse arbeid minder dan het
+              minimumloon. Afwezig zonder vaststelling. Bron: gemeente.
+          - name: is_pwet_toegeleid_naar_dienstbetrekking
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: de persoon is met ondersteuning van het college (Pwet 7
+              lid 1 onderdeel a) toegeleid naar een dienstbetrekking. Bron:
+              gemeente.
+          - name: uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
+            type: boolean
+            required: true
+            description: |-
+              38b.1.e: "van wie op eigen verzoek door het UWV is of wordt
+              vastgesteld dat hij niet in staat is tot het verdienen van het
+              wettelijk minimumloon". Hoe het UWV dat vaststelt (Besluit SUWI
+              artikel 3.5) staat buiten de scope; de vaststelling is een
+              aangeleverd feit. Bron: UWV.
+          - name: laatste_dag_persoon_lid_1_b_of_c
+            type: date
+            required: false
+            nullable: true
+            description: |-
+              38b.1.f overgangsrecht: de laatste dag waarop de persoon een
+              persoon was als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong).
+              Afwezig als hij dat nooit was, of het nog steeds is. Bron:
+              UWV-historie.
+          - name: komt_uit_voortgezet_speciaal_onderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel a: doelgroep voortgezet speciaal onderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: komt_uit_praktijkonderwijs
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1 onderdeel b: doelgroep praktijkonderwijs.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_zich_schriftelijk_gemeld_bij_uwv
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 1, aanhef: schriftelijke melding bij het UWV.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
+          - name: heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+            type: boolean
+            required: true
+            description: |-
+              Besluit Wfsv 2.24 lid 3: uitsluiting bij duurzaam geen mogelijkheden tot arbeidsparticipatie.
+              Doorgegeven aan Besluit Wfsv artikel 2.24.
           - name: is_wsw_geindiceerd_of_oude_indicatie
             type: boolean
             required: true
@@ -1803,31 +1883,6 @@ articles:
               38b.1.c uitzondering: vastgesteld op grond van Wajong 1a:1
               dat persoon duurzaam geen mogelijkheden tot arbeidsparticipatie
               heeft. Sluit grond 38b.1.c uit. Bron: UWV.
-          - name: voldoet_aan_amvb_indicatie_38b_1_d
-            type: boolean
-            required: true
-            description: |-
-              38b.1.d: voldoet aan bij of krachtens AMvB vastgestelde
-              indicatie. Bron: UWV (uitvoering AMvB).
-              AMvB-implementatie is open_term — niet in deze YAML
-              gemodelleerd; engine ontvangt vlag van uitvoering.
-          - name: is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
-            type: boolean
-            required: true
-            description: |-
-              38b.1.e: persoon is met collegale ondersteuning (Pwet 7 lid 1.a)
-              toegeleid naar dienstbetrekking EN op EIGEN VERZOEK heeft UWV
-              vastgesteld dat persoon niet in staat is WML te verdienen.
-              Bron: UWV.
-          - name: was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
-            type: boolean
-            required: true
-            description: |-
-              38b.1.f overgangsrecht: persoon was op of na 1-1-2013 een
-              persoon als bedoeld in lid 1 onderdeel b (Wsw) of c (Wajong),
-              EN op 1-5-2015 niet langer zodanig persoon. Uitzondering:
-              voormalige Wajong-er die duurzaam geen mogelijkheden meer
-              heeft (Wajong 1a:1) valt buiten. Bron: UWV-historie.
           - name: was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
             type: boolean
             required: true
@@ -1870,7 +1925,34 @@ articles:
               38b.6 blijfgrond: de opname van de persoon in de registratie
               van arbeidsbeperkten (artikel 38d lid 1) is nog niet
               geëindigd. Bron: UWV-registratie.
+        input:
+          # Lid 1 onderdeel d: de indicatie staat in Besluit Wfsv artikel 2.24.
+          # Zelfde invulling als in de Wfsv-versie van 1 juli 2026 (daar via
+          # open_terms en implements op artikel 38b); deze versie hangt haar
+          # machine_readable op 38b.1, dus hier via een bronverwijzing.
+          - name: amvb_indicatie_38b_1_d
+            type: boolean
+            source:
+              regulation: besluit_wfsv
+              output: amvb_indicatie_38b_1_d
+              parameters:
+                bsn: $bsn
+                komt_uit_voortgezet_speciaal_onderwijs: $komt_uit_voortgezet_speciaal_onderwijs
+                komt_uit_praktijkonderwijs: $komt_uit_praktijkonderwijs
+                heeft_zich_schriftelijk_gemeld_bij_uwv: $heeft_zich_schriftelijk_gemeld_bij_uwv
+                heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie: $heeft_duurzaam_geen_mogelijkheden_arbeidsparticipatie
+                is_uitgesloten_beschut_werk_pwet_10b: $is_uitgesloten_beschut_werk_pwet_10b
+              description: |-
+                38b.1.d: "die voldoet aan een bij of krachtens algemene maatregel
+                van bestuur vastgestelde indicatie". Ingevuld door Besluit Wfsv
+                artikel 2.24 (voortgezet speciaal onderwijs of praktijkonderwijs,
+                met schriftelijke melding bij het UWV).
         output:
+          - name: loonwaarde_onder_minimumloon_vastgesteld
+            type: boolean
+            description: |-
+              38b.1.a: het college heeft een loonwaarde vastgesteld die bij
+              voltijdse arbeid minder bedraagt dan het wettelijk minimumloon.
           - name: behoort_tot_doelgroepregister_banenafspraak
             type: boolean
             description: |-
@@ -1878,6 +1960,18 @@ articles:
               38b.1 (a t/m f), 38b.2 of de registratie-blijfgrond 38b.6,
               en is hij niet uitgesloten op grond van chapeau (beschut werk
               Pwet 10b). Bepaalt opname in doelgroepregister banenafspraak.
+          # Versie-aansluiting (review 25 oktober 2026): de Wtl-versie van
+          # 1 januari 2026 en de Wfsv-versie van 1 juli 2026 noemen deze
+          # uitkomst is_arbeidsbeperkte. Voor peildata van 1 januari tot en met
+          # 30 juni 2026 geldt deze Wfsv-versie; zonder deze output faalde de
+          # aanroep uit Wtl artikel 2.10 met "output not found".
+          - name: is_arbeidsbeperkte
+            type: boolean
+            description: |-
+              Artikel 38b lid 1, 2 en 6: de persoon is arbeidsbeperkte in de
+              zin van deze paragraaf. Gelijk aan
+              behoort_tot_doelgroepregister_banenafspraak; dezelfde naam als in
+              de Wfsv-versie van 1 juli 2026.
           - name: voldoet_aan_grond_38b_1_a
             type: boolean
             description: 38b.1.a — Pwet LKS-traject + UWV-loonwaarde/WML-vaststelling.
@@ -1935,17 +2029,55 @@ articles:
               SUWI 33 en loonaangifte (Wet LB 1964 28). Niet hier
               gemodelleerd.
         actions:
-          - output: voldoet_aan_grond_38b_1_a
-            value: $is_pwet_lks_toegeleid_met_uwv_loonwaarde_vaststelling
+          - output: loonwaarde_onder_minimumloon_vastgesteld
+            value:
+              operation: IF
+              cases:
+                - when:
+                    operation: EQUALS
+                    subject: $loonwaarde_percentage
+                    value: null
+                  then: false
+              default:
+                operation: AND
+                conditions:
+                  - $college_heeft_loonwaarde_vastgesteld_conform_10d
+                  - operation: LESS_THAN
+                    subject: $loonwaarde_percentage
+                    value: 100
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1.a'
               explanation: |-
-                Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, met
-                UWV-vaststelling 'kan WML niet verdienen' op verzoek van
-                het college, dan wel college-loonwaarde < WML.
+                "van wie door het college van burgemeester en wethouders in
+                overeenstemming met de eisen gesteld aan een
+                loonwaardevaststelling op grond van artikel 10d [...] een
+                loonwaarde is vastgesteld die bij voltijdse arbeid minder
+                bedraagt dan het wettelijk minimumloon". De loonwaarde is een
+                percentage van het minimumloon; onder de 100 is zij lager.
+          - output: voldoet_aan_grond_38b_1_a
+            value:
+              operation: AND
+              conditions:
+                - $is_pwet_toegeleid_of_lks_lid_2
+                - operation: OR
+                  conditions:
+                    - $uwv_heeft_op_verzoek_college_vastgesteld_niet_in_staat_minimumloon
+                    - $loonwaarde_onder_minimumloon_vastgesteld
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1.a'
+              explanation: |-
+                Pwet 7 lid 1.a-toeleiding of LKS via Pwet 10d lid 2, en
+                "uitsluitend op verzoek van het college [...] door het UWV
+                is vastgesteld dat hij niet in staat is tot het verdienen
+                van het wettelijk minimumloon", dan wel een door het
+                college vastgestelde loonwaarde onder het minimumloon. Hoe
+                het UWV vaststelt (Besluit SUWI 3.5) staat buiten de scope.
           - output: voldoet_aan_grond_38b_1_b
             value: $is_wsw_geindiceerd_of_oude_indicatie
             legal_basis:
@@ -1973,30 +2105,51 @@ articles:
                 tenzij persoon duurzaam geen mogelijkheden tot
                 arbeidsparticipatie heeft (Wajong 1a:1).
           - output: voldoet_aan_grond_38b_1_d
-            value: $voldoet_aan_amvb_indicatie_38b_1_d
+            value: $amvb_indicatie_38b_1_d
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1.d'
               explanation: |-
-                Voldoet aan bij of krachtens AMvB vastgestelde indicatie.
-                Concrete invulling AMvB valt buiten deze YAML.
+                Voldoet aan bij of krachtens AMvB vastgestelde indicatie;
+                de invulling komt uit Besluit Wfsv artikel 2.24.
           - output: voldoet_aan_grond_38b_1_e
-            value: $is_pwet_toegeleid_met_uwv_wml_vaststelling_eigen_verzoek
+            value:
+              operation: AND
+              conditions:
+                - $is_pwet_toegeleid_naar_dienstbetrekking
+                - $uwv_heeft_op_eigen_verzoek_vastgesteld_niet_in_staat_minimumloon
             legal_basis:
               law: Wet financiering sociale verzekeringen
               bwb_id: BWBR0017745
               article: 38b
               paragraph: '1.e'
               explanation: |-
-                Pwet 7 lid 1.a-toeleiding + UWV-vaststelling op eigen
-                verzoek dat persoon WML niet kan verdienen.
+                Pwet 7 lid 1.a-toeleiding en "op eigen verzoek door het UWV
+                is of wordt vastgesteld dat hij niet in staat is tot het
+                verdienen van het wettelijk minimumloon". Hoe het UWV
+                vaststelt (Besluit SUWI 3.5) staat buiten de scope.
           - output: voldoet_aan_grond_38b_1_f
             value:
               operation: AND
               conditions:
-                - $was_arbeidsbeperkte_lid_1_b_of_c_op_of_na_2013_01_01
+                - operation: IF
+                  cases:
+                    - when:
+                        operation: EQUALS
+                        subject: $laatste_dag_persoon_lid_1_b_of_c
+                        value: null
+                      then: false
+                  default:
+                    operation: AND
+                    conditions:
+                      - operation: GREATER_THAN_OR_EQUAL
+                        subject: $laatste_dag_persoon_lid_1_b_of_c
+                        value: '2013-01-01'
+                      - operation: LESS_THAN
+                        subject: $laatste_dag_persoon_lid_1_b_of_c
+                        value: '2015-05-01'
                 - operation: NOT
                   value: $was_lid_1_c_en_nu_wajong_duurzaam_geen_mogelijkheden
             legal_basis:
@@ -2005,6 +2158,10 @@ articles:
               article: 38b
               paragraph: '1.f'
               explanation: |-
+                "een persoon die op of na 1 januari 2013 een persoon was als
+                bedoeld in onderdeel b of c, en op 1 mei 2015 niet langer een
+                persoon is als bedoeld in die onderdelen": de laatste dag ligt
+                op of na 1 januari 2013 en vóór 1 mei 2015.
                 Overgangsrecht: was op/na 1-1-2013 persoon als bedoeld in
                 onderdeel b of c, en op 1-5-2015 niet langer; uitzondering
                 voor voormalige Wajong-er die nu duurzaam geen mogelijkheden
@@ -2066,6 +2223,17 @@ articles:
                 door UWV per 38d) als hij voldoet aan minimaal één grond
                 van 38b lid 1 (a t/m f) of lid 2, EN niet onder de
                 chapeau-uitsluiting valt (uitsluitend beschut werk Pwet 10b).
+          - output: is_arbeidsbeperkte
+            value: $behoort_tot_doelgroepregister_banenafspraak
+            legal_basis:
+              law: Wet financiering sociale verzekeringen
+              bwb_id: BWBR0017745
+              article: 38b
+              paragraph: '1, 2, 6'
+              explanation: |-
+                "wordt onder een arbeidsbeperkte verstaan": dezelfde uitkomst
+                als behoort_tot_doelgroepregister_banenafspraak, onder de naam
+                die Wtl artikel 2.10 (versie 2026) aanroept.
           - output: grond_opname_doelgroepregister
             value:
               operation: IF
@@ -2132,16 +2300,6 @@ articles:
                 polisadministratie (SUWI art. 33 lid 2). Geen rekenoutput
                 hier; afnemers gebruiken polisadministratie.
       untranslatables:
-        - construct: 'AMvB-indicatie (38b.1.d) — verwijst naar nog op te stellen indicatie'
-          reason: |-
-            38b.1.d delegeert de inhoudelijke indicatie naar een AMvB
-            ('bij of krachtens algemene maatregel van bestuur vastgestelde
-            indicatie'). De feitelijke indicatie-criteria staan niet in
-            38b zelf en zijn dus niet uit dit artikel zelf afleidbaar.
-            Modelleer-keuze: parameter $voldoet_aan_amvb_indicatie_38b_1_d
-            (bron: UWV); ware modellering via open_terms/implements naar
-            de AMvB valt buiten deze iteratie (geen aparte AMvB-YAML).
-          accepted: true
         - construct: 'AMvB-beoordelingsregels jonggehandicapt (38b.3)'
           reason: |-
             38b.3 delegeert beoordelingsregels voor het UWV-oordeel onder

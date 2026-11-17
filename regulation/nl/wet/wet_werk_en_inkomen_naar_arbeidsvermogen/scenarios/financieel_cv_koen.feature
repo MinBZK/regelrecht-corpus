@@ -20,8 +20,10 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
   #   - Pwet-uitkering, doelgroep banenafspraak
   #   - Geschatte loonwaarde 60% van WML
   #   - In dienst per 1 januari 2026 bij logistiek MKB via gemeente
-  #   - €12 per uur × 32 uur per week × 52 weken
-  #     = 1664 verloonde uren, jaarloon €19.968 (1.996.800 eurocent)
+  #   - €15 per uur × 32 uur per week × 52 weken
+  #     = 1664 verloonde uren, jaarloon €24.960 (2.496.000 eurocent)
+  #     (gecorrigeerd 25 oktober 2026: stond op €12, onder het
+  #     minimumuurloon van €14,99 per 1 juli 2026.)
   #
   # Peildatum 2026-07-01: de machine_readable hangt op de
   # 2026-07-01-wetsversies, dus die peildatum laadt precies wat wij
@@ -62,6 +64,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
       | kosten_voorziening_eurocent | 250000 |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |
@@ -87,6 +90,7 @@ Feature: Financieel CV, werknemer-perspectief, casus Koen
       | aanvraag_jobcoaching_ingediend             | true      |
       | aanvraag_werkplekaanpassing_ingediend      | true      |
       | ondersteuning_is_noodzakelijk_en_compenseert_beperkingen | true |
+      | ondersteuning_is_in_overwegende_mate_op_individu_gericht | true |
       | voorziening_is_meeneembaar_en_individueel_afgestemd | true |
       | kosten_voorziening_eurocent | 250000 |
       | gezamenlijke_waarde_voorzieningen_kalenderjaar_eurocent | 250000 |
