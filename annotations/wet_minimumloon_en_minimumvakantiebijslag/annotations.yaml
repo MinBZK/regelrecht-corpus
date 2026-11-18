@@ -1,0 +1,36 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_minimumloon_en_minimumvakantiebijslag"
+      selector:
+        type: TextQuoteSelector
+        exact: "recht op een vakantiebijslag ten minste tot een bedrag van 8%"
+        prefix: "De werknemer heeft jegens de werkgever "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='15']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F293 (de oordelen in dat record gaan over het gegeven "wettelijk
+          minimumloon, €14,99 per uur", F275). Het prototype toont "wettelijk minimumloon, €14,99
+          per uur" met als grond de artikelen 8 en 15 van deze wet. Dit artikel regelt de
+          minimumvakantiebijslag van 8 procent; het minimumloon per uur staat in artikel 8, eerste
+          lid, onderdeel a, met aanpassing op grond van artikel 14. Vraag: hoort dit artikel bij de
+          grond van het uurbedrag, of alleen bij bedragen inclusief vakantiebijslag, zoals de
+          grondslag van loonkostensubsidie?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

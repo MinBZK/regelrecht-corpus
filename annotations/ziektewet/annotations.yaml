@@ -1,0 +1,113 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://ziektewet"
+      selector:
+        type: TextQuoteSelector
+        exact: "die, voorafgaand aan zijn dienstbetrekking, bedoeld in"
+        prefix: "e. "
+        suffix: " [artikel 3][ref25],"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='29b']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt C5; juristpunt in
+          moza-portaal PR #277, punt 5. Het prototype toont bij de no-riskpolis waarom die geldt:
+          Wajong (tweede lid, onderdeel a), doelgroep banenafspraak via de gemeente of
+          loonkostensubsidie bij beschut werk (tweede lid, onderdeel e), en WIA (eerste lid). Een
+          voorbeeld van de korte formulering: "Geldt hier omdat de kandidaat bij de doelgroep
+          banenafspraak hoort (Ziektewet, artikel 29b lid 2 onder e)." Onderdeel f van het tweede
+          lid noemt arbeid in een dienstbetrekking als bedoeld in artikel 10b, eerste lid, van de
+          Participatiewet. De grond wordt in het portaal nu afgeleid uit de doelgroepen en de duur
+          die de engine geeft; op de nieuwe corpusversie komt die rechtstreeks uit de engine
+          (voldoet_aan_lid_2_a, _e, _f en voldoet_aan_lid_1). Vragen: zijn deze korte formuleringen
+          juist voor een werkgever, ook bij beschut werk? En mag de grond worden afgeleid, of moet
+          die rechtstreeks uit de engine komen?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://ziektewet"
+      selector:
+        type: TextQuoteSelector
+        exact: "niet meer kan bedragen dan de aanspraak van de werknemer"
+        prefix: "met dien verstande dat het ziekengeld "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='29b']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevindingen F84, F315 en F322 (de oordelen in F315 en F322 gaan over de
+          zinnen "Bij ziekte: ziekengeld van UWV" en "UWV betaalt u dan ziekengeld"). Het prototype
+          zegt bij de no-riskpolis: "Wordt uw werknemer ziek, dan betaalt UWV ziekengeld. U betaalt
+          het loon door." Elders staat "UWV betaalt u dan ziekengeld", met dit artikel als grond.
+          Dit artikel geeft de werknemer recht op ziekengeld. Het zesde lid begrenst het ziekengeld
+          tot de aanspraak op het loon dat de werkgever verschuldigd zou zijn "indien daarop geen
+          ziekengeld in mindering zou zijn gebracht"; artikel 33, tweede lid, Ziektewet en artikel
+          7:629, vijfde lid, BW gaan uit van verrekening met het loon. Vraag: aan wie wordt het
+          ziekengeld op grond van dit artikel uitbetaald, en hoe verhoudt die betaling zich tot de
+          loondoorbetaling door de werkgever?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://ziektewet"
+      selector:
+        type: TextQuoteSelector
+        exact: "het ziekengeld vermenigvuldigd met de voor die werknemer vastgestelde loonwaarde"
+        prefix: "wordt "
+        suffix: ", bedoeld in"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='29e']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevindingen F316 en F327 (de oordelen in die records gaan over "70 procent
+          van het dagloon" en over de grond van de no-riskpolis in de situatie via de gemeente). Het
+          prototype zegt dat het ziekengeld bij de no-riskpolis 70 procent van het dagloon is
+          (artikel 29b, vijfde lid), met op verzoek het hele dagloon in de eerste 52 weken, en noemt
+          als grond artikel 29b, tweede lid, onderdeel e, vijfde en zesde lid, en artikel 12e
+          Dagloonbesluit. In de situatie via de gemeente ontvangt de werkgever ook
+          loonkostensubsidie. Dit artikel, eerste lid, bepaalt dat het ziekengeld dan wordt
+          vermenigvuldigd met de vastgestelde loonwaarde; bij een loonwaarde van 60 procent komt het
+          ziekengeld zo op 42 procent van het dagloon. Het prototype noemt dit artikel niet. Vraag:
+          is dit artikel van toepassing op de no-riskpolis op grond van artikel 29b, tweede lid,
+          onderdeel e, bij gelijktijdige loonkostensubsidie, en hoort het dan bij de grond en de
+          berekening?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

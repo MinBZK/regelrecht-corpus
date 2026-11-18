@@ -1,0 +1,106 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loondispensatie_wajong"
+      selector:
+        type: TextQuoteSelector
+        exact: "de beloning die voor dezelfde arbeid gebruikelijk is"
+        prefix: "ten minste 25% lager ligt dan "
+        suffix: "."
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='1']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt D1; feitencheck
+          van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11 november 2026), bevinding
+          F131. Het voorbeeld in het prototype neemt als gebruikelijke beloning het minimumloon per
+          uur, en als gerechtvaardigde beloning het minimumloon maal de loonwaarde. Het voordeel per
+          jaar is het verschil tussen het minimumloon en het uurloon dat UWV vaststelt, maal de uren
+          en 52 weken, plus 8 procent vakantiegeld en ongeveer 20 procent werkgeverslasten. Dit
+          artikel spreekt van "de beloning die voor dezelfde arbeid gebruikelijk is"; artikel 2:20
+          Wajong van "de arbeidsprestatie die een geldelijke beloning van het minimumloon
+          rechtvaardigt". Het prototype verwijst voor de grens van 25 procent alleen naar artikel
+          2:20 Wajong; die grens staat in dit artikel. Vraag: is het minimumloon als gebruikelijke
+          beloning een verantwoorde aanname voor een voorbeeld, of moet dat het loon uit de cao of
+          het uurloon bij de werkgever zijn?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loondispensatie_wajong"
+      selector:
+        type: TextQuoteSelector
+        exact: "vastgesteld op een percentage van het"
+        prefix: "berekend per uur, "
+        suffix: " op grond van de"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='3']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F181 (de oordelen in dat record gaan over de zin "UWV stelt het
+          percentage vast", F182). Het prototype verwijst bij de zin "UWV stelt het percentage vast"
+          naar artikel 4 van dit besluit. Artikel 4 regelt dat de loondispensatie ingaat op de
+          eerste dag van de maand waarin zij is aangevraagd. Dat UWV de aanspraak op beloning per
+          uur vaststelt op een percentage van het minimumloon, volgt uit artikel 2:20, eerste lid,
+          Wajong in samenhang met dit artikel. Vraag: zijn artikel 2:20, eerste lid, Wajong en dit
+          artikel de grondslag voor deze zin, en gaat het om het percentage van het minimumloon dat
+          de werknemer nog ontvangt?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loondispensatie_wajong"
+      selector:
+        type: TextQuoteSelector
+        exact: "Bij het verlenen van loondispensatie wordt de aanspraak"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='3']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F249 (de oordelen in dat record gaan over het percentage met een
+          eigen vaststellingsdatum op de besluitpagina). Bij de situatie Wajong toont de
+          besluitpagina van het prototype het percentage loondispensatie met een eigen
+          vaststellingsdatum die vóór de datum van het besluit ligt; in de demo is die fase als
+          aanname gemarkeerd. Dit artikel bepaalt dat de aanspraak op beloning "bij het verlenen van
+          loondispensatie" wordt vastgesteld op een percentage van het minimumloon per uur. Vraag:
+          wordt het percentage daarmee alleen in de beschikking tot loondispensatie vastgesteld, of
+          laat het besluit een afzonderlijke, eerdere vaststelling van het percentage toe?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

@@ -1,0 +1,99 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_tegemoetkomingen_loondomein"
+      selector:
+        type: TextQuoteSelector
+        exact: "niet op enig moment in de periode van zes maanden voorafgaand aan de datum van indiensttreding"
+        prefix: "b. "
+        suffix: " in"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2.6']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt E1. Het portaal
+          toont het voorbehoud "niet eerder bij deze werkgever in dienst" alleen bij het
+          loonkostenvoordeel arbeidsgehandicapte werknemer (dit artikel), en niet bij de doelgroep
+          banenafspraak (artikel 2.10). Een eerdere controle meldt dat de engine het voorbehoud bij
+          elke categorie meegeeft; dat wordt nog uitgezocht. Vraag: geldt de voorwaarde van zes
+          maanden alleen voor dit artikel, of ook voor de artikelen 2.10 en 2.14?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_tegemoetkomingen_loondomein"
+      selector:
+        type: TextQuoteSelector
+        exact: "een geldige doelgroepverklaring als bedoeld in"
+        prefix: "c. "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2.6']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F188 (de oordelen in dat record gaan over de zin "Zonder
+          verklaring geen loonkostenvoordeel", F190). Het prototype noemt bij de zin "Zonder
+          verklaring geen loonkostenvoordeel" artikel 2.7 als bron. Artikel 2.7 regelt de afgifte
+          van de doelgroepverklaring. De voorwaarde dat de werknemer "een geldige
+          doelgroepverklaring als bedoeld in artikel 2.7" aan de werkgever heeft verstrekt, staat in
+          dit artikel, eerste lid, onderdeel c. Vraag: steunt de zin op dit onderdeel, zodat de
+          verwijzing de artikelen 2.6 en 2.7 moet noemen?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_tegemoetkomingen_loondomein"
+      selector:
+        type: TextQuoteSelector
+        exact: "loonkostenvoordeel doelgroep banenafspraak"
+        suffix: " indien bij deze werkgever"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2.10']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F312 (de oordelen in dat record gaan over de grond van de kaart
+          loonkostenvoordeel doelgroep banenafspraak, F318). De kaart loonkostenvoordeel doelgroep
+          banenafspraak in het prototype noemt als grond "Wet tegemoetkomingen loondomein 2.10 en
+          2.13; Wfsv 38b". Andere zinnen op de kaart steunen op artikel 2.1, onderdeel b (verzoek in
+          de loonaangifte), artikel 38d Wfsv (de registratie), het vervallen van artikel 2.11 (geen
+          doelgroepverklaring), artikel 2.12 (duur) en artikel 4.1 (berekening na afloop van het
+          kalenderjaar). Dit artikel, eerste lid, verwijst zelf naar het verzoek van artikel 2.1.
+          Vraag: horen deze artikelen bij de grond van de kaart?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

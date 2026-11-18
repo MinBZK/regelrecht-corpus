@@ -1,0 +1,109 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      selector:
+        type: TextQuoteSelector
+        exact: "een geldelijke beloning van het minimumloon rechtvaardigt"
+        prefix: "is dan de arbeidsprestatie die "
+        suffix: ", vermindert het"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2:20']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt D2; feitencheck
+          van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11 november 2026), bevinding
+          F47. Ligt het uurloon boven het minimumloon, dan telt het voorbeeld in het prototype
+          loondispensatie niet mee, met de toelichting "boven het minimumloon hangt het van de cao
+          af". Dit lid koppelt de vermindering aan een arbeidsprestatie die duidelijk minder is dan
+          "de arbeidsprestatie die een geldelijke beloning van het minimumloon rechtvaardigt", en
+          vermindert de aanspraak "in afwijking van hetgeen bij en krachtens de Wet minimumloon en
+          minimumvakantiebijslag is bepaald". De cao wordt niet genoemd; een hoger loon kan ook
+          alleen in de arbeidsovereenkomst zijn afgesproken. Vraag: klopt het dat loondispensatie
+          boven het minimumloon van de cao afhangt, en is "niet meetellen" dan de juiste weergave?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      selector:
+        type: TextQuoteSelector
+        exact: "van een werknemer die recht heeft op arbeidsondersteuning"
+        prefix: "Indien de arbeidsprestatie "
+        suffix: " in een bepaalde functie,"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2:20']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F130. Het prototype noemt loondispensatie "alleen voor een
+          werknemer met een Wajong-uitkering" en verwijst naar dit artikel. Het eerste lid spreekt
+          van een werknemer "die recht heeft op arbeidsondersteuning"; dat recht kan bestaan terwijl
+          de inkomensondersteuning nihil is. Voor wie recht heeft op een
+          arbeidsongeschiktheidsuitkering (Wajong van vóór 2015) regelt artikel 3:63 hetzelfde, en
+          het Besluit loondispensatie Wajong noemt beide artikelen. Vraag: is het recht op
+          arbeidsondersteuning de voorwaarde waaraan het prototype moet toetsen, en hoort artikel
+          3:63 bij de verwijzing en in het model?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
+      selector:
+        type: TextQuoteSelector
+        exact: "meeneembare voorzieningen ten behoeve van de inrichting van de arbeidsplaats"
+        prefix: "c. "
+        suffix: ", de productie-"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='2:22']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevindingen F192 en F222 (de oordelen in die records gaan over de zinnen
+          dat de werknemer met Wajong een jobcoach of een aangepaste werkplek zelf bij UWV
+          aanvraagt, F194 en het scherm na versturen). Het prototype zegt, ook op het scherm na
+          versturen, dat een werknemer met Wajong een jobcoach of een aangepaste werkplek zelf bij
+          UWV aanvraagt, met dit artikel als bron. Het tweede lid, onderdeel c, noemt uitsluitend
+          meeneembare voorzieningen voor de arbeidsplaats die in overwegende mate op het individu
+          zijn afgestemd. Voor voorzieningen die "naar de aard der zaak duurzaam zijn verenigd met
+          het bedrijf van de werkgever" kent artikel 36, eerste en tweede lid, Wet WIA een subsidie
+          op aanvraag van de werkgever. Vraag: valt een aanpassing van de werkplek alleen onder dit
+          artikel voor zover die meeneembaar en op de persoon afgestemd is, en loopt een vaste
+          aanpassing bij een werknemer met Wajong via artikel 36 Wet WIA?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

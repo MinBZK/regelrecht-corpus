@@ -1,0 +1,138 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_financiering_sociale_verzekeringen"
+      selector:
+        type: TextQuoteSelector
+        exact: "is of wordt toegeleid of ten behoeve van wie loonkostensubsidie wordt verstrekt"
+        suffix: " op grond van"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='38b']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt F1. Bij dit
+          onderdeel gaat het om de toeleiding door de gemeente naar een dienstbetrekking. Besluiten
+          die de gemeente of UWV nog neemt, tellen in het voorbeeld van het prototype als "ja": de
+          loonwaarde is vastgesteld (Participatiewet, artikel 10d), het college verleent toestemming
+          voor de proefplaatsing (Participatiewet, artikel 8a, tweede lid, onderdeel d), de
+          kandidaat is door de gemeente toegeleid (dit onderdeel) en het college acht een
+          voorziening noodzakelijk (Participatiewet, artikel 10). Onder "Waarom deze uitkomst?"
+          staat: "Wat de gemeente of UWV nog moet beoordelen, telt in dit voorbeeld als ‘ja’."
+          Vraag: is dat voor een voorbeeldberekening een verantwoorde weergave, of moet per regeling
+          zichtbaar zijn welk besluit nog genomen moet worden?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_financiering_sociale_verzekeringen"
+      selector:
+        type: TextQuoteSelector
+        exact: "recht heeft op arbeidsondersteuning of een arbeidsongeschiktheidsuitkering"
+        prefix: "c. die "
+        suffix: " op grond van de"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='38b']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F277 (de oordelen in dat record gaan over de vraag naar een
+          Wajong-uitkering of arbeidsondersteuning, F282). Het prototype vraagt of de kandidaat een
+          Wajong-uitkering of arbeidsondersteuning van UWV heeft, met als grond artikel 2:15 Wajong.
+          De vraag en de parameter heeft_wajong_arbeidsondersteuning_of_uitkering volgen dit
+          onderdeel: "recht heeft op arbeidsondersteuning of een arbeidsongeschiktheidsuitkering op
+          grond van" de Wajong. Artikel 2:15 Wajong regelt alleen het recht op arbeidsondersteuning;
+          de arbeidsongeschiktheidsuitkering volgt uit de artikelen 1a:2 en 3:3 Wajong. Vraag: is
+          dit onderdeel de grond voor deze vraag, en welke artikelen van de Wajong horen daarbij te
+          worden genoemd?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_financiering_sociale_verzekeringen"
+      selector:
+        type: TextQuoteSelector
+        exact: "in een lopend kalenderjaar of in het voorgaande kalenderjaar"
+        prefix: "gedurende welke periode "
+        suffix: " deze persoon"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='38d']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F125. Het prototype toont de werkgever bij het doelgroepregister
+          de datum waarop de registratie begon (bijvoorbeeld "sinds 14 mei 2024") en dat de
+          registratie nog loopt. Het zevende lid, onderdeel b, laat UWV aan de werkgever meedelen
+          "gedurende welke periode in een lopend kalenderjaar of in het voorgaande kalenderjaar" de
+          persoon in de registratie is opgenomen. Vraag: mag op grond van dit lid een begindatum
+          worden gedeeld die vóór het voorgaande kalenderjaar ligt, of is de mededeling beperkt tot
+          de periode binnen het lopende en het voorgaande kalenderjaar?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://wet_financiering_sociale_verzekeringen"
+      selector:
+        type: TextQuoteSelector
+        exact: "de registratie van arbeidsbeperkten"
+        prefix: "adequate werking van "
+        suffix: " en is de"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='38d']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F275 (de oordelen in dat record gaan over het gegeven "Ja, sinds
+          3 november 2025" bij het doelgroepregister, F280). In de situatie via de gemeente toont
+          het prototype dat de kandidaat sinds 3 november 2025 in het doelgroepregister staat, met
+          als grond artikel 38b, eerste lid, onderdeel a. Artikel 38b omschrijft wie een
+          arbeidsbeperkte is; de registratie zelf is geregeld in dit artikel, eerste lid, en de
+          mededeling aan de werkgever over opname en periode in het zevende lid. Vraag: is dit
+          artikel, eerste lid, in samenhang met artikel 38b, eerste lid, onderdeel a, de grondslag
+          voor het gegeven "opgenomen in het doelgroepregister sinds"?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

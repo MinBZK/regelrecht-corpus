@@ -1,0 +1,43 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://regeling_loonkostensubsidie_participatiewet_2021"
+      selector:
+        type: TextQuoteSelector
+        exact: "de loonkosten waarover loonkostensubsidie wordt verstrekt"
+        prefix: "bedraagt 25 procent van "
+        suffix: "."
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='1']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: actieregister met SZW (regelrecht-corpus-FCV, docs/szw/actieregister.md), punt
+          5.2 (juristfeedback ronde 5, 10 november 2026); feitencheck van het prototype iemand
+          aannemen (moza-portaal main 0f8fcdd, 11 november 2026), bevindingen F46, F296 en F297 (de
+          oordelen in F296 en F297 gaan over het getoonde bedrag van € 897,41 per maand). Het model
+          rekent de vergoeding voor werkgeverslasten als 25 procent van het bedrag van de
+          loonkostensubsidie zelf, na het maximum van 70 procent (artikel 10d, vierde lid,
+          Participatiewet). De tekst laat ook andere lezingen toe: 25 procent van het wettelijk
+          minimumloon met vakantiebijslag, naar rato van de arbeidsduur; of 25 procent van het
+          verschil tussen het minimumloon met vakantiebijslag en de loonwaarde, vóór het maximum.
+          Bij een loonwaarde van 60 procent en 36 uur is de vergoeding volgens het model € 252,40
+          per maand en volgens de lezing over het minimumloon € 630,99. Vragen: zijn "de loonkosten
+          waarover loonkostensubsidie wordt verstrekt" het bedrag van de loonkostensubsidie of het
+          minimumloon met vakantiebijslag? En als het het bedrag van de loonkostensubsidie is: na of
+          vóór het maximum van 70 procent?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open

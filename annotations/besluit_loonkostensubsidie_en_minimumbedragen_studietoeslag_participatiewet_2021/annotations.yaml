@@ -1,0 +1,36 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loonkostensubsidie_en_minimumbedragen_studietoeslag_participatiewet_2021"
+      selector:
+        type: TextQuoteSelector
+        exact: "op basis van de feitelijke werkzaamheden op de werkplek"
+        prefix: "Het college stelt de loonwaarde vast "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='3']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
+          november 2026), bevinding F284 (de oordelen in dat record gaan over de zin dat de gemeente
+          de loonwaarde op de werkplek meet na de aanvraag). Het prototype zegt dat de gemeente de
+          loonwaarde "op de werkplek na uw aanvraag" meet, met als grond artikel 10d, eerste en
+          tweede lid, Participatiewet. Dat de vaststelling plaatsvindt op basis van de feitelijke
+          werkzaamheden op de werkplek, staat in dit artikel, eerste lid; de meting gebeurt volgens
+          het derde lid door een loonwaardedeskundige. Vraag: hoort dit artikel, eerste lid, bij de
+          grond van dit gegeven, naast artikel 10d, tweede lid, Participatiewet?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: feitencheck
+        purpose: tagging
+    workflow: open

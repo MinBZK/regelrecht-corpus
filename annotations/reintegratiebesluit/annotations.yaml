@@ -1,0 +1,35 @@
+---
+# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
+# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+$schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
+annotations:
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://reintegratiebesluit"
+      selector:
+        type: TextQuoteSelector
+        exact: "overwegende mate op het individu is gericht"
+        suffix: "."
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='4']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open juristvraag uit de agenda van de vervolgsessie met SZW, november 2026
+          (regelrecht-corpus-FCV, docs/szw/agenda-vervolgsessie-november.md), punt G1 (moza-portaal
+          PR #280). Voor jobcoaching bij WIA is "in overwegende mate op het individu gericht" in het
+          nieuwe corpus een verplicht feit. Het voorbeeld in het prototype zet dit feit op "ja", net
+          als de andere feiten van die route; zonder dat feit is jobcoaching bij WIA "nee". Vraag:
+          is "ja" een verantwoorde aanname voor een voorbeeld, of hoort dit een vraag aan de
+          werkgever te zijn?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
