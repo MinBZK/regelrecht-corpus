@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -46,29 +46,28 @@ annotations:
       source: "regelrecht://wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
       selector:
         type: TextQuoteSelector
-        exact: "van een werknemer die recht heeft op arbeidsondersteuning"
-        prefix: "Indien de arbeidsprestatie "
-        suffix: " in een bepaalde functie,"
+        exact: "ten gevolge van ziekte of gebrek duidelijk minder"
+        prefix: "arbeidsovereenkomst als bedoeld in artikel 7 van die wet, "
         regelrecht:hint:
           type: CssSelector
           value: "article[number='2:20']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F130. Het prototype noemt loondispensatie "alleen voor een
-          werknemer met een Wajong-uitkering" en verwijst naar dit artikel. Het eerste lid spreekt
-          van een werknemer "die recht heeft op arbeidsondersteuning"; dat recht kan bestaan terwijl
-          de inkomensondersteuning nihil is. Voor wie recht heeft op een
-          arbeidsongeschiktheidsuitkering (Wajong van vóór 2015) regelt artikel 3:63 hetzelfde, en
-          het Besluit loondispensatie Wajong noemt beide artikelen. Vraag: is het recht op
-          arbeidsondersteuning de voorwaarde waaraan het prototype moet toetsen, en hoort artikel
-          3:63 bij de verwijzing en in het model?
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). Dit lid laat het oordeel dat de
+          arbeidsprestatie "ten gevolge van ziekte of gebrek duidelijk minder" is aan UWV en zegt
+          niet hoe UWV dat vaststelt. Elders in de wet staat "rechtstreeks en objectief medisch vast
+          te stellen gevolg van ziekte, gebrek, zwangerschap of bevalling" (onder meer artikel
+          1a:1); dit artikel gebruikt die woorden niet. In de bron voor de chronolexografie-PoC
+          ontleent UWV het verband met ziekte of gebrek aan het rapport van de arbeidsdeskundige;
+          dat is fictief beleid. Vraag: geldt de maatstaf "rechtstreeks en objectief medisch vast te
+          stellen" ook voor dit artikel, en wie beoordeelt het verband met ziekte of gebrek?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open
 
@@ -79,31 +78,30 @@ annotations:
       source: "regelrecht://wet_arbeidsongeschiktheidsvoorziening_jonggehandicapten"
       selector:
         type: TextQuoteSelector
-        exact: "meeneembare voorzieningen ten behoeve van de inrichting van de arbeidsplaats"
-        prefix: "c. "
-        suffix: ", de productie-"
+        exact: "aanspraak op een geldelijke beloning voor de verrichte arbeid naar evenredigheid"
         regelrecht:hint:
           type: CssSelector
-          value: "article[number='2:22']"
+          value: "article[number='2:20']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevindingen F192 en F222 (de oordelen in die records gaan over de zinnen
-          dat de werknemer met Wajong een jobcoach of een aangepaste werkplek zelf bij UWV
-          aanvraagt, F194 en het scherm na versturen). Het prototype zegt, ook op het scherm na
-          versturen, dat een werknemer met Wajong een jobcoach of een aangepaste werkplek zelf bij
-          UWV aanvraagt, met dit artikel als bron. Het tweede lid, onderdeel c, noemt uitsluitend
-          meeneembare voorzieningen voor de arbeidsplaats die in overwegende mate op het individu
-          zijn afgestemd. Voor voorzieningen die "naar de aard der zaak duurzaam zijn verenigd met
-          het bedrijf van de werkgever" kent artikel 36, eerste en tweede lid, Wet WIA een subsidie
-          op aanvraag van de werkgever. Vraag: valt een aanpassing van de werkplek alleen onder dit
-          artikel voor zover die meeneembaar en op de persoon afgestemd is, en loopt een vaste
-          aanpassing bij een werknemer met Wajong via artikel 36 Wet WIA?
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). Dit lid zet de arbeidsprestatie af
+          tegen "de arbeidsprestatie die een geldelijke beloning van het minimumloon rechtvaardigt".
+          Artikel 1 van het Besluit loondispensatie Wajong zet de beloning af tegen "de beloning die
+          voor dezelfde arbeid gebruikelijk is". De bron voor de chronolexografie-PoC rekent met het
+          eerste: het percentage is de gerechtvaardigde beloning als percentage van het minimumloon
+          per uur, met een bovengrens van 100 procent. Met het tweede is het percentage de gemeten
+          prestatie zelf. Bij een gebruikelijke beloning gelijk aan het minimumloon geven beide
+          hetzelfde bedrag. Bij een prestatie van 60 procent en een gebruikelijke beloning van €
+          18,00 per uur geeft de eerste lezing € 10,80 en de tweede € 8,99 (minimumloon € 14,99).
+          Vraag: waarnaar wordt de aanspraak "naar evenredigheid" verminderd, en kan het percentage
+          van artikel 3 van het Besluit boven 100 uitkomen? Zie ook de taak bij artikel 1 van het
+          Besluit (punt D1).
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open

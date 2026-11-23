@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -11,26 +11,27 @@ annotations:
       source: "regelrecht://besluit_loonkostensubsidie_en_minimumbedragen_studietoeslag_participatiewet_2021"
       selector:
         type: TextQuoteSelector
-        exact: "op basis van de feitelijke werkzaamheden op de werkplek"
-        prefix: "Het college stelt de loonwaarde vast "
+        exact: "op grond van het rapport, bedoeld in"
         regelrecht:hint:
           type: CssSelector
           value: "article[number='3']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F284 (de oordelen in dat record gaan over de zin dat de gemeente
-          de loonwaarde op de werkplek meet na de aanvraag). Het prototype zegt dat de gemeente de
-          loonwaarde "op de werkplek na uw aanvraag" meet, met als grond artikel 10d, eerste en
-          tweede lid, Participatiewet. Dat de vaststelling plaatsvindt op basis van de feitelijke
-          werkzaamheden op de werkplek, staat in dit artikel, eerste lid; de meting gebeurt volgens
-          het derde lid door een loonwaardedeskundige. Vraag: hoort dit artikel, eerste lid, bij de
-          grond van dit gegeven, naast artikel 10d, tweede lid, Participatiewet?
+          Herkomst: review van het model van loonkostensubsidie en doelgroep, november 2026
+          (regelrecht-corpus-FCV, PDR 0026, punt 6). Dit lid noemt geen opdracht aan de
+          loonwaardedeskundige en geen dag van vaststelling. Het model van de Participatiewet
+          behandelt de loonwaarde als aangeleverd feit. De bron voor de chronolexografie-PoC neemt
+          het laatste rapport over de werknemer tot en met de dag van het besluit, zonder
+          ondergrens. Een rapport van vóór de aanvraag telt daar dus mee, ook een rapport van een
+          eerdere aanvraag, een andere werkgever of een andere functie zolang er geen nieuwer is.
+          Vraag: mag het college de loonwaarde vaststellen op grond van een rapport over een meting
+          van vóór de aanvraag, en welke band tussen het rapport en de dienstbetrekking vraagt dit
+          lid ("de feitelijke werkzaamheden op de werkplek van de werknemer bij de werkgever")?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open

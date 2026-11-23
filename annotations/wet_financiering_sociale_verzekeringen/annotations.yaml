@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -45,94 +45,24 @@ annotations:
       source: "regelrecht://wet_financiering_sociale_verzekeringen"
       selector:
         type: TextQuoteSelector
-        exact: "recht heeft op arbeidsondersteuning of een arbeidsongeschiktheidsuitkering"
-        prefix: "c. die "
-        suffix: " op grond van de"
+        exact: "wordt onder een arbeidsbeperkte verstaan de persoon"
         regelrecht:hint:
           type: CssSelector
           value: "article[number='38b']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F277 (de oordelen in dat record gaan over de vraag naar een
-          Wajong-uitkering of arbeidsondersteuning, F282). Het prototype vraagt of de kandidaat een
-          Wajong-uitkering of arbeidsondersteuning van UWV heeft, met als grond artikel 2:15 Wajong.
-          De vraag en de parameter heeft_wajong_arbeidsondersteuning_of_uitkering volgen dit
-          onderdeel: "recht heeft op arbeidsondersteuning of een arbeidsongeschiktheidsuitkering op
-          grond van" de Wajong. Artikel 2:15 Wajong regelt alleen het recht op arbeidsondersteuning;
-          de arbeidsongeschiktheidsuitkering volgt uit de artikelen 1a:2 en 3:3 Wajong. Vraag: is
-          dit onderdeel de grond voor deze vraag, en welke artikelen van de Wajong horen daarbij te
-          worden genoemd?
+          Herkomst: aantekening in het model bij de uitkomst voor de grond van opname in het
+          doelgroepregister. Het eerste lid noemt de onderdelen a tot en met g naast elkaar. Een
+          persoon kan aan meer dan een onderdeel voldoen. Het model geeft dan als grond van opname
+          het eerste onderdeel dat past, in de volgorde a tot en met g, daarna het tweede en het
+          zesde lid. De wet noemt geen rangorde; of iemand arbeidsbeperkte is, hangt er niet van af.
+          Vraag: kent het eerste lid een rangorde tussen de onderdelen, en welke grond geldt als een
+          persoon aan meer dan een onderdeel voldoet?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://wet_financiering_sociale_verzekeringen"
-      selector:
-        type: TextQuoteSelector
-        exact: "in een lopend kalenderjaar of in het voorgaande kalenderjaar"
-        prefix: "gedurende welke periode "
-        suffix: " deze persoon"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='38d']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F125. Het prototype toont de werkgever bij het doelgroepregister
-          de datum waarop de registratie begon (bijvoorbeeld "sinds 14 mei 2024") en dat de
-          registratie nog loopt. Het zevende lid, onderdeel b, laat UWV aan de werkgever meedelen
-          "gedurende welke periode in een lopend kalenderjaar of in het voorgaande kalenderjaar" de
-          persoon in de registratie is opgenomen. Vraag: mag op grond van dit lid een begindatum
-          worden gedeeld die vóór het voorgaande kalenderjaar ligt, of is de mededeling beperkt tot
-          de periode binnen het lopende en het voorgaande kalenderjaar?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://wet_financiering_sociale_verzekeringen"
-      selector:
-        type: TextQuoteSelector
-        exact: "de registratie van arbeidsbeperkten"
-        prefix: "adequate werking van "
-        suffix: " en is de"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='38d']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F275 (de oordelen in dat record gaan over het gegeven "Ja, sinds
-          3 november 2025" bij het doelgroepregister, F280). In de situatie via de gemeente toont
-          het prototype dat de kandidaat sinds 3 november 2025 in het doelgroepregister staat, met
-          als grond artikel 38b, eerste lid, onderdeel a. Artikel 38b omschrijft wie een
-          arbeidsbeperkte is; de registratie zelf is geregeld in dit artikel, eerste lid, en de
-          mededeling aan de werkgever over opname en periode in het zevende lid. Vraag: is dit
-          artikel, eerste lid, in samenhang met artikel 38b, eerste lid, onderdeel a, de grondslag
-          voor het gegeven "opgenomen in het doelgroepregister sinds"?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open

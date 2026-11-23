@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -42,58 +42,28 @@ annotations:
       source: "regelrecht://wet_tegemoetkomingen_loondomein"
       selector:
         type: TextQuoteSelector
-        exact: "een geldige doelgroepverklaring als bedoeld in"
-        prefix: "c. "
+        exact: "voor deze werknemer is verstreken"
+        prefix: "[artikel 2.8][ref15], "
+        suffix: "."
         regelrecht:hint:
           type: CssSelector
           value: "article[number='2.6']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F188 (de oordelen in dat record gaan over de zin "Zonder
-          verklaring geen loonkostenvoordeel", F190). Het prototype noemt bij de zin "Zonder
-          verklaring geen loonkostenvoordeel" artikel 2.7 als bron. Artikel 2.7 regelt de afgifte
-          van de doelgroepverklaring. De voorwaarde dat de werknemer "een geldige
-          doelgroepverklaring als bedoeld in artikel 2.7" aan de werkgever heeft verstrekt, staat in
-          dit artikel, eerste lid, onderdeel c. Vraag: steunt de zin op dit onderdeel, zodat de
-          verwijzing de artikelen 2.6 en 2.7 moet noemen?
+          Herkomst: markering in het model (regelrecht-corpus-FCV, review van 25 oktober 2026). Het
+          derde lid zegt dat het eerste lid "niet of niet langer van toepassing" is als de periode
+          van artikel 2.8 voor de werknemer is verstreken. De tegemoetkoming wordt per kalenderjaar
+          berekend over de verloonde uren (artikel 4.1). Het model toetst op de peildatum of de
+          periode is verstreken en zet dan de tegemoetkoming over het hele kalenderjaar op nul, ook
+          voor de uren vóór het einde van de periode. Artikel 2.10, derde lid, heeft dezelfde vorm.
+          Vraag: vervalt bij een periode die in de loop van het kalenderjaar eindigt de
+          tegemoetkoming over het hele kalenderjaar, of alleen over de uren na het einde van de
+          periode?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://wet_tegemoetkomingen_loondomein"
-      selector:
-        type: TextQuoteSelector
-        exact: "loonkostenvoordeel doelgroep banenafspraak"
-        suffix: " indien bij deze werkgever"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='2.10']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F312 (de oordelen in dat record gaan over de grond van de kaart
-          loonkostenvoordeel doelgroep banenafspraak, F318). De kaart loonkostenvoordeel doelgroep
-          banenafspraak in het prototype noemt als grond "Wet tegemoetkomingen loondomein 2.10 en
-          2.13; Wfsv 38b". Andere zinnen op de kaart steunen op artikel 2.1, onderdeel b (verzoek in
-          de loonaangifte), artikel 38d Wfsv (de registratie), het vervallen van artikel 2.11 (geen
-          doelgroepverklaring), artikel 2.12 (duur) en artikel 4.1 (berekening na afloop van het
-          kalenderjaar). Dit artikel, eerste lid, verwijst zelf naar het verzoek van artikel 2.1.
-          Vraag: horen deze artikelen bij de grond van de kaart?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open

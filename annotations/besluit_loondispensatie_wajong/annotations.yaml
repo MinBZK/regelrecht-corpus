@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -48,29 +48,24 @@ annotations:
       source: "regelrecht://besluit_loondispensatie_wajong"
       selector:
         type: TextQuoteSelector
-        exact: "vastgesteld op een percentage van het"
-        prefix: "berekend per uur, "
-        suffix: " op grond van de"
+        exact: "de eerste dag van de maand waarin deze is aangevraagd"
+        suffix: "."
         regelrecht:hint:
           type: CssSelector
-          value: "article[number='3']"
+          value: "article[number='4']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F181 (de oordelen in dat record gaan over de zin "UWV stelt het
-          percentage vast", F182). Het prototype verwijst bij de zin "UWV stelt het percentage vast"
-          naar artikel 4 van dit besluit. Artikel 4 regelt dat de loondispensatie ingaat op de
-          eerste dag van de maand waarin zij is aangevraagd. Dat UWV de aanspraak op beloning per
-          uur vaststelt op een percentage van het minimumloon, volgt uit artikel 2:20, eerste lid,
-          Wajong in samenhang met dit artikel. Vraag: zijn artikel 2:20, eerste lid, Wajong en dit
-          artikel de grondslag voor deze zin, en gaat het om het percentage van het minimumloon dat
-          de werknemer nog ontvangt?
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). De bron voor de chronolexografie-PoC
+          neemt voor "de maand waarin deze is aangevraagd" de dagtekening van de aanvraag. Het kan
+          ook de dag zijn waarop UWV de aanvraag ontvangt. Vraag: welke dag bepaalt de maand van de
+          aanvraag: de dagtekening of de dag van ontvangst?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open
 
@@ -81,26 +76,82 @@ annotations:
       source: "regelrecht://besluit_loondispensatie_wajong"
       selector:
         type: TextQuoteSelector
-        exact: "Bij het verlenen van loondispensatie wordt de aanspraak"
+        exact: "naar de verwachting van het UWV sprake zal zijn van een"
         regelrecht:hint:
           type: CssSelector
-          value: "article[number='3']"
+          value: "article[number='5']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F249 (de oordelen in dat record gaan over het percentage met een
-          eigen vaststellingsdatum op de besluitpagina). Bij de situatie Wajong toont de
-          besluitpagina van het prototype het percentage loondispensatie met een eigen
-          vaststellingsdatum die vóór de datum van het besluit ligt; in de demo is die fase als
-          aanname gemarkeerd. Dit artikel bepaalt dat de aanspraak op beloning "bij het verlenen van
-          loondispensatie" wordt vastgesteld op een percentage van het minimumloon per uur. Vraag:
-          wordt het percentage daarmee alleen in de beschikking tot loondispensatie vastgesteld, of
-          laat het besluit een afzonderlijke, eerdere vaststelling van het percentage toe?
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). Dit artikel zegt "naar de verwachting
+          van het UWV"; artikel 2 zegt "naar verwachting". In de bron voor de chronolexografie-PoC
+          neemt UWV de verwachte duur over uit het rapport van de arbeidsdeskundige, zonder daarvan
+          te kunnen afwijken; dat is fictief beleid. Vraag: wiens verwachting is bedoeld in artikel
+          2 en in dit artikel, en past het overnemen van de verwachting uit het rapport van de
+          arbeidsdeskundige bij "de verwachting van het UWV"?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loondispensatie_wajong"
+      selector:
+        type: TextQuoteSelector
+        exact: "doch ten hoogste voor vijf jaar"
+        suffix: "."
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='5']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). Loondispensatie wordt verleend "voor
+          de periode" van de verwachte duur. De bron voor de chronolexografie-PoC neemt bij een
+          periode van twaalf maanden met ingang van 1 juli 2026 als laatste dag 30 juni 2027, de dag
+          vóór dezelfde datum twaalf maanden later. Vraag: is de laatste dag van de periode 30 juni
+          2027 of 1 juli 2027?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://besluit_loondispensatie_wajong"
+      selector:
+        type: TextQuoteSelector
+        exact: "Na afloop van deze periode is verlenging"
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='5']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: open punten van de loondispensatie in de bron voor de chronolexografie-PoC
+          (regelrecht-corpus-FCV, chronolexografie/README.md). Verlenging is "na afloop" mogelijk.
+          Artikel 4 laat loondispensatie ingaan op de eerste dag van de maand van de aanvraag. De
+          artikelen zeggen niet wat geldt als de werkgever een nieuwe aanvraag doet terwijl de
+          periode nog loopt. De bron voor de chronolexografie-PoC verbiedt dat niet en behandelt die
+          aanvraag niet als verlenging. Vraag: kan een verlenging worden aangevraagd voordat de
+          periode is afgelopen, en met ingang van welke dag wordt zij dan verleend?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
         purpose: tagging
     workflow: open

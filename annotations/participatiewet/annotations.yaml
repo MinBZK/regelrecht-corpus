@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -35,41 +35,6 @@ annotations:
         language: nl
       - type: TextualBody
         value: juristvraag
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "doch wel mogelijkheden tot arbeidsparticipatie hebben"
-        prefix: "het wettelijk minimumloon, "
-        suffix: ","
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='6']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F176 (de oordelen in dat record gaan over de bronverwijzingen
-          bij "Hoe de gemeente beslist"). Het prototype noemt bij de beoordeling of de werknemer tot
-          de doelgroep loonkostensubsidie hoort artikel 10c als bron, met als maatstaf dat de
-          werknemer met voltijdse arbeid het wettelijk minimumloon niet kan verdienen. Artikel 10c
-          regelt dat het college vaststelt of iemand tot de doelgroep behoort. De omschrijving van
-          de doelgroep staat in dit artikel, eerste lid, onderdeel e, en vraagt daarnaast dat de
-          persoon "doch wel mogelijkheden tot arbeidsparticipatie" heeft. Vraag: is onderdeel e (en
-          voor een aanvraag na de start artikel 10d, tweede lid) de grondslag voor deze beoordeling,
-          en hoort de eis van mogelijkheden tot arbeidsparticipatie bij de toets die het college
-          uitvoert?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
         purpose: tagging
     workflow: open
 
@@ -283,101 +248,6 @@ annotations:
       source: "regelrecht://participatiewet"
       selector:
         type: TextQuoteSelector
-        exact: "het administratieve proces met betrekking tot het verstrekken van loonkostensubsidie"
-        prefix: "c. de wijze waarop "
-        suffix: ", bedoeld in"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='8a']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F18. Het prototype zegt dat in de verordening van de gemeente
-          staat welke wijzigingen de werkgever bij loonkostensubsidie doorgeeft. Onderdeel c vraagt
-          regels over "de wijze waarop het administratieve proces met betrekking tot het verstrekken
-          van loonkostensubsidie" wordt vormgegeven; artikel 10d bevat geen meldplicht voor de
-          werkgever. Artikel 4:38 Awb maakt het mogelijk verplichtingen van de subsidieontvanger bij
-          de subsidieverlening op te leggen. Vraag: valt een meldplicht van de werkgever onder de
-          regels van dit onderdeel, berust die op de beschikking tot verlening op grond van titel
-          4.2 Awb, of op beide?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "het college toestemming verleent aan een persoon"
-        prefix: "onder welke voorwaarden "
-        suffix: " als bedoeld in"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='8a']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F146. Het prototype zegt bij de proefplaatsing via de gemeente
-          "Kandidaat vraagt aan". Onderdeel d bepaalt dat de verordening regelt "onder welke
-          voorwaarden het college toestemming verleent aan een persoon" die algemene bijstand
-          ontvangt; wie de toestemming vraagt, regelt het artikel niet. Vraag: volgt uit dit artikel
-          dat de kandidaat de aanvrager is, of laat de wet aan de verordening over wie de
-          toestemming vraagt en welke rol de werkgever daarbij heeft?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "zowel in natura als door middel van subsidieverstrekking"
-        prefix: "die "
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='8a']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F331 (de oordelen in dat record gaan over de zin dat de gemeente
-          de begeleiding op de werkplek levert of vergoedt). Het prototype zegt dat de gemeente de
-          begeleiding op de werkplek levert of vergoedt, met als grond artikel 10da en artikel 10,
-          vijfde lid. Die artikelen regelen de aanspraak en de aanvraag; de vorm, in natura of door
-          subsidieverstrekking, staat in dit artikel, tweede lid, onderdeel e, onder 1°, als
-          onderwerp van de verordening. Vraag: hoort dit onderdeel bij de grond voor "levert of
-          vergoedt"?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
         exact: "niet-uitkeringsgerechtigden hebben, overeenkomstig de verordening"
         suffix: ", bedoeld in"
         regelrecht:hint:
@@ -416,63 +286,32 @@ annotations:
       source: "regelrecht://participatiewet"
       selector:
         type: TextQuoteSelector
-        exact: "waaronder persoonlijke ondersteuning bij het verrichten van de"
-        prefix: "gericht op arbeidsinschakeling, "
-        suffix: " aan die persoon"
+        exact: "op schriftelijke aanvraag van een persoon als bedoeld in de"
+        prefix: "a. "
         regelrecht:hint:
           type: CssSelector
-          value: "article[number='10']"
+          value: "article[number='10c']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F139. Het prototype zegt bij jobcoaching via de gemeente "Alleen
-          voor een werknemer die bij de doelgroep loonkostensubsidie hoort (Participatiewet, artikel
-          10da)", en het model leidt jobcoaching alleen af uit artikel 10da. Het eerste lid van dit
-          artikel geeft ook personen met algemene bijstand, niet-uitkeringsgerechtigden en personen
-          met een Anw-uitkering aanspraak op de noodzakelijk geachte voorziening, "waaronder
-          persoonlijke ondersteuning bij het verrichten van de aan die persoon opgedragen taken";
-          het derde lid, onderdeel a, noemt daarbij een erkende deskundige. Vraag: valt jobcoaching
-          voor een werknemer via de gemeente die niet tot de doelgroep loonkostensubsidie behoort
-          onder de persoonlijke ondersteuning van dit lid?
+          Herkomst: review van het model van loonkostensubsidie en doelgroep, november 2026
+          (regelrecht-corpus-FCV, PR #14, punt 9, en PDR 0026); markering bij artikel 10d in het
+          model. Dit artikel geeft het college de bevoegdheid om vast te stellen of een persoon tot
+          de doelgroep loonkostensubsidie behoort. Artikel 10d, eerste lid, verleent
+          loonkostensubsidie bij een persoon "die behoort tot de doelgroep loonkostensubsidie"; het
+          achtste lid sluit het eerste en tweede lid uit "vanaf het moment dat is vastgesteld dat
+          die persoon niet tot de doelgroep loonkostensubsidie behoort". Het model leidt de
+          doelgroep af uit de feiten van artikel 6, eerste lid, onderdeel e, en vraagt geen
+          vaststelling op grond van dit artikel. De bron voor de chronolexografie-PoC vraagt die
+          vaststelling wel: zonder vaststelling wordt de aanvraag daar afgewezen. Vraag: vraagt
+          artikel 10d, eerste lid, dat het college vooraf op grond van dit artikel heeft vastgesteld
+          dat de persoon tot de doelgroep behoort, of volstaat het dat de persoon aan de
+          omschrijving van artikel 6, eerste lid, onderdeel e, voldoet?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "aan de aanspraak, bedoeld in het eerste lid"
-        prefix: "om gevolg te geven "
-        suffix: "."
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='10']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevindingen F147 en F329 (de oordelen in F329 gaan over het label
-          "Aanvragen als u wilt" bij begeleiding op de werkplek). In het prototype vraagt de
-          werkgever jobcoaching bij de gemeente aan als onderdeel van de aanvraag, met artikel 10da
-          als grondslag. Het vijfde lid van dit artikel laat een persoon of een werkgever een
-          aanvraag indienen "om gevolg te geven aan de aanspraak, bedoeld in het eerste lid";
-          artikel 10da regelt een eigen aanspraak op begeleiding op de werkplek voor de doelgroep
-          loonkostensubsidie en noemt geen aanvrager. Vraag: geldt het aanvraagrecht van de
-          werkgever uit het vijfde lid ook voor de aanspraak uit artikel 10da?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open
 
@@ -640,6 +479,68 @@ annotations:
       source: "regelrecht://participatiewet"
       selector:
         type: TextQuoteSelector
+        exact: "De hoogte van de loonkostensubsidie, bedoeld in het eerste lid, onderdeel a, en het tweede lid"
+        prefix: "4 "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='10d']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: review van het model van loonkostensubsidie en doelgroep, november 2026
+          (regelrecht-corpus-FCV, PDR 0026). Het tweede lid noemt de loonwaarde niet. Dit vierde lid
+          berekent de hoogte, ook voor het tweede lid, uit de loonwaarde. De 50 procent van het
+          vijfde lid geldt voor het eerste lid, onderdeel b. In het model vraagt het recht op grond
+          van het tweede lid geen vastgestelde loonwaarde; ontbreekt de loonwaarde, dan is het
+          bedrag onbekend. De bron voor de chronolexografie-PoC rekent zonder vastgestelde
+          loonwaarde met nul en komt zo op het maximum van 70 procent. Vraag: kan het college
+          loonkostensubsidie op grond van het tweede lid verlenen voordat de loonwaarde is
+          vastgesteld, en zo ja, welk bedrag geldt tot de vaststelling?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://participatiewet"
+      selector:
+        type: TextQuoteSelector
+        exact: "niet langer op een persoon van toepassing"
+        prefix: "Het eerste en tweede lid zijn "
+        regelrecht:hint:
+          type: CssSelector
+          value: "article[number='10d']"
+    body:
+      - type: TextualBody
+        value: >-
+          Herkomst: review van het model van loonkostensubsidie en doelgroep, november 2026
+          (regelrecht-corpus-FCV, PR #14). Artikel 10da geeft personen die tot de doelgroep
+          loonkostensubsidie behoren aanspraak op begeleiding op de werkplek. Dit achtste lid staat
+          niet in het model: er is geen feit voor de dag waarop is vastgesteld dat de persoon niet
+          tot de doelgroep behoort, en de doelgroep volgt alleen uit de feiten van artikel 6, eerste
+          lid, onderdeel e. Vraag: beëindigt de vaststelling van dit lid alleen de
+          loonkostensubsidie, of ook de aanspraak op begeleiding op de werkplek, en vanaf welke dag?
+        purpose: questioning
+        format: text/plain
+        language: nl
+      - type: TextualBody
+        value: juristvraag
+        purpose: tagging
+    workflow: open
+
+  - type: Annotation
+    motivation: questioning
+    creator: RIG (FCV)
+    target:
+      source: "regelrecht://participatiewet"
+      selector:
+        type: TextQuoteSelector
         exact: "De beschikking tot loonkostensubsidie wordt genomen binnen vijf weken"
         prefix: "12 "
         suffix: ":"
@@ -649,122 +550,21 @@ annotations:
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevindingen F2, F174 en F244 (de oordelen in F244 gaan over de toelichting
-          "Na 8 weken is die voorbij" bij een lopende zaak). Het prototype noemt bij
-          loonkostensubsidie een beslistermijn van vijf weken na de vaststelling van de loonwaarde,
-          direct boven de tekst over een aanvraag nadat de werknemer al begonnen is. Elders noemt
-          het prototype voor een werknemer die al begonnen is een termijn van acht weken op grond
-          van de artikelen 4:13 en 4:14 Awb. Dit lid verbindt de termijn van vijf weken aan de
-          vaststelling van de loonwaarde, of het achterwege laten daarvan, "bedoeld in artikel 10d,
-          eerste lid"; het tweede lid wordt niet genoemd. Ook bij een aanvraag op grond van het
-          tweede lid stelt het college de loonwaarde vast. Vraag: geldt de termijn van vijf weken
-          ook voor een aanvraag op grond van het tweede lid, of geldt daarvoor de redelijke termijn
-          van artikel 4:13 Awb?
+          Herkomst: review van het model van loonkostensubsidie en doelgroep, november 2026
+          (regelrecht-corpus-FCV, PDR 0026, punt 2). De termijn loopt "nadat de loonwaarde is
+          vastgesteld". Artikel 3, eerste lid, van het Besluit loonkostensubsidie en minimumbedragen
+          studietoeslag Participatiewet 2021 laat het college de loonwaarde vaststellen op grond van
+          het rapport van de loonwaardedeskundige en met inbreng van werknemer en werkgever. In het
+          model is de dag van de vaststelling een aangeleverde datum; het model zegt niet welke dag
+          dat is. De bron voor de chronolexografie-PoC neemt de dag van het rapport. Vraag: welke
+          dag geldt als de dag waarop de loonwaarde is vastgesteld: de dag van het rapport, of de
+          dag waarop het college de loonwaarde na de inbreng van werknemer en werkgever vaststelt?
+          Kan die dag vóór de dag van de aanvraag liggen, en wat vraagt dit lid bij een
+          heroverweging in bezwaar met een nieuw rapport?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "nadat de loonwaarde is vastgesteld"
-        prefix: "a. "
-        suffix: ", bedoeld in"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='10d']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F3. Het prototype zegt dat voor het meten van de loonwaarde geen
-          termijn geldt. Dit lid bevat een beslistermijn van vijf weken die ingaat "nadat de
-          loonwaarde is vastgesteld". De Participatiewet, het Besluit loonkostensubsidie en de
-          Regeling loonkostensubsidie noemen geen termijn voor de vaststelling zelf. Artikel 4:13
-          Awb schrijft bij het ontbreken van een wettelijke termijn een redelijke termijn na
-          ontvangst van de aanvraag voor. Vraag: vervangt het twaalfde lid de termijn van artikel
-          4:13 Awb voor de hele periode vanaf de aanvraag, of geldt tot de vaststelling van de
-          loonwaarde een redelijke termijn als bedoeld in artikel 4:13 Awb?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "gedaan binnen zes maanden na het begin van de"
-        prefix: "werkgever of werknemer, "
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='10d']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F161. Het prototype zegt bij loonkostensubsidie "Vraag aan
-          binnen 6 maanden na de start van het dienstverband (Participatiewet, artikel 10d lid 2)",
-          zonder beperking tot een groep. Het tweede lid noemt een aanvraag "gedaan binnen zes
-          maanden na het begin van de dienstbetrekking" voor personen die in de zes maanden daarvoor
-          tot een van de groepen onder a tot en met c behoorden; het eerste lid regelt de route vóór
-          de dienstbetrekking en noemt geen termijn. Vraag: geldt de termijn van zes maanden alleen
-          voor de personen van het tweede lid, en hoe verhoudt een aanvraag na de start voor een
-          persoon uit de doelgroep van het eerste lid zich tot die termijn? Zie ook de juristpunten
-          A5a en B1.
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://participatiewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "onderdeel a, en het tweede lid, is het"
-        prefix: "bedoeld in het eerste lid, "
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='10d']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevinding F283 (de oordelen in dat record gaan over de vraag of de
-          gemeente de loonwaarde al heeft vastgesteld). In de situatie via de gemeente begint het
-          dienstverband vóór de aanvraag, zodat loonkostensubsidie via het tweede lid loopt. De
-          vraag "Heeft de gemeente de loonwaarde al vastgesteld?" in het prototype verwijst naar het
-          eerste lid, onderdeel a, dat gaat over een dienstbetrekking die de werkgever voornemens is
-          aan te gaan. Het tweede lid noemt de loonwaarde niet; dit vierde lid koppelt de hoogte bij
-          het eerste lid, onderdeel a, en het tweede lid aan de loonwaarde. Vraag: op welke bepaling
-          berust de vaststelling van de loonwaarde bij een aanvraag op grond van het tweede lid, en
-          moet de vraag in het prototype daarom naar het tweede en vierde lid verwijzen? Zie ook
-          juristpunt B1.
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open

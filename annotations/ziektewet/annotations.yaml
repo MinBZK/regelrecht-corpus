@@ -1,7 +1,7 @@
 ---
-# Open vragen bij deze wet als taken (RFC-018, motivation questioning).
-# Herkomst: agenda vervolgsessie november, actieregister en feitencheck
-# van het prototype iemand aannemen (moza-portaal). Status per vraag in workflow.
+# Open vragen voor de jurist bij deze wet als taken (RFC-018, motivation questioning).
+# Herkomst per taak in de eerste zin. Status per vraag in workflow.
+# De vragen van de feitencheck staan in docs/feitencheck/.
 $schema: https://raw.githubusercontent.com/MinBZK/regelrecht/refs/heads/main/schema/v0.5.3/annotation-schema.json
 annotations:
   - type: Annotation
@@ -48,66 +48,29 @@ annotations:
       source: "regelrecht://ziektewet"
       selector:
         type: TextQuoteSelector
-        exact: "niet meer kan bedragen dan de aanspraak van de werknemer"
-        prefix: "met dien verstande dat het ziekengeld "
+        exact: "of een persoon is ten behoeve van wie loonkostensubsidie wordt verstrekt op grond"
+        prefix: "is of werd toegeleid "
         regelrecht:hint:
           type: CssSelector
           value: "article[number='29b']"
     body:
       - type: TextualBody
         value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevindingen F84, F315 en F322 (de oordelen in F315 en F322 gaan over de
-          zinnen "Bij ziekte: ziekengeld van UWV" en "UWV betaalt u dan ziekengeld"). Het prototype
-          zegt bij de no-riskpolis: "Wordt uw werknemer ziek, dan betaalt UWV ziekengeld. U betaalt
-          het loon door." Elders staat "UWV betaalt u dan ziekengeld", met dit artikel als grond.
-          Dit artikel geeft de werknemer recht op ziekengeld. Het zesde lid begrenst het ziekengeld
-          tot de aanspraak op het loon dat de werkgever verschuldigd zou zijn "indien daarop geen
-          ziekengeld in mindering zou zijn gebracht"; artikel 33, tweede lid, Ziektewet en artikel
-          7:629, vijfde lid, BW gaan uit van verrekening met het loon. Vraag: aan wie wordt het
-          ziekengeld op grond van dit artikel uitbetaald, en hoe verhoudt die betaling zich tot de
-          loondoorbetaling door de werkgever?
+          Herkomst: markering in het model (regelrecht-corpus-FCV, review van 25 oktober 2026).
+          Onderdeel e noemt eerst de persoon die door het college naar een dienstbetrekking is of
+          werd toegeleid, dan de persoon ten behoeve van wie loonkostensubsidie wordt verstrekt op
+          grond van artikel 10d, tweede lid, Participatiewet, en vervolgt met "en van wie door het
+          Uitvoeringsinstituut werknemersverzekeringen is vastgesteld [...] dan wel van wie door het
+          college [...] een loonwaarde is vastgesteld die minder bedraagt dan het wettelijk
+          minimumloon". Het model laat de persoon met loonkostensubsidie op grond van artikel 10d,
+          tweede lid, toe zonder die tweede eis en zonder de slotzin van het tweede lid over het
+          moment waarop het recht ontstaat. Vraag: geldt de eis van een vaststelling door UWV of een
+          loonwaarde onder het minimumloon ook voor de persoon met loonkostensubsidie op grond van
+          artikel 10d, tweede lid, en geldt de slotzin van het tweede lid ook voor die persoon?
         purpose: questioning
         format: text/plain
         language: nl
       - type: TextualBody
-        value: feitencheck
-        purpose: tagging
-    workflow: open
-
-  - type: Annotation
-    motivation: questioning
-    creator: RIG (FCV)
-    target:
-      source: "regelrecht://ziektewet"
-      selector:
-        type: TextQuoteSelector
-        exact: "het ziekengeld vermenigvuldigd met de voor die werknemer vastgestelde loonwaarde"
-        prefix: "wordt "
-        suffix: ", bedoeld in"
-        regelrecht:hint:
-          type: CssSelector
-          value: "article[number='29e']"
-    body:
-      - type: TextualBody
-        value: >-
-          Herkomst: feitencheck van het prototype iemand aannemen (moza-portaal main 0f8fcdd, 11
-          november 2026), bevindingen F316 en F327 (de oordelen in die records gaan over "70 procent
-          van het dagloon" en over de grond van de no-riskpolis in de situatie via de gemeente). Het
-          prototype zegt dat het ziekengeld bij de no-riskpolis 70 procent van het dagloon is
-          (artikel 29b, vijfde lid), met op verzoek het hele dagloon in de eerste 52 weken, en noemt
-          als grond artikel 29b, tweede lid, onderdeel e, vijfde en zesde lid, en artikel 12e
-          Dagloonbesluit. In de situatie via de gemeente ontvangt de werkgever ook
-          loonkostensubsidie. Dit artikel, eerste lid, bepaalt dat het ziekengeld dan wordt
-          vermenigvuldigd met de vastgestelde loonwaarde; bij een loonwaarde van 60 procent komt het
-          ziekengeld zo op 42 procent van het dagloon. Het prototype noemt dit artikel niet. Vraag:
-          is dit artikel van toepassing op de no-riskpolis op grond van artikel 29b, tweede lid,
-          onderdeel e, bij gelijktijdige loonkostensubsidie, en hoort het dan bij de grond en de
-          berekening?
-        purpose: questioning
-        format: text/plain
-        language: nl
-      - type: TextualBody
-        value: feitencheck
+        value: juristvraag
         purpose: tagging
     workflow: open
